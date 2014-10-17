@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Project Nebula.cpp" />
+    <ClCompile Include="GLWindow_moc.cpp" />
+    <ClCompile Include="Utility\Camera.cpp" />
+    <ClCompile Include="Utility\MeshGenerator.cpp" />
+    <ClCompile Include="GLWindow.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Primitives\Bone.h" />
+    <ClInclude Include="Primitives\MeshData.h" />
+    <ClInclude Include="Primitives\Vertex.h" />
+    <ClInclude Include="Utility\Camera.h" />
+    <ClInclude Include="Utility\DataTypes.h" />
+    <ClInclude Include="Utility\MeshGenerator.h" />
+    <ClInclude Include="Utility\MeshImporter.h" />
+    <ClInclude Include="GLWindow.h" />
+  </ItemGroup>
+</Project>
