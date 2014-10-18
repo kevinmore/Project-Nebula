@@ -4,20 +4,31 @@
 class Bone
 {
 public:
+	/** The name of the bone. **/
 	const char* m_boneName;
-	Bone* m_parent;
-	QVector<Bone*> m_children;
-	mat4 m_localTransform;
-	mat4 m_globalTransform;
-	MeshData m_mesh;
 
+	/** Parent bode. NULL if this node is the root. **/
+	Bone* m_parent;
+
+	/** The child bones of this bone. **/
+	QVector<Bone*> m_children;
+
+	/** The transformation relative to the node's parent. **/
+	mat4 m_localTransform;
+
+	/** The absolute transformation in the world. **/
+	mat4 m_globalTransform;
+
+	/** The mesh data. One bone can be attached with sevral meshes.**/
+	QVector<MeshData> m_meshes;
+	Bone(){};
 	Bone(const char* boneName, Bone* parent, const mat4 &transform, MeshData &mesh)
 	{
 		// init the current bone
 		m_boneName = boneName;
 		m_parent = parent;
 		m_localTransform = transform;
-		m_mesh = mesh;
+		m_meshes.push_back(mesh);
 		// add the current bone to its parent if it's not the root
 		if(parent) parent->addChild(this);
 	}
@@ -44,9 +55,9 @@ public:
 		else return m_children.size();
 	}
 
-	MeshData getMeshData()
+	QVector<MeshData> getMeshData()
 	{
-		return m_mesh;
+		return m_meshes;
 	}
 
 	static Bone* freeSkeleton(Bone* root)

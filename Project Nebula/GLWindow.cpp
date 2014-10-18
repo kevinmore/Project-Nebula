@@ -4,7 +4,7 @@
 #include <Qt/qdesktopwidget.h>
 #include <Qt/qdebug.h>
 #include <Utility/MeshGenerator.h>
-
+#include <Utility/MeshImporter.h>
 
 
 GLWindow::GLWindow(QWidget *parent) : QGLWidget(QGLFormat(/* Additional format options */), parent)
@@ -106,6 +106,14 @@ void GLWindow::initializeGL()
 
 	// make a hand
 	hand = MeshGenerator::makeHand();
+
+	// import the hand mesh
+	MeshImporter importer;
+	if (importer.loadMeshFromFile("../Resource/Models/phoenix_ugv.md2"))
+	{
+		Bone* root = importer.getSkeleton();
+	}
+	int i = 1;
 }
 
 void GLWindow::resizeGL( int w, int h )
@@ -239,7 +247,12 @@ void GLWindow::renderMesh( QGLShaderProgram &shader, MeshData &mesh, mat4 &model
 void GLWindow::renderSkeleton( Bone* root )
 {
 	if(!root) return; // empty skeleton
-	renderMesh(lightingShaderProgram, root->getMeshData(), root->m_globalTransform);
+	QVector<MeshData> meshes = root->getMeshData();
+	for (int i = 0; i < meshes.size(); ++i)
+	{
+		renderMesh(lightingShaderProgram, meshes[i], root->m_globalTransform);
+	}
+	
 	for (int i = 0; i < root->childCount(); ++i)
 	{
 		renderSkeleton(root->getChild(i));

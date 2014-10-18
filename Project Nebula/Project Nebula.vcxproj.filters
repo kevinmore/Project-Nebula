@@ -6,6 +6,7 @@
     <ClCompile Include="Utility\Camera.cpp" />
     <ClCompile Include="Utility\MeshGenerator.cpp" />
     <ClCompile Include="GLWindow.cpp" />
+    <ClCompile Include="Utility\MeshImporter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Primitives\Bone.h" />
@@ -14,7 +15,7 @@
     <ClInclude Include="Utility\Camera.h" />
     <ClInclude Include="Utility\DataTypes.h" />
     <ClInclude Include="Utility\MeshGenerator.h" />
-    <ClInclude Include="Utility\MeshImporter.h" />
     <ClInclude Include="GLWindow.h" />
+    <ClInclude Include="Utility\MeshImporter.h" />
   </ItemGroup>
 </Project>
