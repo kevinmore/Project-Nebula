@@ -9,6 +9,7 @@ struct MaterialInfo
 	vec3 Diffuse;
 	vec3 Specular;
 	GLfloat Shininess;
+	QString textureFile;
 };
 
 struct LightInfo
@@ -29,7 +30,11 @@ public:
 	GLuint m_shaderProgramID;
 	QGLBuffer vertexBuff;
 	MaterialInfo* material;
-	MeshData():vertices(0), numVertices(0), indices(0), numIndices(0){};
+	MeshData():vertices(0), numVertices(0), indices(0), numIndices(0)
+	{
+		material = new MaterialInfo();
+		material->textureFile = "";
+	};
 
 	void createVertexBuffer()
 	{
@@ -44,6 +49,7 @@ public:
 
 	void cleanUp()
 	{
+		delete material;
 		delete [] vertices;
 		delete [] indices;
 		numVertices = 0;

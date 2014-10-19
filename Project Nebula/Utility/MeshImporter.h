@@ -14,24 +14,18 @@ private:
 
 	QVector<MaterialInfo*> m_materials;
 	QVector<MeshData*> m_meshes;
+	
 	Bone* m_Root;
-
+	
 public:
 	MeshImporter(void);
 	~MeshImporter(void);
-
-	bool loadMeshFromFile(const QString &fileName);
-	void getBufferData(QVector<float> **vertices, QVector<float> **normals,
-		QVector<unsigned int> **indices);
-
+	void cleanUp();
 	Bone* getSkeleton() { return m_Root; }
-
-	MaterialInfo* processMaterial(aiMaterial *material);
+	bool loadMeshFromFile(const QString &fileName);
+	MaterialInfo* processMaterial(aiMaterial *material, const QString &fileName);
 	MeshData* processMesh(aiMesh *mesh);
 	void processSkeleton(const aiScene *scene, aiNode *node, Bone *parentNode, Bone &newNode);
-
-	void transformToUnitCoordinates();
-	void findObjectDimensions(Bone *node, QMatrix4x4 transformation, QVector3D &minDimension, QVector3D &maxDimension);
 
 };
 

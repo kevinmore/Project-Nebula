@@ -12,10 +12,10 @@ private:
 	const vec3 m_Up;
 	
 	vec2 m_lastMousePosition;
-	const float movementSpeed;
 	const float rotationSpeed;
 
 public:
+	float movementSpeed;
 	Camera(void) : m_position(0.0f, 0.1f, 0.2f), 
 				   m_center(0.0f, 0.0f, 0.0f), 
 				   m_viewDirection(0.0f, -0.2f, -1.0f),

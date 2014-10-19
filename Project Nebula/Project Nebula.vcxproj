@@ -28,6 +28,10 @@
     <ClInclude Include="Utility\DataTypes.h" />
     <ClInclude Include="Utility\MeshGenerator.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Resource\Shaders\lightingFragmentShader.fsh" />
+    <None Include="..\Resource\Shaders\lightingVertexShader.vsh" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{89A9A61D-5047-460C-91C1-C99FC990ABD7}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>

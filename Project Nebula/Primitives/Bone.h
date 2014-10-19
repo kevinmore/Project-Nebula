@@ -21,7 +21,15 @@ public:
 
 	/** The mesh data. One bone can be attached with sevral meshes.**/
 	QVector<MeshData> m_meshes;
-	Bone(){};
+
+	Bone(void)
+	{
+		m_parent = 0;
+	};
+	~Bone(void)
+	{
+		freeSkeleton(this);
+	};
 	Bone(const char* boneName, Bone* parent, const mat4 &transform, MeshData &mesh)
 	{
 		// init the current bone
@@ -60,14 +68,15 @@ public:
 		return m_meshes;
 	}
 
+	// clean up the skeleton
 	static Bone* freeSkeleton(Bone* root)
 	{
 		if(!root) return NULL; // empty skeleton
+		free(root);
 		for (int i = 0; i < root->childCount(); ++i)
 		{
 			freeSkeleton(root->getChild(i));
 		}
-		free(root);
 
 		return NULL;
 	}
@@ -124,6 +133,5 @@ public:
 		}
 	}
 
-	~Bone(void);
 };
 

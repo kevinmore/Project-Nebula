@@ -8,6 +8,7 @@
 #include <QtGui/QWheelEvent>
 #include <Utility/Camera.h>
 #include <Primitives/Bone.h>
+#include <Utility/MeshImporter.h>
 
 class GLWindow : public QGLWidget
 {
@@ -32,7 +33,8 @@ private:
 	//void renderAllObjects();
 
 	// TEST
-	Bone* hand;
+	MeshImporter m_importer;
+	Bone *hand, *handModel;
 	GLfloat handRotationAngle;
 	int handRotationDirection;
 	MeshData shape, shape2;

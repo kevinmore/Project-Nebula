@@ -4,7 +4,7 @@
 #include <Qt/qdesktopwidget.h>
 #include <Qt/qdebug.h>
 #include <Utility/MeshGenerator.h>
-#include <Utility/MeshImporter.h>
+
 
 
 GLWindow::GLWindow(QWidget *parent) : QGLWidget(QGLFormat(/* Additional format options */), parent)
@@ -12,8 +12,8 @@ GLWindow::GLWindow(QWidget *parent) : QGLWidget(QGLFormat(/* Additional format o
 //	setFormat(QGLFormat(QGL::Rgba | QGL::DoubleBuffer | QGL::DepthBuffer));
 //	m_allRenderableObjects.reserve(1);
 	m_frameCount = 0;
-
-
+	handModel = NULL;
+	hand = NULL;
 	lightAngle = 0;
 	handRotationAngle = 1;
 	handRotationDirection = 1;
@@ -21,6 +21,7 @@ GLWindow::GLWindow(QWidget *parent) : QGLWidget(QGLFormat(/* Additional format o
 	m_timer = new QTimer(this);
 	connect(m_timer, SIGNAL(timeout()), this, SLOT(updateLoop()));
 	m_timer->start(0);
+
 }
 
 QSize GLWindow::sizeHint() const
@@ -30,7 +31,7 @@ QSize GLWindow::sizeHint() const
 
 GLWindow::~GLWindow(void)
 {
-	hand->freeSkeleton(hand);
+//	if(hand) hand->freeSkeleton(hand);
 //	glUseProgram(0);
 // 	Shader* temp = 0;
 // 	for (unsigned int i = 0; i < m_runningShaderPrograms.size(); ++i)
@@ -96,24 +97,22 @@ void GLWindow::initializeGL()
 	spotlightBuffer.release();
 	/***********************************************************************************************************/
 
-	// cylinder
 	lightingShaderProgram.addShaderFromSourceFile(QGLShader::Vertex, "../Resource/Shaders/lightingVertexShader.vsh");
 	lightingShaderProgram.addShaderFromSourceFile(QGLShader::Fragment, "../Resource/Shaders/lightingFragmentShader.fsh");
 	lightingShaderProgram.link();
 
-	//shape = MeshGenerator::makeCylinder(0.05f, 0.025f, 0.020f, vec4(0.855f, 0.745f, 0.702f, 1.0f), vec4(0.847f, 0.808f, 0.8f, 1.0f), 256);
-	shape2 = MeshGenerator::makeCylinder(0.5f, 0.3f, 0.1f, vec4(0.455f, 0.245f, 0.702f, 1.0f), vec4(0.847f, 0.808f, 0.2f, 1.0f), 256);
 
 	// make a hand
 	hand = MeshGenerator::makeHand();
 
 	// import the hand mesh
-	MeshImporter importer;
-	if (importer.loadMeshFromFile("../Resource/Models/phoenix_ugv.md2"))
+	if (m_importer.loadMeshFromFile("../Resource/Models/boblampclean.md5mesh"))
 	{
-		Bone* root = importer.getSkeleton();
+		handModel = m_importer.getSkeleton();
+		mat4 transform;
+		transform.scale(0.01, 0.01, 0.01);
+		Bone::sortSkeleton(handModel);
 	}
-	int i = 1;
 }
 
 void GLWindow::resizeGL( int w, int h )
@@ -181,26 +180,41 @@ void GLWindow::paintGL()
 		handRotationAngle *= -1;
 	}
 
-	mat4 transform;
+	/** render the hand represented by cylinders **/
+  	mat4 transform;
 	// rotate the palm around the Y axis, for demo purpose
-//  	transform.rotate(0.2, vec3(0, 1, 0));
-//  	hand->m_localTransform *= transform;
+	transform.rotate(0.2, vec3(0, 1, 0));
+  	hand->m_localTransform *= transform;
 	Bone::sortSkeleton(hand);
-
 	// only move the 5 fingers, not the palm
+	// thumb
 	transform.setToIdentity();
 	transform.rotate(-handRotationAngle, vec3(1, 0, 0));
-	for (int i = 0; i < hand->childCount(); ++i)
+	Bone::configureSkeleton(hand->getChild(0), transform);
+	// other 4 fingers
+	transform.setToIdentity();
+	transform.rotate(-1.5*handRotationAngle, vec3(1, 0, 0));
+	for (int i = 1; i < hand->childCount(); ++i)
 	{
 		Bone::configureSkeleton(hand->getChild(i), transform);
 	}
-	
-
 	renderSkeleton(hand);
+
+	/** render the imported hand model **/
+	if(!handModel) return; // the model may not be imported successfully
+// 	Bone::sortSkeleton(handModel);
+//  	transform.setToIdentity();
+//  	transform.rotate(-1.5*handRotationAngle, vec3(1, 0, 0));
+//  	for (int i = 1; i < handModel->childCount(); ++i)
+//  	{
+//  		Bone::configureSkeleton(handModel->getChild(i), transform);
+//  	}
+ 	renderSkeleton(handModel);
 }
 
 void GLWindow::renderMesh( QGLShaderProgram &shader, MeshData &mesh, mat4 &modelToWorldMatrix )
 {
+	int tupleSize;
 	// calculate MV Matrix
 	mat4 mvMatrix = vMatrix * modelToWorldMatrix;
 
@@ -220,17 +234,36 @@ void GLWindow::renderMesh( QGLShaderProgram &shader, MeshData &mesh, mat4 &model
 	shader.setUniformValue("specularReflection", (GLfloat) 1.0);
 	shader.setUniformValue("shininess", (GLfloat) 100.0);
 	shader.setUniformValue("texture", 0);
+	if (mesh.material->textureFile!="")
+	{
+		shader.setUniformValue("useTexture", true);
+		GLuint texture = bindTexture(QPixmap(mesh.material->textureFile));
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, texture);
+		glActiveTexture(0);
+		tupleSize = 4;
+	} 
+	else
+	{
+		shader.setUniformValue("useTexture", false);
+		tupleSize = 3;
+	}
 
 	// active the buffer from the mesh itself 
 	// pass in values
 	// lastly, release the buffer
 	mesh.vertexBuff.bind();
-	shader.setAttributeBuffer("vertex", GL_FLOAT, 0, 3, sizeof(Vertex));
+	shader.setAttributeBuffer("vertex", GL_FLOAT, 0, tupleSize, sizeof(Vertex));
 	shader.enableAttributeArray("vertex");
-	shader.setAttributeBuffer("color", GL_FLOAT, 3*sizeof(GLfloat), 3, sizeof(Vertex));
+	shader.setAttributeBuffer("color", GL_FLOAT, 3*sizeof(GLfloat), tupleSize, sizeof(Vertex));
 	shader.enableAttributeArray("color");
-	shader.setAttributeBuffer("normal", GL_FLOAT, 7*sizeof(GLfloat), 3, sizeof(Vertex));
+	shader.setAttributeBuffer("normal", GL_FLOAT, 7*sizeof(GLfloat), tupleSize, sizeof(Vertex));
 	shader.enableAttributeArray("normal");
+	if (mesh.material->textureFile!="")
+	{
+		shader.setAttributeBuffer("textureCoordinate", GL_FLOAT, 10*sizeof(GLfloat), tupleSize, sizeof(Vertex));
+		shader.enableAttributeArray("textureCoordinate");
+	}
 	mesh.vertexBuff.release();
 
 	// draw the mesh here
@@ -240,6 +273,7 @@ void GLWindow::renderMesh( QGLShaderProgram &shader, MeshData &mesh, mat4 &model
 	shader.disableAttributeArray("vertex");
 	shader.disableAttributeArray("color");
 	shader.disableAttributeArray("normal");
+	if (mesh.material->textureFile!="") shader.disableAttributeArray("textureCoordinate");
 
 	shader.release();
 }
@@ -287,6 +321,10 @@ void GLWindow::keyPressEvent( QKeyEvent * e )
 		break;
 	case Qt::Key_Escape:
 		close();
+	case Qt::Key_Plus:
+		m_camera.movementSpeed += 0.5;
+	case Qt::Key_Minus:
+		m_camera.movementSpeed -= 0.5;
 	}
 	
 }

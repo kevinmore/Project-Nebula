@@ -18,4 +18,8 @@
     <ClInclude Include="GLWindow.h" />
     <ClInclude Include="Utility\MeshImporter.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Resource\Shaders\lightingFragmentShader.fsh" />
+    <None Include="..\Resource\Shaders\lightingVertexShader.vsh" />
+  </ItemGroup>
 </Project>

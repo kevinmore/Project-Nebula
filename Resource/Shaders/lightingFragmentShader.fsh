@@ -7,6 +7,7 @@ uniform float ambientReflection;
 uniform float diffuseReflection;
 uniform float specularReflection;
 uniform float shininess;
+uniform bool useTexture;
 uniform sampler2D texture;
 
 in vec3 varyingNormal;
@@ -27,9 +28,14 @@ void main(void)
     vec4 specularIllumination = specularReflection * pow(max(0.0, 
                                                              dot(-reflect(lightDirection, normal), viewerDirection)
                                                              ), shininess) * specularColor;
-//     fragColor = texture2D(texture, 
-//                           varyingTextureCoordinate) * (ambientIllumination + diffuseIllumination
-//                           ) + specularIllumination;
-
-	fragColor = varyingColor * (ambientIllumination + diffuseIllumination) + specularIllumination;
+   
+	if(useTexture)
+	{
+		fragColor = texture2D(texture, varyingTextureCoordinate) * (ambientIllumination + diffuseIllumination) + specularIllumination;
+	}   
+    else
+	{
+		fragColor = varyingColor * (ambientIllumination + diffuseIllumination) + specularIllumination;
+	}
+	
 }

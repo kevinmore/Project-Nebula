@@ -4,12 +4,16 @@
 
 MeshImporter::MeshImporter(void)
 {
+	cleanUp();
+	m_Root = new Bone();
 }
 
 
 MeshImporter::~MeshImporter(void)
 {
 }
+
+
 
 // utility function to convert aiMatrix4x4 to QMatrix4x4
 QMatrix4x4 conv(const aiMatrix4x4 * m) {
@@ -18,6 +22,17 @@ QMatrix4x4 conv(const aiMatrix4x4 * m) {
 		m->a3, m->b3, m->c3, m->d3,
 		m->a4, m->b4, m->c4, m->d4);
 }
+
+void MeshImporter::cleanUp()
+{
+	m_vertices.clear();
+	m_normals.clear();
+	m_indices.clear();
+	m_materials.clear();
+	m_meshes.clear();
+	m_Root = 0;
+}
+
 
 bool MeshImporter::loadMeshFromFile( const QString &fileName )
 {
@@ -28,12 +43,13 @@ bool MeshImporter::loadMeshFromFile( const QString &fileName )
 		aiProcess_CalcTangentSpace |
 		aiProcess_Triangulate |
 		aiProcess_JoinIdenticalVertices |
-		aiProcess_SortByPType
+		aiProcess_SortByPType |
+		aiProcess_FlipUVs
 		);
 
 	if (!scene)
 	{
-		qDebug() << "Error loading mesh file: " << importer.GetErrorString();
+		qDebug() << "Error loading mesh file: " << fileName << importer.GetErrorString();
 		return false;
 	}
 
@@ -44,7 +60,7 @@ bool MeshImporter::loadMeshFromFile( const QString &fileName )
 	{
 		for (unsigned int i = 0; i < scene->mNumMaterials; ++i)
 		{
-			MaterialInfo* mater = processMaterial(scene->mMaterials[i]);
+			MaterialInfo* mater = processMaterial(scene->mMaterials[i], fileName);
 			m_materials.push_back(mater);
 		}
 	}
@@ -52,52 +68,75 @@ bool MeshImporter::loadMeshFromFile( const QString &fileName )
 	// load mesh
 	if (scene->HasMeshes())
 	{
-		for (unsigned int ii = 0; ii < scene->mNumMeshes; ++ii)
+		for (unsigned int i = 0; i < scene->mNumMeshes; ++i)
 		{
-			m_meshes.push_back(processMesh(scene->mMeshes[ii]));
+			m_meshes.push_back(processMesh(scene->mMeshes[i]));
 		}
 	}
 	else
 	{
-		qDebug() << "Error: No meshes found";
+		qDebug() << "Error: No meshes found" << fileName;
 		return false;
 	}
 
 	// load bones
 	if (scene->mRootNode != NULL)
 	{
-		Bone *root = new Bone();
-		processSkeleton(scene, scene->mRootNode, 0, *root);
-		m_Root = root;
+		processSkeleton(scene, scene->mRootNode, 0, *m_Root);
 	}
 	else
 	{
-		qDebug() << "Error loading model";
+		qDebug() << "Error: The model has no root node" << fileName;
 		return false;
 	}
 
 	return true;
-
-	return true;
 }
 
-MaterialInfo* MeshImporter::processMaterial( aiMaterial *material )
+MaterialInfo* MeshImporter::processMaterial( aiMaterial *pMaterial, const QString &fileName )
 {
 	MaterialInfo* mater(new MaterialInfo);
 	aiString mname;
-	material->Get(AI_MATKEY_NAME, mname);
+	pMaterial->Get(AI_MATKEY_NAME, mname);
 	if (mname.length > 0)
 		mater->Name = mname.C_Str();
 
+
+	// Extract the directory part from the file name
+	int SlashIndex = fileName.lastIndexOf("/");
+	QString Dir;
+
+	if (SlashIndex == std::string::npos) {
+		Dir = ".";
+	}
+	else if (SlashIndex == 0) {
+		Dir = "/";
+	}
+	else {
+		QString left = fileName.left(SlashIndex);
+		Dir = left;
+	}
+	
+	if (pMaterial->GetTextureCount(aiTextureType_DIFFUSE) > 0) 
+	{
+		aiString Path;
+
+		if (pMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &Path, NULL, NULL, NULL, NULL, NULL) == AI_SUCCESS) 
+		{
+			QString FullPath = Dir + "/" + Path.data;
+			mater->textureFile = FullPath;
+		}
+	}
+
+
 	int shadingModel;
-	material->Get(AI_MATKEY_SHADING_MODEL, shadingModel);
+	pMaterial->Get(AI_MATKEY_SHADING_MODEL, shadingModel);
 
 	if (shadingModel != aiShadingMode_Phong && shadingModel != aiShadingMode_Gouraud)
 	{
 		qDebug() << "This mesh's shading model is not implemented in this loader, setting to default material";
 		mater->Name = "DefaultMaterial";
 	}
-
 	else
 	{
 		aiColor3D dif(0.f,0.f,0.f);
@@ -105,10 +144,10 @@ MaterialInfo* MeshImporter::processMaterial( aiMaterial *material )
 		aiColor3D spec(0.f,0.f,0.f);
 		float shine = 0.0;
 
-		material->Get(AI_MATKEY_COLOR_AMBIENT, amb);
-		material->Get(AI_MATKEY_COLOR_DIFFUSE, dif);
-		material->Get(AI_MATKEY_COLOR_SPECULAR, spec);
-		material->Get(AI_MATKEY_SHININESS, shine);
+		pMaterial->Get(AI_MATKEY_COLOR_AMBIENT, amb);
+		pMaterial->Get(AI_MATKEY_COLOR_DIFFUSE, dif);
+		pMaterial->Get(AI_MATKEY_COLOR_SPECULAR, spec);
+		pMaterial->Get(AI_MATKEY_SHININESS, shine);
 
 		mater->Ambient = QVector3D(amb.r, amb.g, amb.b);
 		mater->Diffuse = QVector3D(dif.r, dif.g, dif.b);
@@ -125,39 +164,48 @@ MaterialInfo* MeshImporter::processMaterial( aiMaterial *material )
 
 MeshData* MeshImporter::processMesh( aiMesh *mesh )
 {
-	MeshData* newMesh(new MeshData);
+	MeshData* ret(new MeshData);
 
-	newMesh->meshName = mesh->mName.length != 0 ? mesh->mName.C_Str() : "";
-	int indexOffset = m_indices.size();
-	unsigned int indexCountBefore = m_indices.size();
-	int vertindexoffset = m_vertices.size()/3;
+	ret->meshName = mesh->mName.length != 0 ? mesh->mName.C_Str() : "";
+	ret->numVertices = mesh->mNumVertices;
+	ret->vertices = new Vertex[ret->numVertices];
 
-	// Get Vertices
-	if (mesh->mNumVertices > 0)
+	// Get vertex attributes
+	for (uint i = 0; i < mesh->mNumVertices; ++i)
 	{
-		for (uint i = 0; i < mesh->mNumVertices; ++i)
-		{
-			aiVector3D &vec = mesh->mVertices[i];
+		// position
+		ret->vertices[i].postition = vec3 (mesh->mVertices[i].x, 
+											mesh->mVertices[i].y, 
+											mesh->mVertices[i].z);
 
-			m_vertices.push_back(vec.x);
-			m_vertices.push_back(vec.y);
-			m_vertices.push_back(vec.z);
+		// Color
+		if (mesh->HasVertexColors(0))
+		{
+			ret->vertices[i].color = vec4(mesh->mColors[i]->r, 
+											mesh->mColors[i]->g, 
+											mesh->mColors[i]->b, 
+											mesh->mColors[i]->a);
+		}else{ret->vertices[i].color = vec4(0.5, 0, 0.5, 1);}
+
+		// normals
+		if (mesh->HasNormals())
+		{
+			ret->vertices[i].normal = vec3 ( mesh->mNormals[i].x,  
+											mesh->mNormals[i].y,  
+											mesh->mNormals[i].z);
+		}
+
+		if (mesh->HasTextureCoords(0))
+		{
+			ret->vertices[i].texCoord = vec2 (mesh->mTextureCoords[0][i].x, 
+												mesh->mTextureCoords[0][i].y);
 		}
 	}
 
-	// Get Normals
-	if (mesh->HasNormals())
-	{
-		for (uint i = 0; i < mesh->mNumVertices; ++i)
-		{
-			aiVector3D &vec = mesh->mNormals[i];
-			m_normals.push_back(vec.x);
-			m_normals.push_back(vec.y);
-			m_normals.push_back(vec.z);
-		};
-	}
 
 	// Get mesh indexes
+	ret->numIndices = mesh->mNumFaces*3;
+	ret->indices = new GLushort[ret->numIndices];
 	for (uint i = 0; i < mesh->mNumFaces; ++i)
 	{
 		aiFace* face = &mesh->mFaces[i];
@@ -166,36 +214,41 @@ MeshData* MeshImporter::processMesh( aiMesh *mesh )
 			qDebug() << "Warning: Mesh face with not exactly 3 indices, ignoring this primitive.";
 			continue;
 		}
-
-		m_indices.push_back(face->mIndices[0]+vertindexoffset);
-		m_indices.push_back(face->mIndices[1]+vertindexoffset);
-		m_indices.push_back(face->mIndices[2]+vertindexoffset);
+		ret->indices[3*i] = face->mIndices[0];
+		ret->indices[3*i+1] = face->mIndices[1];
+		ret->indices[3*i+2] = face->mIndices[2];
 	}
 
-	newMesh->numIndices = m_indices.size() - indexCountBefore;
-	newMesh->material = m_materials.at(mesh->mMaterialIndex);
+	// material
+	ret->material = m_materials.at(mesh->mMaterialIndex);
 
-	return newMesh;
+	
+	// create a vertex buffer
+	ret->createVertexBuffer();
 
-
+	return ret;
 }
 
-void MeshImporter::processSkeleton( const aiScene *scene, aiNode *node, Bone *parentNode, Bone &newNode )
+void MeshImporter::processSkeleton( const aiScene *scene, aiNode *node, Bone *parent, Bone &currentBone )
 {
-	newNode.m_boneName = node->mName.length != 0 ? node->mName.C_Str() : "";
+	currentBone.m_boneName = node->mName.length != 0 ? node->mName.C_Str() : "";
 
-	newNode.m_localTransform = conv(&node->mTransformation);
-	newNode.m_meshes.resize(node->mNumMeshes);
+	currentBone.m_localTransform = conv(&node->mTransformation);
+
+	if(parent) parent->addChild(&currentBone);
+
 	for (uint imesh = 0; imesh < node->mNumMeshes; ++imesh)
 	{
 		MeshData* mesh = m_meshes[node->mMeshes[imesh]];
-		newNode.m_meshes.push_back(*mesh);
+		currentBone.m_meshes.push_back(*mesh);
 	}
 
 	for (uint ich = 0; ich < node->mNumChildren; ++ich)
 	{
-		newNode.m_children.push_back(new Bone());
-		processSkeleton(scene, node->mChildren[ich], parentNode, *newNode.m_children[ich]);
+		Bone* temp = new Bone();
+		currentBone.addChild(temp);
+		processSkeleton(scene, node->mChildren[ich], &currentBone, *currentBone.m_children[ich]);
+		temp = 0;
+		delete temp;
 	}
 }
-

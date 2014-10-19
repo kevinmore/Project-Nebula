@@ -159,34 +159,43 @@ MeshData MeshGenerator::makePalm(vec4 &color)
 		vec3(-0.03f, +0.05f, 0.01f), // 0
 		color,
 		vec3(1.0f, 0.0f, 0.0f),
+		vec2(0, 0),
 
 		vec3(-0.03f, +0.05f, -0.01f), // 1
 		color,
 		vec3(1.0f, 0.0f, 1.0f),
+		vec2(0, 0),
 
 		vec3(+0.03f, +0.05f, -0.01f), // 2
 		color,
 		vec3(-1.0f, -1.0f, 0.0f),
+		vec2(0, 0),
 
 		vec3(+0.03f, +0.05f, 0.01f), // 3
 		color,
 		vec3(0.0f, 0.0f, 0.0f),
+		vec2(0, 0),
 
 		vec3(-0.03f, 0.0f, 0.01f), // 4
 		color,
 		vec3(1.0f, 1.0f, 0.0f),
+		vec2(0, 0),
 
 		vec3(-0.03f, 0.0f, -0.01f), // 5
 		color,
 		vec3(1.0f, 1.0f, 1.0f),
+		vec2(0, 0),
 
 		vec3(+0.03f, 0.0f, -0.01f), // 6
 		color,
 		vec3(0.0f, 1.0f, 1.0f),
+		vec2(0, 0),
 
 		vec3(+0.03f, 0.0f, 0.01f), // 7
 		color,
-		vec3(0.0f, 1.0f, 0.0f)
+		vec3(0.0f, 1.0f, 0.0f),
+		vec2(0, 0)
+
 	};
 
 	ret.numVertices = NUM_ARRAY_ELEMENTS(stackVerts);
@@ -262,7 +271,7 @@ MeshData MeshGenerator::makeCylinder( const float height, const float radiusTop,
 		vertex_indexes.push_back(nbSegments+i+2);
 	}
 
-	// map the vertices into shape data
+	// map the vertices into mesh data
 	ret.numVertices = vertex_positions.size();
 	ret.vertices = new Vertex[ret.numVertices];
 	for (unsigned int i = 0; i < vertex_positions.size(); ++i)
@@ -301,34 +310,43 @@ MeshData MeshGenerator::makeDemoRoom()
 		vec3(-10.0f, +15.0f, 10.0f), // 0
 		vec4(0.25f, 0.25f, 0.25f, 1.0f),
 		vec3(1.0f, 0.0f, 0.0f),
+		vec2(0, 0),
 
 		vec3(-10.0f, +15.0f, -10.0f), // 1
 		vec4(0.25f, 0.25f, 0.25f, 1.0f),
 		vec3(1.0f, 0.0f, 1.0f),
+		vec2(0, 0),
 
 		vec3(+10.0f, +15.0f, -10.0f), // 2
 		vec4(0.25f, 0.25f, 0.25f, 1.0f),
 		vec3(-1.0f, -1.0f, 0.0f),
+		vec2(0, 0),
 
 		vec3(+10.0f, +15.0f, 10.0f), // 3
 		vec4(0.25f, 0.25f, 0.25f, 1.0f),
 		vec3(0.0f, 0.0f, 0.0f),
+		vec2(0, 0),
 
 		vec3(-10.0f, -0.1f, 10.0f), // 4
 		vec4(0.25f, 0.25f, 0.25f, 1.0f),
 		vec3(1.0f, 1.0f, 0.0f),
+		vec2(0, 0),
 
 		vec3(-10.0f, -0.1f, -10.0f), // 5
 		vec4(0.25f, 0.25f, 0.25f, 1.0f),
 		vec3(1.0f, 1.0f, 1.0f),
+		vec2(0, 0),
 
 		vec3(+10.0f, -0.1f, -10.0f), // 6
 		vec4(0.25f, 0.25f, 0.25f, 1.0f),
 		vec3(0.0f, 1.0f, 1.0f),
+		vec2(0, 0),
 
 		vec3(+10.0f, -0.1f, 10.0f), // 7
 		vec4(0.25f, 0.25f, 0.25f, 1.0f),
-		vec3(0.0f, 1.0f, 0.0f)
+		vec3(0.0f, 1.0f, 0.0f),
+		vec2(0, 0)
+
 	};
 
 	ret.numVertices = 8;
@@ -360,8 +378,8 @@ Bone* MeshGenerator::makeHand()
 {
 	MeshData mesh_root = makePalm(vec4(0.6, 0.6, 1.0, 1.0));
 
-	MeshData mesh_1_1 = makeCylinder(0.03f, 0.0046f, 0.005f, QColor(0,153,255), QColor(0,153,255));
-	MeshData mesh_1_2 = makeCylinder(0.025f, 0.0042f, 0.0046f, QColor(34,139,34), QColor(34,139,34));
+	MeshData mesh_1_1 = makeCylinder(0.028f, 0.0046f, 0.005f, QColor(0,153,255), QColor(0,153,255));
+	MeshData mesh_1_2 = makeCylinder(0.023f, 0.0042f, 0.0046f, QColor(34,139,34), QColor(34,139,34));
 	MeshData mesh_1_3 = makeCylinder(0.02f, 0.0038f, 0.0042f, QColor(255,12,62), QColor(255,12,62));
 
 	MeshData mesh_2_1 = makeCylinder(0.035f, 0.0046f, 0.005f, QColor(0,153,255), QColor(0,153,255));
@@ -396,11 +414,11 @@ Bone* MeshGenerator::makeHand()
 	Bone* thumb_1 = new Bone("thumb_1", root, tMatrix, mesh_1_1);
 
 	tMatrix.setToIdentity();
-	tMatrix.translate(0, 0.03, 0);
+	tMatrix.translate(0, 0.025, 0);
 	Bone* thumb_2 = new Bone("thumb_2", thumb_1, tMatrix, mesh_1_2);
 
 	tMatrix.setToIdentity();
-	tMatrix.translate(0, 0.025, 0);
+	tMatrix.translate(0, 0.023, 0);
 	Bone* thumb_3 = new Bone("thumb_3", thumb_2, tMatrix, mesh_1_3);
 
 	// index finger
