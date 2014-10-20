@@ -34,24 +34,26 @@ private:
 	QVector<MeshEntry> m_Entries;
 	QVector<BoneInfo> m_BoneInfo;
 	mat4 m_GlobalInverseTransform;
-	const aiAnimation* m_Animation;
+	QVector<aiAnimation*> m_Animations;
+	const aiScene* m_pScene;
 
 public:
-	const aiScene* m_pScene;
+	
 	QVector<MeshData*> m_Meshes;
 	MeshImporter(void);
 	~MeshImporter(void);
 	void cleanUp();
 	Bone* getSkeleton() { return m_Root; }
+	void processSkeleton(const aiScene *scene, aiNode *node, Bone *parentNode, Bone &newNode);
 
 	void BoneTransform(float TimeInSeconds, QVector<mat4> &Transforms);
 
-	const aiScene* loadMeshFromFile(const QString &fileName);
+	bool loadMeshFromFile(const QString &fileName);
 	bool processScene(const aiScene* pScene, const QString &Filename);
 	MeshData* processMesh(uint MeshIndex, const aiMesh* paiMesh);
 	void processBones(uint MeshIndex, const aiMesh *paiMesh, QVector<VertexBoneData> &Bones);
 	MaterialInfo* processMaterial(const aiMaterial *pMaterial, const QString &Filename);
-	void processSkeleton(const aiScene *scene, aiNode *node, Bone *parentNode, Bone &newNode);
+	aiAnimation* processAnimations(uint animationIndex);
 	void ReadNodeHeirarchy(float AnimationTime, const aiNode* pNode, const mat4 &ParentTransform);
 	const aiNodeAnim* FindNodeAnim(const aiAnimation* pAnimation, QString &NodeName);
 

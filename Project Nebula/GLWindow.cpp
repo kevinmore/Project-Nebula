@@ -112,16 +112,15 @@ void GLWindow::initializeGL()
 	hand = MeshGenerator::makeHand();
 
 	// import the hand mesh
-	const aiScene* s = m_importer->loadMeshFromFile("../Resource/Models/boblampclean.md5mesh");
-// 	if ()
-// 	{
-// 		qDebug() << "Model loaded successfully!";
-// 		qDebug() << m_importer->m_pScene->HasAnimations();
+	if (m_importer->loadMeshFromFile("../Resource/Models/boblampclean.md5mesh"))
+	{
+		qDebug() << "Model loaded successfully!";
+//		qDebug() << m_importer->m_pScene->HasAnimations();
 // 		handModel = m_importer->getSkeleton();
 // 		mat4 transform;
 // 		transform.scale(0.01, 0.01, 0.01);
 // 		Bone::sortSkeleton(handModel);
-//	}
+	}
 
 	for (unsigned int i = 0 ; i < ARRAY_SIZE_IN_ELEMENTS(m_boneLocation) ; ++i) {
 		char Name[128];
@@ -226,7 +225,7 @@ void GLWindow::paintGL()
 //  	{
 //  		Bone::configureSkeleton(handModel->getChild(i), transform);
 //  	}
-	//renderSkeleton(handModel);
+//	renderSkeleton(handModel);
 	
 }
 

@@ -4,8 +4,8 @@
 
 MeshImporter::MeshImporter(void)
 {
-	m_NumBones = 0;
 	cleanUp();
+	m_NumBones = 0;
 	m_Root = new Bone();
 }
 
@@ -15,23 +15,25 @@ MeshImporter::~MeshImporter(void)
 }
 
 
-
 // utility function to convert aiMatrix4x4 to QMatrix4x4
-QMatrix4x4 convToQMat4(const aiMatrix4x4 * m) {
+QMatrix4x4 convToQMat4(const aiMatrix4x4 * m)
+{
 	return QMatrix4x4(m->a1, m->b1, m->c1, m->d1,
 		m->a2, m->b2, m->c2, m->d2,
 		m->a3, m->b3, m->c3, m->d3,
 		m->a4, m->b4, m->c4, m->d4);
 }
 
-QMatrix4x4 convToQMat4(aiMatrix4x4 * m) {
+QMatrix4x4 convToQMat4(aiMatrix4x4 * m) 
+{
 	return QMatrix4x4(m->a1, m->b1, m->c1, m->d1,
 		m->a2, m->b2, m->c2, m->d2,
 		m->a3, m->b3, m->c3, m->d3,
 		m->a4, m->b4, m->c4, m->d4);
 }
 
-QMatrix4x4 convToQMat4(aiMatrix3x3 * m) {
+QMatrix4x4 convToQMat4(aiMatrix3x3 * m) 
+{
 	return QMatrix4x4(m->a1, m->b1, m->c1, 0,
 						m->a2, m->b2, m->c2, 0,
 						m->a3, m->b3, m->c3, 0,
@@ -47,15 +49,14 @@ void MeshImporter::cleanUp()
 	m_Bones.clear();
 	m_Entries.clear();
 	m_BoneInfo.clear();
-	m_Root = 0;
 }
 
 
-const aiScene* MeshImporter::loadMeshFromFile( const QString &fileName )
+bool MeshImporter::loadMeshFromFile( const QString &fileName )
 {
-	Assimp::Importer importer;
+	Assimp::Importer* importer = new Assimp::Importer();
 
-	    m_pScene = importer.ReadFile(fileName.toStdString(),
+	    m_pScene = importer->ReadFile(fileName.toStdString(),
 		aiProcess_GenSmoothNormals |
 		aiProcess_CalcTangentSpace |
 		aiProcess_Triangulate |
@@ -66,7 +67,7 @@ const aiScene* MeshImporter::loadMeshFromFile( const QString &fileName )
 
 	if (!m_pScene)
 	{
-		qDebug() << "Error loading mesh file: " << fileName << importer.GetErrorString();
+		qDebug() << "Error loading mesh file: " << fileName << importer->GetErrorString();
 		return false;
 	}
 	else
@@ -75,8 +76,7 @@ const aiScene* MeshImporter::loadMeshFromFile( const QString &fileName )
 		m_GlobalInverseTransform.inverted();
 		processScene(m_pScene, fileName);
 	}
-	const aiScene *s = new aiScene(*m_pScene);
-	return s;
+
 }
 
 bool MeshImporter::processScene( const aiScene* pScene, const QString &fileName )
@@ -87,7 +87,8 @@ bool MeshImporter::processScene( const aiScene* pScene, const QString &fileName 
 	uint NumIndices = 0;
 
 	// Count the number of vertices and indices
-	for (int i = 0 ; i < m_Entries.size() ; i++) {
+	for (int i = 0 ; i < m_Entries.size() ; ++i) 
+	{
 		m_Entries[i].MaterialIndex = pScene->mMeshes[i]->mMaterialIndex;        
 		m_Entries[i].NumIndices    = pScene->mMeshes[i]->mNumFaces * 3;
 		m_Entries[i].BaseVertex    = NumVertices;
@@ -125,6 +126,7 @@ bool MeshImporter::processScene( const aiScene* pScene, const QString &fileName 
 	if (pScene->mRootNode != NULL)
 	{
 		//processSkeleton(pScene, pScene->mRootNode, 0, *m_Root);
+		
 	}
 	else
 	{
@@ -135,11 +137,15 @@ bool MeshImporter::processScene( const aiScene* pScene, const QString &fileName 
 	// load animation
 	if (pScene->HasAnimations())
 	{
-		m_Animation = m_pScene->mAnimations[0];
+		for (uint i = 0; i < pScene->mNumAnimations; ++i)
+		{
+			m_Animations.push_back(processAnimations(i));
+		}
+		
 	}
 	else
 	{
-		m_Animation = NULL;
+		qDebug() << "The model has no animation" << fileName;
 	}
 	return true;
 }
@@ -232,14 +238,14 @@ MeshData* MeshImporter::processMesh(uint MeshIndex, const aiMesh* paiMesh)
 		ret->vertices[i].postition = vec3 (paiMesh->mVertices[i].x, paiMesh->mVertices[i].y, paiMesh->mVertices[i].z);
 
 		// Color
-// 		if (paiMesh->HasVertexColors(0))
-// 		{
-// 			ret->vertices[i].color = vec4(paiMesh->mColors[i]->r, paiMesh->mColors[i]->g, paiMesh->mColors[i]->b, paiMesh->mColors[i]->a);
-// 		}
-// 		else
-// 		{
+		if (paiMesh->HasVertexColors(0))
+		{
+			ret->vertices[i].color = vec4(paiMesh->mColors[i]->r, paiMesh->mColors[i]->g, paiMesh->mColors[i]->b, paiMesh->mColors[i]->a);
+		}
+		else
+		{
 			ret->vertices[i].color = vec4(0.547, 0.39, 0.234, 1);
-//		}
+		}
 
 		// normals
 		if (paiMesh->HasNormals())
@@ -315,6 +321,11 @@ void MeshImporter::processBones( uint MeshIndex, const aiMesh *paiMesh, QVector<
 			Bones[VertexID].addBoneData(boneIndex, Weight);
 		}
 	}
+}
+
+aiAnimation* MeshImporter::processAnimations( uint animationIndex )
+{
+	return m_pScene->mAnimations[animationIndex];
 }
 
 void MeshImporter::processSkeleton( const aiScene *scene, aiNode *node, Bone *parent, Bone &currentBone )
@@ -511,14 +522,15 @@ uint MeshImporter::FindScaling(float AnimationTime, const aiNodeAnim* pNodeAnim)
 
 void MeshImporter::BoneTransform( float TimeInSeconds, QVector<mat4> &Transforms )
 {
-	if(!m_Animation) return;
+	if(m_Animations.isEmpty()) return;
 
 	mat4 Identity;
 	Identity.setToIdentity();
 
-	float TicksPerSecond = (float)(m_Animation->mTicksPerSecond != 0 ? m_pScene->mAnimations[0]->mTicksPerSecond : 25.0f);
+	float TicksPerSecond = (float)(m_Animations[0]->mTicksPerSecond != 0 ? m_Animations[0]->mTicksPerSecond : 25.0f);
 	float TimeInTicks = TimeInSeconds * TicksPerSecond;
-	float AnimationTime = fmod(TimeInTicks, (float)m_pScene->mAnimations[0]->mDuration);
+	float AnimationTime = fmod(TimeInTicks, (float)m_Animations[0]->mDuration);
+
 
 	ReadNodeHeirarchy(AnimationTime, m_pScene->mRootNode, Identity);
 
