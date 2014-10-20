@@ -10,6 +10,11 @@ struct MaterialInfo
 	vec3 Specular;
 	GLfloat Shininess;
 	QString textureFile;
+
+	MaterialInfo(const QString &fileName)
+	{
+		textureFile = fileName;
+	}
 };
 
 struct LightInfo
@@ -32,8 +37,7 @@ public:
 	MaterialInfo* material;
 	MeshData():vertices(0), numVertices(0), indices(0), numIndices(0)
 	{
-		material = new MaterialInfo();
-		material->textureFile = "";
+		material = new MaterialInfo("");
 	};
 
 	void createVertexBuffer()

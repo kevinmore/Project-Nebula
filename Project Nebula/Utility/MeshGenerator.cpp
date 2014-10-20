@@ -6,7 +6,7 @@ void MeshGenerator::generateNormals( MeshData &mesh )
 {
 	QVector<vec3>* normal_buffer = new QVector<vec3>[mesh.numVertices];
 
-	for (unsigned int i = 0; i < mesh.numIndices;  i+=3)
+	for (uint i = 0; i < mesh.numIndices; i+=3)
 	{
 		// get the three vertices that make the faces
 		vec3 p1 = mesh.vertices[mesh.indices[i+0]].postition;
@@ -27,7 +27,7 @@ void MeshGenerator::generateNormals( MeshData &mesh )
 	}
 
 	// Now loop through each vertex, and average out all the normals stored.
-	for( int i = 0; i < mesh.numVertices; ++i )
+	for( uint i = 0; i < mesh.numVertices; ++i )
 	{
 		for( int j = 0; j < normal_buffer[i].size(); ++j )
 			mesh.vertices[i].normal += normal_buffer[i][j];
@@ -160,42 +160,49 @@ MeshData MeshGenerator::makePalm(vec4 &color)
 		color,
 		vec3(1.0f, 0.0f, 0.0f),
 		vec2(0, 0),
+		VertexBoneData(),
 
 		vec3(-0.03f, +0.05f, -0.01f), // 1
 		color,
 		vec3(1.0f, 0.0f, 1.0f),
 		vec2(0, 0),
+		VertexBoneData(),
 
 		vec3(+0.03f, +0.05f, -0.01f), // 2
 		color,
 		vec3(-1.0f, -1.0f, 0.0f),
 		vec2(0, 0),
+		VertexBoneData(),
 
 		vec3(+0.03f, +0.05f, 0.01f), // 3
 		color,
 		vec3(0.0f, 0.0f, 0.0f),
 		vec2(0, 0),
+		VertexBoneData(),
 
 		vec3(-0.03f, 0.0f, 0.01f), // 4
 		color,
 		vec3(1.0f, 1.0f, 0.0f),
 		vec2(0, 0),
+		VertexBoneData(),
 
 		vec3(-0.03f, 0.0f, -0.01f), // 5
 		color,
 		vec3(1.0f, 1.0f, 1.0f),
 		vec2(0, 0),
+		VertexBoneData(),
 
 		vec3(+0.03f, 0.0f, -0.01f), // 6
 		color,
 		vec3(0.0f, 1.0f, 1.0f),
 		vec2(0, 0),
+		VertexBoneData(),
 
 		vec3(+0.03f, 0.0f, 0.01f), // 7
 		color,
 		vec3(0.0f, 1.0f, 0.0f),
-		vec2(0, 0)
-
+		vec2(0, 0),
+		VertexBoneData()
 	};
 
 	ret.numVertices = NUM_ARRAY_ELEMENTS(stackVerts);
@@ -238,7 +245,7 @@ MeshData MeshGenerator::makeCylinder( const float height, const float radiusTop,
 	double angle = 0.0;
 	vertex_positions.push_back(vec4(0,height,0,1));
 	vertex_colors.push_back(colorTop);
-	for(unsigned int i = 0; i<nbSegments; ++i)
+	for(int i = 0; i<nbSegments; ++i)
 	{
 		angle = ((double)i)/((double)nbSegments)*2.0*3.14;
 		vertex_positions.push_back(vec4(radiusTop*std::cos(angle),height,radiusTop*std::sin(angle),1.0));
@@ -250,7 +257,7 @@ MeshData MeshGenerator::makeCylinder( const float height, const float radiusTop,
 
 	vertex_positions.push_back(vec4(0,0,0,1));
 	vertex_colors.push_back(colorBottom);
-	for(unsigned int i = 0; i<nbSegments; ++i)
+	for(int i = 0; i<nbSegments; ++i)
 	{
 		angle = ((double)i)/((double)nbSegments)*2.0*3.14;
 		vertex_positions.push_back(vec4(radiusBottom*std::cos(angle),0.0,radiusBottom*std::sin(angle),1.0));
@@ -260,7 +267,7 @@ MeshData MeshGenerator::makeCylinder( const float height, const float radiusTop,
 		vertex_indexes.push_back(nbSegments+i+2);
 	}
 
-	for(unsigned int i = 0; i<nbSegments; ++i)
+	for(int i = 0; i<nbSegments; ++i)
 	{
 		vertex_indexes.push_back(i+1);
 		vertex_indexes.push_back((i+1)%nbSegments + 1);
@@ -274,7 +281,7 @@ MeshData MeshGenerator::makeCylinder( const float height, const float radiusTop,
 	// map the vertices into mesh data
 	ret.numVertices = vertex_positions.size();
 	ret.vertices = new Vertex[ret.numVertices];
-	for (unsigned int i = 0; i < vertex_positions.size(); ++i)
+	for (int i = 0; i < vertex_positions.size(); ++i)
 	{
 		ret.vertices[i].postition = vec3(vertex_positions[i].x(), vertex_positions[i].y(), vertex_positions[i].z());
 		ret.vertices[i].color = vertex_colors[i];
@@ -282,7 +289,7 @@ MeshData MeshGenerator::makeCylinder( const float height, const float radiusTop,
 	
 	ret.numIndices = vertex_indexes.size();
 	ret.indices = new GLushort[ret.numIndices];
-	for (unsigned int i = 0; i < vertex_indexes.size(); ++i)
+	for (int i = 0; i < vertex_indexes.size(); ++i)
 	{
 		ret.indices[i] = vertex_indexes[i];
 	}
@@ -307,45 +314,53 @@ MeshData MeshGenerator::makeDemoRoom()
 {
 	MeshData ret;
 	Vertex stackVerts[] = {
-		vec3(-10.0f, +15.0f, 10.0f), // 0
+		vec3(-2.0f, +3.0f, 2.0f), // 0
 		vec4(0.25f, 0.25f, 0.25f, 1.0f),
 		vec3(1.0f, 0.0f, 0.0f),
 		vec2(0, 0),
+		VertexBoneData(),
 
-		vec3(-10.0f, +15.0f, -10.0f), // 1
+		vec3(-2.0f, +3.0f, -2.0f), // 1
 		vec4(0.25f, 0.25f, 0.25f, 1.0f),
 		vec3(1.0f, 0.0f, 1.0f),
 		vec2(0, 0),
+		VertexBoneData(),
 
-		vec3(+10.0f, +15.0f, -10.0f), // 2
+		vec3(+2.0f, +3.0f, -2.0f), // 2
 		vec4(0.25f, 0.25f, 0.25f, 1.0f),
 		vec3(-1.0f, -1.0f, 0.0f),
 		vec2(0, 0),
+		VertexBoneData(),
 
-		vec3(+10.0f, +15.0f, 10.0f), // 3
+		vec3(+2.0f, +3.0f, 2.0f), // 3
 		vec4(0.25f, 0.25f, 0.25f, 1.0f),
 		vec3(0.0f, 0.0f, 0.0f),
 		vec2(0, 0),
+		VertexBoneData(),
 
-		vec3(-10.0f, -0.1f, 10.0f), // 4
+		vec3(-2.0f, -0.1f, 2.0f), // 4
 		vec4(0.25f, 0.25f, 0.25f, 1.0f),
 		vec3(1.0f, 1.0f, 0.0f),
 		vec2(0, 0),
+		VertexBoneData(),
 
-		vec3(-10.0f, -0.1f, -10.0f), // 5
+		vec3(-2.0f, -0.1f, -2.0f), // 5
 		vec4(0.25f, 0.25f, 0.25f, 1.0f),
 		vec3(1.0f, 1.0f, 1.0f),
 		vec2(0, 0),
+		VertexBoneData(),
 
-		vec3(+10.0f, -0.1f, -10.0f), // 6
+		vec3(+2.0f, -0.1f, -2.0f), // 6
 		vec4(0.25f, 0.25f, 0.25f, 1.0f),
 		vec3(0.0f, 1.0f, 1.0f),
 		vec2(0, 0),
+		VertexBoneData(),
 
-		vec3(+10.0f, -0.1f, 10.0f), // 7
+		vec3(+2.0f, -0.1f, 2.0f), // 7
 		vec4(0.25f, 0.25f, 0.25f, 1.0f),
 		vec3(0.0f, 1.0f, 0.0f),
-		vec2(0, 0)
+		vec2(0, 0),
+		VertexBoneData()
 
 	};
 
@@ -408,13 +423,13 @@ Bone* MeshGenerator::makeHand()
 	tMatrix.setToIdentity();
 	tMatrix.translate(0.03, 0.01, -0.01);
 	tMatrix.rotate(80, vec3(0, 1, 0));
-	tMatrix.rotate(-10, vec3(0, 0, 1));
-	tMatrix.rotate(20, vec3(1, 0, 0));
+	tMatrix.rotate(-60, vec3(0, 0, 1));
+	tMatrix.rotate(60, vec3(1, 0, 0));
 	
 	Bone* thumb_1 = new Bone("thumb_1", root, tMatrix, mesh_1_1);
 
 	tMatrix.setToIdentity();
-	tMatrix.translate(0, 0.025, 0);
+	tMatrix.translate(0, 0.028, 0);
 	Bone* thumb_2 = new Bone("thumb_2", thumb_1, tMatrix, mesh_1_2);
 
 	tMatrix.setToIdentity();

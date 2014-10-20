@@ -14,7 +14,7 @@
     <ClCompile Include="GLWindow.cpp" />
     <ClCompile Include="GLWindow_moc.cpp" />
     <ClCompile Include="Utility\MeshImporter.cpp" />
-    <ClCompile Include="Project Nebula.cpp" />
+    <ClCompile Include="Main.cpp" />
     <ClCompile Include="Utility\Camera.cpp" />
     <ClCompile Include="Utility\MeshGenerator.cpp" />
   </ItemGroup>
@@ -31,6 +31,8 @@
   <ItemGroup>
     <None Include="..\Resource\Shaders\lightingFragmentShader.fsh" />
     <None Include="..\Resource\Shaders\lightingVertexShader.vsh" />
+    <None Include="..\Resource\Shaders\skinningFragmentShader.fsh" />
+    <None Include="..\Resource\Shaders\skinningVertexShader.vsh" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{89A9A61D-5047-460C-91C1-C99FC990ABD7}</ProjectGuid>

@@ -2,6 +2,7 @@
 #include <Primitives/MeshData.h>
 #include <QtOpenGL/QGLWidget>
 #include <Qt/qtimer.h>
+#include <Qt/QElapsedTimer.h>
 #include <QtOpenGL/QGLShaderProgram>
 #include <QtGui/QMouseEvent>
 #include <QtGui/QKeyEvent>
@@ -20,6 +21,7 @@ private:
 	GLuint m_frameCount;
 
 	QTimer* m_timer;
+	QElapsedTimer* m_elaTimer;
 	Camera m_camera;
 
 	GLuint m_numVerts;
@@ -29,17 +31,21 @@ private:
 	void setupLights();
 	void SendDataToOpenGL();
 	void renderMesh(QGLShaderProgram &shader, MeshData &mesh, mat4 &modelToWorldMatrix);
+	void renderBone(QGLShaderProgram &shader, MeshData &mesh, mat4 &modelToWorldMatrix);
 	void renderSkeleton(Bone* root);
+	void renderModel(MeshImporter *importer);
 	//void renderAllObjects();
 
 	// TEST
-	MeshImporter m_importer;
+	MeshImporter *m_importer;
 	Bone *hand, *handModel;
+	QVector<MeshData*> model_meshes;
 	GLfloat handRotationAngle;
 	int handRotationDirection;
 	MeshData shape, shape2;
 	QGLBuffer cylinderVertexBuffer, cylinderVertexBuffer2;
-	QGLShaderProgram coloringShaderProgram;
+	QGLShaderProgram coloringShaderProgram, skinningShaderProgram;
+	GLuint m_boneLocation[100];
 
 	// projection matrix
 	mat4 pMatrix;

@@ -20,7 +20,7 @@ public:
 	mat4 m_globalTransform;
 
 	/** The mesh data. One bone can be attached with sevral meshes.**/
-	QVector<MeshData> m_meshes;
+	QVector<MeshData> m_Meshes;
 
 	Bone(void)
 	{
@@ -36,7 +36,7 @@ public:
 		m_boneName = boneName;
 		m_parent = parent;
 		m_localTransform = transform;
-		m_meshes.push_back(mesh);
+		m_Meshes.push_back(mesh);
 		// add the current bone to its parent if it's not the root
 		if(parent) parent->addChild(this);
 	}
@@ -44,6 +44,11 @@ public:
 	void addChild(Bone* child)
 	{
 		m_children.push_back(child);
+	}
+
+	void addMesh(MeshData &mesh)
+	{
+		m_Meshes.push_back(mesh);
 	}
 
 	QVector<Bone*> getChildren()
@@ -65,7 +70,7 @@ public:
 
 	QVector<MeshData> getMeshData()
 	{
-		return m_meshes;
+		return m_Meshes;
 	}
 
 	// clean up the skeleton
