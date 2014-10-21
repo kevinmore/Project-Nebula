@@ -223,9 +223,17 @@ void GLWindow::paintGL()
 	
 	/** render the imported hand model **/
 
-// 	transform.setToIdentity();
- 	renderMesh(lightingShaderProgram, *m_importer->m_Meshes[0], transform);
-//	renderModel(m_importer);
+	// this render path has no animations
+//  	transform.setToIdentity();
+// 	for (int i = 0; i < m_importer->m_Meshes.size(); ++i)
+// 	{
+// 		renderMesh(lightingShaderProgram, *m_importer->m_Meshes[i], transform);
+// 	}
+ 	
+	// this render path has animations
+	renderModel(m_importer);
+
+
 	if(!handModel) return; // the model may not be imported successfully
 // 	Bone::sortSkeleton(handModel);
 //  	transform.setToIdentity();
@@ -262,12 +270,7 @@ void GLWindow::renderMesh( QGLShaderProgram &shader, MeshData &mesh, mat4 &model
 	if (mesh.material->textureFile!=NULL)
 	{
 		shader.setUniformValue("useTexture", true);
-// 		GLuint texture = bindTexture(QPixmap(mesh.material->textureFile));
-// 		glActiveTexture(GL_TEXTURE0);
-// 		glBindTexture(GL_TEXTURE_2D, texture);
-// 		glActiveTexture(0);
-//		mesh.material->textureFile->bind(GL_TEXTURE0);
-//		glActiveTexture(0);
+		mesh.material->textureFile->bind(GL_TEXTURE0);
 	} 
 	else
 	{
@@ -305,7 +308,11 @@ void GLWindow::renderMesh( QGLShaderProgram &shader, MeshData &mesh, mat4 &model
 	shader.disableAttributeArray("vertex");
 	shader.disableAttributeArray("color");
 	shader.disableAttributeArray("normal");
-	if (mesh.material->textureFile!=NULL) shader.disableAttributeArray("textureCoordinate");
+	if (mesh.material->textureFile!=NULL) 
+	{
+		mesh.material->textureFile->release();
+		shader.disableAttributeArray("textureCoordinate");
+	}
 
 	shader.release();
 }
@@ -342,10 +349,6 @@ void GLWindow::renderBone( QGLShaderProgram &shader, MeshData &mesh, mat4 &model
 	if (mesh.material->textureFile!= NULL)
 	{
 		shader.setUniformValue("useTexture", true);
-// 		GLuint texture = bindTexture(QPixmap(mesh.material->textureFile));
-// 		glActiveTexture(GL_TEXTURE0);
-// 		glBindTexture(GL_TEXTURE_2D, texture);
-// 		glActiveTexture(0);
 		mesh.material->textureFile->bind(GL_TEXTURE0);
 	} 
 	else
@@ -384,7 +387,11 @@ void GLWindow::renderBone( QGLShaderProgram &shader, MeshData &mesh, mat4 &model
 	shader.disableAttributeArray("vertex");
 	shader.disableAttributeArray("color");
 	shader.disableAttributeArray("normal");
-	if (mesh.material->textureFile!=NULL) shader.disableAttributeArray("textureCoordinate");
+	if (mesh.material->textureFile!=NULL) 
+	{
+		mesh.material->textureFile->release();
+		shader.disableAttributeArray("textureCoordinate");
+	}
 
 	shader.release();
 }

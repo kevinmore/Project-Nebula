@@ -11,6 +11,8 @@ class Texture
 {
 
 public:
+	QString     m_fileName;
+
 	enum TextureType
 	{
 		Texture1D      = GL_TEXTURE_1D,
@@ -38,7 +40,6 @@ private:
 	Magick::Image m_image;
 	Magick::Blob  m_blob;
 
-	QString     m_fileName;
 	TextureType m_type;
 	GLuint      m_textureId;
 };

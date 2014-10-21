@@ -240,11 +240,11 @@ MeshData* MeshImporter::processMesh(uint MeshIndex, const aiMesh* paiMesh)
 		ret->vertices[i].postition = vec3 (paiMesh->mVertices[i].x, paiMesh->mVertices[i].y, paiMesh->mVertices[i].z);
 
 		// Color
-		if (paiMesh->HasVertexColors(0))
-		{
-			ret->vertices[i].color = vec4(paiMesh->mColors[i]->r, paiMesh->mColors[i]->g, paiMesh->mColors[i]->b, paiMesh->mColors[i]->a);
-		}
-		else
+// 		if (paiMesh->HasVertexColors(1))
+// 		{
+// 			ret->vertices[i].color = vec4(paiMesh->mColors[i]->r, paiMesh->mColors[i]->g, paiMesh->mColors[i]->b, paiMesh->mColors[i]->a);
+// 		}
+// 		else
 		{
 			ret->vertices[i].color = vec4(0.547, 0.39, 0.234, 1);
 		}
