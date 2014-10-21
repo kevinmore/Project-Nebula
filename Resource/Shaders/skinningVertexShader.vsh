@@ -8,7 +8,7 @@ uniform vec3 lightPosition;
 
 
 
-in vec4 vertex;
+in vec3 vertex;
 in vec4 color;
 in vec3 normal;
 in vec2 textureCoordinate;
@@ -30,22 +30,20 @@ void main(void)
     BoneTransform += gBones[BoneIDs[2]] * Weights[2];
     BoneTransform += gBones[BoneIDs[3]] * Weights[3];
 
-	vec4 PosL = BoneTransform * vertex;
+	vec4 PosL = BoneTransform * vec4(vertex, 1.0);
 	gl_Position = mvpMatrix * PosL;
-
-	varyingTextureCoordinate = textureCoordinate;
 
 	vec4 NormalL = BoneTransform * vec4(normal, 0.0);
 	varyingNormal =  (mvMatrix * NormalL).xyz;
 
 
-    vec4 eyeVertex = mvMatrix * vertex;
+    vec4 eyeVertex = mvMatrix * PosL;
     eyeVertex /= eyeVertex.w;
 
 
     varyingLightDirection = lightPosition - eyeVertex.xyz;
     varyingViewerDirection = -eyeVertex.xyz;
     
-    
+    varyingTextureCoordinate = textureCoordinate;
 	varyingColor = color;
 }

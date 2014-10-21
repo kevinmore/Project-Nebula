@@ -46,6 +46,7 @@ struct Vertex
 	vec4 color;
 	vec3 normal;
 	vec2 texCoord;
-	VertexBoneData boneData;
+	vec4 boneIDs;
+	vec4 boneWeights;
 };
 

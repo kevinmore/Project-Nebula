@@ -63,24 +63,6 @@ void GLWindow::initializeGL()
 	qglClearColor(QColor(40, 40, 40));
 
 
-
-	// make a hand
-	hand = MeshGenerator::makeHand();
-
-	// import the hand mesh
-	if (m_importer->loadMeshFromFile("../Resource/Models/boblampclean.md5mesh"))
-	{
-		qDebug() << "Model loaded successfully!";
-		//		qDebug() << m_importer->m_pScene->HasAnimations();
-		// 		handModel = m_importer->getSkeleton();
-		// 		mat4 transform;
-		// 		transform.scale(0.01, 0.01, 0.01);
-		// 		Bone::sortSkeleton(handModel);
-	}
-
-
-
-
 	// spot light
 
 	coloringShaderProgram.addShaderFromSourceFile(QGLShader::Vertex, "../Resource/Shaders/coloringVertexShader.vsh");
@@ -121,17 +103,27 @@ void GLWindow::initializeGL()
 	lightingShaderProgram.addShaderFromSourceFile(QGLShader::Fragment, "../Resource/Shaders/lightingFragmentShader.fsh");
 	lightingShaderProgram.link();
 
-	skinningShaderProgram.addShaderFromSourceFile(QGLShader::Vertex, "../Resource/Shaders/skinningVertexShader.vsh");
-	skinningShaderProgram.addShaderFromSourceFile(QGLShader::Fragment, "../Resource/Shaders/skinningFragmentShader.fsh");
+	skinningShaderProgram.addShaderFromSourceFile(QGLShader::Vertex, "../Resource/Shaders/skinning.vs");
+	skinningShaderProgram.addShaderFromSourceFile(QGLShader::Fragment, "../Resource/Shaders/skinning.fs");
 	skinningShaderProgram.link();
 
+	skinningShaderProgram2.addShaderFromSourceFile(QGLShader::Vertex, "../Resource/Shaders/skinningVertexShader.vsh");
+	skinningShaderProgram2.addShaderFromSourceFile(QGLShader::Fragment, "../Resource/Shaders/skinningFragmentShader.fsh");
+	skinningShaderProgram2.link();
 
 
-	for (unsigned int i = 0 ; i < ARRAY_SIZE_IN_ELEMENTS(m_boneLocation) ; ++i) {
-		char Name[128];
-		memset(Name, 0, sizeof(Name));
-		_snprintf_s(Name, sizeof(Name), "gBones[%d]", i);
-		m_boneLocation[i] = lightingShaderProgram.uniformLocation(Name);
+	// make a hand
+	hand = MeshGenerator::makeHand();
+
+	// import the hand mesh
+	if (m_importer->loadMeshFromFile("../Resource/Models/female/female.dae"))
+	{
+		qDebug() << "Model loaded successfully!";
+		//		qDebug() << m_importer->m_pScene->HasAnimations();
+		// 		handModel = m_importer->getSkeleton();
+		// 		mat4 transform;
+		// 		transform.scale(0.01, 0.01, 0.01);
+		// 		Bone::sortSkeleton(handModel);
 	}
 }
 
@@ -222,7 +214,7 @@ void GLWindow::paintGL()
 
 	
 	/** render the imported hand model **/
-
+	//if(!handModel) return; // the model may not be imported successfully
 	// this render path has no animations
 //  	transform.setToIdentity();
 // 	for (int i = 0; i < m_importer->m_Meshes.size(); ++i)
@@ -231,19 +223,7 @@ void GLWindow::paintGL()
 // 	}
  	
 	// this render path has animations
-	renderModel(m_importer);
-
-
-	if(!handModel) return; // the model may not be imported successfully
-// 	Bone::sortSkeleton(handModel);
-//  	transform.setToIdentity();
-//  	transform.rotate(-1.5*handRotationAngle, vec3(1, 0, 0));
-//  	for (int i = 0; i < handModel->childCount(); ++i)
-//  	{
-//  		Bone::configureSkeleton(handModel->getChild(i), transform);
-//  	}
-//	renderSkeleton(handModel);
-	
+	renderModel(m_importer);	
 }
 
 void GLWindow::renderMesh( QGLShaderProgram &shader, MeshData &mesh, mat4 &modelToWorldMatrix )
@@ -258,7 +238,7 @@ void GLWindow::renderMesh( QGLShaderProgram &shader, MeshData &mesh, mat4 &model
 	shader.setUniformValue("mvpMatrix", pMatrix * mvMatrix);
 	shader.setUniformValue("mvMatrix", mvMatrix);
 	shader.setUniformValue("normalMatrix", normalMatrix);
-	shader.setUniformValue("lightPosition", vMatrix * lightPosition);
+	shader.setUniformValue("lightPosition", mvMatrix * lightPosition);
 	shader.setUniformValue("ambientColor", QColor(32, 32, 32));
 	shader.setUniformValue("diffuseColor", QColor(128, 128, 128));
 	shader.setUniformValue("specularColor", QColor(255, 255, 255));
@@ -317,11 +297,12 @@ void GLWindow::renderMesh( QGLShaderProgram &shader, MeshData &mesh, mat4 &model
 	shader.release();
 }
 
-void GLWindow::renderBone( QGLShaderProgram &shader, MeshData &mesh, mat4 &modelToWorldMatrix )
+void GLWindow::renderBone( QGLShaderProgram &shader, MeshData &mesh)
 {
 
 	// calculate MV Matrix
-	mat4 mvMatrix = vMatrix * modelToWorldMatrix;
+	mat4 mMatrix;
+	mat4 mvMatrix = vMatrix * mMatrix;
 
 	// active the shader
 	shader.bind();
@@ -334,10 +315,101 @@ void GLWindow::renderBone( QGLShaderProgram &shader, MeshData &mesh, mat4 &model
 	//	glUniformMatrix4fv(m_boneLocation[i], 1, GL_TRUE, (const GLfloat*)transform.constData());
 		shader.setUniformValue(m_boneLocation[i], Transforms[i].transposed());
 	}
+	shader.setUniformValue("gWVP", pMatrix * mvMatrix);
+	shader.setUniformValue("gWorld", mvMatrix);
+	shader.setUniformValue("gEyeWorldPos", m_camera.Position());
+	
+	shader.setUniformValue("gColorMap", 0);
+	shader.setUniformValue("gDirectionalLight.Base.Color", vec3(1.0f, 1.0f, 1.0f));
+	shader.setUniformValue("gDirectionalLight.Base.AmbientIntensity", 0.55f);
+	shader.setUniformValue("gDirectionalLight.Base.DiffuseIntensity", 0.9f);
+	shader.setUniformValue("gDirectionalLight.Direction", vec3(1.0f, -0.5f, -0.5f));
+	shader.setUniformValue("gMatSpecularIntensity", 0);
+	shader.setUniformValue("gSpecularPower", 0);
+	shader.setUniformValue("gPointLights[0].Base.Color", vec3(1.0f, 1.0f, 1.0f));
+	shader.setUniformValue("gPointLights[0].Base.AmbientIntensity", 0.55f);
+	shader.setUniformValue("gPointLights[0].Base.DiffuseIntensity", 0.9f);
+	shader.setUniformValue("gPointLights[0].Position", vec3(10, 10, 10));
+	shader.setUniformValue("gPointLights[0].Atten", 0.8f);
+
+
+	shader.setUniformValue("gNumSpotLights", 0);
+	
+	// active the buffer from the mesh itself 
+	// pass in values
+	// lastly, release the buffer
+	mesh.vertexBuff.bind();
+	int offset = 0;
+	shader.setAttributeBuffer("Position", GL_FLOAT, 0, 3, sizeof(Vertex));
+	shader.enableAttributeArray("Position");
+	offset += sizeof(mesh.vertices[0].postition);
+
+	shader.setAttributeBuffer("color", GL_FLOAT, offset, 4, sizeof(Vertex));
+	shader.enableAttributeArray("color");
+	offset += sizeof(mesh.vertices[0].color);
+
+	shader.setAttributeBuffer("Normal", GL_FLOAT, offset, 3, sizeof(Vertex));
+	shader.enableAttributeArray("Normal");
+	offset += sizeof(mesh.vertices[0].normal);
+
+	shader.setAttributeBuffer("TexCoord", GL_FLOAT, offset, 2, sizeof(Vertex));
+	shader.enableAttributeArray("TexCoord");
+	offset += sizeof(mesh.vertices[0].texCoord);
+
+	shader.setAttributeBuffer("BoneIDs", GL_FLOAT, offset, 4, sizeof(Vertex));
+	shader.enableAttributeArray("BoneIDs");
+	offset += sizeof(mesh.vertices[0].boneIDs);
+
+	shader.setAttributeBuffer("Weights", GL_FLOAT, offset, 4, sizeof(Vertex));
+	shader.enableAttributeArray("Weights");
+	offset += sizeof(mesh.vertices[0].boneWeights);
+
+	mesh.vertexBuff.release();
+
+	// draw the mesh here
+	glDrawElements(GL_TRIANGLES, mesh.numIndices, GL_UNSIGNED_SHORT, mesh.indices);
+
+	// clean up
+	shader.disableAttributeArray("Position");
+	shader.disableAttributeArray("color");
+	shader.disableAttributeArray("Normal");
+	shader.disableAttributeArray("TexCoord");
+	shader.disableAttributeArray("BoneIDs");
+	shader.disableAttributeArray("Weights");
+	if (mesh.material->textureFile!=NULL) 
+	{
+		mesh.material->textureFile->release();
+		shader.disableAttributeArray("TexCoord");
+	}
+
+	shader.release();
+}
+
+void GLWindow::renderBone2( QGLShaderProgram &shader, MeshData &mesh )
+{
+	// calculate MV Matrix
+	mat4 modelToWorldMatrix;
+	mat4 mvMatrix = vMatrix * modelToWorldMatrix;
+
+	// active the shader
+	shader.bind();
+
+	// set the uniform values
+	// set the uniform values
+	QVector<mat4> Transforms;
+	m_importer->BoneTransform((float)m_elaTimer->elapsed()/1000, Transforms);
+	for (int i = 0 ; i < Transforms.size() ; i++) 
+	{
+		char Name[128];
+		memset(Name, 0, sizeof(Name));
+		_snprintf_s(Name, sizeof(Name), "gBones[%d]", i);
+		shader.setUniformValue(Name, Transforms[i].transposed());
+	}
+
 	shader.setUniformValue("mvpMatrix", pMatrix * mvMatrix);
 	shader.setUniformValue("mvMatrix", mvMatrix);
 	shader.setUniformValue("normalMatrix", normalMatrix);
-	shader.setUniformValue("lightPosition", vMatrix * lightPosition);
+	shader.setUniformValue("lightPosition", mvMatrix * lightPosition);
 	shader.setUniformValue("ambientColor", QColor(32, 32, 32));
 	shader.setUniformValue("diffuseColor", QColor(128, 128, 128));
 	shader.setUniformValue("specularColor", QColor(255, 255, 255));
@@ -346,7 +418,7 @@ void GLWindow::renderBone( QGLShaderProgram &shader, MeshData &mesh, mat4 &model
 	shader.setUniformValue("specularReflection", (GLfloat) 1.0);
 	shader.setUniformValue("shininess", (GLfloat) 100.0);
 	shader.setUniformValue("texture", 0);
-	if (mesh.material->textureFile!= NULL)
+	if (mesh.material->textureFile!=NULL)
 	{
 		shader.setUniformValue("useTexture", true);
 		mesh.material->textureFile->bind(GL_TEXTURE0);
@@ -355,6 +427,7 @@ void GLWindow::renderBone( QGLShaderProgram &shader, MeshData &mesh, mat4 &model
 	{
 		shader.setUniformValue("useTexture", false);
 	}
+
 
 	// active the buffer from the mesh itself 
 	// pass in values
@@ -373,11 +446,18 @@ void GLWindow::renderBone( QGLShaderProgram &shader, MeshData &mesh, mat4 &model
 	shader.enableAttributeArray("normal");
 	offset += sizeof(mesh.vertices[0].normal);
 
-	if (mesh.material->textureFile!= NULL)
-	{
-		shader.setAttributeBuffer("textureCoordinate", GL_FLOAT, offset, 2, sizeof(Vertex));
-		shader.enableAttributeArray("textureCoordinate");
-	}
+	shader.setAttributeBuffer("textureCoordinate", GL_FLOAT, offset, 2, sizeof(Vertex));
+	shader.enableAttributeArray("textureCoordinate");
+	offset += sizeof(mesh.vertices[0].texCoord);
+
+	shader.setAttributeBuffer("BoneIDs", GL_INT, offset, 4, sizeof(Vertex));
+	shader.enableAttributeArray("BoneIDs");
+	offset += sizeof(mesh.vertices[0].boneIDs);
+
+	shader.setAttributeBuffer("Weights", GL_FLOAT, offset, 4, sizeof(Vertex));
+	shader.enableAttributeArray("Weights");
+	offset += sizeof(mesh.vertices[0].boneWeights);
+
 	mesh.vertexBuff.release();
 
 	// draw the mesh here
@@ -387,10 +467,13 @@ void GLWindow::renderBone( QGLShaderProgram &shader, MeshData &mesh, mat4 &model
 	shader.disableAttributeArray("vertex");
 	shader.disableAttributeArray("color");
 	shader.disableAttributeArray("normal");
+	shader.disableAttributeArray("textureCoordinate");
+	shader.disableAttributeArray("BoneIDs");
+	shader.disableAttributeArray("Weights");
 	if (mesh.material->textureFile!=NULL) 
 	{
 		mesh.material->textureFile->release();
-		shader.disableAttributeArray("textureCoordinate");
+		shader.disableAttributeArray("TexCoord");
 	}
 
 	shader.release();
@@ -420,7 +503,7 @@ void GLWindow::renderModel( MeshImporter *importer )
 	QVector<MeshData*> meshes = importer->m_Meshes;
 	for (int i = 0; i < meshes.size(); ++i)
 	{
-		renderBone(skinningShaderProgram, *meshes[i], mMatrix);
+		renderBone2(skinningShaderProgram2, *meshes[i]);
 	}
 }
 

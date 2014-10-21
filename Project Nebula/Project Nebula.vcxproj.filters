@@ -25,5 +25,7 @@
     <None Include="..\Resource\Shaders\lightingVertexShader.vsh" />
     <None Include="..\Resource\Shaders\skinningFragmentShader.fsh" />
     <None Include="..\Resource\Shaders\skinningVertexShader.vsh" />
+    <None Include="..\Resource\Shaders\skinning.fs" />
+    <None Include="..\Resource\Shaders\skinning.vs" />
   </ItemGroup>
 </Project>

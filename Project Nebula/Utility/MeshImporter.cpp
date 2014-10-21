@@ -262,7 +262,8 @@ MeshData* MeshImporter::processMesh(uint MeshIndex, const aiMesh* paiMesh)
 		}
 
 		// bone data
-		ret->vertices[i].boneData = Bones[i];
+		ret->vertices[i].boneIDs = vec4(Bones[i].IDs[0], Bones[i].IDs[1], Bones[i].IDs[2], Bones[i].IDs[3]);
+		ret->vertices[i].boneWeights = vec4(Bones[i].Weights[0], Bones[i].Weights[1], Bones[i].Weights[2], Bones[i].Weights[3]);
 	}
 
 
@@ -532,7 +533,6 @@ void MeshImporter::BoneTransform( float TimeInSeconds, QVector<mat4> &Transforms
 	float TicksPerSecond = (float)(m_Animations[0]->mTicksPerSecond != 0 ? m_Animations[0]->mTicksPerSecond : 25.0f);
 	float TimeInTicks = TimeInSeconds * TicksPerSecond;
 	float AnimationTime = fmod(TimeInTicks, (float)m_Animations[0]->mDuration);
-
 
 	ReadNodeHeirarchy(AnimationTime, m_pScene->mRootNode, Identity);
 
