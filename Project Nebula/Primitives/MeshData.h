@@ -1,5 +1,6 @@
 #pragma once
 #include <Primitives/Vertex.h>
+#include <Primitives/Texture.h>
 #include <QtOpenGL/QGLBuffer>
 
 struct MaterialInfo
@@ -9,12 +10,10 @@ struct MaterialInfo
 	vec3 Diffuse;
 	vec3 Specular;
 	GLfloat Shininess;
-	QString textureFile;
+	Texture* textureFile;
 
-	MaterialInfo(const QString &fileName)
-	{
-		textureFile = fileName;
-	}
+	MaterialInfo(){textureFile = NULL;}
+
 };
 
 struct LightInfo
@@ -37,7 +36,7 @@ public:
 	MaterialInfo* material;
 	MeshData():vertices(0), numVertices(0), indices(0), numIndices(0)
 	{
-		material = new MaterialInfo("");
+		material = new MaterialInfo();
 	};
 
 	void createVertexBuffer()

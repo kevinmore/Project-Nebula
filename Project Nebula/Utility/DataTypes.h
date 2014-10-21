@@ -1,11 +1,12 @@
 #pragma once
-#include <Qt/qvector.h>
-#include <Qt/qvector2d.h>
-#include <Qt/qvector3d.h>
-#include <Qt/qvector4d.h>
-#include <Qt/qmatrix.h>
-#include <Qt/qmatrix4x4.h>
-#include <Qt/qstring.h>
+#include <QtCore/QVector>
+#include <QtGui/QVector2D>
+#include <QtGui/QVector3D>
+#include <QtGui/QVector4D>
+#include <QtGui/QMatrix3x3>
+#include <QtGui/QMatrix4x4>
+#include <QtCore/QString>
+
 
 typedef QVector2D vec2;
 typedef QVector3D vec3;

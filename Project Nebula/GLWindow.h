@@ -1,8 +1,9 @@
 #pragma once
 #include <Primitives/MeshData.h>
+#include <QtGui/QApplication>
 #include <QtOpenGL/QGLWidget>
-#include <Qt/qtimer.h>
-#include <Qt/QElapsedTimer.h>
+#include <QtCore/QTimer>
+#include <QtCore/QElapsedTimer>
 #include <QtOpenGL/QGLShaderProgram>
 #include <QtGui/QMouseEvent>
 #include <QtGui/QKeyEvent>

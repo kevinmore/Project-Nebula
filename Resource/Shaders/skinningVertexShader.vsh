@@ -1,4 +1,4 @@
-#version 130
+#version 330
 const int MAX_BONES = 100;
 
 uniform mat4 mvpMatrix;
@@ -6,7 +6,7 @@ uniform mat4 mvMatrix;
 uniform mat3 normalMatrix;
 uniform vec3 lightPosition;
 
-uniform mat4 gBones[MAX_BONES];
+
 
 in vec4 vertex;
 in vec4 color;
@@ -21,7 +21,7 @@ out vec3 varyingViewerDirection;
 out vec2 varyingTextureCoordinate;
 out vec4 varyingColor;
 
-
+uniform mat4 gBones[MAX_BONES];
 
 void main(void)
 {
@@ -33,16 +33,19 @@ void main(void)
 	vec4 PosL = BoneTransform * vertex;
 	gl_Position = mvpMatrix * PosL;
 
-    vec4 eyeVertex = mvMatrix * PosL;
+	varyingTextureCoordinate = textureCoordinate;
+
+	vec4 NormalL = BoneTransform * vec4(normal, 0.0);
+	varyingNormal =  (mvMatrix * NormalL).xyz;
+
+
+    vec4 eyeVertex = mvMatrix * vertex;
     eyeVertex /= eyeVertex.w;
 
-//	vec4 NormalL = BoneTransform * vec4(normal, 0.0);
-
-    varyingNormal =  normalMatrix * normal;
 
     varyingLightDirection = lightPosition - eyeVertex.xyz;
     varyingViewerDirection = -eyeVertex.xyz;
-    varyingTextureCoordinate = textureCoordinate;
+    
     
 	varyingColor = color;
 }

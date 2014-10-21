@@ -15,7 +15,7 @@ void MeshGenerator::generateNormals( MeshData &mesh )
 		
 		vec3 v1 = p2 - p1;
 		vec3 v2 = p3 - p1;
-		vec3 normal =QVector3D::crossProduct(v1, v2);
+		vec3 normal = QVector3D::crossProduct(v1, v2);
 		normal.normalize();
 		mesh.vertices[mesh.indices[i]].normal = normal;
 

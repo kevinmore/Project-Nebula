@@ -1,18 +1,5 @@
 #include <Utility/MeshImporter.h>
-
-
-
-MeshImporter::MeshImporter(void)
-{
-	cleanUp();
-	m_NumBones = 0;
-	m_Root = new Bone();
-}
-
-
-MeshImporter::~MeshImporter(void)
-{
-}
+#include <assert.h>
 
 
 // utility function to convert aiMatrix4x4 to QMatrix4x4
@@ -38,6 +25,19 @@ QMatrix4x4 convToQMat4(aiMatrix3x3 * m)
 						m->a2, m->b2, m->c2, 0,
 						m->a3, m->b3, m->c3, 0,
 						0, 0, 0, 1);
+}
+
+
+MeshImporter::MeshImporter(void)
+{
+	cleanUp();
+	m_NumBones = 0;
+	m_Root = new Bone();
+}
+
+
+MeshImporter::~MeshImporter(void)
+{
 }
 
 
@@ -77,6 +77,8 @@ bool MeshImporter::loadMeshFromFile( const QString &fileName )
 		processScene(m_pScene, fileName);
 	}
 
+	return true;
+
 }
 
 bool MeshImporter::processScene( const aiScene* pScene, const QString &fileName )
@@ -111,7 +113,7 @@ bool MeshImporter::processScene( const aiScene* pScene, const QString &fileName 
 	// load mesh
 	if (pScene->HasMeshes())
 	{
-		for (unsigned int i = 0; i < m_Entries.size(); ++i)
+		for (int i = 0; i < m_Entries.size(); ++i)
 		{
 			m_Meshes.push_back(processMesh(i, pScene->mMeshes[i]));
 		}
@@ -145,14 +147,14 @@ bool MeshImporter::processScene( const aiScene* pScene, const QString &fileName 
 	}
 	else
 	{
-		qDebug() << "The model has no animation" << fileName;
+		qDebug() << "The model has no animations.";
 	}
 	return true;
 }
 
 MaterialInfo* MeshImporter::processMaterial( const aiMaterial *pMaterial, const QString &fileName )
 {
-	MaterialInfo* mater = new MaterialInfo("");
+	MaterialInfo* mater = new MaterialInfo();
 
 	// Extract the directory part from the file name
 	int SlashIndex = fileName.lastIndexOf("/");
@@ -176,7 +178,7 @@ MaterialInfo* MeshImporter::processMaterial( const aiMaterial *pMaterial, const 
 		if (pMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &textureFileName, NULL, NULL, NULL, NULL, NULL) == AI_SUCCESS)
 		{
 			QString FullPath = Dir + "/" + textureFileName.data;
-			mater->textureFile = FullPath;
+			mater->textureFile = new Texture(FullPath);
 		}
 		else
 		{
@@ -296,7 +298,7 @@ void MeshImporter::processBones( uint MeshIndex, const aiMesh *paiMesh, QVector<
 	{
 		uint boneIndex = 0;        
 		QString boneName(paiMesh->mBones[i]->mName.data);
-
+		qDebug() << "Bone detected:" << boneName;
 		if (m_BoneMapping.find(boneName) == m_BoneMapping.end()) 
 		{
 			// Allocate an index for a new bone

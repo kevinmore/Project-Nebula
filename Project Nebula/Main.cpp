@@ -1,5 +1,4 @@
 #include <GLWindow.h>
-#include <Qt/qapplication.h>
 
 int main(int argc, char* argv[])
 {

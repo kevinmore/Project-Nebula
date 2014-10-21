@@ -7,6 +7,7 @@
     <ClCompile Include="GLWindow.cpp" />
     <ClCompile Include="Utility\MeshImporter.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Primitives\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Primitives\Bone.h" />
@@ -17,6 +18,7 @@
     <ClInclude Include="Utility\MeshGenerator.h" />
     <ClInclude Include="GLWindow.h" />
     <ClInclude Include="Utility\MeshImporter.h" />
+    <ClInclude Include="Primitives\Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Resource\Shaders\lightingFragmentShader.fsh" />
