@@ -1,17 +1,16 @@
 #version 330
-const int MAX_BONES = 100;
+const int MAX_BONES = 200;
 
+uniform mat4 mMatrix;
 uniform mat4 mvpMatrix;
 uniform mat4 mvMatrix;
 uniform mat3 normalMatrix;
 uniform vec3 lightPosition;
 
-
-
-in vec3 vertex;
+in vec3 Position; 
+in vec2 TexCoord; 
 in vec4 color;
-in vec3 normal;
-in vec2 textureCoordinate;
+in vec3 Normal;   
 in ivec4 BoneIDs;
 in vec4 Weights;
 
@@ -25,25 +24,27 @@ uniform mat4 gBones[MAX_BONES];
 
 void main(void)
 {
-	mat4 BoneTransform = gBones[BoneIDs[0]] * Weights[0];
-    BoneTransform += gBones[BoneIDs[1]] * Weights[1];
-    BoneTransform += gBones[BoneIDs[2]] * Weights[2];
-    BoneTransform += gBones[BoneIDs[3]] * Weights[3];
 
-	vec4 PosL = BoneTransform * vec4(vertex, 1.0);
-	gl_Position = mvpMatrix * PosL;
+	mat4 BoneTransform = gBones[BoneIDs.x] * Weights.x;
+    BoneTransform	  += gBones[BoneIDs.y] * Weights.y;
+    BoneTransform	  += gBones[BoneIDs.z] * Weights.z;
+    BoneTransform	  += gBones[BoneIDs.w] * Weights.w;
 
-	vec4 NormalL = BoneTransform * vec4(normal, 0.0);
-	varyingNormal =  (mvMatrix * NormalL).xyz;
+	vec4 PosL = BoneTransform * vec4(Position, 1.0);
+	//gl_Position = mvpMatrix * PosL;
+	gl_Position = mvpMatrix * vec4(Position, 1.0);
+	vec4 NormalL = BoneTransform * vec4(Normal, 0.0);
+	varyingNormal =  (mvMatrix * vec4(Normal, 0.0)).xyz;
 
 
-    vec4 eyeVertex = mvMatrix * PosL;
+    //vec4 eyeVertex = mvMatrix * PosL;
+	vec4 eyeVertex = mvMatrix * vec4(Position, 1.0);
     eyeVertex /= eyeVertex.w;
 
 
     varyingLightDirection = lightPosition - eyeVertex.xyz;
     varyingViewerDirection = -eyeVertex.xyz;
     
-    varyingTextureCoordinate = textureCoordinate;
+    varyingTextureCoordinate = TexCoord;
 	varyingColor = color;
 }

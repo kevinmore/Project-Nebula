@@ -32,7 +32,9 @@ MeshImporter::MeshImporter(void)
 {
 	cleanUp();
 	m_NumBones = 0;
-	m_Root = new Bone();
+	m_offSet = 0;
+	m_pScene = NULL;
+	m_loaded = false;
 }
 
 
@@ -46,7 +48,6 @@ void MeshImporter::cleanUp()
 	m_Materials.clear();
 	m_Meshes.clear();
 	m_BoneMapping.clear();
-	m_Bones.clear();
 	m_Entries.clear();
 	m_BoneInfo.clear();
 }
@@ -54,43 +55,42 @@ void MeshImporter::cleanUp()
 
 bool MeshImporter::loadMeshFromFile( const QString &fileName )
 {
-	Assimp::Importer* importer = new Assimp::Importer();
-
-	    m_pScene = importer->ReadFile(fileName.toStdString(),
+	 
+	    m_pScene = importer.ReadFile(fileName.toStdString(),
 		aiProcess_GenSmoothNormals |
-		aiProcess_CalcTangentSpace |
+	//	aiProcess_CalcTangentSpace |
 		aiProcess_Triangulate |
-		aiProcess_JoinIdenticalVertices |
+	//	aiProcess_JoinIdenticalVertices |
 		aiProcess_SortByPType |
 		aiProcess_FlipUVs
 		);
 
 	if (!m_pScene)
 	{
-		qDebug() << "Error loading mesh file: " << fileName << importer->GetErrorString();
-		return false;
+		qDebug() << "Error loading mesh file: " << fileName << importer.GetErrorString();
+		m_loaded = false;
 	}
 	else
 	{
 		m_GlobalInverseTransform = convToQMat4(&m_pScene->mRootNode->mTransformation);
 		m_GlobalInverseTransform.inverted();
 		processScene(m_pScene, fileName);
+		m_loaded = true;
 	}
 
-	return true;
+	return m_loaded;
 
 }
 
 bool MeshImporter::processScene( const aiScene* pScene, const QString &fileName )
 {
 	m_Entries.resize(pScene->mNumMeshes);
-
+	
 	uint NumVertices = 0;
 	uint NumIndices = 0;
 
 	// Count the number of vertices and indices
-	for (int i = 0 ; i < m_Entries.size() ; ++i) 
-	{
+	for (uint i = 0 ; i < pScene->mNumMeshes; i++) {
 		m_Entries[i].MaterialIndex = pScene->mMeshes[i]->mMaterialIndex;        
 		m_Entries[i].NumIndices    = pScene->mMeshes[i]->mNumFaces * 3;
 		m_Entries[i].BaseVertex    = NumVertices;
@@ -99,6 +99,9 @@ bool MeshImporter::processScene( const aiScene* pScene, const QString &fileName 
 		NumVertices += pScene->mMeshes[i]->mNumVertices;
 		NumIndices  += m_Entries[i].NumIndices;
 	}
+
+	QVector<VertexBoneData> Bones;
+	Bones.resize(NumVertices);
 
 	// load materials
 	if (pScene->HasMaterials())
@@ -113,9 +116,10 @@ bool MeshImporter::processScene( const aiScene* pScene, const QString &fileName 
 	// load mesh
 	if (pScene->HasMeshes())
 	{
-		for (int i = 0; i < m_Entries.size(); ++i)
+		for (uint i = 0; i < pScene->mNumMeshes; ++i)
 		{
-			m_Meshes.push_back(processMesh(i, pScene->mMeshes[i]));
+			const aiMesh* paiMesh = pScene->mMeshes[i];
+			processMesh(i, paiMesh, Bones);
 		}
 	}
 	else
@@ -218,13 +222,11 @@ MaterialInfo* MeshImporter::processMaterial( const aiMaterial *pMaterial, const 
 	return mater;
 }
 
-MeshData* MeshImporter::processMesh(uint MeshIndex, const aiMesh* paiMesh)
+void MeshImporter::processMesh(uint MeshIndex, const aiMesh* paiMesh, QVector<VertexBoneData> &Bones)
 {
 	// process bones first
-	QVector<VertexBoneData> Bones;
-	Bones.resize(paiMesh->mNumVertices);
 	if(paiMesh->HasBones()) processBones(MeshIndex, paiMesh, Bones);
-	else qDebug() << "This mesh has no bones.";
+	else qDebug() << "This mesh" << paiMesh->mName.C_Str() << "has no bones.";
 
 	// Map those vectors into the my mesh data
 	MeshData *ret(new MeshData);
@@ -260,12 +262,10 @@ MeshData* MeshImporter::processMesh(uint MeshIndex, const aiMesh* paiMesh)
 		{
 			ret->vertices[i].texCoord = vec2 (paiMesh->mTextureCoords[0][i].x,  paiMesh->mTextureCoords[0][i].y);
 		}
-
-		// bone data
-		ret->vertices[i].boneIDs = vec4(Bones[i].IDs[0], Bones[i].IDs[1], Bones[i].IDs[2], Bones[i].IDs[3]);
-		ret->vertices[i].boneWeights = vec4(Bones[i].Weights[0], Bones[i].Weights[1], Bones[i].Weights[2], Bones[i].Weights[3]);
+		ret->vertices[i].boneIDs = vec4(Bones[i+m_offSet].IDs[0], Bones[i+m_offSet].IDs[1], Bones[i+m_offSet].IDs[2], Bones[i+m_offSet].IDs[3]);
+		ret->vertices[i].boneWeights = vec4(Bones[i+m_offSet].Weights[0], Bones[i+m_offSet].Weights[1], Bones[i+m_offSet].Weights[2], Bones[i+m_offSet].Weights[3]);
 	}
-
+	m_offSet += paiMesh->mNumVertices;
 
 	// Get mesh indexes
 	ret->numIndices = 3 * paiMesh->mNumFaces;
@@ -290,7 +290,7 @@ MeshData* MeshImporter::processMesh(uint MeshIndex, const aiMesh* paiMesh)
 	// create a vertex buffer
 	ret->createVertexBuffer();
 
-	return ret;
+	m_Meshes.push_back(ret);
 }
 
 void MeshImporter::processBones( uint MeshIndex, const aiMesh *paiMesh, QVector<VertexBoneData> &Bones )
@@ -309,17 +309,16 @@ void MeshImporter::processBones( uint MeshIndex, const aiMesh *paiMesh, QVector<
 			m_BoneInfo.push_back(bi);
 			m_BoneInfo[boneIndex].boneOffset = convToQMat4(&paiMesh->mBones[i]->mOffsetMatrix);
 			m_BoneMapping[boneName] = boneIndex;
-
-			m_BoneMapping[boneName] = boneIndex;
 		}
 		else 
 		{
 			boneIndex = m_BoneMapping[boneName];
 		}                      
 
+
 		for (uint j = 0 ; j < paiMesh->mBones[i]->mNumWeights ; ++j) 
 		{
-			uint VertexID = paiMesh->mBones[i]->mWeights[j].mVertexId;
+			uint VertexID = m_Entries[MeshIndex].BaseVertex + paiMesh->mBones[i]->mWeights[j].mVertexId;
 			float Weight  = paiMesh->mBones[i]->mWeights[j].mWeight;                   
 			Bones[VertexID].addBoneData(boneIndex, Weight);
 		}

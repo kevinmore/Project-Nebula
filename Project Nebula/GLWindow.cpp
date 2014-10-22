@@ -116,7 +116,7 @@ void GLWindow::initializeGL()
 	hand = MeshGenerator::makeHand();
 
 	// import the hand mesh
-	if (m_importer->loadMeshFromFile("../Resource/Models/female/female.dae"))
+	if (m_importer->loadMeshFromFile("../Resource/Models/boblampclean.md5mesh"))
 	{
 		qDebug() << "Model loaded successfully!";
 		//		qDebug() << m_importer->m_pScene->HasAnimations();
@@ -193,37 +193,36 @@ void GLWindow::paintGL()
 	}
 
 	/** render the hand represented by cylinders **/
-	mat4 transform;
-	// rotate the palm around the Y axis, for demo purpose
-	transform.rotate(0.2, vec3(0, 1, 0));
-	hand->m_localTransform *= transform;
-	Bone::sortSkeleton(hand);
-	// only move the 5 fingers, not the palm
-	// thumb
-	transform.setToIdentity();
-	transform.rotate(-handRotationAngle, vec3(1, 0, 0));
-	Bone::configureSkeleton(hand->getChild(0), transform);
-	// other 4 fingers
-	transform.setToIdentity();
-	transform.rotate(-1.5*handRotationAngle, vec3(1, 0, 0));
-	for (int i = 1; i < hand->childCount(); ++i)
-	{
-		Bone::configureSkeleton(hand->getChild(i), transform);
-	}
-//	renderSkeleton(hand);
+// 	mat4 transform;
+// 	// rotate the palm around the Y axis, for demo purpose
+// 	transform.rotate(0.2, vec3(0, 1, 0));
+// 	hand->m_localTransform *= transform;
+// 	Bone::sortSkeleton(hand);
+// 	// only move the 5 fingers, not the palm
+// 	// thumb
+// 	transform.setToIdentity();
+// 	transform.rotate(-handRotationAngle, vec3(1, 0, 0));
+// 	Bone::configureSkeleton(hand->getChild(0), transform);
+// 	// other 4 fingers
+// 	transform.setToIdentity();
+// 	transform.rotate(-1.5*handRotationAngle, vec3(1, 0, 0));
+// 	for (int i = 1; i < hand->childCount(); ++i)
+// 	{
+// 		Bone::configureSkeleton(hand->getChild(i), transform);
+// 	}
+// 	renderSkeleton(hand);
 
 	
 	/** render the imported hand model **/
-	//if(!handModel) return; // the model may not be imported successfully
 	// this render path has no animations
 //  	transform.setToIdentity();
 // 	for (int i = 0; i < m_importer->m_Meshes.size(); ++i)
 // 	{
 // 		renderMesh(lightingShaderProgram, *m_importer->m_Meshes[i], transform);
 // 	}
- 	
+ 	 	
 	// this render path has animations
-	renderModel(m_importer);	
+	if (m_importer->loadSucceeded()) renderModel(m_importer);	// the model may not be imported successfully
 }
 
 void GLWindow::renderMesh( QGLShaderProgram &shader, MeshData &mesh, mat4 &modelToWorldMatrix )
@@ -403,9 +402,10 @@ void GLWindow::renderBone2( QGLShaderProgram &shader, MeshData &mesh )
 		char Name[128];
 		memset(Name, 0, sizeof(Name));
 		_snprintf_s(Name, sizeof(Name), "gBones[%d]", i);
-		shader.setUniformValue(Name, Transforms[i].transposed());
+		shader.setUniformValue(Name, Transforms[i]);
 	}
 
+	shader.setUniformValue("mMatrix", modelToWorldMatrix);
 	shader.setUniformValue("mvpMatrix", pMatrix * mvMatrix);
 	shader.setUniformValue("mvMatrix", mvMatrix);
 	shader.setUniformValue("normalMatrix", normalMatrix);
@@ -415,7 +415,7 @@ void GLWindow::renderBone2( QGLShaderProgram &shader, MeshData &mesh )
 	shader.setUniformValue("specularColor", QColor(255, 255, 255));
 	shader.setUniformValue("ambientReflection", (GLfloat) 1.0);
 	shader.setUniformValue("diffuseReflection", (GLfloat) 1.0);
-	shader.setUniformValue("specularReflection", (GLfloat) 1.0);
+	shader.setUniformValue("specularReflection", (GLfloat) 0.2);
 	shader.setUniformValue("shininess", (GLfloat) 100.0);
 	shader.setUniformValue("texture", 0);
 	if (mesh.material->textureFile!=NULL)
@@ -434,20 +434,20 @@ void GLWindow::renderBone2( QGLShaderProgram &shader, MeshData &mesh )
 	// lastly, release the buffer
 	mesh.vertexBuff.bind();
 	int offset = 0;
-	shader.setAttributeBuffer("vertex", GL_FLOAT, 0, 3, sizeof(Vertex));
-	shader.enableAttributeArray("vertex");
+	shader.setAttributeBuffer("Position", GL_FLOAT, 0, 3, sizeof(Vertex));
+	shader.enableAttributeArray("Position");
 	offset += sizeof(mesh.vertices[0].postition);
 
 	shader.setAttributeBuffer("color", GL_FLOAT, offset, 4, sizeof(Vertex));
 	shader.enableAttributeArray("color");
 	offset += sizeof(mesh.vertices[0].color);
 
-	shader.setAttributeBuffer("normal", GL_FLOAT, offset, 3, sizeof(Vertex));
-	shader.enableAttributeArray("normal");
+	shader.setAttributeBuffer("Normal", GL_FLOAT, offset, 3, sizeof(Vertex));
+	shader.enableAttributeArray("Normal");
 	offset += sizeof(mesh.vertices[0].normal);
 
-	shader.setAttributeBuffer("textureCoordinate", GL_FLOAT, offset, 2, sizeof(Vertex));
-	shader.enableAttributeArray("textureCoordinate");
+	shader.setAttributeBuffer("TexCoord", GL_FLOAT, offset, 2, sizeof(Vertex));
+	shader.enableAttributeArray("TexCoord");
 	offset += sizeof(mesh.vertices[0].texCoord);
 
 	shader.setAttributeBuffer("BoneIDs", GL_INT, offset, 4, sizeof(Vertex));
@@ -464,10 +464,10 @@ void GLWindow::renderBone2( QGLShaderProgram &shader, MeshData &mesh )
 	glDrawElements(GL_TRIANGLES, mesh.numIndices, GL_UNSIGNED_SHORT, mesh.indices);
 
 	// clean up
-	shader.disableAttributeArray("vertex");
+	shader.disableAttributeArray("Position");
 	shader.disableAttributeArray("color");
-	shader.disableAttributeArray("normal");
-	shader.disableAttributeArray("textureCoordinate");
+	shader.disableAttributeArray("Normal");
+	shader.disableAttributeArray("TexCoord");
 	shader.disableAttributeArray("BoneIDs");
 	shader.disableAttributeArray("Weights");
 	if (mesh.material->textureFile!=NULL) 

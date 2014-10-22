@@ -160,49 +160,57 @@ MeshData MeshGenerator::makePalm(vec4 &color)
 		color,
 		vec3(1.0f, 0.0f, 0.0f),
 		vec2(0, 0),
-		VertexBoneData(),
+		vec4(0, 0, 0, 0),
+		vec4(0, 0, 0, 0),
 
 		vec3(-0.03f, +0.05f, -0.01f), // 1
 		color,
 		vec3(1.0f, 0.0f, 1.0f),
 		vec2(0, 0),
-		VertexBoneData(),
+		vec4(0, 0, 0, 0),
+		vec4(0, 0, 0, 0),
 
 		vec3(+0.03f, +0.05f, -0.01f), // 2
 		color,
 		vec3(-1.0f, -1.0f, 0.0f),
 		vec2(0, 0),
-		VertexBoneData(),
+		vec4(0, 0, 0, 0),
+		vec4(0, 0, 0, 0),
 
 		vec3(+0.03f, +0.05f, 0.01f), // 3
 		color,
 		vec3(0.0f, 0.0f, 0.0f),
 		vec2(0, 0),
-		VertexBoneData(),
+		vec4(0, 0, 0, 0),
+		vec4(0, 0, 0, 0),
 
 		vec3(-0.03f, 0.0f, 0.01f), // 4
 		color,
 		vec3(1.0f, 1.0f, 0.0f),
 		vec2(0, 0),
-		VertexBoneData(),
+		vec4(0, 0, 0, 0),
+		vec4(0, 0, 0, 0),
 
 		vec3(-0.03f, 0.0f, -0.01f), // 5
 		color,
 		vec3(1.0f, 1.0f, 1.0f),
 		vec2(0, 0),
-		VertexBoneData(),
+		vec4(0, 0, 0, 0),
+		vec4(0, 0, 0, 0),
 
 		vec3(+0.03f, 0.0f, -0.01f), // 6
 		color,
 		vec3(0.0f, 1.0f, 1.0f),
 		vec2(0, 0),
-		VertexBoneData(),
+		vec4(0, 0, 0, 0),
+		vec4(0, 0, 0, 0),
 
 		vec3(+0.03f, 0.0f, 0.01f), // 7
 		color,
 		vec3(0.0f, 1.0f, 0.0f),
 		vec2(0, 0),
-		VertexBoneData()
+		vec4(0, 0, 0, 0),
+		vec4(0, 0, 0, 0)
 	};
 
 	ret.numVertices = NUM_ARRAY_ELEMENTS(stackVerts);
@@ -318,49 +326,57 @@ MeshData MeshGenerator::makeDemoRoom()
 		vec4(0.25f, 0.25f, 0.25f, 1.0f),
 		vec3(1.0f, 0.0f, 0.0f),
 		vec2(0, 0),
-		VertexBoneData(),
+		vec4(0, 0, 0, 0),
+		vec4(0, 0, 0, 0),
 
 		vec3(-2.0f, +3.0f, -2.0f), // 1
 		vec4(0.25f, 0.25f, 0.25f, 1.0f),
 		vec3(1.0f, 0.0f, 1.0f),
 		vec2(0, 0),
-		VertexBoneData(),
+		vec4(0, 0, 0, 0),
+		vec4(0, 0, 0, 0),
 
 		vec3(+2.0f, +3.0f, -2.0f), // 2
 		vec4(0.25f, 0.25f, 0.25f, 1.0f),
 		vec3(-1.0f, -1.0f, 0.0f),
 		vec2(0, 0),
-		VertexBoneData(),
+		vec4(0, 0, 0, 0),
+		vec4(0, 0, 0, 0),
 
 		vec3(+2.0f, +3.0f, 2.0f), // 3
 		vec4(0.25f, 0.25f, 0.25f, 1.0f),
 		vec3(0.0f, 0.0f, 0.0f),
 		vec2(0, 0),
-		VertexBoneData(),
+		vec4(0, 0, 0, 0),
+		vec4(0, 0, 0, 0),
 
 		vec3(-2.0f, -0.1f, 2.0f), // 4
 		vec4(0.25f, 0.25f, 0.25f, 1.0f),
 		vec3(1.0f, 1.0f, 0.0f),
 		vec2(0, 0),
-		VertexBoneData(),
+		vec4(0, 0, 0, 0),
+		vec4(0, 0, 0, 0),
 
 		vec3(-2.0f, -0.1f, -2.0f), // 5
 		vec4(0.25f, 0.25f, 0.25f, 1.0f),
 		vec3(1.0f, 1.0f, 1.0f),
 		vec2(0, 0),
-		VertexBoneData(),
+		vec4(0, 0, 0, 0),
+		vec4(0, 0, 0, 0),
 
 		vec3(+2.0f, -0.1f, -2.0f), // 6
 		vec4(0.25f, 0.25f, 0.25f, 1.0f),
 		vec3(0.0f, 1.0f, 1.0f),
 		vec2(0, 0),
-		VertexBoneData(),
+		vec4(0, 0, 0, 0),
+		vec4(0, 0, 0, 0),
 
 		vec3(+2.0f, -0.1f, 2.0f), // 7
 		vec4(0.25f, 0.25f, 0.25f, 1.0f),
 		vec3(0.0f, 1.0f, 0.0f),
 		vec2(0, 0),
-		VertexBoneData()
+		vec4(0, 0, 0, 0),
+		vec4(0, 0, 0, 0)
 
 	};
 

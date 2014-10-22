@@ -24,19 +24,22 @@ private:
 		unsigned int BaseIndex;
 		unsigned int MaterialIndex;
 	};
+	
+	QVector<MeshEntry> m_Entries;
 
-
-	QVector<MaterialInfo*> m_Materials;
-	Bone* m_Root;
 	QMap<QString, uint> m_BoneMapping; // maps a bone name to its index
 	uint m_NumBones;
-	QVector<VertexBoneData> m_Bones;
-	QVector<MeshEntry> m_Entries;
 	QVector<BoneInfo> m_BoneInfo;
 	mat4 m_GlobalInverseTransform;
+
+	QVector<MaterialInfo*> m_Materials;
 	QVector<aiAnimation*> m_Animations;
 	const aiScene* m_pScene;
+	Assimp::Importer importer;
 
+	uint m_offSet;
+	bool m_loaded;
+	Bone* m_Root;
 public:
 	
 	QVector<MeshData*> m_Meshes;
@@ -47,10 +50,11 @@ public:
 	void processSkeleton(const aiScene *scene, aiNode *node, Bone *parentNode, Bone &newNode);
 
 	void BoneTransform(float TimeInSeconds, QVector<mat4> &Transforms);
-
+	
+	bool loadSucceeded() { return m_loaded; };
 	bool loadMeshFromFile(const QString &fileName);
 	bool processScene(const aiScene* pScene, const QString &Filename);
-	MeshData* processMesh(uint MeshIndex, const aiMesh* paiMesh);
+	void processMesh(uint MeshIndex, const aiMesh* paiMesh, QVector<VertexBoneData> &Bones);
 	void processBones(uint MeshIndex, const aiMesh *paiMesh, QVector<VertexBoneData> &Bones);
 	MaterialInfo* processMaterial(const aiMaterial *pMaterial, const QString &Filename);
 	aiAnimation* processAnimations(uint animationIndex);
