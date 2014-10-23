@@ -10,9 +10,9 @@ struct MaterialInfo
 	vec3 Diffuse;
 	vec3 Specular;
 	GLfloat Shininess;
-	Texture* textureFile;
+	QVector<Texture*> textures;
 
-	MaterialInfo(){textureFile = NULL;}
+	MaterialInfo(){textures.clear();}
 
 };
 

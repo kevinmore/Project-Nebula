@@ -33,10 +33,8 @@ private:
 	void SendDataToOpenGL();
 	void renderMesh(QGLShaderProgram &shader, MeshData &mesh, mat4 &modelToWorldMatrix);
 	void renderBone(QGLShaderProgram &shader, MeshData &mesh);
-	void renderBone2(QGLShaderProgram &shader, MeshData &mesh);
+	void renderSkinningModel(QGLShaderProgram &shader, MeshData &mesh);
 	void renderSkeleton(Bone* root);
-	void renderModel(MeshImporter *importer);
-	//void renderAllObjects();
 
 	// TEST
 	MeshImporter *m_importer;

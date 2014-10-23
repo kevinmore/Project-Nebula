@@ -6,6 +6,20 @@
 #include <assimp/postprocess.h>
 #define INVALID_MATERIAL 0xFFFFFFFF
 
+
+struct BoneInfo
+{
+	mat4 boneOffset;
+	mat4 finalTransformation;        
+
+	BoneInfo()
+	{ 
+		boneOffset.fill(0);
+		finalTransformation.fill(0);
+	}
+};
+
+
 class MeshImporter
 {
 private:
@@ -27,9 +41,12 @@ private:
 	
 	QVector<MeshEntry> m_Entries;
 
+	// vertex attribute
+	QVector<Texture*> m_Textures;
+
 	QMap<QString, uint> m_BoneMapping; // maps a bone name to its index
-	uint m_NumBones;
 	QVector<BoneInfo> m_BoneInfo;
+	uint m_NumBones;
 	mat4 m_GlobalInverseTransform;
 
 	QVector<MaterialInfo*> m_Materials;
@@ -40,12 +57,14 @@ private:
 	uint m_offSet;
 	bool m_loaded;
 	Bone* m_Root;
+	MeshData* m_wholeMesh;
 public:
 	
 	QVector<MeshData*> m_Meshes;
 	MeshImporter(void);
 	~MeshImporter(void);
 	void cleanUp();
+	MeshData* getWholeMesh() { return m_wholeMesh; }
 	Bone* getSkeleton() { return m_Root; }
 	void processSkeleton(const aiScene *scene, aiNode *node, Bone *parentNode, Bone &newNode);
 
@@ -54,12 +73,17 @@ public:
 	bool loadSucceeded() { return m_loaded; };
 	bool loadMeshFromFile(const QString &fileName);
 	bool processScene(const aiScene* pScene, const QString &Filename);
-	void processMesh(uint MeshIndex, const aiMesh* paiMesh, QVector<VertexBoneData> &Bones);
+
+	void processMesh(uint MeshIndex, const aiMesh* paiMesh,	QVector<VertexBoneData>& Bones);
+
+	void generateWholeMesh();
+
 	void processBones(uint MeshIndex, const aiMesh *paiMesh, QVector<VertexBoneData> &Bones);
 	MaterialInfo* processMaterial(const aiMaterial *pMaterial, const QString &Filename);
 	aiAnimation* processAnimations(uint animationIndex);
 	void ReadNodeHeirarchy(float AnimationTime, const aiNode* pNode, const mat4 &ParentTransform);
 	const aiNodeAnim* FindNodeAnim(const aiAnimation* pAnimation, QString &NodeName);
+	
 
 	uint FindScaling(float AnimationTime, const aiNodeAnim* pNodeAnim);
 	uint FindRotation(float AnimationTime, const aiNodeAnim* pNodeAnim);

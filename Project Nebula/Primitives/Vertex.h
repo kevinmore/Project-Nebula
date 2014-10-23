@@ -32,13 +32,7 @@ struct VertexBoneData
 	}
 };
 
-struct BoneInfo
-{
-	mat4 boneOffset;
-	mat4 finalTransformation;        
 
-	BoneInfo(){}
-};
 
 struct Vertex
 {

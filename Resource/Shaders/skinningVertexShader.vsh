@@ -1,7 +1,6 @@
 #version 330
 const int MAX_BONES = 200;
 
-uniform mat4 mMatrix;
 uniform mat4 mvpMatrix;
 uniform mat4 mvMatrix;
 uniform mat3 normalMatrix;
@@ -31,14 +30,12 @@ void main(void)
     BoneTransform	  += gBones[BoneIDs.w] * Weights.w;
 
 	vec4 PosL = BoneTransform * vec4(Position, 1.0);
-	//gl_Position = mvpMatrix * PosL;
-	gl_Position = mvpMatrix * vec4(Position, 1.0);
+	gl_Position = mvpMatrix * PosL;
 	vec4 NormalL = BoneTransform * vec4(Normal, 0.0);
-	varyingNormal =  (mvMatrix * vec4(Normal, 0.0)).xyz;
+	varyingNormal =  (mvMatrix * NormalL).xyz;
 
 
-    //vec4 eyeVertex = mvMatrix * PosL;
-	vec4 eyeVertex = mvMatrix * vec4(Position, 1.0);
+    vec4 eyeVertex = mvMatrix * PosL;
     eyeVertex /= eyeVertex.w;
 
 

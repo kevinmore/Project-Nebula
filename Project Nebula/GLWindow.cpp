@@ -22,7 +22,6 @@ GLWindow::GLWindow(QWidget *parent) : QGLWidget(QGLFormat(/* Additional format o
 	m_timer->start(0);
 	m_elaTimer = new QElapsedTimer();
 	m_elaTimer->start();
-
 	m_importer = new MeshImporter();
 }
 
@@ -116,15 +115,12 @@ void GLWindow::initializeGL()
 	hand = MeshGenerator::makeHand();
 
 	// import the hand mesh
-	if (m_importer->loadMeshFromFile("../Resource/Models/boblampclean.md5mesh"))
+	QString fileName = "../Resource/Models/boblampclean.md5mesh";
+	if (m_importer->loadMeshFromFile(fileName))
 	{
-		qDebug() << "Model loaded successfully!";
-		//		qDebug() << m_importer->m_pScene->HasAnimations();
-		// 		handModel = m_importer->getSkeleton();
-		// 		mat4 transform;
-		// 		transform.scale(0.01, 0.01, 0.01);
-		// 		Bone::sortSkeleton(handModel);
+		qDebug() << "Model:" << fileName << "loaded successfully!";
 	}
+	
 }
 
 void GLWindow::resizeGL( int w, int h )
@@ -192,9 +188,9 @@ void GLWindow::paintGL()
 		handRotationAngle *= -1;
 	}
 
+	mat4 transform;
 	/** render the hand represented by cylinders **/
-// 	mat4 transform;
-// 	// rotate the palm around the Y axis, for demo purpose
+//  	// rotate the palm around the Y axis, for demo purpose
 // 	transform.rotate(0.2, vec3(0, 1, 0));
 // 	hand->m_localTransform *= transform;
 // 	Bone::sortSkeleton(hand);
@@ -213,16 +209,17 @@ void GLWindow::paintGL()
 // 	renderSkeleton(hand);
 
 	
-	/** render the imported hand model **/
+	/** render the imported model **/
 	// this render path has no animations
-//  	transform.setToIdentity();
-// 	for (int i = 0; i < m_importer->m_Meshes.size(); ++i)
-// 	{
-// 		renderMesh(lightingShaderProgram, *m_importer->m_Meshes[i], transform);
-// 	}
+ 	transform.setToIdentity();
+	for (int i = 0; i < m_importer->m_Meshes.size(); ++i)
+	{
+		renderMesh(lightingShaderProgram, *m_importer->m_Meshes[i], transform);
+	}
+//	renderMesh(lightingShaderProgram, *m_importer->getWholeMesh(), transform);
  	 	
 	// this render path has animations
-	if (m_importer->loadSucceeded()) renderModel(m_importer);	// the model may not be imported successfully
+//	if (m_importer->loadSucceeded()) renderSkinningModel(skinningShaderProgram2, *m_importer->getWholeMesh());	// the model may not be imported successfully
 }
 
 void GLWindow::renderMesh( QGLShaderProgram &shader, MeshData &mesh, mat4 &modelToWorldMatrix )
@@ -246,10 +243,11 @@ void GLWindow::renderMesh( QGLShaderProgram &shader, MeshData &mesh, mat4 &model
 	shader.setUniformValue("specularReflection", (GLfloat) 1.0);
 	shader.setUniformValue("shininess", (GLfloat) 100.0);
 	shader.setUniformValue("texture", 0);
-	if (mesh.material->textureFile!=NULL)
+	if (!mesh.material->textures.isEmpty())
 	{
 		shader.setUniformValue("useTexture", true);
-		mesh.material->textureFile->bind(GL_TEXTURE0);
+		for (int i = 0; i < mesh.material->textures.size(); ++i)
+			mesh.material->textures[i]->bind(GL_TEXTURE0);
 	} 
 	else
 	{
@@ -273,7 +271,7 @@ void GLWindow::renderMesh( QGLShaderProgram &shader, MeshData &mesh, mat4 &model
 	shader.enableAttributeArray("normal");
 	offset += sizeof(mesh.vertices[0].normal);
 
-	if (mesh.material->textureFile!=NULL)
+	if (!mesh.material->textures.isEmpty())
 	{
 		shader.setAttributeBuffer("textureCoordinate", GL_FLOAT, offset, 2, sizeof(Vertex));
 		shader.enableAttributeArray("textureCoordinate");
@@ -287,11 +285,14 @@ void GLWindow::renderMesh( QGLShaderProgram &shader, MeshData &mesh, mat4 &model
 	shader.disableAttributeArray("vertex");
 	shader.disableAttributeArray("color");
 	shader.disableAttributeArray("normal");
-	if (mesh.material->textureFile!=NULL) 
+	if (!mesh.material->textures.isEmpty())
 	{
-		mesh.material->textureFile->release();
+		shader.setUniformValue("useTexture", true);
+		for (int i = 0; i < mesh.material->textures.size(); ++i)
+			mesh.material->textures[i]->release();
 		shader.disableAttributeArray("textureCoordinate");
-	}
+	} 
+
 
 	shader.release();
 }
@@ -375,16 +376,17 @@ void GLWindow::renderBone( QGLShaderProgram &shader, MeshData &mesh)
 	shader.disableAttributeArray("TexCoord");
 	shader.disableAttributeArray("BoneIDs");
 	shader.disableAttributeArray("Weights");
-	if (mesh.material->textureFile!=NULL) 
+	if (!mesh.material->textures.isEmpty())
 	{
-		mesh.material->textureFile->release();
-		shader.disableAttributeArray("TexCoord");
-	}
+		shader.setUniformValue("useTexture", true);
+		for (int i = 0; i < mesh.material->textures.size(); ++i)
+			mesh.material->textures[i]->bind(GL_TEXTURE0);
+	} 
 
 	shader.release();
 }
 
-void GLWindow::renderBone2( QGLShaderProgram &shader, MeshData &mesh )
+void GLWindow::renderSkinningModel( QGLShaderProgram &shader, MeshData &mesh )
 {
 	// calculate MV Matrix
 	mat4 modelToWorldMatrix;
@@ -406,8 +408,8 @@ void GLWindow::renderBone2( QGLShaderProgram &shader, MeshData &mesh )
 	}
 
 	shader.setUniformValue("mMatrix", modelToWorldMatrix);
-	shader.setUniformValue("mvpMatrix", pMatrix * mvMatrix);
-	shader.setUniformValue("mvMatrix", mvMatrix);
+ 	shader.setUniformValue("mvpMatrix", pMatrix * mvMatrix);
+ 	shader.setUniformValue("mvMatrix", mvMatrix);
 	shader.setUniformValue("normalMatrix", normalMatrix);
 	shader.setUniformValue("lightPosition", mvMatrix * lightPosition);
 	shader.setUniformValue("ambientColor", QColor(32, 32, 32));
@@ -418,10 +420,11 @@ void GLWindow::renderBone2( QGLShaderProgram &shader, MeshData &mesh )
 	shader.setUniformValue("specularReflection", (GLfloat) 0.2);
 	shader.setUniformValue("shininess", (GLfloat) 100.0);
 	shader.setUniformValue("texture", 0);
-	if (mesh.material->textureFile!=NULL)
+	if (!mesh.material->textures.isEmpty())
 	{
 		shader.setUniformValue("useTexture", true);
-		mesh.material->textureFile->bind(GL_TEXTURE0);
+		for (int i = 0; i < mesh.material->textures.size(); ++i)
+			mesh.material->textures[i]->bind(GL_TEXTURE0);
 	} 
 	else
 	{
@@ -470,11 +473,14 @@ void GLWindow::renderBone2( QGLShaderProgram &shader, MeshData &mesh )
 	shader.disableAttributeArray("TexCoord");
 	shader.disableAttributeArray("BoneIDs");
 	shader.disableAttributeArray("Weights");
-	if (mesh.material->textureFile!=NULL) 
+	if (!mesh.material->textures.isEmpty())
 	{
-		mesh.material->textureFile->release();
+		shader.setUniformValue("useTexture", true);
+		for (int i = 0; i < mesh.material->textures.size(); ++i)
+			mesh.material->textures[i]->release();
 		shader.disableAttributeArray("TexCoord");
-	}
+	} 
+
 
 	shader.release();
 }
@@ -496,16 +502,6 @@ void GLWindow::renderSkeleton( Bone* root )
 }
 
 
-void GLWindow::renderModel( MeshImporter *importer )
-{
-	mat4 mMatrix;
-	mMatrix.setToIdentity();
-	QVector<MeshData*> meshes = importer->m_Meshes;
-	for (int i = 0; i < meshes.size(); ++i)
-	{
-		renderBone2(skinningShaderProgram2, *meshes[i]);
-	}
-}
 
 void GLWindow::keyPressEvent( QKeyEvent * e )
 {
