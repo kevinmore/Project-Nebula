@@ -1,6 +1,6 @@
 #include <gl/glew.h>
 #include <GLWindow.h>
-#include <QtGui/QDesktopWidget>
+#include <QtWidgets/QDesktopWidget>
 #include <QtCore/QDebug>
 #include <Utility/MeshGenerator.h>
 
@@ -115,7 +115,7 @@ void GLWindow::initializeGL()
 	hand = MeshGenerator::makeHand();
 
 	// import the hand mesh
-	QString fileName = "../Resource/Models/boblampclean.md5mesh";
+	QString fileName = "../Resource/Models/Alice/Alice.dae";
 	if (m_importer->loadMeshFromFile(fileName))
 	{
 		qDebug() << "Model:" << fileName << "loaded successfully!";
@@ -191,35 +191,35 @@ void GLWindow::paintGL()
 	mat4 transform;
 	/** render the hand represented by cylinders **/
 //  	// rotate the palm around the Y axis, for demo purpose
-// 	transform.rotate(0.2, vec3(0, 1, 0));
-// 	hand->m_localTransform *= transform;
-// 	Bone::sortSkeleton(hand);
-// 	// only move the 5 fingers, not the palm
-// 	// thumb
-// 	transform.setToIdentity();
-// 	transform.rotate(-handRotationAngle, vec3(1, 0, 0));
-// 	Bone::configureSkeleton(hand->getChild(0), transform);
-// 	// other 4 fingers
-// 	transform.setToIdentity();
-// 	transform.rotate(-1.5*handRotationAngle, vec3(1, 0, 0));
-// 	for (int i = 1; i < hand->childCount(); ++i)
-// 	{
-// 		Bone::configureSkeleton(hand->getChild(i), transform);
-// 	}
-// 	renderSkeleton(hand);
+	transform.rotate(0.2, vec3(0, 1, 0));
+	hand->m_localTransform *= transform;
+	Bone::sortSkeleton(hand);
+	// only move the 5 fingers, not the palm
+	// thumb
+	transform.setToIdentity();
+	transform.rotate(-handRotationAngle, vec3(1, 0, 0));
+	Bone::configureSkeleton(hand->getChild(0), transform);
+	// other 4 fingers
+	transform.setToIdentity();
+	transform.rotate(-1.5*handRotationAngle, vec3(1, 0, 0));
+	for (int i = 1; i < hand->childCount(); ++i)
+	{
+		Bone::configureSkeleton(hand->getChild(i), transform);
+	}
+	renderSkeleton(hand);
 
 	
 	/** render the imported model **/
 	// this render path has no animations
- 	transform.setToIdentity();
-	for (int i = 0; i < m_importer->m_Meshes.size(); ++i)
-	{
-		renderMesh(lightingShaderProgram, *m_importer->m_Meshes[i], transform);
-	}
+//  	transform.setToIdentity();
+// 	for (int i = 0; i < m_importer->m_Meshes.size(); ++i)
+// 	{
+// 		renderMesh(lightingShaderProgram, *m_importer->m_Meshes[i], transform);
+// 	}
 //	renderMesh(lightingShaderProgram, *m_importer->getWholeMesh(), transform);
  	 	
 	// this render path has animations
-//	if (m_importer->loadSucceeded()) renderSkinningModel(skinningShaderProgram2, *m_importer->getWholeMesh());	// the model may not be imported successfully
+	//if (m_importer->loadSucceeded()) renderSkinningModel(skinningShaderProgram2, m_importer);	// the model may not be imported successfully
 }
 
 void GLWindow::renderMesh( QGLShaderProgram &shader, MeshData &mesh, mat4 &modelToWorldMatrix )
@@ -485,6 +485,57 @@ void GLWindow::renderSkinningModel( QGLShaderProgram &shader, MeshData &mesh )
 	shader.release();
 }
 
+void GLWindow::renderSkinningModel( QGLShaderProgram &shader, MeshImporter* importer )
+{
+	// calculate MV Matrix
+	mat4 modelToWorldMatrix;
+	mat4 mvMatrix = vMatrix * modelToWorldMatrix;
+
+	// active the shader
+	shader.bind();
+
+	// set the uniform values
+	// set the uniform values
+	QVector<mat4> Transforms;
+	m_importer->BoneTransform((float)m_elaTimer->elapsed()/1000, Transforms);
+	for (int i = 0 ; i < Transforms.size() ; i++) 
+	{
+		char Name[128];
+		memset(Name, 0, sizeof(Name));
+		_snprintf_s(Name, sizeof(Name), "gBones[%d]", i);
+		shader.setUniformValue(Name, Transforms[i]);
+	}
+
+	shader.setUniformValue("mMatrix", modelToWorldMatrix);
+	shader.setUniformValue("mvpMatrix", pMatrix * mvMatrix);
+	shader.setUniformValue("mvMatrix", mvMatrix);
+	shader.setUniformValue("normalMatrix", normalMatrix);
+	shader.setUniformValue("lightPosition", mvMatrix * lightPosition);
+	shader.setUniformValue("ambientColor", QColor(32, 32, 32));
+	shader.setUniformValue("diffuseColor", QColor(128, 128, 128));
+	shader.setUniformValue("specularColor", QColor(255, 255, 255));
+	shader.setUniformValue("ambientReflection", (GLfloat) 1.0);
+	shader.setUniformValue("diffuseReflection", (GLfloat) 1.0);
+	shader.setUniformValue("specularReflection", (GLfloat) 0.2);
+	shader.setUniformValue("shininess", (GLfloat) 100.0);
+	shader.setUniformValue("texture", 0);
+	shader.setUniformValue("useTexture", true);
+
+	importer->Render();
+
+	// clean up
+	shader.disableAttributeArray("Position");
+	shader.disableAttributeArray("color");
+	shader.disableAttributeArray("Normal");
+	shader.disableAttributeArray("TexCoord");
+	shader.disableAttributeArray("BoneIDs");
+	shader.disableAttributeArray("Weights");
+	
+	shader.release();
+
+
+}
+
 void GLWindow::renderSkeleton( Bone* root )
 {
 	if(!root) return; // empty skeleton
@@ -533,6 +584,7 @@ void GLWindow::resizeToScreenCenter()
 {
 	setGeometry( 0, 0, 1024, 768 );
 	move(QApplication::desktop()->screen()->rect().center() - rect().center());
+	
 }
 
 void GLWindow::updateLoop()

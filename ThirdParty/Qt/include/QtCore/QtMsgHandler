@@ -1,1 +1,1 @@
-#include "qglobal.h"
+#include "qlogging.h"

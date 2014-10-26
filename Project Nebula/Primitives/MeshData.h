@@ -2,7 +2,6 @@
 #include <Primitives/Vertex.h>
 #include <Primitives/Texture.h>
 #include <QtOpenGL/QGLBuffer>
-
 struct MaterialInfo
 {
 	QString Name;

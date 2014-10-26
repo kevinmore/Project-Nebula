@@ -1,4 +1,5 @@
 #pragma once
+#include <GL/glew.h>
 #include <Primitives/MeshData.h>
 #include <Primitives/Bone.h>
 #include <assimp/Importer.hpp>
@@ -20,9 +21,22 @@ struct BoneInfo
 };
 
 
+
 class MeshImporter
 {
 private:
+
+	enum VB_TYPES {
+		INDEX_BUFFER,
+		POS_VB,
+		NORMAL_VB,
+		TEXCOORD_VB,
+		BONE_VB,
+		NUM_VBs            
+	};
+
+	GLuint m_VAO;
+	GLuint m_Buffers[NUM_VBs];
 
 	struct MeshEntry {
 		MeshEntry()
@@ -63,6 +77,7 @@ public:
 	QVector<MeshData*> m_Meshes;
 	MeshImporter(void);
 	~MeshImporter(void);
+	void Render();
 	void cleanUp();
 	MeshData* getWholeMesh() { return m_wholeMesh; }
 	Bone* getSkeleton() { return m_Root; }
@@ -74,7 +89,13 @@ public:
 	bool loadMeshFromFile(const QString &fileName);
 	bool processScene(const aiScene* pScene, const QString &Filename);
 
-	void processMesh(uint MeshIndex, const aiMesh* paiMesh,	QVector<VertexBoneData>& Bones);
+	void processMesh(uint MeshIndex,
+					const aiMesh* paiMesh,
+					QVector<vec3>& Positions,
+					QVector<vec3>& Normals,
+					QVector<vec2>& TexCoords,
+					QVector<VertexBoneData>& Bones,
+					QVector<unsigned int>& Indices);
 
 	void generateWholeMesh();
 

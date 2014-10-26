@@ -6,7 +6,7 @@
 #include <QtGui/QMatrix3x3>
 #include <QtGui/QMatrix4x4>
 #include <QtCore/QString>
-
+#include <QtGui/QQuaternion>
 
 typedef QVector2D vec2;
 typedef QVector3D vec3;

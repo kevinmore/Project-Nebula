@@ -1,1 +1,1 @@
-#include "qglobal.h"
+#include "qglobalstatic.h"

@@ -1,7 +1,6 @@
 #ifndef QT_QTOPENGL_MODULE_H
 #define QT_QTOPENGL_MODULE_H
-#include <QtCore/QtCore>
-#include <QtGui/QtGui>
+#include <QtOpenGL/QtOpenGLDepends>
 #include "qgl.h"
 #include "qglbuffer.h"
 #include "qglcolormap.h"
@@ -9,4 +8,6 @@
 #include "qglfunctions.h"
 #include "qglpixelbuffer.h"
 #include "qglshaderprogram.h"
+#include "qtopenglglobal.h"
+#include "qtopenglversion.h"
 #endif

@@ -1,6 +1,10 @@
 #include <Utility/MeshImporter.h>
 #include <assert.h>
-
+#define POSITION_LOCATION    0
+#define TEX_COORD_LOCATION   1
+#define NORMAL_LOCATION      2
+#define BONE_ID_LOCATION     3
+#define BONE_WEIGHT_LOCATION 4
 
 // utility function to convert aiMatrix4x4 to QMatrix4x4
 QMatrix4x4 convToQMat4(const aiMatrix4x4 * m)
@@ -30,42 +34,62 @@ QMatrix4x4 convToQMat4(aiMatrix3x3 * m)
 
 MeshImporter::MeshImporter(void)
 {
-	cleanUp();
+	
 	m_NumBones = 0;
 	m_offSet = 0;
 	m_pScene = NULL;
 	m_wholeMesh = NULL;
 	m_loaded = false;
-
+	m_VAO = 0;
+	ZERO_MEM(m_Buffers);
+	
 }
 
 
 MeshImporter::~MeshImporter(void)
 {
+	cleanUp();
 }
 
 
 void MeshImporter::cleanUp()
 {
+	if (m_Buffers[0] != 0) {
+		glDeleteBuffers(ARRAY_SIZE_IN_ELEMENTS(m_Buffers), m_Buffers);
+	}
+
+	if (m_VAO != 0) {
+		glDeleteVertexArrays(1, &m_VAO);
+		m_VAO = 0;
+	}
 	m_Materials.clear();
 	m_Meshes.clear();
 	m_BoneMapping.clear();
 	m_Entries.clear();
-	m_BoneInfo.clear();
+	m_BoneInfo.clear();	
 }
 
 
 bool MeshImporter::loadMeshFromFile( const QString &fileName )
 {
-	 
-	    m_pScene = importer.ReadFile(fileName.toStdString(),
-		aiProcess_GenSmoothNormals |
-	//	aiProcess_CalcTangentSpace |
-		aiProcess_Triangulate |
-	//	aiProcess_JoinIdenticalVertices |
-		aiProcess_SortByPType |
-		aiProcess_FlipUVs
-		);
+	 cleanUp();
+	// Create the VAO
+	 glewExperimental = GL_TRUE;
+	 glewInit();
+	glGenVertexArrays(1, &m_VAO);   
+	glBindVertexArray(m_VAO);
+
+	// Create the buffers for the vertices attributes
+	glGenBuffers(ARRAY_SIZE_IN_ELEMENTS(m_Buffers), m_Buffers);
+
+	m_pScene = importer.ReadFile(fileName.toStdString(),
+	aiProcess_GenSmoothNormals |
+//	aiProcess_CalcTangentSpace |
+	aiProcess_Triangulate |
+//	aiProcess_JoinIdenticalVertices |
+	aiProcess_SortByPType |
+	aiProcess_FlipUVs
+	);
 
 	if (!m_pScene)
 	{
@@ -83,6 +107,9 @@ bool MeshImporter::loadMeshFromFile( const QString &fileName )
 		processScene(m_pScene, fileName);
 		m_loaded = true;
 	}
+
+	// Make sure the VAO is not changed from the outside
+	glBindVertexArray(0);	
 
 	return m_loaded;
 
@@ -106,14 +133,20 @@ bool MeshImporter::processScene( const aiScene* pScene, const QString &fileName 
 		NumIndices  += m_Entries[i].NumIndices;
 	}
 
+
+
 	// Reserve space in the vectors for the vertex attributes and indices
-	m_wholeMesh = new MeshData();
-	m_wholeMesh->numVertices = NumVertices;
-	m_wholeMesh->vertices = new Vertex[NumVertices];
-	m_wholeMesh->numIndices = NumIndices;
-	m_wholeMesh->indices = new GLushort[NumIndices];
+	QVector<vec3> Positions;
+	QVector<vec3> Normals;
+	QVector<vec2> TexCoords;
 	QVector<VertexBoneData> Bones;
+	QVector<uint> Indices;
+
+	Positions.reserve(NumVertices);
+	Normals.reserve(NumVertices);
+	TexCoords.reserve(NumVertices);
 	Bones.resize(NumVertices);
+	Indices.reserve(NumIndices);
 
 
 	// load materials
@@ -132,25 +165,25 @@ bool MeshImporter::processScene( const aiScene* pScene, const QString &fileName 
 		for (uint i = 0; i < pScene->mNumMeshes; ++i)
 		{
 			const aiMesh* paiMesh = pScene->mMeshes[i];
-			processMesh(i, paiMesh, Bones);
+			processMesh(i, paiMesh, Positions, Normals, TexCoords, Bones, Indices);
 		}
 
-		for (int i = 0; i < m_Meshes.size(); ++i)
-		{
-			MeshData* pMesh = m_Meshes[i];
-			for (int j = 0; j < pMesh->numVertices; ++j)
-			{
-				m_wholeMesh->vertices[m_Entries[i].BaseVertex + j] = pMesh->vertices[j];
-			}
-			for (int j = 0; j < pMesh->numIndices; ++j)
-			{
-				m_wholeMesh->indices[m_Entries[i].BaseIndex + j] = pMesh->indices[j] + m_Entries[i].BaseVertex;
-			}
-		}
-		for (int i = 0; i < m_Textures.size(); ++i)
-			m_wholeMesh->material->textures << m_Textures[i];
-
-		m_wholeMesh->createVertexBuffer();
+// 		for (int i = 0; i < m_Meshes.size(); ++i)
+// 		{
+// 			MeshData* pMesh = m_Meshes[i];
+// 			for (int j = 0; j < pMesh->numVertices; ++j)
+// 			{
+// 				m_wholeMesh->vertices[m_Entries[i].BaseVertex + j] = pMesh->vertices[j];
+// 			}
+// 			for (int j = 0; j < pMesh->numIndices; ++j)
+// 			{
+// 				m_wholeMesh->indices[m_Entries[i].BaseIndex + j] = pMesh->indices[j] + m_Entries[i].BaseVertex;
+// 			}
+// 		}
+// 		for (int i = 0; i < m_Textures.size(); ++i)
+// 			m_wholeMesh->material->textures << m_Textures[i];
+// 
+// 		m_wholeMesh->createVertexBuffer();
 	}
 	else
 	{
@@ -185,7 +218,31 @@ bool MeshImporter::processScene( const aiScene* pScene, const QString &fileName 
 	}
 
 
+	// Generate and populate the buffers with vertex attributes and the indices
+	glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[POS_VB]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(Positions[0]) * Positions.size(), &Positions[0], GL_STATIC_DRAW);
+	glEnableVertexAttribArray(POSITION_LOCATION);
+	glVertexAttribPointer(POSITION_LOCATION, 3, GL_FLOAT, GL_FALSE, 0, 0);    
 
+	glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[TEXCOORD_VB]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(TexCoords[0]) * TexCoords.size(), &TexCoords[0], GL_STATIC_DRAW);
+	glEnableVertexAttribArray(TEX_COORD_LOCATION);
+	glVertexAttribPointer(TEX_COORD_LOCATION, 2, GL_FLOAT, GL_FALSE, 0, 0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[NORMAL_VB]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(Normals[0]) * Normals.size(), &Normals[0], GL_STATIC_DRAW);
+	glEnableVertexAttribArray(NORMAL_LOCATION);
+	glVertexAttribPointer(NORMAL_LOCATION, 3, GL_FLOAT, GL_FALSE, 0, 0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[BONE_VB]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(Bones[0]) * Bones.size(), &Bones[0], GL_STATIC_DRAW);
+	glEnableVertexAttribArray(BONE_ID_LOCATION);
+	glVertexAttribIPointer(BONE_ID_LOCATION, 4, GL_INT, sizeof(VertexBoneData), (const GLvoid*)0);
+	glEnableVertexAttribArray(BONE_WEIGHT_LOCATION);    
+	glVertexAttribPointer(BONE_WEIGHT_LOCATION, 4, GL_FLOAT, GL_FALSE, sizeof(VertexBoneData), (const GLvoid*)16);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_Buffers[INDEX_BUFFER]);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(Indices[0]) * Indices.size(), &Indices[0], GL_STATIC_DRAW);
 
 
 	return true;
@@ -259,75 +316,43 @@ MaterialInfo* MeshImporter::processMaterial( const aiMaterial *pMaterial, const 
 	return mater;
 }
 
-void MeshImporter::processMesh(uint MeshIndex, const aiMesh* paiMesh, QVector<VertexBoneData> &Bones)
+void MeshImporter::processMesh(uint MeshIndex,
+							const aiMesh* paiMesh,
+							QVector<vec3>& Positions,
+							QVector<vec3>& Normals,
+							QVector<vec2>& TexCoords,
+							QVector<VertexBoneData>& Bones,
+							QVector<unsigned int>& Indices)
 {
-	// process bones first
+	const aiVector3D Zero3D(0.0f, 0.0f, 0.0f);
+
+	// Populate the vertex attribute vectors
+	for (uint i = 0 ; i < paiMesh->mNumVertices ; i++) {
+		const aiVector3D* pPos      = &(paiMesh->mVertices[i]);
+		const aiVector3D* pNormal   = &(paiMesh->mNormals[i]);
+		const aiVector3D* pTexCoord = paiMesh->HasTextureCoords(0) ? &(paiMesh->mTextureCoords[0][i]) : &Zero3D;
+
+		Positions.push_back(vec3(pPos->x, pPos->y, pPos->z));
+		Normals.push_back(vec3(pNormal->x, pNormal->y, pNormal->z));
+		TexCoords.push_back(vec2(pTexCoord->x, pTexCoord->y));        
+	}
+	// process bones
 	if(paiMesh->HasBones()) processBones(MeshIndex, paiMesh, Bones);
 	else qDebug() << "This mesh" << paiMesh->mName.C_Str() << "has no bones.";
 
-	// Map those vectors into the my mesh data
-	MeshData *ret(new MeshData);
-	ret->meshName = paiMesh->mName.length != 0 ? paiMesh->mName.C_Str() : "";
-
-	// Get vertex attributes
-	ret->numVertices = paiMesh->mNumVertices;
-	ret->vertices = new Vertex[ret->numVertices];
-
-	for (uint i = 0 ; i < paiMesh->mNumVertices ; ++i) 
-	{
-		// position
-		ret->vertices[i].postition = vec3 (paiMesh->mVertices[i].x, paiMesh->mVertices[i].y, paiMesh->mVertices[i].z);
-
-		// Color
-		// 		if (paiMesh->HasVertexColors(1))
-		// 		{
-		// 			ret->vertices[i].color = vec4(paiMesh->mColors[i]->r, paiMesh->mColors[i]->g, paiMesh->mColors[i]->b, paiMesh->mColors[i]->a);
-		// 		}
-		// 		else
-		{
-			ret->vertices[i].color = vec4(0.547, 0.39, 0.234, 1);
-		}
-
-		// normals
-		if (paiMesh->HasNormals())
-		{
-			ret->vertices[i].normal = vec3 ( paiMesh->mNormals[i].x, paiMesh->mNormals[i].y, paiMesh->mNormals[i].z);
-		}
-
-		// texture coord
-		if (paiMesh->HasTextureCoords(0))
-		{
-			ret->vertices[i].texCoord = vec2 (paiMesh->mTextureCoords[0][i].x,  paiMesh->mTextureCoords[0][i].y);
-		}
-		ret->vertices[i].boneIDs = vec4(Bones[i+m_offSet].IDs[0], Bones[i+m_offSet].IDs[1], Bones[i+m_offSet].IDs[2], Bones[i+m_offSet].IDs[3]);
-		ret->vertices[i].boneWeights = vec4(Bones[i+m_offSet].Weights[0], Bones[i+m_offSet].Weights[1], Bones[i+m_offSet].Weights[2], Bones[i+m_offSet].Weights[3]);
-	}
-	m_offSet += paiMesh->mNumVertices;
-
-	// Get mesh indexes
-	ret->numIndices = 3 * paiMesh->mNumFaces;
-	ret->indices = new GLushort[ret->numIndices];
-	for (uint i = 0; i < paiMesh->mNumFaces; ++i)
-	{
-		const aiFace& face = paiMesh->mFaces[i];
-		if (face.mNumIndices != 3)
+	// Populate the index buffer
+	for (uint i = 0 ; i < paiMesh->mNumFaces ; i++) {
+		const aiFace& Face = paiMesh->mFaces[i];
+		if (Face.mNumIndices != 3)
 		{
 			qDebug() << "Warning: Mesh face with not exactly 3 indices, ignoring this primitive.";
 			continue;
 		}
-		ret->indices[3*i] = face.mIndices[0];
-		ret->indices[3*i+1] = face.mIndices[1];
-		ret->indices[3*i+2] = face.mIndices[2];
+		Indices.push_back(Face.mIndices[0]);
+		Indices.push_back(Face.mIndices[1]);
+		Indices.push_back(Face.mIndices[2]);
 	}
 
-	// material
-	ret->material = m_Materials[paiMesh->mMaterialIndex];
-
-
-	// create a vertex buffer
-	ret->createVertexBuffer();
-
-	m_Meshes.push_back(ret);
 }
 
 void MeshImporter::processBones( uint MeshIndex, const aiMesh *paiMesh, QVector<VertexBoneData> &Bones )
@@ -577,4 +602,28 @@ void MeshImporter::BoneTransform( float TimeInSeconds, QVector<mat4> &Transforms
 	for (uint i = 0 ; i < m_NumBones ; i++) {
 		Transforms[i] = m_BoneInfo[i].finalTransformation;
 	}
+}
+
+void MeshImporter::Render()
+{
+	glBindVertexArray(m_VAO);
+
+	for (uint i = 0 ; i < m_Entries.size() ; i++) {
+		const uint MaterialIndex = m_Entries[i].MaterialIndex;
+
+		assert(MaterialIndex < m_Textures.size());
+
+		if (m_Textures[MaterialIndex]) {
+			m_Textures[MaterialIndex]->bind(GL_TEXTURE0);
+		}
+
+		glDrawElementsBaseVertex(GL_TRIANGLES, 
+			m_Entries[i].NumIndices, 
+			GL_UNSIGNED_INT, 
+			(void*)(sizeof(uint) * m_Entries[i].BaseIndex), 
+			m_Entries[i].BaseVertex);
+	}
+
+	// Make sure the VAO is not changed from the outside    
+	glBindVertexArray(0);
 }

@@ -20,7 +20,7 @@ public:
 				   m_center(0.0f, 0.0f, 0.0f), 
 				   m_viewDirection(0.0f, -0.2f, -1.0f),
 				   m_Up(0.0f, 1.0f, 0.0f),
-				   movementSpeed(1.f),
+				   movementSpeed(0.01f),
 				   rotationSpeed(0.2f)
 	
 	{};

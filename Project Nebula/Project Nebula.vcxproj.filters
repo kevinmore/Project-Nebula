@@ -1,13 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="GLWindow_moc.cpp" />
     <ClCompile Include="Utility\Camera.cpp" />
     <ClCompile Include="Utility\MeshGenerator.cpp" />
     <ClCompile Include="GLWindow.cpp" />
     <ClCompile Include="Utility\MeshImporter.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Primitives\Texture.cpp" />
+    <ClCompile Include="Primitives\Material.cpp" />
+    <ClCompile Include="GLWindow_moc.cpp" />
+    <ClCompile Include="Primitives\Mesh.cpp" />
+    <ClCompile Include="Scene\TextureManager.cpp" />
+    <ClCompile Include="Scene\MaterialManager.cpp" />
+    <ClCompile Include="Scene\Light.cpp" />
+    <ClCompile Include="Scene\Object3D.cpp" />
+    <ClCompile Include="Scene\Object3D_moc.cpp" />
+    <ClCompile Include="Scene\SceneCamera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Primitives\Bone.h" />
@@ -15,10 +23,17 @@
     <ClInclude Include="Primitives\Vertex.h" />
     <ClInclude Include="Utility\Camera.h" />
     <ClInclude Include="Utility\DataTypes.h" />
-    <ClInclude Include="Utility\MeshGenerator.h" />
-    <ClInclude Include="GLWindow.h" />
     <ClInclude Include="Utility\MeshImporter.h" />
     <ClInclude Include="Primitives\Texture.h" />
+    <ClInclude Include="Primitives\Material.h" />
+    <ClInclude Include="GLWindow.h" />
+    <ClInclude Include="Primitives\Mesh.h" />
+    <ClInclude Include="Utility\Math.h" />
+    <ClInclude Include="Scene\TextureManager.h" />
+    <ClInclude Include="Scene\MaterialManager.h" />
+    <ClInclude Include="Scene\Light.h" />
+    <ClInclude Include="Scene\Object3D.h" />
+    <ClInclude Include="Scene\SceneCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Resource\Shaders\lightingFragmentShader.fsh" />
@@ -27,5 +42,8 @@
     <None Include="..\Resource\Shaders\skinningVertexShader.vsh" />
     <None Include="..\Resource\Shaders\skinning.fs" />
     <None Include="..\Resource\Shaders\skinning.vs" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="Utility\MeshGenerator.h" />
   </ItemGroup>
 </Project>

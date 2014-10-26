@@ -1,6 +1,6 @@
 #pragma once
 #include <Primitives/MeshData.h>
-#include <QtGui/QApplication>
+#include <QtWidgets/QApplication>
 #include <QtOpenGL/QGLWidget>
 #include <QtCore/QTimer>
 #include <QtCore/QElapsedTimer>
@@ -34,6 +34,7 @@ private:
 	void renderMesh(QGLShaderProgram &shader, MeshData &mesh, mat4 &modelToWorldMatrix);
 	void renderBone(QGLShaderProgram &shader, MeshData &mesh);
 	void renderSkinningModel(QGLShaderProgram &shader, MeshData &mesh);
+	void renderSkinningModel(QGLShaderProgram &shader, MeshImporter* importer);
 	void renderSkeleton(Bone* root);
 
 	// TEST

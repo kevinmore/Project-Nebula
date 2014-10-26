@@ -6,12 +6,11 @@ uniform mat4 mvMatrix;
 uniform mat3 normalMatrix;
 uniform vec3 lightPosition;
 
-in vec3 Position; 
-in vec2 TexCoord; 
-in vec4 color;
-in vec3 Normal;   
-in ivec4 BoneIDs;
-in vec4 Weights;
+layout (location = 0) in vec3 Position; 
+layout (location = 1) in vec2 TexCoord; 
+layout (location = 2) in vec3 Normal;   
+layout (location = 3) in ivec4 BoneIDs;
+layout (location = 4) in vec4 Weights;
 
 out vec3 varyingNormal;
 out vec3 varyingLightDirection;
