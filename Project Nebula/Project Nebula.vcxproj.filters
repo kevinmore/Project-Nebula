@@ -1,39 +1,51 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Utility\Camera.cpp" />
-    <ClCompile Include="Utility\MeshGenerator.cpp" />
-    <ClCompile Include="GLWindow.cpp" />
-    <ClCompile Include="Utility\MeshImporter.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Primitives\Texture.cpp" />
     <ClCompile Include="Primitives\Material.cpp" />
-    <ClCompile Include="GLWindow_moc.cpp" />
     <ClCompile Include="Primitives\Mesh.cpp" />
-    <ClCompile Include="Scene\TextureManager.cpp" />
-    <ClCompile Include="Scene\MaterialManager.cpp" />
     <ClCompile Include="Scene\Light.cpp" />
     <ClCompile Include="Scene\Object3D.cpp" />
     <ClCompile Include="Scene\Object3D_moc.cpp" />
     <ClCompile Include="Scene\SceneCamera.cpp" />
+    <ClCompile Include="Scene\Managers\MaterialManager.cpp" />
+    <ClCompile Include="Scene\Managers\MeshManager.cpp" />
+    <ClCompile Include="Scene\Managers\TextureManager.cpp" />
+    <ClCompile Include="Utility\ModelLoader.cpp" />
+    <ClCompile Include="Scene\Scene_moc.cpp" />
+    <ClCompile Include="Scene\Scene.cpp" />
+    <ClCompile Include="Scene\Model.cpp" />
+    <ClCompile Include="Scene\Managers\ModelManager.cpp" />
+    <ClCompile Include="Scene\AbstractModel.cpp" />
+    <ClCompile Include="Scene\AbstractScene.cpp" />
+    <ClCompile Include="UI\Window.cpp" />
+    <ClCompile Include="UI\Window_moc.cpp" />
+    <ClCompile Include="UI\MainWindow.cpp" />
+    <ClCompile Include="UI\MainWindow_moc.cpp" />
+    <ClCompile Include="Scene\SceneCamera_moc.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Primitives\Bone.h" />
-    <ClInclude Include="Primitives\MeshData.h" />
-    <ClInclude Include="Primitives\Vertex.h" />
-    <ClInclude Include="Utility\Camera.h" />
     <ClInclude Include="Utility\DataTypes.h" />
-    <ClInclude Include="Utility\MeshImporter.h" />
     <ClInclude Include="Primitives\Texture.h" />
     <ClInclude Include="Primitives\Material.h" />
-    <ClInclude Include="GLWindow.h" />
     <ClInclude Include="Primitives\Mesh.h" />
     <ClInclude Include="Utility\Math.h" />
-    <ClInclude Include="Scene\TextureManager.h" />
-    <ClInclude Include="Scene\MaterialManager.h" />
     <ClInclude Include="Scene\Light.h" />
     <ClInclude Include="Scene\Object3D.h" />
     <ClInclude Include="Scene\SceneCamera.h" />
+    <ClInclude Include="Scene\AbstractScene.h" />
+    <ClInclude Include="Scene\AbstractModel.h" />
+    <ClInclude Include="Scene\Managers\MeshManager.h" />
+    <ClInclude Include="Scene\Managers\MaterialManager.h" />
+    <ClInclude Include="Scene\Managers\TextureManager.h" />
+    <ClInclude Include="Utility\ModelLoader.h" />
+    <ClInclude Include="Scene\Scene.h" />
+    <ClInclude Include="Scene\Model.h" />
+    <ClInclude Include="Scene\Managers\ModelManager.h" />
+    <ClInclude Include="UI\Window.h" />
+    <ClInclude Include="UI\MainWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Resource\Shaders\lightingFragmentShader.fsh" />
@@ -42,8 +54,5 @@
     <None Include="..\Resource\Shaders\skinningVertexShader.vsh" />
     <None Include="..\Resource\Shaders\skinning.fs" />
     <None Include="..\Resource\Shaders\skinning.vs" />
-  </ItemGroup>
-  <ItemGroup>
-    <CustomBuild Include="Utility\MeshGenerator.h" />
   </ItemGroup>
 </Project>

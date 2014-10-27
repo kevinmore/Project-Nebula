@@ -406,7 +406,7 @@ void MeshImporter::processSkeleton( const aiScene *scene, aiNode *node, Bone *pa
 
 	for (uint imesh = 0; imesh < node->mNumMeshes; ++imesh)
 	{
-		MeshData* mesh = m_Meshes[node->mMeshes[imesh]];
+		MyMeshData* mesh = m_Meshes[node->mMeshes[imesh]];
 		currentBone.m_Meshes.push_back(*mesh);
 	}
 
@@ -608,10 +608,10 @@ void MeshImporter::Render()
 {
 	glBindVertexArray(m_VAO);
 
-	for (uint i = 0 ; i < m_Entries.size() ; i++) {
+	for (int i = 0 ; i < m_Entries.size() ; i++) {
 		const uint MaterialIndex = m_Entries[i].MaterialIndex;
 
-		assert(MaterialIndex < m_Textures.size());
+		assert(MaterialIndex < (uint)m_Textures.size());
 
 		if (m_Textures[MaterialIndex]) {
 			m_Textures[MaterialIndex]->bind(GL_TEXTURE0);

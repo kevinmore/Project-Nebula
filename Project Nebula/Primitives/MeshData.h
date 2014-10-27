@@ -22,7 +22,7 @@ struct LightInfo
 };
 
 
-class MeshData
+class MyMeshData
 {
 public:
 	QString meshName;
@@ -33,7 +33,7 @@ public:
 	GLuint m_shaderProgramID;
 	QGLBuffer vertexBuff;
 	MaterialInfo* material;
-	MeshData():vertices(0), numVertices(0), indices(0), numIndices(0)
+	MyMeshData():vertices(0), numVertices(0), indices(0), numIndices(0)
 	{
 		material = new MaterialInfo();
 	};

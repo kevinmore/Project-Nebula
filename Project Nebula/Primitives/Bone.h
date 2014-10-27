@@ -20,7 +20,7 @@ public:
 	mat4 m_globalTransform;
 
 	/** The mesh data. One bone can be attached with sevral meshes.**/
-	QVector<MeshData> m_Meshes;
+	QVector<MyMeshData> m_Meshes;
 
 	Bone(void)
 	{
@@ -30,7 +30,7 @@ public:
 	{
 		freeSkeleton(this);
 	};
-	Bone(const char* boneName, Bone* parent, const mat4 &transform, MeshData &mesh)
+	Bone(const char* boneName, Bone* parent, const mat4 &transform, MyMeshData &mesh)
 	{
 		// init the current bone
 		m_boneName = boneName;
@@ -46,7 +46,7 @@ public:
 		m_children.push_back(child);
 	}
 
-	void addMesh(MeshData &mesh)
+	void addMesh(MyMeshData &mesh)
 	{
 		m_Meshes.push_back(mesh);
 	}
@@ -68,7 +68,7 @@ public:
 		else return m_children.size();
 	}
 
-	QVector<MeshData> getMeshData()
+	QVector<MyMeshData> getMeshData()
 	{
 		return m_Meshes;
 	}

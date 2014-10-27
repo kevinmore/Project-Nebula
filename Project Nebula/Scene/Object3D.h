@@ -36,16 +36,16 @@ public:
 
 	const QMatrix4x4& modelMatrix();
 
-	public slots:
-		void setObjectXPosition(int x);
-		void setObjectYPosition(int y);
-		void setObjectZPosition(int z);
+public slots:
+	void setObjectXPosition(int x);
+	void setObjectYPosition(int y);
+	void setObjectZPosition(int z);
 
-		void setObjectXRotation(int x);
-		void setObjectYRotation(int y);
-		void setObjectZRotation(int z);
+	void setObjectXRotation(int x);
+	void setObjectYRotation(int y);
+	void setObjectZRotation(int z);
 
-		void reset();
+	void reset();
 
 private:
 	QVector3D m_position;

@@ -5,19 +5,19 @@
 class MeshGenerator
 {
 public:
-	static MeshData makeTriangle();
-	static MeshData makeIdentityCube(vec4 &color);
-	static MeshData makeCylinder(const float height, const float radiusTop, const float radiusBottom,
+	static MyMeshData makeTriangle();
+	static MyMeshData makeIdentityCube(vec4 &color);
+	static MyMeshData makeCylinder(const float height, const float radiusTop, const float radiusBottom,
 		const QVector4D &colorTop, const QVector4D &colorBottom, const int segments = 16);
-	static MeshData makeCylinder(const float height, const float radiusTop, const float radiusBottom,
+	static MyMeshData makeCylinder(const float height, const float radiusTop, const float radiusBottom,
 		const QColor &colorTop, const QColor &colorBottom, const int segments = 16);
-	static MeshData makeDemoRoom();
-	static MeshData makePyramid();
-	static MeshData makePalm(vec4 &color);
+	static MyMeshData makeDemoRoom();
+	static MyMeshData makePyramid();
+	static MyMeshData makePalm(vec4 &color);
 	static Bone* makeHand(); // returns the root of the hand
 
 
-	static void generateNormals(MeshData &mesh);
+	static void generateNormals(MyMeshData &mesh);
 
 };
 

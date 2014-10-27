@@ -1,4 +1,4 @@
-#include <Scene/Light.h>
+#include "Light.h"
 #include <Utility/Math.h>
 using namespace Math;
 #define M_PI       3.14159265358979323846

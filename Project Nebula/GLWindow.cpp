@@ -222,7 +222,7 @@ void GLWindow::paintGL()
 	//if (m_importer->loadSucceeded()) renderSkinningModel(skinningShaderProgram2, m_importer);	// the model may not be imported successfully
 }
 
-void GLWindow::renderMesh( QGLShaderProgram &shader, MeshData &mesh, mat4 &modelToWorldMatrix )
+void GLWindow::renderMesh( QGLShaderProgram &shader, MyMeshData &mesh, mat4 &modelToWorldMatrix )
 {
 	// calculate MV Matrix
 	mat4 mvMatrix = vMatrix * modelToWorldMatrix;
@@ -297,7 +297,7 @@ void GLWindow::renderMesh( QGLShaderProgram &shader, MeshData &mesh, mat4 &model
 	shader.release();
 }
 
-void GLWindow::renderBone( QGLShaderProgram &shader, MeshData &mesh)
+void GLWindow::renderBone( QGLShaderProgram &shader, MyMeshData &mesh)
 {
 
 	// calculate MV Matrix
@@ -386,7 +386,7 @@ void GLWindow::renderBone( QGLShaderProgram &shader, MeshData &mesh)
 	shader.release();
 }
 
-void GLWindow::renderSkinningModel( QGLShaderProgram &shader, MeshData &mesh )
+void GLWindow::renderSkinningModel( QGLShaderProgram &shader, MyMeshData &mesh )
 {
 	// calculate MV Matrix
 	mat4 modelToWorldMatrix;
@@ -539,7 +539,7 @@ void GLWindow::renderSkinningModel( QGLShaderProgram &shader, MeshImporter* impo
 void GLWindow::renderSkeleton( Bone* root )
 {
 	if(!root) return; // empty skeleton
-	QVector<MeshData> meshes = root->getMeshData();
+	QVector<MyMeshData> meshes = root->getMeshData();
 	for (int i = 0; i < meshes.size(); ++i)
 	{
 		renderMesh(lightingShaderProgram, meshes[i], root->m_globalTransform);

@@ -2,7 +2,7 @@
 
 #define  NUM_ARRAY_ELEMENTS(a) sizeof(a)/sizeof(*a)
 
-void MeshGenerator::generateNormals( MeshData &mesh )
+void MeshGenerator::generateNormals( MyMeshData &mesh )
 {
 	QVector<vec3>* normal_buffer = new QVector<vec3>[mesh.numVertices];
 
@@ -152,9 +152,9 @@ ShapeData ShapeGenerator::makeCube()
 
 */
 
-MeshData MeshGenerator::makePalm(vec4 &color)
+MyMeshData MeshGenerator::makePalm(vec4 &color)
 {
-	MeshData ret;
+	MyMeshData ret;
 	Vertex stackVerts[] = {
 		vec3(-0.03f, +0.05f, 0.01f), // 0
 		color,
@@ -235,10 +235,10 @@ MeshData MeshGenerator::makePalm(vec4 &color)
 	return ret;
 }
 
-MeshData MeshGenerator::makeCylinder( const float height, const float radiusTop, const float radiusBottom,
+MyMeshData MeshGenerator::makeCylinder( const float height, const float radiusTop, const float radiusBottom,
 	const QVector4D &colorTop, const QVector4D &colorBottom, const int segments)
 {
-	MeshData ret;
+	MyMeshData ret;
 
 	int nbSegments;
 	QVector<vec4> vertex_positions;
@@ -309,7 +309,7 @@ MeshData MeshGenerator::makeCylinder( const float height, const float radiusTop,
 	return ret;
 }
 
-MeshData MeshGenerator::makeCylinder( const float height, const float radiusTop, const float radiusBottom, const QColor &colorTop, const QColor &colorBottom, const int segments /*= 16*/ )
+MyMeshData MeshGenerator::makeCylinder( const float height, const float radiusTop, const float radiusBottom, const QColor &colorTop, const QColor &colorBottom, const int segments /*= 16*/ )
 {
 	vec4 top = vec4((GLfloat)colorTop.red()/255, (GLfloat)colorTop.green()/255, (GLfloat)colorTop.blue()/255, 1.0);
 	vec4 bot = vec4((GLfloat)colorBottom.red()/255, (GLfloat)colorBottom.green()/255, (GLfloat)colorBottom.blue()/255, 1.0);
@@ -318,9 +318,9 @@ MeshData MeshGenerator::makeCylinder( const float height, const float radiusTop,
 
 
 
-MeshData MeshGenerator::makeDemoRoom()
+MyMeshData MeshGenerator::makeDemoRoom()
 {
-	MeshData ret;
+	MyMeshData ret;
 	Vertex stackVerts[] = {
 		vec3(-2.0f, +3.0f, 2.0f), // 0
 		vec4(0.25f, 0.25f, 0.25f, 1.0f),
@@ -398,36 +398,36 @@ MeshData MeshGenerator::makeDemoRoom()
 	return ret;
 }
 
-MeshData MeshGenerator::makePyramid()
+MyMeshData MeshGenerator::makePyramid()
 {
-	MeshData ret;
+	MyMeshData ret;
 
 	return ret;
 }
 
 Bone* MeshGenerator::makeHand()
 {
-	MeshData mesh_root = makePalm(vec4(0.6, 0.6, 1.0, 1.0));
+	MyMeshData mesh_root = makePalm(vec4(0.6, 0.6, 1.0, 1.0));
 
-	MeshData mesh_1_1 = makeCylinder(0.028f, 0.0046f, 0.005f, QColor(0,153,255), QColor(0,153,255));
-	MeshData mesh_1_2 = makeCylinder(0.023f, 0.0042f, 0.0046f, QColor(34,139,34), QColor(34,139,34));
-	MeshData mesh_1_3 = makeCylinder(0.02f, 0.0038f, 0.0042f, QColor(255,12,62), QColor(255,12,62));
+	MyMeshData mesh_1_1 = makeCylinder(0.028f, 0.0046f, 0.005f, QColor(0,153,255), QColor(0,153,255));
+	MyMeshData mesh_1_2 = makeCylinder(0.023f, 0.0042f, 0.0046f, QColor(34,139,34), QColor(34,139,34));
+	MyMeshData mesh_1_3 = makeCylinder(0.02f, 0.0038f, 0.0042f, QColor(255,12,62), QColor(255,12,62));
 
-	MeshData mesh_2_1 = makeCylinder(0.035f, 0.0046f, 0.005f, QColor(0,153,255), QColor(0,153,255));
-	MeshData mesh_2_2 = makeCylinder(0.025f, 0.0042f, 0.0046f, QColor(34,139,34), QColor(34,139,34));
-	MeshData mesh_2_3 = makeCylinder(0.015f, 0.0038f, 0.0042f, QColor(255,12,62), QColor(255,12,62));
+	MyMeshData mesh_2_1 = makeCylinder(0.035f, 0.0046f, 0.005f, QColor(0,153,255), QColor(0,153,255));
+	MyMeshData mesh_2_2 = makeCylinder(0.025f, 0.0042f, 0.0046f, QColor(34,139,34), QColor(34,139,34));
+	MyMeshData mesh_2_3 = makeCylinder(0.015f, 0.0038f, 0.0042f, QColor(255,12,62), QColor(255,12,62));
 
-	MeshData mesh_3_1 = makeCylinder(0.04f, 0.0046f, 0.005f, QColor(0,153,255), QColor(0,153,255));
-	MeshData mesh_3_2 = makeCylinder(0.03f, 0.0042f, 0.0046f, QColor(34,139,34), QColor(34,139,34));
-	MeshData mesh_3_3 = makeCylinder(0.015f, 0.0038f, 0.0042f,QColor(255,12,62), QColor(255,12,62));
+	MyMeshData mesh_3_1 = makeCylinder(0.04f, 0.0046f, 0.005f, QColor(0,153,255), QColor(0,153,255));
+	MyMeshData mesh_3_2 = makeCylinder(0.03f, 0.0042f, 0.0046f, QColor(34,139,34), QColor(34,139,34));
+	MyMeshData mesh_3_3 = makeCylinder(0.015f, 0.0038f, 0.0042f,QColor(255,12,62), QColor(255,12,62));
 
-	MeshData mesh_4_1 = makeCylinder(0.035f, 0.0046f, 0.005f, QColor(0,153,255), QColor(0,153,255));
-	MeshData mesh_4_2 = makeCylinder(0.03f, 0.0042f, 0.0046f, QColor(34,139,34), QColor(34,139,34));
-	MeshData mesh_4_3 = makeCylinder(0.015f, 0.0038f, 0.0042f,QColor(255,12,62), QColor(255,12,62));
+	MyMeshData mesh_4_1 = makeCylinder(0.035f, 0.0046f, 0.005f, QColor(0,153,255), QColor(0,153,255));
+	MyMeshData mesh_4_2 = makeCylinder(0.03f, 0.0042f, 0.0046f, QColor(34,139,34), QColor(34,139,34));
+	MyMeshData mesh_4_3 = makeCylinder(0.015f, 0.0038f, 0.0042f,QColor(255,12,62), QColor(255,12,62));
 
-	MeshData mesh_5_1 = makeCylinder(0.02f, 0.0046f, 0.005f, QColor(0,153,255), QColor(0,153,255));
-	MeshData mesh_5_2 = makeCylinder(0.02f, 0.0042f, 0.0046f, QColor(34,139,34), QColor(34,139,34));
-	MeshData mesh_5_3 = makeCylinder(0.01f, 0.0038f, 0.0042f, QColor(255,12,62), QColor(255,12,62));
+	MyMeshData mesh_5_1 = makeCylinder(0.02f, 0.0046f, 0.005f, QColor(0,153,255), QColor(0,153,255));
+	MyMeshData mesh_5_2 = makeCylinder(0.02f, 0.0042f, 0.0046f, QColor(34,139,34), QColor(34,139,34));
+	MyMeshData mesh_5_3 = makeCylinder(0.01f, 0.0038f, 0.0042f, QColor(255,12,62), QColor(255,12,62));
 
 	mat4 tMatrix;
 

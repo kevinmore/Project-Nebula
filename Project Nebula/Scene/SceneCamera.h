@@ -4,8 +4,10 @@
 
 class SceneCamera : public QObject
 {
+	Q_OBJECT
+
 public:
-	SceneCamera();
+	SceneCamera(QObject *parent = 0);
 	~SceneCamera();
 
 	enum ProjectionType
@@ -66,6 +68,7 @@ public:
 	QQuaternion panRotation(const float& angle) const;
 	QQuaternion panRotation(const float& angle, const QVector3D& axis) const;
 
+public slots:
 	void setPosition(const QVector3D& position);
 	void setUpVector(const QVector3D& upVector);
 	void setViewCenter(const QVector3D& viewCenter);

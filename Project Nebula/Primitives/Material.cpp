@@ -50,10 +50,10 @@ void Material::init()
 	m_buffer.bind();
 	
 
-	GLint offsets[7];
-
-
-	m_buffer.allocate(sizeof(offsets));
+// 	GLint offsets[7];
+// 
+// 
+// 	m_buffer.allocate(sizeof(offsets));
 	m_buffer.release();
 }
 
@@ -69,11 +69,11 @@ void Material::bind()
 	{
 		switch(m_blendMode)
 		{
-		case BlendMode::Additive:
+		case Additive:
 			glBlendFunc(GL_ONE, GL_ONE);
 			break;
 
-		case BlendMode::Default:
+		case Default:
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			break;
 		}

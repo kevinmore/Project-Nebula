@@ -1,8 +1,9 @@
-#include <Scene/SceneCamera.h>
+#include "SceneCamera.h"
 using namespace Math;
 
-SceneCamera::SceneCamera()
-  : m_position(Vector3D::UNIT_Z),
+SceneCamera::SceneCamera(QObject *parent)
+  : QObject(parent),
+	m_position(Vector3D::UNIT_Z),
 	m_upVector(Vector3D::UNIT_Y),
 	m_viewCenter(Vector3D::ZERO),
 	m_cameraToCenter(Vector3D::NEGATIVE_UNIT_Z),

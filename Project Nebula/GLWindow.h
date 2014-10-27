@@ -31,19 +31,19 @@ private:
 
 	void setupLights();
 	void SendDataToOpenGL();
-	void renderMesh(QGLShaderProgram &shader, MeshData &mesh, mat4 &modelToWorldMatrix);
-	void renderBone(QGLShaderProgram &shader, MeshData &mesh);
-	void renderSkinningModel(QGLShaderProgram &shader, MeshData &mesh);
+	void renderMesh(QGLShaderProgram &shader, MyMeshData &mesh, mat4 &modelToWorldMatrix);
+	void renderBone(QGLShaderProgram &shader, MyMeshData &mesh);
+	void renderSkinningModel(QGLShaderProgram &shader, MyMeshData &mesh);
 	void renderSkinningModel(QGLShaderProgram &shader, MeshImporter* importer);
 	void renderSkeleton(Bone* root);
 
 	// TEST
 	MeshImporter *m_importer;
 	Bone *hand, *handModel;
-	QVector<MeshData*> model_meshes;
+	QVector<MyMeshData*> model_meshes;
 	GLfloat handRotationAngle;
 	int handRotationDirection;
-	MeshData shape, shape2;
+	MyMeshData shape, shape2;
 	QGLBuffer cylinderVertexBuffer, cylinderVertexBuffer2;
 	QGLShaderProgram coloringShaderProgram, skinningShaderProgram, skinningShaderProgram2;
 	GLuint m_boneLocation[100];

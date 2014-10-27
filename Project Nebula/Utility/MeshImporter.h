@@ -71,15 +71,15 @@ private:
 	uint m_offSet;
 	bool m_loaded;
 	Bone* m_Root;
-	MeshData* m_wholeMesh;
+	MyMeshData* m_wholeMesh;
 public:
 	
-	QVector<MeshData*> m_Meshes;
+	QVector<MyMeshData*> m_Meshes;
 	MeshImporter(void);
 	~MeshImporter(void);
 	void Render();
 	void cleanUp();
-	MeshData* getWholeMesh() { return m_wholeMesh; }
+	MyMeshData* getWholeMesh() { return m_wholeMesh; }
 	Bone* getSkeleton() { return m_Root; }
 	void processSkeleton(const aiScene *scene, aiNode *node, Bone *parentNode, Bone &newNode);
 
