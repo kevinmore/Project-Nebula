@@ -39,13 +39,13 @@
     <ClInclude Include="Scene\AbstractModel.h" />
     <ClInclude Include="Scene\Managers\MeshManager.h" />
     <ClInclude Include="Scene\Managers\MaterialManager.h" />
-    <ClInclude Include="Scene\Managers\TextureManager.h" />
     <ClInclude Include="Utility\ModelLoader.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\Model.h" />
     <ClInclude Include="Scene\Managers\ModelManager.h" />
     <ClInclude Include="UI\Window.h" />
     <ClInclude Include="UI\MainWindow.h" />
+    <ClInclude Include="Scene\Managers\TextureManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Resource\Shaders\lightingFragmentShader.fsh" />

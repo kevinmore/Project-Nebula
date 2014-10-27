@@ -24,12 +24,7 @@ MeshPtr MeshManager::addMesh( const QString& name, unsigned int numIndices, unsi
 		return m_meshes[name];
 	} 
 	
-	Mesh* mesh = new Mesh(name, numIndices, baseVertex, baseIndex);
-
-	m_meshes[name] = MeshPtr(mesh);
-
-	delete mesh;
-	mesh = nullptr;
+	m_meshes[name] = MeshPtr(new Mesh(name, numIndices, baseVertex, baseIndex));
 
 	return m_meshes[name];
 }

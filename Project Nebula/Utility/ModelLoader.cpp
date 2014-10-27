@@ -48,15 +48,13 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName, const QOp
 		exit(1);
 	}
 
-	QVector<ModelDataPtr> modelDataVector = QVector<ModelDataPtr>();
-	modelDataVector.resize(scene->mNumMeshes);
 
-	qDebug() << "Model has" << modelDataVector.size() << "meshes";
+	qDebug() << "Model has" << scene->mNumMeshes << "meshes";
 
 	unsigned int numVertices = 0;
 	unsigned int numIndices  = 0;
 
-	for(int i = 0; i < modelDataVector.size(); ++i)
+	for(uint i = 0; i < scene->mNumMeshes; ++i)
 	{
 		numVertices += scene->mMeshes[i]->mNumVertices;
 		numIndices  += scene->mMeshes[i]->mNumFaces * 3;
@@ -72,20 +70,22 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName, const QOp
 	numVertices = 0;
 	numIndices  = 0;
 
-	for(int i = 0; i < modelDataVector.size(); ++i)
+
+	QVector<ModelDataPtr> modelDataVector;
+	modelDataVector.resize(scene->mNumMeshes);
+
+	for(uint i = 0; i < scene->mNumMeshes; ++i)
 	{
 		ModelData* md = new ModelData();
-		modelDataVector[i] = ModelDataPtr(md);
-
-		modelDataVector[i]->meshData     = loadMesh(i, numVertices, numIndices, scene->mMeshes[i]);
-		modelDataVector[i]->textureData  = loadTexture(fileName, scene->mMaterials[scene->mMeshes[i]->mMaterialIndex]);
-		modelDataVector[i]->materialData = loadMaterial(i, scene->mMaterials[scene->mMeshes[i]->mMaterialIndex]);
+		
+		md->meshData     = loadMesh(i, numVertices, numIndices, scene->mMeshes[i]);
+		md->textureData  = loadTexture(fileName, scene->mMaterials[scene->mMeshes[i]->mMaterialIndex]);
+		md->materialData = loadMaterial(i, scene->mMaterials[scene->mMeshes[i]->mMaterialIndex]);
 
 		numVertices += scene->mMeshes[i]->mNumVertices;
 		numIndices  += scene->mMeshes[i]->mNumFaces * 3;
 		
-		delete md;
-		md = nullptr;
+		modelDataVector[i] = ModelDataPtr(md);
 	}
 
 	prepareVertexBuffers();
@@ -159,36 +159,38 @@ void ModelLoader::prepareVertexBuffers()
 	m_vao->create();
 	m_vao->bind();
 
+
 	// Generate and populate the buffers with vertex attributes and the indices
 	m_vertexPositionBuffer.create();
+	m_vertexPositionBuffer.setUsagePattern(QOpenGLBuffer::StaticDraw);
 	m_vertexPositionBuffer.bind();
-	m_vertexPositionBuffer.setUsagePattern(QOpenGLBuffer::StreamDraw);
 	m_vertexPositionBuffer.allocate(m_positions.data(), m_positions.size() * sizeof(QVector3D));
 
 	m_vertexColorBuffer.create();
+	m_vertexColorBuffer.setUsagePattern(QOpenGLBuffer::StaticDraw);
 	m_vertexColorBuffer.bind();
-	m_vertexColorBuffer.setUsagePattern(QOpenGLBuffer::StreamDraw);
 	m_vertexColorBuffer.allocate(m_colors.data(), m_colors.size() * sizeof(QVector4D));
 
 	m_vertexTexCoordBuffer.create();
+	m_vertexTexCoordBuffer.setUsagePattern(QOpenGLBuffer::StaticDraw);
 	m_vertexTexCoordBuffer.bind();
-	m_vertexTexCoordBuffer.setUsagePattern(QOpenGLBuffer::StreamDraw);
 	m_vertexTexCoordBuffer.allocate(m_texCoords.data(), m_texCoords.size() * sizeof(QVector2D));
 
 	m_vertexNormalBuffer.create();
+	m_vertexNormalBuffer.setUsagePattern(QOpenGLBuffer::StaticDraw);
 	m_vertexNormalBuffer.bind();
-	m_vertexNormalBuffer.setUsagePattern(QOpenGLBuffer::StreamDraw);
 	m_vertexNormalBuffer.allocate(m_normals.data(), m_normals.size() * sizeof(QVector3D));
 
 	m_vertexTangentBuffer.create();
+	m_vertexTangentBuffer.setUsagePattern(QOpenGLBuffer::StaticDraw);
 	m_vertexTangentBuffer.bind();
-	m_vertexTangentBuffer.setUsagePattern(QOpenGLBuffer::StreamDraw);
 	m_vertexTangentBuffer.allocate(m_tangents.data(), m_tangents.size() * sizeof(QVector3D));
 
 	m_indexBuffer.create();
-	m_indexBuffer.bind();
 	m_indexBuffer.setUsagePattern(QOpenGLBuffer::StaticDraw);
+	m_indexBuffer.bind();
 	m_indexBuffer.allocate(m_indices.data(), m_indices.size() * sizeof(unsigned int));
+
 
 	m_shaderProgram->bind();
 

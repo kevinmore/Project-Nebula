@@ -1,8 +1,9 @@
 #include "MaterialManager.h"
 
 
-MaterialManager::MaterialManager(void)
+MaterialManager::MaterialManager(GLuint programHandle)
 {
+	m_programHandle = programHandle;
 }
 
 
@@ -34,12 +35,7 @@ MaterialPtr MaterialManager::addMaterial(const QString& name,
 		return m_materials[name];
 	} 
 	
-	Material* mat = new Material(name, ambientColor, diffuseColor, specularColor, emissiveColor, shininess, shininessStrength, twoSided, blendMode, alphaBlending, hasTexture);
-
-	m_materials[name] = MaterialPtr(mat);
-
-	delete mat;
-	mat = nullptr;
+	m_materials[name] = MaterialPtr(new Material(name, ambientColor, diffuseColor, specularColor, emissiveColor, shininess, shininessStrength, twoSided, blendMode, alphaBlending, hasTexture, m_programHandle));
 
 	return m_materials[name];
 }

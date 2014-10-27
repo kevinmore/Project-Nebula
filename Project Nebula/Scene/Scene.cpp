@@ -34,6 +34,7 @@ Scene::~Scene()
 
 void Scene::initialize()
 {
+
 	glShadeModel(GL_SMOOTH);
 	glClearDepth( 1.0 );
     glClearColor(0.39f, 0.39f, 0.39f, 0.0f);
@@ -53,18 +54,17 @@ void Scene::initialize()
     m_light.setIntensity(3.0f);
 
 	m_modelManager = QSharedPointer<ModelManager>(new ModelManager(this));
-	m_materialManager = QSharedPointer<MaterialManager>(new MaterialManager());
+	m_materialManager = QSharedPointer<MaterialManager>(new MaterialManager(m_shaderProgram->programId()));
 	m_textureManager = QSharedPointer<TextureManager>(new TextureManager());
 	m_meshManager = QSharedPointer<MeshManager>(new MeshManager());
 
 	
-	//m_model = m_modelManager->loadModel("Alice", "../Resource/Models/Alice/Alice.dae", m_shaderProgram);
+	m_model = m_modelManager->loadModel("Alice", "../Resource/Models/Alice/Alice.dae", m_shaderProgram);
 }
 
 void Scene::prepareShaders()
 {
-	QOpenGLShaderProgram* prog = new QOpenGLShaderProgram();
-	m_shaderProgram = ShadersProgramPtr(prog); 
+	m_shaderProgram = ShadersProgramPtr(new QOpenGLShaderProgram()); 
 	m_shaderProgram->addShaderFromSourceFile(QOpenGLShader::Vertex, "../Resource/Shaders/basic.vert");
 	m_shaderProgram->addShaderFromSourceFile(QOpenGLShader::Fragment, "../Resource/Shaders/basic.frag");
 	m_shaderProgram->link();
@@ -112,7 +112,7 @@ void Scene::render(double currentTime)
 	m_shaderProgram->setUniformValue("modelViewMatrix", modelViewMatrix);
 	m_shaderProgram->setUniformValue("projectionMatrix", m_camera->projectionMatrix());
 
-//	m_model->render();
+	m_model->render();
 
 	m_light.setPosition(m_camera->position());
 	m_light.setDirection(m_camera->viewCenter());

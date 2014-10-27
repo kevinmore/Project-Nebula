@@ -1,4 +1,4 @@
-#include <gl/glew.h>
+#include <GL/glew.h>
 #include <Primitives/Material.h>
 
 Material::Material(const QString& name,
@@ -11,7 +11,8 @@ Material::Material(const QString& name,
 				   int twoSided,
 				   int blendMode,
 				   bool alphaBlending,
-				   bool hasTexture)
+				   bool hasTexture,
+				   GLuint programHandle)
 	: m_name(name),
 	m_ambientColor(ambientColor),
 	m_diffuseColor(diffuseColor),
@@ -22,7 +23,8 @@ Material::Material(const QString& name,
 	m_twoSided(twoSided),
 	m_blendMode(blendMode),
 	m_alphaBlending(alphaBlending),
-	m_hasTexture(hasTexture)
+	m_hasTexture(hasTexture),
+	m_programHandle(programHandle)
 {
 	init();
 }
@@ -33,6 +35,13 @@ Material::~Material(void)
 
 void Material::init()
 {
+	// A call to glewInit() must be done after glut is initialized!
+	GLenum res = glewInit();
+	// Check for any errors
+	if (res != GLEW_OK) {
+		fprintf(stderr, "Error: '%s'\n", glewGetErrorString(res));
+	}
+
 	const GLchar* uniformNames[7] =
 	{
 		"MaterialInfo.Ka",
@@ -50,10 +59,23 @@ void Material::init()
 	m_buffer.bind();
 	
 
-// 	GLint offsets[7];
-// 
-// 
-// 	m_buffer.allocate(sizeof(offsets));
+ 	GLint offsets[7];
+
+	GLuint* membersIndices = new GLuint[7];
+
+	glGetUniformIndices(m_programHandle, 7, uniformNames, membersIndices);
+	glGetActiveUniformsiv(m_programHandle, 7, membersIndices, GL_UNIFORM_OFFSET, offsets);
+
+	delete[] membersIndices;
+
+	GLuint blockIndex = glGetUniformBlockIndex(m_programHandle, "MaterialInfo");;
+	GLint blockSize;
+	glGetActiveUniformBlockiv(m_programHandle, blockIndex, GL_UNIFORM_BLOCK_DATA_SIZE, &blockSize);
+
+	QVector<GLubyte> buffer(blockSize);
+	fillBuffer(buffer, offsets);
+
+	m_buffer.allocate(buffer.data(), blockSize);
 	m_buffer.release();
 }
 
@@ -82,28 +104,28 @@ void Material::bind()
 
 void Material::fillBuffer(QVector<GLubyte>& buffer, GLint* offsets)
 {
-// 	(reinterpret_cast<float*>(buffer.data() + offsets[0]))[0] = m_ambientColor.x();
-// 	(reinterpret_cast<float*>(buffer.data() + offsets[0]))[1] = m_ambientColor.y();
-// 	(reinterpret_cast<float*>(buffer.data() + offsets[0]))[2] = m_ambientColor.z();
-// 	(reinterpret_cast<float*>(buffer.data() + offsets[0]))[3] = m_ambientColor.w();
-// 
-// 	(reinterpret_cast<float*>(buffer.data() + offsets[1]))[0] = m_diffuseColor.x();
-// 	(reinterpret_cast<float*>(buffer.data() + offsets[1]))[1] = m_diffuseColor.y();
-// 	(reinterpret_cast<float*>(buffer.data() + offsets[1]))[2] = m_diffuseColor.z();
-// 	(reinterpret_cast<float*>(buffer.data() + offsets[1]))[3] = m_diffuseColor.w();
-// 
-// 	(reinterpret_cast<float*>(buffer.data() + offsets[2]))[0] = m_specularColor.x();
-// 	(reinterpret_cast<float*>(buffer.data() + offsets[2]))[1] = m_specularColor.y();
-// 	(reinterpret_cast<float*>(buffer.data() + offsets[2]))[2] = m_specularColor.z();
-// 	(reinterpret_cast<float*>(buffer.data() + offsets[2]))[3] = m_specularColor.w();
-// 
-// 	(reinterpret_cast<float*>(buffer.data() + offsets[3]))[0] = m_emissiveColor.x();
-// 	(reinterpret_cast<float*>(buffer.data() + offsets[3]))[1] = m_emissiveColor.y();
-// 	(reinterpret_cast<float*>(buffer.data() + offsets[3]))[2] = m_emissiveColor.z();
-// 	(reinterpret_cast<float*>(buffer.data() + offsets[3]))[3] = m_emissiveColor.w();
-// 
-// 	*(reinterpret_cast<float*>(buffer.data() + offsets[4])) = m_shininess;
-// 	*(reinterpret_cast<float*>(buffer.data() + offsets[5])) = m_shininessStrength;
-// 
-// 	*(reinterpret_cast<bool*>(buffer.data() + offsets[6])) = m_hasTexture;
+	(reinterpret_cast<float*>(buffer.data() + offsets[0]))[0] = m_ambientColor.x();
+	(reinterpret_cast<float*>(buffer.data() + offsets[0]))[1] = m_ambientColor.y();
+	(reinterpret_cast<float*>(buffer.data() + offsets[0]))[2] = m_ambientColor.z();
+	(reinterpret_cast<float*>(buffer.data() + offsets[0]))[3] = m_ambientColor.w();
+
+	(reinterpret_cast<float*>(buffer.data() + offsets[1]))[0] = m_diffuseColor.x();
+	(reinterpret_cast<float*>(buffer.data() + offsets[1]))[1] = m_diffuseColor.y();
+	(reinterpret_cast<float*>(buffer.data() + offsets[1]))[2] = m_diffuseColor.z();
+	(reinterpret_cast<float*>(buffer.data() + offsets[1]))[3] = m_diffuseColor.w();
+
+	(reinterpret_cast<float*>(buffer.data() + offsets[2]))[0] = m_specularColor.x();
+	(reinterpret_cast<float*>(buffer.data() + offsets[2]))[1] = m_specularColor.y();
+	(reinterpret_cast<float*>(buffer.data() + offsets[2]))[2] = m_specularColor.z();
+	(reinterpret_cast<float*>(buffer.data() + offsets[2]))[3] = m_specularColor.w();
+
+	(reinterpret_cast<float*>(buffer.data() + offsets[3]))[0] = m_emissiveColor.x();
+	(reinterpret_cast<float*>(buffer.data() + offsets[3]))[1] = m_emissiveColor.y();
+	(reinterpret_cast<float*>(buffer.data() + offsets[3]))[2] = m_emissiveColor.z();
+	(reinterpret_cast<float*>(buffer.data() + offsets[3]))[3] = m_emissiveColor.w();
+
+	*(reinterpret_cast<float*>(buffer.data() + offsets[4])) = m_shininess;
+	*(reinterpret_cast<float*>(buffer.data() + offsets[5])) = m_shininessStrength;
+
+	*(reinterpret_cast<bool*>(buffer.data() + offsets[6])) = m_hasTexture;
 }

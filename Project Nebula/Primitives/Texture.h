@@ -11,7 +11,6 @@ class Texture
 {
 
 public:
-	QString     m_fileName;
 
 	enum TextureType
 	{
@@ -42,5 +41,7 @@ private:
 
 	TextureType m_type;
 	GLuint      m_textureId;
+
+	QString m_fileName;
 };
 

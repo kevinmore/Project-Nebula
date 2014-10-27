@@ -39,7 +39,6 @@ private:
 	};
 
 	void initialize(QVector<ModelDataPtr> modelDataVector = QVector<ModelDataPtr>());
-	void drawElements(unsigned int index);
 
 	QOpenGLVertexArrayObjectPtr m_vao;
 };

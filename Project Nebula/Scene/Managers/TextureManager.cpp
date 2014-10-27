@@ -24,11 +24,7 @@ TexturePtr TextureManager::addTexture( const QString& name, const QString& fileN
 		return m_textures[name];
 	} 
 	
-	Texture* tex = new Texture(fileName);
-	m_textures[name] = TexturePtr(tex);
-
-	delete tex;
-	tex = nullptr;
+	m_textures[name] = TexturePtr(new Texture(fileName));
 
 	return m_textures[name];
 }

@@ -77,14 +77,6 @@ void Model::initialize(QVector<ModelDataPtr> modelDataVector)
 	
 }
 
-void Model::drawElements( unsigned int index )
-{
-	glDrawElementsBaseVertex(GL_TRIANGLES,
-							m_meshes[index]->getNumIndices(),
-							GL_UNSIGNED_INT,
-							reinterpret_cast<void*>((sizeof(unsigned int)) * m_meshes[index]->getBaseIndex()),
-							m_meshes[index]->getBaseVertex());
-}
 
 void Model::render()
 {
@@ -101,7 +93,11 @@ void Model::render()
 
 			m_materials[i]->bind();
 
-			drawElements(i);
+			glDrawElementsBaseVertex(GL_TRIANGLES,
+				m_meshes[i]->getNumIndices(),
+				GL_UNSIGNED_INT,
+				(void*)(sizeof(uint) * m_meshes[i]->getBaseIndex()),
+				m_meshes[i]->getBaseVertex());
 		}
 	}
 
@@ -114,7 +110,11 @@ void Model::render()
 
 			m_materials[i]->bind();
 
-			drawElements(i);
+			glDrawElementsBaseVertex(GL_TRIANGLES,
+				m_meshes[i]->getNumIndices(),
+				GL_UNSIGNED_INT,
+				(void*)(sizeof(uint) * m_meshes[i]->getBaseIndex()),
+				m_meshes[i]->getBaseVertex());
 
 			glDisable(GL_BLEND);
 			glDepthMask(GL_TRUE);

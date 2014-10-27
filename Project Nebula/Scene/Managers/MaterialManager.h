@@ -9,7 +9,7 @@ typedef QSharedPointer<Material> MaterialPtr;
 class MaterialManager
 {
 public:
-	MaterialManager(void);
+	MaterialManager(GLuint programHandle);
 	~MaterialManager(void);
 
 	MaterialPtr getMaterial(const QString& name);
@@ -27,6 +27,6 @@ public:
 
 private:
 	QMap<QString, MaterialPtr> m_materials;
-
+	GLuint m_programHandle;
 };
 

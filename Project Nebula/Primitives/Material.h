@@ -14,7 +14,8 @@ public:
 		     int twoSided,
 		     int blendMode,
 		     bool alphaBlending,
-		     bool hasTexture);
+		     bool hasTexture,
+			 GLuint programHandle);
 
 	virtual ~Material(void);
 
@@ -51,5 +52,6 @@ private:
 	};
 
 	QOpenGLBuffer m_buffer;
+	GLuint m_programHandle;
 };
 

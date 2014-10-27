@@ -1,15 +1,5 @@
 #include <Primitives/Texture.h>
 
-Texture::Texture(TextureType type)
-	: m_qimage(),
-	m_image(),
-	m_fileName(""),
-	m_type(type),
-	m_textureId(0)
-{
-	load();
-}
-
 
 Texture::Texture(const QString& fileName, TextureType type)
 	: m_qimage(),
@@ -101,6 +91,9 @@ void Texture::destroy()
 
 void Texture::bind(GLenum textureUnit)
 {
+#ifdef WIN32
+	glActiveTexture = (PFNGLACTIVETEXTUREPROC) wglGetProcAddress((LPCSTR) "glActiveTexture");
+#endif
 	glActiveTexture(textureUnit);
 	glBindTexture(m_type, m_textureId);
 }
