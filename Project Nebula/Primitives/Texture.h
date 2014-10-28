@@ -1,7 +1,5 @@
 #pragma once
-#include <gl/glew.h>
-#include <QtCore/QDebug>
-#include <QtOpenGL/QGLWidget>
+#include <QtGui/QOpenGLFunctions_4_3_Core>
 #include <QtCore/QString>
 #include <Magick++.h>
 #include <QtGui/QImage>
@@ -19,7 +17,7 @@ public:
 		Texture3D      = GL_TEXTURE_3D,
 		TextureCubeMap = GL_TEXTURE_CUBE_MAP
 	};
-	Texture(TextureType type = Texture2D);
+
 	Texture(const QString& fileName, TextureType type = Texture2D);
 	Texture(const QImage& image, TextureType type = Texture2D);
 	virtual ~Texture();
@@ -32,6 +30,7 @@ public:
 	GLuint textureId() const { return m_textureId; }
 
 private:
+	void init();
 	bool load();
 
 	QImage m_qimage;
@@ -39,9 +38,10 @@ private:
 	Magick::Image m_image;
 	Magick::Blob  m_blob;
 
+	QString m_fileName;
 	TextureType m_type;
 	GLuint      m_textureId;
 
-	QString m_fileName;
+	QOpenGLFunctions_4_3_Core *m_funcs;
 };
 

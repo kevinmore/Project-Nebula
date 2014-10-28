@@ -7,9 +7,7 @@ MaterialManager::MaterialManager(GLuint programHandle)
 }
 
 
-MaterialManager::~MaterialManager(void)
-{
-}
+MaterialManager::~MaterialManager(){}
 
 MaterialPtr MaterialManager::getMaterial( const QString& name )
 {

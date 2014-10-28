@@ -1,6 +1,6 @@
 #pragma once
 #include <Utility/DataTypes.h>
-#include <QtGui/QOpenGLBuffer>
+#include <Utility/OpenGLUniformBuffer.h>
 class Material
 {
 public:
@@ -17,7 +17,7 @@ public:
 		     bool hasTexture,
 			 GLuint programHandle);
 
-	virtual ~Material(void);
+	virtual ~Material();
 
 	void setName(const QString& name) { m_name = name; }
 	QString name() const { return m_name; }
@@ -51,7 +51,6 @@ private:
 		Additive = 0x1
 	};
 
-	QOpenGLBuffer m_buffer;
-	GLuint m_programHandle;
+	OpenGLUniformBuffer m_uniformsBuffer;
 };
 

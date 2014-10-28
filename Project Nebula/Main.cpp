@@ -1,4 +1,3 @@
-#include <GLWindow.h>
 #include <UI/MainWindow.h>
 int main(int argc, char* argv[])
 {

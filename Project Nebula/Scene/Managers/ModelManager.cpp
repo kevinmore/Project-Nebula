@@ -7,9 +7,7 @@ ModelManager::ModelManager(Scene* scene)
 {}
 
 
-ModelManager::~ModelManager(void)
-{
-}
+ModelManager::~ModelManager() {}
 
 ModelPtr ModelManager::getModel( const QString& name )
 {

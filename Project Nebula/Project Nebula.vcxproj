@@ -12,15 +12,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scene\SceneCamera_moc.cpp" />
-    <ClCompile Include="UI\MainWindow.cpp" />
     <ClCompile Include="Scene\AbstractModel.cpp" />
     <ClCompile Include="Scene\AbstractScene.cpp" />
     <ClCompile Include="Scene\Managers\ModelManager.cpp" />
     <ClCompile Include="Scene\Model.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\Scene_moc.cpp" />
+    <ClCompile Include="UI\Canvas_moc.cpp" />
+    <ClCompile Include="UI\MainWindow.cpp" />
+    <ClCompile Include="UI\Canvas.cpp" />
     <ClCompile Include="UI\MainWindow_moc.cpp" />
-    <ClCompile Include="UI\Window_moc.cpp" />
     <ClCompile Include="Utility\ModelLoader.cpp" />
     <ClCompile Include="Scene\Managers\MeshManager.cpp" />
     <ClCompile Include="Scene\SceneCamera.cpp" />
@@ -33,13 +34,14 @@
     <ClCompile Include="Scene\Object3D_moc.cpp" />
     <ClCompile Include="Scene\Managers\TextureManager.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="UI\Window.cpp" />
+    <ClCompile Include="Utility\OpenGLUniformBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="UI\MainWindow.h" />
     <ClInclude Include="Scene\Managers\ModelManager.h" />
     <ClInclude Include="Scene\Model.h" />
     <ClInclude Include="Scene\Scene.h" />
+    <ClInclude Include="UI\MainWindow.h" />
+    <ClInclude Include="UI\Canvas.h" />
     <ClInclude Include="Utility\ModelLoader.h" />
     <ClInclude Include="Scene\AbstractModel.h" />
     <ClInclude Include="Scene\AbstractScene.h" />
@@ -55,15 +57,11 @@
     <ClInclude Include="Utility\Math.h" />
     <ClInclude Include="Primitives\Bone.h" />
     <ClInclude Include="Utility\DataTypes.h" />
-    <ClInclude Include="UI\Window.h" />
+    <ClInclude Include="Utility\OpenGLUniformBuffer.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Resource\Shaders\lightingFragmentShader.fsh" />
-    <None Include="..\Resource\Shaders\lightingVertexShader.vsh" />
-    <None Include="..\Resource\Shaders\skinning.fs" />
-    <None Include="..\Resource\Shaders\skinning.vs" />
-    <None Include="..\Resource\Shaders\skinningFragmentShader.fsh" />
-    <None Include="..\Resource\Shaders\skinningVertexShader.vsh" />
+    <None Include="..\Resource\Shaders\basicSkinning.frag" />
+    <None Include="..\Resource\Shaders\basicSkinning.vert" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{89A9A61D-5047-460C-91C1-C99FC990ABD7}</ProjectGuid>
@@ -107,13 +105,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\ThirdParty\Qt\include;$(ProjectDir)..\ThirdParty\glew\include;$(ProjectDir)..\ThirdParty\assimp\include;$(ProjectDir)..\ThirdParty\ImageMagick\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\ThirdParty\Qt\include;$(ProjectDir)..\ThirdParty\assimp\include;$(ProjectDir)..\ThirdParty\ImageMagick\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\ThirdParty\Qt\lib;$(ProjectDir)..\ThirdParty\glew\lib\Release\Win32;$(ProjectDir)..\ThirdParty\ImageMagick\lib;$(ProjectDir)..\ThirdParty\assimp\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Qt5Cored.lib;Qt5Guid.lib;Qt5OpenGLd.lib;Qt5Widgetsd.lib;opengl32.lib;%(AdditionalDependencies);glew32.lib;assimp.lib;CORE_DB_Magick++_.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\ThirdParty\Qt\lib;$(ProjectDir)..\ThirdParty\ImageMagick\lib;$(ProjectDir)..\ThirdParty\assimp\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Qt5Cored.lib;Qt5Guid.lib;Qt5OpenGLd.lib;Qt5Widgetsd.lib;opengl32.lib;%(AdditionalDependencies);assimp.lib;CORE_DB_Magick++_.lib</AdditionalDependencies>
     </Link>
     <BuildLog>
       <Path>$(ProjectDir)\..\TempFiles\$(MSBuildProjectName).log</Path>
@@ -128,15 +126,15 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\ThirdParty\Qt\include;$(ProjectDir)..\ThirdParty\glew\include;$(ProjectDir)..\ThirdParty\assimp\include;$(ProjectDir)..\ThirdParty\ImageMagick\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\ThirdParty\Qt\include;$(ProjectDir)..\ThirdParty\assimp\include;$(ProjectDir)..\ThirdParty\ImageMagick\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\ThirdParty\Qt\lib;$(ProjectDir)..\ThirdParty\glew\lib\Release\Win32;$(ProjectDir)..\ThirdParty\ImageMagick\lib;$(ProjectDir)..\ThirdParty\assimp\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Qt5Core.lib;Qt5Gui.lib;Qt5OpenGL.lib;Qt5Widgets.lib;opengl32.lib;%(AdditionalDependencies);glew32.lib;assimp.lib;CORE_RL_Magick++_.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\ThirdParty\Qt\lib;$(ProjectDir)..\ThirdParty\ImageMagick\lib;$(ProjectDir)..\ThirdParty\assimp\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Qt5Core.lib;Qt5Gui.lib;Qt5OpenGL.lib;Qt5Widgets.lib;opengl32.lib;%(AdditionalDependencies);assimp.lib;CORE_RL_Magick++_.lib</AdditionalDependencies>
     </Link>
     <BuildLog>
       <Path>$(ProjectDir)\..\TempFiles\$(MSBuildProjectName).log</Path>

@@ -1,7 +1,7 @@
 #include "Light.h"
 #include <Utility/Math.h>
 using namespace Math;
-#define M_PI       3.14159265358979323846
+#define M_PI 3.14159265358979323846
 const float INNER_ANGLE = 30.0f; // 30deg = 0.6981rad = cos(2PI/9) = 0.76604;
 const float OUTER_ANGLE = 40.0f; // 40deg = 0.5235rad = cos(1PI/6) = 0.86602;
 
@@ -22,10 +22,8 @@ Light::Light(const QString& name) :
 	m_intensity(1.0f)
 {}
 
+Light::~Light() {}
 
-Light::~Light(void)
-{
-}
 void Light::setType(LightType type)
 {
 	m_type = type;
@@ -59,8 +57,8 @@ void Light::setUniqueColor(float r, float g, float b)
 }
 
 void Light::setColors(const QColor& ambientColor,
-	const QColor& diffuseColor,
-	const QColor& specularColor)
+					  const QColor& diffuseColor,
+					  const QColor& specularColor)
 {
 	if(ambientColor.alpha() || diffuseColor.alpha() || specularColor.alpha())
 		qWarning("The alpha channel of light colors should be equal to 0");

@@ -1,14 +1,7 @@
 #include "MeshManager.h"
 
-
-MeshManager::MeshManager(void)
-{
-}
-
-
-MeshManager::~MeshManager(void)
-{
-}
+MeshManager::MeshManager() {}
+MeshManager::~MeshManager() {}
 
 MeshPtr MeshManager::getMesh( const QString& name )
 {

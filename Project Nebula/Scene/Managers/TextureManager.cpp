@@ -1,14 +1,8 @@
 #include "TextureManager.h"
+#include <QtCore/QDebug>
 
-
-TextureManager::TextureManager(void)
-{
-}
-
-
-TextureManager::~TextureManager(void)
-{
-}
+TextureManager::TextureManager() {}
+TextureManager::~TextureManager() {}
 
 TexturePtr TextureManager::getTexture( const QString& name )
 {
@@ -25,6 +19,8 @@ TexturePtr TextureManager::addTexture( const QString& name, const QString& fileN
 	} 
 	
 	m_textures[name] = TexturePtr(new Texture(fileName));
+
+	qDebug() << "Loaded texture :" << fileName;
 
 	return m_textures[name];
 }

@@ -1,5 +1,5 @@
 #pragma once
-#include <GL/glew.h>
+#include <QtGui/QOpenGLFunctions_4_3_Core>
 #include <QtCore/QSharedPointer>
 #include <QtGui/QOpenGLShaderProgram>
 #include <Scene/AbstractScene.h>
@@ -12,6 +12,7 @@
 #include <Scene/Managers/MeshManager.h>
 #include <Scene/Managers/ModelManager.h>
 
+
 typedef QSharedPointer<QOpenGLShaderProgram> ShadersProgramPtr;
 
 class Scene : public AbstractScene
@@ -20,7 +21,7 @@ class Scene : public AbstractScene
 
 public:
 	Scene(QObject* parent = 0);
-	~Scene(void);
+	virtual ~Scene();
 
 	virtual void initialize();
 	virtual void update(float t);
@@ -48,7 +49,7 @@ public:
 	void setLightMode(LightMode lightMode) { m_lightMode = lightMode; }
 	LightMode lightMode() const { return m_lightMode; }
 
-	Object3D* getObject();
+	Object3D*    getObject();
 	SceneCamera* getCamera();
 
 	QSharedPointer<MeshManager>     meshManager();
@@ -97,5 +98,7 @@ private:
 
 	LightMode       m_lightMode;
 	QVector<GLuint> m_lightModeSubroutines;
+
+	QOpenGLFunctions_4_3_Core* m_funcs;
 };
 

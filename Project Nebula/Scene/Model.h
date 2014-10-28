@@ -1,5 +1,5 @@
 #pragma once
-#include <GL/glew.h>
+#include <QtGui/QOpenGLFunctions_4_3_Core>
 #include <Scene/AbstractModel.h>
 #include <Scene/Managers/MeshManager.h>
 #include <Scene/Managers/MaterialManager.h>
@@ -39,7 +39,10 @@ private:
 	};
 
 	void initialize(QVector<ModelDataPtr> modelDataVector = QVector<ModelDataPtr>());
+	void drawElements(unsigned int index, int mode);
+	void destroy();
 
 	QOpenGLVertexArrayObjectPtr m_vao;
+	QOpenGLFunctions_4_3_Core *m_funcs;
 };
 

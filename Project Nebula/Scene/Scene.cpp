@@ -3,16 +3,16 @@
 
 Scene::Scene(QObject* parent)
 	: AbstractScene(parent),
-		m_camera(new SceneCamera(this)),
-		m_light("light01"),
-		m_v(),
-		m_viewCenterFixed(false),
-		m_panAngle(0.0f),
-		m_tiltAngle(0.0f),
-		m_time(0.0f),
-		m_metersToUnits(0.05f),
-		m_lightMode(PerFragmentPhong),
-		m_lightModeSubroutines(LightModeCount)
+	  m_camera(new SceneCamera(this)),
+	  m_light("light01"),
+	  m_v(),
+	  m_viewCenterFixed(false),
+	  m_panAngle(0.0f),
+	  m_tiltAngle(0.0f),
+	  m_time(0.0f),
+	  m_metersToUnits(0.05f),
+	  m_lightMode(PerFragmentPhong),
+	  m_lightModeSubroutines(LightModeCount)
 {
 	// Initializing the position and orientation of the camera
 	m_camera->setPosition(QVector3D(-8.0f, 0.0f, -7.0f));
@@ -34,6 +34,18 @@ Scene::~Scene()
 
 void Scene::initialize()
 {
+	m_funcs = QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions_4_3_Core>();
+
+	if( ! m_funcs )
+	{
+		qFatal("Requires OpenGL >= 4.3");
+		exit(1);
+	}
+
+	m_funcs->initializeOpenGLFunctions();
+
+	// compile and link shaders
+	prepareShaders();
 
 	glShadeModel(GL_SMOOTH);
 	glClearDepth( 1.0 );
@@ -42,11 +54,9 @@ void Scene::initialize()
     glDepthFunc(GL_LEQUAL);
     glEnable(GL_CULL_FACE);
 	
-	// compile and link shaders
-	prepareShaders();
+	
 	m_shaderProgram->bind();
 	m_shaderProgram->setUniformValue("texColor", 0);
-	// shader->setUniformValue("texNormal", 1);
 	
     m_light.setType(Light::SpotLight);
     m_light.setUniqueColor(1.0, 1.0, 1.0);
@@ -65,8 +75,8 @@ void Scene::initialize()
 void Scene::prepareShaders()
 {
 	m_shaderProgram = ShadersProgramPtr(new QOpenGLShaderProgram()); 
-	m_shaderProgram->addShaderFromSourceFile(QOpenGLShader::Vertex, "../Resource/Shaders/basic.vert");
-	m_shaderProgram->addShaderFromSourceFile(QOpenGLShader::Fragment, "../Resource/Shaders/basic.frag");
+	m_shaderProgram->addShaderFromSourceFile(QOpenGLShader::Vertex, "../Resource/Shaders/basicSkinning.vert");
+	m_shaderProgram->addShaderFromSourceFile(QOpenGLShader::Fragment, "../Resource/Shaders/basicSkinning.frag");
 	m_shaderProgram->link();
 }
 
@@ -97,7 +107,8 @@ void Scene::update(float t)
 void Scene::render(double currentTime)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+	// Set the fragment shader light mode subroutine
+    m_funcs->glUniformSubroutinesuiv(GL_FRAGMENT_SHADER, 1, &m_lightModeSubroutines[m_lightMode]);
 
 	if(currentTime > 0)
 	{
@@ -111,7 +122,7 @@ void Scene::render(double currentTime)
 	m_shaderProgram->setUniformValue("normalMatrix", normalMatrix);
 	m_shaderProgram->setUniformValue("modelViewMatrix", modelViewMatrix);
 	m_shaderProgram->setUniformValue("projectionMatrix", m_camera->projectionMatrix());
-
+	
 	m_model->render();
 
 	m_light.setPosition(m_camera->position());
@@ -130,18 +141,18 @@ void Scene::resize(int width, int height)
 		float aspect = static_cast<float>(width) / static_cast<float>(height);
 
 		m_camera->setPerspectiveProjection(m_camera->fieldOfView(),
-			aspect,
-			m_camera->nearPlane(),
-			m_camera->farPlane());
+										   aspect,
+										   m_camera->nearPlane(),
+										   m_camera->farPlane());
 	}
 	else if(m_camera->projectionType() == SceneCamera::OrthogonalProjection)
 	{
 		m_camera->setOrthographicProjection(m_camera->left(),
-			m_camera->right(),
-			m_camera->bottom(),
-			m_camera->top(),
-			m_camera->nearPlane(),
-			m_camera->farPlane());
+											m_camera->right(),
+											m_camera->bottom(),
+											m_camera->top(),
+											m_camera->nearPlane(),
+											m_camera->farPlane());
 	}
 }
 

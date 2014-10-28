@@ -4,9 +4,9 @@ using namespace Math;
 
 Object3D::Object3D()
 	: m_position(Vector3D::ZERO),
-	m_rotation(Vector3D::ZERO),
-	m_scale(Vector3D::UNIT_SCALE),
-	m_modelMatrixDirty(true)
+	  m_rotation(Vector3D::ZERO),
+	  m_scale(QVector3D(0.1f, 0.1f, 0.1f)),
+	  m_modelMatrixDirty(true)
 {}
 
 void Object3D::setPosition(const QVector3D& positionVector)

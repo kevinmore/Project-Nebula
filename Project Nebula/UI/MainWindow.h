@@ -1,7 +1,6 @@
 #pragma once
-#include <GL/glew.h>
 #include <QtWidgets/QtWidgets>
-#include <UI/Window.h>
+#include <UI/Canvas.h>
 #include <Scene/Scene.h>
 #include <Scene/SceneCamera.h>
 #include <Scene/Object3D.h>
@@ -12,12 +11,15 @@ class MainWindow : public QMainWindow
 
 public:
 	MainWindow(QWidget* parent = 0);
+
+
+
 	~MainWindow(void);
 
 private:
+	void initializeCanvas();
 	void initializeMenuBar();
 	void initializeParamsArea();
-
 private slots:
 	void setFullScreen(bool state);
 	void setViewProperties(bool state);
@@ -32,7 +34,7 @@ private slots:
 	void updateTop(double top);
 
 private:
-	QScopedPointer<Window> m_openglArea;
+	QScopedPointer<Canvas> m_canvas;
 
 	QWidget      * m_params,         * m_coordinate,     * m_mvpMatrix;
 	QDockWidget  * m_dockParamsArea, * m_dockMatrixArea;

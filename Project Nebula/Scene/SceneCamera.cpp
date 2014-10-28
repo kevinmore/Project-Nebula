@@ -10,7 +10,7 @@ SceneCamera::SceneCamera(QObject *parent)
 	m_projectionType(PerspectiveProjection),
 	m_nearPlane(0.1f),
 	m_farPlane(1024.0f),
-	m_fieldOfView(75.0f),
+	m_fieldOfView(60.0f),
 	m_aspectRatio(1.0f),
 	m_left(-0.5f),
 	m_right(0.5f),

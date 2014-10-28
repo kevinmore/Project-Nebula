@@ -1,87 +1,66 @@
-#include <GL/glew.h>
 #include <Primitives/Material.h>
 
 Material::Material(const QString& name,
-				   const vec4& ambientColor,
-				   const vec4& diffuseColor,
-				   const vec4& specularColor,
-				   const vec4& emissiveColor,
-				   float shininess,
-				   float shininessStrength,
-				   int twoSided,
-				   int blendMode,
-				   bool alphaBlending,
-				   bool hasTexture,
-				   GLuint programHandle)
+					const QVector4D& ambientColor,
+					const QVector4D& diffuseColor,
+					const QVector4D& specularColor,
+					const QVector4D& emissiveColor,
+					float shininess,
+					float shininessStrength,
+					int twoSided,
+					int blendMode,
+					bool alphaBlending,
+					bool hasTexture,
+					GLuint programHandle)
 	: m_name(name),
-	m_ambientColor(ambientColor),
-	m_diffuseColor(diffuseColor),
-	m_specularColor(specularColor),
-	m_emissiveColor(emissiveColor),
-	m_shininess(shininess),
-	m_shininessStrength(shininessStrength),
-	m_twoSided(twoSided),
-	m_blendMode(blendMode),
-	m_alphaBlending(alphaBlending),
-	m_hasTexture(hasTexture),
-	m_programHandle(programHandle)
+	  m_ambientColor(ambientColor),
+	  m_diffuseColor(diffuseColor),
+	  m_specularColor(specularColor),
+	  m_emissiveColor(emissiveColor),
+	  m_shininess(shininess),
+	  m_shininessStrength(shininessStrength),
+	  m_twoSided(twoSided),
+	  m_blendMode(blendMode),
+	  m_alphaBlending(alphaBlending),
+	  m_hasTexture(hasTexture),
+	  m_uniformsBuffer(programHandle, "MaterialInfo", 7)
 {
 	init();
 }
 
-Material::~Material(void)
-{
-}
+Material::~Material() {}
 
 void Material::init()
 {
-	// A call to glewInit() must be done after glut is initialized!
-	GLenum res = glewInit();
-	// Check for any errors
-	if (res != GLEW_OK) {
-		fprintf(stderr, "Error: '%s'\n", glewGetErrorString(res));
-	}
+	m_uniformsBuffer.create();
+	m_uniformsBuffer.setUsagePattern(OpenGLUniformBuffer::StreamDraw);
+	m_uniformsBuffer.bind();
 
-	const GLchar* uniformNames[7] =
+	const GLchar* uniformNames[] =
 	{
-		"MaterialInfo.Ka",
-		"MaterialInfo.Kd",
-		"MaterialInfo.Ks",
-		"MaterialInfo.Ke",
-		"MaterialInfo.shininess",
-		"MaterialInfo.shininessStrength",
+		"MaterialInfo.Ka",					// Ambient reflectivity
+		"MaterialInfo.Kd",					// Diffuse reflectivity
+		"MaterialInfo.Ks",					// Specular reflectivity
+		"MaterialInfo.Ke",					// Emissive reflectivity
+		"MaterialInfo.shininess",			// Specular shininess exponent
+		"MaterialInfo.shininessStrength",	// Not used in Phong model
 		"MaterialInfo.hasTexture"
 	};
 
-	m_buffer = QOpenGLBuffer(QOpenGLBuffer::VertexBuffer);
-	m_buffer.create();
-	m_buffer.setUsagePattern(QOpenGLBuffer::StreamDraw);
-	m_buffer.bind();
-	
-
- 	GLint offsets[7];
-
-	GLuint* membersIndices = new GLuint[7];
-
-	glGetUniformIndices(m_programHandle, 7, uniformNames, membersIndices);
-	glGetActiveUniformsiv(m_programHandle, 7, membersIndices, GL_UNIFORM_OFFSET, offsets);
-
-	delete[] membersIndices;
-
-	GLuint blockIndex = glGetUniformBlockIndex(m_programHandle, "MaterialInfo");;
-	GLint blockSize;
-	glGetActiveUniformBlockiv(m_programHandle, blockIndex, GL_UNIFORM_BLOCK_DATA_SIZE, &blockSize);
+	GLint offsets[7] = {0,16,32,48,64,68,72};
+	m_uniformsBuffer.getBlockMembersData(uniformNames, OpenGLUniformBuffer::Offset, offsets); // this is not working
+	GLint blockSize = m_uniformsBuffer.getSize();
 
 	QVector<GLubyte> buffer(blockSize);
 	fillBuffer(buffer, offsets);
 
-	m_buffer.allocate(buffer.data(), blockSize);
-	m_buffer.release();
+	m_uniformsBuffer.allocate(blockSize, buffer.data());
+	m_uniformsBuffer.assignBindingPoint(1);
 }
 
 void Material::bind()
 {
-	m_buffer.bind();
+	m_uniformsBuffer.bind(1);
 
 	// Specifies whether meshes using this material
 	// must be rendered with or without back face culling

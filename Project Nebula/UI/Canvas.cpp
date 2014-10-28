@@ -1,15 +1,15 @@
-#include "Window.h"
+#include "Canvas.h"
 
 #include <QtCore/QCoreApplication>
 #include <QtGui/QKeyEvent>
 #include <QtGui/QOpenGLContext>
 #include <QtCore/QTimer>
 
-Window::Window(QScreen *screen)
+Canvas::Canvas(QScreen *screen)
 	: QWindow(screen),
-	  m_context(new QOpenGLContext()),
+	  m_context(new QOpenGLContext),
 	  m_scene(new Scene(this)),
-	  m_leftButtonPressed(false),
+	  m_rightButtonPressed(false),
 	  m_cameraSpeed(200.0f),
 	  m_cameraSensitivity(0.2f)
 {
@@ -26,11 +26,11 @@ Window::Window(QScreen *screen)
 	format.setProfile(QSurfaceFormat::CoreProfile); 
 	format.setOption(QSurfaceFormat::DebugContext);
 
-	// Create the format
+	// Create the window
 	setFormat(format);
 	create();
 	resize(800, 600);
-	setTitle("Real Time Animation");
+	setTitle("Canvas");
 
 	// Apply the format
 	m_context->setFormat(format);
@@ -61,12 +61,12 @@ Window::Window(QScreen *screen)
 	timer->start(16); // f = 1 / 16.10e-3 = 60Hz
 }
 
-Window::~Window() {}
+Canvas::~Canvas() {}
 
 /**
  * @brief Initializing the rendering area
  */
-void Window::initializeGL()
+void Canvas::initializeGL()
 {
     m_context->makeCurrent(this);
     m_scene->initialize();
@@ -75,7 +75,7 @@ void Window::initializeGL()
 /**
  * @brief Updating the rendering area
  */
-void Window::paintGL()
+void Canvas::paintGL()
 {
     if(isExposed())
     {
@@ -90,7 +90,7 @@ void Window::paintGL()
 /**
  * @brief Resize the rendering area
  */
-void Window::resizeGL()
+void Canvas::resizeGL()
 {
     m_context->makeCurrent(this);
     m_scene->resize(width(), height());
@@ -99,7 +99,7 @@ void Window::resizeGL()
 /**
  * @brief Update the scene
  */
-void Window::updateScene()
+void Canvas::updateScene()
 {
     m_scene->update(static_cast<float>(m_updateTimer.elapsed())/1000.0f);
     paintGL();
@@ -108,7 +108,7 @@ void Window::updateScene()
 /**
  * @brief Checking the animation of the scene
  */
-void Window::checkAnimate(int state)
+void Canvas::checkAnimate(int state)
 {
     if(state == Qt::Checked)
         m_renderTimer.start();
@@ -117,12 +117,12 @@ void Window::checkAnimate(int state)
         m_renderTimer.invalidate();
 }
 
-Scene* Window::getScene()
+Scene* Canvas::getScene()
 {
 	return ( static_cast<Scene*>(m_scene) );
 }
 
-void Window::keyPressEvent(QKeyEvent* e)
+void Canvas::keyPressEvent(QKeyEvent* e)
 {
 	switch (e->key())
 	{
@@ -131,27 +131,27 @@ void Window::keyPressEvent(QKeyEvent* e)
 		QCoreApplication::instance()->quit();
 		break;
 
-	case Qt::Key_Right:
+	case Qt::Key_D:
 		getScene()->setSideSpeed(static_cast<float>(m_cameraSpeed));
 		break;
 
-	case Qt::Key_Left:
+	case Qt::Key_A:
 		getScene()->setSideSpeed(static_cast<float>(-m_cameraSpeed));
 		break;
 
-	case Qt::Key_Up:
+	case Qt::Key_W:
 		getScene()->setForwardSpeed(static_cast<float>(m_cameraSpeed));
 		break;
 
-	case Qt::Key_Down:
+	case Qt::Key_S:
 		getScene()->setForwardSpeed(static_cast<float>(-m_cameraSpeed));
 		break;
 
-	case Qt::Key_PageUp:
+	case Qt::Key_R:
 		getScene()->setVerticalSpeed(static_cast<float>(m_cameraSpeed));
 		break;
 
-	case Qt::Key_PageDown:
+	case Qt::Key_F:
 		getScene()->setVerticalSpeed(static_cast<float>(-m_cameraSpeed));
 		break;
 
@@ -165,22 +165,22 @@ void Window::keyPressEvent(QKeyEvent* e)
 
 }
 
-void Window::keyReleaseEvent(QKeyEvent* e)
+void Canvas::keyReleaseEvent(QKeyEvent* e)
 {
 	switch (e->key())
 	{
-	case Qt::Key_Right:
-	case Qt::Key_Left:
+	case Qt::Key_D:
+	case Qt::Key_A:
 		getScene()->setSideSpeed(0.0f);
 		break;
 
-	case Qt::Key_Up:
-	case Qt::Key_Down:
+	case Qt::Key_W:
+	case Qt::Key_S:
 		getScene()->setForwardSpeed(0.0f);
 		break;
 
-	case Qt::Key_PageUp:
-	case Qt::Key_PageDown:
+	case Qt::Key_R:
+	case Qt::Key_F:
 		getScene()->setVerticalSpeed(0.0f);
 		break;
 
@@ -194,30 +194,30 @@ void Window::keyReleaseEvent(QKeyEvent* e)
 
 }
 
-void Window::mousePressEvent(QMouseEvent* e)
+void Canvas::mousePressEvent(QMouseEvent* e)
 {
-	if(e->button() == Qt::LeftButton)
+	if(e->button() == Qt::RightButton)
 	{
-		m_leftButtonPressed = true;
+		m_rightButtonPressed = true;
 		m_pos = m_prevPos = e->pos();
 	}
 
 	QWindow::mousePressEvent(e);
 }
 
-void Window::mouseReleaseEvent(QMouseEvent* e)
+void Canvas::mouseReleaseEvent(QMouseEvent* e)
 {
-	if(e->button() == Qt::LeftButton)
+	if(e->button() == Qt::RightButton)
 	{
-		m_leftButtonPressed = false;
+		m_rightButtonPressed = false;
 	}
 
 	QWindow::mouseReleaseEvent(e);
 }
 
-void Window::mouseMoveEvent(QMouseEvent* e)
+void Canvas::mouseMoveEvent(QMouseEvent* e)
 {
-	if(m_leftButtonPressed)
+	if(m_rightButtonPressed)
 	{
 		m_pos = e->pos();
 
@@ -233,12 +233,12 @@ void Window::mouseMoveEvent(QMouseEvent* e)
 	QWindow::mouseMoveEvent(e);
 }
 
-void Window::setCameraSpeed(double speed)
+void Canvas::setCameraSpeed(double speed)
 {
 	m_cameraSpeed = speed;
 }
 
-void Window::setCameraSensitivity(double sensitivity)
+void Canvas::setCameraSensitivity(double sensitivity)
 {
 	m_cameraSensitivity = sensitivity;
 }

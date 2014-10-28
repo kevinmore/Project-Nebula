@@ -1,25 +1,35 @@
 #include "MainWindow.h"
-#include "Window.h"
 
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent),
-	m_openglArea(new Window),
-	m_scene(nullptr),
-	m_object3D(nullptr),
-	m_camera(nullptr)
+	  m_canvas(new Canvas),
+	  m_scene(nullptr),
+	  m_object3D(nullptr),
+	  m_camera(nullptr)
 {
-	resize(1366, 768);
-	setCentralWidget(QWidget::createWindowContainer(m_openglArea.data()));
-
-	m_scene    = m_openglArea->getScene();
+	
+	m_scene    = m_canvas->getScene();
 	m_object3D = m_scene->getObject();
 	m_camera   = m_scene->getCamera();
 
-	initializeMenuBar();
+	initializeCanvas();
 	initializeParamsArea();
+	initializeMenuBar();
+
+	resize(1366, 768);
 }
 
 MainWindow::~MainWindow() {}
+
+void MainWindow::initializeCanvas() 
+{
+	QWidget* canvas = QWidget::createWindowContainer(m_canvas.data());
+	QDockWidget* dock_canvas = new QDockWidget("Scene", this);
+	dock_canvas->setWidget(canvas);
+	dock_canvas->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
+	addDockWidget(Qt::LeftDockWidgetArea, dock_canvas);
+	setCentralWidget(dock_canvas);
+}
 
 void MainWindow::initializeMenuBar()
 {
@@ -44,17 +54,17 @@ void MainWindow::initializeMenuBar()
 	QMenu *antialiasingMenu = menuBar()->addMenu("&Anti-aliasing");
 	antialiasingMenu->addAction(msaaAction);
 
+
 	QObject::connect(exitAction,       SIGNAL(triggered()),     qApp,    SLOT(quit()));
 	QObject::connect(fullscreenAction, SIGNAL(triggered(bool)), this,    SLOT(setFullScreen(bool)));
 	QObject::connect(msaaAction,       SIGNAL(triggered(bool)), m_scene, SLOT(toggleAA(bool)));
 }
 
-
 void MainWindow::initializeParamsArea()
 {
 	// ############ DOCK RIGHT ############
 
-	m_dockParamsArea = new QDockWidget("PARAMETERS", this);
+	m_dockParamsArea = new QDockWidget("Parameters", this);
 	addDockWidget(Qt::RightDockWidgetArea, m_dockParamsArea);
 
 	m_params = new QWidget;
@@ -135,7 +145,7 @@ void MainWindow::initializeParamsArea()
 	topValue         = new QDoubleSpinBox;
 
 	fovValue->setRange(25.0, 130.0);
-	fovValue->setValue(75.0);
+	fovValue->setValue(60.0);
 
 	nearPlaneValue->setMinimum(0.1);
 	nearPlaneValue->setSingleStep(0.1);
@@ -356,7 +366,7 @@ void MainWindow::initializeParamsArea()
 
 	// ############ DOCK BOTTOM ############
 
-	m_dockMatrixArea = new QDockWidget("MODEL VIEW PROJECTION MATRIX", this);
+	m_dockMatrixArea = new QDockWidget("Model View Projection Matrix", this);
 	addDockWidget(Qt::BottomDockWidgetArea, m_dockMatrixArea);
 
 	m_mvpMatrix = new QWidget;
@@ -533,7 +543,7 @@ void MainWindow::initializeParamsArea()
 
 	// ############ SIGNALS/SLOTS ############
 
-	QObject::connect(animate, SIGNAL(stateChanged(int)), m_openglArea.data(), SLOT(checkAnimate(int)));
+	QObject::connect(animate, SIGNAL(stateChanged(int)), m_canvas.data(), SLOT(checkAnimate(int)));
 
 	// Rendering mode
 	QObject::connect(fill,      SIGNAL(toggled(bool)), m_scene, SLOT(toggleFill(bool)));
@@ -553,8 +563,8 @@ void MainWindow::initializeParamsArea()
 	QObject::connect(topValue,       SIGNAL(valueChanged(double)), this, SLOT(updateTop(double)));
 
 	// Camera
-	QObject::connect(cameraSpeedValue,       SIGNAL(valueChanged(double)), m_openglArea.data(), SLOT(setCameraSpeed(double)));
-	QObject::connect(cameraSensitivityValue, SIGNAL(valueChanged(double)), m_openglArea.data(), SLOT(setCameraSensitivity(double)));
+	QObject::connect(cameraSpeedValue,       SIGNAL(valueChanged(double)), m_canvas.data(), SLOT(setCameraSpeed(double)));
+	QObject::connect(cameraSensitivityValue, SIGNAL(valueChanged(double)), m_canvas.data(), SLOT(setCameraSensitivity(double)));
 	QObject::connect(resetCamera,            SIGNAL(clicked()),            m_camera,            SLOT(resetCamera()));
 
 	// Object
@@ -572,7 +582,7 @@ void MainWindow::initializeParamsArea()
 	QObject::connect(RimLighting,  SIGNAL(toggled(bool)), m_scene, SLOT(toggleRimLighting(bool)));
 
 	// Update framerate
-	QObject::connect(m_openglArea.data(), SIGNAL(updateFramerate()), this, SLOT(setFramerate()));
+	QObject::connect(m_canvas.data(), SIGNAL(updateFramerate()), this, SLOT(setFramerate()));
 
 	// Update MVP matrix
 	QObject::connect(m_scene, SIGNAL(renderCycleDone()), this, SLOT(updateMatrix()));
@@ -583,7 +593,7 @@ void MainWindow::setViewProperties(bool state)
 	if(state)
 	{
 		m_camera->setProjectionType(SceneCamera::PerspectiveProjection);
-		m_scene->resize(m_openglArea->width(), m_openglArea->height());
+		m_scene->resize(m_canvas->width(), m_canvas->height());
 
 		fovLabel->show();
 		fovValue->show();
@@ -601,7 +611,7 @@ void MainWindow::setViewProperties(bool state)
 	else
 	{
 		m_camera->setProjectionType(SceneCamera::OrthogonalProjection);
-		m_scene->resize(m_openglArea->width(), m_openglArea->height());
+		m_scene->resize(m_canvas->width(), m_canvas->height());
 
 		fovLabel->hide();
 		fovValue->hide();

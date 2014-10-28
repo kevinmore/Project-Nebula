@@ -1,13 +1,17 @@
 #include <Primitives/Texture.h>
-
+#include <QtCore/QDebug>
+#include <QtOpenGL/QGLWidget>
+#include <QtGui/QOpenGLContext>
 
 Texture::Texture(const QString& fileName, TextureType type)
 	: m_qimage(),
 	  m_image(),
 	  m_fileName(fileName),
 	  m_type(type),
-	  m_textureId(0)
+	  m_textureId(0),
+	  m_funcs(nullptr)
 {
+	init();
 	load();
 }
 
@@ -16,23 +20,34 @@ Texture::Texture(const QImage& image, TextureType type)
 	m_image(),
 	m_fileName(""),
 	m_type(type),
-	m_textureId(0)
+	m_textureId(0),
+	m_funcs(nullptr)
 {
+	init();
 	load();
 }
 
 
-
 Texture::~Texture()
 {
-	glDeleteTextures(1, &m_textureId);
+	if(QOpenGLContext::currentContext())
+ 		m_funcs->glDeleteTextures(1, &m_textureId);
 }
 
+void Texture::init()
+{
+	QOpenGLContext* context = QOpenGLContext::currentContext();
+
+	Q_ASSERT(context);
+
+	m_funcs = context->versionFunctions<QOpenGLFunctions_4_3_Core>();
+	m_funcs->initializeOpenGLFunctions();
+}
 
 bool Texture::load()
 {
-	glGenTextures(1, &m_textureId);
-	glBindTexture(m_type, m_textureId);
+	m_funcs->glGenTextures(1, &m_textureId);
+	m_funcs->glBindTexture(m_type, m_textureId);
 
 	if( !m_fileName.isEmpty() )
 	{
@@ -74,8 +89,8 @@ bool Texture::load()
 			);
 	}
 
-	glTexParameterf(m_type, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameterf(m_type, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	m_funcs->glTexParameterf(m_type, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	m_funcs->glTexParameterf(m_type, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	return true;
 }
@@ -84,21 +99,18 @@ void Texture::destroy()
 {
 	if(m_textureId)
 	{
-		glDeleteTextures(1, &m_textureId);
+		m_funcs->glDeleteTextures(1, &m_textureId);
 		m_textureId = 0;
 	}
 }
 
 void Texture::bind(GLenum textureUnit)
 {
-#ifdef WIN32
-	glActiveTexture = (PFNGLACTIVETEXTUREPROC) wglGetProcAddress((LPCSTR) "glActiveTexture");
-#endif
-	glActiveTexture(textureUnit);
-	glBindTexture(m_type, m_textureId);
+	m_funcs->glActiveTexture(textureUnit);
+	m_funcs->glBindTexture(m_type, m_textureId);
 }
 
 void Texture::release()
 {
-	glBindTexture(m_type, 0);
+	m_funcs->glBindTexture(m_type, 0);
 }

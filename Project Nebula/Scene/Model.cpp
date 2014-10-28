@@ -1,26 +1,33 @@
 #include "Model.h"
 #include <Scene/Scene.h>
-Model::~Model() {}
+#include <QtGui/QOpenGLContext>
 
 Model::Model(Scene* scene, const QOpenGLVertexArrayObjectPtr& vao)
   : m_scene(scene),
-	m_vao(vao)
+	m_vao(vao),
+	m_funcs(nullptr)
 {
 	initialize();
 }
 
 Model::Model(Scene* scene, const QOpenGLVertexArrayObjectPtr& vao, QVector<ModelDataPtr> modelData)
   : m_scene(scene),
-	m_vao(vao)
+	m_vao(vao),
+	m_funcs(nullptr)
 {
 	initialize(modelData);
 }
+
+Model::~Model() {}
 
 void Model::initialize(QVector<ModelDataPtr> modelDataVector)
 {
 	QOpenGLContext* context = QOpenGLContext::currentContext();
 
 	Q_ASSERT(context);
+
+	m_funcs = context->versionFunctions<QOpenGLFunctions_4_3_Core>();
+	m_funcs->initializeOpenGLFunctions();
 
 	m_meshManager     = m_scene->meshManager();
 	m_textureManager  = m_scene->textureManager();
@@ -77,6 +84,7 @@ void Model::initialize(QVector<ModelDataPtr> modelDataVector)
 	
 }
 
+void Model::destroy() {}
 
 void Model::render()
 {
@@ -93,11 +101,7 @@ void Model::render()
 
 			m_materials[i]->bind();
 
-			glDrawElementsBaseVertex(GL_TRIANGLES,
-				m_meshes[i]->getNumIndices(),
-				GL_UNSIGNED_INT,
-				(void*)(sizeof(uint) * m_meshes[i]->getBaseIndex()),
-				m_meshes[i]->getBaseVertex());
+			drawElements(i, Indexed | BaseVertex);
 		}
 	}
 
@@ -110,11 +114,7 @@ void Model::render()
 
 			m_materials[i]->bind();
 
-			glDrawElementsBaseVertex(GL_TRIANGLES,
-				m_meshes[i]->getNumIndices(),
-				GL_UNSIGNED_INT,
-				(void*)(sizeof(uint) * m_meshes[i]->getBaseIndex()),
-				m_meshes[i]->getBaseVertex());
+			drawElements(i, Indexed | BaseVertex);
 
 			glDisable(GL_BLEND);
 			glDepthMask(GL_TRUE);
@@ -124,3 +124,16 @@ void Model::render()
 	m_vao->release();
 }
 
+void Model::drawElements(unsigned int index, int mode)
+{
+	// Mode has not been implemented yet
+	Q_UNUSED(mode);
+
+	m_funcs->glDrawElementsBaseVertex(
+		GL_TRIANGLES,
+		m_meshes[index]->getNumIndices(),
+		GL_UNSIGNED_INT,
+		reinterpret_cast<void*>((sizeof(unsigned int)) * m_meshes[index]->getBaseIndex()),
+		m_meshes[index]->getBaseVertex()
+		);
+}

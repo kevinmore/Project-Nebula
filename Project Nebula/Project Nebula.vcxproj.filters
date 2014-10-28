@@ -19,11 +19,12 @@
     <ClCompile Include="Scene\Managers\ModelManager.cpp" />
     <ClCompile Include="Scene\AbstractModel.cpp" />
     <ClCompile Include="Scene\AbstractScene.cpp" />
-    <ClCompile Include="UI\Window.cpp" />
-    <ClCompile Include="UI\Window_moc.cpp" />
-    <ClCompile Include="UI\MainWindow.cpp" />
-    <ClCompile Include="UI\MainWindow_moc.cpp" />
     <ClCompile Include="Scene\SceneCamera_moc.cpp" />
+    <ClCompile Include="Utility\OpenGLUniformBuffer.cpp" />
+    <ClCompile Include="UI\MainWindow.cpp" />
+    <ClCompile Include="UI\Canvas.cpp" />
+    <ClCompile Include="UI\Canvas_moc.cpp" />
+    <ClCompile Include="UI\MainWindow_moc.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Primitives\Bone.h" />
@@ -43,16 +44,13 @@
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\Model.h" />
     <ClInclude Include="Scene\Managers\ModelManager.h" />
-    <ClInclude Include="UI\Window.h" />
-    <ClInclude Include="UI\MainWindow.h" />
     <ClInclude Include="Scene\Managers\TextureManager.h" />
+    <ClInclude Include="Utility\OpenGLUniformBuffer.h" />
+    <ClInclude Include="UI\MainWindow.h" />
+    <ClInclude Include="UI\Canvas.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Resource\Shaders\lightingFragmentShader.fsh" />
-    <None Include="..\Resource\Shaders\lightingVertexShader.vsh" />
-    <None Include="..\Resource\Shaders\skinningFragmentShader.fsh" />
-    <None Include="..\Resource\Shaders\skinningVertexShader.vsh" />
-    <None Include="..\Resource\Shaders\skinning.fs" />
-    <None Include="..\Resource\Shaders\skinning.vs" />
+    <None Include="..\Resource\Shaders\basicSkinning.frag" />
+    <None Include="..\Resource\Shaders\basicSkinning.vert" />
   </ItemGroup>
 </Project>

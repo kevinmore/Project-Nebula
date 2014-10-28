@@ -8,6 +8,8 @@ in vec3 position; // Vertex position
 in vec4 color;    // Vertex color
 in vec2 texCoord; // Texture coordinates
 in vec3 normal;   // Vertex normal
+in ivec4 BoneIDs; // Vertex Bone IDs
+in vec4 Weights;  // Vertex Bone Weights
 
 out VS_OUT
 {
@@ -22,6 +24,9 @@ out VS_OUT
 uniform mat3 normalMatrix;
 uniform mat4 modelViewMatrix;
 uniform mat4 projectionMatrix;
+
+const int MAX_BONES = 200;
+uniform mat4 gBones[MAX_BONES];
 
 void main()
 {

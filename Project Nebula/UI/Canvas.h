@@ -1,5 +1,4 @@
 #pragma once
-#include <GL/glew.h>
 #include <QtGui/QWindow>
 #include <QtCore/QElapsedTimer>
 #include <QtGui/QOpenGLContext>
@@ -9,15 +8,15 @@
 /*This class is used to initialize the OpenGL context 
 and manipulate the scene rendering.                                     */
 /************************************************************************/
-class Window : public QWindow
+class Canvas : public QWindow
 {
 
 	Q_OBJECT
 
 
 public:
-	Window(QScreen* screen = 0);
-	~Window(void);
+	Canvas(QScreen* screen = 0);
+	~Canvas();
 
 	Scene* getScene();
 
@@ -54,7 +53,7 @@ private:
 	QPoint m_prevPos;
 	QPoint m_pos;
 
-	bool m_leftButtonPressed;
+	bool m_rightButtonPressed;
 
 	double m_cameraSpeed;
 	double m_cameraSensitivity;

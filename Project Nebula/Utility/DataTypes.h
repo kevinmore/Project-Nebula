@@ -1,5 +1,6 @@
 #pragma once
 #include <QtCore/QVector>
+#include <QtCore/QMap>
 #include <QtGui/QVector2D>
 #include <QtGui/QVector3D>
 #include <QtGui/QVector4D>

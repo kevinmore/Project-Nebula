@@ -1,19 +1,18 @@
 #pragma once
-#include <GL/glew.h>
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
-#include <QtCore/QVector>
 #include <QtGui/QOpenGLBuffer>
 #include <QtGui/QOpenGLVertexArrayObject>
 #include <QtCore/QSharedPointer>
 #include <Scene/AbstractModel.h>
+#include <Utility/DataTypes.h>
 
 class ModelLoader
 {
 public:
-	ModelLoader(void);
-	~ModelLoader(void);
+	ModelLoader();
+	virtual ~ModelLoader();
 
 	QVector<ModelDataPtr> loadModel(const QString& filename, const QOpenGLShaderProgramPtr& shaderProgram);
 	QOpenGLVertexArrayObjectPtr getVAO();
@@ -25,7 +24,7 @@ private:
 	TextureData  loadTexture(const QString& filename, const aiMaterial* material);
 
 	void prepareVertexBuffers();
-	void prepareVertexContainers(const aiMesh* mesh);
+	void prepareVertexContainers(unsigned int index, const aiMesh* mesh);
 
 	QOpenGLBuffer m_vertexPositionBuffer;
 	QOpenGLBuffer m_vertexColorBuffer;
@@ -43,5 +42,70 @@ private:
 
 	QOpenGLVertexArrayObjectPtr m_vao;
 	QOpenGLShaderProgramPtr     m_shaderProgram;
+
+	/************************************************************************/
+	/* Skinning Stuff                                                       */
+	/************************************************************************/
+public:
+	uint NumBones() const
+	{
+		return m_NumBones;
+	}
+
+	void BoneTransform(float TimeInSeconds, QVector<mat4>& Transforms);
+
+private:
+#define NUM_BONES_PER_VEREX 4
+
+	struct BoneInfo
+	{
+		mat4 boneOffset;
+		mat4 finalTransformation;        
+
+		BoneInfo()
+		{ 
+			boneOffset.fill(0);
+			finalTransformation.fill(0);
+		}
+	};
+
+	struct VertexBoneData
+	{        
+		uint IDs[NUM_BONES_PER_VEREX];
+		float Weights[NUM_BONES_PER_VEREX];
+
+		VertexBoneData()
+		{
+			Reset();
+		};
+
+		void Reset()
+		{
+			ZERO_MEM(IDs);
+			ZERO_MEM(Weights);        
+		}
+
+		void AddBoneData(uint BoneID, float Weight);
+	};
+
+	void CalcInterpolatedScaling(aiVector3D& Out, float AnimationTime, const aiNodeAnim* pNodeAnim);
+	void CalcInterpolatedRotation(aiQuaternion& Out, float AnimationTime, const aiNodeAnim* pNodeAnim);
+	void CalcInterpolatedPosition(aiVector3D& Out, float AnimationTime, const aiNodeAnim* pNodeAnim);    
+	uint FindScaling(float AnimationTime, const aiNodeAnim* pNodeAnim);
+	uint FindRotation(float AnimationTime, const aiNodeAnim* pNodeAnim);
+	uint FindPosition(float AnimationTime, const aiNodeAnim* pNodeAnim);
+	const aiNodeAnim* FindNodeAnim(const aiAnimation* pAnimation, const QString NodeName);
+	void ReadNodeHeirarchy(float AnimationTime, const aiNode* pNode, const mat4& ParentTransform);
+	void LoadBones(uint MeshIndex, const aiMesh* paiMesh);
+
+
+	QMap<QString, uint> m_BoneMapping; // maps a bone name to its index
+	QVector<VertexBoneData> m_Bones;
+	uint m_NumBones;
+	QVector<BoneInfo> m_BoneInfo;
+	mat4 m_GlobalInverseTransform;
+
+	const aiScene* m_scene;
+	QOpenGLBuffer m_vertexBoneBuffer;
 };
 

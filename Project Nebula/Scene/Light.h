@@ -1,9 +1,9 @@
 #pragma once
-#include <Utility/DataTypes.h>
+#include <QtCore/QSharedPointer>
 #include <QtCore/QString>
+#include <QtGui/QVector3D>
 #include <QtGui/QColor>
 #include <QtGui/QOpenGLShaderProgram>
-#include <QtCore/QSharedPointer>
 
 typedef QSharedPointer<QOpenGLShaderProgram> QOpenGLShaderProgramPtr;
 
@@ -18,7 +18,7 @@ public:
 	};
 
 	Light(const QString& name);
-	~Light(void);
+	~Light();
 
 
 	void setType(LightType type);

@@ -1,16 +1,16 @@
 /****************************************************************************
-** Meta object code from reading C++ file 'Window.h'
+** Meta object code from reading C++ file 'Canvas.h'
 **
 ** Created by: The Qt Meta Object Compiler version 67 (Qt 5.3.2)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include "Window.h"
+#include "Canvas.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
-#error "The header file 'Window.h' doesn't include <QObject>."
+#error "The header file 'Canvas.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
 #error "This file was generated using the moc from 5.3.2. It"
 #error "cannot be used with the include files from this version of Qt."
@@ -18,16 +18,16 @@
 #endif
 
 QT_BEGIN_MOC_NAMESPACE
-struct qt_meta_stringdata_Window_t {
+struct qt_meta_stringdata_Canvas_t {
     QByteArrayData data[12];
     char stringdata[126];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
-    qptrdiff(offsetof(qt_meta_stringdata_Window_t, stringdata) + ofs \
+    qptrdiff(offsetof(qt_meta_stringdata_Canvas_t, stringdata) + ofs \
         - idx * sizeof(QByteArrayData)) \
     )
-static const qt_meta_stringdata_Window_t qt_meta_stringdata_Window = {
+static const qt_meta_stringdata_Canvas_t qt_meta_stringdata_Canvas = {
     {
 QT_MOC_LITERAL(0, 0, 6),
 QT_MOC_LITERAL(1, 7, 15),
@@ -42,14 +42,14 @@ QT_MOC_LITERAL(9, 97, 8),
 QT_MOC_LITERAL(10, 106, 7),
 QT_MOC_LITERAL(11, 114, 11)
     },
-    "Window\0updateFramerate\0\0checkAnimate\0"
+    "Canvas\0updateFramerate\0\0checkAnimate\0"
     "state\0setCameraSpeed\0speed\0"
     "setCameraSensitivity\0sensitivity\0"
     "resizeGL\0paintGL\0updateScene"
 };
 #undef QT_MOC_LITERAL
 
-static const uint qt_meta_data_Window[] = {
+static const uint qt_meta_data_Canvas[] = {
 
  // content:
        7,       // revision
@@ -87,10 +87,10 @@ static const uint qt_meta_data_Window[] = {
        0        // eod
 };
 
-void Window::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+void Canvas::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
-        Window *_t = static_cast<Window *>(_o);
+        Canvas *_t = static_cast<Canvas *>(_o);
         switch (_id) {
         case 0: _t->updateFramerate(); break;
         case 1: _t->checkAnimate((*reinterpret_cast< int(*)>(_a[1]))); break;
@@ -105,34 +105,34 @@ void Window::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         int *result = reinterpret_cast<int *>(_a[0]);
         void **func = reinterpret_cast<void **>(_a[1]);
         {
-            typedef void (Window::*_t)();
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&Window::updateFramerate)) {
+            typedef void (Canvas::*_t)();
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&Canvas::updateFramerate)) {
                 *result = 0;
             }
         }
     }
 }
 
-const QMetaObject Window::staticMetaObject = {
-    { &QWindow::staticMetaObject, qt_meta_stringdata_Window.data,
-      qt_meta_data_Window,  qt_static_metacall, 0, 0}
+const QMetaObject Canvas::staticMetaObject = {
+    { &QWindow::staticMetaObject, qt_meta_stringdata_Canvas.data,
+      qt_meta_data_Canvas,  qt_static_metacall, 0, 0}
 };
 
 
-const QMetaObject *Window::metaObject() const
+const QMetaObject *Canvas::metaObject() const
 {
     return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
 }
 
-void *Window::qt_metacast(const char *_clname)
+void *Canvas::qt_metacast(const char *_clname)
 {
     if (!_clname) return 0;
-    if (!strcmp(_clname, qt_meta_stringdata_Window.stringdata))
-        return static_cast<void*>(const_cast< Window*>(this));
+    if (!strcmp(_clname, qt_meta_stringdata_Canvas.stringdata))
+        return static_cast<void*>(const_cast< Canvas*>(this));
     return QWindow::qt_metacast(_clname);
 }
 
-int Window::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int Canvas::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QWindow::qt_metacall(_c, _id, _a);
     if (_id < 0)
@@ -150,7 +150,7 @@ int Window::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void Window::updateFramerate()
+void Canvas::updateFramerate()
 {
     QMetaObject::activate(this, &staticMetaObject, 0, 0);
 }

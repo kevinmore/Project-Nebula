@@ -10,9 +10,10 @@ class MaterialManager
 {
 public:
 	MaterialManager(GLuint programHandle);
-	~MaterialManager(void);
+	~MaterialManager();
 
 	MaterialPtr getMaterial(const QString& name);
+
 	MaterialPtr addMaterial(const QString& name, 
 							const QVector4D& ambientColor,
 							const QVector4D& diffuseColor,
