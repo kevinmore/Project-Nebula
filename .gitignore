@@ -219,3 +219,4 @@ FakesAssemblies/
 *.log
 *.log
 *.tlog
+TempFiles/
