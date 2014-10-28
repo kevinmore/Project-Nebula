@@ -100,5 +100,6 @@ private:
 	QVector<GLuint> m_lightModeSubroutines;
 
 	QOpenGLFunctions_4_3_Core* m_funcs;
+	GLuint m_boneLocation[200];
 };
 

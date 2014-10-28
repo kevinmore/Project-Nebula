@@ -1,43 +1,83 @@
 #include "ModelLoader.h"
 #include <QtCore/QDebug>
-#include <assert.h>
+
+// NOT SURE WHICH ONE TO USE!!!!!!!!!!!!
 // utility function to convert aiMatrix4x4 to QMatrix4x4
 QMatrix4x4 convToQMat4(const aiMatrix4x4 * m)
 {
 	return QMatrix4x4(m->a1, m->a2, m->a3, m->a4,
-		m->b1, m->b2, m->b3, m->b4,
-		m->c1, m->c2, m->c3, m->c4,
-		m->d1, m->d2, m->d3, m->d4);
+					  m->b1, m->b2, m->b3, m->b4,
+					  m->c1, m->c2, m->c3, m->c4,
+					  m->d1, m->d2, m->d3, m->d4);
 }
 
-QMatrix4x4 convToQMat4(aiMatrix4x4 * m) 
-{
-	return QMatrix4x4(m->a1, m->a2, m->a3, m->a4,
-		m->b1, m->b2, m->b3, m->b4,
-		m->c1, m->c2, m->c3, m->c4,
-		m->d1, m->d2, m->d3, m->d4);
-}
 
 QMatrix4x4 convToQMat4(aiMatrix3x3 * m) 
 {
 	return QMatrix4x4(m->a1, m->a2, m->a3, 0,
-		m->b1, m->b2, m->b3, 0,
-		m->c1, m->c2, m->c3, 0,
-		0, 0, 0, 1);
+					  m->b1, m->b2, m->b3, 0,
+					  m->c1, m->c2, m->c3, 0,
+					  0,     0,     0,     1);
+
 }
 
-void ModelLoader::VertexBoneData::AddBoneData(uint BoneID, float Weight)
-{
-	for (uint i = 0 ; i < ARRAY_SIZE_IN_ELEMENTS(IDs) ; i++) {
-		if (Weights[i] == 0.0) {
-			IDs[i]     = BoneID;
-			Weights[i] = Weight;
-			return;
-		}        
-	}
+// QMatrix4x4 convToQMat4(const aiMatrix4x4 * m) {
+// 	return QMatrix4x4(m->a1, m->b1, m->c1, m->d1,
+// 					  m->a2, m->b2, m->c2, m->d2,
+// 					  m->a3, m->b3, m->c3, m->d3,
+// 					  m->a4, m->b4, m->c4, m->d4);
+// }
+// 
+// QMatrix4x4 convToQMat4(aiMatrix3x3 * m) {
+// 	return QMatrix4x4(m->a1, m->b1, m->c1, 0,
+// 					  m->a2, m->b2, m->c2, 0,
+// 					  m->a3, m->b3, m->c3, 0,
+// 					  0, 0, 0, 1);
+// }
 
-	// should never get here - more bones than we have space for
-	assert(0);
+
+void inverseQMat4(QMatrix4x4 &m)
+{
+	float det = m.determinant();
+	if(det == 0.0f) 
+	{
+		// Matrix not invertible. Setting all elements to nan is not really
+		// correct in a mathematical sense but it is easy to debug for the
+		// programmer.
+		/*const float nan = std::numeric_limits<float>::quiet_NaN();
+		*this = Matrix4f(
+			nan,nan,nan,nan,
+			nan,nan,nan,nan,
+			nan,nan,nan,nan,
+			nan,nan,nan,nan);*/
+		return;
+	}
+	qDebug() << "Input:" << endl << m;
+	float invdet = 1.0f / det;
+
+	QMatrix4x4 res;
+	
+	res(0, 0) = invdet  * (m(1, 1) * (m(2, 2) * m(3, 3) - m(2, 3) * m(3, 2) + m(1, 2) * (m(2, 3) * m(3, 1) - m(2, 1) * m(3, 3)) + m(1, 3) * (m(2, 1) * m(3, 2) - m(2, 2) * m(3, 1))));
+	res(0, 1) = -invdet * (m(0, 1) * (m(2, 2) * m(3, 3) - m(2, 3) * m(3, 2) + m(0, 2) * (m(2, 3) * m(3, 1) - m(2, 1) * m(3, 3)) + m(0, 3) * (m(2, 1) * m(3, 2) - m(2, 2) * m(3, 1))));
+	res(0, 2) = invdet  * (m(0, 1) * (m(1, 2) * m(3, 3) - m(1, 3) * m(3, 2) + m(0, 2) * (m(1, 3) * m(3, 1) - m(1, 1) * m(3, 3)) + m(0, 3) * (m(1, 1) * m(3, 2) - m(1, 2) * m(3, 1))));
+	res(0, 3) = -invdet * (m(0, 1) * (m(1, 2) * m(2, 3) - m(1, 3) * m(2, 2) + m(0, 2) * (m(1, 3) * m(2, 1) - m(1, 1) * m(2, 3)) + m(0, 3) * (m(1, 1) * m(2, 2) - m(1, 2) * m(2, 1))));
+	res(1, 0) = -invdet * (m(1, 0) * (m(2, 2) * m(3, 3) - m(2, 3) * m(3, 2) + m(1, 2) * (m(2, 3) * m(3, 0) - m(2, 0) * m(3, 3)) + m(1, 3) * (m(2, 0) * m(3, 2) - m(2, 2) * m(3, 0))));
+	res(1, 1) = invdet  * (m(0, 0) * (m(2, 2) * m(3, 3) - m(2, 3) * m(3, 2) + m(0, 2) * (m(2, 3) * m(3, 0) - m(2, 0) * m(3, 3)) + m(0, 3) * (m(2, 0) * m(3, 2) - m(2, 2) * m(3, 0))));
+	res(1, 2) = -invdet * (m(0, 0) * (m(1, 2) * m(3, 3) - m(1, 3) * m(3, 2) + m(0, 2) * (m(1, 3) * m(3, 0) - m(1, 0) * m(3, 3)) + m(0, 3) * (m(1, 0) * m(3, 2) - m(1, 2) * m(3, 0))));
+	res(1, 3) = invdet  * (m(0, 0) * (m(1, 2) * m(2, 3) - m(1, 3) * m(2, 2) + m(0, 2) * (m(1, 3) * m(2, 0) - m(1, 0) * m(2, 3)) + m(0, 3) * (m(1, 0) * m(2, 2) - m(1, 2) * m(2, 0))));
+	res(2, 0) = invdet  * (m(1, 0) * (m(2, 1) * m(3, 3) - m(2, 3) * m(3, 1) + m(1, 1) * (m(2, 3) * m(3, 0) - m(2, 0) * m(3, 3)) + m(1, 3) * (m(2, 0) * m(3, 1) - m(2, 1) * m(3, 0))));
+	res(2, 1) = -invdet * (m(0, 0) * (m(2, 1) * m(3, 3) - m(2, 3) * m(3, 1) + m(0, 1) * (m(2, 3) * m(3, 0) - m(2, 0) * m(3, 3)) + m(0, 3) * (m(2, 0) * m(3, 1) - m(2, 1) * m(3, 0))));
+	res(2, 2) = invdet  * (m(0, 0) * (m(1, 1) * m(3, 3) - m(1, 3) * m(3, 1) + m(0, 1) * (m(1, 3) * m(3, 0) - m(1, 0) * m(3, 3)) + m(0, 3) * (m(1, 0) * m(3, 1) - m(1, 1) * m(3, 0))));
+	res(2, 3) = -invdet * (m(0, 0) * (m(1, 1) * m(2, 3) - m(1, 3) * m(2, 1) + m(0, 1) * (m(1, 3) * m(2, 0) - m(1, 0) * m(2, 3)) + m(0, 3) * (m(1, 0) * m(2, 1) - m(1, 1) * m(2, 0))));
+	res(3, 0) = -invdet * (m(1, 0) * (m(2, 1) * m(3, 2) - m(2, 2) * m(3, 1) + m(1, 1) * (m(2, 2) * m(3, 0) - m(2, 0) * m(3, 2)) + m(1, 2) * (m(2, 0) * m(3, 1) - m(2, 1) * m(3, 0))));
+	res(3, 1) = invdet  * (m(0, 0) * (m(2, 1) * m(3, 2) - m(2, 2) * m(3, 1) + m(0, 1) * (m(2, 2) * m(3, 0) - m(2, 0) * m(3, 2)) + m(0, 2) * (m(2, 0) * m(3, 1) - m(2, 1) * m(3, 0))));
+	res(3, 2) = -invdet * (m(0, 0) * (m(1, 1) * m(3, 2) - m(1, 2) * m(3, 1) + m(0, 1) * (m(1, 2) * m(3, 0) - m(1, 0) * m(3, 2)) + m(0, 2) * (m(1, 0) * m(3, 1) - m(1, 1) * m(3, 0))));
+	res(3, 3) = invdet  * (m(0, 0) * (m(1, 1) * m(2, 2) - m(1, 2) * m(2, 1) + m(0, 1) * (m(1, 2) * m(2, 0) - m(1, 0) * m(2, 2)) + m(0, 2) * (m(1, 0) * m(2, 1) - m(1, 1) * m(2, 0)))); 
+	
+	
+
+	qDebug() << "Output:" << endl << res;
+	m = QMatrix4x4(res);
 }
 
 ModelLoader::ModelLoader()
@@ -51,6 +91,11 @@ ModelLoader::ModelLoader()
 	  m_vao(QOpenGLVertexArrayObjectPtr(new QOpenGLVertexArrayObject()))
 {}
 
+
+QOpenGLVertexArrayObjectPtr ModelLoader::getVAO()
+{
+	return m_vao;
+}
 
 ModelLoader::~ModelLoader()
 {
@@ -68,41 +113,40 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName, const QOp
 {
 	m_shaderProgram = shaderProgram;
 
-	Assimp::Importer importer;
-	const aiScene* scene = importer.ReadFile(fileName.toStdString(),	
+	m_scene = m_importer.ReadFile(fileName.toStdString(),	
 		  aiProcess_Triangulate
 		| aiProcess_GenSmoothNormals
 		| aiProcess_FlipUVs
- 		| aiProcess_CalcTangentSpace
- 		| aiProcess_JoinIdenticalVertices
- 		| aiProcess_SortByPType
+//  		| aiProcess_CalcTangentSpace
+//  		| aiProcess_JoinIdenticalVertices
+//  		| aiProcess_SortByPType
 // 		| aiProcessPreset_TargetRealtime_MaxQuality
 		);
 
-	if(!scene)
+	if(!m_scene)
 	{
-		qDebug() << "Error loading mesh file: " << fileName << importer.GetErrorString();
+		qDebug() << "Error loading mesh file: " << fileName << m_importer.GetErrorString();
 	}
-	else if(scene->HasTextures())
+	else if(m_scene->HasTextures())
 	{
 		qFatal("Support for meshes with embedded textures is not implemented");
 		exit(1);
 	}
 
 
-	qDebug() << "Model has" << scene->mNumMeshes << "meshes";
-
-	m_scene = scene;
-	m_GlobalInverseTransform = convToQMat4(&scene->mRootNode->mTransformation);
-	m_GlobalInverseTransform.inverted();
-
+// 	m_GlobalInverseTransform = convToQMat4(&m_scene->mRootNode->mTransformation);
+// 	inverseQMat4(m_GlobalInverseTransform);
+	m_GlobalInverseTransform = mat4(1, 0, 0, 0, 
+									0, 0, -1, 0,
+									0, 1, 0, 0,
+									0, 0, 0, 1);
 	unsigned int numVertices = 0;
 	unsigned int numIndices  = 0;
 
-	for(uint i = 0; i < scene->mNumMeshes; ++i)
+	for(uint i = 0; i < m_scene->mNumMeshes; ++i)
 	{
-		numVertices += scene->mMeshes[i]->mNumVertices;
-		numIndices  += scene->mMeshes[i]->mNumFaces * 3;
+		numVertices += m_scene->mMeshes[i]->mNumVertices;
+		numIndices  += m_scene->mMeshes[i]->mNumFaces * 3;
 	}
 
 	m_positions.reserve(numVertices);
@@ -118,26 +162,25 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName, const QOp
 	m_NumBones = 0;
 
 	QVector<ModelDataPtr> modelDataVector;
-	modelDataVector.resize(scene->mNumMeshes);
+	modelDataVector.resize(m_scene->mNumMeshes);
 
-	for(uint i = 0; i < scene->mNumMeshes; ++i)
+	for(uint i = 0; i < m_scene->mNumMeshes; ++i)
 	{
 		ModelData* md = new ModelData();
 		
-		md->meshData     = loadMesh(i, numVertices, numIndices, scene->mMeshes[i]);
-		md->textureData  = loadTexture(fileName, scene->mMaterials[scene->mMeshes[i]->mMaterialIndex]);
-		md->materialData = loadMaterial(i, scene->mMaterials[scene->mMeshes[i]->mMaterialIndex]);
+		md->meshData     = loadMesh(i, numVertices, numIndices, m_scene->mMeshes[i]);
+		md->textureData  = loadTexture(fileName, m_scene->mMaterials[m_scene->mMeshes[i]->mMaterialIndex]);
+		md->materialData = loadMaterial(i, m_scene->mMaterials[m_scene->mMeshes[i]->mMaterialIndex]);
 
-		numVertices += scene->mMeshes[i]->mNumVertices;
-		numIndices  += scene->mMeshes[i]->mNumFaces * 3;
+		numVertices += m_scene->mMeshes[i]->mNumVertices;
+		numIndices  += m_scene->mMeshes[i]->mNumFaces * 3;
 		
 		modelDataVector[i] = ModelDataPtr(md);
 	}
 
 	prepareVertexBuffers();
 
-	qDebug() << "Model has" << numVertices << "vertices";
-	qDebug() << "Model has" << numIndices << "indices";
+	qDebug() << "Model has" << m_scene->mNumMeshes << "meshes," << numVertices << "vertices, and" << numIndices << "indices";
 
 	return modelDataVector;
 }
@@ -200,7 +243,6 @@ void ModelLoader::prepareVertexContainers(unsigned int index, const aiMesh* mesh
 		m_indices.push_back(face.mIndices[1]);
 		m_indices.push_back(face.mIndices[2]);
 
-		// Voir : http://gamedev.stackexchange.com/q/45683
 	}
 }
 
@@ -241,6 +283,19 @@ void ModelLoader::prepareVertexBuffers()
 	m_vertexBoneBuffer.setUsagePattern(QOpenGLBuffer::StreamDraw);
 	m_vertexBoneBuffer.allocate(m_Bones.data(), m_Bones.size() * sizeof(VertexBoneData));
 
+// 	for(int i =0; i<m_Bones.size();++i)
+// 	{
+// 		for(int j = 0; j < 4; ++j)
+// 		{
+// 			if (m_Bones[i].Weights[j] > 0)
+// 			{
+// 				printf("\n\nm_Bones[%d].IDs[%d] = %d",i,j, m_Bones[i].IDs[j]);
+// 				printf("\nm_Bones[%d].Weights[%d] = %f",i,j, m_Bones[i].Weights[j]);
+// 			}
+// 			
+// 		}
+// 	}
+
 	m_indexBuffer.create();
 	m_indexBuffer.bind();
 	m_indexBuffer.setUsagePattern(QOpenGLBuffer::StreamDraw);
@@ -252,36 +307,30 @@ void ModelLoader::prepareVertexBuffers()
 	m_vertexPositionBuffer.bind();
 	m_shaderProgram->enableAttributeArray("position");
 	m_shaderProgram->setAttributeBuffer("position", GL_FLOAT, 0, 3);
-	m_vertexPositionBuffer.release();
-
+	
 	m_vertexColorBuffer.bind();
 	m_shaderProgram->enableAttributeArray("color");
 	m_shaderProgram->setAttributeBuffer("color", GL_FLOAT, 0, 4);
-	m_vertexColorBuffer.release();
 
 	m_vertexTexCoordBuffer.bind();
 	m_shaderProgram->enableAttributeArray("texCoord");
 	m_shaderProgram->setAttributeBuffer("texCoord", GL_FLOAT, 0, 2);
-	m_vertexTexCoordBuffer.release();
 
 	m_vertexNormalBuffer.bind();
 	m_shaderProgram->enableAttributeArray("normal");
 	m_shaderProgram->setAttributeBuffer("normal", GL_FLOAT, 0, 3);
-	m_vertexNormalBuffer.release();
 
 	m_vertexTangentBuffer.bind();
 	m_shaderProgram->enableAttributeArray("tangent");
 	m_shaderProgram->setAttributeBuffer("tangent", GL_FLOAT, 0, 3);
-	m_vertexTangentBuffer.release();
 
 	m_vertexBoneBuffer.bind();
 	m_shaderProgram->enableAttributeArray("BoneIDs");
-	m_shaderProgram->setAttributeBuffer("BoneIDs", GL_INT, 0, 4);
+	m_shaderProgram->setAttributeBuffer("BoneIDs", GL_INT, 0, 4, sizeof(VertexBoneData));
 	m_shaderProgram->enableAttributeArray("Weights");
-	m_shaderProgram->setAttributeBuffer("Weights", GL_FLOAT, 16, 4);
-	m_vertexBoneBuffer.release();
+	m_shaderProgram->setAttributeBuffer("Weights", GL_FLOAT, 16, 4, sizeof(VertexBoneData));
 
-	m_shaderProgram->release();
+
 	m_vao->release();
 }
 
@@ -433,18 +482,12 @@ TextureData ModelLoader::loadTexture(const QString& fileName, const aiMaterial* 
 	return data;
 }
 
-QOpenGLVertexArrayObjectPtr ModelLoader::getVAO()
-{
-	return m_vao;
-}
-
 void ModelLoader::LoadBones( uint MeshIndex, const aiMesh* paiMesh )
 {
 	for (uint i = 0; i < paiMesh->mNumBones; ++i)
 	{
 		uint boneIndex = 0;        
 		QString boneName(paiMesh->mBones[i]->mName.data);
-		qDebug() << "Bone detected:" << boneName;
 		if (m_BoneMapping.find(boneName) == m_BoneMapping.end()) 
 		{
 			// Allocate an index for a new bone
@@ -472,5 +515,186 @@ void ModelLoader::LoadBones( uint MeshIndex, const aiMesh* paiMesh )
 			float Weight  = paiMesh->mBones[i]->mWeights[j].mWeight;                   
 			m_Bones[VertexID].AddBoneData(boneIndex, Weight);
 		}
+	}
+}
+
+void ModelLoader::CalcInterpolatedPosition(aiVector3D& Out, float AnimationTime, const aiNodeAnim* pNodeAnim)
+{
+	if (pNodeAnim->mNumPositionKeys == 1) {
+		Out = pNodeAnim->mPositionKeys[0].mValue;
+		return;
+	}
+
+	uint PositionIndex = FindPosition(AnimationTime, pNodeAnim);
+	uint NextPositionIndex = (PositionIndex + 1);
+	assert(NextPositionIndex < pNodeAnim->mNumPositionKeys);
+	float DeltaTime = (float)(pNodeAnim->mPositionKeys[NextPositionIndex].mTime - pNodeAnim->mPositionKeys[PositionIndex].mTime);
+	float Factor = (AnimationTime - (float)pNodeAnim->mPositionKeys[PositionIndex].mTime) / DeltaTime;
+	//assert(Factor >= 0.0f && Factor <= 1.0f);
+	const aiVector3D& Start = pNodeAnim->mPositionKeys[PositionIndex].mValue;
+	const aiVector3D& End = pNodeAnim->mPositionKeys[NextPositionIndex].mValue;
+	aiVector3D Delta = End - Start;
+	Out = Start + Factor * Delta;
+}
+
+
+void ModelLoader::CalcInterpolatedRotation(aiQuaternion& Out, float AnimationTime, const aiNodeAnim* pNodeAnim)
+{
+	// we need at least two values to interpolate...
+	if (pNodeAnim->mNumRotationKeys == 1) {
+		Out = pNodeAnim->mRotationKeys[0].mValue;
+		return;
+	}
+
+	uint RotationIndex = FindRotation(AnimationTime, pNodeAnim);
+	uint NextRotationIndex = (RotationIndex + 1);
+	assert(NextRotationIndex < pNodeAnim->mNumRotationKeys);
+	float DeltaTime = (float)(pNodeAnim->mRotationKeys[NextRotationIndex].mTime - pNodeAnim->mRotationKeys[RotationIndex].mTime);
+	float Factor = (AnimationTime - (float)pNodeAnim->mRotationKeys[RotationIndex].mTime) / DeltaTime;
+	//assert(Factor >= 0.0f && Factor <= 1.0f);
+	const aiQuaternion& StartRotationQ = pNodeAnim->mRotationKeys[RotationIndex].mValue;
+	const aiQuaternion& EndRotationQ   = pNodeAnim->mRotationKeys[NextRotationIndex].mValue;    
+	aiQuaternion::Interpolate(Out, StartRotationQ, EndRotationQ, Factor);
+	Out = Out.Normalize();
+}
+
+
+void ModelLoader::CalcInterpolatedScaling(aiVector3D& Out, float AnimationTime, const aiNodeAnim* pNodeAnim)
+{
+	if (pNodeAnim->mNumScalingKeys == 1) {
+		Out = pNodeAnim->mScalingKeys[0].mValue;
+		return;
+	}
+
+	uint ScalingIndex = FindScaling(AnimationTime, pNodeAnim);
+	uint NextScalingIndex = (ScalingIndex + 1);
+	assert(NextScalingIndex < pNodeAnim->mNumScalingKeys);
+	float DeltaTime = (float)(pNodeAnim->mScalingKeys[NextScalingIndex].mTime - pNodeAnim->mScalingKeys[ScalingIndex].mTime);
+	float Factor = (AnimationTime - (float)pNodeAnim->mScalingKeys[ScalingIndex].mTime) / DeltaTime;
+	//assert(Factor >= 0.0f && Factor <= 1.0f);
+	const aiVector3D& Start = pNodeAnim->mScalingKeys[ScalingIndex].mValue;
+	const aiVector3D& End   = pNodeAnim->mScalingKeys[NextScalingIndex].mValue;
+	aiVector3D Delta = End - Start;
+	Out = Start + Factor * Delta;
+}
+
+uint ModelLoader::FindPosition(float AnimationTime, const aiNodeAnim* pNodeAnim)
+{    
+	for (uint i = 0 ; i < pNodeAnim->mNumPositionKeys - 1 ; i++) {
+		if (AnimationTime < (float)pNodeAnim->mPositionKeys[i + 1].mTime) {
+			return i;
+		}
+	}
+
+	assert(0);
+
+	return 0;
+}
+
+
+uint ModelLoader::FindRotation(float AnimationTime, const aiNodeAnim* pNodeAnim)
+{
+	assert(pNodeAnim->mNumRotationKeys > 0);
+
+	for (uint i = 0 ; i < pNodeAnim->mNumRotationKeys - 1 ; i++) {
+		if (AnimationTime < (float)pNodeAnim->mRotationKeys[i + 1].mTime) {
+			return i;
+		}
+	}
+
+	assert(0);
+
+	return 0;
+}
+
+
+uint ModelLoader::FindScaling(float AnimationTime, const aiNodeAnim* pNodeAnim)
+{
+	assert(pNodeAnim->mNumScalingKeys > 0);
+
+	for (uint i = 0 ; i < pNodeAnim->mNumScalingKeys - 1 ; i++) {
+		if (AnimationTime < (float)pNodeAnim->mScalingKeys[i + 1].mTime) {
+			return i;
+		}
+	}
+
+	assert(0);
+
+	return 0;
+}
+
+const aiNodeAnim* ModelLoader::FindNodeAnim(const aiAnimation* pAnimation, const QString NodeName)
+{
+	for (uint i = 0 ; i < pAnimation->mNumChannels ; i++) {
+		const aiNodeAnim* pNodeAnim = pAnimation->mChannels[i];
+
+		if (QString(pNodeAnim->mNodeName.data) == NodeName) {
+			return pNodeAnim;
+		}
+	}
+
+	return NULL;
+}
+
+void ModelLoader::ReadNodeHeirarchy( float AnimationTime, const aiNode* pNode, const mat4 &ParentTransform )
+{
+	QString NodeName(pNode->mName.data);
+
+	const aiAnimation* pAnimation = m_scene->mAnimations[0];
+
+	mat4 NodeTransformation(convToQMat4(&pNode->mTransformation));
+
+	const aiNodeAnim* pNodeAnim = FindNodeAnim(pAnimation, NodeName);
+	if (pNodeAnim) {
+		// Interpolate scaling and generate scaling transformation matrix
+		aiVector3D Scaling;
+		CalcInterpolatedScaling(Scaling, AnimationTime, pNodeAnim);
+		mat4 ScalingM;
+		ScalingM.scale(Scaling.x, Scaling.y, Scaling.z);
+
+		// Interpolate rotation and generate rotation transformation matrix
+		aiQuaternion RotationQ;
+		CalcInterpolatedRotation(RotationQ, AnimationTime, pNodeAnim);        
+		mat4 RotationM = convToQMat4(&RotationQ.GetMatrix());
+
+		// Interpolate translation and generate translation transformation matrix
+		aiVector3D Translation;
+		CalcInterpolatedPosition(Translation, AnimationTime, pNodeAnim);
+		mat4 TranslationM;
+		TranslationM.translate(Translation.x, Translation.y, Translation.z);
+
+		// Combine the above transformations
+		NodeTransformation = TranslationM * RotationM * ScalingM;
+
+	}
+
+
+	mat4 GlobalTransformation = ParentTransform * NodeTransformation;
+	if (m_BoneMapping.find(NodeName) != m_BoneMapping.end()) {
+		uint BoneIndex = m_BoneMapping[NodeName];
+		m_BoneInfo[BoneIndex].finalTransformation = m_GlobalInverseTransform * GlobalTransformation * m_BoneInfo[BoneIndex].boneOffset;
+	}
+
+	for (uint i = 0 ; i < pNode->mNumChildren ; i++) {
+		ReadNodeHeirarchy(AnimationTime, pNode->mChildren[i], GlobalTransformation);
+	}
+
+}
+
+void ModelLoader::BoneTransform( float TimeInSeconds, QVector<mat4>& Transforms )
+{
+	if(!m_scene->HasAnimations()) return;
+
+	mat4 Identity;
+	Identity.setToIdentity();
+	float TicksPerSecond = (float)(m_scene->mAnimations[0]->mTicksPerSecond != 0 ? m_scene->mAnimations[0]->mTicksPerSecond : 25.0f);
+	float TimeInTicks = TimeInSeconds * TicksPerSecond;
+	float AnimationTime = fmod(TimeInTicks, (float)m_scene->mAnimations[0]->mDuration);
+	ReadNodeHeirarchy(AnimationTime, m_scene->mRootNode, Identity);
+
+	Transforms.resize(m_NumBones);
+
+	for (uint i = 0 ; i < m_NumBones ; i++) {
+		Transforms[i] = m_BoneInfo[i].finalTransformation;
 	}
 }

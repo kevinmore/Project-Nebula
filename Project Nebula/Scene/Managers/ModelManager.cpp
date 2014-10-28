@@ -3,7 +3,7 @@
 
 ModelManager::ModelManager(Scene* scene)
 	: m_scene(scene),
-	m_modelLoader(ModelLoader())
+	m_modelLoader(new ModelLoader())
 {}
 
 
@@ -17,8 +17,8 @@ ModelPtr ModelManager::getModel( const QString& name )
 
 ModelPtr ModelManager::loadModel( const QString& name, const QString& filename, const QOpenGLShaderProgramPtr& shaderProgram )
 {
-	QVector<ModelDataPtr> modelDataVector = m_modelLoader.loadModel(filename, shaderProgram);
-	m_models[name] = ModelPtr(new Model(m_scene, m_modelLoader.getVAO(), modelDataVector));
+	QVector<ModelDataPtr> modelDataVector = m_modelLoader->loadModel(filename, shaderProgram);
+	m_models[name] = ModelPtr(new Model(m_scene, m_modelLoader, m_modelLoader->getVAO(), modelDataVector));
 
 	return m_models[name];
 }

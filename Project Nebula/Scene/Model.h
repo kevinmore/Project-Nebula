@@ -7,21 +7,22 @@
 #include <Primitives/Mesh.h>
 #include <Primitives/Texture.h>
 #include <Primitives/Material.h>
+#include <Utility/ModelLoader.h>
 
 class Scene;
 
 class Model : public AbstractModel
 {
 public:
-	Model(Scene* scene, const QOpenGLVertexArrayObjectPtr& vao);
-	Model(Scene* scene,	const QOpenGLVertexArrayObjectPtr& vao,	QVector<ModelDataPtr> modelDataVector);
+	Model(Scene* scene, ModelLoader* loader, const QOpenGLVertexArrayObjectPtr& vao);
+	Model(Scene* scene, ModelLoader* loader, const QOpenGLVertexArrayObjectPtr& vao,	QVector<ModelDataPtr> modelDataVector);
 	virtual ~Model(void);
 
 	virtual void render();
+	ModelLoader* m_loader;
 
 protected:
 	Scene* m_scene;
-
 	QVector<MeshPtr> m_meshes;
 	QVector<TexturePtr>  m_textures;
 	QVector<MaterialPtr> m_materials;

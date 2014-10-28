@@ -410,10 +410,13 @@ void SceneCamera::rotateAboutViewCenter(const QQuaternion& q)
 
 void SceneCamera::resetCamera()
 {
-	m_position = QVector3D(Vector3D::UNIT_Z);
-	m_upVector = QVector3D(Vector3D::UNIT_Y);
-	m_viewCenter = QVector3D(Vector3D::ZERO);
+// 	m_position = QVector3D(Vector3D::UNIT_Z);
+// 	m_upVector = QVector3D(Vector3D::UNIT_Y);
+// 	m_viewCenter = QVector3D(Vector3D::ZERO);
+// 	m_cameraToCenter = QVector3D(Vector3D::NEGATIVE_UNIT_Z);
+	m_position = QVector3D(0.0f, 6.0f, 6.0f);
+	m_upVector = QVector3D(0.0f, 3.6f, 0.0f);
+	m_viewCenter = QVector3D(0.0f, 1.0f, 0.0f);
 	m_cameraToCenter = QVector3D(Vector3D::NEGATIVE_UNIT_Z);
-
 	m_viewMatrixDirty = true;
 }

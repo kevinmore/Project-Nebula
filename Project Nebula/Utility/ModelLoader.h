@@ -7,6 +7,7 @@
 #include <QtCore/QSharedPointer>
 #include <Scene/AbstractModel.h>
 #include <Utility/DataTypes.h>
+#include <assert.h>
 
 class ModelLoader
 {
@@ -17,7 +18,6 @@ public:
 	QVector<ModelDataPtr> loadModel(const QString& filename, const QOpenGLShaderProgramPtr& shaderProgram);
 	QOpenGLVertexArrayObjectPtr getVAO();
 
-
 private:
 	MeshData loadMesh(unsigned int index, unsigned int numVertices, unsigned int numIndices, const aiMesh* mesh);
 	MaterialData loadMaterial(unsigned int index, const aiMaterial* material);
@@ -25,6 +25,9 @@ private:
 
 	void prepareVertexBuffers();
 	void prepareVertexContainers(unsigned int index, const aiMesh* mesh);
+
+	Assimp::Importer m_importer;
+	const aiScene* m_scene;
 
 	QOpenGLBuffer m_vertexPositionBuffer;
 	QOpenGLBuffer m_vertexColorBuffer;
@@ -85,7 +88,19 @@ private:
 			ZERO_MEM(Weights);        
 		}
 
-		void AddBoneData(uint BoneID, float Weight);
+		void AddBoneData(uint BoneID, float Weight)
+		{
+			for (uint i = 0 ; i < ARRAY_SIZE_IN_ELEMENTS(IDs) ; i++) {
+				if (Weights[i] == 0.0) {
+					IDs[i]     = BoneID;
+					Weights[i] = Weight;
+					return;
+				}        
+			}
+
+			// should never get here - more bones than we have space for
+			assert(0);
+		}
 	};
 
 	void CalcInterpolatedScaling(aiVector3D& Out, float AnimationTime, const aiNodeAnim* pNodeAnim);
@@ -105,7 +120,7 @@ private:
 	QVector<BoneInfo> m_BoneInfo;
 	mat4 m_GlobalInverseTransform;
 
-	const aiScene* m_scene;
 	QOpenGLBuffer m_vertexBoneBuffer;
 };
+
 

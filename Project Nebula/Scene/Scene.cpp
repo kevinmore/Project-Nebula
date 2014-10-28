@@ -15,8 +15,8 @@ Scene::Scene(QObject* parent)
 	  m_lightModeSubroutines(LightModeCount)
 {
 	// Initializing the position and orientation of the camera
-	m_camera->setPosition(QVector3D(-8.0f, 0.0f, -7.0f));
-	m_camera->setViewCenter(QVector3D(0.0f, 0.0f, 0.0f));
+	m_camera->setPosition(QVector3D(0.0f, 6.0f, 6.0f));
+	m_camera->setViewCenter(QVector3D(0.0f, 3.6f, 0.0f));
 	m_camera->setUpVector(QVector3D(0.0f, 1.0f, 0.0f));
 
 	// Initializing the lights
@@ -55,8 +55,8 @@ void Scene::initialize()
     glEnable(GL_CULL_FACE);
 	
 	
-	m_shaderProgram->bind();
-	m_shaderProgram->setUniformValue("texColor", 0);
+ 	m_shaderProgram->bind();
+ 	m_shaderProgram->setUniformValue("texColor", 0);
 	
     m_light.setType(Light::SpotLight);
     m_light.setUniqueColor(1.0, 1.0, 1.0);
@@ -69,7 +69,15 @@ void Scene::initialize()
 	m_meshManager = QSharedPointer<MeshManager>(new MeshManager());
 
 	
-	m_model = m_modelManager->loadModel("Alice", "../Resource/Models/Alice/Alice.dae", m_shaderProgram);
+	m_model = m_modelManager->loadModel("Alice", "../Resource/Models/jiuniang/jiuniang.DAE", m_shaderProgram);
+
+	
+	for (unsigned int i = 0 ; i < ARRAY_SIZE_IN_ELEMENTS(m_boneLocation) ; i++) {
+		char Name[128];
+		memset(Name, 0, sizeof(Name));
+		_snprintf_s(Name, sizeof(Name), "gBones[%d]", i);
+		m_boneLocation[i] = m_funcs->glGetUniformLocation(m_shaderProgram->programId(), Name);
+	}
 }
 
 void Scene::prepareShaders()
@@ -102,11 +110,42 @@ void Scene::update(float t)
 		m_camera->tilt(m_tiltAngle);
 		m_tiltAngle = 0.0f;
 	}
+
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	QMatrix4x4 modelViewMatrix = m_camera->viewMatrix() * m_object.modelMatrix();
+	QMatrix3x3 normalMatrix = modelViewMatrix.normalMatrix();
+
+	m_shaderProgram->bind();
+	m_shaderProgram->setUniformValue("normalMatrix", normalMatrix);
+	m_shaderProgram->setUniformValue("modelMatrix", m_object.modelMatrix());
+	m_shaderProgram->setUniformValue("viewMatrix", m_camera->viewMatrix());
+	m_shaderProgram->setUniformValue("projectionMatrix", m_camera->projectionMatrix());
+
+
+	m_light.setPosition(m_camera->position());
+	m_light.setDirection(m_camera->viewCenter());
+	m_light.render(m_shaderProgram, m_camera->viewMatrix());
+	// do the skeleton animation here
+	QVector<QMatrix4x4> Transforms;
+	m_model->m_loader->BoneTransform(t, Transforms);
+// 	for (int i = 0 ; i < Transforms.size() ; i++) 
+// 	{
+// 		m_funcs->glUniformMatrix4fv(m_boneLocation[i], 1, GL_TRUE, (const GLfloat*)Transforms[i].data());
+// 	}
+	for (int i = 0 ; i < Transforms.size() ; i++) 
+	{
+		char Name[128];
+		memset(Name, 0, sizeof(Name));
+		_snprintf_s(Name, sizeof(Name), "gBones[%d]", i);
+		m_shaderProgram->setUniformValue(Name, Transforms[i].transposed());
+	}
+
+	m_model->render();
 }
 
 void Scene::render(double currentTime)
 {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	// Set the fragment shader light mode subroutine
     m_funcs->glUniformSubroutinesuiv(GL_FRAGMENT_SHADER, 1, &m_lightModeSubroutines[m_lightMode]);
 
@@ -114,20 +153,6 @@ void Scene::render(double currentTime)
 	{
 		m_object.rotateY(static_cast<float>(currentTime)/0.02f);
 	}
-
-	QMatrix4x4 modelViewMatrix = m_camera->viewMatrix() * m_object.modelMatrix();
-	QMatrix3x3 normalMatrix = modelViewMatrix.normalMatrix();
-
-	m_shaderProgram->bind();
-	m_shaderProgram->setUniformValue("normalMatrix", normalMatrix);
-	m_shaderProgram->setUniformValue("modelViewMatrix", modelViewMatrix);
-	m_shaderProgram->setUniformValue("projectionMatrix", m_camera->projectionMatrix());
-	
-	m_model->render();
-
-	m_light.setPosition(m_camera->position());
-	m_light.setDirection(m_camera->viewCenter());
-	m_light.render(m_shaderProgram, m_camera->viewMatrix());
 
 	emit renderCycleDone();
 }

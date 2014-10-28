@@ -2,17 +2,19 @@
 #include <Scene/Scene.h>
 #include <QtGui/QOpenGLContext>
 
-Model::Model(Scene* scene, const QOpenGLVertexArrayObjectPtr& vao)
+Model::Model(Scene* scene, ModelLoader* loader, const QOpenGLVertexArrayObjectPtr& vao)
   : m_scene(scene),
 	m_vao(vao),
+	m_loader(loader),
 	m_funcs(nullptr)
 {
 	initialize();
 }
 
-Model::Model(Scene* scene, const QOpenGLVertexArrayObjectPtr& vao, QVector<ModelDataPtr> modelData)
+Model::Model(Scene* scene, ModelLoader* loader, const QOpenGLVertexArrayObjectPtr& vao, QVector<ModelDataPtr> modelData)
   : m_scene(scene),
 	m_vao(vao),
+	m_loader(loader),
 	m_funcs(nullptr)
 {
 	initialize(modelData);

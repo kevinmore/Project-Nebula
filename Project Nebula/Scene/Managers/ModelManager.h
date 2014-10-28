@@ -22,6 +22,6 @@ public:
 private:
 	QMap<QString, ModelPtr> m_models;
 	Scene* m_scene;
-	ModelLoader m_modelLoader;
+	ModelLoader* m_modelLoader;
 };
 

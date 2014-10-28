@@ -62,6 +62,8 @@
   <ItemGroup>
     <None Include="..\Resource\Shaders\basicSkinning.frag" />
     <None Include="..\Resource\Shaders\basicSkinning.vert" />
+    <None Include="..\Resource\Shaders\skinning.frag" />
+    <None Include="..\Resource\Shaders\skinning.vert" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{89A9A61D-5047-460C-91C1-C99FC990ABD7}</ProjectGuid>
