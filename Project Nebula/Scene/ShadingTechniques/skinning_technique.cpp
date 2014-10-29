@@ -22,8 +22,8 @@ bool SkinningTechnique::Init()
         return false;
     }
 
-	m_shader->addShaderFromSourceFile(QOpenGLShader::Vertex, "../Resource/Shaders/basicSkinning.vert");
-	m_shader->addShaderFromSourceFile(QOpenGLShader::Fragment, "../Resource/Shaders/basicSkinning.frag");
+	m_shader->addShaderFromSourceFile(QOpenGLShader::Vertex, "../Resource/Shaders/skinning.vert");
+	m_shader->addShaderFromSourceFile(QOpenGLShader::Fragment, "../Resource/Shaders/skinning.frag");
 	m_shader->link();
     
     m_WVPLocation = GetUniformLocation("gWVP");

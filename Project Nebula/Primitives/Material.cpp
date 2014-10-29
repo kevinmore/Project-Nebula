@@ -51,11 +51,11 @@ void Material::init()
 	m_uniformsBuffer.getBlockMembersData(uniformNames, OpenGLUniformBuffer::Offset, offsets); // this is not working
 	GLint blockSize = m_uniformsBuffer.getSize();
 
-	QVector<GLubyte> buffer(blockSize);
-	fillBuffer(buffer, offsets);
-
-	m_uniformsBuffer.allocate(blockSize, buffer.data());
-	m_uniformsBuffer.assignBindingPoint(1);
+// 	QVector<GLubyte> buffer(blockSize);
+// 	fillBuffer(buffer, offsets);
+// 
+// 	m_uniformsBuffer.allocate(blockSize, buffer.data());
+// 	m_uniformsBuffer.assignBindingPoint(1);
 }
 
 void Material::bind()

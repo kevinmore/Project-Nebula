@@ -15,7 +15,7 @@ public:
 
     void Enable();
 
-	GLuint getProgramID() { return m_shader->programId(); }
+	QOpenGLShaderProgram* getShader() { return m_shader; }
 
 protected:
 

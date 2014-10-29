@@ -11,7 +11,7 @@
 #include <Scene/Managers/MaterialManager.h>
 #include <Scene/Managers/MeshManager.h>
 #include <Scene/Managers/ModelManager.h>
-
+#include <Scene/ShadingTechniques/skinning_technique.h>
 
 typedef QSharedPointer<QOpenGLShaderProgram> ShadersProgramPtr;
 
@@ -101,5 +101,8 @@ private:
 
 	QOpenGLFunctions_4_3_Core* m_funcs;
 	GLuint m_boneLocation[200];
+
+	SkinningTechnique* m_pEffect;
+	DirectionalLight m_directionalLight;
 };
 

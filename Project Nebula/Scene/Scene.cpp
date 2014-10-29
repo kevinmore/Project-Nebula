@@ -45,19 +45,32 @@ void Scene::initialize()
 	m_funcs->initializeOpenGLFunctions();
 
 	// compile and link shaders
-	prepareShaders();
+	//prepareShaders();
 
-	glShadeModel(GL_SMOOTH);
 	glClearDepth( 1.0 );
     glClearColor(0.39f, 0.39f, 0.39f, 0.0f);
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
     glEnable(GL_CULL_FACE);
 	
-	
- 	m_shaderProgram->bind();
- 	m_shaderProgram->setUniformValue("texColor", 0);
-	
+
+	m_directionalLight.Color = vec3(1.0f, 1.0f, 1.0f);
+	m_directionalLight.AmbientIntensity = 0.55f;
+	m_directionalLight.DiffuseIntensity = 0.9f;
+	m_directionalLight.Direction = vec3(1.0f, 0.0, 0.0);
+
+	m_pEffect = new SkinningTechnique();
+	if (!m_pEffect->Init()) {
+		printf("Error initializing the lighting technique\n");
+	}
+	m_pEffect->Enable();
+	m_pEffect->SetColorTextureUnit(0);
+	m_pEffect->SetDirectionalLight(m_directionalLight);
+	m_pEffect->SetMatSpecularIntensity(0.0f);
+	m_pEffect->SetMatSpecularPower(0);
+
+	m_shaderProgram = ShadersProgramPtr(m_pEffect->getShader());
+
     m_light.setType(Light::SpotLight);
     m_light.setUniqueColor(1.0, 1.0, 1.0);
     m_light.setAttenuation(1.0f, 0.14f, 0.07f);
@@ -69,15 +82,8 @@ void Scene::initialize()
 	m_meshManager = QSharedPointer<MeshManager>(new MeshManager());
 
 	
-	m_model = m_modelManager->loadModel("Alice", "../Resource/Models/jiuniang/jiuniang.DAE", m_shaderProgram);
+	m_model = m_modelManager->loadModel("Alice", "../Resource/Models/Alice/Alice.dae", m_shaderProgram);
 
-	
-	for (unsigned int i = 0 ; i < ARRAY_SIZE_IN_ELEMENTS(m_boneLocation) ; i++) {
-		char Name[128];
-		memset(Name, 0, sizeof(Name));
-		_snprintf_s(Name, sizeof(Name), "gBones[%d]", i);
-		m_boneLocation[i] = m_funcs->glGetUniformLocation(m_shaderProgram->programId(), Name);
-	}
 }
 
 void Scene::prepareShaders()
@@ -116,11 +122,11 @@ void Scene::update(float t)
 	QMatrix4x4 modelViewMatrix = m_camera->viewMatrix() * m_object.modelMatrix();
 	QMatrix3x3 normalMatrix = modelViewMatrix.normalMatrix();
 
-	m_shaderProgram->bind();
-	m_shaderProgram->setUniformValue("normalMatrix", normalMatrix);
-	m_shaderProgram->setUniformValue("modelMatrix", m_object.modelMatrix());
-	m_shaderProgram->setUniformValue("viewMatrix", m_camera->viewMatrix());
-	m_shaderProgram->setUniformValue("projectionMatrix", m_camera->projectionMatrix());
+// 	m_shaderProgram->bind();
+// 	m_shaderProgram->setUniformValue("normalMatrix", normalMatrix);
+// 	m_shaderProgram->setUniformValue("modelMatrix", m_object.modelMatrix());
+// 	m_shaderProgram->setUniformValue("viewMatrix", m_camera->viewMatrix());
+// 	m_shaderProgram->setUniformValue("projectionMatrix", m_camera->projectionMatrix());
 
 
 	m_light.setPosition(m_camera->position());
@@ -129,17 +135,13 @@ void Scene::update(float t)
 	// do the skeleton animation here
 	QVector<QMatrix4x4> Transforms;
 	m_model->m_loader->BoneTransform(t, Transforms);
-// 	for (int i = 0 ; i < Transforms.size() ; i++) 
-// 	{
-// 		m_funcs->glUniformMatrix4fv(m_boneLocation[i], 1, GL_TRUE, (const GLfloat*)Transforms[i].data());
-// 	}
-	for (int i = 0 ; i < Transforms.size() ; i++) 
-	{
-		char Name[128];
-		memset(Name, 0, sizeof(Name));
-		_snprintf_s(Name, sizeof(Name), "gBones[%d]", i);
-		m_shaderProgram->setUniformValue(Name, Transforms[i]);
+	for (uint i = 0 ; i < Transforms.size() ; i++) {
+		m_pEffect->SetBoneTransform(i, Transforms[i]);
 	}
+	m_pEffect->SetEyeWorldPos(m_camera->position());
+	m_pEffect->SetWVP(m_camera->projectionMatrix() * modelViewMatrix);
+	m_pEffect->SetWorldMatrix(m_object.modelMatrix()); 
+
 
 	m_model->render();
 }

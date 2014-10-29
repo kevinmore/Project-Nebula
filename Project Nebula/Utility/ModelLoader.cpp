@@ -89,7 +89,14 @@ ModelLoader::ModelLoader()
 	  m_vertexBoneBuffer(QOpenGLBuffer::VertexBuffer),
 	  m_indexBuffer(QOpenGLBuffer::IndexBuffer),
 	  m_vao(QOpenGLVertexArrayObjectPtr(new QOpenGLVertexArrayObject()))
-{}
+{
+	QOpenGLContext* context = QOpenGLContext::currentContext();
+
+	Q_ASSERT(context);
+
+	m_funcs = context->versionFunctions<QOpenGLFunctions_4_3_Core>();
+	m_funcs->initializeOpenGLFunctions();
+}
 
 
 QOpenGLVertexArrayObjectPtr ModelLoader::getVAO()
@@ -117,9 +124,9 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName, const QOp
 		  aiProcess_Triangulate
 		| aiProcess_GenSmoothNormals
 		| aiProcess_FlipUVs
-//  		| aiProcess_CalcTangentSpace
-//  		| aiProcess_JoinIdenticalVertices
-//  		| aiProcess_SortByPType
+ 		| aiProcess_CalcTangentSpace
+ 		| aiProcess_JoinIdenticalVertices
+ 		| aiProcess_SortByPType
 // 		| aiProcessPreset_TargetRealtime_MaxQuality
 		);
 
@@ -250,86 +257,33 @@ void ModelLoader::prepareVertexBuffers()
 {
 	m_vao->create();
 	m_vao->bind();
-
+	m_funcs->glGenBuffers(ARRAY_SIZE_IN_ELEMENTS(m_Buffers), m_Buffers);
 
 	// Generate and populate the buffers with vertex attributes and the indices
-	m_vertexPositionBuffer.create();
-	m_vertexPositionBuffer.bind();
-	m_vertexPositionBuffer.setUsagePattern(QOpenGLBuffer::StreamDraw);
-	m_vertexPositionBuffer.allocate(m_positions.data(), m_positions.size() * sizeof(QVector3D));
+	m_funcs->glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[POS_VB]);
+	m_funcs->glBufferData(GL_ARRAY_BUFFER, sizeof(m_positions[0]) * m_positions.size(), m_positions.data(), GL_STATIC_DRAW);
+	m_funcs->glEnableVertexAttribArray(POSITION_LOCATION);
+	m_funcs->glVertexAttribPointer(POSITION_LOCATION, 3, GL_FLOAT, GL_FALSE, 0, 0);    
 
-	m_vertexColorBuffer.create();
-	m_vertexColorBuffer.bind();
-	m_vertexColorBuffer.setUsagePattern(QOpenGLBuffer::StreamDraw);
-	m_vertexColorBuffer.allocate(m_colors.data(), m_colors.size() * sizeof(QVector4D));
+	m_funcs->glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[TEXCOORD_VB]);
+	m_funcs->glBufferData(GL_ARRAY_BUFFER, sizeof(m_texCoords[0]) * m_texCoords.size(), m_texCoords.data(), GL_STATIC_DRAW);
+	m_funcs->glEnableVertexAttribArray(TEX_COORD_LOCATION);
+	m_funcs->glVertexAttribPointer(TEX_COORD_LOCATION, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
-	m_vertexTexCoordBuffer.create();
-	m_vertexTexCoordBuffer.bind();
-	m_vertexTexCoordBuffer.setUsagePattern(QOpenGLBuffer::StreamDraw);
-	m_vertexTexCoordBuffer.allocate(m_texCoords.data(), m_texCoords.size() * sizeof(QVector2D));
+	m_funcs->glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[NORMAL_VB]);
+	m_funcs->glBufferData(GL_ARRAY_BUFFER, sizeof(m_normals[0]) * m_normals.size(), m_normals.data(), GL_STATIC_DRAW);
+	m_funcs->glEnableVertexAttribArray(NORMAL_LOCATION);
+	m_funcs->glVertexAttribPointer(NORMAL_LOCATION, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
-	m_vertexNormalBuffer.create();
-	m_vertexNormalBuffer.bind();
-	m_vertexNormalBuffer.setUsagePattern(QOpenGLBuffer::StreamDraw);
-	m_vertexNormalBuffer.allocate(m_normals.data(), m_normals.size() * sizeof(QVector3D));
+	m_funcs->glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[BONE_VB]);
+	m_funcs->glBufferData(GL_ARRAY_BUFFER, sizeof(m_Bones[0]) * m_Bones.size(), m_Bones.data(), GL_STATIC_DRAW);
+	m_funcs->glEnableVertexAttribArray(BONE_ID_LOCATION);
+	m_funcs->glVertexAttribIPointer(BONE_ID_LOCATION, 4, GL_INT, sizeof(VertexBoneData), (const GLvoid*)0);
+	m_funcs->glEnableVertexAttribArray(BONE_WEIGHT_LOCATION);    
+	m_funcs->glVertexAttribPointer(BONE_WEIGHT_LOCATION, 4, GL_FLOAT, GL_FALSE, sizeof(VertexBoneData), (const GLvoid*)16);
 
-	m_vertexTangentBuffer.create();
-	m_vertexTangentBuffer.bind();
-	m_vertexTangentBuffer.setUsagePattern(QOpenGLBuffer::StreamDraw);
-	m_vertexTangentBuffer.allocate(m_tangents.data(), m_tangents.size() * sizeof(QVector3D));
-
-	m_vertexBoneBuffer.create();
-	m_vertexBoneBuffer.bind();
-	m_vertexBoneBuffer.setUsagePattern(QOpenGLBuffer::StreamDraw);
-	m_vertexBoneBuffer.allocate(m_Bones.data(), m_Bones.size() * sizeof(VertexBoneData));
-
-// 	for(int i =0; i<m_Bones.size();++i)
-// 	{
-// 		for(int j = 0; j < 4; ++j)
-// 		{
-// 			if (m_Bones[i].Weights[j] > 0)
-// 			{
-// 				printf("\n\nm_Bones[%d].IDs[%d] = %d",i,j, m_Bones[i].IDs[j]);
-// 				printf("\nm_Bones[%d].Weights[%d] = %f",i,j, m_Bones[i].Weights[j]);
-// 			}
-// 			
-// 		}
-// 	}
-
-	m_indexBuffer.create();
-	m_indexBuffer.bind();
-	m_indexBuffer.setUsagePattern(QOpenGLBuffer::StreamDraw);
-	m_indexBuffer.allocate(m_indices.data(), m_indices.size() * sizeof(unsigned int));
-
-
-	m_shaderProgram->bind();
-
-	m_vertexPositionBuffer.bind();
-	m_shaderProgram->enableAttributeArray("position");
-	m_shaderProgram->setAttributeBuffer("position", GL_FLOAT, 0, 3);
-	
-	m_vertexColorBuffer.bind();
-	m_shaderProgram->enableAttributeArray("color");
-	m_shaderProgram->setAttributeBuffer("color", GL_FLOAT, 0, 4);
-
-	m_vertexTexCoordBuffer.bind();
-	m_shaderProgram->enableAttributeArray("texCoord");
-	m_shaderProgram->setAttributeBuffer("texCoord", GL_FLOAT, 0, 2);
-
-	m_vertexNormalBuffer.bind();
-	m_shaderProgram->enableAttributeArray("normal");
-	m_shaderProgram->setAttributeBuffer("normal", GL_FLOAT, 0, 3);
-
-	m_vertexTangentBuffer.bind();
-	m_shaderProgram->enableAttributeArray("tangent");
-	m_shaderProgram->setAttributeBuffer("tangent", GL_FLOAT, 0, 3);
-
-	m_vertexBoneBuffer.bind();
-	m_shaderProgram->enableAttributeArray("BoneIDs");
-	m_shaderProgram->setAttributeBuffer("BoneIDs", GL_INT, 0, 4, sizeof(VertexBoneData));
-	m_shaderProgram->enableAttributeArray("Weights");
-	m_shaderProgram->setAttributeBuffer("Weights", GL_FLOAT, 16, 4, sizeof(VertexBoneData));
-
+	m_funcs->glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_Buffers[INDEX_BUFFER]);
+	m_funcs->glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(m_indices[0]) * m_indices.size(), m_indices.data(), GL_STATIC_DRAW);
 
 	m_vao->release();
 }

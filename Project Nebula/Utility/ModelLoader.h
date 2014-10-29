@@ -8,6 +8,7 @@
 #include <Scene/AbstractModel.h>
 #include <Utility/DataTypes.h>
 #include <assert.h>
+#include <QtGui/QOpenGLFunctions_4_3_Core>
 
 class ModelLoader
 {
@@ -28,6 +29,7 @@ private:
 
 	Assimp::Importer m_importer;
 	const aiScene* m_scene;
+	QOpenGLFunctions_4_3_Core *m_funcs;
 
 	QOpenGLBuffer m_vertexPositionBuffer;
 	QOpenGLBuffer m_vertexColorBuffer;
@@ -59,6 +61,25 @@ public:
 
 private:
 #define NUM_BONES_PER_VEREX 4
+#define POSITION_LOCATION    0
+#define TEX_COORD_LOCATION   1
+#define NORMAL_LOCATION      2
+#define BONE_ID_LOCATION     3
+#define BONE_WEIGHT_LOCATION 4
+
+	enum VB_TYPES {
+		INDEX_BUFFER,
+		POS_VB,
+		NORMAL_VB,
+		TEXCOORD_VB,
+		BONE_VB,
+		NUM_VBs            
+	};
+
+	GLuint m_VAO;
+	GLuint m_Buffers[NUM_VBs];
+
+
 
 	struct BoneInfo
 	{
