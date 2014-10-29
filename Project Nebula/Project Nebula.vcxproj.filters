@@ -25,6 +25,8 @@
     <ClCompile Include="UI\Canvas.cpp" />
     <ClCompile Include="UI\Canvas_moc.cpp" />
     <ClCompile Include="UI\MainWindow_moc.cpp" />
+    <ClCompile Include="Scene\ShadingTechniques\technique.cpp" />
+    <ClCompile Include="Scene\ShadingTechniques\skinning_technique.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Primitives\Bone.h" />
@@ -48,6 +50,8 @@
     <ClInclude Include="Utility\OpenGLUniformBuffer.h" />
     <ClInclude Include="UI\MainWindow.h" />
     <ClInclude Include="UI\Canvas.h" />
+    <ClInclude Include="Scene\ShadingTechniques\technique.h" />
+    <ClInclude Include="Scene\ShadingTechniques\skinning_technique.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Resource\Shaders\basicSkinning.frag" />

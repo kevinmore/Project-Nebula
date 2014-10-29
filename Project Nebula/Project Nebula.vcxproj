@@ -18,6 +18,8 @@
     <ClCompile Include="Scene\Model.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\Scene_moc.cpp" />
+    <ClCompile Include="Scene\ShadingTechniques\skinning_technique.cpp" />
+    <ClCompile Include="Scene\ShadingTechniques\technique.cpp" />
     <ClCompile Include="UI\Canvas_moc.cpp" />
     <ClCompile Include="UI\MainWindow.cpp" />
     <ClCompile Include="UI\Canvas.cpp" />
@@ -40,6 +42,8 @@
     <ClInclude Include="Scene\Managers\ModelManager.h" />
     <ClInclude Include="Scene\Model.h" />
     <ClInclude Include="Scene\Scene.h" />
+    <ClInclude Include="Scene\ShadingTechniques\skinning_technique.h" />
+    <ClInclude Include="Scene\ShadingTechniques\technique.h" />
     <ClInclude Include="UI\MainWindow.h" />
     <ClInclude Include="UI\Canvas.h" />
     <ClInclude Include="Utility\ModelLoader.h" />

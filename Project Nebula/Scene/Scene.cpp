@@ -138,7 +138,7 @@ void Scene::update(float t)
 		char Name[128];
 		memset(Name, 0, sizeof(Name));
 		_snprintf_s(Name, sizeof(Name), "gBones[%d]", i);
-		m_shaderProgram->setUniformValue(Name, Transforms[i].transposed());
+		m_shaderProgram->setUniformValue(Name, Transforms[i]);
 	}
 
 	m_model->render();
