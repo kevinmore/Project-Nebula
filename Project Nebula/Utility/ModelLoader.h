@@ -124,15 +124,15 @@ private:
 		}
 	};
 
-	void CalcInterpolatedScaling(aiVector3D& Out, float AnimationTime, const aiNodeAnim* pNodeAnim);
-	void CalcInterpolatedRotation(aiQuaternion& Out, float AnimationTime, const aiNodeAnim* pNodeAnim);
-	void CalcInterpolatedPosition(aiVector3D& Out, float AnimationTime, const aiNodeAnim* pNodeAnim);    
-	uint FindScaling(float AnimationTime, const aiNodeAnim* pNodeAnim);
-	uint FindRotation(float AnimationTime, const aiNodeAnim* pNodeAnim);
-	uint FindPosition(float AnimationTime, const aiNodeAnim* pNodeAnim);
-	const aiNodeAnim* FindNodeAnim(const aiAnimation* pAnimation, const QString NodeName);
-	void ReadNodeHeirarchy(float AnimationTime, const aiNode* pNode, const mat4& ParentTransform);
-	void LoadBones(uint MeshIndex, const aiMesh* paiMesh);
+	void calcInterpolatedScaling(aiVector3D& Out, float AnimationTime, const aiNodeAnim* pNodeAnim);
+	void calcInterpolatedRotation(aiQuaternion& Out, float AnimationTime, const aiNodeAnim* pNodeAnim);
+	void calcInterpolatedPosition(aiVector3D& Out, float AnimationTime, const aiNodeAnim* pNodeAnim);    
+	uint findScaling(float AnimationTime, const aiNodeAnim* pNodeAnim);
+	uint findRotation(float AnimationTime, const aiNodeAnim* pNodeAnim);
+	uint findPosition(float AnimationTime, const aiNodeAnim* pNodeAnim);
+	const aiNodeAnim* findNodeAnim(const aiAnimation* pAnimation, const QString NodeName);
+	void readNodeHeirarchy(float AnimationTime, const aiNode* pNode, const mat4& ParentTransform);
+	void loadBones(uint MeshIndex, const aiMesh* paiMesh);
 
 
 	QMap<QString, uint> m_BoneMapping; // maps a bone name to its index

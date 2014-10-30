@@ -6,7 +6,6 @@
 Technique::Technique()
 {
 	m_shader = nullptr;
-	m_funcs = nullptr;
 }
 
 
@@ -20,12 +19,8 @@ bool Technique::Init()
 {
 	m_shader = new QOpenGLShaderProgram();
 
-	QOpenGLContext* context = QOpenGLContext::currentContext();
 
-	Q_ASSERT(context);
-
-	m_funcs = context->versionFunctions<QOpenGLFunctions_4_3_Core>();
-	m_funcs->initializeOpenGLFunctions();
+	Q_ASSERT(initializeOpenGLFunctions());	
 
     return true;
 }
@@ -45,6 +40,6 @@ GLint Technique::GetUniformLocation(const char* pUniformName)
 GLint Technique::GetProgramParam(GLint param)
 {
     GLint ret;
-    m_funcs->glGetProgramiv(m_shader->programId(), param, &ret);
+    glGetProgramiv(m_shader->programId(), param, &ret);
     return ret;
 }

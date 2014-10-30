@@ -135,7 +135,7 @@ void Scene::update(float t)
 	// do the skeleton animation here
 	QVector<QMatrix4x4> Transforms;
 	m_model->m_loader->BoneTransform(t, Transforms);
-	for (uint i = 0 ; i < Transforms.size() ; i++) {
+	for (int i = 0 ; i < Transforms.size() ; i++) {
 		m_pEffect->SetBoneTransform(i, Transforms[i]);
 	}
 	m_pEffect->SetEyeWorldPos(m_camera->position());
