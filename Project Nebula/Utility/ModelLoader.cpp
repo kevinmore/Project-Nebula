@@ -261,29 +261,29 @@ void ModelLoader::prepareVertexBuffers()
 
 	// Generate and populate the buffers with vertex attributes and the indices
 	m_funcs->glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[POS_VB]);
-	m_funcs->glBufferData(GL_ARRAY_BUFFER, sizeof(m_positions[0]) * m_positions.size(), m_positions.data(), GL_STATIC_DRAW);
+	m_funcs->glBufferData(GL_ARRAY_BUFFER, sizeof(m_positions[0]) * m_positions.size(), m_positions.data(), GL_STREAM_DRAW);
 	m_funcs->glEnableVertexAttribArray(POSITION_LOCATION);
 	m_funcs->glVertexAttribPointer(POSITION_LOCATION, 3, GL_FLOAT, GL_FALSE, 0, 0);    
 
 	m_funcs->glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[TEXCOORD_VB]);
-	m_funcs->glBufferData(GL_ARRAY_BUFFER, sizeof(m_texCoords[0]) * m_texCoords.size(), m_texCoords.data(), GL_STATIC_DRAW);
+	m_funcs->glBufferData(GL_ARRAY_BUFFER, sizeof(m_texCoords[0]) * m_texCoords.size(), m_texCoords.data(), GL_STREAM_DRAW);
 	m_funcs->glEnableVertexAttribArray(TEX_COORD_LOCATION);
 	m_funcs->glVertexAttribPointer(TEX_COORD_LOCATION, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
 	m_funcs->glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[NORMAL_VB]);
-	m_funcs->glBufferData(GL_ARRAY_BUFFER, sizeof(m_normals[0]) * m_normals.size(), m_normals.data(), GL_STATIC_DRAW);
+	m_funcs->glBufferData(GL_ARRAY_BUFFER, sizeof(m_normals[0]) * m_normals.size(), m_normals.data(), GL_STREAM_DRAW);
 	m_funcs->glEnableVertexAttribArray(NORMAL_LOCATION);
 	m_funcs->glVertexAttribPointer(NORMAL_LOCATION, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
 	m_funcs->glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[BONE_VB]);
-	m_funcs->glBufferData(GL_ARRAY_BUFFER, sizeof(m_Bones[0]) * m_Bones.size(), m_Bones.data(), GL_STATIC_DRAW);
+	m_funcs->glBufferData(GL_ARRAY_BUFFER, sizeof(m_Bones[0]) * m_Bones.size(), m_Bones.data(), GL_STREAM_DRAW);
 	m_funcs->glEnableVertexAttribArray(BONE_ID_LOCATION);
 	m_funcs->glVertexAttribIPointer(BONE_ID_LOCATION, 4, GL_INT, sizeof(VertexBoneData), (const GLvoid*)0);
 	m_funcs->glEnableVertexAttribArray(BONE_WEIGHT_LOCATION);    
 	m_funcs->glVertexAttribPointer(BONE_WEIGHT_LOCATION, 4, GL_FLOAT, GL_FALSE, sizeof(VertexBoneData), (const GLvoid*)16);
 
 	m_funcs->glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_Buffers[INDEX_BUFFER]);
-	m_funcs->glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(m_indices[0]) * m_indices.size(), m_indices.data(), GL_STATIC_DRAW);
+	m_funcs->glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(m_indices[0]) * m_indices.size(), m_indices.data(), GL_STREAM_DRAW);
 
 	m_vao->release();
 }

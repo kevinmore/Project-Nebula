@@ -25,6 +25,7 @@ Canvas::Canvas(QScreen *screen)
 	format.setSamples(16); // Multisampling x16
 	format.setProfile(QSurfaceFormat::CoreProfile); 
 	format.setOption(QSurfaceFormat::DebugContext);
+	//format.setSwapBehavior(QSurfaceFormat::TripleBuffer); // may be efficient
 
 	// Create the window
 	setFormat(format);

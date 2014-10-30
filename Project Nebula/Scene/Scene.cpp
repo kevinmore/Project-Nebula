@@ -15,8 +15,8 @@ Scene::Scene(QObject* parent)
 	  m_lightModeSubroutines(LightModeCount)
 {
 	// Initializing the position and orientation of the camera
-	m_camera->setPosition(QVector3D(0.0f, 6.0f, 6.0f));
-	m_camera->setViewCenter(QVector3D(0.0f, 3.6f, 0.0f));
+	m_camera->setPosition(QVector3D(0.0f, 2.0f, 5.0f));
+	m_camera->setViewCenter(QVector3D(0.0f, 0.0f, 0.0f));
 	m_camera->setUpVector(QVector3D(0.0f, 1.0f, 0.0f));
 
 	// Initializing the lights
