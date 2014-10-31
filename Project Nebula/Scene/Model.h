@@ -19,10 +19,12 @@ public:
 	virtual ~Model(void);
 
 	virtual void render();
+	bool hasAnimation() { return m_hasAnimation; }
 	ModelLoader* m_loader;
 
 protected:
 	Scene* m_scene;
+	bool m_hasAnimation;
 	QVector<MeshPtr> m_meshes;
 	QVector<TexturePtr>  m_textures;
 	QVector<MaterialPtr> m_materials;

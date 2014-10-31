@@ -10,7 +10,7 @@
 #include <assert.h>
 #include <QtGui/QOpenGLFunctions_4_3_Core>
 
-class ModelLoader
+class ModelLoader : protected QOpenGLFunctions_4_3_Core
 {
 public:
 	ModelLoader();
@@ -29,14 +29,6 @@ private:
 
 	Assimp::Importer m_importer;
 	const aiScene* m_scene;
-	QOpenGLFunctions_4_3_Core *m_funcs;
-
-	QOpenGLBuffer m_vertexPositionBuffer;
-	QOpenGLBuffer m_vertexColorBuffer;
-	QOpenGLBuffer m_vertexTexCoordBuffer;
-	QOpenGLBuffer m_vertexNormalBuffer;
-	QOpenGLBuffer m_vertexTangentBuffer;
-	QOpenGLBuffer m_indexBuffer;
 
 	QVector<QVector3D> m_positions;
 	QVector<QVector4D> m_colors;
@@ -141,7 +133,6 @@ private:
 	QVector<BoneInfo> m_BoneInfo;
 	mat4 m_GlobalInverseTransform;
 
-	QOpenGLBuffer m_vertexBoneBuffer;
 };
 
 

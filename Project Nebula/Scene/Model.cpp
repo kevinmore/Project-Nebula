@@ -6,6 +6,7 @@ Model::Model(Scene* scene, ModelLoader* loader, const QOpenGLVertexArrayObjectPt
   : m_scene(scene),
 	m_vao(vao),
 	m_loader(loader),
+	m_hasAnimation(false),
 	m_funcs(nullptr)
 {
 	initialize();
@@ -15,6 +16,7 @@ Model::Model(Scene* scene, ModelLoader* loader, const QOpenGLVertexArrayObjectPt
   : m_scene(scene),
 	m_vao(vao),
 	m_loader(loader),
+	m_hasAnimation(false),
 	m_funcs(nullptr)
 {
 	initialize(modelData);
@@ -39,6 +41,8 @@ void Model::initialize(QVector<ModelDataPtr> modelDataVector)
 	for (int i = 0; i < modelDataVector.size(); ++i)
 	{
 		ModelDataPtr data = modelDataVector[i];
+
+		m_hasAnimation = data->hasAnimation;
 
 		// deal with the mesh
 		MeshPtr mesh = m_meshManager->getMesh(data->meshData.name);

@@ -54,22 +54,9 @@ void Scene::initialize()
     glEnable(GL_CULL_FACE);
 	
 
-	m_directionalLight.Color = vec3(1.0f, 1.0f, 1.0f);
-	m_directionalLight.AmbientIntensity = 0.55f;
-	m_directionalLight.DiffuseIntensity = 0.9f;
-	m_directionalLight.Direction = vec3(1.0f, 0.0, 0.0);
+	initRenderingEffect();
 
-	m_pEffect = new SkinningTechnique();
-	if (!m_pEffect->Init()) {
-		printf("Error initializing the lighting technique\n");
-	}
-	m_pEffect->Enable();
-	m_pEffect->SetColorTextureUnit(0);
-	m_pEffect->SetDirectionalLight(m_directionalLight);
-	m_pEffect->SetMatSpecularIntensity(0.0f);
-	m_pEffect->SetMatSpecularPower(0);
-
-	m_shaderProgram = ShadersProgramPtr(m_pEffect->getShader());
+	
 
     m_light.setType(Light::SpotLight);
     m_light.setUniqueColor(1.0, 1.0, 1.0);
@@ -82,16 +69,29 @@ void Scene::initialize()
 	m_meshManager = QSharedPointer<MeshManager>(new MeshManager());
 
 	
-	m_model = m_modelManager->loadModel("Alice", "../Resource/Models/Alice/Alice.dae", m_shaderProgram);
+	m_model = m_modelManager->loadModel("Alice", "../Resource/Models/Naruto/NarutoDummy.dae", m_shaderProgram);
 
 }
 
-void Scene::prepareShaders()
-{
-	m_shaderProgram = ShadersProgramPtr(new QOpenGLShaderProgram()); 
-	m_shaderProgram->addShaderFromSourceFile(QOpenGLShader::Vertex, "../Resource/Shaders/basicSkinning.vert");
-	m_shaderProgram->addShaderFromSourceFile(QOpenGLShader::Fragment, "../Resource/Shaders/basicSkinning.frag");
-	m_shaderProgram->link();
+void Scene::initRenderingEffect()
+{ 
+	DirectionalLight directionalLight;
+	directionalLight.Color = vec3(1.0f, 1.0f, 1.0f);
+	directionalLight.AmbientIntensity = 0.55f;
+	directionalLight.DiffuseIntensity = 0.9f;
+	directionalLight.Direction = vec3(1.0f, 0.0, 0.0);
+
+	m_RenderingEffect = new SkinningTechnique();
+	if (!m_RenderingEffect->Init()) {
+		printf("Error initializing the lighting technique\n");
+	}
+	m_RenderingEffect->Enable();
+	m_RenderingEffect->SetColorTextureUnit(0);
+	m_RenderingEffect->SetDirectionalLight(directionalLight);
+	m_RenderingEffect->SetMatSpecularIntensity(0.0f);
+	m_RenderingEffect->SetMatSpecularPower(0);
+
+	m_shaderProgram = ShadersProgramPtr(m_RenderingEffect->getShader());
 }
 
 void Scene::update(float t)
@@ -132,16 +132,22 @@ void Scene::update(float t)
 	m_light.setPosition(m_camera->position());
 	m_light.setDirection(m_camera->viewCenter());
 	m_light.render(m_shaderProgram, m_camera->viewMatrix());
-	// do the skeleton animation here
-	QVector<QMatrix4x4> Transforms;
-	m_model->m_loader->BoneTransform(t, Transforms);
-	for (int i = 0 ; i < Transforms.size() ; i++) {
-		m_pEffect->SetBoneTransform(i, Transforms[i]);
-	}
-	m_pEffect->SetEyeWorldPos(m_camera->position());
-	m_pEffect->SetWVP(m_camera->projectionMatrix() * modelViewMatrix);
-	m_pEffect->SetWorldMatrix(m_object.modelMatrix()); 
 
+	m_RenderingEffect->SetEyeWorldPos(m_camera->position());
+	m_RenderingEffect->SetWVP(m_camera->projectionMatrix() * modelViewMatrix);
+	m_RenderingEffect->SetWorldMatrix(m_object.modelMatrix()); 
+
+	// do the skeleton animation here
+	// check if the model has animation first
+	if(m_model->hasAnimation())
+	{
+		m_shaderProgram->setUniformValue("hasAnimation", true);
+		QVector<QMatrix4x4> Transforms;
+		m_model->m_loader->BoneTransform(t, Transforms);
+		for (int i = 0 ; i < Transforms.size() ; i++) {
+			m_RenderingEffect->SetBoneTransform(i, Transforms[i]);
+		}
+	}
 
 	m_model->render();
 }

@@ -57,7 +57,7 @@ public:
 	QSharedPointer<MaterialManager> materialManager();
 
 private:
-	void prepareShaders();
+	void initRenderingEffect();
 
 public slots:
 	void toggleFill(bool state);
@@ -100,9 +100,7 @@ private:
 	QVector<GLuint> m_lightModeSubroutines;
 
 	QOpenGLFunctions_4_3_Core* m_funcs;
-	GLuint m_boneLocation[200];
 
-	SkinningTechnique* m_pEffect;
-	DirectionalLight m_directionalLight;
+	SkinningTechnique* m_RenderingEffect;
 };
 

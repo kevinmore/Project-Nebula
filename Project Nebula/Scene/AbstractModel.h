@@ -43,6 +43,7 @@ struct ModelData
 	MeshData     meshData;
 	TextureData  textureData;
 	MaterialData materialData;
+	bool hasAnimation;
 };
 
 typedef QSharedPointer<MeshData> MeshDataPtr;

@@ -66,21 +66,9 @@ void inverseQMat4(QMatrix4x4 &m)
 }
 
 ModelLoader::ModelLoader()
-	: m_vertexPositionBuffer(QOpenGLBuffer::VertexBuffer),
-	  m_vertexColorBuffer(QOpenGLBuffer::VertexBuffer),
-	  m_vertexTexCoordBuffer(QOpenGLBuffer::VertexBuffer),
-	  m_vertexNormalBuffer(QOpenGLBuffer::VertexBuffer),
-	  m_vertexTangentBuffer(QOpenGLBuffer::VertexBuffer),
-	  m_vertexBoneBuffer(QOpenGLBuffer::VertexBuffer),
-	  m_indexBuffer(QOpenGLBuffer::IndexBuffer),
-	  m_vao(QOpenGLVertexArrayObjectPtr(new QOpenGLVertexArrayObject()))
+	: m_vao(QOpenGLVertexArrayObjectPtr(new QOpenGLVertexArrayObject()))
 {
-	QOpenGLContext* context = QOpenGLContext::currentContext();
-
-	Q_ASSERT(context);
-
-	m_funcs = context->versionFunctions<QOpenGLFunctions_4_3_Core>();
-	m_funcs->initializeOpenGLFunctions();
+	initializeOpenGLFunctions();
 }
 
 
@@ -91,13 +79,6 @@ QOpenGLVertexArrayObjectPtr ModelLoader::getVAO()
 
 ModelLoader::~ModelLoader()
 {
-	m_vertexPositionBuffer.destroy();
-	m_vertexColorBuffer.destroy();
-	m_vertexTexCoordBuffer.destroy();
-	m_vertexNormalBuffer.destroy();
-	m_vertexTangentBuffer.destroy();
-	m_indexBuffer.destroy();
-
 	m_vao->destroy();
 }
 
@@ -122,7 +103,6 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName, const QOp
 	else if(m_scene->HasTextures())
 	{
 		qFatal("Support for meshes with embedded textures is not implemented");
-		exit(1);
 	}
 
 
@@ -163,6 +143,7 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName, const QOp
 		md->meshData     = loadMesh(i, numVertices, numIndices, m_scene->mMeshes[i]);
 		md->textureData  = loadTexture(fileName, m_scene->mMaterials[m_scene->mMeshes[i]->mMaterialIndex]);
 		md->materialData = loadMaterial(i, m_scene->mMaterials[m_scene->mMeshes[i]->mMaterialIndex]);
+		md->hasAnimation = m_scene->HasAnimations();
 
 		numVertices += m_scene->mMeshes[i]->mNumVertices;
 		numIndices  += m_scene->mMeshes[i]->mNumFaces * 3;
@@ -172,7 +153,9 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName, const QOp
 
 	prepareVertexBuffers();
 
-	qDebug() << "Model has" << m_scene->mNumMeshes << "meshes," << numVertices << "vertices, and" << numIndices << "indices";
+	qDebug() << "Model has" << m_scene->mNumMeshes << "meshes," << numVertices << "vertices," << numIndices << "indices and" << m_NumBones << "bones.";
+
+
 
 	return modelDataVector;
 }
@@ -216,7 +199,7 @@ void ModelLoader::prepareVertexContainers(unsigned int index, const aiMesh* mesh
 		m_tangents.push_back(QVector3D(pTangent->x, pTangent->y, pTangent->z));
 	}
 
-	loadBones(index, mesh);
+	if(mesh->HasBones()) loadBones(index, mesh);
 	
 
 	// Populate the index buffer
@@ -242,33 +225,33 @@ void ModelLoader::prepareVertexBuffers()
 {
 	m_vao->create();
 	m_vao->bind();
-	m_funcs->glGenBuffers(ARRAY_SIZE_IN_ELEMENTS(m_Buffers), m_Buffers);
+	glGenBuffers(ARRAY_SIZE_IN_ELEMENTS(m_Buffers), m_Buffers);
 
 	// Generate and populate the buffers with vertex attributes and the indices
-	m_funcs->glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[POS_VB]);
-	m_funcs->glBufferData(GL_ARRAY_BUFFER, sizeof(m_positions[0]) * m_positions.size(), m_positions.data(), GL_STREAM_DRAW);
-	m_funcs->glEnableVertexAttribArray(POSITION_LOCATION);
-	m_funcs->glVertexAttribPointer(POSITION_LOCATION, 3, GL_FLOAT, GL_FALSE, 0, 0);    
+	glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[POS_VB]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(m_positions[0]) * m_positions.size(), m_positions.data(), GL_STREAM_DRAW);
+	glEnableVertexAttribArray(POSITION_LOCATION);
+	glVertexAttribPointer(POSITION_LOCATION, 3, GL_FLOAT, GL_FALSE, 0, 0);    
 
-	m_funcs->glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[TEXCOORD_VB]);
-	m_funcs->glBufferData(GL_ARRAY_BUFFER, sizeof(m_texCoords[0]) * m_texCoords.size(), m_texCoords.data(), GL_STREAM_DRAW);
-	m_funcs->glEnableVertexAttribArray(TEX_COORD_LOCATION);
-	m_funcs->glVertexAttribPointer(TEX_COORD_LOCATION, 2, GL_FLOAT, GL_FALSE, 0, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[TEXCOORD_VB]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(m_texCoords[0]) * m_texCoords.size(), m_texCoords.data(), GL_STREAM_DRAW);
+	glEnableVertexAttribArray(TEX_COORD_LOCATION);
+	glVertexAttribPointer(TEX_COORD_LOCATION, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
-	m_funcs->glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[NORMAL_VB]);
-	m_funcs->glBufferData(GL_ARRAY_BUFFER, sizeof(m_normals[0]) * m_normals.size(), m_normals.data(), GL_STREAM_DRAW);
-	m_funcs->glEnableVertexAttribArray(NORMAL_LOCATION);
-	m_funcs->glVertexAttribPointer(NORMAL_LOCATION, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[NORMAL_VB]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(m_normals[0]) * m_normals.size(), m_normals.data(), GL_STREAM_DRAW);
+	glEnableVertexAttribArray(NORMAL_LOCATION);
+	glVertexAttribPointer(NORMAL_LOCATION, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
-	m_funcs->glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[BONE_VB]);
-	m_funcs->glBufferData(GL_ARRAY_BUFFER, sizeof(m_Bones[0]) * m_Bones.size(), m_Bones.data(), GL_STREAM_DRAW);
-	m_funcs->glEnableVertexAttribArray(BONE_ID_LOCATION);
-	m_funcs->glVertexAttribIPointer(BONE_ID_LOCATION, 4, GL_INT, sizeof(VertexBoneData), (const GLvoid*)0);
-	m_funcs->glEnableVertexAttribArray(BONE_WEIGHT_LOCATION);    
-	m_funcs->glVertexAttribPointer(BONE_WEIGHT_LOCATION, 4, GL_FLOAT, GL_FALSE, sizeof(VertexBoneData), (const GLvoid*)16);
+	glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[BONE_VB]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(m_Bones[0]) * m_Bones.size(), m_Bones.data(), GL_STREAM_DRAW);
+	glEnableVertexAttribArray(BONE_ID_LOCATION);
+	glVertexAttribIPointer(BONE_ID_LOCATION, 4, GL_INT, sizeof(VertexBoneData), (const GLvoid*)0);
+	glEnableVertexAttribArray(BONE_WEIGHT_LOCATION);    
+	glVertexAttribPointer(BONE_WEIGHT_LOCATION, 4, GL_FLOAT, GL_FALSE, sizeof(VertexBoneData), (const GLvoid*)16);
 
-	m_funcs->glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_Buffers[INDEX_BUFFER]);
-	m_funcs->glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(m_indices[0]) * m_indices.size(), m_indices.data(), GL_STREAM_DRAW);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_Buffers[INDEX_BUFFER]);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(m_indices[0]) * m_indices.size(), m_indices.data(), GL_STREAM_DRAW);
 
 	m_vao->release();
 }
