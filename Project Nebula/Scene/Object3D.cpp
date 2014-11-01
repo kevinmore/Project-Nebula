@@ -6,7 +6,7 @@ using namespace Math;
 Object3D::Object3D()
 	: m_position(Vector3D::ZERO),
 	  m_rotation(QVector3D(-90, 0, 0)),
-	  m_scale(QVector3D(0.1, 0.1, 0.1)),
+	  m_scale(QVector3D(0.1f, 0.1f, 0.1f)),
 	  m_modelMatrixDirty(true)
 {}
 

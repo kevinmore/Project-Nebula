@@ -44,55 +44,28 @@ void Scene::initialize()
 
 	m_funcs->initializeOpenGLFunctions();
 
-	// compile and link shaders
-	//prepareShaders();
-
-	glClearDepth( 1.0 );
-    glClearColor(0.39f, 0.39f, 0.39f, 0.0f);
-    glEnable(GL_DEPTH_TEST);
-    glDepthFunc(GL_LEQUAL);
-    glEnable(GL_CULL_FACE);
-	
-
-	initRenderingEffect();
 
 	
 
-    m_light.setType(Light::SpotLight);
-    m_light.setUniqueColor(1.0, 1.0, 1.0);
-    m_light.setAttenuation(1.0f, 0.14f, 0.07f);
-    m_light.setIntensity(3.0f);
+//     m_light.setType(Light::SpotLight);
+//     m_light.setUniqueColor(1.0, 1.0, 1.0);
+//     m_light.setAttenuation(1.0f, 0.14f, 0.07f);
+//     m_light.setIntensity(3.0f);
 
 	m_modelManager = QSharedPointer<ModelManager>(new ModelManager(this));
-	m_materialManager = QSharedPointer<MaterialManager>(new MaterialManager(m_shaderProgram->programId()));
+	m_materialManager = QSharedPointer<MaterialManager>(new MaterialManager(1));// hack, fix it later!
 	m_textureManager = QSharedPointer<TextureManager>(new TextureManager());
 	m_meshManager = QSharedPointer<MeshManager>(new MeshManager());
 
+	m_modelManager->loadModel("Naruto2", "../Resource/Models/Alice/Alice.dae");
+	m_modelManager->getModel("Naruto2")->getActor()->setObjectXPosition(250);
+
+	m_modelManager->loadModel("Naruto1", "../Resource/Models/Naruto/Naruto.dae");
+ 	m_modelManager->getModel("Naruto1")->getActor()->setObjectXPosition(-250);
+
 	
-	m_model = m_modelManager->loadModel("Alice", "../Resource/Models/Naruto/NarutoDummy.dae", m_shaderProgram);
-
 }
 
-void Scene::initRenderingEffect()
-{ 
-	DirectionalLight directionalLight;
-	directionalLight.Color = vec3(1.0f, 1.0f, 1.0f);
-	directionalLight.AmbientIntensity = 0.55f;
-	directionalLight.DiffuseIntensity = 0.9f;
-	directionalLight.Direction = vec3(1.0f, 0.0, 0.0);
-
-	m_RenderingEffect = new SkinningTechnique();
-	if (!m_RenderingEffect->Init()) {
-		printf("Error initializing the lighting technique\n");
-	}
-	m_RenderingEffect->Enable();
-	m_RenderingEffect->SetColorTextureUnit(0);
-	m_RenderingEffect->SetDirectionalLight(directionalLight);
-	m_RenderingEffect->SetMatSpecularIntensity(0.0f);
-	m_RenderingEffect->SetMatSpecularPower(0);
-
-	m_shaderProgram = ShadersProgramPtr(m_RenderingEffect->getShader());
-}
 
 void Scene::update(float t)
 {
@@ -119,8 +92,6 @@ void Scene::update(float t)
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	QMatrix4x4 modelViewMatrix = m_camera->viewMatrix() * m_object.modelMatrix();
-	QMatrix3x3 normalMatrix = modelViewMatrix.normalMatrix();
 
 // 	m_shaderProgram->bind();
 // 	m_shaderProgram->setUniformValue("normalMatrix", normalMatrix);
@@ -129,38 +100,24 @@ void Scene::update(float t)
 // 	m_shaderProgram->setUniformValue("projectionMatrix", m_camera->projectionMatrix());
 
 
-	m_light.setPosition(m_camera->position());
-	m_light.setDirection(m_camera->viewCenter());
-	m_light.render(m_shaderProgram, m_camera->viewMatrix());
+// 	m_light.setPosition(m_camera->position());
+// 	m_light.setDirection(m_camera->viewCenter());
+// 	m_light.render(m_shaderProgram, m_camera->viewMatrix());
 
-	m_RenderingEffect->SetEyeWorldPos(m_camera->position());
-	m_RenderingEffect->SetWVP(m_camera->projectionMatrix() * modelViewMatrix);
-	m_RenderingEffect->SetWorldMatrix(m_object.modelMatrix()); 
 
-	// do the skeleton animation here
-	// check if the model has animation first
-	if(m_model->hasAnimation())
-	{
-		m_shaderProgram->setUniformValue("hasAnimation", true);
-		QVector<QMatrix4x4> Transforms;
-		m_model->m_loader->BoneTransform(t, Transforms);
-		for (int i = 0 ; i < Transforms.size() ; i++) {
-			m_RenderingEffect->SetBoneTransform(i, Transforms[i]);
-		}
-	}
-
-	m_model->render();
+	m_modelManager->renderAllModels(t);
+	//m_modelManager->getModel("Naruto1")->render(t);
 }
 
 void Scene::render(double currentTime)
 {
 	// Set the fragment shader light mode subroutine
-    m_funcs->glUniformSubroutinesuiv(GL_FRAGMENT_SHADER, 1, &m_lightModeSubroutines[m_lightMode]);
-
-	if(currentTime > 0)
-	{
-		m_object.rotateY(static_cast<float>(currentTime)/0.02f);
-	}
+//     m_funcs->glUniformSubroutinesuiv(GL_FRAGMENT_SHADER, 1, &m_lightModeSubroutines[m_lightMode]);
+// 
+// 	if(currentTime > 0)
+// 	{
+// 		m_object.rotateY(static_cast<float>(currentTime)/0.02f);
+// 	}
 
 	emit renderCycleDone();
 }
@@ -234,11 +191,6 @@ void Scene::toggleRimLighting(bool state)
 void Scene::toggleAA(bool state)
 {
 	(state) ? glEnable(GL_MULTISAMPLE) : glDisable(GL_MULTISAMPLE);
-}
-
-Object3D* Scene::getObject()
-{
-	return &m_object;
 }
 
 SceneCamera* Scene::getCamera()

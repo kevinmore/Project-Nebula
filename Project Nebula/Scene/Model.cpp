@@ -2,27 +2,29 @@
 #include <Scene/Scene.h>
 #include <QtGui/QOpenGLContext>
 
-Model::Model(Scene* scene, ModelLoader* loader, const QOpenGLVertexArrayObjectPtr& vao)
+Model::Model(Scene* scene, FKController* fkCtrl, const QOpenGLVertexArrayObjectPtr vao)
   : m_scene(scene),
 	m_vao(vao),
-	m_loader(loader),
+	m_FKController(fkCtrl),
 	m_hasAnimation(false),
-	m_funcs(nullptr)
+	m_actor(new Object3D)
 {
 	initialize();
 }
 
-Model::Model(Scene* scene, ModelLoader* loader, const QOpenGLVertexArrayObjectPtr& vao, QVector<ModelDataPtr> modelData)
+Model::Model(Scene* scene, FKController* fkCtrl, const QOpenGLVertexArrayObjectPtr vao, QVector<ModelDataPtr> modelData)
   : m_scene(scene),
 	m_vao(vao),
-	m_loader(loader),
+	m_FKController(fkCtrl),
 	m_hasAnimation(false),
-	m_funcs(nullptr)
+	m_actor(new Object3D)
 {
 	initialize(modelData);
 }
 
-Model::~Model() {}
+Model::~Model() 
+{
+}
 
 void Model::initialize(QVector<ModelDataPtr> modelDataVector)
 {
@@ -32,6 +34,8 @@ void Model::initialize(QVector<ModelDataPtr> modelDataVector)
 
 	m_funcs = context->versionFunctions<QOpenGLFunctions_4_3_Core>();
 	m_funcs->initializeOpenGLFunctions();
+
+	initRenderingEffect();
 
 	m_meshManager     = m_scene->meshManager();
 	m_textureManager  = m_scene->textureManager();
@@ -90,42 +94,91 @@ void Model::initialize(QVector<ModelDataPtr> modelDataVector)
 	
 }
 
+void Model::initRenderingEffect()
+{ 	
+	m_funcs->glClearDepth( 1.0 );
+	m_funcs->glClearColor(0.39f, 0.39f, 0.39f, 0.0f);
+	m_funcs->glEnable(GL_DEPTH_TEST);
+	m_funcs->glDepthFunc(GL_LEQUAL);
+	m_funcs->glEnable(GL_CULL_FACE);
+
+	DirectionalLight directionalLight;
+	directionalLight.Color = vec3(1.0f, 1.0f, 1.0f);
+	directionalLight.AmbientIntensity = 0.55f;
+	directionalLight.DiffuseIntensity = 0.9f;
+	directionalLight.Direction = vec3(1.0f, 0.0, 0.0);
+
+	m_RenderingEffect = new SkinningTechnique();
+	if (!m_RenderingEffect->Init()) {
+		printf("Error initializing the lighting technique\n");
+	}
+	m_RenderingEffect->Enable();
+	m_RenderingEffect->SetColorTextureUnit(0);
+	m_RenderingEffect->SetDirectionalLight(directionalLight);
+	m_RenderingEffect->SetMatSpecularIntensity(0.0f);
+	m_RenderingEffect->SetMatSpecularPower(0);
+
+}
+
+
 void Model::destroy() {}
 
-void Model::render()
+void Model::render( float time )
 {
+	QMatrix4x4 modelViewMatrix = m_scene->getCamera()->viewMatrix() * m_actor->modelMatrix();
+	QMatrix3x3 normalMatrix = modelViewMatrix.normalMatrix();
+
+	m_RenderingEffect->SetEyeWorldPos(m_scene->getCamera()->position());
+	m_RenderingEffect->SetWVP(m_scene->getCamera()->projectionMatrix() * modelViewMatrix);
+	m_RenderingEffect->SetWorldMatrix(m_actor->modelMatrix()); 
+
+
+	// do the skeleton animation here
+	// check if the model has animation first
+// 	if(m_hasAnimation)
+// 	{
+// 		m_RenderingEffect->getShader()->setUniformValue("hasAnimation", true);
+// 		QVector<QMatrix4x4> Transforms;
+// 		m_FKController->BoneTransform(time, Transforms);
+// 		for (int i = 0 ; i < Transforms.size() ; i++) {
+// 			m_RenderingEffect->SetBoneTransform(i, Transforms[i]);
+// 		}
+// 	}
+
+
 	m_vao->bind();
+
 
 	for(int i = 0; i < m_meshes.size(); ++i)
 	{
-		if( m_materials[i] != nullptr && ! m_materials[i]->isTranslucent())
+		/*if( m_materials[i] != nullptr && ! m_materials[i]->isTranslucent())*/
 		{
 			if(m_textures[i] != nullptr)
 			{
 				m_textures[i]->bind(GL_TEXTURE0);
 			}
 
-			m_materials[i]->bind();
+			//m_materials[i]->bind();
 
-			drawElements(i, Indexed | BaseVertex);
+			drawElements(i, BaseVertex);
 		}
 	}
 
-	for(int i = 0; i < m_meshes.size(); ++i)
-	{
-		if( m_materials[i] != nullptr && m_materials[i]->isTranslucent())
-		{
-			glDepthMask(GL_FALSE);
-			glEnable(GL_BLEND);
-
-			m_materials[i]->bind();
-
-			drawElements(i, Indexed | BaseVertex);
-
-			glDisable(GL_BLEND);
-			glDepthMask(GL_TRUE);
-		}
-	}
+// 	for(int i = 0; i < m_meshes.size(); ++i)
+// 	{
+// 		if( m_materials[i] != nullptr && m_materials[i]->isTranslucent())
+// 		{
+// 			glDepthMask(GL_FALSE);
+// 			glEnable(GL_BLEND);
+// 
+// 			m_materials[i]->bind();
+// 
+// 			drawElements(i, Indexed | BaseVertex);
+// 
+// 			glDisable(GL_BLEND);
+// 			glDepthMask(GL_TRUE);
+// 		}
+// 	}
 
 	m_vao->release();
 }

@@ -46,16 +46,16 @@ void Material::init()
 		"MaterialInfo.shininessStrength",	// Not used in Phong model
 		"MaterialInfo.hasTexture"
 	};
-
-	GLint offsets[7] = {0,16,32,48,64,68,72};
-	m_uniformsBuffer.getBlockMembersData(uniformNames, OpenGLUniformBuffer::Offset, offsets); // this is not working
-	GLint blockSize = m_uniformsBuffer.getSize();
+// 
+// 	GLint offsets[7] = {0,16,32,48,64,68,72};
+// 	m_uniformsBuffer.getBlockMembersData(uniformNames, OpenGLUniformBuffer::Offset, offsets); // this is not working
+// 	GLint blockSize = m_uniformsBuffer.getSize();
 
 // 	QVector<GLubyte> buffer(blockSize);
 // 	fillBuffer(buffer, offsets);
 // 
-// 	m_uniformsBuffer.allocate(blockSize, buffer.data());
-// 	m_uniformsBuffer.assignBindingPoint(1);
+//	m_uniformsBuffer.allocate(blockSize, buffer.data());
+	m_uniformsBuffer.assignBindingPoint(1);
 }
 
 void Material::bind()

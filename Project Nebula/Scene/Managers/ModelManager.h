@@ -16,12 +16,10 @@ public:
 	~ModelManager(void);
 
 	ModelPtr getModel(const QString& name);
-
-	ModelPtr loadModel(const QString& name, const QString& filename, const QOpenGLShaderProgramPtr& shaderProgram);
-
+	ModelPtr loadModel(const QString& name, const QString& filename);
+	void renderAllModels(float time);
 private:
 	QMap<QString, ModelPtr> m_models;
 	Scene* m_scene;
-	ModelLoader* m_modelLoader;
 };
 

@@ -11,7 +11,6 @@
 #include <Scene/Managers/MaterialManager.h>
 #include <Scene/Managers/MeshManager.h>
 #include <Scene/Managers/ModelManager.h>
-#include <Scene/ShadingTechniques/skinning_technique.h>
 
 typedef QSharedPointer<QOpenGLShaderProgram> ShadersProgramPtr;
 
@@ -49,7 +48,7 @@ public:
 	void setLightMode(LightMode lightMode) { m_lightMode = lightMode; }
 	LightMode lightMode() const { return m_lightMode; }
 
-	Object3D*    getObject();
+	Object3D*    getObject() { return NULL; } //hack! need to improve
 	SceneCamera* getCamera();
 
 	QSharedPointer<MeshManager>     meshManager();
@@ -57,7 +56,6 @@ public:
 	QSharedPointer<MaterialManager> materialManager();
 
 private:
-	void initRenderingEffect();
 
 public slots:
 	void toggleFill(bool state);
@@ -84,7 +82,6 @@ private:
 	QSharedPointer<MaterialManager> m_materialManager;
 
 	ShadersProgramPtr m_shaderProgram;
-	Object3D		  m_object;
 	Light			  m_light;
 	QVector3D		  m_v;
 
@@ -101,6 +98,5 @@ private:
 
 	QOpenGLFunctions_4_3_Core* m_funcs;
 
-	SkinningTechnique* m_RenderingEffect;
 };
 

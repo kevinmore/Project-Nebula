@@ -62,6 +62,6 @@ public:
 	AbstractModel();
 	virtual ~AbstractModel() = 0;
 
-	virtual void render() = 0;
+	virtual void render(float time) = 0;
 
 };

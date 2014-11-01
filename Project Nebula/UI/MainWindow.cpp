@@ -365,7 +365,7 @@ void MainWindow::initializeParamsArea()
 	lightTab->setLayout(lightTabLayout);
 
 	// ############ DOCK BOTTOM ############
-
+	/*
 	m_dockMatrixArea = new QDockWidget("Model View Projection Matrix", this);
 	addDockWidget(Qt::BottomDockWidgetArea, m_dockMatrixArea);
 
@@ -540,7 +540,7 @@ void MainWindow::initializeParamsArea()
 	matrixLayout->addStrut(102);
 
 	m_mvpMatrix->setLayout(matrixLayout);
-
+	*/
 	// ############ SIGNALS/SLOTS ############
 
 	QObject::connect(animate, SIGNAL(stateChanged(int)), m_canvas.data(), SLOT(checkAnimate(int)));
@@ -585,7 +585,7 @@ void MainWindow::initializeParamsArea()
 	QObject::connect(m_canvas.data(), SIGNAL(updateFramerate()), this, SLOT(setFramerate()));
 
 	// Update MVP matrix
-	QObject::connect(m_scene, SIGNAL(renderCycleDone()), this, SLOT(updateMatrix()));
+	//QObject::connect(m_scene, SIGNAL(renderCycleDone()), this, SLOT(updateMatrix()));
 }
 
 void MainWindow::setViewProperties(bool state)
