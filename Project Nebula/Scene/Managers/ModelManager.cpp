@@ -1,6 +1,6 @@
 #include "ModelManager.h"
 #include <Scene/Scene.h>
-#include <Scene/Animation/FKController.h>
+#include <Animation/FK/FKController.h>
 
 ModelManager::ModelManager(Scene* scene)
 	: m_scene(scene)

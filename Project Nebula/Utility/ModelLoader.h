@@ -6,8 +6,17 @@
 #include <QtCore/QSharedPointer>
 #include <Scene/AbstractModel.h>
 #include <Utility/DataTypes.h>
+#include <Animation/Rig/Skeleton.h>
 #include <assert.h>
 #include <QtGui/QOpenGLFunctions_4_3_Core>
+
+
+#define POSITION_LOCATION    0
+#define TEX_COORD_LOCATION   1
+#define NORMAL_LOCATION      2
+#define BONE_ID_LOCATION     3
+#define BONE_WEIGHT_LOCATION 4
+
 
 class ModelLoader : protected QOpenGLFunctions_4_3_Core
 {
@@ -15,24 +24,44 @@ public:
 	ModelLoader();
 	virtual ~ModelLoader();
 
+	/*
+	 *	This is the core functionality
+	 */
 	QVector<ModelDataPtr> loadModel(const QString& filename);
-	QOpenGLVertexArrayObject* getVAO();
+
+
+	/*
+	 *	Public Getters
+	 */
+	QOpenGLVertexArrayObject* getVAO() { return m_vao; };
+	uint getNumBones() const {	return m_NumBones;	}
+	QMap<QString, uint> getBoneMap() const { return m_BoneMapping; }
+	mat4 getGlobalInverseTransform () const { return m_GlobalInverseTransform; }
+	aiAnimation** getAnimations() const	{ return m_scene->mAnimations; }
+	QVector<BoneInfo> getBoneInfo() const {	return m_BoneInfo; }
+	aiNode* getRootNode() const	{ return m_scene->mRootNode; }
 
 
 private:
+	/*
+	 *	Methods to process the model file
+	 */
 	MeshData loadMesh(unsigned int index, unsigned int numVertices, unsigned int numIndices, const aiMesh* mesh);
 	MaterialData loadMaterial(unsigned int index, const aiMaterial* material);
 	TextureData  loadTexture(const QString& filename, const aiMaterial* material);
 	void loadBones(uint MeshIndex, const aiMesh* paiMesh);
-
-	void prepareVertexBuffers();
 	void prepareVertexContainers(unsigned int index, const aiMesh* mesh);
+	Skeleton* generateSkeleton(aiNode* pAiRootNode, Skeleton* pRootSkeleton);
 
+	/*
+	 *	Clean up
+	 */
 	void clear();
 
-	Assimp::Importer m_importer;
-	const aiScene* m_scene;
 
+	/*
+	 *	Vertex Data Containers
+	 */
 	QVector<QVector3D> m_positions;
 	QVector<QVector4D> m_colors;
 	QVector<QVector2D> m_texCoords;
@@ -40,15 +69,11 @@ private:
 	QVector<QVector3D> m_tangents;
 	QVector<unsigned int> m_indices;
 
-	QOpenGLVertexArrayObject* m_vao;
 
 
-#define NUM_BONES_PER_VEREX 4
-#define POSITION_LOCATION    0
-#define TEX_COORD_LOCATION   1
-#define NORMAL_LOCATION      2
-#define BONE_ID_LOCATION     3
-#define BONE_WEIGHT_LOCATION 4
+	/*
+	 *	Vertex Buffers
+	 */
 
 	enum VB_TYPES {
 		INDEX_BUFFER,
@@ -61,87 +86,15 @@ private:
 
 	GLuint m_VAO;
 	GLuint m_Buffers[NUM_VBs];
+	QOpenGLVertexArrayObject* m_vao;
+	void prepareVertexBuffers();
 
-	/************************************************************************/
-	/* Skinning Stuff                                                       */
-	/************************************************************************/
-public:
-
-	struct BoneInfo
-	{
-		mat4 boneOffset;
-		mat4 finalTransformation;        
-
-		BoneInfo()
-		{ 
-			boneOffset.fill(0);
-			finalTransformation.fill(0);
-		}
-	};
-
-	uint getNumBones() const
-	{
-		return m_NumBones;
-	}
-
-	QMap<QString, uint> getBoneMap() const
-	{
-		return m_BoneMapping;
-	}
-
-	mat4 getGlobalInverseTransform () const
-	{
-		return m_GlobalInverseTransform;
-	}
-
-	aiAnimation** getAnimations() const
-	{
-		return m_scene->mAnimations;
-	}
-
-	QVector<BoneInfo> getBoneInfo() const
-	{
-		return m_BoneInfo;
-	}
-
-	aiNode* getRootNode() const
-	{
-		return m_scene->mRootNode;
-	}
-
-	struct VertexBoneData
-	{        
-		uint IDs[NUM_BONES_PER_VEREX];
-		float Weights[NUM_BONES_PER_VEREX];
-
-		VertexBoneData()
-		{
-			Reset();
-		};
-
-		void Reset()
-		{
-			ZERO_MEM(IDs);
-			ZERO_MEM(Weights);        
-		}
-
-		void AddBoneData(uint BoneID, float Weight)
-		{
-			for (uint i = 0 ; i < ARRAY_SIZE_IN_ELEMENTS(IDs) ; i++) {
-				if (Weights[i] == 0.0) {
-					IDs[i]     = BoneID;
-					Weights[i] = Weight;
-					return;
-				}        
-			}
-
-			// should never get here - more bones than we have space for
-			assert(0);
-		}
-	};
-
-
-
+	/*
+	 *	Members Variables
+	 */
+	Assimp::Importer m_importer;
+	const aiScene* m_scene;
+	Skeleton* m_skeleton;
 	QMap<QString, uint> m_BoneMapping; // maps a bone name to its index
 	QVector<VertexBoneData> m_Bones;
 	uint m_NumBones;

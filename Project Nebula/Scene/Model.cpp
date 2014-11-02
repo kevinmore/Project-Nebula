@@ -22,6 +22,7 @@ Model::Model(Scene* scene, FKController* fkCtrl, const QOpenGLVertexArrayObjectP
 	initialize(modelData);
 }
 
+
 Model::~Model() 
 {
 }
@@ -135,15 +136,15 @@ void Model::render( float time )
 
 	// do the skeleton animation here
 	// check if the model has animation first
-// 	if(m_hasAnimation)
-// 	{
-// 		m_RenderingEffect->getShader()->setUniformValue("hasAnimation", true);
-// 		QVector<QMatrix4x4> Transforms;
-// 		m_FKController->BoneTransform(time, Transforms);
-// 		for (int i = 0 ; i < Transforms.size() ; i++) {
-// 			m_RenderingEffect->SetBoneTransform(i, Transforms[i]);
-// 		}
-// 	}
+	if(m_hasAnimation)
+	{
+		m_RenderingEffect->getShader()->setUniformValue("hasAnimation", true);
+		QVector<QMatrix4x4> Transforms;
+		m_FKController->BoneTransform(time, Transforms);
+		for (int i = 0 ; i < Transforms.size() ; i++) {
+			m_RenderingEffect->SetBoneTransform(i, Transforms[i]);
+		}
+	}
 
 
 	m_vao->bind();

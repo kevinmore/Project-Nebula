@@ -27,10 +27,10 @@
     <ClCompile Include="UI\MainWindow_moc.cpp" />
     <ClCompile Include="Scene\ShadingTechniques\technique.cpp" />
     <ClCompile Include="Scene\ShadingTechniques\skinning_technique.cpp" />
-    <ClCompile Include="Scene\Animation\FKController.cpp" />
+    <ClCompile Include="Animation\FK\FKController.cpp" />
+    <ClCompile Include="Animation\Rig\Skeleton.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Primitives\Bone.h" />
     <ClInclude Include="Utility\DataTypes.h" />
     <ClInclude Include="Primitives\Texture.h" />
     <ClInclude Include="Primitives\Material.h" />
@@ -53,7 +53,9 @@
     <ClInclude Include="UI\Canvas.h" />
     <ClInclude Include="Scene\ShadingTechniques\technique.h" />
     <ClInclude Include="Scene\ShadingTechniques\skinning_technique.h" />
-    <ClInclude Include="Scene\Animation\FKController.h" />
+    <ClInclude Include="Animation\FK\FKController.h" />
+    <ClInclude Include="Animation\Rig\Skeleton.h" />
+    <ClInclude Include="Animation\Rig\BoneInfo.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Resource\Shaders\basicSkinning.frag" />

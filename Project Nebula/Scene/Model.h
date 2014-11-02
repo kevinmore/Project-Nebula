@@ -11,7 +11,7 @@
 #include <Utility/ModelLoader.h>
 #include <Scene/Object3D.h>
 #include <Scene/ShadingTechniques/skinning_technique.h>
-#include <Scene/Animation/FKController.h>
+#include <Animation/FK/FKController.h>
 
 class Scene;
 

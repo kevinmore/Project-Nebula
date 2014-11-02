@@ -2,8 +2,6 @@
 #include <QtCore/QDebug>
 #include <Utility/Math.h>
 
-
-
 ModelLoader::ModelLoader()
 	: m_vao(new QOpenGLVertexArrayObject())
 {
@@ -11,11 +9,6 @@ ModelLoader::ModelLoader()
 	clear();
 }
 
-
-QOpenGLVertexArrayObject* ModelLoader::getVAO()
-{
-	return m_vao;
-}
 
 void ModelLoader::clear()
 {
@@ -65,12 +58,12 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName )
 	}
 
 
-  	m_GlobalInverseTransform = Math::convToQMat4(&m_scene->mRootNode->mTransformation);
+//  	m_GlobalInverseTransform = Math::convToQMat4(&m_scene->mRootNode->mTransformation);
 //  	inverseQMat4(m_GlobalInverseTransform);
-// 	m_GlobalInverseTransform = mat4(1, 0, 0, 0, 
-// 									0, 0, -1, 0,
-// 									0, 1, 0, 0,
-// 									0, 0, 0, 1);
+	m_GlobalInverseTransform = mat4(1, 0, 0, 0, 
+									0, 0, -1, 0,
+									0, 1, 0, 0,
+									0, 0, 0, 1);
 	unsigned int numVertices = 0;
 	unsigned int numIndices  = 0;
 
@@ -115,6 +108,9 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName )
 	qDebug() << "Loaded" << fileName;
 	qDebug() << "Model has" << m_scene->mNumMeshes << "meshes," << numVertices << "vertices," << numIndices << "indices and" << m_NumBones << "bones.";
 
+
+	m_skeleton = generateSkeleton(m_scene->mRootNode, NULL);
+	int i = m_skeleton->childCount();
 	return modelDataVector;
 }
 
@@ -177,6 +173,69 @@ void ModelLoader::prepareVertexContainers(unsigned int index, const aiMesh* mesh
 		m_indices.push_back(face.mIndices[2]);
 
 	}
+}
+
+void ModelLoader::loadBones( uint MeshIndex, const aiMesh* paiMesh )
+{
+	for (uint i = 0; i < paiMesh->mNumBones; ++i)
+	{
+		uint boneIndex = 0;        
+		QString boneName(paiMesh->mBones[i]->mName.data);
+		if (m_BoneMapping.find(boneName) == m_BoneMapping.end()) 
+		{
+			// Allocate an index for a new bone
+			boneIndex = m_NumBones;
+			m_NumBones++;
+			BoneInfo bi;
+			m_BoneInfo.push_back(bi);
+			m_BoneInfo[boneIndex].m_name = boneName;
+			m_BoneInfo[boneIndex].m_localTransform = Math::convToQMat4(&paiMesh->mBones[i]->mOffsetMatrix);
+			m_BoneMapping[boneName] = boneIndex;
+			//qDebug() << "Loaded Bone:" << boneName;
+		}
+		else 
+		{
+			boneIndex = m_BoneMapping[boneName];
+		}                      
+
+		uint offset = 0;
+		for (uint k = 0; k < MeshIndex; ++k)
+		{
+			offset += m_scene->mMeshes[k]->mNumVertices;
+		}
+
+		for (uint j = 0 ; j < paiMesh->mBones[i]->mNumWeights ; ++j) 
+		{
+			uint VertexID = offset + paiMesh->mBones[i]->mWeights[j].mVertexId;
+			float Weight  = paiMesh->mBones[i]->mWeights[j].mWeight;                   
+			m_Bones[VertexID].AddBoneData(boneIndex, Weight);
+		}
+	}
+}
+
+Skeleton* ModelLoader::generateSkeleton( aiNode* pAiRootNode, Skeleton* pRootSkeleton )
+{
+	// generate a skeleton from the existing bone map and BoneInfo vector
+	Skeleton* pSkeleton = NULL;
+
+	QString nodeName(pAiRootNode->mName.data);
+
+	// aiNode is not aiBone, aiBones are part of all the aiNodes
+	if (m_BoneMapping.find(nodeName) != m_BoneMapping.end())
+	{
+		uint BoneIndex = m_BoneMapping[nodeName];
+		BoneInfo bi = m_BoneInfo[BoneIndex];
+
+		pSkeleton = new Skeleton(bi, pRootSkeleton);
+	}
+
+	for (uint i = 0 ; i < pAiRootNode->mNumChildren ; ++i) 
+	{
+		generateSkeleton(pAiRootNode->mChildren[i], pSkeleton);
+	}
+
+	return pSkeleton;
+	
 }
 
 void ModelLoader::prepareVertexBuffers()
@@ -360,41 +419,4 @@ TextureData ModelLoader::loadTexture(const QString& fileName, const aiMaterial* 
 	}
 
 	return data;
-}
-
-void ModelLoader::loadBones( uint MeshIndex, const aiMesh* paiMesh )
-{
-	for (uint i = 0; i < paiMesh->mNumBones; ++i)
-	{
-		uint boneIndex = 0;        
-		QString boneName(paiMesh->mBones[i]->mName.data);
-		if (m_BoneMapping.find(boneName) == m_BoneMapping.end()) 
-		{
-			// Allocate an index for a new bone
-			boneIndex = m_NumBones;
-			m_NumBones++;
-			BoneInfo bi;			
-			m_BoneInfo.push_back(bi);
-			m_BoneInfo[boneIndex].boneOffset = Math::convToQMat4(&paiMesh->mBones[i]->mOffsetMatrix);
-			m_BoneMapping[boneName] = boneIndex;
-			//qDebug() << "Loaded Bone:" << boneName;
-		}
-		else 
-		{
-			boneIndex = m_BoneMapping[boneName];
-		}                      
-
-		uint offset = 0;
-		for (uint k = 0; k < MeshIndex; ++k)
-		{
-			offset += m_scene->mMeshes[k]->mNumVertices;
-		}
-
-		for (uint j = 0 ; j < paiMesh->mBones[i]->mNumWeights ; ++j) 
-		{
-			uint VertexID = offset + paiMesh->mBones[i]->mWeights[j].mVertexId;
-			float Weight  = paiMesh->mBones[i]->mWeights[j].mWeight;                   
-			m_Bones[VertexID].AddBoneData(boneIndex, Weight);
-		}
-	}
 }

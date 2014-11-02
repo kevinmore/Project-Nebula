@@ -11,7 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Scene\Animation\FKController.cpp" />
+    <ClCompile Include="Animation\FK\FKController.cpp" />
+    <ClCompile Include="Animation\Rig\Skeleton.cpp" />
     <ClCompile Include="Scene\SceneCamera_moc.cpp" />
     <ClCompile Include="Scene\AbstractModel.cpp" />
     <ClCompile Include="Scene\AbstractScene.cpp" />
@@ -40,12 +41,14 @@
     <ClCompile Include="Utility\OpenGLUniformBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Scene\Animation\FKController.h" />
+    <ClInclude Include="Animation\FK\FKController.h" />
+    <ClInclude Include="Animation\Rig\BoneInfo.h" />
     <ClInclude Include="Scene\Managers\ModelManager.h" />
     <ClInclude Include="Scene\Model.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\ShadingTechniques\skinning_technique.h" />
     <ClInclude Include="Scene\ShadingTechniques\technique.h" />
+    <ClInclude Include="Animation\Rig\Skeleton.h" />
     <ClInclude Include="UI\MainWindow.h" />
     <ClInclude Include="UI\Canvas.h" />
     <ClInclude Include="Utility\ModelLoader.h" />
@@ -61,7 +64,6 @@
     <ClInclude Include="Scene\Managers\MaterialManager.h" />
     <ClInclude Include="Scene\Managers\TextureManager.h" />
     <ClInclude Include="Utility\Math.h" />
-    <ClInclude Include="Primitives\Bone.h" />
     <ClInclude Include="Utility\DataTypes.h" />
     <ClInclude Include="Utility\OpenGLUniformBuffer.h" />
   </ItemGroup>
