@@ -38,9 +38,9 @@ public:
 	QMap<QString, uint> getBoneMap() const { return m_BoneMapping; }
 	mat4 getGlobalInverseTransform () const { return m_GlobalInverseTransform; }
 	aiAnimation** getAnimations() const	{ return m_scene->mAnimations; }
-	QVector<BoneInfo> getBoneInfo() const {	return m_BoneInfo; }
+	QVector<Bone> getBoneInfo() const {	return m_BoneInfo; }
 	aiNode* getRootNode() const	{ return m_scene->mRootNode; }
-
+	Skeleton* getSkeletom() const { return m_skeleton; }
 
 private:
 	/*
@@ -51,7 +51,7 @@ private:
 	TextureData  loadTexture(const QString& filename, const aiMaterial* material);
 	void loadBones(uint MeshIndex, const aiMesh* paiMesh);
 	void prepareVertexContainers(unsigned int index, const aiMesh* mesh);
-	Skeleton* generateSkeleton(aiNode* pAiRootNode, Skeleton* pRootSkeleton);
+	void generateSkeleton(aiNode* pAiRootNode, Bone* pRootSkeleton);
 
 	/*
 	 *	Clean up
@@ -98,7 +98,7 @@ private:
 	QMap<QString, uint> m_BoneMapping; // maps a bone name to its index
 	QVector<VertexBoneData> m_Bones;
 	uint m_NumBones;
-	QVector<BoneInfo> m_BoneInfo;
+	QVector<Bone> m_BoneInfo;
 	mat4 m_GlobalInverseTransform;
 
 };

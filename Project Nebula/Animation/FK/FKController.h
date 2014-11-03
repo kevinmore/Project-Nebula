@@ -23,7 +23,7 @@ private:
 	QMap<QString, uint> m_BoneMapping; // maps a bone name to its index
 	mat4 m_GlobalInverseTransform;
 	uint m_NumBones;
-	QVector<BoneInfo> m_BoneInfo;
+	QVector<Bone> m_BoneInfo;
 	aiAnimation** m_Animations;
 	aiNode* m_root;
 };

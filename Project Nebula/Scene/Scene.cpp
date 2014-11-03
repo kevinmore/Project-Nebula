@@ -57,7 +57,7 @@ void Scene::initialize()
 	m_textureManager = QSharedPointer<TextureManager>(new TextureManager());
 	m_meshManager = QSharedPointer<MeshManager>(new MeshManager());
 
-// 	m_modelManager->loadModel("Alice", "../Resource/Models/Alice/Alice.dae");
+ //	m_modelManager->loadModel("Alice", "../Resource/Models/Alice/Alice.dae");
 // 	m_modelManager->getModel("Alice")->getActor()->setObjectXPosition(-250);
 // 	
 // 	m_modelManager->loadModel("Jiuniang", "../Resource/Models/jiuniang/jiuniang.dae");
@@ -66,8 +66,8 @@ void Scene::initialize()
 //	m_modelManager->loadModel("Rasengang", "../Resource/Models/Naruto/rasengan.dae");
 
 
-	m_modelManager->loadModel("Naruto1", "../Resource/Models/Naruto/Naruto.dae");
-	m_modelManager->getModel("Naruto1")->getActor()->setObjectXPosition(-250);
+ 	m_modelManager->loadModel("Naruto1", "../Resource/Models/Naruto/Naruto.dae");
+// 	m_modelManager->getModel("Naruto1")->getActor()->setObjectXPosition(-250);
  
 // 	m_modelManager->loadModel("Naruto2", "../Resource/Models/Naruto/Naruto.dae");
 // 	m_modelManager->getModel("Naruto2")->getActor()->setObjectXPosition(250);
@@ -158,7 +158,7 @@ void Scene::toggleFill(bool state)
 {
 	if(state)
 	{
-		glEnable(GL_CULL_FACE);
+		//glEnable(GL_CULL_FACE);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 }
@@ -167,7 +167,7 @@ void Scene::toggleWireframe(bool state)
 {
 	if(state)
 	{
-		glDisable(GL_CULL_FACE);
+		//glDisable(GL_CULL_FACE);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	}
 }
@@ -176,7 +176,7 @@ void Scene::togglePoints(bool state)
 {
 	if(state)
 	{
-		glDisable(GL_CULL_FACE);
+		//glDisable(GL_CULL_FACE);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
 	}
 }

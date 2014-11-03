@@ -29,6 +29,7 @@
     <ClCompile Include="Scene\ShadingTechniques\skinning_technique.cpp" />
     <ClCompile Include="Animation\FK\FKController.cpp" />
     <ClCompile Include="Animation\Rig\Skeleton.cpp" />
+    <ClCompile Include="Animation\IK\IKSolver.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utility\DataTypes.h" />
@@ -56,6 +57,7 @@
     <ClInclude Include="Animation\FK\FKController.h" />
     <ClInclude Include="Animation\Rig\Skeleton.h" />
     <ClInclude Include="Animation\Rig\BoneInfo.h" />
+    <ClInclude Include="Animation\IK\IKSolver.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Resource\Shaders\basicSkinning.frag" />

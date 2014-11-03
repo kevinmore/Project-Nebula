@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClCompile Include="Animation\FK\FKController.cpp" />
     <ClCompile Include="Animation\Rig\Skeleton.cpp" />
+    <ClCompile Include="Animation\IK\IKSolver.cpp" />
     <ClCompile Include="Scene\SceneCamera_moc.cpp" />
     <ClCompile Include="Scene\AbstractModel.cpp" />
     <ClCompile Include="Scene\AbstractScene.cpp" />
@@ -43,6 +44,7 @@
   <ItemGroup>
     <ClInclude Include="Animation\FK\FKController.h" />
     <ClInclude Include="Animation\Rig\BoneInfo.h" />
+    <ClInclude Include="Animation\IK\IKSolver.h" />
     <ClInclude Include="Scene\Managers\ModelManager.h" />
     <ClInclude Include="Scene\Model.h" />
     <ClInclude Include="Scene\Scene.h" />

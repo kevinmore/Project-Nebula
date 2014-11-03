@@ -29,7 +29,7 @@ void FKController::BoneTransform( float TimeInSeconds, QVector<mat4>& Transforms
 	Transforms.resize(m_NumBones);
 
 	for (uint i = 0 ; i < m_NumBones ; i++) {
-		Transforms[i] = m_BoneInfo[i].m_globalTransform;
+		Transforms[i] = m_BoneInfo[i].m_finalTransform;
 	}
 }
 
@@ -188,7 +188,7 @@ void FKController::readNodeHeirarchy( float AnimationTime, const aiNode* pNode, 
 	mat4 GlobalTransformation = ParentTransform * NodeTransformation;
 	if (m_BoneMapping.find(NodeName) != m_BoneMapping.end()) {
 		uint BoneIndex = m_BoneMapping[NodeName];
-		m_BoneInfo[BoneIndex].m_globalTransform = m_GlobalInverseTransform * GlobalTransformation * m_BoneInfo[BoneIndex].m_localTransform;
+		m_BoneInfo[BoneIndex].m_finalTransform = m_GlobalInverseTransform * GlobalTransformation * m_BoneInfo[BoneIndex].m_offsetMatrix;
 	}
 
 	for (uint i = 0 ; i < pNode->mNumChildren ; i++) {

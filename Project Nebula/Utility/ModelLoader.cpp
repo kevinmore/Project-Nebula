@@ -1,6 +1,7 @@
 #include "ModelLoader.h"
 #include <QtCore/QDebug>
 #include <Utility/Math.h>
+#include <Animation/IK/IKSolver.h>
 
 ModelLoader::ModelLoader()
 	: m_vao(new QOpenGLVertexArrayObject())
@@ -19,14 +20,13 @@ void ModelLoader::clear()
 	m_tangents.clear();
 	m_indices.clear();
 
-	if (m_Buffers[0] != 0) {
+	if (m_Buffers[0] != 0) 
 		glDeleteBuffers(ARRAY_SIZE_IN_ELEMENTS(m_Buffers), m_Buffers);
-	}
+	
 
 	if (m_vao)
-	{
 		m_vao->destroy();
-	}
+	
 }
 
 ModelLoader::~ModelLoader()
@@ -108,9 +108,20 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName )
 	qDebug() << "Loaded" << fileName;
 	qDebug() << "Model has" << m_scene->mNumMeshes << "meshes," << numVertices << "vertices," << numIndices << "indices and" << m_NumBones << "bones.";
 
+	// generate the skeleton of the model
+	// specify the root bone
+	Bone* skeleton_root = new Bone();
+	skeleton_root->m_ID = 9999;
+	skeleton_root->m_name = "Project Nebula Skeleton ROOT";
+	generateSkeleton(m_scene->mRootNode, skeleton_root);
+	m_skeleton = new Skeleton(skeleton_root);
 
-	m_skeleton = generateSkeleton(m_scene->mRootNode, NULL);
-	int i = m_skeleton->childCount();
+	m_skeleton->dumpSkeleton(skeleton_root, 0);
+
+	// IK stuff
+
+	IKSolver* solver = new IKSolver(m_skeleton);
+	solver->solveIK("arm_left_wrist", "arm_left_shoulder_1", vec3(0, 0, 0));
 	return modelDataVector;
 }
 
@@ -186,12 +197,12 @@ void ModelLoader::loadBones( uint MeshIndex, const aiMesh* paiMesh )
 			// Allocate an index for a new bone
 			boneIndex = m_NumBones;
 			m_NumBones++;
-			BoneInfo bi;
+			Bone bi;
 			m_BoneInfo.push_back(bi);
+			m_BoneInfo[boneIndex].m_ID = boneIndex;
 			m_BoneInfo[boneIndex].m_name = boneName;
-			m_BoneInfo[boneIndex].m_localTransform = Math::convToQMat4(&paiMesh->mBones[i]->mOffsetMatrix);
+			m_BoneInfo[boneIndex].m_offsetMatrix = Math::convToQMat4(&paiMesh->mBones[i]->mOffsetMatrix);
 			m_BoneMapping[boneName] = boneIndex;
-			//qDebug() << "Loaded Bone:" << boneName;
 		}
 		else 
 		{
@@ -213,10 +224,10 @@ void ModelLoader::loadBones( uint MeshIndex, const aiMesh* paiMesh )
 	}
 }
 
-Skeleton* ModelLoader::generateSkeleton( aiNode* pAiRootNode, Skeleton* pRootSkeleton )
+void ModelLoader::generateSkeleton( aiNode* pAiRootNode, Bone* pRootSkeleton )
 {
 	// generate a skeleton from the existing bone map and BoneInfo vector
-	Skeleton* pSkeleton = NULL;
+	Bone* pBone = NULL;
 
 	QString nodeName(pAiRootNode->mName.data);
 
@@ -224,18 +235,21 @@ Skeleton* ModelLoader::generateSkeleton( aiNode* pAiRootNode, Skeleton* pRootSke
 	if (m_BoneMapping.find(nodeName) != m_BoneMapping.end())
 	{
 		uint BoneIndex = m_BoneMapping[nodeName];
-		BoneInfo bi = m_BoneInfo[BoneIndex];
+		m_BoneInfo[BoneIndex].m_nodeTransform = Math::convToQMat4(&pAiRootNode->mTransformation);
 
-		pSkeleton = new Skeleton(bi, pRootSkeleton);
+		Bone bi = m_BoneInfo[BoneIndex];
+		pBone = new Bone(pRootSkeleton);
+		pBone->m_ID = BoneIndex;
+		pBone->m_name = bi.m_name;
+		pBone->m_offsetMatrix = bi.m_offsetMatrix;
+		pBone->m_nodeTransform = Math::convToQMat4(&pAiRootNode->mTransformation);
 	}
 
 	for (uint i = 0 ; i < pAiRootNode->mNumChildren ; ++i) 
 	{
-		generateSkeleton(pAiRootNode->mChildren[i], pSkeleton);
+		if(pBone) generateSkeleton(pAiRootNode->mChildren[i], pBone);
+		else generateSkeleton(pAiRootNode->mChildren[i], pRootSkeleton);
 	}
-
-	return pSkeleton;
-	
 }
 
 void ModelLoader::prepareVertexBuffers()

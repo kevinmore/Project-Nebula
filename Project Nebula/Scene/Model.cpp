@@ -101,7 +101,7 @@ void Model::initRenderingEffect()
 	m_funcs->glClearColor(0.39f, 0.39f, 0.39f, 0.0f);
 	m_funcs->glEnable(GL_DEPTH_TEST);
 	m_funcs->glDepthFunc(GL_LEQUAL);
-	m_funcs->glEnable(GL_CULL_FACE);
+	//m_funcs->glEnable(GL_CULL_FACE);
 
 	DirectionalLight directionalLight;
 	directionalLight.Color = vec3(1.0f, 1.0f, 1.0f);
@@ -136,15 +136,15 @@ void Model::render( float time )
 
 	// do the skeleton animation here
 	// check if the model has animation first
-	if(m_hasAnimation)
-	{
-		m_RenderingEffect->getShader()->setUniformValue("hasAnimation", true);
-		QVector<QMatrix4x4> Transforms;
-		m_FKController->BoneTransform(time, Transforms);
-		for (int i = 0 ; i < Transforms.size() ; i++) {
-			m_RenderingEffect->SetBoneTransform(i, Transforms[i]);
-		}
-	}
+// 	if(m_hasAnimation)
+// 	{
+// 		m_RenderingEffect->getShader()->setUniformValue("hasAnimation", true);
+// 		QVector<QMatrix4x4> Transforms;
+// 		m_FKController->BoneTransform(time, Transforms);
+// 		for (int i = 0 ; i < Transforms.size() ; i++) {
+// 			m_RenderingEffect->SetBoneTransform(i, Transforms[i]);
+// 		}
+// 	}
 
 
 	m_vao->bind();
