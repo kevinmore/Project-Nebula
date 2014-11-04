@@ -9,12 +9,15 @@ public:
 	~Skeleton();
 
 	Bone* getBone(QString boneName);
+	int getSkeletonSize();
+	QMap<QString, Bone*> getBoneMap();
+	QVector<Bone*> getBoneList();
 
 	// calculate and set the global transformation
 	// for each bone in the skeleton
 	Bone* sortSkeleton(Bone* root);
 	mat4 calcGlobalTransformation(Bone* bone);
-
+	void setBoneWorldPosition(Bone* bone, vec3 &newPos);
 
 	// clean up the skeleton
 	Bone* freeSkeleton(Bone* root);
@@ -34,7 +37,7 @@ public:
 	uint getBoneCountBetween(Bone* upperBone, Bone* lowerBone);
 
 private:
-	
+	void initialize(Bone* pBone, mat4 &parentTransform);
 
 	/** The root bone of the skeleton. **/
 	Bone* m_root;
@@ -44,5 +47,6 @@ private:
 
 	/** The bone map witch stores the bone name and its pointer. **/
 	QMap<QString, Bone*> m_BoneMap;
+	QVector<Bone*> m_BoneList;
 };
 

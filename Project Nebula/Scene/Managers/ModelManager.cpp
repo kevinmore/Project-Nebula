@@ -1,6 +1,7 @@
 #include "ModelManager.h"
 #include <Scene/Scene.h>
 #include <Animation/FK/FKController.h>
+#include <Animation/IK/IKSolver.h>
 
 ModelManager::ModelManager(Scene* scene)
 	: m_scene(scene)
@@ -23,7 +24,10 @@ ModelPtr ModelManager::loadModel( const QString& name, const QString& filename )
 	// create a FKController for the model
 	FKController* controller = new FKController(modelLoader);
 
-	m_models[name] = ModelPtr(new Model(m_scene, controller, QOpenGLVertexArrayObjectPtr(modelLoader->getVAO()), modelDataVector));
+	// create an IKSolver for the model
+	IKSolver* solver = new IKSolver(modelLoader->getSkeletom(), 0.001f);
+
+	m_models[name] = ModelPtr(new Model(m_scene, controller, solver, QOpenGLVertexArrayObjectPtr(modelLoader->getVAO()), modelDataVector));
 	//delete modelLoader;
 	return m_models[name];
 }

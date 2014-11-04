@@ -15,9 +15,9 @@ Scene::Scene(QObject* parent)
 	  m_lightModeSubroutines(LightModeCount)
 {
 	// Initializing the position and orientation of the camera
-	m_camera->setPosition(QVector3D(0.0f, 2.0f, 5.0f));
-	m_camera->setViewCenter(QVector3D(0.0f, 0.0f, 0.0f));
-	m_camera->setUpVector(QVector3D(0.0f, 1.0f, 0.0f));
+	m_camera->setPosition(QVector3D(0.0f, 60.0f, 80.0f));
+	m_camera->setViewCenter(QVector3D(0.0f, 30.0f, 0.0f));
+	m_camera->setUpVector(Math::Vector3D::UNIT_Y);
 
 	// Initializing the lights
 	for(int i = 1; i < LightModeCount; ++i)
@@ -57,7 +57,7 @@ void Scene::initialize()
 	m_textureManager = QSharedPointer<TextureManager>(new TextureManager());
 	m_meshManager = QSharedPointer<MeshManager>(new MeshManager());
 
- //	m_modelManager->loadModel("Alice", "../Resource/Models/Alice/Alice.dae");
+ 	m_modelManager->loadModel("Alice", "../Resource/Models/Alice/Alice.dae");
 // 	m_modelManager->getModel("Alice")->getActor()->setObjectXPosition(-250);
 // 	
 // 	m_modelManager->loadModel("Jiuniang", "../Resource/Models/jiuniang/jiuniang.dae");
@@ -66,7 +66,7 @@ void Scene::initialize()
 //	m_modelManager->loadModel("Rasengang", "../Resource/Models/Naruto/rasengan.dae");
 
 
- 	m_modelManager->loadModel("Naruto1", "../Resource/Models/Naruto/Naruto.dae");
+// 	m_modelManager->loadModel("Naruto1", "../Resource/Models/Naruto/Naruto.dae");
 // 	m_modelManager->getModel("Naruto1")->getActor()->setObjectXPosition(-250);
  
 // 	m_modelManager->loadModel("Naruto2", "../Resource/Models/Naruto/Naruto.dae");

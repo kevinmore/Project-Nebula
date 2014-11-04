@@ -6,8 +6,8 @@
       <authoring_tool>OpenCOLLADA for 3ds Max;  ;  </authoring_tool>
       <source_data>file:///D:/GitHub/Project-Nebula/Resource/Models/Naruto/Naruto_raw.max</source_data>
     </contributor>
-    <created>2014-10-31T18:01:11</created>
-    <modified>2014-10-31T18:01:11</modified>
+    <created>2014-11-03T13:06:20</created>
+    <modified>2014-11-03T13:06:20</modified>
     <unit name="centimeter" meter="0.01"/>
     <up_axis>Z_UP</up_axis>
   </asset>
@@ -1914,38 +1914,29 @@
         <instance_light url="#EnvironmentAmbientLight"/>
       </node>
       <node id="node-root_ground" name="root_ground" sid="joint9" type="JOINT">
-        <rotate>0.7002429 0.6180477 0.3573191 -128.176</rotate>
+        <matrix>0.1753302 0.981172 -0.08099777 0 0.4193833 -2.98023e-8 0.9078093 0 0.890717 -0.1931354 -0.4114871 0 0 0 0 1</matrix>
         <node id="node-pelvis" name="pelvis" sid="joint11" type="JOINT">
-          <translate>33.33372 -7.226867 -14.82107</translate>
-          <rotate>-0.1725335 -0.7977011 -0.5778453 -20.40827</rotate>
+          <matrix>0.9391006 -0.1928601 0.2844219 33.33372 0.2101378 0.9771731 -0.03123075 -7.226867 -0.2719066 0.08909667 0.9581903 -14.82107 0 0 0 1</matrix>
           <node id="node-spine_lower" name="spine_lower" sid="joint2" type="JOINT">
-            <translate>6.229267 -2.647104 -0.9257855</translate>
-            <rotate>0.06964224 -0.327373 0.9423252 -25.44216</rotate>
+            <matrix>0.9034898 0.4026114 0.1470038 6.229267 -0.4070337 0.9134132 5.66718e-7 -2.647104 -0.1342749 -0.05983598 0.9891363 -0.9257855 0 0 0 1</matrix>
             <node id="node-spine_upper" name="spine_upper" sid="joint1" type="JOINT">
-              <translate>6.677238 5.00679e-6 7.62939e-6</translate>
-              <rotate>4.80852e-4 0.03281201 0.9994614 -1.735119</rotate>
+              <matrix>0.9995413 0.03026261 -9.93279e-4 6.677238 -0.03026261 0.9995421 2.95955e-5 5.00679e-6 9.93746e-4 4.76546e-7 0.9999993 7.62939e-6 0 0 0 1</matrix>
               <node id="node-head_neck_lower" name="head_neck_lower" sid="joint50" type="JOINT">
-                <translate>5.050896 0.2793603 -0.005020142</translate>
-                <rotate>0.01629386 -0.998693 -0.04844462 -37.33821</rotate>
+                <matrix>0.7951236 -0.03271731 0.6055642 5.050896 0.02604782 0.9994645 0.01979736 0.2793603 -0.6058879 3.22858e-5 0.7955503 -0.005020142 0 0 0 1</matrix>
                 <node id="node-head_neck_upper" name="head_neck_upper" sid="joint49" type="JOINT">
-                  <translate>1.500633 0.01516378 1.039738</translate>
-                  <rotate>-0.02791961 0.9985662 0.04567463 -11.61318</rotate>
+                  <matrix>0.9795448 0.008623716 -0.2010405 1.500633 -0.009765185 0.9999412 -0.004686642 0.01516378 0.2009886 0.006553973 0.9795714 1.039738 0 0 0 1</matrix>
                   <node id="node-head_jaw" name="head_jaw" sid="joint59" type="JOINT">
-                    <translate>1.504757 -1.29938e-5 8.7738e-5</translate>
-                    <rotate>0.7309248 -0.4171908 -0.5400932 -103.527</rotate>
+                    <matrix>0.4253108 -0.9013717 -0.08148745 1.504757 0.1488503 -0.01914519 0.9886745 -1.29938e-5 -0.8927231 -0.4326232 0.1260267 8.7738e-5 0 0 0 1</matrix>
                     <node id="node-unused_don_t_move" name="unused_don_t_move">
-                      <rotate>0.9860762 0.01608476 -0.1655143 -92.72883</rotate>
+                      <matrix>0.9710298 -0.1487107 -0.1870465 9.43244e-5 0.1819426 -0.04733809 0.9821691 3.8147e-6 -0.1549135 -0.9877468 -0.01890989 -3.8147e-6 0 0 0 1</matrix>
                       <node id="node-head_tongue_1" name="head_tongue_1" sid="joint48" type="JOINT">
-                        <translate>0.646059 -0.00528717 0.2235069</translate>
-                        <rotate>0.9889894 -8.2023e-4 -0.1479839 -177.2884</rotate>
+                        <matrix>0.9562249 -0.008622492 -0.2925063 0.646059 0.005379509 -0.9988791 0.04703094 -0.00528717 -0.2925839 -0.0465457 -0.9551061 0.2235069 0 0 0 1</matrix>
                         <node id="node-head_tongue_2" name="head_tongue_2" sid="joint47" type="JOINT">
-                          <translate>0.7011509 -1.19209e-7 -3.8147e-6</translate>
-                          <rotate>0.9912713 3.95142e-8 -0.1318376 -180</rotate>
+                          <matrix>0.9652378 1.75096e-7 -0.2613737 0.7011509 -1.96937e-8 -1 -6.27201e-7 -1.19209e-7 -0.2613736 5.96778e-7 -0.965238 -3.8147e-6 0 0 0 1</matrix>
                           <node id="node-head_tongue_3" name="head_tongue_3" sid="joint46" type="JOINT">
-                            <translate>0.5197077 2.37487e-7 -3.8147e-6</translate>
-                            <rotate>5.23403e-9 1 -3.26167e-9 -10.22736</rotate>
+                            <matrix>0.984111 -4.60395e-9 -0.1775547 0.5197077 -3.08228e-9 0.9999998 3.2594e-9 2.37487e-7 0.1775548 6.98037e-10 0.984111 -3.8147e-6 0 0 0 1</matrix>
                             <node id="node-head_tongue_4" name="head_tongue_4" sid="joint45" type="JOINT">
-                              <translate>0.2651215 -9.31323e-10 0</translate>
+                              <matrix>0.9999999 1.03202e-9 -2.98023e-8 0.2651215 1.7053e-13 1 -1.49012e-8 -9.31323e-10 -5.96046e-8 2.03144e-8 1 0 0 0 0 1</matrix>
                               <extra>
                                 <technique profile="OpenCOLLADA">
                                   <cast_shadows>1</cast_shadows>
@@ -1983,8 +1974,7 @@
                         </extra>
                       </node>
                       <node id="node-head_lip_lower_middle" name="head_lip_lower_middle" sid="joint57" type="JOINT">
-                        <translate>3.084832 -0.02624273 -0.008491516</translate>
-                        <rotate>-0.9820783 -0.05378904 0.1806348 -2.717795</rotate>
+                        <matrix>0.9999602 0.008624543 0.002350941 3.084832 -0.008505667 0.9988788 -0.04657782 -0.02624273 -0.002750054 0.046556 0.9989119 -0.008491516 0 0 0 1</matrix>
                         <extra>
                           <technique profile="OpenCOLLADA">
                             <cast_shadows>1</cast_shadows>
@@ -1995,8 +1985,7 @@
                         </extra>
                       </node>
                       <node id="node-head_lip_lower_left" name="head_lip_lower_left" sid="joint58" type="JOINT">
-                        <translate>2.800557 -0.4458768 -0.1296539</translate>
-                        <rotate>-0.9805163 0.02752236 0.1945004 -49.38504</rotate>
+                        <matrix>0.9865319 0.1382267 -0.08745566 2.800557 -0.1570645 0.6512371 -0.7424431 -0.4458768 -0.04567112 0.7461796 0.6641761 -0.1296539 0 0 0 1</matrix>
                         <extra>
                           <technique profile="OpenCOLLADA">
                             <cast_shadows>1</cast_shadows>
@@ -2007,8 +1996,7 @@
                         </extra>
                       </node>
                       <node id="node-head_lip_lower_right" name="head_lip_lower_right" sid="joint56" type="JOINT">
-                        <translate>2.781852 0.4773924 -0.08538055</translate>
-                        <rotate>0.9777641 0.04948838 -0.2037849 -48.53679</rotate>
+                        <matrix>0.9851422 -0.1363642 -0.1044057 2.781852 0.169061 0.6629666 0.7293108 0.4773924 -0.03023435 -0.736125 0.6761698 -0.08538055 0 0 0 1</matrix>
                         <extra>
                           <technique profile="OpenCOLLADA">
                             <cast_shadows>1</cast_shadows>
@@ -2037,15 +2025,13 @@
                     </extra>
                   </node>
                   <node id="node-unused_don_t_move_1_" name="unused_don_t_move_1_">
-                    <rotate>-0.002914124 -0.9999819 0.005255037 -6.72419</rotate>
+                    <matrix>0.9931215 6.35363e-4 0.1170877 3.8147e-5 -5.95262e-4 1 -3.77362e-4 1.34706e-5 -0.1170882 3.05068e-4 0.9931216 -7.62939e-5 0 0 0 1</matrix>
                     <node id="node-hair_front_left_2a" name="hair_front_left_2a" sid="joint83" type="JOINT">
-                      <translate>7.538609 2.219465 3.28763</translate>
-                      <rotate>-0.5244723 -0.005443307 0.8514102 -226.2643</rotate>
+                      <matrix>-0.2260956 -0.6103463 -0.759182 7.538609 0.6200035 -0.6912821 0.3711119 2.219465 -0.7513165 -0.386789 0.5347131 3.28763 0 0 0 1</matrix>
                       <node id="node-hair_front_left_2b" name="hair_front_left_2b" sid="joint82" type="JOINT">
-                        <translate>1.611885 -3.8147e-6 -7.62939e-6</translate>
-                        <rotate>0.1397095 0.8610096 -0.4890232 -34.47988</rotate>
+                        <matrix>0.827754 -0.2557122 -0.4994341 1.611885 0.2979766 0.9545599 0.005123383 -3.8147e-6 0.47543 -0.1530605 0.8663368 -7.62939e-6 0 0 0 1</matrix>
                         <node id="node-hair_front_left_2c" name="hair_front_left_2c" sid="joint81" type="JOINT">
-                          <translate>1.218449 3.8147e-6 3.8147e-6</translate>
+                          <matrix>0.9999999 0 -1.02445e-8 1.218449 2.98023e-8 1 -4.37256e-7 3.8147e-6 1.39698e-8 4.90807e-7 0.9999999 3.8147e-6 0 0 0 1</matrix>
                           <extra>
                             <technique profile="OpenCOLLADA">
                               <cast_shadows>1</cast_shadows>
@@ -2074,13 +2060,11 @@
                       </extra>
                     </node>
                     <node id="node-hair_front_left_1a" name="hair_front_left_1a" sid="joint86" type="JOINT">
-                      <translate>8.428696 1.051799 2.494295</translate>
-                      <rotate>-0.4346922 -0.05468677 0.8989171 -230.8938</rotate>
+                      <matrix>-0.3226155 -0.6587738 -0.6796586 8.428696 0.7363063 -0.6258824 0.2571453 1.051799 -0.5947871 -0.417478 0.686979 2.494295 0 0 0 1</matrix>
                       <node id="node-hair_front_left_1b" name="hair_front_left_1b" sid="joint85" type="JOINT">
-                        <translate>2.089603 -3.8147e-6 -7.62939e-6</translate>
-                        <rotate>0.2310788 0.2444617 -0.9417224 -42.74213</rotate>
+                        <matrix>0.7485974 -0.6241442 -0.2237105 2.089603 0.6541498 0.7502875 0.09569163 -3.8147e-6 0.1081218 -0.2179747 0.9699469 -7.62939e-6 0 0 0 1</matrix>
                         <node id="node-hair_front_left_1c" name="hair_front_left_1c" sid="joint84" type="JOINT">
-                          <translate>1.387089 -9.53674e-7 0</translate>
+                          <matrix>1 0 -1.49012e-8 1.387089 0 1 -1.86265e-9 -9.53674e-7 -1.49012e-8 -5.58794e-9 1 0 0 0 0 1</matrix>
                           <extra>
                             <technique profile="OpenCOLLADA">
                               <cast_shadows>1</cast_shadows>
@@ -2109,16 +2093,13 @@
                       </extra>
                     </node>
                     <node id="node-hair_front_right_1a" name="hair_front_right_1a" sid="joint80" type="JOINT">
-                      <translate>8.260662 -1.198254 2.752298</translate>
-                      <rotate>-0.533331 0.001117467 0.8459059 -128.3985</rotate>
+                      <matrix>-0.1600105 0.6619787 -0.7322434 8.260662 -0.6639109 -0.6211246 -0.4164442 -1.198254 -0.7304922 0.4195093 0.5388815 2.752298 0 0 0 1</matrix>
                       <node id="node-hair_front_right_1b" name="hair_front_right_1b" sid="joint79" type="JOINT">
-                        <translate>1.492016 0 0</translate>
-                        <rotate>-0.4168012 0.4154731 0.8084917 -22.97324</rotate>
+                        <matrix>0.9344658 0.3018208 -0.1888864 1.492016 -0.3292897 0.9343781 -0.1360363 0 0.1354329 0.1893198 0.972531 0 0 0 0 1</matrix>
                         <node id="node-hair_front_right_1c" name="hair_front_right_1c" sid="joint78" type="JOINT">
-                          <translate>1.138851 0 -7.62939e-6</translate>
-                          <rotate>-0.130315 0.789676 0.5995246 -25.6296</rotate>
+                          <matrix>0.9032799 0.2492002 -0.3492626 1.138851 -0.2694505 0.9629645 -0.009786809 0 0.3338886 0.1029491 0.936974 -7.62939e-6 0 0 0 1</matrix>
                           <node id="node-hair_front_right_1d" name="hair_front_right_1d" sid="joint77" type="JOINT">
-                            <translate>0.8091087 0 0</translate>
+                            <matrix>1 -2.08616e-7 4.47035e-8 0.8091087 1.63913e-7 0.9999999 2.98023e-8 0 -1.56462e-7 1.86265e-8 0.9999999 0 0 0 0 1</matrix>
                             <extra>
                               <technique profile="OpenCOLLADA">
                                 <cast_shadows>1</cast_shadows>
@@ -2156,13 +2137,11 @@
                       </extra>
                     </node>
                     <node id="node-hair_front_right_2a" name="hair_front_right_2a" sid="joint76" type="JOINT">
-                      <translate>7.702179 -2.322791 3.27186</translate>
-                      <rotate>-0.5301488 0.002369499 0.8479013 -137.3389</rotate>
+                      <matrix>-0.2476342 0.572409 -0.7816808 7.702179 -0.5767688 -0.7353652 -0.3557741 -2.322791 -0.7784694 0.3627474 0.5122497 3.27186 0 0 0 1</matrix>
                       <node id="node-hair_front_right_2b" name="hair_front_right_2b" sid="joint75" type="JOINT">
-                        <translate>1.475204 3.8147e-6 5.72205e-6</translate>
-                        <rotate>-0.1333062 0.8722527 0.4705366 -36.05993</rotate>
+                        <matrix>0.8118068 0.254694 -0.525453 1.475204 -0.2992509 0.9541748 1.68847e-4 3.8147e-6 0.5014171 0.1571053 0.8508224 5.72205e-6 0 0 0 1</matrix>
                         <node id="node-hair_front_right_2c" name="hair_front_right_2c" sid="joint74" type="JOINT">
-                          <translate>1.091286 -5.72205e-6 -7.62939e-6</translate>
+                          <matrix>1 5.96046e-8 5.19736e-7 1.091286 2.98023e-8 1 -2.44181e-8 -5.72205e-6 -4.84317e-7 -2.79542e-8 1 -7.62939e-6 0 0 0 1</matrix>
                           <extra>
                             <technique profile="OpenCOLLADA">
                               <cast_shadows>1</cast_shadows>
@@ -2191,8 +2170,7 @@
                       </extra>
                     </node>
                     <node id="node-head_cheek_right" name="head_cheek_right" sid="joint72" type="JOINT">
-                      <translate>2.510159 -2.436319 -1.009857</translate>
-                      <rotate>-0.5681455 -0.07595482 0.8194154 -57.22133</rotate>
+                      <matrix>0.6894279 0.7087287 -0.1496417 2.510159 -0.6691481 0.5440407 -0.5062214 -2.436319 -0.2773626 0.4491359 0.8493216 -1.009857 0 0 0 1</matrix>
                       <extra>
                         <technique profile="OpenCOLLADA">
                           <cast_shadows>1</cast_shadows>
@@ -2203,8 +2181,7 @@
                       </extra>
                     </node>
                     <node id="node-head_cheek_left" name="head_cheek_left" sid="joint73" type="JOINT">
-                      <translate>2.407337 2.412449 -1.05187</translate>
-                      <rotate>0.5715398 -0.08134788 -0.8165321 -58.85239</rotate>
+                      <matrix>0.6749402 -0.7212638 -0.1556718 2.407337 0.6763736 0.5204391 0.5212112 2.412449 -0.294913 -0.4570791 0.8391097 -1.05187 0 0 0 1</matrix>
                       <extra>
                         <technique profile="OpenCOLLADA">
                           <cast_shadows>1</cast_shadows>
@@ -2215,8 +2192,7 @@
                       </extra>
                     </node>
                     <node id="node-head_eyelid_right_upper" name="head_eyelid_right_upper" sid="joint60" type="JOINT">
-                      <translate>5.613728 -1.667803 -0.03913498</translate>
-                      <rotate>-0.5261973 0.05664593 0.8484737 -19.48925</rotate>
+                      <matrix>0.9585682 0.2813685 -0.04447934 5.613728 -0.2847841 0.9428877 -0.1728014 -1.667803 -0.00668177 0.178309 0.983952 -0.03913498 0 0 0 1</matrix>
                       <extra>
                         <technique profile="OpenCOLLADA">
                           <cast_shadows>1</cast_shadows>
@@ -2227,8 +2203,7 @@
                       </extra>
                     </node>
                     <node id="node-head_eyelid_right_lower" name="head_eyelid_right_lower" sid="joint61" type="JOINT">
-                      <translate>4.755505 -1.663092 -0.5627041</translate>
-                      <rotate>-0.557777 -0.1696675 0.812464 -24.47319</rotate>
+                      <matrix>0.9381071 0.34508 0.02957243 4.755505 -0.3280747 0.9127412 -0.2434539 -1.663092 -0.111003 0.2186838 0.9694617 -0.5627041 0 0 0 1</matrix>
                       <extra>
                         <technique profile="OpenCOLLADA">
                           <cast_shadows>1</cast_shadows>
@@ -2239,8 +2214,7 @@
                       </extra>
                     </node>
                     <node id="node-head_eyelid_left_upper" name="head_eyelid_left_upper" sid="joint62" type="JOINT">
-                      <translate>5.596344 1.698004 -0.03149605</translate>
-                      <rotate>0.5250398 0.06218613 -0.8488027 -19.86274</rotate>
+                      <matrix>0.9569086 -0.2864535 -0.04764128 5.596344 0.2903382 0.940739 0.1752515 1.698004 -0.005383581 -0.1815318 0.9833705 -0.03149605 0 0 0 1</matrix>
                       <extra>
                         <technique profile="OpenCOLLADA">
                           <cast_shadows>1</cast_shadows>
@@ -2251,8 +2225,7 @@
                       </extra>
                     </node>
                     <node id="node-head_eyelid_left_lower" name="head_eyelid_left_lower" sid="joint63" type="JOINT">
-                      <translate>4.713585 1.676967 -0.6180763</translate>
-                      <rotate>0.5600113 -0.1880321 -0.8068651 -25.12796</rotate>
+                      <matrix>0.9350414 -0.3525936 0.03708342 4.713585 0.3326628 0.9087076 0.2521621 1.676967 -0.122609 -0.2234457 0.9669743 -0.6180763 0 0 0 1</matrix>
                       <extra>
                         <technique profile="OpenCOLLADA">
                           <cast_shadows>1</cast_shadows>
@@ -2263,22 +2236,19 @@
                       </extra>
                     </node>
                     <node id="node-unused_don_t_move_2_" name="unused_don_t_move_2_">
-                      <translate>0.001117706 -9.4521e-4 3.33786e-4</translate>
-                      <rotate>-5.73469e-4 0.9999921 -0.003926929 -81.34546</rotate>
+                      <matrix>0.1504769 -0.004369386 -0.9886039 0.001117706 0.003395039 0.9999865 -0.003902932 -9.4521e-4 0.988608 -0.002769057 0.1504897 3.33786e-4 0 0 0 1</matrix>
                       <node id="node-headband_tail_right_a" name="headband_tail_right_a" sid="joint38" type="JOINT">
-                        <translate>6.240845 -0.8607974 -0.008827209</translate>
-                        <rotate>-0.8843905 0.3178163 -0.341828 -97.39346</rotate>
+                        <matrix>0.7541127 -0.6562289 0.02603737 6.240845 0.02174309 -0.01467731 -0.9996557 -0.8607974 0.6563852 0.7544191 0.003200098 -0.008827209 0 0 0 1</matrix>
                         <node id="node-headband_tail_right_b" name="headband_tail_right_b" sid="joint37" type="JOINT">
-                          <translate>2.399417 0 3.8147e-6</translate>
-                          <rotate>6.26152e-9 1 9.72035e-8 -1.245554</rotate>
+                          <matrix>0.9997634 9.58591e-8 -0.02173729 2.399417 9.18487e-8 0.9999998 9.05008e-9 0 0.0217373 1.08182e-8 0.9997637 3.8147e-6 0 0 0 1</matrix>
                           <node id="node-headband_tail_right_c" name="headband_tail_right_c" sid="joint36" type="JOINT">
-                            <translate>2.294552 7.62939e-6 -7.689e-6</translate>
+                            <matrix>0.9999999 0 8.11243e-7 2.294552 -1.42109e-14 0.9999999 -3.55271e-15 7.62939e-6 -8.11244e-7 -1.77636e-15 1 -7.689e-6 0 0 0 1</matrix>
                             <node id="node-headband_tail_right_d" name="headband_tail_right_d" sid="joint35" type="JOINT">
-                              <translate>2.242394 -7.62939e-6 3.8147e-6</translate>
+                              <matrix>0.9999999 0 7.15256e-7 2.242394 -2.84217e-14 0.9999999 3.55271e-15 -7.62939e-6 -7.15257e-7 -1.77636e-15 1 3.8147e-6 0 0 0 1</matrix>
                               <node id="node-headband_tail_right_e" name="headband_tail_right_e" sid="joint34" type="JOINT">
-                                <translate>2.398849 0 0</translate>
+                                <matrix>0.9999999 -1.2049e-8 4.62806e-7 2.398849 1.42027e-8 0.9999999 -3.62377e-13 0 -4.73983e-7 -1.86276e-9 1 0 0 0 0 1</matrix>
                                 <node id="node-headband_tail_right_f" name="headband_tail_right_f" sid="joint33" type="JOINT">
-                                  <translate>2.294533 -3.8147e-6 0</translate>
+                                  <matrix>1 5.83071e-11 7.44877e-9 2.294533 5.82077e-11 1 3.72529e-9 -3.8147e-6 -1.86173e-9 -9.31322e-9 1 0 0 0 0 1</matrix>
                                   <extra>
                                     <technique profile="OpenCOLLADA">
                                       <cast_shadows>1</cast_shadows>
@@ -2334,22 +2304,17 @@
                         </extra>
                       </node>
                       <node id="node-headband_tail_left_a" name="headband_tail_left_a" sid="joint44" type="JOINT">
-                        <translate>6.222626 0.860795 0.008827209</translate>
-                        <rotate>0.8812551 0.3220488 0.3459392 -95.70124</rotate>
+                        <matrix>0.7544188 0.6562289 0.01469021 6.222626 -0.03222702 0.01467731 0.999373 0.860795 0.6556017 -0.7544191 0.03222114 0.008827209 0 0 0 1</matrix>
                         <node id="node-headband_tail_left_b" name="headband_tail_left_b" sid="joint43" type="JOINT">
-                          <translate>2.287424 0 7.62939e-6</translate>
-                          <rotate>0.99987 9.97754e-8 0.01612212 -180</rotate>
+                          <matrix>0.9994798 2.543e-7 0.03224004 2.287424 1.44831e-7 -1 -3.21749e-7 0 0.03224004 3.23151e-7 -0.9994797 7.62939e-6 0 0 0 1</matrix>
                           <node id="node-headband_tail_left_c" name="headband_tail_left_c" sid="joint42" type="JOINT">
-                            <translate>2.43375 3.8147e-6 7.56979e-6</translate>
-                            <rotate>1.55076e-8 -1 8.34735e-8 -1.818304</rotate>
+                            <matrix>0.9994966 -4.31101e-9 0.03173007 2.43375 -9.62169e-9 0.9999999 7.6318e-10 3.8147e-6 -0.03173007 -8.52651e-14 0.9994966 7.56979e-6 0 0 0 1</matrix>
                             <node id="node-headband_tail_left_d" name="headband_tail_left_d" sid="joint41" type="JOINT">
-                              <translate>2.32432 -3.8147e-6 -3.78489e-6</translate>
-                              <rotate>0.9998349 5.12646e-9 0.01817055 -180</rotate>
+                              <matrix>0.9993397 2.05024e-8 0.0363351 2.32432 -8.88178e-16 -1 5.6426e-7 -3.8147e-6 0.0363351 -5.63887e-7 -0.9993397 -3.78489e-6 0 0 0 1</matrix>
                               <node id="node-headband_tail_left_e" name="headband_tail_left_e" sid="joint40" type="JOINT">
-                                <translate>2.324244 -3.8147e-6 0</translate>
-                                <rotate>6.51669e-9 1 -1.47045e-5 -0.02844119</rotate>
+                                <matrix>0.9999999 -7.63528e-9 -4.96396e-4 2.324244 6.96315e-9 1 1.89999e-11 -3.8147e-6 4.96389e-4 1.23634e-11 0.9999999 0 0 0 0 1</matrix>
                                 <node id="node-headband_tail_left_f" name="headband_tail_left_f" sid="joint39" type="JOINT">
-                                  <translate>2.361171 0 3.8147e-6</translate>
+                                  <matrix>0.9999999 4.6757e-13 1.22469e-7 2.361171 -2.07392e-12 0.9999999 9.4559e-11 0 -1.24797e-7 -5.02027e-10 0.9999998 3.8147e-6 0 0 0 1</matrix>
                                   <extra>
                                     <technique profile="OpenCOLLADA">
                                       <cast_shadows>1</cast_shadows>
@@ -2414,8 +2379,7 @@
                       </extra>
                     </node>
                     <node id="node-head_lip_upper_right" name="head_lip_upper_right" sid="joint53" type="JOINT">
-                      <translate>3.235725 -0.5031205 -2.171198</translate>
-                      <rotate>-0.3640083 -0.875062 0.3190054 -37.1937</rotate>
+                      <matrix>0.8235476 0.2576326 0.5053656 3.235725 -0.1280522 0.952349 -0.2768272 -0.5031205 -0.5526046 0.1632671 0.8172956 -2.171198 0 0 0 1</matrix>
                       <extra>
                         <technique profile="OpenCOLLADA">
                           <cast_shadows>1</cast_shadows>
@@ -2426,8 +2390,7 @@
                       </extra>
                     </node>
                     <node id="node-head_mouth_corner_right" name="head_mouth_corner_right" sid="joint51" type="JOINT">
-                      <translate>2.740566 -1.298638 -1.809357</translate>
-                      <rotate>-0.621645 -0.4818508 0.6175575 -50.58</rotate>
+                      <matrix>0.7760516 0.5864025 0.2321114 2.740566 -0.3677384 0.7197458 -0.5888413 -1.298638 -0.5123597 0.371615 0.7742029 -1.809357 0 0 0 1</matrix>
                       <extra>
                         <technique profile="OpenCOLLADA">
                           <cast_shadows>1</cast_shadows>
@@ -2438,8 +2401,7 @@
                       </extra>
                     </node>
                     <node id="node-head_mouth_corner_left" name="head_mouth_corner_left" sid="joint52" type="JOINT">
-                      <translate>2.664108 1.256282 -1.797886</translate>
-                      <rotate>0.622728 -0.4867478 -0.6126062 -51.12545</rotate>
+                      <matrix>0.7720236 -0.5898007 0.2368847 2.664108 0.3640538 0.7158432 0.5958461 1.256282 -0.5210031 -0.3737687 0.7673675 -1.797886 0 0 0 1</matrix>
                       <extra>
                         <technique profile="OpenCOLLADA">
                           <cast_shadows>1</cast_shadows>
@@ -2450,8 +2412,7 @@
                       </extra>
                     </node>
                     <node id="node-head_lip_upper_left" name="head_lip_upper_left" sid="joint55" type="JOINT">
-                      <translate>3.231041 0.4040388 -2.235695</translate>
-                      <rotate>0.3076417 -0.9141129 -0.26411 -36.96566</rotate>
+                      <matrix>0.8180199 -0.2153451 0.5333574 3.231041 0.1022927 0.9669552 0.2335238 0.4040388 -0.5660211 -0.1364685 0.813017 -2.235695 0 0 0 1</matrix>
                       <extra>
                         <technique profile="OpenCOLLADA">
                           <cast_shadows>1</cast_shadows>
@@ -2462,8 +2423,7 @@
                       </extra>
                     </node>
                     <node id="node-head_lip_upper_middle" name="head_lip_upper_middle" sid="joint54" type="JOINT">
-                      <translate>3.336452 0.004574895 -2.389286</translate>
-                      <rotate>0.003732609 -0.9999882 -0.003113683 -35.60718</rotate>
+                      <matrix>0.8130304 -0.002510749 0.5822158 3.336452 0.001114978 0.9999952 0.002755381 0.004574895 -0.5822203 -0.001591055 0.8130298 -2.389286 0 0 0 1</matrix>
                       <extra>
                         <technique profile="OpenCOLLADA">
                           <cast_shadows>1</cast_shadows>
@@ -2474,8 +2434,7 @@
                       </extra>
                     </node>
                     <node id="node-head_eyebrow_right_1" name="head_eyebrow_right_1" sid="joint66" type="JOINT">
-                      <translate>5.72681 -0.5478925 -0.3865318</translate>
-                      <rotate>-0.4938705 -0.4774404 0.7267342 -7.681381</rotate>
+                      <matrix>0.9932154 0.09925416 0.06059599 5.72681 -0.09502243 0.993072 -0.06912625 -0.5478925 -0.06703734 0.06289929 0.9957659 -0.3865318 0 0 0 1</matrix>
                       <extra>
                         <technique profile="OpenCOLLADA">
                           <cast_shadows>1</cast_shadows>
@@ -2486,8 +2445,7 @@
                       </extra>
                     </node>
                     <node id="node-head_eyebrow_left_1" name="head_eyebrow_left_1" sid="joint69" type="JOINT">
-                      <translate>5.703274 0.6323423 -0.372591</translate>
-                      <rotate>0.5120687 -0.4074477 -0.7561561 -8.539247</rotate>
+                      <matrix>0.9918211 -0.1145921 0.05620822 5.703274 0.1099663 0.9907544 0.07945085 0.6323423 -0.06479302 -0.07262006 0.995253 -0.372591 0 0 0 1</matrix>
                       <extra>
                         <technique profile="OpenCOLLADA">
                           <cast_shadows>1</cast_shadows>
@@ -2498,8 +2456,7 @@
                       </extra>
                     </node>
                     <node id="node-head_eyebrow_left_2" name="head_eyebrow_left_2" sid="joint68" type="JOINT">
-                      <translate>6.030712 1.719124 -0.07975769</translate>
-                      <rotate>0.5300674 0.03492969 -0.8472358 -18.80679</rotate>
+                      <matrix>0.9616117 -0.2721416 -0.0352371 6.030712 0.2741186 0.9466761 0.169302 1.719124 -0.012716 -0.172462 0.9849342 -0.07975769 0 0 0 1</matrix>
                       <extra>
                         <technique profile="OpenCOLLADA">
                           <cast_shadows>1</cast_shadows>
@@ -2510,8 +2467,7 @@
                       </extra>
                     </node>
                     <node id="node-head_eyebrow_left_3" name="head_eyebrow_left_3" sid="joint67" type="JOINT">
-                      <translate>5.708874 2.695088 0.6155415</translate>
-                      <rotate>0.4476364 0.2978908 -0.8431386 -28.95789</rotate>
+                      <matrix>0.9000279 -0.3915481 -0.1914154 5.708874 0.4248911 0.8860701 0.1853291 2.695088 0.09704217 -0.2481322 0.9638534 0.6155415 0 0 0 1</matrix>
                       <extra>
                         <technique profile="OpenCOLLADA">
                           <cast_shadows>1</cast_shadows>
@@ -2522,8 +2478,7 @@
                       </extra>
                     </node>
                     <node id="node-head_eyebrow_right_3" name="head_eyebrow_right_3" sid="joint64" type="JOINT">
-                      <translate>5.814583 -2.615809 0.6716118</translate>
-                      <rotate>-0.4435416 0.3164501 0.8385286 -27.85189</rotate>
+                      <matrix>0.9069475 0.3754906 -0.1909257 5.814583 -0.4080093 0.8957586 -0.1764782 -2.615809 0.1047574 0.237956 0.9656103 0.6716118 0 0 0 1</matrix>
                       <extra>
                         <technique profile="OpenCOLLADA">
                           <cast_shadows>1</cast_shadows>
@@ -2534,8 +2489,7 @@
                       </extra>
                     </node>
                     <node id="node-head_eyebrow_right_2" name="head_eyebrow_right_2" sid="joint65" type="JOINT">
-                      <translate>6.073334 -1.576596 -0.04184914</translate>
-                      <rotate>-0.528982 0.0450948 0.847434 -17.1719</rotate>
+                      <matrix>0.9678967 0.2491326 -0.03329644 6.073334 -0.2512592 0.9555135 -0.1544729 -1.576596 -0.006668895 0.1578799 0.9874358 -0.04184914 0 0 0 1</matrix>
                       <extra>
                         <technique profile="OpenCOLLADA">
                           <cast_shadows>1</cast_shadows>
@@ -2546,11 +2500,9 @@
                       </extra>
                     </node>
                     <node id="node-unused_don_t_move_3_" name="unused_don_t_move_3_">
-                      <translate>0.012043 -0.0270735 -0.01800728</translate>
-                      <rotate>0.04652705 0.9937627 -0.1013458 -15.50293</rotate>
+                      <matrix>0.9636955 -0.02540623 -0.2657919 0.012043 0.02877072 0.9995473 0.00877182 -0.0270735 0.2654491 -0.0161004 0.9639904 -0.01800728 0 0 0 1</matrix>
                       <node id="node-no_headband_hair_left_6" name="no_headband_hair_left_6" sid="joint19" type="JOINT">
-                        <translate>7.462811 2.780146 1.338842</translate>
-                        <rotate>0.1796219 0.4586841 -0.8702556 -22.84052</rotate>
+                        <matrix>0.9241188 -0.3313446 -0.1903033 7.462811 0.3442652 0.938086 0.03842382 2.780146 0.1657892 -0.1010229 0.9809735 1.338842 0 0 0 1</matrix>
                         <extra>
                           <technique profile="OpenCOLLADA">
                             <cast_shadows>1</cast_shadows>
@@ -2561,8 +2513,7 @@
                         </extra>
                       </node>
                       <node id="node-no_headband_hair_left_5" name="no_headband_hair_left_5" sid="joint20" type="JOINT">
-                        <translate>8.055077 2.568986 0.5569</translate>
-                        <rotate>0.2455945 0.2433769 -0.9383235 -18.64937</rotate>
+                        <matrix>0.9506601 -0.2969147 -0.0899262 8.055077 0.3031916 0.9506037 0.0665444 2.568986 0.06572595 -0.09052596 0.9937235 0.5569 0 0 0 1</matrix>
                         <extra>
                           <technique profile="OpenCOLLADA">
                             <cast_shadows>1</cast_shadows>
@@ -2573,8 +2524,7 @@
                         </extra>
                       </node>
                       <node id="node-no_headband_hair_left_4" name="no_headband_hair_left_4" sid="joint21" type="JOINT">
-                        <translate>7.983692 2.47155 -0.09637642</translate>
-                        <rotate>0.2906105 0.006712868 -0.9568179 -17.99625</rotate>
+                        <matrix>0.9552085 -0.295518 -0.01567778 7.983692 0.295709 0.9510792 0.08947129 2.47155 -0.01152983 -0.09009969 0.9958663 -0.09637642 0 0 0 1</matrix>
                         <extra>
                           <technique profile="OpenCOLLADA">
                             <cast_shadows>1</cast_shadows>
@@ -2585,8 +2535,7 @@
                         </extra>
                       </node>
                       <node id="node-no_headband_hair_left_3" name="no_headband_hair_left_3" sid="joint22" type="JOINT">
-                        <translate>8.326199 1.873734 -0.07269478</translate>
-                        <rotate>0.2921433 -0.00458997 -0.9563635 -13.27332</rotate>
+                        <matrix>0.9755659 -0.2196136 -0.006410003 8.326199 0.219542 0.9732868 0.06719238 1.873734 -0.008517683 -0.06695784 0.9977198 -0.07269478 0 0 0 1</matrix>
                         <extra>
                           <technique profile="OpenCOLLADA">
                             <cast_shadows>1</cast_shadows>
@@ -2597,8 +2546,7 @@
                         </extra>
                       </node>
                       <node id="node-no_headband_hair_left_2" name="no_headband_hair_left_2" sid="joint23" type="JOINT">
-                        <translate>8.187485 0.9995109 -0.5518665</translate>
-                        <rotate>0.2886339 -0.4451479 -0.8476638 -8.292181</rotate>
+                        <matrix>0.9904163 -0.1235943 0.06164181 8.187485 0.1209078 0.9916175 0.04557209 0.9995109 -0.06675768 -0.03768215 0.9970578 -0.5518665 0 0 0 1</matrix>
                         <extra>
                           <technique profile="OpenCOLLADA">
                             <cast_shadows>1</cast_shadows>
@@ -2609,8 +2557,7 @@
                         </extra>
                       </node>
                       <node id="node-no_headband_hair_left_1" name="no_headband_hair_left_1" sid="joint24" type="JOINT">
-                        <translate>8.26334 0.7215564 -0.8233414</translate>
-                        <rotate>0.2342731 -0.7208587 -0.6522874 -7.763286</rotate>
+                        <matrix>0.9913378 -0.08965928 0.0959734 8.26334 0.08656361 0.9955976 0.03595541 0.7215564 -0.09877479 -0.02733614 0.9947345 -0.8233414 0 0 0 1</matrix>
                         <extra>
                           <technique profile="OpenCOLLADA">
                             <cast_shadows>1</cast_shadows>
@@ -2621,8 +2568,7 @@
                         </extra>
                       </node>
                       <node id="node-no_headband_hair_middle" name="no_headband_hair_middle" sid="joint18" type="JOINT">
-                        <translate>7.880249 -0.1003979 -0.9209003</translate>
-                        <rotate>-0.04090967 -0.9930149 0.11067 -6.710191</rotate>
+                        <matrix>0.9931616 0.01320978 0.1160002 7.880249 -0.01265322 0.999905 -0.005532999 -0.1003979 -0.1160623 0.004027381 0.9932341 -0.9209003 0 0 0 1</matrix>
                         <extra>
                           <technique profile="OpenCOLLADA">
                             <cast_shadows>1</cast_shadows>
@@ -2633,8 +2579,7 @@
                         </extra>
                       </node>
                       <node id="node-no_headband_hair_right_1" name="no_headband_hair_right_1" sid="joint17" type="JOINT">
-                        <translate>8.283623 -0.6560591 -0.8075428</translate>
-                        <rotate>-0.2239437 -0.7475154 0.6253558 -7.34579</rotate>
+                        <matrix>0.9922043 0.08133022 0.09442577 8.283623 -0.07858238 0.9963788 -0.03246951 -0.6560591 -0.09672487 0.02479617 0.9950026 -0.8075428 0 0 0 1</matrix>
                         <extra>
                           <technique profile="OpenCOLLADA">
                             <cast_shadows>1</cast_shadows>
@@ -2645,8 +2590,7 @@
                         </extra>
                       </node>
                       <node id="node-no_headband_hair_right_2" name="no_headband_hair_right_2" sid="joint16" type="JOINT">
-                        <translate>8.14682 -1.059093 -0.5884724</translate>
-                        <rotate>-0.2903769 -0.4458791 0.8466836 -8.840692</rotate>
+                        <matrix>0.9891212 0.131663 0.0656051 8.14682 -0.1285866 0.9904816 -0.04911247 -1.059093 -0.07144713 0.04014223 0.9966366 -0.5884724 0 0 0 1</matrix>
                         <extra>
                           <technique profile="OpenCOLLADA">
                             <cast_shadows>1</cast_shadows>
@@ -2657,8 +2601,7 @@
                         </extra>
                       </node>
                       <node id="node-no_headband_hair_right_3" name="no_headband_hair_right_3" sid="joint15" type="JOINT">
-                        <translate>8.302769 -1.893755 -0.1280308</translate>
-                        <rotate>-0.2950153 -0.03119243 0.9549832 -13.47951</rotate>
+                        <matrix>0.974851 0.2228579 -4.9001e-4 8.302769 -0.222351 0.9724806 -0.06958795 -1.893755 -0.01503178 0.06794684 0.9975762 -0.1280308 0 0 0 1</matrix>
                         <extra>
                           <technique profile="OpenCOLLADA">
                             <cast_shadows>1</cast_shadows>
@@ -2669,8 +2612,7 @@
                         </extra>
                       </node>
                       <node id="node-no_headband_hair_right_4" name="no_headband_hair_right_4" sid="joint14" type="JOINT">
-                        <translate>7.927124 -2.414274 -0.08225441</translate>
-                        <rotate>-0.2900331 0.01063386 0.9569575 -17.71501</rotate>
+                        <matrix>0.9565705 0.2910393 -0.01639664 7.927124 -0.291332 0.9525875 -0.08776954 -2.414274 -0.009925246 0.08873457 0.9960061 -0.08225441 0 0 0 1</matrix>
                         <extra>
                           <technique profile="OpenCOLLADA">
                             <cast_shadows>1</cast_shadows>
@@ -2681,8 +2623,7 @@
                         </extra>
                       </node>
                       <node id="node-no_headband_hair_right_5" name="no_headband_hair_right_5" sid="joint13" type="JOINT">
-                        <translate>7.936081 -2.574494 0.7035522</translate>
-                        <rotate>-0.2334246 0.2929829 0.9271861 -19.12073</rotate>
+                        <matrix>0.9478368 0.2999358 -0.1079097 7.936081 -0.3074819 0.9495663 -0.06147371 -2.574494 0.08402917 0.09144729 0.9922585 0.7035522 0 0 0 1</matrix>
                         <extra>
                           <technique profile="OpenCOLLADA">
                             <cast_shadows>1</cast_shadows>
@@ -2693,8 +2634,7 @@
                         </extra>
                       </node>
                       <node id="node-no_headband_hair_right_6" name="no_headband_hair_right_6" sid="joint12" type="JOINT">
-                        <translate>7.363346 -2.717395 1.4722</translate>
-                        <rotate>-0.1673389 0.4989874 0.8502995 -23.09906</rotate>
+                        <matrix>0.9220728 0.3268969 -0.2071714 7.363346 -0.3402858 0.9397901 -0.03163464 -2.717395 0.1843562 0.09966684 0.9777934 1.4722 0 0 0 1</matrix>
                         <extra>
                           <technique profile="OpenCOLLADA">
                             <cast_shadows>1</cast_shadows>
@@ -2714,8 +2654,7 @@
                       </extra>
                     </node>
                     <node id="node-head_eyeball_right" name="head_eyeball_right" sid="joint70" type="JOINT">
-                      <translate>4.503033 -1.224304 0.7760468</translate>
-                      <rotate>-0.3817193 0.5444097 0.7469327 -19.31887</rotate>
+                      <matrix>0.9518967 0.2354028 -0.1961589 4.503033 -0.2588055 0.9603804 -0.1033854 -1.224304 0.16405 0.1491793 0.9751067 0.7760468 0 0 0 1</matrix>
                       <extra>
                         <technique profile="OpenCOLLADA">
                           <cast_shadows>1</cast_shadows>
@@ -2726,8 +2665,7 @@
                       </extra>
                     </node>
                     <node id="node-head_eyeball_left" name="head_eyeball_left" sid="joint71" type="JOINT">
-                      <translate>4.460041 1.33873 0.7488213</translate>
-                      <rotate>0.3932195 0.5050647 -0.7683021 -20.65977</rotate>
+                      <matrix>0.9456352 -0.258299 -0.1976241 4.460041 0.2838424 0.9520961 0.1137806 1.33873 0.1587677 -0.1636892 0.9736525 0.7488213 0 0 0 1</matrix>
                       <extra>
                         <technique profile="OpenCOLLADA">
                           <cast_shadows>1</cast_shadows>
@@ -2756,8 +2694,7 @@
                   </extra>
                 </node>
                 <node id="node-zipper_control" name="zipper_control" sid="joint0" type="JOINT">
-                  <translate>2.421268 -0.01517794 -1.039661</translate>
-                  <rotate>-0.02184031 -0.9995793 0.01908437 -23.246</rotate>
+                  <matrix>0.9188575 0.009304482 0.3944797 2.421268 -0.005759935 0.9999318 -0.01016857 -0.01517794 -0.3945473 0.007071276 0.9188483 -1.039661 0 0 0 1</matrix>
                   <extra>
                     <technique profile="OpenCOLLADA">
                       <cast_shadows>1</cast_shadows>
@@ -2777,25 +2714,19 @@
                 </extra>
               </node>
               <node id="node-arm_left_shoulder_1" name="arm_left_shoulder_1" sid="joint109" type="JOINT">
-                <translate>1.834724 3.950991 0.002544463</translate>
-                <rotate>0.01491872 -0.01240234 -0.9998118 -104.1444</rotate>
+                <matrix>-0.2440895 -0.9697307 -0.006534532 1.834724 0.96927 -0.244175 0.02989658 3.950991 -0.03058719 9.63713e-4 0.9995314 0.002544463 0 0 0 1</matrix>
                 <node id="node-arm_left_shoulder_2" name="arm_left_shoulder_2" sid="joint108" type="JOINT">
-                  <translate>5.05173 1.300827 0.3980637</translate>
-                  <rotate>0.03378039 -0.009631538 -0.9993829 -34.09714</rotate>
+                  <matrix>0.8282849 -0.5603077 -4.04243e-4 5.05173 0.5601959 0.8281045 0.02059199 1.300827 -0.01120307 -0.01728244 0.9997886 0.3980637 0 0 0 1</matrix>
                   <node id="node-arm_left_elbow" name="arm_left_elbow" sid="joint126" type="JOINT">
-                    <translate>6.71068 7.62939e-6 -3.93391e-6</translate>
-                    <rotate>0.0202934 0.5661313 -0.8240653 -2.449735</rotate>
+                    <matrix>0.9990864 -0.0352124 -0.02421339 6.71068 0.0352335 0.9993789 4.41032e-4 7.62939e-6 0.0241828 -0.001293764 0.9997063 -3.93391e-6 0 0 0 1</matrix>
                     <node id="node-arm_left_wrist" name="arm_left_wrist" sid="joint107" type="JOINT">
-                      <translate>10.43364 -0.09837723 0.02842715</translate>
-                      <rotate>-0.01430366 -0.0341833 0.9993132 -5.971526</rotate>
+                      <matrix>0.9945748 0.1039654 0.00347867 10.43364 -0.1039602 0.99458 -0.001673434 -0.09837723 -0.003633795 0.001302707 0.9999927 0.02842715 0 0 0 1</matrix>
                       <node id="node-arm_left_finger_3a" name="arm_left_finger_3a" sid="joint119" type="JOINT">
-                        <translate>3.685046 -0.231144 -0.07352448</translate>
-                        <rotate>-0.01102583 0.7511504 -0.6600389 -5.001315</rotate>
+                        <matrix>0.9961933 -0.05757278 -0.06545655 3.685046 0.05750978 0.9983411 -0.002848828 -0.231144 0.06551196 -9.26394e-4 0.9978516 -0.07352448 0 0 0 1</matrix>
                         <node id="node-arm_left_finger_3b" name="arm_left_finger_3b" sid="joint118" type="JOINT">
-                          <translate>1.530689 0 1.13249e-5</translate>
-                          <rotate>5.55949e-4 -0.9999604 0.0088823 -0.1444696</rotate>
+                          <matrix>0.9999967 2.22623e-5 0.002521375 1.530689 -2.25306e-5 1 1.38208e-6 0 -0.00252136 -1.4212e-6 0.9999967 1.13249e-5 0 0 0 1</matrix>
                           <node id="node-arm_left_finger_3c" name="arm_left_finger_3c" sid="joint117" type="JOINT">
-                            <translate>1.007998 0 -3.8147e-6</translate>
+                            <matrix>0.9999999 0 0 1.007998 1.49012e-7 1 1.86265e-9 0 5.58794e-9 0 0.9999999 -3.8147e-6 0 0 0 1</matrix>
                             <extra>
                               <technique profile="OpenCOLLADA">
                                 <cast_shadows>1</cast_shadows>
@@ -2824,13 +2755,11 @@
                         </extra>
                       </node>
                       <node id="node-arm_left_finger_4a" name="arm_left_finger_4a" sid="joint116" type="JOINT">
-                        <translate>3.591083 -0.1724701 0.7390213</translate>
-                        <rotate>-0.02194671 0.9449297 -0.3265366 -10.08773</rotate>
+                        <matrix>0.9845482 -0.0575155 -0.1653993 3.591083 0.05687419 0.9983444 -0.008614115 -0.1724701 0.1656209 -9.25933e-4 0.9861891 0.7390213 0 0 0 1</matrix>
                         <node id="node-arm_left_finger_4b" name="arm_left_finger_4b" sid="joint115" type="JOINT">
-                          <translate>1.453661 0 7.86781e-6</translate>
-                          <rotate>-5.68128e-4 -0.9999912 -0.004163748 -1.998003</rotate>
+                          <matrix>0.9993917 -1.44809e-4 0.03486437 1.453661 1.45525e-4 0.9999998 -1.72481e-5 0 -0.03486432 2.23666e-5 0.9993916 7.86781e-6 0 0 0 1</matrix>
                           <node id="node-arm_left_finger_4c" name="arm_left_finger_4c" sid="joint114" type="JOINT">
-                            <translate>0.9860573 0 -7.62939e-6</translate>
+                            <matrix>1 5.96046e-8 -7.45058e-9 0.9860573 2.98023e-8 1 -5.21541e-8 0 -3.72529e-9 -3.72529e-9 1 -7.62939e-6 0 0 0 1</matrix>
                             <extra>
                               <technique profile="OpenCOLLADA">
                                 <cast_shadows>1</cast_shadows>
@@ -2859,13 +2788,11 @@
                         </extra>
                       </node>
                       <node id="node-arm_left_finger_5a" name="arm_left_finger_5a" sid="joint113" type="JOINT">
-                        <translate>3.40573 -0.03534698 1.493298</translate>
-                        <rotate>-0.02296952 0.9576719 -0.2869441 -11.48141</rotate>
+                        <matrix>0.9799998 -0.05755648 -0.1904926 3.40573 0.05667594 0.998342 -0.01007093 -0.03534698 0.1907565 -9.26782e-4 0.981637 1.493298 0 0 0 1</matrix>
                         <node id="node-arm_left_finger_5b" name="arm_left_finger_5b" sid="joint112" type="JOINT">
-                          <translate>1.190041 0 -2.38419e-7</translate>
-                          <rotate>8.45662e-5 -0.9999999 5.34567e-4 -2.541903</rotate>
+                          <matrix>0.9990164 2.3663e-5 0.04435001 1.190041 -2.37525e-5 1 3.2112e-6 0 -0.04435005 -4.29153e-6 0.9990165 -2.38419e-7 0 0 0 1</matrix>
                           <node id="node-arm_left_finger_5c" name="arm_left_finger_5c" sid="joint111" type="JOINT">
-                            <translate>0.7941532 0 4.05312e-6</translate>
+                            <matrix>1 -1.49012e-7 -3.72529e-8 0.7941532 2.08616e-7 0.9999998 -7.45058e-9 0 -7.45058e-8 0 0.9999998 4.05312e-6 0 0 0 1</matrix>
                             <extra>
                               <technique profile="OpenCOLLADA">
                                 <cast_shadows>1</cast_shadows>
@@ -2894,13 +2821,11 @@
                         </extra>
                       </node>
                       <node id="node-arm_left_finger_2a" name="arm_left_finger_2a" sid="joint122" type="JOINT">
-                        <translate>3.776586 -0.118988 -0.895569</translate>
-                        <rotate>0.02415307 -0.306884 -0.9514404 -3.467883</rotate>
+                        <matrix>0.9981699 -0.0575653 0.01852105 3.776586 0.05753812 0.9983414 0.00199566 -0.118988 -0.01860518 -9.26332e-4 0.9998266 -0.895569 0 0 0 1</matrix>
                         <node id="node-arm_left_finger_2b" name="arm_left_finger_2b" sid="joint121" type="JOINT">
-                          <translate>1.36482 -3.8147e-6 1.14441e-5</translate>
-                          <rotate>-4.36434e-4 -0.9999138 0.0131235 -0.2684905</rotate>
+                          <matrix>0.999989 6.14822e-5 0.004685612 1.36482 -6.1512e-5 1 -2.18116e-6 -3.8147e-6 -0.004685629 1.90921e-6 0.9999889 1.14441e-5 0 0 0 1</matrix>
                           <node id="node-arm_left_finger_2c" name="arm_left_finger_2c" sid="joint120" type="JOINT">
-                            <translate>0.9619789 3.8147e-6 -7.62939e-6</translate>
+                            <matrix>1 2.98023e-8 1.86265e-9 0.9619789 -8.9407e-8 0.9999999 -7.45058e-9 3.8147e-6 -1.86265e-9 -7.45058e-9 1 -7.62939e-6 0 0 0 1</matrix>
                             <extra>
                               <technique profile="OpenCOLLADA">
                                 <cast_shadows>1</cast_shadows>
@@ -2929,13 +2854,11 @@
                         </extra>
                       </node>
                       <node id="node-arm_left_finger_1a" name="arm_left_finger_1a" sid="joint125" type="JOINT">
-                        <translate>0.9292555 0.5579414 -1.263245</translate>
-                        <rotate>0.1144639 -0.8064363 -0.5801367 -25.25028</rotate>
+                        <matrix>0.9057051 -0.2562903 0.3376593 0.9292555 0.2386511 0.9665911 0.09352824 0.5579414 -0.3503488 -0.004126272 0.9366102 -1.263245 0 0 0 1</matrix>
                         <node id="node-arm_left_finger_1b" name="arm_left_finger_1b" sid="joint124" type="JOINT">
-                          <translate>1.941365 0 7.62939e-6</translate>
-                          <rotate>-0.01755481 0.997577 0.06732025 -13.60035</rotate>
+                          <matrix>0.9719682 0.01533908 -0.2346114 1.941365 -0.01632136 0.9998644 -0.002244826 0 0.2345451 0.006011114 0.972087 7.62939e-6 0 0 0 1</matrix>
                           <node id="node-arm_left_finger_1c" name="arm_left_finger_1c" sid="joint123" type="JOINT">
-                            <translate>0.9344463 3.8147e-6 7.39098e-6</translate>
+                            <matrix>0.9999999 0 1.49012e-8 0.9344463 5.96046e-8 1 -7.45058e-9 3.8147e-6 -1.49012e-8 -1.49012e-8 0.9999995 7.39098e-6 0 0 0 1</matrix>
                             <extra>
                               <technique profile="OpenCOLLADA">
                                 <cast_shadows>1</cast_shadows>
@@ -2973,8 +2896,7 @@
                       </extra>
                     </node>
                     <node id="node-shirt_end_left_hand_control" name="shirt_end_left_hand_control" sid="joint8" type="JOINT">
-                      <translate>9.421463 0.09837341 -0.02841565</translate>
-                      <rotate>0.01346925 -0.2774256 -0.9606527 -0.6227537</rotate>
+                      <matrix>0.9999412 -0.01044142 0.003014562 9.421463 0.01044104 0.9999458 1.62141e-4 0.09837341 -0.003016056 -1.30651e-4 0.9999959 -0.02841565 0 0 0 1</matrix>
                       <extra>
                         <technique profile="OpenCOLLADA">
                           <cast_shadows>1</cast_shadows>
@@ -3003,8 +2925,7 @@
                   </extra>
                 </node>
                 <node id="node-arm_left_metal_band_control" name="arm_left_metal_band_control" sid="joint110" type="JOINT">
-                  <translate>4.261796 -1.300819 -0.3980789</translate>
-                  <rotate>-0.0716301 -0.2811822 0.9569774 -17.7491</rotate>
+                  <matrix>0.9526453 0.2926927 0.08245537 4.261796 -0.2907753 0.9561642 -0.03464465 -1.300819 -0.08898111 0.009028137 0.9959929 -0.3980789 0 0 0 1</matrix>
                   <extra>
                     <technique profile="OpenCOLLADA">
                       <cast_shadows>1</cast_shadows>
@@ -3024,25 +2945,19 @@
                 </extra>
               </node>
               <node id="node-arm_right_shoulder_1" name="arm_right_shoulder_1" sid="joint90" type="JOINT">
-                <translate>1.905392 -4.230351 0.002475739</translate>
-                <rotate>0.02630808 0.0161142 0.999524 -115.0653</rotate>
+                <matrix>-0.4226648 0.9059982 0.022839 1.905392 -0.9047911 -0.4232805 0.04676058 -4.230351 0.05203234 -9.00478e-4 0.9986449 0.002475739 0 0 0 1</matrix>
                 <node id="node-arm_right_shoulder_2" name="arm_right_shoulder_2" sid="joint89" type="JOINT">
-                  <translate>4.690325 0 1.19209e-7</translate>
-                  <rotate>0.007177924 -0.2462911 0.9691693 -20.37436</rotate>
+                  <matrix>0.9374411 0.3373081 0.08618211 4.690325 -0.3375295 0.9412327 -0.01243445 0 -0.08531168 -0.01743247 0.9962018 1.19209e-7 0 0 0 1</matrix>
                   <node id="node-arm_right_elbow" name="arm_right_elbow" sid="joint106" type="JOINT">
-                    <translate>6.694231 -3.8147e-6 -7.62939e-6</translate>
-                    <rotate>0.009660097 0.9202046 -0.3913185 -1.509542</rotate>
+                    <matrix>0.999653 -0.01030561 -0.02424265 6.694231 0.01031172 0.999947 1.2951e-4 -3.8147e-6 0.02424003 -3.79451e-4 0.9997061 -7.62939e-6 0 0 0 1</matrix>
                     <node id="node-arm_right_wrist" name="arm_right_wrist" sid="joint88" type="JOINT">
-                      <translate>10.33521 0.09382248 0.02764896</translate>
-                      <rotate>0.02092809 -0.2815606 -0.9593152 -3.759009</rotate>
+                      <matrix>0.9978496 -0.06290546 0.01841595 10.33521 0.06288001 0.9980192 0.001953152 0.09382248 -0.01850228 -7.90942e-4 0.9998283 0.02764896 0 0 0 1</matrix>
                       <node id="node-arm_right_finger_3a" name="arm_right_finger_3a" sid="joint99" type="JOINT">
-                        <translate>3.710274 0.3132477 0.009975433</translate>
-                        <rotate>7.85675e-4 0.8952989 0.4454652 -4.199844</rotate>
+                        <matrix>0.9973143 0.03262573 -0.0655667 3.710274 -0.03262198 0.9994671 0.001128512 0.3132477 0.06556856 0.001013432 0.9978477 0.009975433 0 0 0 1</matrix>
                         <node id="node-arm_right_finger_3b" name="arm_right_finger_3b" sid="joint98" type="JOINT">
-                          <translate>1.548883 7.62939e-6 -7.62939e-6</translate>
-                          <rotate>-5.95579e-4 0.99984 -0.01788093 -0.2523476</rotate>
+                          <matrix>0.9999908 -7.85589e-5 -0.004403586 1.548883 7.89464e-5 0.9999999 -2.80514e-6 7.62939e-6 0.004403571 2.44193e-6 0.9999906 -7.62939e-6 0 0 0 1</matrix>
                           <node id="node-arm_right_finger_3c" name="arm_right_finger_3c" sid="joint97" type="JOINT">
-                            <translate>1.030382 0 7.7486e-6</translate>
+                            <matrix>0.9999999 2.98023e-8 1.86265e-9 1.030382 -5.96046e-8 1 -1.86265e-9 0 3.72529e-9 0 1 7.7486e-6 0 0 0 1</matrix>
                             <extra>
                               <technique profile="OpenCOLLADA">
                                 <cast_shadows>1</cast_shadows>
@@ -3071,13 +2986,11 @@
                         </extra>
                       </node>
                       <node id="node-arm_right_finger_4a" name="arm_right_finger_4a" sid="joint96" type="JOINT">
-                        <translate>3.593287 0.2316628 0.8031235</translate>
-                        <rotate>0.010485 0.9839057 0.1783803 -10.45309</rotate>
+                        <matrix>0.9834056 0.03253493 -0.1784794 3.593287 -0.03219232 0.9994702 0.004815087 0.2316628 0.1785415 0.001010505 0.9839323 0.8031235 0 0 0 1</matrix>
                         <node id="node-arm_right_finger_4b" name="arm_right_finger_4b" sid="joint95" type="JOINT">
-                          <translate>1.492996 3.8147e-6 0</translate>
-                          <rotate>1.89624e-4 -0.9999989 0.001435329 -2.256769</rotate>
+                          <matrix>0.9992242 5.62966e-5 0.03937781 1.492996 -5.67436e-5 0.9999998 6.34789e-6 3.8147e-6 -0.03937782 -8.58307e-6 0.9992242 0 0 0 0 1</matrix>
                           <node id="node-arm_right_finger_4c" name="arm_right_finger_4c" sid="joint94" type="JOINT">
-                            <translate>0.9837818 3.8147e-6 -3.8147e-6</translate>
+                            <matrix>1 -1.19209e-7 1.11759e-8 0.9837818 2.98023e-7 0.9999999 -3.35276e-8 3.8147e-6 -1.49012e-8 -7.45058e-9 1 -3.8147e-6 0 0 0 1</matrix>
                             <extra>
                               <technique profile="OpenCOLLADA">
                                 <cast_shadows>1</cast_shadows>
@@ -3106,13 +3019,11 @@
                         </extra>
                       </node>
                       <node id="node-arm_right_finger_5a" name="arm_right_finger_5a" sid="joint93" type="JOINT">
-                        <translate>3.352886 0.06634521 1.545574</translate>
-                        <rotate>0.01069028 0.9847586 0.1735977 -10.76905</rotate>
+                        <matrix>0.9823902 0.03262228 -0.1839702 3.352886 -0.03225145 0.9994674 0.005008236 0.06634521 0.1840355 0.001013262 0.9829192 1.545574 0 0 0 1</matrix>
                         <node id="node-arm_right_finger_5b" name="arm_right_finger_5b" sid="joint92" type="JOINT">
-                          <translate>1.264837 0 7.62939e-6</translate>
-                          <rotate>-0.004049669 0.99966 -0.02575683 -0.2432369</rotate>
+                          <matrix>0.9999911 -1.09255e-4 -0.004243851 1.264837 1.09434e-4 0.9999999 -1.74344e-5 0 0.004243806 1.69501e-5 0.9999911 7.62939e-6 0 0 0 1</matrix>
                           <node id="node-arm_right_finger_5c" name="arm_right_finger_5c" sid="joint91" type="JOINT">
-                            <translate>0.8066101 0 -7.39098e-6</translate>
+                            <matrix>0.9999999 -5.96046e-8 -1.49012e-8 0.8066101 -8.9407e-8 0.9999998 7.45058e-9 0 1.49012e-8 2.23517e-8 1 -7.39098e-6 0 0 0 1</matrix>
                             <extra>
                               <technique profile="OpenCOLLADA">
                                 <cast_shadows>1</cast_shadows>
@@ -3141,13 +3052,11 @@
                         </extra>
                       </node>
                       <node id="node-arm_right_finger_2a" name="arm_right_finger_2a" sid="joint102" type="JOINT">
-                        <translate>3.751345 0.216156 -0.778843</translate>
-                        <rotate>-0.03412275 -0.6555922 0.7543437 -2.474064</rotate>
+                        <matrix>0.9990687 0.03258386 0.02827602 3.751345 -0.03254187 0.9994683 -0.001933957 0.216156 -0.02832408 0.001012002 0.9995983 -0.778843 0 0 0 1</matrix>
                         <node id="node-arm_right_finger_2b" name="arm_right_finger_2b" sid="joint101" type="JOINT">
-                          <translate>1.466364 0 3.99351e-6</translate>
-                          <rotate>-4.58291e-4 0.9999645 0.008418725 -0.5255335</rotate>
+                          <matrix>0.999958 7.70986e-5 -0.009171847 1.466364 -7.7337e-5 0.9999998 -3.83705e-6 0 0.009171821 4.56907e-6 0.9999581 3.99351e-6 0 0 0 1</matrix>
                           <node id="node-arm_right_finger_2c" name="arm_right_finger_2c" sid="joint100" type="JOINT">
-                            <translate>0.93367 0 -7.51019e-6</translate>
+                            <matrix>1 2.98023e-8 -7.45058e-9 0.93367 -8.9407e-8 1 3.72529e-9 0 -3.72529e-9 -2.04891e-8 1 -7.51019e-6 0 0 0 1</matrix>
                             <extra>
                               <technique profile="OpenCOLLADA">
                                 <cast_shadows>1</cast_shadows>
@@ -3176,13 +3085,11 @@
                         </extra>
                       </node>
                       <node id="node-arm_right_finger_1a" name="arm_right_finger_1a" sid="joint105" type="JOINT">
-                        <translate>0.9746094 -0.3601189 -1.226669</translate>
-                        <rotate>-0.1362186 -0.7307555 0.6689102 -26.414</rotate>
+                        <matrix>0.8975401 0.3079593 0.3155669 0.9746094 -0.2871753 0.9513514 -0.1116276 -0.3601189 -0.334592 0.009567123 0.9423147 -1.226669 0 0 0 1</matrix>
                         <node id="node-arm_right_finger_1b" name="arm_right_finger_1b" sid="joint104" type="JOINT">
-                          <translate>2.026289 0 -4.76837e-6</translate>
-                          <rotate>0.02128436 0.9953673 -0.09375931 -16.98171</rotate>
+                          <matrix>0.956418 -0.02646026 -0.2908003 2.026289 0.02830765 0.999597 0.002147324 0 0.2906264 -0.01028559 0.9567814 -4.76837e-6 0 0 0 1</matrix>
                           <node id="node-arm_right_finger_1c" name="arm_right_finger_1c" sid="joint103" type="JOINT">
-                            <translate>0.8544941 0 -2.38419e-7</translate>
+                            <matrix>0.9999999 -2.98023e-8 -2.6077e-8 0.8544941 -2.98023e-8 1 3.72529e-9 0 -2.98023e-8 0 1 -2.38419e-7 0 0 0 1</matrix>
                             <extra>
                               <technique profile="OpenCOLLADA">
                                 <cast_shadows>1</cast_shadows>
@@ -3211,8 +3118,7 @@
                         </extra>
                       </node>
                       <node id="node-rasengan___kunai_control" name="rasengan___kunai_control" sid="joint10" type="JOINT">
-                        <translate>2.240576 -0.4673233 -0.3531419</translate>
-                        <rotate>-0.08630446 -0.5917574 0.8014829 -14.70583</rotate>
+                        <matrix>0.9674857 0.2051345 0.1479554 2.240576 -0.2017885 0.978713 -0.03744557 -0.4673233 -0.1524874 0.006372294 0.9882851 -0.3531419 0 0 0 1</matrix>
                         <extra>
                           <technique profile="OpenCOLLADA">
                             <cast_shadows>1</cast_shadows>
@@ -3232,8 +3138,7 @@
                       </extra>
                     </node>
                     <node id="node-shirt_end_right_hand_control" name="shirt_end_right_hand_control" sid="joint7" type="JOINT">
-                      <translate>9.449275 -0.09381485 -0.02763739</translate>
-                      <rotate>-0.0134725 -0.282578 0.9591497 -0.593054</rotate>
+                      <matrix>0.9999462 0.009928018 0.002924154 9.449275 -0.009927452 0.9999509 -1.53958e-4 -0.09381485 -0.002925526 1.24937e-4 0.9999956 -0.02763739 0 0 0 1</matrix>
                       <extra>
                         <technique profile="OpenCOLLADA">
                           <cast_shadows>1</cast_shadows>
@@ -3289,8 +3194,7 @@
             </extra>
           </node>
           <node id="node-backpack_control" name="backpack_control" sid="joint87" type="JOINT">
-            <translate>1.308846 4.186416 4.062511</translate>
-            <rotate>-0.4204241 0.3452717 -0.8390656 -87.06406</rotate>
+            <matrix>0.2189227 -0.9756895 -0.01012343 1.308846 0.7002389 0.164326 -0.6947393 4.186416 0.6795139 0.1450052 0.7191907 4.062511 0 0 0 1</matrix>
             <extra>
               <technique profile="OpenCOLLADA">
                 <cast_shadows>1</cast_shadows>
@@ -3301,8 +3205,7 @@
             </extra>
           </node>
           <node id="node-shirt_lower_front_left_control" name="shirt_lower_front_left_control" sid="joint4" type="JOINT">
-            <translate>2.154808 3.183538 -4.038735</translate>
-            <rotate>0.2085958 -0.6744009 -0.7082875 -68.98908</rotate>
+            <matrix>0.386457 -0.7514327 0.5347892 2.154808 0.5709571 0.65029 0.50113 3.183538 -0.7243337 0.1116764 0.6803453 -4.038735 0 0 0 1</matrix>
             <extra>
               <technique profile="OpenCOLLADA">
                 <cast_shadows>1</cast_shadows>
@@ -3313,8 +3216,7 @@
             </extra>
           </node>
           <node id="node-shirt_lower_back_left_control" name="shirt_lower_back_left_control" sid="joint6" type="JOINT">
-            <translate>2.891903 2.666451 2.021843</translate>
-            <rotate>-0.3178335 0.4502328 -0.8344293 -52.05007</rotate>
+            <matrix>0.6538672 -0.7130848 -0.2529172 2.891903 0.6028908 0.6930214 -0.3952771 2.666451 0.4571434 0.1059771 0.8830569 2.021843 0 0 0 1</matrix>
             <extra>
               <technique profile="OpenCOLLADA">
                 <cast_shadows>1</cast_shadows>
@@ -3325,8 +3227,7 @@
             </extra>
           </node>
           <node id="node-shirt_lower_back_right_control" name="shirt_lower_back_right_control" sid="joint5" type="JOINT">
-            <translate>0.1331863 -3.715239 2.528039</translate>
-            <rotate>0.3552242 0.2036746 0.9123225 -96.34431</rotate>
+            <matrix>0.02962506 0.9870802 0.1574635 0.1331863 -0.8263905 -0.06443545 0.5593991 -3.715239 0.5623181 -0.1466984 0.8138052 2.528039 0 0 0 1</matrix>
             <extra>
               <technique profile="OpenCOLLADA">
                 <cast_shadows>1</cast_shadows>
@@ -3337,8 +3238,7 @@
             </extra>
           </node>
           <node id="node-shirt_lower_front_right_control" name="shirt_lower_front_right_control" sid="joint3" type="JOINT">
-            <translate>-0.8291016 -3.674051 -3.64787</translate>
-            <rotate>-0.2918705 -0.3863256 0.8749653 -105.4245</rotate>
+            <matrix>-0.1581232 0.9861972 0.04911208 -0.8291016 -0.7007033 -0.07702634 -0.7092827 -3.674051 -0.6957096 -0.1465669 0.7032118 -3.64787 0 0 0 1</matrix>
             <extra>
               <technique profile="OpenCOLLADA">
                 <cast_shadows>1</cast_shadows>
@@ -3358,16 +3258,13 @@
           </extra>
         </node>
         <node id="node-leg_left_thigh" name="leg_left_thigh" sid="joint30" type="JOINT">
-          <translate>28.89612 -2.279274 -13.34923</translate>
-          <rotate>0.1991739 0.04559249 0.978903 -201.8417</rotate>
+          <matrix>-0.8517228 -0.3466851 0.3929103 28.89612 0.3817048 -0.9242073 0.01195602 -2.279274 0.3589857 0.1601589 0.9194993 -13.34923 0 0 0 1</matrix>
           <node id="node-leg_left_knee" name="leg_left_knee" sid="joint31" type="JOINT">
-            <translate>14.08881 2.86102e-6 5.72205e-6</translate>
-            <rotate>-0.03234824 0.6144816 -0.7882677 -13.4494</rotate>
+            <matrix>0.9726041 -0.1838856 -0.1422209 14.08881 0.1827953 0.9829308 -0.02080748 2.86102e-6 0.1436194 -0.00575995 0.9896162 5.72205e-6 0 0 0 1</matrix>
             <node id="node-leg_left_ankle" name="leg_left_ankle" sid="joint32" type="JOINT">
-              <translate>11.2443 1.43051e-6 9.53674e-7</translate>
-              <rotate>0.05617036 -0.9532866 -0.2967987 -36.00151</rotate>
+              <matrix>0.8096041 -0.1846876 0.557164 11.2443 0.1642329 0.9825724 0.08705731 1.43051e-6 -0.5635322 0.02102272 0.8258265 9.53674e-7 0 0 0 1</matrix>
               <node id="node-leg_left_toes" name="leg_left_toes" sid="joint29" type="JOINT">
-                <translate>5.181822 2.38419e-6 4.76837e-7</translate>
+                <matrix>1 0 1.19209e-7 5.181822 1.49012e-8 1 7.45058e-9 2.38419e-6 -8.9407e-8 7.45058e-9 1 4.76837e-7 0 0 0 1</matrix>
                 <extra>
                   <technique profile="OpenCOLLADA">
                     <cast_shadows>1</cast_shadows>
@@ -3405,16 +3302,13 @@
           </extra>
         </node>
         <node id="node-leg_right_thigh" name="leg_right_thigh" sid="joint26" type="JOINT">
-          <translate>27.24466 -9.967741 -12.5863</translate>
-          <rotate>0.1989199 9.11535e-4 0.9800153 -180.4412</rotate>
+          <matrix>-0.9208335 -0.007184222 0.3898905 27.24466 0.007909507 -0.9999691 2.54791e-4 -9.967741 0.3898765 0.003318429 0.9208615 -12.5863 0 0 0 1</matrix>
           <node id="node-leg_right_knee" name="leg_right_knee" sid="joint27" type="JOINT">
-            <translate>13.67981 1.90735e-6 5.78165e-6</translate>
-            <rotate>0.03027667 0.6553274 0.7547379 -12.62296</rotate>
+            <matrix>0.9758511 0.1654156 -0.1426592 13.67981 -0.1644565 0.986209 0.01857134 1.90735e-6 0.1437638 0.005338356 0.9895974 5.78165e-6 0 0 0 1</matrix>
             <node id="node-leg_right_ankle" name="leg_right_ankle" sid="joint28" type="JOINT">
-              <translate>11.43108 0 3.93391e-6</translate>
-              <rotate>-0.05931936 -0.951291 0.3025337 -36.75211</rotate>
+              <matrix>0.8019313 0.1922388 0.5656419 11.43108 -0.1698058 0.9811084 -0.09269904 0 -0.5727757 -0.02171102 0.8194243 3.93391e-6 0 0 0 1</matrix>
               <node id="node-leg_right_toes" name="leg_right_toes" sid="joint25" type="JOINT">
-                <translate>5.100246 2.38419e-6 -2.14577e-6</translate>
+                <matrix>1 -1.04308e-7 -5.96046e-8 5.100246 8.9407e-8 1 1.49012e-8 2.38419e-6 -1.19209e-7 7.45058e-9 1 -2.14577e-6 0 0 0 1</matrix>
                 <extra>
                   <technique profile="OpenCOLLADA">
                     <cast_shadows>1</cast_shadows>

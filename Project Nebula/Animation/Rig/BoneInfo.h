@@ -1,6 +1,9 @@
 #pragma once
 #include <Utility/DataTypes.h>
 #include <assert.h>
+#include <QtGui/QQuaternion>
+#include <assimp/scene.h>
+#include <Utility/Math.h>
 
 class Bone
 {
@@ -32,15 +35,44 @@ public:
 	mat4 getLocalTransformMatrix()
 	{
 		return m_nodeTransform * m_offsetMatrix;
+		//return m_offsetMatrix;
+		//return m_nodeTransform;
+
 	}
 
-	void calcWorldPos()
+	void calcWorldTransform()
 	{
-		float x = m_finalTransform(0, 3);
-		float y = m_finalTransform(1, 3);
-		float z = m_finalTransform(2, 3);
-	
-		m_worldPos = vec3(x, y, z);
+// 		float x = m_finalTransform(0, 3);
+// 		float y = m_finalTransform(1, 3);
+// 		float z = m_finalTransform(2, 3);
+// 	
+// 		m_worldPos = vec3(x, y, z);
+
+		// The bone's transformation in the skeleton space,
+		// aka the bind matrix - the bone's parent's local matrices concatenated with the bone's local matrix.
+		const aiMatrix4x4 nodeGlobalTransform = Math::convToAiMat4(m_finalTransform);
+		// The transformation relative to the bone's parent (parent => bone space).
+		aiMatrix4x4 nodeLocalTransform;
+		if (this->m_parent && this->m_parent->m_name != "Project Nebula Skeleton ROOT")
+		{
+			const Bone* parentBone = this->m_parent;
+			aiMatrix4x4 parentGlobalTransform = Math::convToAiMat4(parentBone->m_finalTransform);
+			aiMatrix4x4 inverseParentGlobalTransform(parentGlobalTransform);
+			inverseParentGlobalTransform.Inverse();
+			nodeLocalTransform = nodeGlobalTransform * inverseParentGlobalTransform; // N = P^-1 * B
+		}
+		else
+		{
+			nodeLocalTransform = Math::convToAiMat4(this->m_nodeTransform);
+		}
+
+		aiVector3D	 scaling;
+		aiQuaternion rotation;
+		aiVector3D	 position;
+		nodeLocalTransform.Decompose(scaling, rotation, position);
+		
+
+		m_worldPos = vec3(position.x, position.y, position.z);
 	}
 
 	void addChild(Bone* child)
@@ -56,7 +88,7 @@ public:
 	Bone* getChild(uint i)
 	{
 		if(m_children.isEmpty()) return NULL;
-		else return m_children.at(i);
+		else return m_children[i];
 	}
 
 	int childCount()
@@ -84,8 +116,10 @@ public:
 	}
 
 private:
-	/** Position. **/
+	/** Position, rotation, scaling. **/
 	vec3 m_worldPos;
+	vec3 m_worldScaling;
+	QQuaternion m_worldQuaternion;
 
 	/** The child bones of this bone. **/
 	QVector<Bone*> m_children;

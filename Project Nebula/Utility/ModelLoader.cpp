@@ -36,18 +36,23 @@ ModelLoader::~ModelLoader()
 
 QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName )
 {
-	m_scene = m_importer.ReadFile(fileName.toStdString(),	
-		  aiProcess_Triangulate
-		| aiProcess_GenSmoothNormals
-		| aiProcess_FlipUVs
- 		| aiProcess_CalcTangentSpace
- 		| aiProcess_JoinIdenticalVertices
- 		| aiProcess_SortByPType
-		| aiProcess_LimitBoneWeights
-		| aiProcess_FixInfacingNormals
-// 		| aiProcessPreset_TargetRealtime_MaxQuality
-		);
+// 	m_scene = m_importer.ReadFile(fileName.toStdString(),	
+// 		  aiProcess_Triangulate
+// 		| aiProcess_RemoveComponent
+// 		| aiProcess_GenSmoothNormals
+// 		| aiProcess_FlipUVs
+//  		| aiProcess_CalcTangentSpace
+//  		| aiProcess_JoinIdenticalVertices
+//  		| aiProcess_SortByPType
+// 		| aiProcess_LimitBoneWeights
+// 		| aiProcess_FixInfacingNormals
+// 		| aiProcess_ImproveCacheLocality
+// 		| aiProcess_RemoveRedundantMaterials
+// 		| aiProcess_SplitLargeMeshes
+// 		| aiProcess_FindInvalidData
+// 		);
 
+	m_scene = m_importer.ReadFile(fileName.toStdString(), aiProcessPreset_TargetRealtime_Quality | aiProcess_FlipUVs);
 	if(!m_scene)
 	{
 		qDebug() << "Error loading mesh file: " << fileName << m_importer.GetErrorString();
@@ -58,12 +63,13 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName )
 	}
 
 
-//  	m_GlobalInverseTransform = Math::convToQMat4(&m_scene->mRootNode->mTransformation);
-//  	inverseQMat4(m_GlobalInverseTransform);
+//   	m_GlobalInverseTransform = Math::convToQMat4(&m_scene->mRootNode->mTransformation.Inverse());
+
 	m_GlobalInverseTransform = mat4(1, 0, 0, 0, 
 									0, 0, -1, 0,
 									0, 1, 0, 0,
 									0, 0, 0, 1);
+//	m_GlobalInverseTransform.rotate(-90, vec3(1,0,0));
 	unsigned int numVertices = 0;
 	unsigned int numIndices  = 0;
 
@@ -113,15 +119,18 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName )
 	Bone* skeleton_root = new Bone();
 	skeleton_root->m_ID = 9999;
 	skeleton_root->m_name = "Project Nebula Skeleton ROOT";
+// 	skeleton_root->m_nodeTransform = m_GlobalInverseTransform;
+// 	skeleton_root->m_nodeTransform.rotate(-90, vec3(1,0,0));
 	generateSkeleton(m_scene->mRootNode, skeleton_root);
 	m_skeleton = new Skeleton(skeleton_root);
 
-	m_skeleton->dumpSkeleton(skeleton_root, 0);
+// 	for (int i = 0; i < m_BoneInfo.size(); ++i)
+// 	{
+// 		qDebug() << m_BoneInfo[i].m_ID << m_BoneInfo[i].m_name;
+// 	}
 
-	// IK stuff
+//	m_skeleton->dumpSkeleton(skeleton_root, 0);
 
-	IKSolver* solver = new IKSolver(m_skeleton);
-	solver->solveIK("arm_left_wrist", "arm_left_shoulder_1", vec3(0, 0, 0));
 	return modelDataVector;
 }
 

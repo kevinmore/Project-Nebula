@@ -12,14 +12,15 @@
 #include <Scene/Object3D.h>
 #include <Scene/ShadingTechniques/skinning_technique.h>
 #include <Animation/FK/FKController.h>
+#include <Animation/IK/IKSolver.h>
 
 class Scene;
 
 class Model : public AbstractModel
 {
 public:
-	Model(Scene* scene, FKController* fkCtrl, const QOpenGLVertexArrayObjectPtr vao);
-	Model(Scene* scene, FKController* fkCtrl, const QOpenGLVertexArrayObjectPtr vao, QVector<ModelDataPtr> modelDataVector);
+	Model(Scene* scene, FKController* fkCtrl, IKSolver* ikSolver, const QOpenGLVertexArrayObjectPtr vao);
+	Model(Scene* scene, FKController* fkCtrl, IKSolver* ikSolver, const QOpenGLVertexArrayObjectPtr vao, QVector<ModelDataPtr> modelDataVector);
 	virtual ~Model(void);
 
 	virtual void render( float time );
@@ -56,5 +57,6 @@ private:
 	bool m_hasAnimation;
 	Object3D* m_actor;
 	FKController* m_FKController;
+	IKSolver* m_IKSolver;
 };
 

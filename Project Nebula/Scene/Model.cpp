@@ -2,20 +2,22 @@
 #include <Scene/Scene.h>
 #include <QtGui/QOpenGLContext>
 
-Model::Model(Scene* scene, FKController* fkCtrl, const QOpenGLVertexArrayObjectPtr vao)
+Model::Model(Scene* scene, FKController* fkCtrl, IKSolver* ikSolver, const QOpenGLVertexArrayObjectPtr vao)
   : m_scene(scene),
 	m_vao(vao),
 	m_FKController(fkCtrl),
+	m_IKSolver(ikSolver),
 	m_hasAnimation(false),
 	m_actor(new Object3D)
 {
 	initialize();
 }
 
-Model::Model(Scene* scene, FKController* fkCtrl, const QOpenGLVertexArrayObjectPtr vao, QVector<ModelDataPtr> modelData)
+Model::Model(Scene* scene, FKController* fkCtrl, IKSolver* ikSolver, const QOpenGLVertexArrayObjectPtr vao, QVector<ModelDataPtr> modelData)
   : m_scene(scene),
 	m_vao(vao),
 	m_FKController(fkCtrl),
+	m_IKSolver(ikSolver),
 	m_hasAnimation(false),
 	m_actor(new Object3D)
 {
@@ -92,7 +94,10 @@ void Model::initialize(QVector<ModelDataPtr> modelDataVector)
 		m_materials.push_back(material);
 
 	}
-	
+
+
+	// INIT IK
+	//m_IKSolver->prepareIK("Bip01-L-Clavicle", "Bip01-L-Hand");
 }
 
 void Model::initRenderingEffect()
@@ -126,26 +131,35 @@ void Model::destroy() {}
 
 void Model::render( float time )
 {
-	QMatrix4x4 modelViewMatrix = m_scene->getCamera()->viewMatrix() * m_actor->modelMatrix();
+	QMatrix4x4 modelMatrix = m_actor->modelMatrix();
+	modelMatrix.rotate(-90, Math::Vector3D::UNIT_X); // this is for dae files
+	QMatrix4x4 modelViewMatrix = m_scene->getCamera()->viewMatrix() * modelMatrix;
 	QMatrix3x3 normalMatrix = modelViewMatrix.normalMatrix();
 
 	m_RenderingEffect->SetEyeWorldPos(m_scene->getCamera()->position());
 	m_RenderingEffect->SetWVP(m_scene->getCamera()->projectionMatrix() * modelViewMatrix);
-	m_RenderingEffect->SetWorldMatrix(m_actor->modelMatrix()); 
+	m_RenderingEffect->SetWorldMatrix(modelMatrix); 
 
 
 	// do the skeleton animation here
 	// check if the model has animation first
+	QVector<QMatrix4x4> Transforms;
+
 // 	if(m_hasAnimation)
 // 	{
 // 		m_RenderingEffect->getShader()->setUniformValue("hasAnimation", true);
-// 		QVector<QMatrix4x4> Transforms;
 // 		m_FKController->BoneTransform(time, Transforms);
 // 		for (int i = 0 ; i < Transforms.size() ; i++) {
 // 			m_RenderingEffect->SetBoneTransform(i, Transforms[i]);
 // 		}
 // 	}
 
+//	m_IKSolver->solveIK(vec3(10, 10, 120));
+	m_RenderingEffect->getShader()->setUniformValue("hasAnimation", true);
+	m_IKSolver->BoneTransform(Transforms);
+	for (int i = 0 ; i < Transforms.size() ; i++) {
+		m_RenderingEffect->SetBoneTransform(i, Transforms[i]);
+	}
 
 	m_vao->bind();
 

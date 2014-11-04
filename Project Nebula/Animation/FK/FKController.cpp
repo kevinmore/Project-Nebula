@@ -159,6 +159,7 @@ void FKController::readNodeHeirarchy( float AnimationTime, const aiNode* pNode, 
 	const aiAnimation* pAnimation = m_Animations[0];
 
 	mat4 NodeTransformation(Math::convToQMat4(&pNode->mTransformation));
+	
 
 	const aiNodeAnim* pNodeAnim = findNodeAnim(pAnimation, NodeName);
 	if (pNodeAnim) {

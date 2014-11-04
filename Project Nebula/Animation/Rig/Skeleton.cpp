@@ -8,15 +8,57 @@ Skeleton::Skeleton( Bone* root )
 								  0, 0, -1, 0,
 								  0, 1, 0, 0,
 								  0, 0, 0, 1);
+
+
 	m_root = root;
-	m_root->m_finalTransform = m_gloableInverseMatrix * m_root->m_finalTransform;
-	sortSkeleton(m_root);
+//	m_root->m_finalTransform = m_gloableInverseMatrix * m_root->m_finalTransform;
+//	m_root->m_finalTransform.rotate(-90, vec3(1,0,0));
+//	sortSkeleton(m_root);
+
+
+	mat4 identity;
+	initialize(m_root, identity);
+
+	// generate the bone list
+	// the root skeleton is added manually in the loader
+	// that's why here we minus 1
+	m_BoneList.resize(getSkeletonSize() - 1);
+	QMap<QString, Bone*>::iterator it;
+	for (it = m_BoneMap.begin(); it != m_BoneMap.end(); ++it)
+	{
+		if(it.value()->m_name == "Project Nebula Skeleton ROOT") continue;
+		m_BoneList[it.value()->m_ID] = it.value();
+		it.value()->calcWorldTransform();
+
+	}
+
+	for (int i = 0; i < m_BoneList.size(); ++i)
+	{
+		qDebug() << m_BoneList[i]->m_ID << m_BoneList[i]->m_name << m_BoneList[i]->getWorldPosition();
+		//qDebug() << m_BoneList[i]->m_finalTransform;
+	}
+
 }
 
 
 Skeleton::~Skeleton()
 {
 	freeSkeleton(m_root);
+}
+
+void Skeleton::initialize( Bone* pBone, mat4 &parentTransform )
+{
+	// add this bone to the map
+	m_BoneMap[pBone->m_name] = pBone;
+
+	// calculate the global transform
+	mat4 globalTransformation = parentTransform * pBone->m_nodeTransform;
+	pBone->m_finalTransform = /*m_gloableInverseMatrix **/ globalTransformation * pBone->m_offsetMatrix;
+
+	for (int i = 0 ; i < pBone->childCount() ; ++i) 
+	{
+		initialize(pBone->getChild(i), globalTransformation);
+	}
 }
 
 void Skeleton::dumpSkeleton( Bone* pBone, uint level )
@@ -51,7 +93,7 @@ Bone* Skeleton::sortSkeleton( Bone* root )
 	root->m_finalTransform = calcGlobalTransformation(root);
 
 	// calculate the world position
-	root->calcWorldPos(); // need to fix
+	root->calcWorldTransform(); // need to fix
 
 	// store this bone into the map
 	if (m_BoneMap.find(root->m_name) == m_BoneMap.end())
@@ -70,7 +112,7 @@ mat4 Skeleton::calcGlobalTransformation( Bone* bone )
 	mat4 result;
 	if (!bone) return result;
 
-	result = bone->getLocalTransformMatrix();
+	result =  bone->getLocalTransformMatrix();
 	while (bone->m_parent)
 	{
 		// NOTE: the matrix multiplying order is very important!
@@ -101,10 +143,7 @@ float Skeleton::getDistanceBetween( const QString& upperBoneName, const QString&
 	// check input
 	if(!isBoneInSkeleton(lowerBoneName) || !isBoneInSkeleton(upperBoneName)) return -1.0;
 
-	Bone* upperBone = m_BoneMap[upperBoneName];
-	Bone* lowerBone = m_BoneMap[lowerBoneName];
-
-	return getDistanceBetween(upperBone, lowerBone);
+	return getDistanceBetween(m_BoneMap[upperBoneName], m_BoneMap[lowerBoneName]);
 }
 
 Bone* Skeleton::getBone( QString boneName )
@@ -169,4 +208,27 @@ uint Skeleton::getBoneCountBetween( Bone* upperBone, Bone* lowerBone )
 	}
 
 	return count;
+}
+
+
+void Skeleton::setBoneWorldPosition( Bone* bone, vec3 &newPos )
+{
+	bone->setWorldPosition(newPos);
+
+	// update the map
+}
+
+int Skeleton::getSkeletonSize()
+{
+	return m_BoneMap.size();
+}
+
+QMap<QString, Bone*> Skeleton::getBoneMap()
+{
+	return m_BoneMap;
+}
+
+QVector<Bone*> Skeleton::getBoneList()
+{
+	return m_BoneList;
 }

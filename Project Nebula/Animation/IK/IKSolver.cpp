@@ -1,8 +1,9 @@
 #include "IKSolver.h"
 
 
-IKSolver::IKSolver(Skeleton* skeleton)
-	: m_skeleton(skeleton)
+IKSolver::IKSolver(Skeleton* skeleton, float tolerance)
+	: m_skeleton(skeleton),
+	  m_tolerance(tolerance)
 {}
 
 
@@ -10,9 +11,8 @@ IKSolver::~IKSolver(void)
 {
 }
 
-void IKSolver::solveIK( const QString &effectorName, const QString &rootName, const vec3 &targetPos )
+void IKSolver::prepareIK( const QString &rootName, const QString &effectorName )
 {
-
 	/************************************************************************/
 	/* Check inputs                                                         */
 	/************************************************************************/
@@ -31,6 +31,8 @@ void IKSolver::solveIK( const QString &effectorName, const QString &rootName, co
 		return;
 	}
 
+	m_rootBone = rootBone;
+	m_effectorBone = effectorBone;
 
 	/************************************************************************/
 	/* Create the bone chain                                                */
@@ -46,38 +48,58 @@ void IKSolver::solveIK( const QString &effectorName, const QString &rootName, co
 		temp = temp->m_parent;
 	}
 
+
 	/************************************************************************/
-	/* Calculate the original distances between each bone                   */
+	/* Calculate the original distances, and the total chain length         */
 	/************************************************************************/
 	// from root to effector
-	QVector<float> distances;
+	m_distances.clear();
 	for(int i = 0; i < m_boneChain.size() - 1; ++i)
-		distances.push_back(m_skeleton->getDistanceBetween(m_boneChain[i], m_boneChain[i + 1]));
+		m_distances.push_back(m_skeleton->getDistanceBetween(m_boneChain[i], m_boneChain[i + 1]));
 
+	m_totalChainLength = 0.0f;
+	for (int i = 0; i < m_distances.size(); ++i)
+	{
+		m_totalChainLength += m_distances[i];
+	}
+
+}
+
+void IKSolver::solveIK( const vec3 &targetPos )
+{
+	/************************************************************************/
+	/* Check if the target is already reached                               */
+	/************************************************************************/
+	if((m_effectorBone->getWorldPosition() - targetPos).length() <= m_tolerance)
+	{
+		qDebug() << "Target Reached";
+		return;
+	}
 
 	/************************************************************************/
 	/* Check if the target is reachable                                     */
 	/************************************************************************/
-	vec3 originalRootPosition = rootBone->getWorldPosition();
-	float totalChainLength = 0.0f;
-	for (int i = 0; i < distances.size(); ++i)
-	{
-		totalChainLength += distances[i];
-	}
-
+	vec3 originalRootPosition = m_rootBone->getWorldPosition();
+	
 	float rootToTargetLenght = (targetPos - originalRootPosition).length();
-	if(totalChainLength - rootToTargetLenght < 0.00001f)
+	if(m_totalChainLength - rootToTargetLenght < 0.00001f)
 	{
 		qDebug() << "solveIK failed! Target out of range.";
 		return;
 	}
 
+	qDebug() << "Original Bone Chain.";
+	for (int i = 0; i < m_boneChain.size(); ++i)
+	{
+		qDebug() << "Bone[" << i << "]" << m_boneChain[i]->getWorldPosition();
+	}
 
 	/************************************************************************/
 	/* Stage 1: Forward Reaching                                            */
 	/************************************************************************/
+	uint chainCount = m_skeleton->getBoneCountBetween(m_rootBone, m_effectorBone);
 	uint effectorIndex = chainCount - 1;
-	effectorBone->setWorldPosition(targetPos);
+	m_effectorBone->setWorldPosition(targetPos);
 	vec3 direction;
 	Bone *currentBone, *parentToCurrent;
 	uint i = effectorIndex;
@@ -90,13 +112,17 @@ void IKSolver::solveIK( const QString &effectorName, const QString &rootName, co
 		parentToCurrent = m_boneChain[i-1];
 
 		direction = (parentToCurrent->getWorldPosition() - currentBone->getWorldPosition()).normalized();
-		parentToCurrent->setWorldPosition(currentBone->getWorldPosition() + direction * distances[i-1]);
+		parentToCurrent->setWorldPosition(currentBone->getWorldPosition() + direction * m_distances[i-1]);
 	}
-
+	qDebug() << "After Stage 1 Bone Chain.";
+	for (int i = 0; i < m_boneChain.size(); ++i)
+	{
+		qDebug() << "Bone[" << i << "]" << m_boneChain[i]->getWorldPosition();
+	}
 	/************************************************************************/
 	/* Stage 2: Backward Reaching                                           */
 	/************************************************************************/
-	rootBone->setWorldPosition(originalRootPosition);
+	m_rootBone->setWorldPosition(originalRootPosition);
 	Bone* childOfCurrent;
 
 	// from root to effector
@@ -106,15 +132,33 @@ void IKSolver::solveIK( const QString &effectorName, const QString &rootName, co
 		childOfCurrent = m_boneChain[i+1];
 
 		direction = (childOfCurrent->getWorldPosition() - currentBone->getWorldPosition()).normalized();
-		childOfCurrent->setWorldPosition(currentBone->getWorldPosition() + direction * distances[i]);
+		childOfCurrent->setWorldPosition(currentBone->getWorldPosition() + direction * m_distances[i]);
 	}
 
+	qDebug() << "After Stage 2 Bone Chain.";
+	for (int i = 0; i < m_boneChain.size(); ++i)
+	{
+		qDebug() << "Bone[" << i << "]" << m_boneChain[i]->getWorldPosition();
+	}
+	printf("\n");
 	/************************************************************************/
 	/* Stage 3: Moving the children of the effector(if any)                 */
 	/************************************************************************/
-	for (int i = 0; i < effectorBone->childCount(); ++i)
+	for (int i = 0; i < m_effectorBone->childCount(); ++i)
 	{
-		m_skeleton->calcGlobalTransformation(effectorBone->getChild(i));
+		m_skeleton->sortSkeleton(m_effectorBone->getChild(i));
+	}
+}
+
+void IKSolver::BoneTransform( QVector<mat4>& Transforms )
+{
+
+	QVector<Bone*> boneList = m_skeleton->getBoneList();
+
+	Transforms.resize(boneList.size());
+	for (int i = 0; i < Transforms.size(); ++i)
+	{
+		Transforms[i] = boneList[i]->m_finalTransform;
 	}
 
 }

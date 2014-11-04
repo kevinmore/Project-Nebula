@@ -5,8 +5,8 @@ using namespace Math;
 // dae files, should rotate the model
 Object3D::Object3D()
 	: m_position(Vector3D::ZERO),
-	  m_rotation(QVector3D(-90, 0, 0)),
-	  m_scale(QVector3D(0.1f, 0.1f, 0.1f)),
+	  m_rotation(Vector3D::ZERO),
+	  m_scale(Vector3D::UNIT_SCALE),
 	  m_modelMatrixDirty(true)
 {}
 

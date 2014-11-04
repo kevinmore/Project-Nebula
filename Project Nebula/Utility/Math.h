@@ -7,19 +7,27 @@ namespace Math
 	static QMatrix4x4 convToQMat4(const aiMatrix4x4 * m)
 	{
 		return QMatrix4x4(m->a1, m->a2, m->a3, m->a4,
-			m->b1, m->b2, m->b3, m->b4,
-			m->c1, m->c2, m->c3, m->c4,
-			m->d1, m->d2, m->d3, m->d4);
+						  m->b1, m->b2, m->b3, m->b4,
+						  m->c1, m->c2, m->c3, m->c4,
+						  m->d1, m->d2, m->d3, m->d4);
 	}
 
 
 	static QMatrix4x4 convToQMat4(aiMatrix3x3 * m) 
 	{
 		return QMatrix4x4(m->a1, m->a2, m->a3, 0,
-			m->b1, m->b2, m->b3, 0,
-			m->c1, m->c2, m->c3, 0,
-			0,     0,     0,     1);
+						  m->b1, m->b2, m->b3, 0,
+						  m->c1, m->c2, m->c3, 0,
+						  0,     0,     0,     1);
 
+	}
+
+	static aiMatrix4x4 convToAiMat4(const QMatrix4x4 &m)
+	{
+		return aiMatrix4x4( m(0, 0), m(0, 1), m(0, 2), m(0, 3),
+							m(1, 0), m(1, 1), m(1, 2), m(1, 3),
+							m(2, 0), m(2, 1), m(2, 2), m(2, 3),
+							m(3, 0), m(3, 1), m(3, 2), m(3, 3));
 	}
 
 	static void inverseQMat4(QMatrix4x4 &m)
