@@ -11,7 +11,7 @@ IKSolver::~IKSolver(void)
 {
 }
 
-void IKSolver::prepareIK( const QString &rootName, const QString &effectorName )
+void IKSolver::enableIKChain( const QString &rootName, const QString &effectorName )
 {
 	/************************************************************************/
 	/* Check inputs                                                         */
@@ -144,10 +144,24 @@ void IKSolver::solveIK( const vec3 &targetPos )
 	/************************************************************************/
 	/* Stage 3: Moving the children of the effector(if any)                 */
 	/************************************************************************/
-	for (int i = 0; i < m_effectorBone->childCount(); ++i)
-	{
-		m_skeleton->sortSkeleton(m_effectorBone->getChild(i));
-	}
+// 	if(m_effectorBone->childCount() > 0)
+// 	{
+// 		vec3 offset = m_effectorBone->getWorldPosition() - m_effectorBone->getChild(i)->getWorldPosition();
+// 		mat4 offsetM;
+// 		offsetM.translate(offset);
+// 		for (int i = 0; i < m_effectorBone->childCount(); ++i)
+// 		{
+// 			m_skeleton->applyOffset(m_effectorBone->getChild(i), offsetM);
+// 		}
+// 		
+// 	}
+	
+
+	/************************************************************************/
+	/* Stage 4: Update the skeleton position                                */
+	/************************************************************************/
+	mat4 identity;
+	m_skeleton->sortPose(m_skeleton->getRoot(), identity);
 }
 
 void IKSolver::BoneTransform( QVector<mat4>& Transforms )
@@ -161,4 +175,8 @@ void IKSolver::BoneTransform( QVector<mat4>& Transforms )
 		Transforms[i] = boneList[i]->m_finalTransform;
 	}
 
+// 	Transforms[18] = mat4(2,3,1,0,
+// 						-2,-3,3,1,
+// 						1.2, -3.4, -4.5, 0,
+// 						0, 0, 0, 1);
 }

@@ -7,7 +7,7 @@ public:
 	IKSolver(Skeleton* skeleton, float tolerance);
 	~IKSolver(void);
 
-	void prepareIK(const QString &rootName, const QString &effectorName);
+	void enableIKChain(const QString &rootName, const QString &effectorName);
 	void solveIK(const vec3 &targetPos);
 	void BoneTransform(QVector<mat4>& Transforms);
 

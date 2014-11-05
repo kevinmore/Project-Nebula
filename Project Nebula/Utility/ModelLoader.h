@@ -24,10 +24,16 @@ public:
 	ModelLoader();
 	virtual ~ModelLoader();
 
+	enum MODEL_TYPE
+	{
+		STATIC_MODEL,
+		RIGGED_MODEL
+	};
+
 	/*
 	 *	This is the core functionality
 	 */
-	QVector<ModelDataPtr> loadModel(const QString& filename);
+	QVector<ModelDataPtr> loadModel(const QString& filename, MODEL_TYPE type);
 
 
 	/*
@@ -41,6 +47,7 @@ public:
 	QVector<Bone> getBoneInfo() const {	return m_BoneInfo; }
 	aiNode* getRootNode() const	{ return m_scene->mRootNode; }
 	Skeleton* getSkeletom() const { return m_skeleton; }
+
 
 private:
 	/*
@@ -85,7 +92,7 @@ private:
 	};
 
 	GLuint m_VAO;
-	GLuint m_Buffers[NUM_VBs];
+	QVector<GLuint> m_Buffers;
 	QOpenGLVertexArrayObject* m_vao;
 	void prepareVertexBuffers();
 
@@ -100,7 +107,7 @@ private:
 	uint m_NumBones;
 	QVector<Bone> m_BoneInfo;
 	mat4 m_GlobalInverseTransform;
-
+	MODEL_TYPE m_modelType;
 };
 
 

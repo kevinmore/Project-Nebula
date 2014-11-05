@@ -16,16 +16,16 @@ ModelPtr ModelManager::getModel( const QString& name )
 	else return ModelPtr();
 }
 
-ModelPtr ModelManager::loadModel( const QString& name, const QString& filename )
+ModelPtr ModelManager::loadModel( const QString& name, const QString& filename, ModelLoader::MODEL_TYPE type )
 {
 	ModelLoader* modelLoader = new ModelLoader();
-	QVector<ModelDataPtr> modelDataVector = modelLoader->loadModel(filename);
+	QVector<ModelDataPtr> modelDataVector = modelLoader->loadModel(filename, type);
 
 	// create a FKController for the model
 	FKController* controller = new FKController(modelLoader);
 
 	// create an IKSolver for the model
-	IKSolver* solver = new IKSolver(modelLoader->getSkeletom(), 0.001f);
+	IKSolver* solver = new IKSolver(modelLoader->getSkeletom(), 0.00001f);
 
 	m_models[name] = ModelPtr(new Model(m_scene, controller, solver, QOpenGLVertexArrayObjectPtr(modelLoader->getVAO()), modelDataVector));
 	//delete modelLoader;

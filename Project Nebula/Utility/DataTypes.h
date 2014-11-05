@@ -8,6 +8,7 @@
 #include <QtGui/QMatrix4x4>
 #include <QtCore/QString>
 #include <QtGui/QQuaternion>
+#include <QtCore/QtMath>
 
 typedef QVector2D vec2;
 typedef QVector3D vec3;

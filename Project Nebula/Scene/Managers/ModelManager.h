@@ -16,7 +16,7 @@ public:
 	~ModelManager(void);
 
 	ModelPtr getModel(const QString& name);
-	ModelPtr loadModel(const QString& name, const QString& filename);
+	ModelPtr loadModel(const QString& name, const QString& filename, ModelLoader::MODEL_TYPE type);
 	void renderAllModels(float time);
 private:
 	QMap<QString, ModelPtr> m_models;

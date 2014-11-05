@@ -17,6 +17,7 @@ public:
 	mat4 m_offsetMatrix;
 	mat4 m_nodeTransform;
 	mat4 m_finalTransform;
+	mat4 m_worldMatrix;
 
 	/** Parent bode. NULL if this node is the root. **/
 	Bone* m_parent;
@@ -42,37 +43,34 @@ public:
 
 	void calcWorldTransform()
 	{
-// 		float x = m_finalTransform(0, 3);
-// 		float y = m_finalTransform(1, 3);
-// 		float z = m_finalTransform(2, 3);
-// 	
-// 		m_worldPos = vec3(x, y, z);
-
 		// The bone's transformation in the skeleton space,
 		// aka the bind matrix - the bone's parent's local matrices concatenated with the bone's local matrix.
 		const aiMatrix4x4 nodeGlobalTransform = Math::convToAiMat4(m_finalTransform);
 		// The transformation relative to the bone's parent (parent => bone space).
 		aiMatrix4x4 nodeLocalTransform;
-		if (this->m_parent && this->m_parent->m_name != "Project Nebula Skeleton ROOT")
+		if (m_parent && m_parent->m_name != "Project Nebula Skeleton ROOT")
 		{
-			const Bone* parentBone = this->m_parent;
-			aiMatrix4x4 parentGlobalTransform = Math::convToAiMat4(parentBone->m_finalTransform);
-			aiMatrix4x4 inverseParentGlobalTransform(parentGlobalTransform);
-			inverseParentGlobalTransform.Inverse();
-			nodeLocalTransform = nodeGlobalTransform * inverseParentGlobalTransform; // N = P^-1 * B
+			aiMatrix4x4 parentGlobalTransform = Math::convToAiMat4(m_parent->m_finalTransform);
+			aiMatrix4x4 inverseParentGlobalTransform = parentGlobalTransform.Inverse();
+			nodeLocalTransform = inverseParentGlobalTransform * nodeGlobalTransform ; // N = P^-1 * B
 		}
 		else
 		{
-			nodeLocalTransform = Math::convToAiMat4(this->m_nodeTransform);
+			nodeLocalTransform = Math::convToAiMat4(m_nodeTransform);
 		}
+
+		aiMatrix4x4 globalTransform = nodeLocalTransform * Math::convToAiMat4(this->m_offsetMatrix);
 
 		aiVector3D	 scaling;
 		aiQuaternion rotation;
 		aiVector3D	 position;
-		nodeLocalTransform.Decompose(scaling, rotation, position);
+		globalTransform.Decompose(scaling, rotation, position);
 		
-
 		m_worldPos = vec3(position.x, position.y, position.z);
+		m_worldScaling = vec3(scaling.x, scaling.y, scaling.z);
+		m_worldQuaternion = QQuaternion(rotation.w, rotation.x, rotation.y, rotation.z);
+
+		m_worldMatrix = Math::convToQMat4(&globalTransform);
 	}
 
 	void addChild(Bone* child)
@@ -108,9 +106,26 @@ public:
 
 		// here the bone is translated in the world coordinates
 		// dont use QMatrix4x4.translate(), that only translates in the relative coordinates
-		m_finalTransform(0, 3) += delta.x();
-		m_finalTransform(1, 3) += delta.y();
-		m_finalTransform(2, 3) += delta.z();
+// 		m_nodeTransform(0, 3) += delta.x();
+// 		m_nodeTransform(1, 3) += delta.y();
+// 		m_nodeTransform(2, 3) += delta.z();
+
+// 		m_finalTransform(0, 3) = newPos.x();
+// 		m_finalTransform(1, 3) = newPos.y();
+// 		m_finalTransform(2, 3) = newPos.z();
+
+// 		mat4 newTrans;
+// 		newTrans.scale(m_worldScaling);
+// 		newTrans.rotate(m_worldQuaternion);
+// 		newTrans.translate(delta);
+// 
+// 		m_finalTransform = newTrans;
+
+		m_nodeTransform.translate(delta);
+		//calcWorldTransform();
+
+
+		//m_nodeTransform = m_parent->m_finalTransform * m_worldMatrix;
 
 		m_worldPos = newPos;
 	}

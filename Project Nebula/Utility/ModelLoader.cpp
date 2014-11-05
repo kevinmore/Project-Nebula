@@ -20,8 +20,8 @@ void ModelLoader::clear()
 	m_tangents.clear();
 	m_indices.clear();
 
-	if (m_Buffers[0] != 0) 
-		glDeleteBuffers(ARRAY_SIZE_IN_ELEMENTS(m_Buffers), m_Buffers);
+	if (m_Buffers.size()) 
+		glDeleteBuffers(m_Buffers.size(), m_Buffers.data());
 	
 
 	if (m_vao)
@@ -34,25 +34,12 @@ ModelLoader::~ModelLoader()
 	clear();
 }
 
-QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName )
+QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName , MODEL_TYPE type)
 {
-// 	m_scene = m_importer.ReadFile(fileName.toStdString(),	
-// 		  aiProcess_Triangulate
-// 		| aiProcess_RemoveComponent
-// 		| aiProcess_GenSmoothNormals
-// 		| aiProcess_FlipUVs
-//  		| aiProcess_CalcTangentSpace
-//  		| aiProcess_JoinIdenticalVertices
-//  		| aiProcess_SortByPType
-// 		| aiProcess_LimitBoneWeights
-// 		| aiProcess_FixInfacingNormals
-// 		| aiProcess_ImproveCacheLocality
-// 		| aiProcess_RemoveRedundantMaterials
-// 		| aiProcess_SplitLargeMeshes
-// 		| aiProcess_FindInvalidData
-// 		);
+	m_modelType = type;
 
 	m_scene = m_importer.ReadFile(fileName.toStdString(), aiProcessPreset_TargetRealtime_Quality | aiProcess_FlipUVs);
+
 	if(!m_scene)
 	{
 		qDebug() << "Error loading mesh file: " << fileName << m_importer.GetErrorString();
@@ -61,15 +48,10 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName )
 	{
 		qFatal("Support for meshes with embedded textures is not implemented");
 	}
+	
+   	m_GlobalInverseTransform = Math::convToQMat4(&(m_scene->mRootNode->mTransformation.Inverse()));
 
 
-//   	m_GlobalInverseTransform = Math::convToQMat4(&m_scene->mRootNode->mTransformation.Inverse());
-
-	m_GlobalInverseTransform = mat4(1, 0, 0, 0, 
-									0, 0, -1, 0,
-									0, 1, 0, 0,
-									0, 0, 0, 1);
-//	m_GlobalInverseTransform.rotate(-90, vec3(1,0,0));
 	unsigned int numVertices = 0;
 	unsigned int numIndices  = 0;
 
@@ -85,7 +67,8 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName )
 	m_texCoords.reserve(numVertices);
 	m_tangents.reserve(numVertices);
 	m_indices.reserve(numIndices);
-	m_Bones.resize(numVertices);
+	if(m_modelType == RIGGED_MODEL)
+		m_Bones.resize(numVertices);
 
 	numVertices = 0;
 	numIndices  = 0;
@@ -116,20 +99,16 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName )
 
 	// generate the skeleton of the model
 	// specify the root bone
-	Bone* skeleton_root = new Bone();
-	skeleton_root->m_ID = 9999;
-	skeleton_root->m_name = "Project Nebula Skeleton ROOT";
-// 	skeleton_root->m_nodeTransform = m_GlobalInverseTransform;
-// 	skeleton_root->m_nodeTransform.rotate(-90, vec3(1,0,0));
-	generateSkeleton(m_scene->mRootNode, skeleton_root);
-	m_skeleton = new Skeleton(skeleton_root);
+	if(m_BoneMapping.size() > 0 && m_modelType == RIGGED_MODEL)
+	{
+		Bone* skeleton_root = new Bone();
+		skeleton_root->m_ID = 9999;
+		skeleton_root->m_name = "Project Nebula Skeleton ROOT";
 
-// 	for (int i = 0; i < m_BoneInfo.size(); ++i)
-// 	{
-// 		qDebug() << m_BoneInfo[i].m_ID << m_BoneInfo[i].m_name;
-// 	}
-
-//	m_skeleton->dumpSkeleton(skeleton_root, 0);
+		generateSkeleton(m_scene->mRootNode, skeleton_root);
+		m_skeleton = new Skeleton(skeleton_root, m_GlobalInverseTransform);
+	}
+	
 
 	return modelDataVector;
 }
@@ -173,7 +152,7 @@ void ModelLoader::prepareVertexContainers(unsigned int index, const aiMesh* mesh
 		m_tangents.push_back(QVector3D(pTangent->x, pTangent->y, pTangent->z));
 	}
 
-	if(mesh->HasBones()) loadBones(index, mesh);
+	if(mesh->HasBones() && m_modelType == RIGGED_MODEL) loadBones(index, mesh);
 	
 
 	// Populate the index buffer
@@ -265,7 +244,11 @@ void ModelLoader::prepareVertexBuffers()
 {
 	m_vao->create();
 	m_vao->bind();
-	glGenBuffers(ARRAY_SIZE_IN_ELEMENTS(m_Buffers), m_Buffers);
+	
+	if(m_modelType == RIGGED_MODEL) m_Buffers.resize(NUM_VBs);
+	else m_Buffers.resize(NUM_VBs - 1);
+
+	glGenBuffers(m_Buffers.size(), m_Buffers.data());
 
 	// Generate and populate the buffers with vertex attributes and the indices
 	glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[POS_VB]);
@@ -283,15 +266,18 @@ void ModelLoader::prepareVertexBuffers()
 	glEnableVertexAttribArray(NORMAL_LOCATION);
 	glVertexAttribPointer(NORMAL_LOCATION, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[BONE_VB]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(m_Bones[0]) * m_Bones.size(), m_Bones.data(), GL_STREAM_DRAW);
-	glEnableVertexAttribArray(BONE_ID_LOCATION);
-	glVertexAttribIPointer(BONE_ID_LOCATION, 4, GL_INT, sizeof(VertexBoneData), (const GLvoid*)0);
-	glEnableVertexAttribArray(BONE_WEIGHT_LOCATION);    
-	glVertexAttribPointer(BONE_WEIGHT_LOCATION, 4, GL_FLOAT, GL_FALSE, sizeof(VertexBoneData), (const GLvoid*)16);
-
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_Buffers[INDEX_BUFFER]);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(m_indices[0]) * m_indices.size(), m_indices.data(), GL_STREAM_DRAW);
+
+	if (m_modelType == RIGGED_MODEL)
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[BONE_VB]);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(m_Bones[0]) * m_Bones.size(), m_Bones.data(), GL_STREAM_DRAW);
+		glEnableVertexAttribArray(BONE_ID_LOCATION);
+		glVertexAttribIPointer(BONE_ID_LOCATION, 4, GL_INT, sizeof(VertexBoneData), (const GLvoid*)0);
+		glEnableVertexAttribArray(BONE_WEIGHT_LOCATION);    
+		glVertexAttribPointer(BONE_WEIGHT_LOCATION, 4, GL_FLOAT, GL_FALSE, sizeof(VertexBoneData), (const GLvoid*)16);
+	}
 
 	m_vao->release();
 }

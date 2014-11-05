@@ -97,7 +97,7 @@ void Model::initialize(QVector<ModelDataPtr> modelDataVector)
 
 
 	// INIT IK
-	//m_IKSolver->prepareIK("Bip01-L-Clavicle", "Bip01-L-Hand");
+	m_IKSolver->enableIKChain("L_collar", "L_hand");
 }
 
 void Model::initRenderingEffect()
@@ -112,7 +112,7 @@ void Model::initRenderingEffect()
 	directionalLight.Color = vec3(1.0f, 1.0f, 1.0f);
 	directionalLight.AmbientIntensity = 0.55f;
 	directionalLight.DiffuseIntensity = 0.9f;
-	directionalLight.Direction = vec3(1.0f, 0.0, 0.0);
+	directionalLight.Direction = vec3(-1.0f, 0.0, 1.0);
 
 	m_RenderingEffect = new SkinningTechnique();
 	if (!m_RenderingEffect->Init()) {
@@ -132,7 +132,7 @@ void Model::destroy() {}
 void Model::render( float time )
 {
 	QMatrix4x4 modelMatrix = m_actor->modelMatrix();
-	modelMatrix.rotate(-90, Math::Vector3D::UNIT_X); // this is for dae files
+	//modelMatrix.rotate(-90, Math::Vector3D::UNIT_X); // this is for dae files
 	QMatrix4x4 modelViewMatrix = m_scene->getCamera()->viewMatrix() * modelMatrix;
 	QMatrix3x3 normalMatrix = modelViewMatrix.normalMatrix();
 
@@ -154,7 +154,7 @@ void Model::render( float time )
 // 		}
 // 	}
 
-//	m_IKSolver->solveIK(vec3(10, 10, 120));
+	m_IKSolver->solveIK(vec3(0.4*qSin(time), -0.02, -1.0));
 	m_RenderingEffect->getShader()->setUniformValue("hasAnimation", true);
 	m_IKSolver->BoneTransform(Transforms);
 	for (int i = 0 ; i < Transforms.size() ; i++) {

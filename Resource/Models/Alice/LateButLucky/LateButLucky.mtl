@@ -1,0 +1,98 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# File Created: 14.01.2012 11:42:49
+
+newmtl Material__427
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5880 0.5880 0.5880
+	Kd 0.5880 0.5880 0.5880
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka C:\Users\Owner\Desktop\umodel_win32\CH_Alice_WRabbit_SF\Texture2D\Alice_WRabbit_Skin_DMA.png
+	map_Kd C:\Users\Owner\Desktop\umodel_win32\CH_Alice_WRabbit_SF\Texture2D\Alice_WRabbit_Skin_DMA.png
+	map_bump C:\Users\Owner\Desktop\umodel_win32\CH_Alice_WRabbit_SF\Texture2D\Alice_WRabbit_Skin_NM.png
+	bump C:\Users\Owner\Desktop\umodel_win32\CH_Alice_WRabbit_SF\Texture2D\Alice_WRabbit_Skin_NM.png
+
+newmtl Material__428
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5880 0.5880 0.5880
+	Kd 0.5880 0.5880 0.5880
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka C:\Users\Owner\Desktop\umodel_win32\CH_Alice_WRabbit_SF\Texture2D\Alice_WRabbit_Skirt_DMA.png
+	map_Kd C:\Users\Owner\Desktop\umodel_win32\CH_Alice_WRabbit_SF\Texture2D\Alice_WRabbit_Skirt_DMA.png
+	map_bump C:\Users\Owner\Desktop\umodel_win32\CH_Alice_WRabbit_SF\Texture2D\Alice_WRabbit_Skirt_NM.png
+	bump C:\Users\Owner\Desktop\umodel_win32\CH_Alice_WRabbit_SF\Texture2D\Alice_WRabbit_Skirt_NM.png
+
+newmtl Material__424
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5880 0.5880 0.5880
+	Kd 0.5880 0.5880 0.5880
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka C:\Users\Owner\Desktop\umodel_win32\CH_Alice_WRabbit_SF\Texture2D\Alice_WRabbit_Cloth_DM.png
+	map_Kd C:\Users\Owner\Desktop\umodel_win32\CH_Alice_WRabbit_SF\Texture2D\Alice_WRabbit_Cloth_DM.png
+	map_bump C:\Users\Owner\Desktop\umodel_win32\CH_Alice_WRabbit_SF\Texture2D\Alice_WRabbit_Cloth_NM.png
+	bump C:\Users\Owner\Desktop\umodel_win32\CH_Alice_WRabbit_SF\Texture2D\Alice_WRabbit_Cloth_NM.png
+
+newmtl Material__425
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5880 0.5880 0.5880
+	Kd 0.5880 0.5880 0.5880
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka C:\Users\Owner\Desktop\umodel_win32\CH_Alice_WRabbit_SF\Texture2D\Alice_WRabbit_Eye_DM.png
+	map_Kd C:\Users\Owner\Desktop\umodel_win32\CH_Alice_WRabbit_SF\Texture2D\Alice_WRabbit_Eye_DM.png
+	map_bump C:\Users\Owner\Desktop\umodel_win32\CH_Alice_WRabbit_SF\Texture2D\Alice_WRabbit_Eye_NM.png
+	bump C:\Users\Owner\Desktop\umodel_win32\CH_Alice_WRabbit_SF\Texture2D\Alice_WRabbit_Eye_NM.png
+
+newmtl Material__429
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5880 0.5880 0.5880
+	Kd 0.5880 0.5880 0.5880
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka C:\Users\Owner\Desktop\umodel_win32\CH_Alice_WRabbit_SF\Texture2D\WR_ClockHand_Min_DMA.png
+	map_Kd C:\Users\Owner\Desktop\umodel_win32\CH_Alice_WRabbit_SF\Texture2D\WR_ClockHand_Min_DMA.png
+	map_bump C:\Users\Owner\Desktop\umodel_win32\CH_Alice_WRabbit_SF\Texture2D\WR_ClockHand_Min_NM.png
+	bump C:\Users\Owner\Desktop\umodel_win32\CH_Alice_WRabbit_SF\Texture2D\WR_ClockHand_Min_NM.png
+
+newmtl Material__411
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5880 0.5880 0.5880
+	Kd 0.5880 0.5880 0.5880
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka C:\Users\Owner\Desktop\AliceMadnessReturns_Alice_Default_by_o0Crofty0o\hair_DM.tga
+	map_Kd C:\Users\Owner\Desktop\AliceMadnessReturns_Alice_Default_by_o0Crofty0o\hair_DM.tga
+	map_d C:\Users\Owner\Desktop\AliceMadnessReturns_Alice_Default_by_o0Crofty0o\hair_DM.tga
+	map_bump Normal_Bump_Normal_Bump.tga

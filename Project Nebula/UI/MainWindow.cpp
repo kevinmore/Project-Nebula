@@ -147,9 +147,9 @@ void MainWindow::initializeParamsArea()
 	fovValue->setRange(25.0, 130.0);
 	fovValue->setValue(60.0);
 
-	nearPlaneValue->setMinimum(0.1);
-	nearPlaneValue->setSingleStep(0.1);
-	nearPlaneValue->setValue(0.1);
+	nearPlaneValue->setMinimum(0.01);
+	nearPlaneValue->setSingleStep(0.01);
+	nearPlaneValue->setValue(0.01);
 
 	farPlaneValue->setRange(1.0, 1024.0);
 	farPlaneValue->setValue(1024.0);
@@ -227,7 +227,7 @@ void MainWindow::initializeParamsArea()
 	QDoubleSpinBox* cameraSensitivityValue = new QDoubleSpinBox;
 
 	cameraSpeedValue->setRange(1.0, 2000.0);
-	cameraSpeedValue->setValue(800.0);
+	cameraSpeedValue->setValue(50.0);
 	cameraSpeedValue->setMaximumSize(60, 20);
 
 	cameraSensitivityValue->setValue(0.2);

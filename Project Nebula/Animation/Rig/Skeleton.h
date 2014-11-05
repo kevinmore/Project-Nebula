@@ -5,7 +5,7 @@
 class Skeleton
 {
 public:
-	Skeleton(Bone* root);
+	Skeleton(Bone* root, mat4& globalInverseMatrix);
 	~Skeleton();
 
 	Bone* getBone(QString boneName);
@@ -13,15 +13,16 @@ public:
 	QMap<QString, Bone*> getBoneMap();
 	QVector<Bone*> getBoneList();
 
-	// calculate and set the global transformation
-	// for each bone in the skeleton
 	Bone* sortSkeleton(Bone* root);
+	void initialize(Bone* pBone, mat4 &parentTransform);
+	void sortPose(Bone* pBone, mat4 &parentTransform);
+
 	mat4 calcGlobalTransformation(Bone* bone);
-	void setBoneWorldPosition(Bone* bone, vec3 &newPos);
 
 	// clean up the skeleton
 	Bone* freeSkeleton(Bone* root);
 	
+	mat4 getBoneGlobalTransform(Bone* pBone);
 
 	/** Method to print out the skeleton. **/
 	void dumpSkeleton(Bone* pBone, uint level);
@@ -36,8 +37,11 @@ public:
 
 	uint getBoneCountBetween(Bone* upperBone, Bone* lowerBone);
 
+	Bone* getRoot() { return m_root; }
+
+	void applyOffset(Bone* pBone, mat4& offset);
+
 private:
-	void initialize(Bone* pBone, mat4 &parentTransform);
 
 	/** The root bone of the skeleton. **/
 	Bone* m_root;

@@ -58,5 +58,6 @@ private:
 	Object3D* m_actor;
 	FKController* m_FKController;
 	IKSolver* m_IKSolver;
+
 };
 
