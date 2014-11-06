@@ -17,7 +17,6 @@ public:
 	void initialize(Bone* pBone, mat4 &parentTransform);
 	void sortPose(Bone* pBone, mat4 &parentTransform);
 
-	mat4 calcGlobalTransformation(Bone* bone);
 
 	// clean up the skeleton
 	Bone* freeSkeleton(Bone* root);

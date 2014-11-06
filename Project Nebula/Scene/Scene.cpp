@@ -63,7 +63,6 @@ void Scene::initialize()
 // 	m_modelManager->loadModel("Jiuniang", "../Resource/Models/jiuniang/jiuniang.dae");
 // 	m_modelManager->getModel("Jiuniang")->getActor()->setObjectXPosition(250);
 
-//	m_modelManager->loadModel("Rasengang", "../Resource/Models/Naruto/rasengan.dae");
 
 
 // 	m_modelManager->loadModel("Naruto1", "../Resource/Models/Naruto/Naruto.dae");
@@ -71,7 +70,13 @@ void Scene::initialize()
  
 // 	m_modelManager->loadModel("Naruto2", "../Resource/Models/Naruto/Naruto.dae");
 // 	m_modelManager->getModel("Naruto2")->getActor()->setObjectXPosition(250);
+
+	
 	m_modelManager->loadModel("Naruto2", "../Resource/Models/Naruto Sage/Naruto.dae", ModelLoader::RIGGED_MODEL);
+
+
+//	m_modelManager->loadModel("Rasengang", "../Resource/Models/Naruto/rasengan.dae", ModelLoader::STATIC_MODEL);
+
 }
 
 

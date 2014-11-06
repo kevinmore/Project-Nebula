@@ -85,43 +85,6 @@ Bone* Skeleton::freeSkeleton( Bone* root )
 	return NULL;
 }
 
-Bone* Skeleton::sortSkeleton( Bone* root )
-{
-	if(!root) return NULL; // empty skeleton
-
-	// calculate the final transform
-	root->m_finalTransform = calcGlobalTransformation(root);
-
-	// calculate the world position
-	root->calcWorldTransform(); // need to fix
-
-	// store this bone into the map
-	if (m_BoneMap.find(root->m_name) == m_BoneMap.end())
-		m_BoneMap[root->m_name] = root;
-
-	for (int i = 0; i < root->childCount(); ++i)
-	{
-		sortSkeleton(root->getChild(i));
-	}
-	return NULL;
-}
-
-mat4 Skeleton::calcGlobalTransformation( Bone* bone )
-{
-	// empty bone
-	mat4 result;
-	if (!bone) return result;
-
-	result =  bone->getLocalTransformMatrix();
-	while (bone->m_parent)
-	{
-		// NOTE: the matrix multiplying order is very important!
-		result = bone->m_parent->getLocalTransformMatrix() * result;
-		bone = bone->m_parent;
-	}
-	return result;
-}
-
 float Skeleton::getDistanceBetween( Bone* upperBone, Bone* lowerBone )
 {
 	// if they are the same bone

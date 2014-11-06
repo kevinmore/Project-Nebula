@@ -88,11 +88,11 @@ void IKSolver::solveIK( const vec3 &targetPos )
 		return;
 	}
 
-	qDebug() << "Original Bone Chain.";
-	for (int i = 0; i < m_boneChain.size(); ++i)
-	{
-		qDebug() << "Bone[" << i << "]" << m_boneChain[i]->getWorldPosition();
-	}
+// 	qDebug() << "Original Bone Chain.";
+// 	for (int i = 0; i < m_boneChain.size(); ++i)
+// 	{
+// 		qDebug() << "Bone[" << i << "]" << m_boneChain[i]->getWorldPosition();
+// 	}
 
 	/************************************************************************/
 	/* Stage 1: Forward Reaching                                            */
@@ -114,11 +114,13 @@ void IKSolver::solveIK( const vec3 &targetPos )
 		direction = (parentToCurrent->getWorldPosition() - currentBone->getWorldPosition()).normalized();
 		parentToCurrent->setWorldPosition(currentBone->getWorldPosition() + direction * m_distances[i-1]);
 	}
-	qDebug() << "After Stage 1 Bone Chain.";
-	for (int i = 0; i < m_boneChain.size(); ++i)
-	{
-		qDebug() << "Bone[" << i << "]" << m_boneChain[i]->getWorldPosition();
-	}
+
+
+// 	qDebug() << "After Stage 1 Bone Chain.";
+// 	for (int i = 0; i < m_boneChain.size(); ++i)
+// 	{
+// 		qDebug() << "Bone[" << i << "]" << m_boneChain[i]->getWorldPosition();
+// 	}
 	/************************************************************************/
 	/* Stage 2: Backward Reaching                                           */
 	/************************************************************************/
@@ -135,12 +137,13 @@ void IKSolver::solveIK( const vec3 &targetPos )
 		childOfCurrent->setWorldPosition(currentBone->getWorldPosition() + direction * m_distances[i]);
 	}
 
-	qDebug() << "After Stage 2 Bone Chain.";
-	for (int i = 0; i < m_boneChain.size(); ++i)
-	{
-		qDebug() << "Bone[" << i << "]" << m_boneChain[i]->getWorldPosition();
-	}
-	printf("\n");
+
+// 	qDebug() << "After Stage 2 Bone Chain.";
+// 	for (int i = 0; i < m_boneChain.size(); ++i)
+// 	{
+// 		qDebug() << "Bone[" << i << "]" << m_boneChain[i]->getWorldPosition();
+// 	}
+// 	printf("\n");
 	/************************************************************************/
 	/* Stage 3: Moving the children of the effector(if any)                 */
 	/************************************************************************/

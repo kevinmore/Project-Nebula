@@ -6,7 +6,7 @@
 #include <Scene/Light.h>
 #include <Scene/SceneCamera.h>
 #include <Scene/Object3D.h>
-#include <Scene/Model.h>
+#include <Scene/RiggedModel.h>
 #include <Scene/Managers/TextureManager.h>
 #include <Scene/Managers/MaterialManager.h>
 #include <Scene/Managers/MeshManager.h>

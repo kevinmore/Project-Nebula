@@ -1,8 +1,8 @@
-#include "Model.h"
+#include "RiggedModel.h"
 #include <Scene/Scene.h>
 #include <QtGui/QOpenGLContext>
 
-Model::Model(Scene* scene, FKController* fkCtrl, IKSolver* ikSolver, const QOpenGLVertexArrayObjectPtr vao)
+RiggedModel::RiggedModel(Scene* scene, FKController* fkCtrl, IKSolver* ikSolver, const QOpenGLVertexArrayObjectPtr vao)
   : m_scene(scene),
 	m_vao(vao),
 	m_FKController(fkCtrl),
@@ -13,7 +13,7 @@ Model::Model(Scene* scene, FKController* fkCtrl, IKSolver* ikSolver, const QOpen
 	initialize();
 }
 
-Model::Model(Scene* scene, FKController* fkCtrl, IKSolver* ikSolver, const QOpenGLVertexArrayObjectPtr vao, QVector<ModelDataPtr> modelData)
+RiggedModel::RiggedModel(Scene* scene, FKController* fkCtrl, IKSolver* ikSolver, const QOpenGLVertexArrayObjectPtr vao, QVector<ModelDataPtr> modelData)
   : m_scene(scene),
 	m_vao(vao),
 	m_FKController(fkCtrl),
@@ -25,11 +25,11 @@ Model::Model(Scene* scene, FKController* fkCtrl, IKSolver* ikSolver, const QOpen
 }
 
 
-Model::~Model() 
+RiggedModel::~RiggedModel() 
 {
 }
 
-void Model::initialize(QVector<ModelDataPtr> modelDataVector)
+void RiggedModel::initialize(QVector<ModelDataPtr> modelDataVector)
 {
 	QOpenGLContext* context = QOpenGLContext::currentContext();
 
@@ -100,7 +100,7 @@ void Model::initialize(QVector<ModelDataPtr> modelDataVector)
 	m_IKSolver->enableIKChain("L_collar", "L_hand");
 }
 
-void Model::initRenderingEffect()
+void RiggedModel::initRenderingEffect()
 { 	
 	m_funcs->glClearDepth( 1.0 );
 	m_funcs->glClearColor(0.39f, 0.39f, 0.39f, 0.0f);
@@ -114,7 +114,7 @@ void Model::initRenderingEffect()
 	directionalLight.DiffuseIntensity = 0.9f;
 	directionalLight.Direction = vec3(-1.0f, 0.0, 1.0);
 
-	m_RenderingEffect = new SkinningTechnique();
+	m_RenderingEffect = new ShadingTechnique();
 	if (!m_RenderingEffect->Init()) {
 		printf("Error initializing the lighting technique\n");
 	}
@@ -127,9 +127,9 @@ void Model::initRenderingEffect()
 }
 
 
-void Model::destroy() {}
+void RiggedModel::destroy() {}
 
-void Model::render( float time )
+void RiggedModel::render( float time )
 {
 	QMatrix4x4 modelMatrix = m_actor->modelMatrix();
 	//modelMatrix.rotate(-90, Math::Vector3D::UNIT_X); // this is for dae files
@@ -154,7 +154,7 @@ void Model::render( float time )
 // 		}
 // 	}
 
-	m_IKSolver->solveIK(vec3(0.4*qSin(time), -0.02, -1.0));
+	m_IKSolver->solveIK(vec3(0.4f*qSin(time), -0.22f, -1.5f));
 	m_RenderingEffect->getShader()->setUniformValue("hasAnimation", true);
 	m_IKSolver->BoneTransform(Transforms);
 	for (int i = 0 ; i < Transforms.size() ; i++) {
@@ -198,7 +198,7 @@ void Model::render( float time )
 	m_vao->release();
 }
 
-void Model::drawElements(unsigned int index, int mode)
+void RiggedModel::drawElements(unsigned int index, int mode)
 {
 	// Mode has not been implemented yet
 	Q_UNUSED(mode);

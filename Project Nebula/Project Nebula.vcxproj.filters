@@ -15,7 +15,6 @@
     <ClCompile Include="Utility\ModelLoader.cpp" />
     <ClCompile Include="Scene\Scene_moc.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
-    <ClCompile Include="Scene\Model.cpp" />
     <ClCompile Include="Scene\Managers\ModelManager.cpp" />
     <ClCompile Include="Scene\AbstractModel.cpp" />
     <ClCompile Include="Scene\AbstractScene.cpp" />
@@ -26,10 +25,12 @@
     <ClCompile Include="UI\Canvas_moc.cpp" />
     <ClCompile Include="UI\MainWindow_moc.cpp" />
     <ClCompile Include="Scene\ShadingTechniques\technique.cpp" />
-    <ClCompile Include="Scene\ShadingTechniques\skinning_technique.cpp" />
     <ClCompile Include="Animation\FK\FKController.cpp" />
     <ClCompile Include="Animation\Rig\Skeleton.cpp" />
     <ClCompile Include="Animation\IK\IKSolver.cpp" />
+    <ClCompile Include="Scene\RiggedModel.cpp" />
+    <ClCompile Include="Scene\StaticModel.cpp" />
+    <ClCompile Include="Scene\ShadingTechniques\ShadingTechnique.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utility\DataTypes.h" />
@@ -46,18 +47,19 @@
     <ClInclude Include="Scene\Managers\MaterialManager.h" />
     <ClInclude Include="Utility\ModelLoader.h" />
     <ClInclude Include="Scene\Scene.h" />
-    <ClInclude Include="Scene\Model.h" />
     <ClInclude Include="Scene\Managers\ModelManager.h" />
     <ClInclude Include="Scene\Managers\TextureManager.h" />
     <ClInclude Include="Utility\OpenGLUniformBuffer.h" />
     <ClInclude Include="UI\MainWindow.h" />
     <ClInclude Include="UI\Canvas.h" />
     <ClInclude Include="Scene\ShadingTechniques\technique.h" />
-    <ClInclude Include="Scene\ShadingTechniques\skinning_technique.h" />
     <ClInclude Include="Animation\FK\FKController.h" />
     <ClInclude Include="Animation\Rig\Skeleton.h" />
     <ClInclude Include="Animation\Rig\BoneInfo.h" />
     <ClInclude Include="Animation\IK\IKSolver.h" />
+    <ClInclude Include="Scene\RiggedModel.h" />
+    <ClInclude Include="Scene\StaticModel.h" />
+    <ClInclude Include="Scene\ShadingTechniques\ShadingTechnique.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Resource\Shaders\basicSkinning.frag" />

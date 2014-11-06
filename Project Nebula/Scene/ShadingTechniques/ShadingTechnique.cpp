@@ -1,7 +1,7 @@
 #include <limits.h>
 #include <string>
 #include <assert.h>
-#include "skinning_technique.h"
+#include "ShadingTechnique.h"
 
 #define INVALID_UNIFORM_LOCATION 0xffffffff
 #define SNPRINTF _snprintf_s
@@ -10,12 +10,12 @@
 
 using namespace std;
 
-SkinningTechnique::SkinningTechnique()
+ShadingTechnique::ShadingTechnique()
 {   
 }
 
 
-bool SkinningTechnique::Init()
+bool ShadingTechnique::Init()
 {
     if (!Technique::Init()) {
         return false;
@@ -141,25 +141,25 @@ bool SkinningTechnique::Init()
     return true;
 }
 
-void SkinningTechnique::SetWVP(const mat4& WVP)
+void ShadingTechnique::SetWVP(const mat4& WVP)
 {
     glUniformMatrix4fv(m_WVPLocation, 1, GL_FALSE, WVP.data());    
 }
 
 
-void SkinningTechnique::SetWorldMatrix(const mat4& World)
+void ShadingTechnique::SetWorldMatrix(const mat4& World)
 {
     glUniformMatrix4fv(m_WorldMatrixLocation, 1, GL_FALSE, World.data());
 }
 
 
-void SkinningTechnique::SetColorTextureUnit(unsigned int TextureUnit)
+void ShadingTechnique::SetColorTextureUnit(unsigned int TextureUnit)
 {
     glUniform1i(m_colorTextureLocation, TextureUnit);
 }
 
 
-void SkinningTechnique::SetDirectionalLight(const DirectionalLight& Light)
+void ShadingTechnique::SetDirectionalLight(const DirectionalLight& Light)
 {
     glUniform3f(m_dirLightLocation.Color, Light.Color.x(), Light.Color.y(), Light.Color.z());
     glUniform1f(m_dirLightLocation.AmbientIntensity, Light.AmbientIntensity);
@@ -170,25 +170,25 @@ void SkinningTechnique::SetDirectionalLight(const DirectionalLight& Light)
 }
 
 
-void SkinningTechnique::SetEyeWorldPos(const vec3& EyeWorldPos)
+void ShadingTechnique::SetEyeWorldPos(const vec3& EyeWorldPos)
 {
     glUniform3f(m_eyeWorldPosLocation, EyeWorldPos.x(), EyeWorldPos.y(), EyeWorldPos.z());
 }
 
 
-void SkinningTechnique::SetMatSpecularIntensity(float Intensity)
+void ShadingTechnique::SetMatSpecularIntensity(float Intensity)
 {
     glUniform1f(m_matSpecularIntensityLocation, Intensity);
 }
 
 
-void SkinningTechnique::SetMatSpecularPower(float Power)
+void ShadingTechnique::SetMatSpecularPower(float Power)
 {
     glUniform1f(m_matSpecularPowerLocation, Power);
 }
 
 
-void SkinningTechnique::SetPointLights(unsigned int NumLights, const PointLight* pLights)
+void ShadingTechnique::SetPointLights(unsigned int NumLights, const PointLight* pLights)
 {
     glUniform1i(m_numPointLightsLocation, NumLights);
     
@@ -203,7 +203,7 @@ void SkinningTechnique::SetPointLights(unsigned int NumLights, const PointLight*
     }
 }
 
-void SkinningTechnique::SetSpotLights(unsigned int NumLights, const SpotLight* pLights)
+void ShadingTechnique::SetSpotLights(unsigned int NumLights, const SpotLight* pLights)
 {
     glUniform1i(m_numSpotLightsLocation, NumLights);
 
@@ -223,7 +223,7 @@ void SkinningTechnique::SetSpotLights(unsigned int NumLights, const SpotLight* p
 }
 
 
-void SkinningTechnique::SetBoneTransform(uint Index, const mat4& Transform)
+void ShadingTechnique::SetBoneTransform(uint Index, const mat4& Transform)
 {
     assert(Index < MAX_BONES);
     //Transform.Print();

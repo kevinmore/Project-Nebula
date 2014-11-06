@@ -1,11 +1,12 @@
 #pragma once
-#include <Scene/Model.h>
+#include <Scene/RiggedModel.h>
+#include <Scene/StaticModel.h>
 #include <Utility/ModelLoader.h>
 #include <QtCore/QMap>
 #include <QtCore/QString>
 #include <QtCore/QSharedPointer>
 
-typedef QSharedPointer<Model> ModelPtr;
+typedef QSharedPointer<AbstractModel> ModelPtr;
 
 class Scene;
 

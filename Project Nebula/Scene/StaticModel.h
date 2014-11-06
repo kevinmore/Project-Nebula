@@ -10,18 +10,16 @@
 #include <Primitives/Material.h>
 #include <Utility/ModelLoader.h>
 #include <Scene/Object3D.h>
-#include <Scene/ShadingTechniques/skinning_technique.h>
-#include <Animation/FK/FKController.h>
-#include <Animation/IK/IKSolver.h>
+#include <Scene/ShadingTechniques/ShadingTechnique.h>
 
 class Scene;
 
-class Model : public AbstractModel
+class StaticModel : public AbstractModel
 {
 public:
-	Model(Scene* scene, FKController* fkCtrl, IKSolver* ikSolver, const QOpenGLVertexArrayObjectPtr vao);
-	Model(Scene* scene, FKController* fkCtrl, IKSolver* ikSolver, const QOpenGLVertexArrayObjectPtr vao, QVector<ModelDataPtr> modelDataVector);
-	virtual ~Model(void);
+	StaticModel(Scene* scene, const QOpenGLVertexArrayObjectPtr vao);
+	StaticModel(Scene* scene, const QOpenGLVertexArrayObjectPtr vao, QVector<ModelDataPtr> modelDataVector);
+	virtual ~StaticModel(void);
 
 	virtual void render( float time );
 	bool hasAnimation() { return m_hasAnimation; }
@@ -53,11 +51,8 @@ private:
 
 	QOpenGLFunctions_4_3_Core* m_funcs;
 	Scene* m_scene;
-	SkinningTechnique* m_RenderingEffect;
+	ShadingTechnique* m_RenderingEffect;
 	bool m_hasAnimation;
 	Object3D* m_actor;
-	FKController* m_FKController;
-	IKSolver* m_IKSolver;
-
 };
 

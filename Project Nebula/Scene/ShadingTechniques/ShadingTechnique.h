@@ -59,14 +59,14 @@ struct SpotLight : public PointLight
     }
 };
 
-class SkinningTechnique : public Technique {
+class ShadingTechnique : public Technique {
 public:
 
     static const uint MAX_POINT_LIGHTS = 2;
     static const uint MAX_SPOT_LIGHTS = 2;
     static const uint MAX_BONES = 200;
 
-    SkinningTechnique();
+    ShadingTechnique();
 
     virtual bool Init();
 

@@ -33,13 +33,6 @@ public:
 		if(parent) parent->addChild(this);
 	}
 
-	mat4 getLocalTransformMatrix()
-	{
-		return m_nodeTransform * m_offsetMatrix;
-		//return m_offsetMatrix;
-		//return m_nodeTransform;
-
-	}
 
 	void calcWorldTransform()
 	{
@@ -59,7 +52,7 @@ public:
 			nodeLocalTransform = Math::convToAiMat4(m_nodeTransform);
 		}
 
-		aiMatrix4x4 globalTransform = nodeLocalTransform * Math::convToAiMat4(this->m_offsetMatrix);
+		aiMatrix4x4 globalTransform = nodeLocalTransform * Math::convToAiMat4(m_offsetMatrix);
 
 		aiVector3D	 scaling;
 		aiQuaternion rotation;
@@ -71,6 +64,9 @@ public:
 		m_worldQuaternion = QQuaternion(rotation.w, rotation.x, rotation.y, rotation.z);
 
 		m_worldMatrix = Math::convToQMat4(&globalTransform);
+
+		qDebug() << m_name << m_worldPos;
+		
 	}
 
 	void addChild(Bone* child)
@@ -109,10 +105,10 @@ public:
 // 		m_nodeTransform(0, 3) += delta.x();
 // 		m_nodeTransform(1, 3) += delta.y();
 // 		m_nodeTransform(2, 3) += delta.z();
-
-// 		m_finalTransform(0, 3) = newPos.x();
-// 		m_finalTransform(1, 3) = newPos.y();
-// 		m_finalTransform(2, 3) = newPos.z();
+// 
+// 		m_worldMatrix(0, 3) = newPos.x();
+// 		m_worldMatrix(1, 3) = newPos.y();
+// 		m_worldMatrix(2, 3) = newPos.z();
 
 // 		mat4 newTrans;
 // 		newTrans.scale(m_worldScaling);
@@ -123,7 +119,7 @@ public:
 
 		m_nodeTransform.translate(delta);
 		//calcWorldTransform();
-
+		//m_offsetMatrix = Math::convToQMat4(&(Math::convToAiMat4(m_parent->m_finalTransform)* Math::convToAiMat4(m_worldMatrix)));
 
 		//m_nodeTransform = m_parent->m_finalTransform * m_worldMatrix;
 
