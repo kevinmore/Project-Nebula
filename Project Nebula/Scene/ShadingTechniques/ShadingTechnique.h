@@ -59,14 +59,15 @@ struct SpotLight : public PointLight
     }
 };
 
-class ShadingTechnique : public Technique {
+class ShadingTechnique : public Technique 
+{
 public:
 
     static const uint MAX_POINT_LIGHTS = 2;
     static const uint MAX_SPOT_LIGHTS = 2;
     static const uint MAX_BONES = 200;
 
-    ShadingTechnique();
+    ShadingTechnique(const QString &vertShaderFile, const QString &fragShaderFile);
 
     virtual bool Init();
 
@@ -83,6 +84,8 @@ public:
 
 private:
     
+	QString m_vertShaderFile, m_fragShaderFile;
+
     GLuint m_WVPLocation;
     GLuint m_WorldMatrixLocation;
     GLuint m_colorTextureLocation;

@@ -2,9 +2,11 @@
 #include <Scene/Scene.h>
 #include <QtGui/QOpenGLContext>
 
-RiggedModel::RiggedModel(Scene* scene, FKController* fkCtrl, IKSolver* ikSolver, const QOpenGLVertexArrayObjectPtr vao)
+RiggedModel::RiggedModel(Scene* scene, ShadingTechnique* tech, Skeleton* skeleton, FKController* fkCtrl, CCDIKSolver* ikSolver, const GLuint vao)
   : m_scene(scene),
+    m_RenderingEffect(tech),
 	m_vao(vao),
+	m_skeleton(skeleton),
 	m_FKController(fkCtrl),
 	m_IKSolver(ikSolver),
 	m_hasAnimation(false),
@@ -13,9 +15,11 @@ RiggedModel::RiggedModel(Scene* scene, FKController* fkCtrl, IKSolver* ikSolver,
 	initialize();
 }
 
-RiggedModel::RiggedModel(Scene* scene, FKController* fkCtrl, IKSolver* ikSolver, const QOpenGLVertexArrayObjectPtr vao, QVector<ModelDataPtr> modelData)
+RiggedModel::RiggedModel(Scene* scene, ShadingTechnique* tech, Skeleton* skeleton, FKController* fkCtrl, CCDIKSolver* ikSolver, const GLuint vao, QVector<ModelDataPtr> modelData)
   : m_scene(scene),
+    m_RenderingEffect(tech),
 	m_vao(vao),
+	m_skeleton(skeleton),
 	m_FKController(fkCtrl),
 	m_IKSolver(ikSolver),
 	m_hasAnimation(false),
@@ -28,6 +32,29 @@ RiggedModel::RiggedModel(Scene* scene, FKController* fkCtrl, IKSolver* ikSolver,
 RiggedModel::~RiggedModel() 
 {
 }
+
+void RiggedModel::initRenderingEffect()
+{ 	
+	m_funcs->glClearDepth( 1.0 );
+	m_funcs->glClearColor(0.39f, 0.39f, 0.39f, 0.0f);
+	m_funcs->glEnable(GL_DEPTH_TEST);
+	m_funcs->glDepthFunc(GL_LEQUAL);
+	//m_funcs->glEnable(GL_CULL_FACE);
+
+	DirectionalLight directionalLight;
+	directionalLight.Color = vec3(1.0f, 1.0f, 1.0f);
+	directionalLight.AmbientIntensity = 0.55f;
+	directionalLight.DiffuseIntensity = 0.9f;
+	directionalLight.Direction = vec3(-1.0f, 0.0, -1.0);
+
+	m_RenderingEffect->Enable();
+	m_RenderingEffect->SetColorTextureUnit(0);
+	m_RenderingEffect->SetDirectionalLight(directionalLight);
+	m_RenderingEffect->SetMatSpecularIntensity(0.0f);
+	m_RenderingEffect->SetMatSpecularPower(0);
+
+}
+
 
 void RiggedModel::initialize(QVector<ModelDataPtr> modelDataVector)
 {
@@ -96,43 +123,18 @@ void RiggedModel::initialize(QVector<ModelDataPtr> modelDataVector)
 	}
 
 
-	// INIT IK
-	m_IKSolver->enableIKChain("L_collar", "L_hand");
+	ikSolved = false;
+	lastUpdatedTime = 0.0f;
+	updateIKRate = 0.2f;
 }
-
-void RiggedModel::initRenderingEffect()
-{ 	
-	m_funcs->glClearDepth( 1.0 );
-	m_funcs->glClearColor(0.39f, 0.39f, 0.39f, 0.0f);
-	m_funcs->glEnable(GL_DEPTH_TEST);
-	m_funcs->glDepthFunc(GL_LEQUAL);
-	//m_funcs->glEnable(GL_CULL_FACE);
-
-	DirectionalLight directionalLight;
-	directionalLight.Color = vec3(1.0f, 1.0f, 1.0f);
-	directionalLight.AmbientIntensity = 0.55f;
-	directionalLight.DiffuseIntensity = 0.9f;
-	directionalLight.Direction = vec3(-1.0f, 0.0, 1.0);
-
-	m_RenderingEffect = new ShadingTechnique();
-	if (!m_RenderingEffect->Init()) {
-		printf("Error initializing the lighting technique\n");
-	}
-	m_RenderingEffect->Enable();
-	m_RenderingEffect->SetColorTextureUnit(0);
-	m_RenderingEffect->SetDirectionalLight(directionalLight);
-	m_RenderingEffect->SetMatSpecularIntensity(0.0f);
-	m_RenderingEffect->SetMatSpecularPower(0);
-
-}
-
 
 void RiggedModel::destroy() {}
 
 void RiggedModel::render( float time )
 {
+
 	QMatrix4x4 modelMatrix = m_actor->modelMatrix();
-	//modelMatrix.rotate(-90, Math::Vector3D::UNIT_X); // this is for dae files
+	modelMatrix.rotate(180, Math::Vector3D::UNIT_X); // this is for dae files
 	QMatrix4x4 modelViewMatrix = m_scene->getCamera()->viewMatrix() * modelMatrix;
 	QMatrix3x3 normalMatrix = modelViewMatrix.normalMatrix();
 
@@ -145,23 +147,40 @@ void RiggedModel::render( float time )
 	// check if the model has animation first
 	QVector<QMatrix4x4> Transforms;
 
-// 	if(m_hasAnimation)
-// 	{
-// 		m_RenderingEffect->getShader()->setUniformValue("hasAnimation", true);
-// 		m_FKController->BoneTransform(time, Transforms);
-// 		for (int i = 0 ; i < Transforms.size() ; i++) {
-// 			m_RenderingEffect->SetBoneTransform(i, Transforms[i]);
-// 		}
-// 	}
+	if(m_hasAnimation)
+	{
+ 		m_RenderingEffect->getShader()->setUniformValue("hasAnimation", true);
+ 		//m_FKController->BoneTransform(time, Transforms);
+	}
 
-	m_IKSolver->solveIK(vec3(0.4f*qSin(time), -0.22f, -1.5f));
-	m_RenderingEffect->getShader()->setUniformValue("hasAnimation", true);
-	m_IKSolver->BoneTransform(Transforms);
+	// INIT IK
+	// set constraint
+	//if (time - lastUpdatedTime > updateIKRate)
+	{
+		m_skeleton->getBone("Bip01_R_Hand")->isXConstraint = true;
+
+		CCDIKSolver::IkConstraint constraint;
+		constraint.m_startBone = m_skeleton->getBone("Bip01_R_UpperArm");
+		constraint.m_endBone = m_skeleton->getBone("Bip01_R_Hand");
+		constraint.m_targetMS = vec3(vec3(5*qSin(time), 0, 0));
+		//if (!ikSolved)
+		{
+			ikSolved = m_IKSolver->solveOneConstraint( constraint, m_skeleton );
+		}
+
+		m_IKSolver->BoneTransform(m_skeleton, constraint.m_startBone, constraint.m_endBone, Transforms);
+
+		lastUpdatedTime = time;
+
+	}
+	
+
+
+ 	// update the bone positions
 	for (int i = 0 ; i < Transforms.size() ; i++) {
 		m_RenderingEffect->SetBoneTransform(i, Transforms[i]);
 	}
 
-	m_vao->bind();
 
 
 	for(int i = 0; i < m_meshes.size(); ++i)
@@ -195,13 +214,14 @@ void RiggedModel::render( float time )
 // 		}
 // 	}
 
-	m_vao->release();
+
 }
 
 void RiggedModel::drawElements(unsigned int index, int mode)
 {
 	// Mode has not been implemented yet
 	Q_UNUSED(mode);
+	m_funcs->glBindVertexArray(m_vao);
 
 	m_funcs->glDrawElementsBaseVertex(
 		GL_TRIANGLES,
@@ -210,4 +230,6 @@ void RiggedModel::drawElements(unsigned int index, int mode)
 		reinterpret_cast<void*>((sizeof(unsigned int)) * m_meshes[index]->getBaseIndex()),
 		m_meshes[index]->getBaseVertex()
 		);
+	// Make sure the VAO is not changed from the outside    
+	m_funcs->glBindVertexArray(0);
 }

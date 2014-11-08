@@ -2,7 +2,6 @@
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
-#include <QtGui/QOpenGLVertexArrayObject>
 #include <QtCore/QSharedPointer>
 #include <Scene/AbstractModel.h>
 #include <Utility/DataTypes.h>
@@ -11,17 +10,10 @@
 #include <QtGui/QOpenGLFunctions_4_3_Core>
 
 
-#define POSITION_LOCATION    0
-#define TEX_COORD_LOCATION   1
-#define NORMAL_LOCATION      2
-#define BONE_ID_LOCATION     3
-#define BONE_WEIGHT_LOCATION 4
-
-
 class ModelLoader : protected QOpenGLFunctions_4_3_Core
 {
 public:
-	ModelLoader();
+	ModelLoader(GLuint shaderProgramID);
 	virtual ~ModelLoader();
 
 	enum MODEL_TYPE
@@ -39,7 +31,7 @@ public:
 	/*
 	 *	Public Getters
 	 */
-	QOpenGLVertexArrayObject* getVAO() { return m_vao; };
+	GLuint getVAO() { return m_VAO; };
 	uint getNumBones() const {	return m_NumBones;	}
 	QMap<QString, uint> getBoneMap() const { return m_BoneMapping; }
 	mat4 getGlobalInverseTransform () const { return m_GlobalInverseTransform; }
@@ -91,9 +83,9 @@ private:
 		NUM_VBs            
 	};
 
+	GLuint m_shaderProgramID;
 	GLuint m_VAO;
 	QVector<GLuint> m_Buffers;
-	QOpenGLVertexArrayObject* m_vao;
 	void prepareVertexBuffers();
 
 	/*

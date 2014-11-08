@@ -1,7 +1,6 @@
 #include "Light.h"
 #include <Utility/Math.h>
 using namespace Math;
-#define M_PI 3.14159265358979323846
 const float INNER_ANGLE = 30.0f; // 30deg = 0.6981rad = cos(2PI/9) = 0.76604;
 const float OUTER_ANGLE = 40.0f; // 40deg = 0.5235rad = cos(1PI/6) = 0.86602;
 

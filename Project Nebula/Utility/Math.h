@@ -3,6 +3,55 @@
 #include <assimp/types.h>
 namespace Math
 {
+	// Computes the quaternion that is equivalent to a given
+	// vector in order:  roll-pitch-yaw.
+	static QQuaternion QuaternionFromEuler(vec3& v)
+	{
+		double c1 = cos(v.z() * 0.5);
+		double c2 = cos(v.y() * 0.5);
+		double c3 = cos(v.x() * 0.5);
+		double s1 = sin(v.z() * 0.5);
+		double s2 = sin(v.y() * 0.5);
+		double s3 = sin(v.x() * 0.5);
+
+		return QQuaternion(c1*c2*c3 + s1*s2*s3, c1*c2*s3 - s1*s2*c3, c1*s2*c3 + s1*c2*s3, s1*c2*c3 - c1*s2*s3);
+	}
+
+	
+	// return Euler angles in roll-pitch-yaw order.
+	static vec3 QuaternionToEuler(QQuaternion& q)
+	{
+		vec3 out;
+		const static double PI_OVER_2 = M_PI * 0.5;
+		const static double EPSILON = 1e-10;
+		double sqw, sqx, sqy, sqz;
+		vec4 qVec4 = q.toVector4D();
+		// quick conversion to Euler angles to give tilt to user
+		sqw = qVec4.w()*qVec4.w();
+		sqx = qVec4.x()*qVec4.x();
+		sqy = qVec4.y()*qVec4.y();
+		sqz = qVec4.y()*qVec4.y();
+
+		out.setY(asin(2.0 * (qVec4.w()*qVec4.y() - qVec4.x()*qVec4.z())));
+
+		if (PI_OVER_2 - fabs(out.y()) > EPSILON) 
+		{
+			out.setZ ((float)atan2(2.0 * (qVec4.x()*qVec4.y() + qVec4.w()*qVec4.z()), sqx - sqy - sqz + sqw));
+			out.setX ((float)atan2(2.0 * (qVec4.w()*qVec4.x() + qVec4.y()*qVec4.z()), sqw - sqx - sqy + sqz));
+		} 
+		else 
+		{
+			// compute heading from local 'down' vector
+			out.setX(0.0f);
+			out.setZ((float)atan2(2*qVec4.y()*qVec4.z() - 2*qVec4.x()*qVec4.w(),	2*qVec4.x()*qVec4.z() + 2*qVec4.y()*qVec4.w()));
+			// If facing down, reverse yaw
+			if (out.y() < 0)
+				out.setZ(M_PI - out.z());
+		}
+
+		return out;
+	}
+
 	// utility function to convert aiMatrix4x4 to QMatrix4x4
 	static QMatrix4x4 convToQMat4(const aiMatrix4x4 * m)
 	{

@@ -8,7 +8,7 @@ SceneCamera::SceneCamera(QObject *parent)
 	m_viewCenter(Vector3D::ZERO),
 	m_cameraToCenter(Vector3D::NEGATIVE_UNIT_Z),
 	m_projectionType(PerspectiveProjection),
-	m_nearPlane(0.01f),
+	m_nearPlane(0.1f),
 	m_farPlane(1024.0f),
 	m_fieldOfView(60.0f),
 	m_aspectRatio(1.0f),

@@ -17,12 +17,21 @@ public:
 	mat4 m_offsetMatrix;
 	mat4 m_nodeTransform;
 	mat4 m_finalTransform;
+
+	mat4 m_globalNodeTransform;
+
 	mat4 m_worldMatrix;
+
+	bool isXConstraint;
 
 	/** Parent bode. NULL if this node is the root. **/
 	Bone* m_parent;
 
-	Bone() { m_parent = NULL; }
+	Bone() 
+	{ 
+		m_parent = NULL;
+		isXConstraint = false;
+	}
 
 	Bone(Bone* parent)
 	{
@@ -31,6 +40,8 @@ public:
 
 		// add the current bone to its parent if it's not the root
 		if(parent) parent->addChild(this);
+
+		isXConstraint = false;
 	}
 
 
@@ -64,9 +75,6 @@ public:
 		m_worldQuaternion = QQuaternion(rotation.w, rotation.x, rotation.y, rotation.z);
 
 		m_worldMatrix = Math::convToQMat4(&globalTransform);
-
-		qDebug() << m_name << m_worldPos;
-		
 	}
 
 	void addChild(Bone* child)
@@ -95,10 +103,22 @@ public:
 		return m_worldPos;
 	}
 
+	QQuaternion getWorldRotation()
+	{
+		return m_worldQuaternion;
+	}
+
+	void setWorldRotation(const QQuaternion& roation)
+	{
+		m_nodeTransform.rotate(roation);
+
+		m_worldQuaternion = roation;
+	}
+
 	void setWorldPosition(const vec3 &newPos)
 	{
 		vec3 originalPos = m_worldPos;
-		vec3 delta = newPos - originalPos;
+		vec3 deltaTranslation = newPos - originalPos;
 
 		// here the bone is translated in the world coordinates
 		// dont use QMatrix4x4.translate(), that only translates in the relative coordinates
@@ -116,8 +136,11 @@ public:
 // 		newTrans.translate(delta);
 // 
 // 		m_finalTransform = newTrans;
+//		qDebug() << m_name << "m_deltaTranslation = " << m_deltaTranslation;
+//		qDebug() << m_parent->m_name << "mparent->m_deltaTranslation = " << m_parent->m_deltaTranslation;
+		m_nodeTransform.rotate(10, deltaTranslation);
 
-		m_nodeTransform.translate(delta);
+		
 		//calcWorldTransform();
 		//m_offsetMatrix = Math::convToQMat4(&(Math::convToAiMat4(m_parent->m_finalTransform)* Math::convToAiMat4(m_worldMatrix)));
 

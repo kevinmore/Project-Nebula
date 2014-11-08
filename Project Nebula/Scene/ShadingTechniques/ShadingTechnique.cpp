@@ -10,9 +10,10 @@
 
 using namespace std;
 
-ShadingTechnique::ShadingTechnique()
-{   
-}
+ShadingTechnique::ShadingTechnique(const QString &vertShaderFile, const QString &fragShaderFile)
+	: m_vertShaderFile(vertShaderFile),
+	  m_fragShaderFile(fragShaderFile)
+{}
 
 
 bool ShadingTechnique::Init()
@@ -21,8 +22,8 @@ bool ShadingTechnique::Init()
         return false;
     }
 
-	m_shader->addShaderFromSourceFile(QOpenGLShader::Vertex, "../Resource/Shaders/skinning.vert");
-	m_shader->addShaderFromSourceFile(QOpenGLShader::Fragment, "../Resource/Shaders/skinning.frag");
+	m_shader->addShaderFromSourceFile(QOpenGLShader::Vertex, m_vertShaderFile);
+	m_shader->addShaderFromSourceFile(QOpenGLShader::Fragment, m_fragShaderFile);
 	m_shader->link();
     
     m_WVPLocation = GetUniformLocation("gWVP");

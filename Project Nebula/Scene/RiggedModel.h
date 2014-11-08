@@ -12,15 +12,15 @@
 #include <Scene/Object3D.h>
 #include <Scene/ShadingTechniques/ShadingTechnique.h>
 #include <Animation/FK/FKController.h>
-#include <Animation/IK/IKSolver.h>
+#include <Animation/IK/CCDIKSolver.h>
 
 class Scene;
 
 class RiggedModel : public AbstractModel
 {
 public:
-	RiggedModel(Scene* scene, FKController* fkCtrl, IKSolver* ikSolver, const QOpenGLVertexArrayObjectPtr vao);
-	RiggedModel(Scene* scene, FKController* fkCtrl, IKSolver* ikSolver, const QOpenGLVertexArrayObjectPtr vao, QVector<ModelDataPtr> modelDataVector);
+	RiggedModel(Scene* scene, ShadingTechnique* tech, Skeleton* skeleton, FKController* fkCtrl, CCDIKSolver* ikSolver, const GLuint vao);
+	RiggedModel(Scene* scene, ShadingTechnique* tech, Skeleton* skeleton, FKController* fkCtrl, CCDIKSolver* ikSolver, const GLuint vao, QVector<ModelDataPtr> modelDataVector);
 	virtual ~RiggedModel(void);
 
 	virtual void render( float time );
@@ -49,15 +49,18 @@ private:
 	void drawElements(unsigned int index, int mode);
 	void destroy();
 
-	QOpenGLVertexArrayObjectPtr m_vao;
+	GLuint m_vao;
 
 	QOpenGLFunctions_4_3_Core* m_funcs;
 	Scene* m_scene;
 	ShadingTechnique* m_RenderingEffect;
 	bool m_hasAnimation;
 	Object3D* m_actor;
+	Skeleton* m_skeleton;
 	FKController* m_FKController;
-	IKSolver* m_IKSolver;
+	CCDIKSolver* m_IKSolver;
 
+	bool ikSolved;
+	float updateIKRate, lastUpdatedTime;
 };
 

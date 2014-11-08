@@ -18,8 +18,6 @@ Skeleton::Skeleton( Bone* root , mat4& globalInverseMatrix)
 	{
 		if(it.value()->m_name == "Project Nebula Skeleton ROOT") continue;
 		m_BoneList[it.value()->m_ID] = it.value();
-		it.value()->calcWorldTransform();
-
 	}
 
 // 	for (int i = 0; i < m_BoneList.size(); ++i)
@@ -54,7 +52,10 @@ void Skeleton::sortPose( Bone* pBone, mat4 &parentTransform )
 
 	// calculate the global transform
 	mat4 globalTransformation = parentTransform * pBone->m_nodeTransform;  // P * B
-	pBone->m_finalTransform = globalTransformation * pBone->m_offsetMatrix;
+	pBone->m_globalNodeTransform = globalTransformation;
+	pBone->m_finalTransform = m_gloableInverseMatrix* globalTransformation * pBone->m_offsetMatrix;
+
+	pBone->calcWorldTransform();
 
 	for (int i = 0 ; i < pBone->childCount() ; ++i) 
 	{
@@ -210,3 +211,33 @@ void Skeleton::applyOffset( Bone* pBone, mat4& offset )
 		applyOffset(pBone->getChild(i), offset);
 	}
 }
+
+void Skeleton::getBoneChain( Bone* start, Bone* end, QVector<Bone*> &boneChain )
+{
+	uint chainCount = getBoneCountBetween(start, end);
+	boneChain.resize(chainCount);
+	uint index = chainCount - 1;
+	Bone* temp = end;
+	while(temp != start->m_parent)
+	{
+		boneChain[index] = temp;
+		--index;
+		temp = temp->m_parent;
+	}
+}
+
+
+void Skeleton::makeBoneListFrom( Bone* baseBone, QVector<Bone*> &listOut )
+{
+	if (!baseBone) return;
+
+	listOut.push_back(baseBone);
+
+	for (int i = 0; i < baseBone->childCount(); ++i)
+	{
+		makeBoneListFrom(baseBone->getChild(i), listOut);
+	}
+
+}
+
+

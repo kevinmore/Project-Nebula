@@ -17,8 +17,8 @@ class Scene;
 class StaticModel : public AbstractModel
 {
 public:
-	StaticModel(Scene* scene, const QOpenGLVertexArrayObjectPtr vao);
-	StaticModel(Scene* scene, const QOpenGLVertexArrayObjectPtr vao, QVector<ModelDataPtr> modelDataVector);
+	StaticModel(Scene* scene, ShadingTechnique* tech, const GLuint vao);
+	StaticModel(Scene* scene, ShadingTechnique* tech, const GLuint vao, QVector<ModelDataPtr> modelDataVector);
 	virtual ~StaticModel(void);
 
 	virtual void render( float time );
@@ -47,7 +47,7 @@ private:
 	void drawElements(unsigned int index, int mode);
 	void destroy();
 
-	QOpenGLVertexArrayObjectPtr m_vao;
+	GLuint m_vao;
 
 	QOpenGLFunctions_4_3_Core* m_funcs;
 	Scene* m_scene;

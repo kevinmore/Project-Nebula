@@ -10,7 +10,7 @@ Canvas::Canvas(QScreen *screen)
 	  m_context(new QOpenGLContext),
 	  m_scene(new Scene(this)),
 	  m_rightButtonPressed(false),
-	  m_cameraSpeed(50.0f),
+	  m_cameraSpeed(1000.0f),
 	  m_cameraSensitivity(0.2f)
 {
 	// It defines the type of the rendering area, in our case it is an OpenGL area

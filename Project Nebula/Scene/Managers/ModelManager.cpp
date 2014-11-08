@@ -1,7 +1,8 @@
 #include "ModelManager.h"
 #include <Scene/Scene.h>
 #include <Animation/FK/FKController.h>
-#include <Animation/IK/IKSolver.h>
+#include <Animation/IK/FABRIKSolver.h>
+#include <Scene/ShadingTechniques/ShadingTechnique.h>
 
 ModelManager::ModelManager(Scene* scene)
 	: m_scene(scene)
@@ -18,24 +19,41 @@ ModelPtr ModelManager::getModel( const QString& name )
 
 ModelPtr ModelManager::loadModel( const QString& name, const QString& filename, ModelLoader::MODEL_TYPE type )
 {
-	ModelLoader* modelLoader = new ModelLoader();
-	QVector<ModelDataPtr> modelDataVector = modelLoader->loadModel(filename, type);
 
 	if (type == ModelLoader::RIGGED_MODEL)
 	{
+
+		ShadingTechnique* effect = new ShadingTechnique("../Resource/Shaders/skinning.vert", "../Resource/Shaders/skinning.frag");
+		if (!effect->Init()) 
+		{
+			printf("Error initializing the lighting technique\n");
+		}
+
+		ModelLoader* modelLoader = new ModelLoader(effect->getShader()->programId());
+		QVector<ModelDataPtr> modelDataVector = modelLoader->loadModel(filename, type);
+
 		// create a FKController for the model
 		FKController* controller = new FKController(modelLoader);
 
 		// create an IKSolver for the model
-		IKSolver* solver = new IKSolver(modelLoader->getSkeletom(), 0.00001f);
+		CCDIKSolver* solver = new CCDIKSolver();
 
-		m_models[name] = ModelPtr(new RiggedModel(m_scene, controller, solver, QOpenGLVertexArrayObjectPtr(modelLoader->getVAO()), modelDataVector));
+		m_models[name] = ModelPtr(new RiggedModel(m_scene, effect, modelLoader->getSkeletom(), controller, solver, modelLoader->getVAO(), modelDataVector));
 
 	}
 
 	else if (type == ModelLoader::STATIC_MODEL)
 	{
-		m_models[name] = ModelPtr(new StaticModel(m_scene, QOpenGLVertexArrayObjectPtr(modelLoader->getVAO()), modelDataVector));
+		ShadingTechnique* effect = new ShadingTechnique("../Resource/Shaders/skinning.vert", "../Resource/Shaders/skinning.frag");
+		if (!effect->Init()) 
+		{
+			printf("Error initializing the lighting technique\n");
+		}
+
+		ModelLoader* modelLoader = new ModelLoader(effect->getShader()->programId());
+		QVector<ModelDataPtr> modelDataVector = modelLoader->loadModel(filename, type);
+
+		m_models[name] = ModelPtr(new StaticModel(m_scene, effect, modelLoader->getVAO(), modelDataVector));
 
 	}
 

@@ -2,8 +2,9 @@
 #include <Scene/Scene.h>
 #include <QtGui/QOpenGLContext>
 
-StaticModel::StaticModel(Scene* scene, const QOpenGLVertexArrayObjectPtr vao)
+StaticModel::StaticModel(Scene* scene, ShadingTechnique* tech, const GLuint vao)
   : m_scene(scene),
+    m_RenderingEffect(tech),
 	m_vao(vao),
 	m_hasAnimation(false),
 	m_actor(new Object3D)
@@ -11,8 +12,9 @@ StaticModel::StaticModel(Scene* scene, const QOpenGLVertexArrayObjectPtr vao)
 	initialize();
 }
 
-StaticModel::StaticModel(Scene* scene, const QOpenGLVertexArrayObjectPtr vao, QVector<ModelDataPtr> modelData)
+StaticModel::StaticModel(Scene* scene, ShadingTechnique* tech, const GLuint vao, QVector<ModelDataPtr> modelData)
   : m_scene(scene),
+    m_RenderingEffect(tech),
 	m_vao(vao),
 	m_hasAnimation(false),
 	m_actor(new Object3D)
@@ -106,10 +108,6 @@ void StaticModel::initRenderingEffect()
 	directionalLight.DiffuseIntensity = 0.9f;
 	directionalLight.Direction = vec3(-1.0f, 0.0, 1.0);
 
-	m_RenderingEffect = new ShadingTechnique();
-	if (!m_RenderingEffect->Init()) {
-		printf("Error initializing the lighting technique\n");
-	}
 	m_RenderingEffect->Enable();
 	m_RenderingEffect->SetColorTextureUnit(0);
 	m_RenderingEffect->SetDirectionalLight(directionalLight);
@@ -124,7 +122,9 @@ void StaticModel::destroy() {}
 void StaticModel::render( float time )
 {
 	QMatrix4x4 modelMatrix = m_actor->modelMatrix();
-	//modelMatrix.rotate(-90, Math::Vector3D::UNIT_X); // this is for dae files
+	modelMatrix.rotate(-90, Math::Vector3D::UNIT_X); // this is for dae files
+	m_actor->setPosition(50*qSin(time), 100, 0);
+	qDebug() << m_actor->position();
 	QMatrix4x4 modelViewMatrix = m_scene->getCamera()->viewMatrix() * modelMatrix;
 	QMatrix3x3 normalMatrix = modelViewMatrix.normalMatrix();
 
@@ -133,7 +133,7 @@ void StaticModel::render( float time )
 	m_RenderingEffect->SetWorldMatrix(modelMatrix); 
 
 
-	m_vao->bind();
+	
 
 
 	for(int i = 0; i < m_meshes.size(); ++i)
@@ -167,13 +167,14 @@ void StaticModel::render( float time )
 // 		}
 // 	}
 
-	m_vao->release();
+	
 }
 
 void StaticModel::drawElements(unsigned int index, int mode)
 {
 	// Mode has not been implemented yet
 	Q_UNUSED(mode);
+	m_funcs->glBindVertexArray(m_vao);
 
 	m_funcs->glDrawElementsBaseVertex(
 		GL_TRIANGLES,
@@ -182,4 +183,6 @@ void StaticModel::drawElements(unsigned int index, int mode)
 		reinterpret_cast<void*>((sizeof(unsigned int)) * m_meshes[index]->getBaseIndex()),
 		m_meshes[index]->getBaseVertex()
 		);
+	// Make sure the VAO is not changed from the outside    
+	m_funcs->glBindVertexArray(0);
 }

@@ -13,7 +13,8 @@
   <ItemGroup>
     <ClCompile Include="Animation\FK\FKController.cpp" />
     <ClCompile Include="Animation\Rig\Skeleton.cpp" />
-    <ClCompile Include="Animation\IK\IKSolver.cpp" />
+    <ClCompile Include="Animation\IK\FABRIKSolver.cpp" />
+    <ClCompile Include="Animation\IK\CCDIKSolver.cpp" />
     <ClCompile Include="Scene\SceneCamera_moc.cpp" />
     <ClCompile Include="Scene\AbstractModel.cpp" />
     <ClCompile Include="Scene\AbstractScene.cpp" />
@@ -45,7 +46,8 @@
   <ItemGroup>
     <ClInclude Include="Animation\FK\FKController.h" />
     <ClInclude Include="Animation\Rig\BoneInfo.h" />
-    <ClInclude Include="Animation\IK\IKSolver.h" />
+    <ClInclude Include="Animation\IK\FABRIKSolver.h" />
+    <ClInclude Include="Animation\IK\CCDIKSolver.h" />
     <ClInclude Include="Scene\Managers\ModelManager.h" />
     <ClInclude Include="Scene\RiggedModel.h" />
     <ClInclude Include="Scene\Scene.h" />
@@ -72,8 +74,6 @@
     <ClInclude Include="Utility\OpenGLUniformBuffer.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Resource\Shaders\basicSkinning.frag" />
-    <None Include="..\Resource\Shaders\basicSkinning.vert" />
     <None Include="..\Resource\Shaders\skinning.frag" />
     <None Include="..\Resource\Shaders\skinning.vert" />
   </ItemGroup>

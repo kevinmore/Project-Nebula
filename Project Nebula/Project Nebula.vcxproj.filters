@@ -27,10 +27,11 @@
     <ClCompile Include="Scene\ShadingTechniques\technique.cpp" />
     <ClCompile Include="Animation\FK\FKController.cpp" />
     <ClCompile Include="Animation\Rig\Skeleton.cpp" />
-    <ClCompile Include="Animation\IK\IKSolver.cpp" />
     <ClCompile Include="Scene\RiggedModel.cpp" />
     <ClCompile Include="Scene\StaticModel.cpp" />
     <ClCompile Include="Scene\ShadingTechniques\ShadingTechnique.cpp" />
+    <ClCompile Include="Animation\IK\FABRIKSolver.cpp" />
+    <ClCompile Include="Animation\IK\CCDIKSolver.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utility\DataTypes.h" />
@@ -56,14 +57,13 @@
     <ClInclude Include="Animation\FK\FKController.h" />
     <ClInclude Include="Animation\Rig\Skeleton.h" />
     <ClInclude Include="Animation\Rig\BoneInfo.h" />
-    <ClInclude Include="Animation\IK\IKSolver.h" />
     <ClInclude Include="Scene\RiggedModel.h" />
     <ClInclude Include="Scene\StaticModel.h" />
     <ClInclude Include="Scene\ShadingTechniques\ShadingTechnique.h" />
+    <ClInclude Include="Animation\IK\FABRIKSolver.h" />
+    <ClInclude Include="Animation\IK\CCDIKSolver.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Resource\Shaders\basicSkinning.frag" />
-    <None Include="..\Resource\Shaders\basicSkinning.vert" />
     <None Include="..\Resource\Shaders\skinning.frag" />
     <None Include="..\Resource\Shaders\skinning.vert" />
   </ItemGroup>

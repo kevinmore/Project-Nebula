@@ -1,10 +1,10 @@
 #include "ModelLoader.h"
 #include <QtCore/QDebug>
 #include <Utility/Math.h>
-#include <Animation/IK/IKSolver.h>
+#include <Animation/IK/FABRIKSolver.h>
 
-ModelLoader::ModelLoader()
-	: m_vao(new QOpenGLVertexArrayObject())
+ModelLoader::ModelLoader(GLuint shaderProgramID)
+	: m_shaderProgramID(shaderProgramID)
 {
 	initializeOpenGLFunctions();
 	clear();
@@ -24,8 +24,11 @@ void ModelLoader::clear()
 		glDeleteBuffers(m_Buffers.size(), m_Buffers.data());
 	
 
-	if (m_vao)
-		m_vao->destroy();
+	if (m_VAO != 0) 
+	{
+		glDeleteVertexArrays(1, &m_VAO);
+		m_VAO = 0;
+	}
 	
 }
 
@@ -107,6 +110,8 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName , MODEL_TY
 
 		generateSkeleton(m_scene->mRootNode, skeleton_root);
 		m_skeleton = new Skeleton(skeleton_root, m_GlobalInverseTransform);
+
+		//m_skeleton->dumpSkeleton(skeleton_root, 0);
 	}
 	
 
@@ -242,27 +247,32 @@ void ModelLoader::generateSkeleton( aiNode* pAiRootNode, Bone* pRootSkeleton )
 
 void ModelLoader::prepareVertexBuffers()
 {
-	m_vao->create();
-	m_vao->bind();
+	// Create the VAO
+	glGenVertexArrays(1, &m_VAO);   
+	glBindVertexArray(m_VAO);
 	
 	if(m_modelType == RIGGED_MODEL) m_Buffers.resize(NUM_VBs);
 	else m_Buffers.resize(NUM_VBs - 1);
 
+	// Create the buffers for the vertices attributes
 	glGenBuffers(m_Buffers.size(), m_Buffers.data());
 
 	// Generate and populate the buffers with vertex attributes and the indices
 	glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[POS_VB]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(m_positions[0]) * m_positions.size(), m_positions.data(), GL_STREAM_DRAW);
+	GLuint POSITION_LOCATION = glGetAttribLocation(m_shaderProgramID, "Position");
 	glEnableVertexAttribArray(POSITION_LOCATION);
 	glVertexAttribPointer(POSITION_LOCATION, 3, GL_FLOAT, GL_FALSE, 0, 0);    
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[TEXCOORD_VB]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(m_texCoords[0]) * m_texCoords.size(), m_texCoords.data(), GL_STREAM_DRAW);
+	GLuint TEX_COORD_LOCATION = glGetAttribLocation(m_shaderProgramID, "TexCoord");
 	glEnableVertexAttribArray(TEX_COORD_LOCATION);
 	glVertexAttribPointer(TEX_COORD_LOCATION, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[NORMAL_VB]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(m_normals[0]) * m_normals.size(), m_normals.data(), GL_STREAM_DRAW);
+	GLuint NORMAL_LOCATION = glGetAttribLocation(m_shaderProgramID, "Normal");
 	glEnableVertexAttribArray(NORMAL_LOCATION);
 	glVertexAttribPointer(NORMAL_LOCATION, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
@@ -273,13 +283,18 @@ void ModelLoader::prepareVertexBuffers()
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[BONE_VB]);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(m_Bones[0]) * m_Bones.size(), m_Bones.data(), GL_STREAM_DRAW);
+
+		GLuint BONE_ID_LOCATION = glGetAttribLocation(m_shaderProgramID, "BoneIDs");
 		glEnableVertexAttribArray(BONE_ID_LOCATION);
 		glVertexAttribIPointer(BONE_ID_LOCATION, 4, GL_INT, sizeof(VertexBoneData), (const GLvoid*)0);
+
+		GLuint BONE_WEIGHT_LOCATION = glGetAttribLocation(m_shaderProgramID, "Weights");
 		glEnableVertexAttribArray(BONE_WEIGHT_LOCATION);    
 		glVertexAttribPointer(BONE_WEIGHT_LOCATION, 4, GL_FLOAT, GL_FALSE, sizeof(VertexBoneData), (const GLvoid*)16);
 	}
 
-	m_vao->release();
+	// Make sure the VAO is not changed from the outside
+	glBindVertexArray(0);
 }
 
 MaterialData ModelLoader::loadMaterial(unsigned int index, const aiMaterial* material)

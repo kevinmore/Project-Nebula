@@ -15,8 +15,8 @@ Scene::Scene(QObject* parent)
 	  m_lightModeSubroutines(LightModeCount)
 {
 	// Initializing the position and orientation of the camera
-	m_camera->setPosition(QVector3D(2.0f, 1.0f, 0.0f));
-	m_camera->setViewCenter(QVector3D(0.0f, 0.0f, 0.0f));
+	m_camera->setPosition(QVector3D(0.0f, 200.0f, 200.0f));
+	m_camera->setViewCenter(QVector3D(0.0f, 100.0f, 0.0f));
 	m_camera->setUpVector(Math::Vector3D::UNIT_Y);
 
 	// Initializing the lights
@@ -60,7 +60,7 @@ void Scene::initialize()
 // 	m_modelManager->loadModel("Alice", "../Resource/Models/Alice/Alice.dae");
 // 	m_modelManager->getModel("Alice")->getActor()->setObjectXPosition(-250);
 // 	
-// 	m_modelManager->loadModel("Jiuniang", "../Resource/Models/jiuniang/jiuniang.dae");
+// 	m_modelManager->loadModel("Jiuniang", "../Resource/Models/jiuniang/jiuniang.dae", ModelLoader::RIGGED_MODEL);
 // 	m_modelManager->getModel("Jiuniang")->getActor()->setObjectXPosition(250);
 
 
@@ -72,10 +72,13 @@ void Scene::initialize()
 // 	m_modelManager->getModel("Naruto2")->getActor()->setObjectXPosition(250);
 
 	
-	m_modelManager->loadModel("Naruto2", "../Resource/Models/Naruto Sage/Naruto.dae", ModelLoader::RIGGED_MODEL);
+//	m_modelManager->loadModel("Naruto2", "../Resource/Models/Naruto Sage/Naruto.dae", ModelLoader::RIGGED_MODEL);
 
 
-//	m_modelManager->loadModel("Rasengang", "../Resource/Models/Naruto/rasengan.dae", ModelLoader::STATIC_MODEL);
+	m_modelManager->loadModel("Male", "../Resource/Models/Male/Male.dae", ModelLoader::RIGGED_MODEL);
+	//m_modelManager->loadModel("Beer", "../Resource/Models/GV2_Model_Peter/Beer.dae", ModelLoader::STATIC_MODEL);
+
+
 
 }
 

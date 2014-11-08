@@ -12,7 +12,8 @@ public:
 	int getSkeletonSize();
 	QMap<QString, Bone*> getBoneMap();
 	QVector<Bone*> getBoneList();
-
+	void makeBoneListFrom(Bone* baseBone, QVector<Bone*> &listOut);
+	
 	Bone* sortSkeleton(Bone* root);
 	void initialize(Bone* pBone, mat4 &parentTransform);
 	void sortPose(Bone* pBone, mat4 &parentTransform);
@@ -37,6 +38,8 @@ public:
 	uint getBoneCountBetween(Bone* upperBone, Bone* lowerBone);
 
 	Bone* getRoot() { return m_root; }
+
+	void getBoneChain(Bone* start, Bone* end, QVector<Bone*> &boneChain);
 
 	void applyOffset(Bone* pBone, mat4& offset);
 
