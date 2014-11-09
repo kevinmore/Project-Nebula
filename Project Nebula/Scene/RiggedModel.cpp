@@ -120,10 +120,59 @@ void RiggedModel::initialize(QVector<ModelDataPtr> modelDataVector)
 
 	ikSolved = false;
 	lastUpdatedTime = 0.0f;
-	updateIKRate = 0.2f;
+	updateIKRate = 0.5f;
 
 	m_FABRSolver = new FABRIKSolver(m_skeleton, 0.1f);
 	m_FABRSolver->enableIKChain("Bip01_L_UpperArm", "Bip01_L_Hand");
+
+
+	// set bone DOFs
+	Bone* pBone;
+	Bone::AngleLimits x, y, z;
+	Bone::DimensionOfFreedom dof;
+
+	// the angles are negative because OpenGl is a right handed system
+	pBone = m_skeleton->getBone("Bip01_L_Clavicle");
+	x = Bone::AngleLimits(0.0f, 0.0f);
+	y = Bone::AngleLimits(-10.0f, 10.0f);
+	z = Bone::AngleLimits(-5.0f, 10.0f);
+	dof = Bone::DimensionOfFreedom(x, y, z);
+	pBone->setDof(dof);
+
+	pBone = m_skeleton->getBone("Bip01_L_UpperArm");
+	x = Bone::AngleLimits(-100.0f, 40.0f);
+	y = Bone::AngleLimits(-100.0f, 20.0f);
+	z = Bone::AngleLimits(-35.0f, 35.0f);
+	dof = Bone::DimensionOfFreedom(x, y, z);
+	pBone->setDof(dof);
+	
+	pBone = m_skeleton->getBone("Bip01_L_Forearm");
+	x = Bone::AngleLimits(-60.0f, 60.0f);
+	y = Bone::AngleLimits(-10.0f, 120.0f);
+	z = Bone::AngleLimits(0.0f, 0.0f);
+	dof = Bone::DimensionOfFreedom(x, y, z);
+	pBone->setDof(dof);
+
+	pBone = m_skeleton->getBone("Bip01_L_Hand");
+	x = Bone::AngleLimits(-5.0f, 5.0f);
+	y = Bone::AngleLimits(-5.0f, 5.0f);
+	z = Bone::AngleLimits(-50.0f, 30.0f);
+	dof = Bone::DimensionOfFreedom(x, y, z);
+	pBone->setDof(dof);
+
+	pBone = m_skeleton->getBone("Bip01_L_Finger2");
+	x = Bone::AngleLimits(0.0f, 0.0f);
+	y = Bone::AngleLimits(0.0f, 0.0f);
+	z = Bone::AngleLimits(-10.0f, 60.0f);
+	dof = Bone::DimensionOfFreedom(x, y, z);
+	pBone->setDof(dof);
+
+	pBone = m_skeleton->getBone("Bip01_L_Finger21");
+	x = Bone::AngleLimits(0.0f, 0.0f);
+	y = Bone::AngleLimits(0.0f, 0.0f);
+	z = Bone::AngleLimits(-10.0f, 60.0f);
+	dof = Bone::DimensionOfFreedom(x, y, z);
+	pBone->setDof(dof);
 }
 
 void RiggedModel::destroy() {}
@@ -150,40 +199,40 @@ void RiggedModel::render( float time )
 	if(m_hasAnimation)
 	{
  		m_RenderingEffect->getShader()->setUniformValue("hasAnimation", true);
- 		m_FKController->BoneTransform(time, Transforms);
 	}
 
 	// use IK
 
 	// CCD
-// 	if (time - lastUpdatedTime > updateIKRate)
-// 	{
-// 		// set constraint
-// 		m_skeleton->getBone("Bip01_L_Hand")->isXConstraint = true;
-// 
-// 		CCDIKSolver::IkConstraint constraint;
-// 		constraint.m_startBone = m_skeleton->getBone("Bip01_L_UpperArm");
-// 		constraint.m_endBone = m_skeleton->getBone("Bip01_L_Hand");
-// 		constraint.m_targetMS = vec3(vec3(25, -100, 20));
-// 		//if (!ikSolved)
-// 		{
-// 			ikSolved = m_CCDSolver->solveOneConstraint( constraint, m_skeleton );
-// 		}
-// 
-// 		m_CCDSolver->BoneTransform(m_skeleton, constraint.m_startBone, Transforms);
-// 
-// 		lastUpdatedTime = time;
-// 
-// 	}
-	
-	// FABRIK
+	// set constraint
+	//m_skeleton->getBone("Bip01_L_Forearm")->isXConstraint = true;
+	CCDIKSolver::IkConstraint constraint;
+	constraint.m_startBone = m_skeleton->getBone("Bip01_L_UpperArm");
+	constraint.m_endBone = m_skeleton->getBone("Bip01_L_Finger22");
+	constraint.m_targetMS = m_targetPos;
+
+	if (m_CCDSolver->solveOneConstraint( constraint, m_skeleton ))
 	{
-		m_FABRSolver->solveIK(vec3(25, -100, 20));
-		m_FABRSolver->BoneTransform(m_skeleton, m_skeleton->getBone("Bip01_L_UpperArm"), Transforms);
+		m_FKController->disableBoneChain(m_skeleton->getBone("Bip01_L_UpperArm"));
+		m_FKController->getBoneTransforms(time, Transforms);
+		m_CCDSolver->getBoneTransforms(m_skeleton, constraint.m_startBone, Transforms);
+	}
+	else
+	{
+		m_FKController->enableAllBones();
+		m_FKController->getBoneTransforms(time, Transforms);
 	}
 
+	
+	// FABRIK
+// 	{
+// 		m_FABRSolver->solveIK(vec3(25, -100, 20));
+// 		m_FABRSolver->BoneTransform(m_skeleton, m_skeleton->getBone("Bip01_L_UpperArm"), Transforms);
+// 	}
+
  	// update the bone positions
-	for (int i = 0 ; i < Transforms.size() ; i++) {
+	for (int i = 0 ; i < Transforms.size() ; i++) 
+	{
 		m_RenderingEffect->SetBoneTransform(i, Transforms[i]);
 	}
 
@@ -237,4 +286,9 @@ void RiggedModel::drawElements(unsigned int index, int mode)
 		);
 	// Make sure the VAO is not changed from the outside    
 	m_funcs->glBindVertexArray(0);
+}
+
+void RiggedModel::setReachableTargetPos( vec3& pos )
+{
+	m_targetPos = pos;
 }

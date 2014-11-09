@@ -27,6 +27,8 @@ public:
 	virtual void render( float time );
 	bool hasAnimation() { return m_hasAnimation; }
 	Object3D* getActor() { return m_actor; }
+	void setReachableTargetPos(vec3& pos);
+	Skeleton* getSkeleton() { return m_skeleton; }
 
 protected:
 	QVector<MeshPtr> m_meshes;
@@ -63,5 +65,6 @@ private:
 	FABRIKSolver* m_FABRSolver;
 	bool ikSolved;
 	float updateIKRate, lastUpdatedTime;
+	vec3 m_targetPos;
 };
 

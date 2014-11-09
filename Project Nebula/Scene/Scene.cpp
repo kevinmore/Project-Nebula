@@ -101,6 +101,7 @@ void Scene::update(float t)
 
 	m_funcs->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+
 // 	m_shaderProgram->bind();
 // 	m_shaderProgram->setUniformValue("normalMatrix", normalMatrix);
 // 	m_shaderProgram->setUniformValue("modelMatrix", m_object.modelMatrix());
@@ -112,10 +113,22 @@ void Scene::update(float t)
 // 	m_light.setDirection(m_camera->viewCenter());
 // 	m_light.render(m_shaderProgram, m_camera->viewMatrix());
 
+	// make the floor look nicer
+// 	QSharedPointer<StaticModel> floorMesh = m_modelManager->getModel("floor").dynamicCast<StaticModel>();
+// 	floorMesh->getShadingTech()->Enable();
+// 	floorMesh->getShadingTech()->SetMatSpecularIntensity(100.f);
+// 	floorMesh->getShadingTech()->SetMatSpecularPower(46.0f);
+// 	floorMesh->getShadingTech()->Disable();
 	
 	// make the object to follow a curve path
 	QSharedPointer<StaticModel> target = m_modelManager->getModel("coffecup").dynamicCast<StaticModel>();
-	target->getActor()->setPosition(m_BezierPath[qFloor(t*500)%m_BezierPath.size()]);
+	vec3 curPos = m_BezierPath[qFloor(t*1000)%m_BezierPath.size()];
+	target->getActor()->setPosition(curPos);
+
+	// pass in the target position to the Rigged Model
+	QSharedPointer<RiggedModel> man = m_modelManager->getModel("m005").dynamicCast<RiggedModel>();
+	vec3 modelSpaceTargetPos = vec3(curPos.x(), -curPos.y(), -curPos.z()); // hack, need to multiply by several matrixes
+	man->setReachableTargetPos(modelSpaceTargetPos);
 
 	m_modelManager->renderAllModels(t);
 }

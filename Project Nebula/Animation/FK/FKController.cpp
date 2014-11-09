@@ -15,7 +15,7 @@ FKController::FKController(ModelLoader* loader, Skeleton* skeleton)
 FKController::~FKController(void)
 {}
 
-void FKController::BoneTransform( float TimeInSeconds, QVector<mat4>& Transforms )
+void FKController::getBoneTransforms( float TimeInSeconds, QVector<mat4>& Transforms )
 {
 
 	mat4 Identity;
@@ -23,40 +23,43 @@ void FKController::BoneTransform( float TimeInSeconds, QVector<mat4>& Transforms
 	float TicksPerSecond = (float)(m_Animations[0]->mTicksPerSecond != 0 ? m_Animations[0]->mTicksPerSecond : 25.0f);
 	float TimeInTicks = TimeInSeconds * TicksPerSecond;
 	float AnimationTime = fmod(TimeInTicks, (float)m_Animations[0]->mDuration);
-	readNodeHeirarchy(AnimationTime, m_root, Identity);
+	calcFinalTransforms(AnimationTime, m_root, Identity);
 
 	Transforms.resize(m_NumBones);
 
-	for (uint i = 0 ; i < m_NumBones ; i++) 
+	for (uint i = 0 ; i < m_NumBones ; i++)
 	{
+		// only update the bones that are enabled
+		// that is, the bone is not in the disabled bones list
+		if (m_disabledBones.indexOf(m_BoneInfo[i]) != -1) continue;
 		Transforms[i] = m_BoneInfo[i]->m_finalTransform;
 	}
 }
 
-void FKController::readNodeHeirarchy( float AnimationTime, const aiNode* pNode, const mat4 &ParentTransform )
+void FKController::calcFinalTransforms( float AnimationTime, const aiNode* pNode, const mat4 &ParentTransform )
 {
 	QString NodeName(pNode->mName.data);
 
 	const aiAnimation* pAnimation = m_Animations[0];
 
-	mat4 NodeTransformation(Math::convToQMat4(&pNode->mTransformation));
+	mat4 NodeTransformation(Math::convToQMat4(pNode->mTransformation));
 	
 	const aiNodeAnim* pNodeAnim = findNodeAnim(pAnimation, NodeName);
 	if (pNodeAnim) {
 		// Interpolate scaling and generate scaling transformation matrix
 		aiVector3D Scaling;
-		calcInterpolatedScaling(Scaling, AnimationTime, pNodeAnim);
+		interpolateScaling(Scaling, AnimationTime, pNodeAnim);
 		mat4 ScalingM;
 		ScalingM.scale(Scaling.x, Scaling.y, Scaling.z);
 
 		// Interpolate rotation and generate rotation transformation matrix
 		aiQuaternion RotationQ;
-		calcInterpolatedRotation(RotationQ, AnimationTime, pNodeAnim);        
-		mat4 RotationM = Math::convToQMat4(&RotationQ.GetMatrix());
+		interpolateRotation(RotationQ, AnimationTime, pNodeAnim);        
+		mat4 RotationM = Math::convToQMat4(RotationQ.GetMatrix());
 
 		// Interpolate translation and generate translation transformation matrix
 		aiVector3D Translation;
-		calcInterpolatedPosition(Translation, AnimationTime, pNodeAnim);
+		interpolatePosition(Translation, AnimationTime, pNodeAnim);
 		mat4 TranslationM;
 		TranslationM.translate(Translation.x, Translation.y, Translation.z);
 
@@ -70,22 +73,29 @@ void FKController::readNodeHeirarchy( float AnimationTime, const aiNode* pNode, 
 	 if (m_BoneMapping.find(NodeName) != m_BoneMapping.end()) 
 	 {
 		uint BoneIndex = m_BoneMapping[NodeName];
-		m_BoneInfo[BoneIndex]->m_nodeTransform = NodeTransformation;
-		m_BoneInfo[BoneIndex]->m_globalNodeTransform = GlobalTransformation;
-		m_BoneInfo[BoneIndex]->m_finalTransform = m_GlobalInverseTransform * GlobalTransformation * m_BoneInfo[BoneIndex]->m_offsetMatrix;
 
-		// update the global position
-		m_BoneInfo[BoneIndex]->calcWorldTransform();
+		// only update the bones that are enabled
+		// that is, the bone is not in the disabled bones list
+		if (m_disabledBones.indexOf(m_BoneInfo[BoneIndex]) == -1)
+		{
+			m_BoneInfo[BoneIndex]->m_nodeTransform = NodeTransformation;
+			m_BoneInfo[BoneIndex]->m_globalNodeTransform = GlobalTransformation;
+			m_BoneInfo[BoneIndex]->m_finalTransform = m_GlobalInverseTransform * GlobalTransformation * m_BoneInfo[BoneIndex]->m_offsetMatrix;
+
+			// update the global position
+			m_BoneInfo[BoneIndex]->calcWorldTransform();
+		}
+
 	 }
 
 	for (uint i = 0 ; i < pNode->mNumChildren ; i++) 
 	{
-		readNodeHeirarchy(AnimationTime, pNode->mChildren[i], GlobalTransformation);
+		calcFinalTransforms(AnimationTime, pNode->mChildren[i], GlobalTransformation);
 	}
 
 }
 
-void FKController::calcInterpolatedPosition(aiVector3D& Out, float AnimationTime, const aiNodeAnim* pNodeAnim)
+void FKController::interpolatePosition(aiVector3D& Out, float AnimationTime, const aiNodeAnim* pNodeAnim)
 {
 	if (pNodeAnim->mNumPositionKeys == 1) {
 		Out = pNodeAnim->mPositionKeys[0].mValue;
@@ -104,7 +114,7 @@ void FKController::calcInterpolatedPosition(aiVector3D& Out, float AnimationTime
 	Out = Start + Factor * Delta;
 }
 
-void FKController::calcInterpolatedRotation(aiQuaternion& Out, float AnimationTime, const aiNodeAnim* pNodeAnim)
+void FKController::interpolateRotation(aiQuaternion& Out, float AnimationTime, const aiNodeAnim* pNodeAnim)
 {
 	// we need at least two values to interpolate...
 	if (pNodeAnim->mNumRotationKeys == 1) {
@@ -124,7 +134,7 @@ void FKController::calcInterpolatedRotation(aiQuaternion& Out, float AnimationTi
 	Out = Out.Normalize();
 }
 
-void FKController::calcInterpolatedScaling(aiVector3D& Out, float AnimationTime, const aiNodeAnim* pNodeAnim)
+void FKController::interpolateScaling(aiVector3D& Out, float AnimationTime, const aiNodeAnim* pNodeAnim)
 {
 	if (pNodeAnim->mNumScalingKeys == 1) {
 		Out = pNodeAnim->mScalingKeys[0].mValue;
@@ -197,4 +207,15 @@ const aiNodeAnim* FKController::findNodeAnim(const aiAnimation* pAnimation, cons
 	}
 
 	return NULL;
+}
+
+void FKController::disableBoneChain( Bone* baseBone )
+{
+	m_disabledBones.clear();
+	m_skeleton->makeBoneListFrom(baseBone, m_disabledBones);
+}
+
+void FKController::enableAllBones()
+{
+	m_disabledBones.clear();
 }

@@ -8,17 +8,19 @@ public:
 	FKController(ModelLoader* loader, Skeleton* skeleton);
 	~FKController(void);
 
-	void BoneTransform(float TimeInSeconds, QVector<mat4>& Transforms);
+	void getBoneTransforms(float TimeInSeconds, QVector<mat4>& Transforms);
+	void enableAllBones();
+	void disableBoneChain(Bone* baseBone);
 
 private:
-	void calcInterpolatedScaling(aiVector3D& Out, float AnimationTime, const aiNodeAnim* pNodeAnim);
-	void calcInterpolatedRotation(aiQuaternion& Out, float AnimationTime, const aiNodeAnim* pNodeAnim);
-	void calcInterpolatedPosition(aiVector3D& Out, float AnimationTime, const aiNodeAnim* pNodeAnim);    
+	void interpolateScaling(aiVector3D& Out, float AnimationTime, const aiNodeAnim* pNodeAnim);
+	void interpolateRotation(aiQuaternion& Out, float AnimationTime, const aiNodeAnim* pNodeAnim);
+	void interpolatePosition(aiVector3D& Out, float AnimationTime, const aiNodeAnim* pNodeAnim);    
 	uint findScaling(float AnimationTime, const aiNodeAnim* pNodeAnim);
 	uint findRotation(float AnimationTime, const aiNodeAnim* pNodeAnim);
 	uint findPosition(float AnimationTime, const aiNodeAnim* pNodeAnim);
 	const aiNodeAnim* findNodeAnim(const aiAnimation* pAnimation, const QString NodeName);
-	void readNodeHeirarchy(float AnimationTime, const aiNode* pNode, const mat4& ParentTransform);
+	void calcFinalTransforms(float AnimationTime, const aiNode* pNode, const mat4& ParentTransform);
 
 	QMap<QString, uint> m_BoneMapping; // maps a bone name to its index
 	mat4 m_GlobalInverseTransform;
@@ -27,5 +29,7 @@ private:
 	aiAnimation** m_Animations;
 	aiNode* m_root;
 	Skeleton* m_skeleton;
+
+	QVector<Bone*> m_disabledBones;
 };
 

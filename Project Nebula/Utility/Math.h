@@ -1,8 +1,17 @@
 #pragma once
 #include <Utility/DataTypes.h>
 #include <assimp/types.h>
+#define CLAMP(x , min , max) ((x) > (max) ? (max) : ((x) < (min) ? (min) : x))
+
 namespace Math
 {
+	// check if a float is not a number
+	static bool isNaN(float var)
+	{
+		volatile float d = var;
+		return d != d;
+	}
+
 	// simple interpolation function
 	static float interpolate(float n1, float n2, float fraction)
 	{
@@ -73,70 +82,79 @@ namespace Math
 		return curvePoints;
 	}
 
-	// Computes the quaternion that is equivalent to a given
-	// vector in order:  roll-pitch-yaw.
-	static QQuaternion QuaternionFromEuler(vec3& v)
+	// EulerAngle structure
+	struct EulerAngle
 	{
-		double c1 = cos(v.z() * 0.5);
-		double c2 = cos(v.y() * 0.5);
-		double c3 = cos(v.x() * 0.5);
-		double s1 = sin(v.z() * 0.5);
-		double s2 = sin(v.y() * 0.5);
-		double s3 = sin(v.x() * 0.5);
+		float m_fRoll, m_fPitch, m_fYaw;
 
-		return QQuaternion(c1*c2*c3 + s1*s2*s3, c1*c2*s3 - s1*s2*c3, c1*s2*c3 + s1*c2*s3, s1*c2*c3 - c1*s2*s3);
+		EulerAngle()
+		{
+			m_fRoll  = 0.0f;
+			m_fPitch = 0.0f;
+			m_fYaw   = 0.0f;
+		}
+
+		EulerAngle(float roll, float pith, float yaw)
+		{
+			m_fRoll  = roll;
+			m_fPitch = pith;
+			m_fYaw   = yaw;
+		}
+	};
+
+
+	// Computes the quaternion that is equivalent to a given Euler Angle
+	static QQuaternion QuaternionFromEuler(EulerAngle& ea)
+	{
+		float fCosHRoll  = qCos(ea.m_fRoll * .5f);
+		float fSinHRoll  = qSin(ea.m_fRoll * .5f);
+		float fCosHPitch = qCos(ea.m_fPitch * .5f);
+		float fSinHPitch = qSin(ea.m_fPitch * .5f);
+		float fCosHYaw   = qCos(ea.m_fYaw * .5f);
+		float fSinHYaw   = qSin(ea.m_fYaw * .5f);
+
+		float w = fCosHRoll * fCosHPitch * fCosHYaw + fSinHRoll * fSinHPitch * fSinHYaw;
+		float x = fCosHRoll * fSinHPitch * fCosHYaw + fSinHRoll * fCosHPitch * fSinHYaw;
+		float y = fCosHRoll * fCosHPitch * fSinHYaw - fSinHRoll * fSinHPitch * fCosHYaw;
+		float z = fSinHRoll * fCosHPitch * fCosHYaw - fCosHRoll * fSinHPitch * fSinHYaw;
+
+		return QQuaternion(w, x, y, z);
 	}
 
 	
-	// return Euler angles in roll-pitch-yaw order.
-	static vec3 QuaternionToEuler(QQuaternion& q)
+	// return Euler angles
+	static EulerAngle QuaternionToEuler(QQuaternion& q)
 	{
-		vec3 out;
-		const static double PI_OVER_2 = M_PI * 0.5;
-		const static double EPSILON = 1e-10;
-		double sqw, sqx, sqy, sqz;
-		vec4 qVec4 = q.toVector4D();
-		// quick conversion to Euler angles to give tilt to user
-		sqw = qVec4.w()*qVec4.w();
-		sqx = qVec4.x()*qVec4.x();
-		sqy = qVec4.y()*qVec4.y();
-		sqz = qVec4.y()*qVec4.y();
+		EulerAngle out;
 
-		out.setY(asin(2.0 * (qVec4.w()*qVec4.y() - qVec4.x()*qVec4.z())));
+		vec4 v = q.toVector4D();
+		float x = v.x();
+		float y = v.y();
+		float z = v.z();
+		float w = v.w();
 
-		if (PI_OVER_2 - fabs(out.y()) > EPSILON) 
-		{
-			out.setZ ((float)atan2(2.0 * (qVec4.x()*qVec4.y() + qVec4.w()*qVec4.z()), sqx - sqy - sqz + sqw));
-			out.setX ((float)atan2(2.0 * (qVec4.w()*qVec4.x() + qVec4.y()*qVec4.z()), sqw - sqx - sqy + sqz));
-		} 
-		else 
-		{
-			// compute heading from local 'down' vector
-			out.setX(0.0f);
-			out.setZ((float)atan2(2*qVec4.y()*qVec4.z() - 2*qVec4.x()*qVec4.w(),	2*qVec4.x()*qVec4.z() + 2*qVec4.y()*qVec4.w()));
-			// If facing down, reverse yaw
-			if (out.y() < 0)
-				out.setZ(M_PI - out.z());
-		}
+		out.m_fRoll  = qAtan2(2 * (w * z + x * y) , 1 - 2 * (z * z + x * x));
+		out.m_fPitch = qSin(CLAMP(2 * (w * x - y * z) , -1.0f , 1.0f));
+		out.m_fYaw   = qAtan2(2 * (w * y + z * x) , 1 - 2 * (x * x + y * y));
 
 		return out;
 	}
 
 	// utility function to convert aiMatrix4x4 to QMatrix4x4
-	static QMatrix4x4 convToQMat4(const aiMatrix4x4 * m)
+	static QMatrix4x4 convToQMat4(const aiMatrix4x4& m)
 	{
-		return QMatrix4x4(m->a1, m->a2, m->a3, m->a4,
-						  m->b1, m->b2, m->b3, m->b4,
-						  m->c1, m->c2, m->c3, m->c4,
-						  m->d1, m->d2, m->d3, m->d4);
+		return QMatrix4x4(m.a1, m.a2, m.a3, m.a4,
+						  m.b1, m.b2, m.b3, m.b4,
+						  m.c1, m.c2, m.c3, m.c4,
+						  m.d1, m.d2, m.d3, m.d4);
 	}
 
 
-	static QMatrix4x4 convToQMat4(aiMatrix3x3 * m) 
+	static QMatrix4x4 convToQMat4(aiMatrix3x3& m) 
 	{
-		return QMatrix4x4(m->a1, m->a2, m->a3, 0,
-						  m->b1, m->b2, m->b3, 0,
-						  m->c1, m->c2, m->c3, 0,
+		return QMatrix4x4(m.a1, m.a2, m.a3, 0,
+						  m.b1, m.b2, m.b3, 0,
+						  m.c1, m.c2, m.c3, 0,
 						  0,     0,     0,     1);
 
 	}
@@ -147,50 +165,6 @@ namespace Math
 							m(1, 0), m(1, 1), m(1, 2), m(1, 3),
 							m(2, 0), m(2, 1), m(2, 2), m(2, 3),
 							m(3, 0), m(3, 1), m(3, 2), m(3, 3));
-	}
-
-	static void inverseQMat4(QMatrix4x4 &m)
-	{
-		float det = m.determinant();
-		if(det == 0.0f) 
-		{
-			// Matrix not invertible. Setting all elements to nan is not really
-			// correct in a mathematical sense but it is easy to debug for the
-			// programmer.
-			/*const float nan = std::numeric_limits<float>::quiet_NaN();
-			*this = Matrix4f(
-				nan,nan,nan,nan,
-				nan,nan,nan,nan,
-				nan,nan,nan,nan,
-				nan,nan,nan,nan);*/
-			return;
-		}
-		qDebug() << "Input:" << endl << m;
-		float invdet = 1.0f / det;
-
-		QMatrix4x4 res;
-	
-		res(0, 0) = invdet  * (m(1, 1) * (m(2, 2) * m(3, 3) - m(2, 3) * m(3, 2) + m(1, 2) * (m(2, 3) * m(3, 1) - m(2, 1) * m(3, 3)) + m(1, 3) * (m(2, 1) * m(3, 2) - m(2, 2) * m(3, 1))));
-		res(0, 1) = -invdet * (m(0, 1) * (m(2, 2) * m(3, 3) - m(2, 3) * m(3, 2) + m(0, 2) * (m(2, 3) * m(3, 1) - m(2, 1) * m(3, 3)) + m(0, 3) * (m(2, 1) * m(3, 2) - m(2, 2) * m(3, 1))));
-		res(0, 2) = invdet  * (m(0, 1) * (m(1, 2) * m(3, 3) - m(1, 3) * m(3, 2) + m(0, 2) * (m(1, 3) * m(3, 1) - m(1, 1) * m(3, 3)) + m(0, 3) * (m(1, 1) * m(3, 2) - m(1, 2) * m(3, 1))));
-		res(0, 3) = -invdet * (m(0, 1) * (m(1, 2) * m(2, 3) - m(1, 3) * m(2, 2) + m(0, 2) * (m(1, 3) * m(2, 1) - m(1, 1) * m(2, 3)) + m(0, 3) * (m(1, 1) * m(2, 2) - m(1, 2) * m(2, 1))));
-		res(1, 0) = -invdet * (m(1, 0) * (m(2, 2) * m(3, 3) - m(2, 3) * m(3, 2) + m(1, 2) * (m(2, 3) * m(3, 0) - m(2, 0) * m(3, 3)) + m(1, 3) * (m(2, 0) * m(3, 2) - m(2, 2) * m(3, 0))));
-		res(1, 1) = invdet  * (m(0, 0) * (m(2, 2) * m(3, 3) - m(2, 3) * m(3, 2) + m(0, 2) * (m(2, 3) * m(3, 0) - m(2, 0) * m(3, 3)) + m(0, 3) * (m(2, 0) * m(3, 2) - m(2, 2) * m(3, 0))));
-		res(1, 2) = -invdet * (m(0, 0) * (m(1, 2) * m(3, 3) - m(1, 3) * m(3, 2) + m(0, 2) * (m(1, 3) * m(3, 0) - m(1, 0) * m(3, 3)) + m(0, 3) * (m(1, 0) * m(3, 2) - m(1, 2) * m(3, 0))));
-		res(1, 3) = invdet  * (m(0, 0) * (m(1, 2) * m(2, 3) - m(1, 3) * m(2, 2) + m(0, 2) * (m(1, 3) * m(2, 0) - m(1, 0) * m(2, 3)) + m(0, 3) * (m(1, 0) * m(2, 2) - m(1, 2) * m(2, 0))));
-		res(2, 0) = invdet  * (m(1, 0) * (m(2, 1) * m(3, 3) - m(2, 3) * m(3, 1) + m(1, 1) * (m(2, 3) * m(3, 0) - m(2, 0) * m(3, 3)) + m(1, 3) * (m(2, 0) * m(3, 1) - m(2, 1) * m(3, 0))));
-		res(2, 1) = -invdet * (m(0, 0) * (m(2, 1) * m(3, 3) - m(2, 3) * m(3, 1) + m(0, 1) * (m(2, 3) * m(3, 0) - m(2, 0) * m(3, 3)) + m(0, 3) * (m(2, 0) * m(3, 1) - m(2, 1) * m(3, 0))));
-		res(2, 2) = invdet  * (m(0, 0) * (m(1, 1) * m(3, 3) - m(1, 3) * m(3, 1) + m(0, 1) * (m(1, 3) * m(3, 0) - m(1, 0) * m(3, 3)) + m(0, 3) * (m(1, 0) * m(3, 1) - m(1, 1) * m(3, 0))));
-		res(2, 3) = -invdet * (m(0, 0) * (m(1, 1) * m(2, 3) - m(1, 3) * m(2, 1) + m(0, 1) * (m(1, 3) * m(2, 0) - m(1, 0) * m(2, 3)) + m(0, 3) * (m(1, 0) * m(2, 1) - m(1, 1) * m(2, 0))));
-		res(3, 0) = -invdet * (m(1, 0) * (m(2, 1) * m(3, 2) - m(2, 2) * m(3, 1) + m(1, 1) * (m(2, 2) * m(3, 0) - m(2, 0) * m(3, 2)) + m(1, 2) * (m(2, 0) * m(3, 1) - m(2, 1) * m(3, 0))));
-		res(3, 1) = invdet  * (m(0, 0) * (m(2, 1) * m(3, 2) - m(2, 2) * m(3, 1) + m(0, 1) * (m(2, 2) * m(3, 0) - m(2, 0) * m(3, 2)) + m(0, 2) * (m(2, 0) * m(3, 1) - m(2, 1) * m(3, 0))));
-		res(3, 2) = -invdet * (m(0, 0) * (m(1, 1) * m(3, 2) - m(1, 2) * m(3, 1) + m(0, 1) * (m(1, 2) * m(3, 0) - m(1, 0) * m(3, 2)) + m(0, 2) * (m(1, 0) * m(3, 1) - m(1, 1) * m(3, 0))));
-		res(3, 3) = invdet  * (m(0, 0) * (m(1, 1) * m(2, 2) - m(1, 2) * m(2, 1) + m(0, 1) * (m(1, 2) * m(2, 0) - m(1, 0) * m(2, 2)) + m(0, 2) * (m(1, 0) * m(2, 1) - m(1, 1) * m(2, 0)))); 
-	
-	
-
-		qDebug() << "Output:" << endl << res;
-		m = QMatrix4x4(res);
 	}
 
 	namespace Vector2D

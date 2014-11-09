@@ -24,6 +24,7 @@ public:
 	virtual void render( float time );
 	bool hasAnimation() { return m_hasAnimation; }
 	Object3D* getActor() { return m_actor; }
+	ShadingTechnique* getShadingTech() { return m_RenderingEffect; }
 
 protected:
 	QVector<MeshPtr> m_meshes;

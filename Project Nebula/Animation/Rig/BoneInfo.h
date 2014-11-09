@@ -20,6 +20,7 @@ public:
 
 	mat4 m_globalNodeTransform;
 
+
 	bool isXConstraint;
 
 	/** Parent bode. NULL if this node is the root. **/
@@ -29,6 +30,7 @@ public:
 	{ 
 		m_parent = NULL;
 		isXConstraint = false;
+		m_DOF = DimensionOfFreedom();
 	}
 
 	Bone(Bone* parent)
@@ -40,31 +42,14 @@ public:
 		if(parent) parent->addChild(this);
 
 		isXConstraint = false;
+		m_DOF = DimensionOfFreedom();
 	}
 
 
 	void calcWorldTransform()
 	{
-// 		// The bone's transformation in the skeleton space,
-// 		// aka the bind matrix - the bone's parent's local matrices concatenated with the bone's local matrix.
-// 		const aiMatrix4x4 nodeGlobalTransform = Math::convToAiMat4(m_finalTransform);
-// 		// The transformation relative to the bone's parent (parent => bone space).
-// 		aiMatrix4x4 nodeLocalTransform;
-// 		if (m_parent && m_parent->m_name != "Project Nebula Skeleton ROOT")
-// 		{
-// 			aiMatrix4x4 parentGlobalTransform = Math::convToAiMat4(m_parent->m_finalTransform);
-// 			aiMatrix4x4 inverseParentGlobalTransform = parentGlobalTransform.Inverse();
-// 			nodeLocalTransform = inverseParentGlobalTransform * nodeGlobalTransform ; // N = P^-1 * B
-// 		}
-// 		else
-// 		{
-// 			nodeLocalTransform = Math::convToAiMat4(m_nodeTransform);
-// 		}
-// 
-// 		aiMatrix4x4 globalTransform = nodeLocalTransform * Math::convToAiMat4(m_offsetMatrix);
-
 		aiMatrix4x4 globalTransform = Math::convToAiMat4(m_globalNodeTransform);
-
+		
 		aiVector3D	 scaling;
 		aiQuaternion rotation;
 		aiVector3D	 position;
@@ -108,9 +93,9 @@ public:
 
 	void setWorldRotation(const QQuaternion& roation)
 	{
-		m_nodeTransform.rotate(roation);
-
-		m_worldQuaternion = roation;
+		m_globalNodeTransform.rotate(roation);
+		m_nodeTransform = m_parent->m_globalNodeTransform.inverted() * m_globalNodeTransform;
+		calcWorldTransform();
 	}
 
 	void setWorldPosition(const vec3 &newPos)
@@ -118,20 +103,92 @@ public:
 		vec3 originalPos = m_worldPos;
 		vec3 deltaTranslation = newPos - originalPos;
 
+		// clean the rotation updated by the FKController
+		m_globalNodeTransform.setToIdentity();
+		//m_globalNodeTransform.translate(deltaTranslation);
+
 		// here the bone is translated in the world coordinates
 		// dont use QMatrix4x4.translate(), that only translates in the relative coordinates
 		m_globalNodeTransform(0, 3) += deltaTranslation.x();
 		m_globalNodeTransform(1, 3) += deltaTranslation.y();
 		m_globalNodeTransform(2, 3) += deltaTranslation.z();
 
-		aiMatrix4x4 parentGlobalTransform = Math::convToAiMat4(m_parent->m_globalNodeTransform);
-		aiMatrix4x4 inverseParentGlobalTransform = parentGlobalTransform.Inverse();
 
-		m_nodeTransform = Math::convToQMat4(&inverseParentGlobalTransform) * m_globalNodeTransform;
+		m_nodeTransform = m_parent->m_globalNodeTransform.inverted() * m_globalNodeTransform;
 		calcWorldTransform();
 	}
 
+
+
+	// DOF in degrees
+	struct AngleLimits
+	{
+		float minAngle;
+		float maxAngle;
+
+		AngleLimits()
+		{
+			minAngle = -100.0f;
+			maxAngle = 100.0f;
+		}
+
+		AngleLimits(float min, float max)
+		{
+			minAngle = min;
+			maxAngle = max;
+		}
+	};
+
+	// DOF in degrees
+	struct DimensionOfFreedom
+	{
+		AngleLimits X_Axis_AngleLimits;
+		AngleLimits Y_Axis_AngleLimits;
+		AngleLimits Z_Axis_AngleLimits;
+
+		DimensionOfFreedom()
+		{
+			X_Axis_AngleLimits = AngleLimits();
+			Y_Axis_AngleLimits = AngleLimits();
+			Z_Axis_AngleLimits = AngleLimits();
+		}
+
+		DimensionOfFreedom(AngleLimits& x, AngleLimits& y, AngleLimits&z)
+		{
+			X_Axis_AngleLimits = x;
+			Y_Axis_AngleLimits = y;
+			Z_Axis_AngleLimits = z;
+		}
+	};
+
+	void setDof(DimensionOfFreedom& dof)
+	{
+		m_DOF = dof;
+	}
+
+	DimensionOfFreedom getDof()
+	{
+		return m_DOF;
+	}
+
+	uint getDofNumber()
+	{
+		uint result = 3;
+
+		if (m_DOF.X_Axis_AngleLimits.minAngle == m_DOF.X_Axis_AngleLimits.maxAngle)
+			--result;
+		if (m_DOF.Y_Axis_AngleLimits.minAngle == m_DOF.Y_Axis_AngleLimits.maxAngle)
+			--result;
+		if (m_DOF.Z_Axis_AngleLimits.minAngle == m_DOF.Z_Axis_AngleLimits.maxAngle)
+			--result;
+
+		return result;
+	}
+
 private:
+	DimensionOfFreedom m_DOF;
+
+
 	/** Position, rotation, scaling. **/
 	vec3 m_worldPos;
 	vec3 m_worldScaling;
@@ -139,6 +196,7 @@ private:
 
 	/** The child bones of this bone. **/
 	QVector<Bone*> m_children;
+
 };
 
 

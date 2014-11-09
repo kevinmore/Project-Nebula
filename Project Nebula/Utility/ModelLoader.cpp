@@ -52,7 +52,7 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName , MODEL_TY
 		qFatal("Support for meshes with embedded textures is not implemented");
 	}
 	
-   	m_GlobalInverseTransform = Math::convToQMat4(&(m_scene->mRootNode->mTransformation.Inverse()));
+   	m_GlobalInverseTransform = Math::convToQMat4(m_scene->mRootNode->mTransformation.Inverse());
 
 
 	unsigned int numVertices = 0;
@@ -197,7 +197,7 @@ void ModelLoader::loadBones( uint MeshIndex, const aiMesh* paiMesh )
 			m_BoneInfo.push_back(bi);
 			m_BoneInfo[boneIndex].m_ID = boneIndex;
 			m_BoneInfo[boneIndex].m_name = boneName;
-			m_BoneInfo[boneIndex].m_offsetMatrix = Math::convToQMat4(&paiMesh->mBones[i]->mOffsetMatrix);
+			m_BoneInfo[boneIndex].m_offsetMatrix = Math::convToQMat4(paiMesh->mBones[i]->mOffsetMatrix);
 			m_BoneMapping[boneName] = boneIndex;
 		}
 		else 
@@ -227,14 +227,14 @@ void ModelLoader::generateSkeleton( aiNode* pAiRootNode, Bone* pRootSkeleton, ma
 
 	QString nodeName(pAiRootNode->mName.data);
 
-	mat4 nodeTransformation(Math::convToQMat4(&pAiRootNode->mTransformation));
+	mat4 nodeTransformation(Math::convToQMat4(pAiRootNode->mTransformation));
 	mat4 globalTransformation = parentTransform * nodeTransformation;
 
 	// aiNode is not aiBone, aiBones are part of all the aiNodes
 	if (m_BoneMapping.find(nodeName) != m_BoneMapping.end())
 	{
 		uint BoneIndex = m_BoneMapping[nodeName];
-		m_BoneInfo[BoneIndex].m_nodeTransform = Math::convToQMat4(&pAiRootNode->mTransformation);
+		m_BoneInfo[BoneIndex].m_nodeTransform = Math::convToQMat4(pAiRootNode->mTransformation);
 
 		Bone bi = m_BoneInfo[BoneIndex];
 		pBone = new Bone(pRootSkeleton);
@@ -242,7 +242,7 @@ void ModelLoader::generateSkeleton( aiNode* pAiRootNode, Bone* pRootSkeleton, ma
 		pBone->m_name = bi.m_name;
 
 		pBone->m_offsetMatrix = bi.m_offsetMatrix;
-		pBone->m_nodeTransform = Math::convToQMat4(&pAiRootNode->mTransformation);
+		pBone->m_nodeTransform = Math::convToQMat4(pAiRootNode->mTransformation);
 		pBone->m_globalNodeTransform = globalTransformation;
 		pBone->m_finalTransform = m_GlobalInverseTransform * pBone->m_globalNodeTransform * pBone->m_offsetMatrix;
 	}

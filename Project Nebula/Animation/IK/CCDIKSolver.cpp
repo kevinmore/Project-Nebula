@@ -24,7 +24,7 @@ bool CCDIKSolver::solve( const QVector<IkConstraint>& constraints, Skeleton* ske
 	{
 		const CCDIKSolver::IkConstraint& constraint = constraints[i];
 
-		allSolved = solveOneConstraint(constraint, skeleton);
+		allSolved = solveOneConstraint(constraint, skeleton) && allSolved;
 
 	}
 
@@ -36,6 +36,10 @@ bool CCDIKSolver::solveOneConstraint( const IkConstraint& constraint, Skeleton* 
 {
 	Bone* effectorBone = constraint.m_endBone;
 	Bone* baseBone = constraint.m_startBone;
+
+	// re-sort the skeleton pose
+	// this step is necessary because the parent of the baseBone might have moved
+	skeleton->sortPose(baseBone, baseBone->m_parent->m_globalNodeTransform);
 
 	// find the set of bones within this chain
 	QVector<Bone*> boneChain;
@@ -57,7 +61,7 @@ bool CCDIKSolver::solveOneConstraint( const IkConstraint& constraint, Skeleton* 
 	}
 
 	float rootToTargetLenght = (constraint.m_targetMS - baseBone->getWorldPosition()).length();
-	if(m_totalChainLength - rootToTargetLenght < 0.00001f)
+	if(m_totalChainLength - rootToTargetLenght < 0.1f)
 	{
 	//	qDebug() << "Target out of range.";
 		return false;
@@ -67,7 +71,7 @@ bool CCDIKSolver::solveOneConstraint( const IkConstraint& constraint, Skeleton* 
 	for( uint iteration = 0; iteration < m_iterations; ++iteration )
 	{
 		// check if the target is already reached
-		if (qFuzzyIsNull((effectorBone->getWorldPosition() - constraint.m_targetMS).length()))
+		if ((effectorBone->getWorldPosition() - constraint.m_targetMS).length() < 0.1f)
 		{
 			qDebug() << "Target reached.";
 			return true;
@@ -83,72 +87,93 @@ bool CCDIKSolver::solveOneConstraint( const IkConstraint& constraint, Skeleton* 
 			const vec3 jointPos = joint->getWorldPosition();
 
 			// joint to effector bone direction
-			vec3 localJoint2End = (effectorPos - jointPos).normalized();
+			vec3 currentDirection = (effectorPos - jointPos).normalized();
 
 			// joint to target direction
-			vec3 localJoint2Target = (constraint.m_targetMS - jointPos).normalized();
+			vec3 targetDirenction = (constraint.m_targetMS - jointPos).normalized();
 
 			// calculate the rotation axis and angle
-			const vec3 rotationAxis = vec3::crossProduct(localJoint2End, localJoint2Target);
-			float deltaAngle = qRadiansToDegrees(qAcos(vec3::dotProduct(localJoint2End,  localJoint2Target)));
-
+			const vec3 rotationAxis = vec3::crossProduct(currentDirection, targetDirenction);
+			float deltaAngle = qRadiansToDegrees(qAcos(vec3::dotProduct(currentDirection,  targetDirenction)));
 			// if the angle is too small
-			if (qFuzzyIsNull(deltaAngle))
+			if (deltaAngle < 0.1f || Math::isNaN(deltaAngle))
 			{  
 				continue;
+				//return true;
 			}
+			deltaAngle *= -1;
+			Bone::DimensionOfFreedom dof = joint->getDof();
+			QQuaternion deltaRotation;
+			Math::EulerAngle eulerAngles;
+			float curYaw, curPitch, curRoll;  
+			float deltaYaw, deltaPitch, deltaRoll;
 
-			// limit the angle
-			deltaAngle = qBound(-100.0f, deltaAngle, 100.0f);
+			// Check DOF
+			// create the quaternion
+			deltaRotation = QQuaternion::fromAxisAndAngle(rotationAxis, deltaAngle);
 
-			QQuaternion deltaRotation = QQuaternion::fromAxisAndAngle(rotationAxis, -deltaAngle);
+			// decompose it
+			eulerAngles = Math::QuaternionToEuler(deltaRotation);
+			deltaRoll  = qRadiansToDegrees(eulerAngles.m_fRoll);
+			deltaPitch = qRadiansToDegrees(eulerAngles.m_fPitch);
+			deltaYaw   = qRadiansToDegrees(eulerAngles.m_fYaw);
+
+			deltaRoll  = qBound(dof.Z_Axis_AngleLimits.minAngle, deltaRoll, dof.Z_Axis_AngleLimits.maxAngle);
+			deltaPitch = qBound(dof.X_Axis_AngleLimits.minAngle, deltaPitch, dof.X_Axis_AngleLimits.maxAngle);
+			deltaYaw   = qBound(dof.Y_Axis_AngleLimits.minAngle, deltaRoll, dof.Y_Axis_AngleLimits.maxAngle);
+
+			// remake the quaternion
+			deltaRotation = Math::QuaternionFromEuler(Math::EulerAngle(deltaRoll, deltaPitch, deltaYaw));
+
+			
+			eulerAngles = Math::QuaternionToEuler(deltaRotation);
+			deltaRoll  = qRadiansToDegrees(eulerAngles.m_fRoll);
+			deltaPitch = qRadiansToDegrees(eulerAngles.m_fPitch);
+			deltaYaw   = qRadiansToDegrees(eulerAngles.m_fYaw);
+			
 
 			//check the DOF of the joint
-			if (joint->isXConstraint)
-			{
-				float curYaw, curPitch, curRoll;  
-				float deltaYaw, deltaPitch, deltaRoll;  
-
-
-				if (iteration == 0)
-				{  
-					deltaRotation = QQuaternion::fromAxisAndAngle(Math::Vector3D::UNIT_Y, -deltaAngle);  
-				} 
-				else  
-				{  
-					vec3 eulerAngles = Math::QuaternionToEuler(deltaRotation);
-					deltaYaw = eulerAngles.z();
-					deltaPitch = eulerAngles.y();
-					deltaRoll = eulerAngles.x();
-
-					eulerAngles = Math::QuaternionToEuler(joint->getWorldRotation());
-					curYaw = eulerAngles.z();
-					curPitch = eulerAngles.y();
-					curRoll = eulerAngles.x();
-
-					if (qFuzzyIsNull(deltaPitch))
-					{  
-						continue;
-					}  
-
-					// limit the yaw [-0.002f - curYaw, M_PI - curYaw]  
-					deltaPitch = qBound(-0.002f - curPitch, deltaPitch, float( M_PI ) - curPitch);
-					deltaPitch = qBound(qDegreesToRadians(-100.0f), deltaPitch, qDegreesToRadians(100.0f));
-
-					deltaRotation = Math::QuaternionFromEuler(vec3(0.0f, -deltaPitch, 0.0f));
-				}  
-			}
+// 			if (joint->isXConstraint)
+// 			{
+// 				if (iteration == 0)
+// 				{  
+// 					deltaRotation = QQuaternion::fromAxisAndAngle(Math::Vector3D::UNIT_Y, -deltaAngle);  
+// 				} 
+// 				else  
+// 				{  
+// 					
+// 
+// 					vec3 eulerAngles = Math::QuaternionToEuler(deltaRotation);
+// 					deltaYaw = eulerAngles.z();
+// 					deltaPitch = eulerAngles.y();
+// 					deltaRoll = eulerAngles.x();
+// 
+// 					eulerAngles = Math::QuaternionToEuler(joint->getWorldRotation());
+// 					curYaw = eulerAngles.z();
+// 					curPitch = eulerAngles.y();
+// 					curRoll = eulerAngles.x();
+// 
+// 					if (qFuzzyIsNull(deltaPitch) || Math::isNaN(deltaPitch))
+// 					{  
+// 						continue;
+// 					}  
+// 
+// 					deltaPitch = qBound(-0.002f - curPitch, deltaPitch, float( M_PI ) - curPitch);
+// 					deltaPitch = qRadiansToDegrees(deltaPitch);
+// 					deltaPitch = qBound(0.0f, deltaPitch, 100.0f);
+// 
+// 					deltaRotation = Math::QuaternionFromEuler(vec3(0.0f, -deltaPitch, 0.0f));
+// 				}  
+// 			}
 			
-			joint->m_nodeTransform.rotate(deltaRotation);
-			joint->m_globalNodeTransform.rotate(deltaRotation);
-			aiMatrix4x4 parentGlobalTransform = Math::convToAiMat4(joint->m_parent->m_globalNodeTransform);
-			aiMatrix4x4 inverseParentGlobalTransform = parentGlobalTransform.Inverse();
-			joint->m_nodeTransform = Math::convToQMat4(&inverseParentGlobalTransform) * joint->m_globalNodeTransform;
+			// adjust the world rotation of the joint
+			joint->setWorldRotation(deltaRotation);
 
 			// re-sort the skeleton pose
 			skeleton->sortPose(baseBone, baseBone->m_parent->m_globalNodeTransform);
 		}
-						
+		
+		m_effectorLastPos = effectorBone->getWorldPosition();
 	}
 
 	return true;
@@ -156,7 +181,7 @@ bool CCDIKSolver::solveOneConstraint( const IkConstraint& constraint, Skeleton* 
 }
 
 
-void CCDIKSolver::BoneTransform( Skeleton* skeleton, Bone* baseBone, QVector<mat4>& Transforms )
+void CCDIKSolver::getBoneTransforms( Skeleton* skeleton, Bone* baseBone, QVector<mat4>& Transforms )
 {
 	QVector<Bone*> boneList;
 	skeleton->makeBoneListFrom(baseBone, boneList);

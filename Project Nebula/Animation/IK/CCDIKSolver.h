@@ -38,12 +38,13 @@ public:
 	// Gets the number of iterations
 	uint getIterations() const { return m_iterations; }
 	
-	void BoneTransform( Skeleton* skeleton, Bone* baseBone, QVector<mat4>& Transforms );
+	void getBoneTransforms( Skeleton* skeleton, Bone* baseBone, QVector<mat4>& Transforms );
 
 protected:
 
 	// The number of iterations of the IK solver
 	uint m_iterations;
 
+	vec3 m_effectorLastPos;
 };
 
