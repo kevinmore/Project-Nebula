@@ -33,7 +33,6 @@ bool FABRIKSolver::enableIKChain( const QString &rootName, const QString &effect
 
 	m_rootBone = rootBone;
 	m_effectorBone = effectorBone;
-
 	/************************************************************************/
 	/* Create the bone chain                                                */
 	/************************************************************************/
@@ -68,6 +67,7 @@ bool FABRIKSolver::enableIKChain( const QString &rootName, const QString &effect
 
 void FABRIKSolver::solveIK( const vec3 &targetPos )
 {
+
 	/************************************************************************/
 	/* Check if the target is already reached                               */
 	/************************************************************************/
@@ -85,7 +85,7 @@ void FABRIKSolver::solveIK( const vec3 &targetPos )
 	float rootToTargetLenght = (targetPos - originalRootPosition).length();
 	if(m_totalChainLength - rootToTargetLenght < 0.00001f)
 	{
-		qDebug() << "solveIK failed! Target out of range.";
+		//qDebug() << "solveIK failed! Target out of range.";
 		return;
 	}
 
@@ -145,42 +145,23 @@ void FABRIKSolver::solveIK( const vec3 &targetPos )
 // 		qDebug() << "Bone[" << i << "]" << m_boneChain[i]->getWorldPosition();
 // 	}
 // 	printf("\n");
-	/************************************************************************/
-	/* Stage 3: Moving the children of the effector(if any)                 */
-	/************************************************************************/
-// 	if(m_effectorBone->childCount() > 0)
-// 	{
-// 		vec3 offset = m_effectorBone->getWorldPosition() - m_effectorBone->getChild(i)->getWorldPosition();
-// 		mat4 offsetM;
-// 		offsetM.translate(offset);
-// 		for (int i = 0; i < m_effectorBone->childCount(); ++i)
-// 		{
-// 			m_skeleton->applyOffset(m_effectorBone->getChild(i), offsetM);
-// 		}
-// 		
-// 	}
+
 	
 
 	/************************************************************************/
-	/* Stage 4: Update the skeleton position                                */
+	/* Stage 3: Update the skeleton position                                */
 	/************************************************************************/
-	mat4 identity;
-	m_skeleton->sortPose(m_skeleton->getRoot(), identity);
+	m_skeleton->sortPose(m_rootBone, m_rootBone->m_parent->m_globalNodeTransform);
 }
 
-void FABRIKSolver::BoneTransform( QVector<mat4>& Transforms )
+void FABRIKSolver::BoneTransform( Skeleton* skeleton, Bone* baseBone, QVector<mat4>& Transforms )
 {
 
-	QVector<Bone*> boneList = m_skeleton->getBoneList();
-
-	Transforms.resize(boneList.size());
-	for (int i = 0; i < Transforms.size(); ++i)
+	QVector<Bone*> boneList;
+	skeleton->makeBoneListFrom(baseBone, boneList);
+	Transforms.resize(skeleton->getSkeletonSize());
+	for (int i = 0; i < boneList.size(); ++i)
 	{
-		Transforms[i] = boneList[i]->m_finalTransform;
+		Transforms[boneList[i]->m_ID] = boneList[i]->m_finalTransform;
 	}
-
-// 	Transforms[18] = mat4(2,3,1,0,
-// 						-2,-3,3,1,
-// 						1.2, -3.4, -4.5, 0,
-// 						0, 0, 0, 1);
 }

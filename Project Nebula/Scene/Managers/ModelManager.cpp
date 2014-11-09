@@ -33,7 +33,7 @@ ModelPtr ModelManager::loadModel( const QString& name, const QString& filename, 
 		QVector<ModelDataPtr> modelDataVector = modelLoader->loadModel(filename, type);
 
 		// create a FKController for the model
-		FKController* controller = new FKController(modelLoader);
+		FKController* controller = new FKController(modelLoader, modelLoader->getSkeletom());
 
 		// create an IKSolver for the model
 		CCDIKSolver* solver = new CCDIKSolver();
@@ -44,7 +44,7 @@ ModelPtr ModelManager::loadModel( const QString& name, const QString& filename, 
 
 	else if (type == ModelLoader::STATIC_MODEL)
 	{
-		ShadingTechnique* effect = new ShadingTechnique("../Resource/Shaders/skinning.vert", "../Resource/Shaders/skinning.frag");
+		ShadingTechnique* effect = new ShadingTechnique("../Resource/Shaders/static.vert", "../Resource/Shaders/static.frag");
 		if (!effect->Init()) 
 		{
 			printf("Error initializing the lighting technique\n");

@@ -45,13 +45,12 @@ private:
 	/*
 	 *	Methods to process the model file
 	 */
-	MeshData loadMesh(unsigned int index, unsigned int numVertices, unsigned int numIndices, const aiMesh* mesh);
+	MeshData loadMesh(unsigned int index, unsigned int numVertices, unsigned int numIndices, const aiMesh* mesh, const QString& fileName);
 	MaterialData loadMaterial(unsigned int index, const aiMaterial* material);
 	TextureData  loadTexture(const QString& filename, const aiMaterial* material);
 	void loadBones(uint MeshIndex, const aiMesh* paiMesh);
 	void prepareVertexContainers(unsigned int index, const aiMesh* mesh);
-	void generateSkeleton(aiNode* pAiRootNode, Bone* pRootSkeleton);
-
+	void generateSkeleton(aiNode* pAiRootNode, Bone* pRootSkeleton, mat4& parentTransform);
 	/*
 	 *	Clean up
 	 */

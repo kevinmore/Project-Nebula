@@ -15,8 +15,11 @@ MainWindow::MainWindow(QWidget *parent)
 	initializeCanvas();
 	initializeParamsArea();
 	initializeMenuBar();
-
 	resize(1366, 768);
+
+	// this is a trick to refresh the opengl surface to make it fit the window properly!
+	showFullScreen();
+	showNormal();
 }
 
 MainWindow::~MainWindow() {}
@@ -220,14 +223,14 @@ void MainWindow::initializeParamsArea()
 	hLineCamera1->setFrameStyle(QFrame::HLine | QFrame::Sunken);
 	hLineCamera2->setFrameStyle(QFrame::HLine | QFrame::Sunken);
 
-	QLabel* cameraSpeedLabel       = new QLabel("Speed (m/s) : ");
+	QLabel* cameraSpeedLabel       = new QLabel("Speed (cm/s) : ");
 	QLabel* cameraSensitivityLabel = new QLabel("Sensitivity : ");
 
 	QDoubleSpinBox* cameraSpeedValue       = new QDoubleSpinBox;
 	QDoubleSpinBox* cameraSensitivityValue = new QDoubleSpinBox;
 
 	cameraSpeedValue->setRange(1.0, 2000.0);
-	cameraSpeedValue->setValue(1000.0);
+	cameraSpeedValue->setValue(1500.0);
 	cameraSpeedValue->setMaximumSize(60, 20);
 
 	cameraSensitivityValue->setValue(0.2);
@@ -568,13 +571,13 @@ void MainWindow::initializeParamsArea()
 	QObject::connect(resetCamera,            SIGNAL(clicked()),            m_camera,            SLOT(resetCamera()));
 
 	// Object
-	QObject::connect(translationX, SIGNAL(valueChanged(int)), m_object3D, SLOT(setObjectXPosition(int)));
-	QObject::connect(translationY, SIGNAL(valueChanged(int)), m_object3D, SLOT(setObjectYPosition(int)));
-	QObject::connect(translationZ, SIGNAL(valueChanged(int)), m_object3D, SLOT(setObjectZPosition(int)));
-
-	QObject::connect(rotationX, SIGNAL(valueChanged(int)), m_object3D, SLOT(setObjectXRotation(int)));
-	QObject::connect(rotationY, SIGNAL(valueChanged(int)), m_object3D, SLOT(setObjectYRotation(int)));
-	QObject::connect(rotationZ, SIGNAL(valueChanged(int)), m_object3D, SLOT(setObjectZRotation(int)));
+	//QObject::connect(translationX, SIGNAL(valueChanged(int)), m_object3D, SLOT(setObjectXPosition(int)));
+	//QObject::connect(translationY, SIGNAL(valueChanged(int)), m_object3D, SLOT(setObjectYPosition(int)));
+	//QObject::connect(translationZ, SIGNAL(valueChanged(int)), m_object3D, SLOT(setObjectZPosition(int)));
+	//
+	//QObject::connect(rotationX, SIGNAL(valueChanged(int)), m_object3D, SLOT(setObjectXRotation(int)));
+	//QObject::connect(rotationY, SIGNAL(valueChanged(int)), m_object3D, SLOT(setObjectYRotation(int)));
+	//QObject::connect(rotationZ, SIGNAL(valueChanged(int)), m_object3D, SLOT(setObjectZRotation(int)));
 
 	// Light Effect
 	QObject::connect(PVPhong,      SIGNAL(toggled(bool)), m_scene, SLOT(togglePhong(bool)));

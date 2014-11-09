@@ -45,7 +45,12 @@ void Scene::initialize()
 	m_funcs->initializeOpenGLFunctions();
 
 
-	
+	m_funcs->glClearDepth( 1.0 );
+	m_funcs->glEnable(GL_DEPTH_TEST);
+	m_funcs->glDepthFunc(GL_LEQUAL);
+	m_funcs->glClearColor(0.39f, 0.39f, 0.39f, 0.0f);
+
+	m_funcs->glEnable(GL_CULL_FACE);
 
 //     m_light.setType(Light::SpotLight);
 //     m_light.setUniqueColor(1.0, 1.0, 1.0);
@@ -57,29 +62,17 @@ void Scene::initialize()
 	m_textureManager = QSharedPointer<TextureManager>(new TextureManager());
 	m_meshManager = QSharedPointer<MeshManager>(new MeshManager());
 
-// 	m_modelManager->loadModel("Alice", "../Resource/Models/Alice/Alice.dae");
-// 	m_modelManager->getModel("Alice")->getActor()->setObjectXPosition(-250);
-// 	
-// 	m_modelManager->loadModel("Jiuniang", "../Resource/Models/jiuniang/jiuniang.dae", ModelLoader::RIGGED_MODEL);
-// 	m_modelManager->getModel("Jiuniang")->getActor()->setObjectXPosition(250);
 
+	m_modelManager->loadModel("floor", "../Resource/Models/DemoRoom/floor.DAE", ModelLoader::STATIC_MODEL);
+	m_modelManager->loadModel("coffecup", "../Resource/Models/IK_Lab/coffecup.DAE", ModelLoader::STATIC_MODEL);
+	m_modelManager->loadModel("m005", "../Resource/Models/IK_Lab/m005.DAE", ModelLoader::RIGGED_MODEL);
 
-
-// 	m_modelManager->loadModel("Naruto1", "../Resource/Models/Naruto/Naruto.dae");
-// 	m_modelManager->getModel("Naruto1")->getActor()->setObjectXPosition(-250);
- 
-// 	m_modelManager->loadModel("Naruto2", "../Resource/Models/Naruto/Naruto.dae");
-// 	m_modelManager->getModel("Naruto2")->getActor()->setObjectXPosition(250);
-
-	
-//	m_modelManager->loadModel("Naruto2", "../Resource/Models/Naruto Sage/Naruto.dae", ModelLoader::RIGGED_MODEL);
-
-
-	m_modelManager->loadModel("Male", "../Resource/Models/Male/Male.dae", ModelLoader::RIGGED_MODEL);
-	//m_modelManager->loadModel("Beer", "../Resource/Models/GV2_Model_Peter/Beer.dae", ModelLoader::STATIC_MODEL);
-
-
-
+	// generate a bezier curve
+	QVector<vec3> anchors;
+	anchors << vec3(-150, 100, 0) << vec3(-50, 120, 150) << vec3(0, 150, 100) << vec3(50, 80, 20)
+		<< vec3(100, 0, -50) << vec3(150, 80, -100) << vec3(150, 200, -120) << vec3(100, 180, -90)
+		<< vec3(50, 100, -50) << vec3(0, 50, -20) << vec3(-100, 80, -10) << vec3(-150, 100, 0);
+	m_BezierPath = Math::makeBezier3D(anchors);
 }
 
 
@@ -106,7 +99,7 @@ void Scene::update(float t)
 		m_tiltAngle = 0.0f;
 	}
 
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	m_funcs->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 // 	m_shaderProgram->bind();
 // 	m_shaderProgram->setUniformValue("normalMatrix", normalMatrix);
@@ -120,8 +113,11 @@ void Scene::update(float t)
 // 	m_light.render(m_shaderProgram, m_camera->viewMatrix());
 
 	
+	// make the object to follow a curve path
+	QSharedPointer<StaticModel> target = m_modelManager->getModel("coffecup").dynamicCast<StaticModel>();
+	target->getActor()->setPosition(m_BezierPath[qFloor(t*500)%m_BezierPath.size()]);
+
 	m_modelManager->renderAllModels(t);
-	//m_modelManager->getModel("Naruto1")->render(t);
 }
 
 void Scene::render(double currentTime)
@@ -165,7 +161,7 @@ void Scene::toggleFill(bool state)
 {
 	if(state)
 	{
-		//glEnable(GL_CULL_FACE);
+		glEnable(GL_CULL_FACE);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 }
@@ -174,7 +170,7 @@ void Scene::toggleWireframe(bool state)
 {
 	if(state)
 	{
-		//glDisable(GL_CULL_FACE);
+		glDisable(GL_CULL_FACE);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	}
 }
@@ -183,7 +179,7 @@ void Scene::togglePoints(bool state)
 {
 	if(state)
 	{
-		//glDisable(GL_CULL_FACE);
+		glDisable(GL_CULL_FACE);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
 	}
 }

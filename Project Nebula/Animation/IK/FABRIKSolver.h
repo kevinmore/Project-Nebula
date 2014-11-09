@@ -9,7 +9,7 @@ public:
 
 	bool enableIKChain(const QString &rootName, const QString &effectorName);
 	void solveIK(const vec3 &targetPos);
-	void BoneTransform(QVector<mat4>& Transforms);
+	void BoneTransform(Skeleton* skeleton, Bone* baseBone, QVector<mat4>& Transforms);
 
 private:
 	Skeleton* m_skeleton;

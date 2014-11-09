@@ -84,7 +84,7 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName , MODEL_TY
 	{
 		ModelData* md = new ModelData();
 		
-		md->meshData     = loadMesh(i, numVertices, numIndices, m_scene->mMeshes[i]);
+		md->meshData     = loadMesh(i, numVertices, numIndices, m_scene->mMeshes[i], fileName);
 		md->textureData  = loadTexture(fileName, m_scene->mMaterials[m_scene->mMeshes[i]->mMaterialIndex]);
 		md->materialData = loadMaterial(i, m_scene->mMaterials[m_scene->mMeshes[i]->mMaterialIndex]);
 		md->hasAnimation = m_scene->HasAnimations();
@@ -98,7 +98,8 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName , MODEL_TY
 	prepareVertexBuffers();
 
 	qDebug() << "Loaded" << fileName;
-	qDebug() << "Model has" << m_scene->mNumMeshes << "meshes," << numVertices << "vertices," << numIndices << "indices and" << m_NumBones << "bones.";
+	qDebug() << "Model has" << m_scene->mNumMeshes << "meshes," << numVertices << "vertices," 
+		     << numIndices << "indices and" << m_NumBones << "bones." << endl;
 
 	// generate the skeleton of the model
 	// specify the root bone
@@ -108,8 +109,10 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName , MODEL_TY
 		skeleton_root->m_ID = 9999;
 		skeleton_root->m_name = "Project Nebula Skeleton ROOT";
 
-		generateSkeleton(m_scene->mRootNode, skeleton_root);
+		mat4 identity;
+		generateSkeleton(m_scene->mRootNode, skeleton_root, identity);
 		m_skeleton = new Skeleton(skeleton_root, m_GlobalInverseTransform);
+
 
 		//m_skeleton->dumpSkeleton(skeleton_root, 0);
 	}
@@ -118,14 +121,14 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName , MODEL_TY
 	return modelDataVector;
 }
 
-MeshData ModelLoader::loadMesh(unsigned int index, unsigned int numVertices, unsigned int numIndices, const aiMesh* mesh)
+MeshData ModelLoader::loadMesh(unsigned int index, unsigned int numVertices, unsigned int numIndices, const aiMesh* mesh, const QString& fileName)
 {
 	MeshData data = MeshData();
 
 	if(mesh->mName.length > 0)
 		data.name = QString(mesh->mName.C_Str());
 	else
-		data.name = "mesh_" + QString::number(index);
+		data.name = fileName + "/mesh_" + QString::number(index);
 
 	data.numIndices = mesh->mNumFaces * 3;
 	data.baseVertex = numVertices;
@@ -217,12 +220,15 @@ void ModelLoader::loadBones( uint MeshIndex, const aiMesh* paiMesh )
 	}
 }
 
-void ModelLoader::generateSkeleton( aiNode* pAiRootNode, Bone* pRootSkeleton )
+void ModelLoader::generateSkeleton( aiNode* pAiRootNode, Bone* pRootSkeleton, mat4& parentTransform )
 {
 	// generate a skeleton from the existing bone map and BoneInfo vector
 	Bone* pBone = NULL;
 
 	QString nodeName(pAiRootNode->mName.data);
+
+	mat4 nodeTransformation(Math::convToQMat4(&pAiRootNode->mTransformation));
+	mat4 globalTransformation = parentTransform * nodeTransformation;
 
 	// aiNode is not aiBone, aiBones are part of all the aiNodes
 	if (m_BoneMapping.find(nodeName) != m_BoneMapping.end())
@@ -234,14 +240,17 @@ void ModelLoader::generateSkeleton( aiNode* pAiRootNode, Bone* pRootSkeleton )
 		pBone = new Bone(pRootSkeleton);
 		pBone->m_ID = BoneIndex;
 		pBone->m_name = bi.m_name;
+
 		pBone->m_offsetMatrix = bi.m_offsetMatrix;
 		pBone->m_nodeTransform = Math::convToQMat4(&pAiRootNode->mTransformation);
+		pBone->m_globalNodeTransform = globalTransformation;
+		pBone->m_finalTransform = m_GlobalInverseTransform * pBone->m_globalNodeTransform * pBone->m_offsetMatrix;
 	}
 
 	for (uint i = 0 ; i < pAiRootNode->mNumChildren ; ++i) 
 	{
-		if(pBone) generateSkeleton(pAiRootNode->mChildren[i], pBone);
-		else generateSkeleton(pAiRootNode->mChildren[i], pRootSkeleton);
+		if(pBone) generateSkeleton(pAiRootNode->mChildren[i], pBone, globalTransformation);
+		else generateSkeleton(pAiRootNode->mChildren[i], pRootSkeleton, globalTransformation);
 	}
 }
 
@@ -250,39 +259,47 @@ void ModelLoader::prepareVertexBuffers()
 	// Create the VAO
 	glGenVertexArrays(1, &m_VAO);   
 	glBindVertexArray(m_VAO);
-	
-	if(m_modelType == RIGGED_MODEL) m_Buffers.resize(NUM_VBs);
-	else m_Buffers.resize(NUM_VBs - 1);
+	GLenum usage;
+	if(m_modelType == RIGGED_MODEL) 
+	{
+		m_Buffers.resize(NUM_VBs);
+		usage = GL_STREAM_DRAW;
+	}
+	else
+	{
+		m_Buffers.resize(NUM_VBs - 1);
+		usage = GL_STATIC_DRAW;
+	}
 
 	// Create the buffers for the vertices attributes
 	glGenBuffers(m_Buffers.size(), m_Buffers.data());
 
 	// Generate and populate the buffers with vertex attributes and the indices
 	glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[POS_VB]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(m_positions[0]) * m_positions.size(), m_positions.data(), GL_STREAM_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(m_positions[0]) * m_positions.size(), m_positions.data(), usage);
 	GLuint POSITION_LOCATION = glGetAttribLocation(m_shaderProgramID, "Position");
 	glEnableVertexAttribArray(POSITION_LOCATION);
 	glVertexAttribPointer(POSITION_LOCATION, 3, GL_FLOAT, GL_FALSE, 0, 0);    
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[TEXCOORD_VB]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(m_texCoords[0]) * m_texCoords.size(), m_texCoords.data(), GL_STREAM_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(m_texCoords[0]) * m_texCoords.size(), m_texCoords.data(), usage);
 	GLuint TEX_COORD_LOCATION = glGetAttribLocation(m_shaderProgramID, "TexCoord");
 	glEnableVertexAttribArray(TEX_COORD_LOCATION);
 	glVertexAttribPointer(TEX_COORD_LOCATION, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[NORMAL_VB]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(m_normals[0]) * m_normals.size(), m_normals.data(), GL_STREAM_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(m_normals[0]) * m_normals.size(), m_normals.data(), usage);
 	GLuint NORMAL_LOCATION = glGetAttribLocation(m_shaderProgramID, "Normal");
 	glEnableVertexAttribArray(NORMAL_LOCATION);
 	glVertexAttribPointer(NORMAL_LOCATION, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_Buffers[INDEX_BUFFER]);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(m_indices[0]) * m_indices.size(), m_indices.data(), GL_STREAM_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(m_indices[0]) * m_indices.size(), m_indices.data(), usage);
 
 	if (m_modelType == RIGGED_MODEL)
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[BONE_VB]);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(m_Bones[0]) * m_Bones.size(), m_Bones.data(), GL_STREAM_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(m_Bones[0]) * m_Bones.size(), m_Bones.data(), usage);
 
 		GLuint BONE_ID_LOCATION = glGetAttribLocation(m_shaderProgramID, "BoneIDs");
 		glEnableVertexAttribArray(BONE_ID_LOCATION);

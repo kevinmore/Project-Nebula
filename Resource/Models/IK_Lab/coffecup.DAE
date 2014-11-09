@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+  <asset>
+    <contributor>
+      <author>Administrator</author>
+      <authoring_tool>OpenCOLLADA for 3ds Max;  ;  </authoring_tool>
+      <source_data>file:///D:/Havok%20Stuff/Models/complete_characters_hd_havok/props/coffeecup_01/coffeecup_01.max</source_data>
+    </contributor>
+    <created>2014-11-08T22:28:24</created>
+    <modified>2014-11-08T22:28:24</modified>
+    <unit name="centimeter" meter="0.01"/>
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_effects>
+    <effect id="coffeecup_01">
+      <profile_COMMON>
+        <newparam sid="coffeecup_01_color_tga-surface">
+          <surface type="2D">
+            <init_from>coffeecup_01_color_tga</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="coffeecup_01_color_tga-sampler">
+          <sampler2D>
+            <source>coffeecup_01_color_tga-surface</source>
+          </sampler2D>
+        </newparam>
+        <newparam sid="coffeecup_01_specular_tga-surface">
+          <surface type="2D">
+            <init_from>coffeecup_01_specular_tga</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="coffeecup_01_specular_tga-sampler">
+          <sampler2D>
+            <source>coffeecup_01_specular_tga-surface</source>
+          </sampler2D>
+        </newparam>
+        <newparam sid="coffeecup_01_normal_tga-surface">
+          <surface type="2D">
+            <init_from>coffeecup_01_normal_tga</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="coffeecup_01_normal_tga-sampler">
+          <sampler2D>
+            <source>coffeecup_01_normal_tga-surface</source>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <blinn>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <texture texture="coffeecup_01_color_tga-sampler" texcoord="CHANNEL1"/>
+            </diffuse>
+            <specular>
+              <color>0.9 0.9 0.9 1</color>
+            </specular>
+            <shininess>
+              <float>0</float>
+            </shininess>
+            <reflective>
+              <color>0 0 0 1</color>
+            </reflective>
+            <transparent opaque="A_ONE">
+              <color>1 1 1 1</color>
+            </transparent>
+            <transparency>
+              <float>1</float>
+            </transparency>
+          </blinn>
+          <extra>
+            <technique profile="OpenCOLLADA3dsMax">
+              <specularLevel>
+                <texture texture="coffeecup_01_specular_tga-sampler" texcoord="CHANNEL1"/>
+              </specularLevel>
+              <bump bumptype="HEIGHTFIELD">
+                <texture texture="coffeecup_01_normal_tga-sampler" texcoord="CHANNEL1"/>
+              </bump>
+            </technique>
+          </extra>
+        </technique>
+      </profile_COMMON>
+      <extra>
+        <technique profile="OpenCOLLADA3dsMax">
+          <extended_shader>
+            <apply_reflection_dimming>0</apply_reflection_dimming>
+            <dim_level>0</dim_level>
+            <falloff_type>0</falloff_type>
+            <index_of_refraction>1.5</index_of_refraction>
+            <opacity_type>0</opacity_type>
+            <reflection_level>3</reflection_level>
+            <wire_size>1</wire_size>
+            <wire_units>0</wire_units>
+          </extended_shader>
+          <shader>
+            <ambient_diffuse_lock>1</ambient_diffuse_lock>
+            <ambient_diffuse_texture_lock>1</ambient_diffuse_texture_lock>
+            <diffuse_specular_lock>0</diffuse_specular_lock>
+            <soften>0.1</soften>
+            <use_self_illum_color>0</use_self_illum_color>
+          </shader>
+        </technique>
+      </extra>
+    </effect>
+  </library_effects>
+  <library_materials>
+    <material id="coffeecup_01-material" name="coffeecup_01">
+      <instance_effect url="#coffeecup_01"/>
+    </material>
+  </library_materials>
+  <library_geometries>
+    <geometry id="geom-coffeecup_01_hipoly" name="coffeecup_01_hipoly">
+      <mesh>
+        <source id="geom-coffeecup_01_hipoly-positions">
+          <float_array id="geom-coffeecup_01_hipoly-positions-array" count="210">2.785962 -0.004054066 -6.477198 2.509084 1.209029 -6.477198 1.733287 2.181847 -6.477198 0.6122298 2.72172 -6.477198 -0.6320502 2.72172 -6.477198 -1.753108 2.181847 -6.477198 -2.528904 1.20903 -6.477198 -2.805782 -0.004053641 -6.477198 -1.753109 -2.189954 -6.477198 -0.6320505 -2.729828 -6.477198 0.6122303 -2.729828 -6.477198 1.733288 -2.189954 -6.477198 2.509084 -1.217137 -6.477198 3.799826 -7.09427e-6 5.07523 3.423524 1.648682 5.07523 2.369148 2.970828 5.07523 0.8455299 3.704564 5.07523 -0.8455578 3.704564 5.07523 -2.369175 2.970828 5.07523 -3.423552 1.648682 5.07523 -3.799854 -6.52051e-6 5.07523 -3.423552 -1.648695 5.07523 -2.369176 -2.970841 5.07523 -0.845558 -3.704577 5.07523 0.8455305 -3.704577 5.07523 2.369148 -2.97084 5.07523 3.423525 -1.648695 5.07523 -2.528904 -1.217137 -6.477198 3.47396 -3.85247e-7 6.477198 3.12993 1.507294 6.477198 2.165979 2.716051 6.477198 0.7730287 3.386861 6.477198 -0.773029 3.386861 6.477198 -2.165979 2.716051 6.477198 -3.12993 1.507295 6.477198 -3.47396 1.47018e-7 6.47694 -3.129931 -1.507295 6.47694 -2.16598 -2.716051 6.47694 -0.7730292 -3.386861 6.477198 0.7730291 -3.386861 6.477198 2.16598 -2.716051 6.477198 3.129931 -1.507294 6.477198 3.77155 -4.28307e-7 5.272905 3.398049 1.636414 5.272905 2.351523 2.948716 5.272905 0.8392484 3.676989 5.272905 -0.8392489 3.676989 5.272905 -2.351523 2.948716 5.272905 -3.398049 1.636414 5.272905 -3.777465 1.41968e-7 5.274183 -3.405087 -1.639803 5.274546 -2.355211 -2.95334 5.274183 -0.8392491 -3.67699 5.272905 0.8392491 -3.67699 5.272905 2.351524 -2.948716 5.272905 3.39805 -1.636413 5.272905 4.061452 -4.57483e-7 4.956825 3.659242 1.762197 4.956825 2.532274 3.175371 4.956825 0.9037578 3.959623 4.956825 -0.9037582 3.959623 4.956825 -2.532274 3.175371 4.956825 -3.659242 1.762198 4.956825 -4.061452 1.55778e-7 4.956825 -3.659243 -1.762198 4.956825 -2.532275 -3.175371 4.956825 -0.9037585 -3.959623 4.956825 0.9037584 -3.959623 4.956825 2.532275 -3.17537 4.956825 3.659243 -1.762197 4.956825</float_array>
+          <technique_common>
+            <accessor source="#geom-coffeecup_01_hipoly-positions-array" count="70" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="geom-coffeecup_01_hipoly-normals">
+          <float_array id="geom-coffeecup_01_hipoly-normals-array" count="336">0.8975103 0.4322271 -0.08749235 0.8975172 0.4322129 -0.08749235 0.9961709 4.85925e-5 -0.08742597 0.996171 -5.00846e-5 -0.08742595 0.6210546 0.7788815 -0.08737785 0.6211539 0.7788023 -0.08737789 0.2215696 0.9712465 -0.0871051 0.2217771 0.9711991 -0.08710526 -0.22181 0.9712253 -0.08672813 -0.2215596 0.9712824 -0.08672836 -0.621262 0.7788338 -0.0863216 -0.6210666 0.7789896 -0.08632181 -0.8976762 0.4321889 -0.08596605 -0.8975924 0.4323631 -0.08596619 -0.9963182 -5.00475e-5 -0.08573191 -0.9963182 4.85515e-5 -0.08573192 -0.8976604 -0.4322814 -0.08566549 -0.8976536 -0.4322957 -0.08566549 -0.6212424 -0.7789093 -0.08577999 -0.6211429 -0.7789886 -0.08578003 -0.2218014 -0.9712873 -0.08605271 -0.2215935 -0.9713347 -0.08605286 0.221561 -0.9713086 -0.08642966 0.2218114 -0.9712515 -0.0864299 0.6210353 -0.7789572 -0.08683617 0.6212306 -0.7788016 -0.08683641 0.8974949 -0.4323198 -0.08719176 0.8975787 -0.4321457 -0.08719191 0 0 -1 0 0 -1 0 0 -0.9999999 0 0 -1 0 0 -0.9999999 0 0 -1 0 0 -0.9999999 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0.8746604 0.421214 0.2398915 0.8746604 0.421214 0.2398914 0.9707997 2.34924e-7 0.2398915 0.9707997 1.81052e-7 0.2398915 0.6052837 0.7590018 0.2398917 0.6052837 0.7590017 0.2398916 0.2160233 0.9464597 0.2398915 0.2160233 0.9464597 0.2398915 -0.2160233 0.9464597 0.2398915 -0.2160233 0.9464597 0.2398916 -0.6052837 0.7590017 0.2398917 -0.6052837 0.7590017 0.2398916 -0.8738973 0.4227954 0.2398911 -0.8739649 0.4221065 0.2408556 -0.9698445 0.001351482 0.2437207 -0.9695296 3.42455e-4 0.2449743 -0.8731788 -0.4208357 0.245878 -0.8731584 -0.4208807 0.2458736 -0.6029209 -0.7592604 0.2449694 -0.6038254 -0.7589479 0.2437068 -0.2151957 -0.9464068 0.2408421 -0.2160317 -0.9464578 0.2398915 0.2160234 -0.9464597 0.2398915 0.2160235 -0.9464597 0.2398916 0.605284 -0.7590015 0.2398918 0.6052839 -0.7590015 0.2398917 0.8746604 -0.4212141 0.2398914 0.8746604 -0.4212141 0.2398914 0.7369652 1.59639e-8 0.6759306 0.6639831 0.3197574 0.6759301 0.663983 0.3197573 0.6759302 0.7369652 3.62014e-8 0.6759306 0.4594908 0.5761833 0.6759297 0.4594908 0.5761833 0.6759297 0.1639902 0.7184879 0.6759307 0.1639903 0.718488 0.6759306 -0.1639902 0.718488 0.6759306 -0.1639902 0.718488 0.6759306 -0.4594909 0.5761832 0.6759297 -0.459491 0.5761832 0.6759297 -0.6641111 0.3210825 0.6751757 -0.6632733 0.3212289 0.6759292 -0.7454153 3.6131e-4 0.6666002 -0.7445887 6.80906e-4 0.6675231 -0.673386 -0.3246874 0.6641757 -0.6733621 -0.324792 0.6641487 -0.4632991 -0.5827978 0.6676081 -0.4634158 -0.5838281 0.6666263 -0.1639904 -0.7184885 0.6759301 -0.1639682 -0.7191231 0.6752604 0.1639905 -0.7184885 0.67593 0.1639905 -0.7184885 0.67593 0.4594909 -0.576183 0.6759299 0.459491 -0.576183 0.6759298 0.663983 -0.3197572 0.6759304 0.663983 -0.3197572 0.6759302 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 -8.78557e-5 4.23091e-5 1 -2.26925e-5 -1.18358e-5 1 -9.02199e-5 2.43706e-5 0.9999999 -1.22494e-5 -4.30384e-5 1 -3.75309e-5 -2.57019e-5 1 3.7438e-6 -6.16679e-5 1 -3.19226e-5 -4.44919e-5 1 7.97903e-5 -1.3358e-4 1 3.01219e-4 -2.40215e-4 0.9999999</float_array>
+          <technique_common>
+            <accessor source="#geom-coffeecup_01_hipoly-normals-array" count="112" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="geom-coffeecup_01_hipoly-map1">
+          <float_array id="geom-coffeecup_01_hipoly-map1-array" count="309">0.4667712 0.5064787 0 0.5340364 0.5064787 0 0.5340364 0.9930981 0 0.4667712 0.9930981 0 0.6001776 0.5064787 0 0.6001775 0.9930981 0 0.6649651 0.5064787 0 0.6649651 0.9930981 0 0.7291667 0.5064787 0 0.7291667 0.9930981 0 0.7939543 0.5064787 0 0.7939543 0.9930981 0 0.8600954 0.5064787 0 0.8600954 0.9930981 0 0.006181682 0.5064787 0 0.006181682 0.9930981 0 0.06895854 0.5064787 0 0.07344681 0.9930981 0 0.1395878 0.5064787 0 0.1395878 0.9930981 0 0.2043755 0.5064787 0 0.2043755 0.9930981 0 0.2685772 0.5064787 0 0.2685772 0.9930981 0 0.3333649 0.5064787 0 0.3333649 0.9930981 0 0.3995059 0.5064787 0 0.3995059 0.9930981 0 0.9831818 0.208535 0 0.9265639 0.2534178 0 0.8906882 0.3397249 0 0.5176765 0.2758692 0 0.5125521 0.1825433 0 0.5484278 0.09623623 0 0.6181979 0.03404207 0 0.8763301 0.07823169 0 0.9214395 0.160092 0 0.8209181 0.4019191 0 0.7310723 0.4276819 0 0.6389459 0.4119109 0 0.5596749 0.3520839 0 0.7080436 0.008279216 0 0.9831821 0.2697205 0 0.8001699 0.02405031 0 0.9334615 0.2697207 0 0.9334614 0.2085352 0 0.9831821 0.3298833 0 0.9334619 0.3298834 0 0.9831823 0.3888148 0 0.9334619 0.3888151 0 0.9831823 0.4472135 0 0.933462 0.4472137 0 0.9831827 0.5061451 0 0.9334621 0.5061453 0 0.9832073 0.566308 0 0.9334377 0.5663081 0 0.9831791 0.6286229 0 0.9334236 0.6286228 0 0.9831641 0.6909375 0 0.9334234 0.6909374 0 0.9831791 0.7522109 0 0.9334234 0.7522107 0 0.9832318 0.8122303 0 0.9334127 0.8122301 0 0.9832318 0.8717068 0 0.9334127 0.8717067 0 0.9832318 0.931726 0 0.9334127 0.931726 0 0.9831818 0.1473497 0 0.9334613 0.1473499 0 0.9962316 0.2085347 0 0.9962317 0.2697203 0 0.9962319 0.3298831 0 0.9962319 0.3888148 0 0.9962322 0.4472135 0 0.9962322 0.5061451 0 0.9962699 0.566308 0 0.9963076 0.6286229 0 0.9963076 0.6909375 0 0.9963074 0.7522109 0 0.9963074 0.8122303 0 0.9963074 0.8717068 0 0.9963074 0.931726 0 0.9962313 0.1473497 0 0.9832318 0.9929996 0 0.9334127 0.9929993 0 0.9963074 0.9929996 0 0.4894448 0.3591174 0 0.4211046 0.4492369 0 0.4840668 0.1386513 0 0.5119157 0.2482706 0 0.3204307 0.5007802 0 0.4114137 0.05197088 0 0.2073628 0.5035381 0 0.3083464 0.00539767 0 0.1042956 0.4569649 0 0.1952786 0.008155768 0 0.03164244 0.3702846 0 0.09460476 0.05969908 0 0.003793614 0.2606653 0 0.02626452 0.1498187 0 0.9273607 0.5064787 0 0.9273607 0.9930981 0</float_array>
+          <technique_common>
+            <accessor source="#geom-coffeecup_01_hipoly-map1-array" count="103" stride="3">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+              <param name="P" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="geom-coffeecup_01_hipoly-vertices">
+          <input semantic="POSITION" source="#geom-coffeecup_01_hipoly-positions"/>
+        </vertices>
+        <triangles material="coffeecup_01" count="108">
+          <input semantic="VERTEX" source="#geom-coffeecup_01_hipoly-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#geom-coffeecup_01_hipoly-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#geom-coffeecup_01_hipoly-map1" offset="2" set="0"/>
+          <p>1 0 1 14 1 2 13 2 3 13 2 3 0 3 0 1 0 1 2 4 4 15 5 5 14 1 2 14 1 2 1 0 1 2 4 4 3 6 6 16 7 7 15 5 5 15 5 5 2 4 4 3 6 6 4 8 8 17 9 9 16 7 7 16 7 7 3 6 6 4 8 8 5 10 10 18 11 11 17 9 9 17 9 9 4 8 8 5 10 10 6 12 12 19 13 13 18 11 11 18 11 11 5 10 10 6 12 12 7 14 101 20 15 102 19 13 13 19 13 13 6 12 12 7 14 101 7 14 14 27 16 16 21 17 17 21 17 17 20 15 15 7 14 14 8 18 18 22 19 19 21 17 17 21 17 17 27 16 16 8 18 18 9 20 20 23 21 21 22 19 19 22 19 19 8 18 18 9 20 20 10 22 22 24 23 23 23 21 21 23 21 21 9 20 20 10 22 22 11 24 24 25 25 25 24 23 23 24 23 23 10 22 22 11 24 24 12 26 26 26 27 27 25 25 25 25 25 25 11 24 24 12 26 26 0 3 0 13 2 3 26 27 27 26 27 27 12 26 26 0 3 0 11 28 30 7 29 31 6 30 32 6 30 32 12 31 29 11 28 30 4 32 34 1 33 35 0 34 36 0 34 36 5 35 33 4 32 34 9 36 38 8 37 39 27 38 40 27 38 40 10 39 37 9 36 38 7 29 31 11 28 30 10 39 37 10 39 37 27 38 40 7 29 31 12 31 29 6 30 32 5 35 33 5 35 33 0 34 36 12 31 29 3 40 41 2 41 43 1 33 35 1 33 35 4 32 34 3 40 41 43 42 42 29 43 44 28 44 45 28 44 45 42 45 28 43 42 42 44 46 46 30 47 47 29 43 44 29 43 44 43 42 42 44 46 46 45 48 48 31 49 49 30 47 47 30 47 47 44 46 46 45 48 48 46 50 50 32 51 51 31 49 49 31 49 49 45 48 48 46 50 50 47 52 52 33 53 53 32 51 51 32 51 51 46 50 50 47 52 52 48 54 54 34 55 55 33 53 53 33 53 53 47 52 52 48 54 54 49 56 56 35 57 57 34 55 55 34 55 55 48 54 54 49 56 56 50 58 58 36 59 59 35 57 57 35 57 57 49 56 56 50 58 58 51 60 60 37 61 61 36 59 59 36 59 59 50 58 58 51 60 60 52 62 62 38 63 63 37 61 61 37 61 61 51 60 60 52 62 62 53 64 64 39 65 65 38 63 63 38 63 63 52 62 62 53 64 64 54 66 66 40 67 67 39 65 65 39 65 65 53 64 64 54 66 66 55 68 84 41 69 85 40 67 67 40 67 67 54 66 66 55 68 84 42 45 28 28 44 45 41 69 69 41 69 69 55 68 68 42 45 28 56 70 70 57 71 71 43 72 42 43 72 42 42 73 28 56 70 70 57 71 71 58 74 72 44 75 46 44 75 46 43 72 42 57 71 71 58 74 72 59 76 73 45 77 48 45 77 48 44 75 46 58 74 72 59 76 73 60 78 74 46 79 50 46 79 50 45 77 48 59 76 73 60 78 74 61 80 75 47 81 52 47 81 52 46 79 50 60 78 74 61 80 75 62 82 76 48 83 54 48 83 54 47 81 52 61 80 75 62 82 76 63 84 77 49 85 56 49 85 56 48 83 54 62 82 76 63 84 77 64 86 78 50 87 58 50 87 58 49 85 56 63 84 77 64 86 78 65 88 79 51 89 60 51 89 60 50 87 58 64 86 78 65 88 79 66 90 80 52 91 62 52 91 62 51 89 60 65 88 79 66 90 80 67 92 81 53 93 64 53 93 64 52 91 62 66 90 80 67 92 81 68 94 82 54 95 66 54 95 66 53 93 64 67 92 81 68 94 82 69 96 86 55 97 84 55 97 84 54 95 66 68 94 82 69 96 83 56 70 70 42 73 28 42 73 28 55 97 68 69 96 83 28 98 88 39 99 89 40 100 90 40 100 90 41 101 87 28 98 88 29 102 91 38 103 92 39 99 89 39 99 89 28 98 88 29 102 91 30 104 93 37 105 94 38 103 92 38 103 92 29 102 91 30 104 93 30 104 93 31 106 95 36 107 96 36 107 96 37 105 94 30 104 93 32 108 97 35 109 98 36 107 96 36 107 96 31 106 95 32 108 97 33 110 99 34 111 100 35 109 98 35 109 98 32 108 97 33 110 99</p>
+        </triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_lights>
+    <light id="EnvironmentAmbientLight" name="EnvironmentAmbientLight">
+      <technique_common>
+        <ambient>
+          <color>0.5019608 0.5019608 0.5019608</color>
+        </ambient>
+      </technique_common>
+    </light>
+  </library_lights>
+  <library_images>
+    <image id="coffeecup_01_color_tga">
+      <init_from>./images/0_coffeecup_01_color.tga</init_from>
+    </image>
+    <image id="coffeecup_01_normal_tga">
+      <init_from>./images/2_coffeecup_01_normal.tga</init_from>
+    </image>
+    <image id="coffeecup_01_specular_tga">
+      <init_from>./images/1_coffeecup_01_specular.tga</init_from>
+    </image>
+  </library_images>
+  <library_visual_scenes>
+    <visual_scene id="MaxScene">
+      <node name="EnvironmentAmbientLight">
+        <instance_light url="#EnvironmentAmbientLight"/>
+      </node>
+      <node id="node-coffeecup_01_hipoly" name="coffeecup_01_hipoly">
+        <matrix>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        <instance_geometry url="#geom-coffeecup_01_hipoly">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="coffeecup_01" target="#coffeecup_01-material">
+                <bind_vertex_input semantic="CHANNEL1" input_semantic="TEXCOORD" input_set="0"/>
+                <bind_vertex_input semantic="CHANNEL1" input_semantic="TEXCOORD" input_set="0"/>
+                <bind_vertex_input semantic="CHANNEL1" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+        <extra>
+          <technique profile="OpenCOLLADA">
+            <cast_shadows>1</cast_shadows>
+            <primary_visibility>1</primary_visibility>
+            <receive_shadows>1</receive_shadows>
+            <secondary_visibility>1</secondary_visibility>
+          </technique>
+        </extra>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#MaxScene"/>
+  </scene>
+</COLLADA>

@@ -10,7 +10,7 @@ Canvas::Canvas(QScreen *screen)
 	  m_context(new QOpenGLContext),
 	  m_scene(new Scene(this)),
 	  m_rightButtonPressed(false),
-	  m_cameraSpeed(1000.0f),
+	  m_cameraSpeed(1500.0f),
 	  m_cameraSensitivity(0.2f)
 {
 	// It defines the type of the rendering area, in our case it is an OpenGL area
@@ -23,9 +23,10 @@ Canvas::Canvas(QScreen *screen)
 	format.setMajorVersion(4);
 	format.setMinorVersion(3);
 	format.setSamples(16); // Multisampling x16
-	format.setProfile(QSurfaceFormat::CoreProfile); 
-	format.setOption(QSurfaceFormat::DebugContext);
-	//format.setSwapBehavior(QSurfaceFormat::TripleBuffer); // may be efficient
+	format.setProfile(QSurfaceFormat::CoreProfile); // Functionality deprecated in OpenGL version 3.0 is not available.
+	format.setOption(QSurfaceFormat::DebugContext); // Used to request a debug context with extra debugging information.
+	format.setRenderableType(QSurfaceFormat::OpenGL); // Desktop OpenGL rendering
+	format.setSwapBehavior(QSurfaceFormat::TripleBuffer); // Decrease the risk of skipping a frame when the rendering rate is just barely keeping up with the screen refresh rate.
 
 	// Create the window
 	setFormat(format);

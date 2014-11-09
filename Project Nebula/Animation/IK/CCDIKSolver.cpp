@@ -59,7 +59,7 @@ bool CCDIKSolver::solveOneConstraint( const IkConstraint& constraint, Skeleton* 
 	float rootToTargetLenght = (constraint.m_targetMS - baseBone->getWorldPosition()).length();
 	if(m_totalChainLength - rootToTargetLenght < 0.00001f)
 	{
-		qDebug() << "Target out of range.";
+	//	qDebug() << "Target out of range.";
 		return false;
 	}
 	
@@ -139,7 +139,11 @@ bool CCDIKSolver::solveOneConstraint( const IkConstraint& constraint, Skeleton* 
 				}  
 			}
 			
-			//joint->m_nodeTransform.rotate(deltaRotation);
+			joint->m_nodeTransform.rotate(deltaRotation);
+			joint->m_globalNodeTransform.rotate(deltaRotation);
+			aiMatrix4x4 parentGlobalTransform = Math::convToAiMat4(joint->m_parent->m_globalNodeTransform);
+			aiMatrix4x4 inverseParentGlobalTransform = parentGlobalTransform.Inverse();
+			joint->m_nodeTransform = Math::convToQMat4(&inverseParentGlobalTransform) * joint->m_globalNodeTransform;
 
 			// re-sort the skeleton pose
 			skeleton->sortPose(baseBone, baseBone->m_parent->m_globalNodeTransform);
@@ -152,7 +156,7 @@ bool CCDIKSolver::solveOneConstraint( const IkConstraint& constraint, Skeleton* 
 }
 
 
-void CCDIKSolver::BoneTransform( Skeleton* skeleton, Bone* baseBone, Bone* effectorBone, QVector<mat4>& Transforms )
+void CCDIKSolver::BoneTransform( Skeleton* skeleton, Bone* baseBone, QVector<mat4>& Transforms )
 {
 	QVector<Bone*> boneList;
 	skeleton->makeBoneListFrom(baseBone, boneList);

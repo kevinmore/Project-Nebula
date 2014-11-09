@@ -1,20 +1,19 @@
 #include "FKController.h"
 #include <Utility/Math.h>
 
-FKController::FKController(ModelLoader* loader)
+FKController::FKController(ModelLoader* loader, Skeleton* skeleton)
 {
 	m_GlobalInverseTransform = loader->getGlobalInverseTransform();
 	m_BoneMapping = loader->getBoneMap();
 	m_NumBones = loader->getNumBones();
-	m_BoneInfo = loader->getBoneInfo();
 	m_Animations = loader->getAnimations();
 	m_root = loader->getRootNode();
+	m_skeleton = skeleton;
+	m_BoneInfo = skeleton->getBoneList();
 }
-
 
 FKController::~FKController(void)
-{
-}
+{}
 
 void FKController::BoneTransform( float TimeInSeconds, QVector<mat4>& Transforms )
 {
@@ -28,11 +27,63 @@ void FKController::BoneTransform( float TimeInSeconds, QVector<mat4>& Transforms
 
 	Transforms.resize(m_NumBones);
 
-	for (uint i = 0 ; i < m_NumBones ; i++) {
-		Transforms[i] = m_BoneInfo[i].m_finalTransform;
+	for (uint i = 0 ; i < m_NumBones ; i++) 
+	{
+		Transforms[i] = m_BoneInfo[i]->m_finalTransform;
 	}
 }
 
+void FKController::readNodeHeirarchy( float AnimationTime, const aiNode* pNode, const mat4 &ParentTransform )
+{
+	QString NodeName(pNode->mName.data);
+
+	const aiAnimation* pAnimation = m_Animations[0];
+
+	mat4 NodeTransformation(Math::convToQMat4(&pNode->mTransformation));
+	
+	const aiNodeAnim* pNodeAnim = findNodeAnim(pAnimation, NodeName);
+	if (pNodeAnim) {
+		// Interpolate scaling and generate scaling transformation matrix
+		aiVector3D Scaling;
+		calcInterpolatedScaling(Scaling, AnimationTime, pNodeAnim);
+		mat4 ScalingM;
+		ScalingM.scale(Scaling.x, Scaling.y, Scaling.z);
+
+		// Interpolate rotation and generate rotation transformation matrix
+		aiQuaternion RotationQ;
+		calcInterpolatedRotation(RotationQ, AnimationTime, pNodeAnim);        
+		mat4 RotationM = Math::convToQMat4(&RotationQ.GetMatrix());
+
+		// Interpolate translation and generate translation transformation matrix
+		aiVector3D Translation;
+		calcInterpolatedPosition(Translation, AnimationTime, pNodeAnim);
+		mat4 TranslationM;
+		TranslationM.translate(Translation.x, Translation.y, Translation.z);
+
+		// Combine the above transformations
+		NodeTransformation = TranslationM * RotationM * ScalingM;
+
+	}
+
+
+	 mat4 GlobalTransformation = ParentTransform * NodeTransformation;
+	 if (m_BoneMapping.find(NodeName) != m_BoneMapping.end()) 
+	 {
+		uint BoneIndex = m_BoneMapping[NodeName];
+		m_BoneInfo[BoneIndex]->m_nodeTransform = NodeTransformation;
+		m_BoneInfo[BoneIndex]->m_globalNodeTransform = GlobalTransformation;
+		m_BoneInfo[BoneIndex]->m_finalTransform = m_GlobalInverseTransform * GlobalTransformation * m_BoneInfo[BoneIndex]->m_offsetMatrix;
+
+		// update the global position
+		m_BoneInfo[BoneIndex]->calcWorldTransform();
+	 }
+
+	for (uint i = 0 ; i < pNode->mNumChildren ; i++) 
+	{
+		readNodeHeirarchy(AnimationTime, pNode->mChildren[i], GlobalTransformation);
+	}
+
+}
 
 void FKController::calcInterpolatedPosition(aiVector3D& Out, float AnimationTime, const aiNodeAnim* pNodeAnim)
 {
@@ -53,7 +104,6 @@ void FKController::calcInterpolatedPosition(aiVector3D& Out, float AnimationTime
 	Out = Start + Factor * Delta;
 }
 
-
 void FKController::calcInterpolatedRotation(aiQuaternion& Out, float AnimationTime, const aiNodeAnim* pNodeAnim)
 {
 	// we need at least two values to interpolate...
@@ -73,7 +123,6 @@ void FKController::calcInterpolatedRotation(aiQuaternion& Out, float AnimationTi
 	aiQuaternion::Interpolate(Out, StartRotationQ, EndRotationQ, Factor);
 	Out = Out.Normalize();
 }
-
 
 void FKController::calcInterpolatedScaling(aiVector3D& Out, float AnimationTime, const aiNodeAnim* pNodeAnim)
 {
@@ -107,7 +156,6 @@ uint FKController::findPosition(float AnimationTime, const aiNodeAnim* pNodeAnim
 	return 0;
 }
 
-
 uint FKController::findRotation(float AnimationTime, const aiNodeAnim* pNodeAnim)
 {
 	assert(pNodeAnim->mNumRotationKeys > 0);
@@ -122,7 +170,6 @@ uint FKController::findRotation(float AnimationTime, const aiNodeAnim* pNodeAnim
 
 	return 0;
 }
-
 
 uint FKController::findScaling(float AnimationTime, const aiNodeAnim* pNodeAnim)
 {
@@ -150,50 +197,4 @@ const aiNodeAnim* FKController::findNodeAnim(const aiAnimation* pAnimation, cons
 	}
 
 	return NULL;
-}
-
-void FKController::readNodeHeirarchy( float AnimationTime, const aiNode* pNode, const mat4 &ParentTransform )
-{
-	QString NodeName(pNode->mName.data);
-
-	const aiAnimation* pAnimation = m_Animations[0];
-
-	mat4 NodeTransformation(Math::convToQMat4(&pNode->mTransformation));
-	
-
-	const aiNodeAnim* pNodeAnim = findNodeAnim(pAnimation, NodeName);
-	if (pNodeAnim) {
-		// Interpolate scaling and generate scaling transformation matrix
-		aiVector3D Scaling;
-		calcInterpolatedScaling(Scaling, AnimationTime, pNodeAnim);
-		mat4 ScalingM;
-		ScalingM.scale(Scaling.x, Scaling.y, Scaling.z);
-
-		// Interpolate rotation and generate rotation transformation matrix
-		aiQuaternion RotationQ;
-		calcInterpolatedRotation(RotationQ, AnimationTime, pNodeAnim);        
-		mat4 RotationM = Math::convToQMat4(&RotationQ.GetMatrix());
-
-		// Interpolate translation and generate translation transformation matrix
-		aiVector3D Translation;
-		calcInterpolatedPosition(Translation, AnimationTime, pNodeAnim);
-		mat4 TranslationM;
-		TranslationM.translate(Translation.x, Translation.y, Translation.z);
-
-		// Combine the above transformations
-		NodeTransformation = TranslationM * RotationM * ScalingM;
-
-	}
-
-
-	mat4 GlobalTransformation = ParentTransform * NodeTransformation;
-	if (m_BoneMapping.find(NodeName) != m_BoneMapping.end()) {
-		uint BoneIndex = m_BoneMapping[NodeName];
-		m_BoneInfo[BoneIndex].m_finalTransform = m_GlobalInverseTransform * GlobalTransformation * m_BoneInfo[BoneIndex].m_offsetMatrix;
-	}
-
-	for (uint i = 0 ; i < pNode->mNumChildren ; i++) {
-		readNodeHeirarchy(AnimationTime, pNode->mChildren[i], GlobalTransformation);
-	}
-
 }

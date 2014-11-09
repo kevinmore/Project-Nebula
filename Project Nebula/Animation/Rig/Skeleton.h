@@ -15,7 +15,6 @@ public:
 	void makeBoneListFrom(Bone* baseBone, QVector<Bone*> &listOut);
 	
 	Bone* sortSkeleton(Bone* root);
-	void initialize(Bone* pBone, mat4 &parentTransform);
 	void sortPose(Bone* pBone, mat4 &parentTransform);
 
 
@@ -41,9 +40,11 @@ public:
 
 	void getBoneChain(Bone* start, Bone* end, QVector<Bone*> &boneChain);
 
-	void applyOffset(Bone* pBone, mat4& offset);
+	const mat4 getGlobalInverseMatrix() { return m_gloableInverseMatrix; }
 
 private:
+
+	void initialize(Bone* pBone);
 
 	/** The root bone of the skeleton. **/
 	Bone* m_root;

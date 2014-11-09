@@ -13,6 +13,7 @@
 #include <Scene/ShadingTechniques/ShadingTechnique.h>
 #include <Animation/FK/FKController.h>
 #include <Animation/IK/CCDIKSolver.h>
+#include <Animation/IK/FABRIKSolver.h>
 
 class Scene;
 
@@ -58,8 +59,8 @@ private:
 	Object3D* m_actor;
 	Skeleton* m_skeleton;
 	FKController* m_FKController;
-	CCDIKSolver* m_IKSolver;
-
+	CCDIKSolver* m_CCDSolver;
+	FABRIKSolver* m_FABRSolver;
 	bool ikSolved;
 	float updateIKRate, lastUpdatedTime;
 };

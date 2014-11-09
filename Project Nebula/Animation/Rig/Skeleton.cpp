@@ -6,36 +6,15 @@ Skeleton::Skeleton( Bone* root , mat4& globalInverseMatrix)
 	: m_root(root),
 	  m_gloableInverseMatrix(globalInverseMatrix)
 {
-	mat4 identity;
-	sortPose(m_root, identity);
+	initialize(m_root);
 
-	// generate the bone list
-	// the root skeleton is added manually in the loader
-	// that's why here we minus 1
-	m_BoneList.resize(getSkeletonSize() - 1);
+	// make the bone list
+	m_BoneList.resize(getSkeletonSize());
 	QMap<QString, Bone*>::iterator it;
 	for (it = m_BoneMap.begin(); it != m_BoneMap.end(); ++it)
 	{
-		if(it.value()->m_name == "Project Nebula Skeleton ROOT") continue;
 		m_BoneList[it.value()->m_ID] = it.value();
 	}
-
-// 	for (int i = 0; i < m_BoneList.size(); ++i)
-// 	{
-
-// 			qDebug() << "offset:"<<m_BoneList[i]->m_offsetMatrix;
-// 			qDebug() << "node:"<<m_BoneList[i]->m_nodeTransform;
-// 			qDebug() << "node*offset"<<m_BoneList[i]->m_nodeTransform * m_BoneList[i]->m_offsetMatrix;
-// 			qDebug() <<m_BoneList[i]->m_name;
-// 			qDebug() << "final:"<<m_BoneList[i]->m_finalTransform;
-
-			
-		
-			
-		//qDebug() << m_BoneList[i]->m_ID << m_BoneList[i]->m_name << m_BoneList[i]->getWorldPosition();
-		//qDebug() << m_BoneList[i]->m_finalTransform;
-//	}
-
 }
 
 
@@ -44,22 +23,34 @@ Skeleton::~Skeleton()
 	freeSkeleton(m_root);
 }
 
-void Skeleton::sortPose( Bone* pBone, mat4 &parentTransform )
+void Skeleton::initialize(Bone* pBone)
 {
 	// add this bone to the map
-	if (m_BoneMap.find(pBone->m_name) == m_BoneMap.end())
+	if (m_BoneMap.find(pBone->m_name) == m_BoneMap.end() && pBone->m_name != "Project Nebula Skeleton ROOT")
+	{
 		m_BoneMap[pBone->m_name] = pBone;
 
+		// do some calculations by the way
+		pBone->calcWorldTransform();
+	}
+
+	for (int i = 0 ; i < pBone->childCount() ; ++i) 
+	{
+		initialize(pBone->getChild(i));
+	}
+}
+
+void Skeleton::sortPose( Bone* pBone, mat4 &parentTransform )
+{
 	// calculate the global transform
-	mat4 globalTransformation = parentTransform * pBone->m_nodeTransform;  // P * B
-	pBone->m_globalNodeTransform = globalTransformation;
-	pBone->m_finalTransform = m_gloableInverseMatrix* globalTransformation * pBone->m_offsetMatrix;
+	pBone->m_globalNodeTransform = parentTransform * pBone->m_nodeTransform;  // P * B
+	pBone->m_finalTransform = m_gloableInverseMatrix * pBone->m_globalNodeTransform * pBone->m_offsetMatrix;
 
 	pBone->calcWorldTransform();
 
 	for (int i = 0 ; i < pBone->childCount() ; ++i) 
 	{
-		sortPose(pBone->getChild(i), globalTransformation);
+		sortPose(pBone->getChild(i), pBone->m_globalNodeTransform);
 	}
 }
 
@@ -201,16 +192,6 @@ mat4 Skeleton::getBoneGlobalTransform( Bone* pBone )
 	return globalTransform;
 }
 
-void Skeleton::applyOffset( Bone* pBone, mat4& offset )
-{
-	if(!pBone) return; // empty skeleton
-	pBone->m_offsetMatrix *= offset;
-
-	for (int i = 0; i < pBone->childCount(); ++i)
-	{
-		applyOffset(pBone->getChild(i), offset);
-	}
-}
 
 void Skeleton::getBoneChain( Bone* start, Bone* end, QVector<Bone*> &boneChain )
 {
@@ -239,5 +220,3 @@ void Skeleton::makeBoneListFrom( Bone* baseBone, QVector<Bone*> &listOut )
 	}
 
 }
-
-

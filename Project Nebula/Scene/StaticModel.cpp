@@ -92,15 +92,11 @@ void StaticModel::initialize(QVector<ModelDataPtr> modelDataVector)
 		m_materials.push_back(material);
 
 	}
+
 }
 
 void StaticModel::initRenderingEffect()
 { 	
-	m_funcs->glClearDepth( 1.0 );
-	m_funcs->glClearColor(0.39f, 0.39f, 0.39f, 0.0f);
-	m_funcs->glEnable(GL_DEPTH_TEST);
-	m_funcs->glDepthFunc(GL_LEQUAL);
-	//m_funcs->glEnable(GL_CULL_FACE);
 
 	DirectionalLight directionalLight;
 	directionalLight.Color = vec3(1.0f, 1.0f, 1.0f);
@@ -113,7 +109,7 @@ void StaticModel::initRenderingEffect()
 	m_RenderingEffect->SetDirectionalLight(directionalLight);
 	m_RenderingEffect->SetMatSpecularIntensity(0.0f);
 	m_RenderingEffect->SetMatSpecularPower(0);
-
+	m_RenderingEffect->Disable();
 }
 
 
@@ -121,19 +117,17 @@ void StaticModel::destroy() {}
 
 void StaticModel::render( float time )
 {
+	m_RenderingEffect->Enable();
+
+
 	QMatrix4x4 modelMatrix = m_actor->modelMatrix();
 	modelMatrix.rotate(-90, Math::Vector3D::UNIT_X); // this is for dae files
-	m_actor->setPosition(50*qSin(time), 100, 0);
-	qDebug() << m_actor->position();
+	
 	QMatrix4x4 modelViewMatrix = m_scene->getCamera()->viewMatrix() * modelMatrix;
 	QMatrix3x3 normalMatrix = modelViewMatrix.normalMatrix();
-
 	m_RenderingEffect->SetEyeWorldPos(m_scene->getCamera()->position());
 	m_RenderingEffect->SetWVP(m_scene->getCamera()->projectionMatrix() * modelViewMatrix);
 	m_RenderingEffect->SetWorldMatrix(modelMatrix); 
-
-
-	
 
 
 	for(int i = 0; i < m_meshes.size(); ++i)
@@ -167,7 +161,7 @@ void StaticModel::render( float time )
 // 		}
 // 	}
 
-	
+	m_RenderingEffect->Disable();	
 }
 
 void StaticModel::drawElements(unsigned int index, int mode)
@@ -183,6 +177,7 @@ void StaticModel::drawElements(unsigned int index, int mode)
 		reinterpret_cast<void*>((sizeof(unsigned int)) * m_meshes[index]->getBaseIndex()),
 		m_meshes[index]->getBaseVertex()
 		);
+
 	// Make sure the VAO is not changed from the outside    
 	m_funcs->glBindVertexArray(0);
 }

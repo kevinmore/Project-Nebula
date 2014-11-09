@@ -5,7 +5,7 @@
 class FKController
 {
 public:
-	FKController(ModelLoader* loader);
+	FKController(ModelLoader* loader, Skeleton* skeleton);
 	~FKController(void);
 
 	void BoneTransform(float TimeInSeconds, QVector<mat4>& Transforms);
@@ -23,8 +23,9 @@ private:
 	QMap<QString, uint> m_BoneMapping; // maps a bone name to its index
 	mat4 m_GlobalInverseTransform;
 	uint m_NumBones;
-	QVector<Bone> m_BoneInfo;
+	QVector<Bone*> m_BoneInfo;
 	aiAnimation** m_Animations;
 	aiNode* m_root;
+	Skeleton* m_skeleton;
 };
 

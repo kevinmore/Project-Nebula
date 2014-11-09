@@ -38,7 +38,7 @@ public:
 	// Gets the number of iterations
 	uint getIterations() const { return m_iterations; }
 	
-	void BoneTransform( Skeleton* skeleton, Bone* baseBone, Bone* effectorBone, QVector<mat4>& Transforms );
+	void BoneTransform( Skeleton* skeleton, Bone* baseBone, QVector<mat4>& Transforms );
 
 protected:
 

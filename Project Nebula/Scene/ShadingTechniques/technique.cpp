@@ -32,6 +32,11 @@ void Technique::Enable()
 }
 
 
+void Technique::Disable()
+{
+	m_shader->release();
+}
+
 GLint Technique::GetUniformLocation(const char* pUniformName)
 {
     return m_shader->uniformLocation(pUniformName);

@@ -14,6 +14,8 @@ public:
     virtual bool Init();
 
     void Enable();
+	void Disable();
+
 
 	QOpenGLShaderProgram* getShader() { return m_shader; }
 
