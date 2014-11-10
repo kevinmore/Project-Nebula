@@ -1,7 +1,6 @@
 #pragma once
 #include <Utility/DataTypes.h>
 #include <assimp/types.h>
-#define CLAMP(x , min , max) ((x) > (max) ? (max) : ((x) < (min) ? (min) : x))
 
 namespace Math
 {
@@ -106,21 +105,10 @@ namespace Math
 	// Computes the quaternion that is equivalent to a given Euler Angle
 	static QQuaternion QuaternionFromEuler(EulerAngle& ea)
 	{
-		float fCosHRoll  = qCos(ea.m_fRoll * .5f);
-		float fSinHRoll  = qSin(ea.m_fRoll * .5f);
-		float fCosHPitch = qCos(ea.m_fPitch * .5f);
-		float fSinHPitch = qSin(ea.m_fPitch * .5f);
-		float fCosHYaw   = qCos(ea.m_fYaw * .5f);
-		float fSinHYaw   = qSin(ea.m_fYaw * .5f);
-
-		float w = fCosHRoll * fCosHPitch * fCosHYaw + fSinHRoll * fSinHPitch * fSinHYaw;
-		float x = fCosHRoll * fSinHPitch * fCosHYaw + fSinHRoll * fCosHPitch * fSinHYaw;
-		float y = fCosHRoll * fCosHPitch * fSinHYaw - fSinHRoll * fSinHPitch * fCosHYaw;
-		float z = fSinHRoll * fCosHPitch * fCosHYaw - fCosHRoll * fSinHPitch * fSinHYaw;
-
-		return QQuaternion(w, x, y, z);
+		return QQuaternion::fromAxisAndAngle(vec3(0,0,1), ea.m_fRoll) *
+			   QQuaternion::fromAxisAndAngle(vec3(1,0,0), ea.m_fPitch) *
+			   QQuaternion::fromAxisAndAngle(vec3(0,1,0), ea.m_fYaw);
 	}
-
 	
 	// return Euler angles
 	static EulerAngle QuaternionToEuler(QQuaternion& q)
@@ -133,9 +121,9 @@ namespace Math
 		float z = v.z();
 		float w = v.w();
 
-		out.m_fRoll  = qAtan2(2 * (w * z + x * y) , 1 - 2 * (z * z + x * x));
-		out.m_fPitch = qSin(CLAMP(2 * (w * x - y * z) , -1.0f , 1.0f));
-		out.m_fYaw   = qAtan2(2 * (w * y + z * x) , 1 - 2 * (x * x + y * y));
+		out.m_fYaw  = qAtan2(2 * (w * x + y * z) , 1 - 2 * (x * x + y * y));
+		out.m_fPitch = qAsin(qBound(-1.0f, 2 * (w * y - x * z), 1.0f));
+		out.m_fRoll   = qAtan2(2 * (w * z + x * y) , 1 - 2 * (y * y + z * z));
 
 		return out;
 	}

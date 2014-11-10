@@ -101,15 +101,23 @@ bool CCDIKSolver::solveOneConstraint( const IkConstraint& constraint, Skeleton* 
 				continue;
 				//return true;
 			}
-			deltaAngle *= -1;
+			deltaAngle *= -1; // right handed system
 			Bone::DimensionOfFreedom dof = joint->getDof();
-			QQuaternion deltaRotation;
+			QQuaternion curRotation, deltaRotation;
 			Math::EulerAngle eulerAngles;
 			float curYaw, curPitch, curRoll;  
 			float deltaYaw, deltaPitch, deltaRoll;
 
 			// Check DOF
-			// create the quaternion
+			// get the current quaternion
+			curRotation = joint->getWorldRotation();
+			// decompose it
+			eulerAngles = Math::QuaternionToEuler(deltaRotation);
+			curRoll  = qRadiansToDegrees(eulerAngles.m_fRoll);
+			curPitch = qRadiansToDegrees(eulerAngles.m_fPitch);
+			curYaw   = qRadiansToDegrees(eulerAngles.m_fYaw);
+
+			// create the delta quaternion
 			deltaRotation = QQuaternion::fromAxisAndAngle(rotationAxis, deltaAngle);
 
 			// decompose it
@@ -167,7 +175,7 @@ bool CCDIKSolver::solveOneConstraint( const IkConstraint& constraint, Skeleton* 
 // 			}
 			
 			// adjust the world rotation of the joint
-			joint->setWorldRotation(deltaRotation);
+			joint->setWorldRotationDelta(deltaRotation);
 
 			// re-sort the skeleton pose
 			skeleton->sortPose(baseBone, baseBone->m_parent->m_globalNodeTransform);
