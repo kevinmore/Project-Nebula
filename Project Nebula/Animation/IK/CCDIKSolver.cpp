@@ -96,7 +96,7 @@ bool CCDIKSolver::solveOneConstraint( const IkConstraint& constraint, Skeleton* 
 			const vec3 rotationAxis = vec3::crossProduct(currentDirection, targetDirenction);
 			float deltaAngle = qRadiansToDegrees(qAcos(vec3::dotProduct(currentDirection,  targetDirenction)));
 			// if the angle is too small
-			if (deltaAngle < 0.1f || Math::isNaN(deltaAngle))
+			if (deltaAngle < 40.1f || Math::isNaN(deltaAngle))
 			{  
 				continue;
 				//return true;
@@ -111,8 +111,9 @@ bool CCDIKSolver::solveOneConstraint( const IkConstraint& constraint, Skeleton* 
 			// Check DOF
 			// get the current quaternion
 			curRotation = joint->getWorldRotation();
+
 			// decompose it
-			eulerAngles = Math::QuaternionToEuler(deltaRotation);
+			eulerAngles = Math::QuaternionToEuler(curRotation);
 			curRoll  = qRadiansToDegrees(eulerAngles.m_fRoll);
 			curPitch = qRadiansToDegrees(eulerAngles.m_fPitch);
 			curYaw   = qRadiansToDegrees(eulerAngles.m_fYaw);
@@ -175,7 +176,7 @@ bool CCDIKSolver::solveOneConstraint( const IkConstraint& constraint, Skeleton* 
 // 			}
 			
 			// adjust the world rotation of the joint
-			joint->setWorldRotationDelta(deltaRotation);
+			joint->rotateInWorldSpace(deltaRotation);
 
 			// re-sort the skeleton pose
 			skeleton->sortPose(baseBone, baseBone->m_parent->m_globalNodeTransform);
