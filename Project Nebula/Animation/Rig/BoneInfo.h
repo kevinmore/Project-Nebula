@@ -91,7 +91,7 @@ public:
 		return m_worldQuaternion;
 	}
 
-	void setWorldRotationDelta(const QQuaternion& deltaRoation)
+	void rotateInWorldSpace(const QQuaternion& deltaRoation)
 	{
 		m_globalNodeTransform.rotate(deltaRoation);
 		m_nodeTransform = m_parent->m_globalNodeTransform.inverted() * m_globalNodeTransform;
