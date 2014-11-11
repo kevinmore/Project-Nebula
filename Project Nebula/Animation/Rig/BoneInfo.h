@@ -21,15 +21,12 @@ public:
 	mat4 m_globalNodeTransform;
 
 
-	bool isXConstraint;
-
 	/** Parent bode. NULL if this node is the root. **/
 	Bone* m_parent;
 
 	Bone() 
 	{ 
 		m_parent = NULL;
-		isXConstraint = false;
 		m_DOF = DimensionOfFreedom();
 	}
 
@@ -41,7 +38,6 @@ public:
 		// add the current bone to its parent if it's not the root
 		if(parent) parent->addChild(this);
 
-		isXConstraint = false;
 		m_DOF = DimensionOfFreedom();
 	}
 
@@ -93,10 +89,12 @@ public:
 
 	void rotateInWorldSpace(const QQuaternion& deltaRoation)
 	{
+		
 		m_globalNodeTransform.rotate(deltaRoation);
 		m_nodeTransform = m_parent->m_globalNodeTransform.inverted() * m_globalNodeTransform;
 		calcWorldTransform();
 	}
+
 
 	void setWorldPosition(const vec3 &newPos)
 	{
@@ -126,10 +124,11 @@ public:
 		float minAngle;
 		float maxAngle;
 
+		// default, totally free
 		AngleLimits()
 		{
-			minAngle = -100.0f;
-			maxAngle = 100.0f;
+			minAngle = -180.0f;
+			maxAngle = 180.0f;
 		}
 
 		AngleLimits(float min, float max)
@@ -142,22 +141,22 @@ public:
 	// DOF in degrees
 	struct DimensionOfFreedom
 	{
-		AngleLimits X_Axis_AngleLimits;
-		AngleLimits Y_Axis_AngleLimits;
-		AngleLimits Z_Axis_AngleLimits;
+		AngleLimits PitchConstraint;
+		AngleLimits YawConstraint;
+		AngleLimits RollConstraint;
 
 		DimensionOfFreedom()
 		{
-			X_Axis_AngleLimits = AngleLimits();
-			Y_Axis_AngleLimits = AngleLimits();
-			Z_Axis_AngleLimits = AngleLimits();
+			PitchConstraint = AngleLimits();
+			YawConstraint   = AngleLimits();
+			RollConstraint  = AngleLimits();
 		}
 
-		DimensionOfFreedom(AngleLimits& x, AngleLimits& y, AngleLimits&z)
+		DimensionOfFreedom(AngleLimits& pitchConstraint, AngleLimits& yawConstraint, AngleLimits& rollConstraint)
 		{
-			X_Axis_AngleLimits = x;
-			Y_Axis_AngleLimits = y;
-			Z_Axis_AngleLimits = z;
+			PitchConstraint = pitchConstraint;
+			YawConstraint = yawConstraint;
+			RollConstraint = rollConstraint;
 		}
 	};
 
@@ -175,14 +174,30 @@ public:
 	{
 		uint result = 3;
 
-		if (m_DOF.X_Axis_AngleLimits.minAngle == m_DOF.X_Axis_AngleLimits.maxAngle)
+		if (m_DOF.PitchConstraint.minAngle == m_DOF.PitchConstraint.maxAngle)
 			--result;
-		if (m_DOF.Y_Axis_AngleLimits.minAngle == m_DOF.Y_Axis_AngleLimits.maxAngle)
+		if (m_DOF.YawConstraint.minAngle == m_DOF.YawConstraint.maxAngle)
 			--result;
-		if (m_DOF.Z_Axis_AngleLimits.minAngle == m_DOF.Z_Axis_AngleLimits.maxAngle)
+		if (m_DOF.RollConstraint.minAngle == m_DOF.RollConstraint.maxAngle)
 			--result;
 
 		return result;
+	}
+
+	Math::EulerAngle getLocalEulerAngleInDegrees()
+	{
+		aiMatrix4x4 localTransform = Math::convToAiMat4(m_nodeTransform);
+
+		aiVector3D	 scaling;
+		aiQuaternion rotation;
+		aiVector3D	 position;
+		localTransform.Decompose(scaling, rotation, position);
+		QQuaternion localRotation = QQuaternion(rotation.w, rotation.x, rotation.y, rotation.z);
+
+		Math::EulerAngle ea = Math::QuaternionToEuler(localRotation);
+		return Math::EulerAngle(qRadiansToDegrees(ea.m_fRoll), 
+			                    qRadiansToDegrees(ea.m_fPitch),
+			                    qRadiansToDegrees(ea.m_fYaw));
 	}
 
 private:

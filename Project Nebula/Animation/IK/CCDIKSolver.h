@@ -21,8 +21,8 @@ public:
 
 	};
 
-	// Constructor, it takes the number of iterations and gain used by the solver.
-	CCDIKSolver( uint iterations = 8 );
+	// Constructor, it takes the number of iterations used by the solver.
+	CCDIKSolver( int iterations = 128 );
 
 	~CCDIKSolver();
 
@@ -43,8 +43,7 @@ public:
 protected:
 
 	// The number of iterations of the IK solver
-	uint m_iterations;
+	int m_iterations;
 
-	vec3 m_effectorLastPos;
 };
 

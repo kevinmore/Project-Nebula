@@ -128,7 +128,7 @@ void Scene::update(float t)
 	// pass in the target position to the Rigged Model
 	QSharedPointer<RiggedModel> man = m_modelManager->getModel("m005").dynamicCast<RiggedModel>();
 	vec3 modelSpaceTargetPos = vec3(curPos.x(), -curPos.y(), -curPos.z()); // hack, need to multiply by several matrixes
-	man->setReachableTargetPos(modelSpaceTargetPos);
+	man->setReachableTargetPos(vec3(50*qSin(t*0.5), -150, -30));
 
 	m_modelManager->renderAllModels(t);
 }

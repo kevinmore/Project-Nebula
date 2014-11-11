@@ -128,50 +128,56 @@ void RiggedModel::initialize(QVector<ModelDataPtr> modelDataVector)
 
 	// set bone DOFs
 	Bone* pBone;
-	Bone::AngleLimits x, y, z;
+	Bone::AngleLimits pitchConstraint, yawConstraint, rollConstraint;
 	Bone::DimensionOfFreedom dof;
+	Math::EulerAngle ea;
+	
 
-	// the angles are negative because OpenGl is a right handed system
 	pBone = m_skeleton->getBone("Bip01_L_Clavicle");
-	x = Bone::AngleLimits(0.0f, 0.0f);
-	y = Bone::AngleLimits(-10.0f, 10.0f);
-	z = Bone::AngleLimits(-5.0f, 10.0f);
-	dof = Bone::DimensionOfFreedom(x, y, z);
+	ea = pBone->getLocalEulerAngleInDegrees();
+	pitchConstraint = Bone::AngleLimits(ea.m_fPitch, ea.m_fPitch);
+	yawConstraint = Bone::AngleLimits(ea.m_fYaw - 20.0f, ea.m_fYaw + 20.0f);
+	rollConstraint = Bone::AngleLimits(ea.m_fRoll - 20.0f, ea.m_fRoll + 20.0f);
+	dof = Bone::DimensionOfFreedom(pitchConstraint, yawConstraint, rollConstraint);
 	pBone->setDof(dof);
 
 	pBone = m_skeleton->getBone("Bip01_L_UpperArm");
-	x = Bone::AngleLimits(-100.0f, 40.0f);
-	y = Bone::AngleLimits(-100.0f, 20.0f);
-	z = Bone::AngleLimits(-35.0f, 35.0f);
-	dof = Bone::DimensionOfFreedom(x, y, z);
+	ea = pBone->getLocalEulerAngleInDegrees();
+	pitchConstraint = Bone::AngleLimits(ea.m_fPitch - 50.0f, ea.m_fPitch + 50.0f);
+	yawConstraint = Bone::AngleLimits(ea.m_fYaw - 120.0f, ea.m_fYaw + 30.0f);
+	rollConstraint = Bone::AngleLimits(ea.m_fRoll - 170.0f, ea.m_fRoll + 40.0f);
+	dof = Bone::DimensionOfFreedom(pitchConstraint, yawConstraint, rollConstraint);
 	pBone->setDof(dof);
 	
 	pBone = m_skeleton->getBone("Bip01_L_Forearm");
-	x = Bone::AngleLimits(-60.0f, 60.0f);
-	y = Bone::AngleLimits(-10.0f, 120.0f);
-	z = Bone::AngleLimits(0.0f, 0.0f);
-	dof = Bone::DimensionOfFreedom(x, y, z);
+	ea = pBone->getLocalEulerAngleInDegrees();
+	pitchConstraint = Bone::AngleLimits(ea.m_fPitch - 5.0f, ea.m_fPitch + 120.0f);
+	yawConstraint = Bone::AngleLimits(ea.m_fYaw - 60.0f, ea.m_fYaw + 20.0f);
+	rollConstraint = Bone::AngleLimits(ea.m_fRoll, ea.m_fRoll);
+	dof = Bone::DimensionOfFreedom(pitchConstraint, yawConstraint, rollConstraint);
 	pBone->setDof(dof);
 
 	pBone = m_skeleton->getBone("Bip01_L_Hand");
-	x = Bone::AngleLimits(-5.0f, 5.0f);
-	y = Bone::AngleLimits(-5.0f, 5.0f);
-	z = Bone::AngleLimits(-50.0f, 30.0f);
-	dof = Bone::DimensionOfFreedom(x, y, z);
+	ea = pBone->getLocalEulerAngleInDegrees();
+	pitchConstraint = Bone::AngleLimits(ea.m_fPitch - 10.0f, ea.m_fPitch + 10.0f);
+	yawConstraint = Bone::AngleLimits(ea.m_fYaw - 120.0f, ea.m_fYaw + 30.0f);
+	rollConstraint = Bone::AngleLimits(ea.m_fRoll - 5.0f, ea.m_fRoll + 5.0f);
+	dof = Bone::DimensionOfFreedom(pitchConstraint, yawConstraint, rollConstraint);
 	pBone->setDof(dof);
 
 	pBone = m_skeleton->getBone("Bip01_L_Finger2");
-	x = Bone::AngleLimits(0.0f, 0.0f);
-	y = Bone::AngleLimits(0.0f, 0.0f);
-	z = Bone::AngleLimits(-10.0f, 60.0f);
-	dof = Bone::DimensionOfFreedom(x, y, z);
+	pitchConstraint = Bone::AngleLimits(ea.m_fPitch, ea.m_fPitch);
+	yawConstraint = Bone::AngleLimits(ea.m_fYaw, ea.m_fYaw);
+	rollConstraint = Bone::AngleLimits(ea.m_fRoll - 5.0f, ea.m_fRoll + 90.0f);
+	dof = Bone::DimensionOfFreedom(pitchConstraint, yawConstraint, rollConstraint);
 	pBone->setDof(dof);
 
 	pBone = m_skeleton->getBone("Bip01_L_Finger21");
-	x = Bone::AngleLimits(0.0f, 0.0f);
-	y = Bone::AngleLimits(0.0f, 0.0f);
-	z = Bone::AngleLimits(-10.0f, 60.0f);
-	dof = Bone::DimensionOfFreedom(x, y, z);
+	ea = pBone->getLocalEulerAngleInDegrees();
+	pitchConstraint = Bone::AngleLimits(ea.m_fPitch, ea.m_fPitch);
+	yawConstraint = Bone::AngleLimits(ea.m_fYaw, ea.m_fYaw);
+	rollConstraint = Bone::AngleLimits(ea.m_fRoll - 5.0f, ea.m_fRoll + 90.0f);
+	dof = Bone::DimensionOfFreedom(pitchConstraint, yawConstraint, rollConstraint);
 	pBone->setDof(dof);
 }
 
@@ -196,24 +202,18 @@ void RiggedModel::render( float time )
 	// check if the model has animation first
 	QVector<QMatrix4x4> Transforms;
 
-	if(m_hasAnimation)
-	{
- 		m_RenderingEffect->getShader()->setUniformValue("hasAnimation", true);
-	}
-
 	// use IK
 
 	// CCD
 	// set constraint
-	//m_skeleton->getBone("Bip01_L_Forearm")->isXConstraint = true;
 	CCDIKSolver::IkConstraint constraint;
-	constraint.m_startBone = m_skeleton->getBone("Bip01_L_UpperArm");
+	constraint.m_startBone = m_skeleton->getBone("Bip01_L_Clavicle");
 	constraint.m_endBone = m_skeleton->getBone("Bip01_L_Finger22");
 	constraint.m_targetMS = m_targetPos;
 
 	if (m_CCDSolver->solveOneConstraint( constraint, m_skeleton ))
 	{
-		m_FKController->disableBoneChain(m_skeleton->getBone("Bip01_L_UpperArm"));
+		m_FKController->disableBoneChain(m_skeleton->getBone("Bip01_L_Clavicle"));
 		m_FKController->getBoneTransforms(time, Transforms);
 		m_CCDSolver->getBoneTransforms(m_skeleton, constraint.m_startBone, Transforms);
 	}

@@ -1,7 +1,7 @@
 #include "CCDIKSolver.h"
 
 
-CCDIKSolver::CCDIKSolver( uint iterations )
+CCDIKSolver::CCDIKSolver( int iterations )
 	: m_iterations( iterations )
 {}
 
@@ -36,10 +36,14 @@ bool CCDIKSolver::solveOneConstraint( const IkConstraint& constraint, Skeleton* 
 {
 	Bone* effectorBone = constraint.m_endBone;
 	Bone* baseBone = constraint.m_startBone;
-
+	
 	// re-sort the skeleton pose
 	// this step is necessary because the parent of the baseBone might have moved
 	skeleton->sortPose(baseBone, baseBone->m_parent->m_globalNodeTransform);
+
+// 	QQuaternion test = Math::QuaternionFromEuler(Math::EulerAngle(0, 0,1));
+// 	skeleton->getBone("Bip01_L_Finger2")->rotateInWorldSpace(test);
+// 	return true;
 
 	// find the set of bones within this chain
 	QVector<Bone*> boneChain;
@@ -63,12 +67,11 @@ bool CCDIKSolver::solveOneConstraint( const IkConstraint& constraint, Skeleton* 
 	float rootToTargetLenght = (constraint.m_targetMS - baseBone->getWorldPosition()).length();
 	if(m_totalChainLength - rootToTargetLenght < 0.1f)
 	{
-	//	qDebug() << "Target out of range.";
 		return false;
 	}
 	
 	// begin the iteration
-	for( uint iteration = 0; iteration < m_iterations; ++iteration )
+	for( int iteration = 0; iteration < m_iterations; ++iteration )
 	{
 		// check if the target is already reached
 		if ((effectorBone->getWorldPosition() - constraint.m_targetMS).length() < 0.1f)
@@ -94,95 +97,58 @@ bool CCDIKSolver::solveOneConstraint( const IkConstraint& constraint, Skeleton* 
 
 			// calculate the rotation axis and angle
 			const vec3 rotationAxis = vec3::crossProduct(currentDirection, targetDirenction);
-			float deltaAngle = qRadiansToDegrees(qAcos(vec3::dotProduct(currentDirection,  targetDirenction)));
-			// if the angle is too small
-			if (deltaAngle < 40.1f || Math::isNaN(deltaAngle))
+			float cosAngle = vec3::dotProduct(currentDirection,  targetDirenction);
+
+			// 360 degree
+			if (cosAngle >= 0.999f) continue;
+			float deltaAngle = qRadiansToDegrees(qAcos(cosAngle));
+			// if the angle is too small, or greater than 180 degree(that's not real for a human)
+			if (deltaAngle < 1.0f || qAbs(deltaAngle) > 179.99f || Math::isNaN(deltaAngle))
 			{  
 				continue;
-				//return true;
 			}
-			deltaAngle *= -1; // right handed system
+
+			// create the delta quaternion
+			QQuaternion deltaRotation = QQuaternion::fromAxisAndAngle(rotationAxis, deltaAngle);
+
+
 			Bone::DimensionOfFreedom dof = joint->getDof();
-			QQuaternion curRotation, deltaRotation;
+			QQuaternion curRotation;
 			Math::EulerAngle eulerAngles;
 			float curYaw, curPitch, curRoll;  
 			float deltaYaw, deltaPitch, deltaRoll;
 
 			// Check DOF
-			// get the current quaternion
-			curRotation = joint->getWorldRotation();
-
-			// decompose it
-			eulerAngles = Math::QuaternionToEuler(curRotation);
-			curRoll  = qRadiansToDegrees(eulerAngles.m_fRoll);
-			curPitch = qRadiansToDegrees(eulerAngles.m_fPitch);
-			curYaw   = qRadiansToDegrees(eulerAngles.m_fYaw);
-
-			// create the delta quaternion
-			deltaRotation = QQuaternion::fromAxisAndAngle(rotationAxis, deltaAngle);
-
-			// decompose it
-			eulerAngles = Math::QuaternionToEuler(deltaRotation);
-			deltaRoll  = qRadiansToDegrees(eulerAngles.m_fRoll);
-			deltaPitch = qRadiansToDegrees(eulerAngles.m_fPitch);
-			deltaYaw   = qRadiansToDegrees(eulerAngles.m_fYaw);
-
-			deltaRoll  = qBound(dof.Z_Axis_AngleLimits.minAngle, deltaRoll, dof.Z_Axis_AngleLimits.maxAngle);
-			deltaPitch = qBound(dof.X_Axis_AngleLimits.minAngle, deltaPitch, dof.X_Axis_AngleLimits.maxAngle);
-			deltaYaw   = qBound(dof.Y_Axis_AngleLimits.minAngle, deltaRoll, dof.Y_Axis_AngleLimits.maxAngle);
-
-			// remake the quaternion
-			deltaRotation = Math::QuaternionFromEuler(Math::EulerAngle(deltaRoll, deltaPitch, deltaYaw));
+			// get the current euler angles
+			eulerAngles = joint->getLocalEulerAngleInDegrees();
+			curRoll  = eulerAngles.m_fRoll;
+			curPitch = eulerAngles.m_fPitch;
+			curYaw   = eulerAngles.m_fYaw;
 
 			
-			eulerAngles = Math::QuaternionToEuler(deltaRotation);
-			deltaRoll  = qRadiansToDegrees(eulerAngles.m_fRoll);
-			deltaPitch = qRadiansToDegrees(eulerAngles.m_fPitch);
-			deltaYaw   = qRadiansToDegrees(eulerAngles.m_fYaw);
-			
 
-			//check the DOF of the joint
-// 			if (joint->isXConstraint)
-// 			{
-// 				if (iteration == 0)
-// 				{  
-// 					deltaRotation = QQuaternion::fromAxisAndAngle(Math::Vector3D::UNIT_Y, -deltaAngle);  
-// 				} 
-// 				else  
-// 				{  
-// 					
+// 			// decompose the delta rotation
+// 			eulerAngles = Math::QuaternionToEuler(deltaRotation);
+// 			deltaRoll  = qRadiansToDegrees(eulerAngles.m_fRoll);
+// 			deltaPitch = qRadiansToDegrees(eulerAngles.m_fPitch);
+// 			deltaYaw   = qRadiansToDegrees(eulerAngles.m_fYaw);
 // 
-// 					vec3 eulerAngles = Math::QuaternionToEuler(deltaRotation);
-// 					deltaYaw = eulerAngles.z();
-// 					deltaPitch = eulerAngles.y();
-// 					deltaRoll = eulerAngles.x();
+// 			// bound the delta rotation
+// 			// Min <= curAngle + deltaAngle <= Max
+// 			// which is, Min - curAngle <= deltaAngle <= Max - curAngle
+// 			deltaRoll  = qBound(dof.RollConstraint.minAngle - curRoll, deltaRoll, dof.RollConstraint.maxAngle - curRoll);
+// 			deltaPitch = qBound(dof.PitchConstraint.minAngle - curPitch, deltaPitch, dof.PitchConstraint.maxAngle - curPitch);
+// 			deltaYaw   = qBound(dof.YawConstraint.minAngle - deltaYaw, deltaRoll, dof.YawConstraint.maxAngle - deltaYaw);
 // 
-// 					eulerAngles = Math::QuaternionToEuler(joint->getWorldRotation());
-// 					curYaw = eulerAngles.z();
-// 					curPitch = eulerAngles.y();
-// 					curRoll = eulerAngles.x();
-// 
-// 					if (qFuzzyIsNull(deltaPitch) || Math::isNaN(deltaPitch))
-// 					{  
-// 						continue;
-// 					}  
-// 
-// 					deltaPitch = qBound(-0.002f - curPitch, deltaPitch, float( M_PI ) - curPitch);
-// 					deltaPitch = qRadiansToDegrees(deltaPitch);
-// 					deltaPitch = qBound(0.0f, deltaPitch, 100.0f);
-// 
-// 					deltaRotation = Math::QuaternionFromEuler(vec3(0.0f, -deltaPitch, 0.0f));
-// 				}  
-// 			}
+// 			// remake the quaternion
+// 			deltaRotation = Math::QuaternionFromEuler(Math::EulerAngle(deltaRoll, deltaPitch, deltaYaw));
+
 			
 			// adjust the world rotation of the joint
 			joint->rotateInWorldSpace(deltaRotation);
-
 			// re-sort the skeleton pose
 			skeleton->sortPose(baseBone, baseBone->m_parent->m_globalNodeTransform);
 		}
-		
-		m_effectorLastPos = effectorBone->getWorldPosition();
 	}
 
 	return true;

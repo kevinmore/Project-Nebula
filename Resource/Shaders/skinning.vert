@@ -19,17 +19,11 @@ uniform bool hasAnimation;
 void main()
 {   
 mat4 BoneTransform;
-if(hasAnimation)
-{
+
 	BoneTransform = gBones[BoneIDs[0]] * Weights[0];
     BoneTransform += gBones[BoneIDs[1]] * Weights[1];
     BoneTransform += gBones[BoneIDs[2]] * Weights[2];
     BoneTransform += gBones[BoneIDs[3]] * Weights[3];
-}
-else
-{
-	BoneTransform = mat4(1);
-}    
 
 	
     vec4 PosL    = BoneTransform * vec4(Position, 1.0);
