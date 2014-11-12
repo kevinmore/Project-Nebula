@@ -122,13 +122,13 @@ void Scene::update(float t)
 	
 	// make the object to follow a curve path
 	QSharedPointer<StaticModel> target = m_modelManager->getModel("coffecup").dynamicCast<StaticModel>();
-	vec3 curPos = m_BezierPath[qFloor(t*1000)%m_BezierPath.size()];
+	vec3 curPos = vec3(50*qSin(t*0.5), 150, 50);//m_BezierPath[qFloor(t*1000)%m_BezierPath.size()];
 	target->getActor()->setPosition(curPos);
 
 	// pass in the target position to the Rigged Model
 	QSharedPointer<RiggedModel> man = m_modelManager->getModel("m005").dynamicCast<RiggedModel>();
 	vec3 modelSpaceTargetPos = vec3(curPos.x(), -curPos.y(), -curPos.z()); // hack, need to multiply by several matrixes
-	man->setReachableTargetPos(vec3(50*qSin(t*0.5), -150, -30));
+	man->setReachableTargetPos(modelSpaceTargetPos);
 
 	m_modelManager->renderAllModels(t);
 }

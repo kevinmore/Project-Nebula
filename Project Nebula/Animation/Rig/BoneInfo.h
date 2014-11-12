@@ -89,9 +89,9 @@ public:
 
 	void rotateInWorldSpace(const QQuaternion& deltaRoation)
 	{
-		
 		m_globalNodeTransform.rotate(deltaRoation);
 		m_nodeTransform = m_parent->m_globalNodeTransform.inverted() * m_globalNodeTransform;
+
 		calcWorldTransform();
 	}
 
@@ -200,6 +200,21 @@ public:
 			                    qRadiansToDegrees(ea.m_fYaw));
 	}
 
+	Math::EulerAngle getGlobalAngleInDegrees()
+	{
+		aiMatrix4x4 globalTransform = Math::convToAiMat4(m_globalNodeTransform);
+
+		aiVector3D	 scaling;
+		aiQuaternion rotation;
+		aiVector3D	 position;
+		globalTransform.Decompose(scaling, rotation, position);
+		QQuaternion worldQuaternion = QQuaternion(rotation.w, rotation.x, rotation.y, rotation.z);
+
+		Math::EulerAngle ea = Math::QuaternionToEuler(worldQuaternion);
+		return Math::EulerAngle(qRadiansToDegrees(ea.m_fRoll), 
+			qRadiansToDegrees(ea.m_fPitch),
+			qRadiansToDegrees(ea.m_fYaw));
+	}
 private:
 	DimensionOfFreedom m_DOF;
 

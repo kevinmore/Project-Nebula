@@ -52,37 +52,37 @@ bool CCDIKSolver::solveOneConstraint( const IkConstraint& constraint, Skeleton* 
 	// if there are bones in the chain
 	if (!boneChain.size()) return false;
 
-	QVector<float> m_distances;
-	float m_totalChainLength;
-
+	QVector<float> bone_distances;
+	float totalChainLength;
+	bone_distances.clear();
 	for(int i = 0; i < boneChain.size() - 1; ++i)
-		m_distances.push_back(skeleton->getDistanceBetween(boneChain[i], boneChain[i + 1]));
+		bone_distances.push_back(skeleton->getDistanceBetween(boneChain[i], boneChain[i + 1]));
 
-	m_totalChainLength = 0.0f;
-	for (int i = 0; i < m_distances.size(); ++i)
+	totalChainLength = 0.0f;
+	for (int i = 0; i < bone_distances.size(); ++i)
 	{
-		m_totalChainLength += m_distances[i];
+		totalChainLength += bone_distances[i];
 	}
 
 	float rootToTargetLenght = (constraint.m_targetMS - baseBone->getWorldPosition()).length();
-	if(m_totalChainLength - rootToTargetLenght < 0.1f)
+	if(totalChainLength < rootToTargetLenght + 10.0f) // to avoid funny results
 	{
 		return false;
 	}
-	
+
 	// begin the iteration
 	for( int iteration = 0; iteration < m_iterations; ++iteration )
 	{
-		// check if the target is already reached
-		if ((effectorBone->getWorldPosition() - constraint.m_targetMS).length() < 0.1f)
-		{
-			qDebug() << "Target reached.";
-			return true;
-		}
-
 		// skip the effector
 		for( int jointIndex = boneChain.size() - 2; jointIndex >= 0; --jointIndex )
 		{
+			// check if the target is already reached
+			if ((effectorBone->getWorldPosition() - constraint.m_targetMS).length() < 1.0f)
+			{
+				return true;
+			}
+
+
 			Bone* joint = boneChain[jointIndex];
 
 
@@ -103,7 +103,7 @@ bool CCDIKSolver::solveOneConstraint( const IkConstraint& constraint, Skeleton* 
 			if (cosAngle >= 0.999f) continue;
 			float deltaAngle = qRadiansToDegrees(qAcos(cosAngle));
 			// if the angle is too small, or greater than 180 degree(that's not real for a human)
-			if (deltaAngle < 1.0f || qAbs(deltaAngle) > 179.99f || Math::isNaN(deltaAngle))
+			if (deltaAngle < 0.1f || qAbs(deltaAngle) > 179.99f || Math::isNaN(deltaAngle))
 			{  
 				continue;
 			}
@@ -112,21 +112,19 @@ bool CCDIKSolver::solveOneConstraint( const IkConstraint& constraint, Skeleton* 
 			QQuaternion deltaRotation = QQuaternion::fromAxisAndAngle(rotationAxis, deltaAngle);
 
 
-			Bone::DimensionOfFreedom dof = joint->getDof();
-			QQuaternion curRotation;
-			Math::EulerAngle eulerAngles;
-			float curYaw, curPitch, curRoll;  
-			float deltaYaw, deltaPitch, deltaRoll;
-
-			// Check DOF
-			// get the current euler angles
-			eulerAngles = joint->getLocalEulerAngleInDegrees();
-			curRoll  = eulerAngles.m_fRoll;
-			curPitch = eulerAngles.m_fPitch;
-			curYaw   = eulerAngles.m_fYaw;
-
-			
-
+// 			Bone::DimensionOfFreedom dof = joint->getDof();
+// 			QQuaternion curRotation;
+// 			Math::EulerAngle eulerAngles;
+// 			float curYaw, curPitch, curRoll;  
+// 			float deltaYaw, deltaPitch, deltaRoll;
+// 
+// 			// Check DOF
+// 			// get the current euler angles
+// 			eulerAngles = joint->getGlobalAngleInDegrees();
+// 			curRoll  = eulerAngles.m_fRoll;
+// 			curPitch = eulerAngles.m_fPitch;
+// 			curYaw   = eulerAngles.m_fYaw;
+// 
 // 			// decompose the delta rotation
 // 			eulerAngles = Math::QuaternionToEuler(deltaRotation);
 // 			deltaRoll  = qRadiansToDegrees(eulerAngles.m_fRoll);
@@ -146,10 +144,12 @@ bool CCDIKSolver::solveOneConstraint( const IkConstraint& constraint, Skeleton* 
 			
 			// adjust the world rotation of the joint
 			joint->rotateInWorldSpace(deltaRotation);
+
 			// re-sort the skeleton pose
 			skeleton->sortPose(baseBone, baseBone->m_parent->m_globalNodeTransform);
 		}
 	}
+
 
 	return true;
 	

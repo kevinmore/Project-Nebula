@@ -36,7 +36,7 @@ ModelPtr ModelManager::loadModel( const QString& name, const QString& filename, 
 		FKController* controller = new FKController(modelLoader, modelLoader->getSkeletom());
 
 		// create an IKSolver for the model
-		CCDIKSolver* solver = new CCDIKSolver();
+		CCDIKSolver* solver = new CCDIKSolver(128);
 
 		m_models[name] = ModelPtr(new RiggedModel(m_scene, effect, modelLoader->getSkeletom(), controller, solver, modelLoader->getVAO(), modelDataVector));
 
