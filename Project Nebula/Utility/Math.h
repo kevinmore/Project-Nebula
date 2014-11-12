@@ -11,76 +11,92 @@ namespace Math
 		return d != d;
 	}
 
-	// simple interpolation function
-	static float interpolate(float n1, float n2, float fraction)
+	namespace Spline
 	{
-		return n1 + ((n2-n1) * fraction);
-	}
-
-	// simple function to generate a vector of 2d Bezier curve points
-	static QVector<vec2> makeBezier2D(const QVector<vec2>& anchors, float accuracy=10000.0)
-	{
-		if(anchors.size()<=2)
-			return anchors;
-
-		QVector<vec2> curvePoints;
-		curvePoints.push_back(anchors[0]);
-		const float stride = 1.0f / accuracy;
-		for(float i = 0.0f; i < 1.0f; i += stride)
+		// simple interpolation function
+		static float interpolate(float n1, float n2, float fraction)
 		{
-			QVector<vec2> temp;
-			for(int j=1; j<anchors.size(); ++j)
-				temp.push_back(vec2(interpolate(anchors[j-1].x(), anchors[j].x(), i),
-									interpolate(anchors[j-1].y(), anchors[j].y(), i)));
-
-			while(temp.size()>1)
-			{
-				QVector<vec2> temp2;
-
-				for(int j=1; j<temp.size(); ++j)
-					temp2.push_back(vec2(interpolate(temp[j-1].x(), temp[j].x(), i),
-										 interpolate(temp[j-1].y(), temp[j].y(), i)));
-				temp = temp2;
-			}
-			curvePoints.push_back(temp[0]);
+			return n1 + ((n2-n1) * fraction);
 		}
 
-		return curvePoints;
-	}
-
-	// simple function to generate a vector of 3d Bezier curve points
-	static QVector<vec3> makeBezier3D(const QVector<vec3>& anchors, float accuracy=10000.0)
-	{
-		if(anchors.size()<=2)
-			return anchors;
-
-		QVector<vec3> curvePoints;
-		curvePoints.push_back(anchors[0]);
-		const float stride = 1.0f / accuracy;
-		for(float i = 0.0f; i < 1.0f; i += stride)
+		static vec2 interpolate(vec2& v1, vec2& v2, float fraction)
 		{
-			QVector<vec3> temp;
-			for(int j=1; j<anchors.size(); ++j)
-				temp.push_back(vec3(interpolate(anchors[j-1].x(), anchors[j].x(), i),
-									interpolate(anchors[j-1].y(), anchors[j].y(), i),
-									interpolate(anchors[j-1].z(), anchors[j].z(), i)));
-
-			while(temp.size()>1)
-			{
-				QVector<vec3> temp2;
-
-				for(int j=1; j<temp.size(); ++j)
-					temp2.push_back(vec3(interpolate(temp[j-1].x(), temp[j].x(), i),
-										 interpolate(temp[j-1].y(), temp[j].y(), i),
-										 interpolate(temp[j-1].z(), temp[j].z(), i)));
-				temp = temp2;
-			}
-			curvePoints.push_back(temp[0]);
+			return vec2(interpolate(v1.x(), v2.x(), fraction),
+				        interpolate(v1.y(), v2.y(), fraction));
 		}
 
-		return curvePoints;
-	}
+		static vec3 interpolate(vec3& v1, vec3& v2, float fraction)
+		{
+			return vec3(interpolate(v1.x(), v2.x(), fraction),
+						interpolate(v1.y(), v2.y(), fraction),
+						interpolate(v1.z(), v2.z(), fraction));
+		}
 
+		// simple function to generate a vector of 2d Bezier curve points
+		static QVector<vec2> makeBezier2D(const QVector<vec2>& anchors, float accuracy=10000.0)
+		{
+			if(anchors.size()<=2)
+				return anchors;
+
+			QVector<vec2> curvePoints;
+			curvePoints.push_back(anchors[0]);
+			const float stride = 1.0f / accuracy;
+			for(float i = 0.0f; i < 1.0f; i += stride)
+			{
+				QVector<vec2> temp;
+				for(int j=1; j<anchors.size(); ++j)
+					temp.push_back(vec2(interpolate(anchors[j-1].x(), anchors[j].x(), i),
+					interpolate(anchors[j-1].y(), anchors[j].y(), i)));
+
+				while(temp.size()>1)
+				{
+					QVector<vec2> temp2;
+
+					for(int j=1; j<temp.size(); ++j)
+						temp2.push_back(vec2(interpolate(temp[j-1].x(), temp[j].x(), i),
+						interpolate(temp[j-1].y(), temp[j].y(), i)));
+					temp = temp2;
+				}
+				curvePoints.push_back(temp[0]);
+			}
+
+			return curvePoints;
+		}
+
+		// simple function to generate a vector of 3d Bezier curve points
+		static QVector<vec3> makeBezier3D(const QVector<vec3>& anchors, float accuracy=10000.0)
+		{
+			if(anchors.size()<=2)
+				return anchors;
+
+			QVector<vec3> curvePoints;
+			curvePoints.push_back(anchors[0]);
+			const float stride = 1.0f / accuracy;
+			for(float i = 0.0f; i < 1.0f; i += stride)
+			{
+				QVector<vec3> temp;
+				for(int j=1; j<anchors.size(); ++j)
+					temp.push_back(vec3(interpolate(anchors[j-1].x(), anchors[j].x(), i),
+					interpolate(anchors[j-1].y(), anchors[j].y(), i),
+					interpolate(anchors[j-1].z(), anchors[j].z(), i)));
+
+				while(temp.size()>1)
+				{
+					QVector<vec3> temp2;
+
+					for(int j=1; j<temp.size(); ++j)
+						temp2.push_back(vec3(interpolate(temp[j-1].x(), temp[j].x(), i),
+						interpolate(temp[j-1].y(), temp[j].y(), i),
+						interpolate(temp[j-1].z(), temp[j].z(), i)));
+					temp = temp2;
+				}
+				curvePoints.push_back(temp[0]);
+			}
+
+			return curvePoints;
+		}
+	}
+	
 	// EulerAngle structure
 	struct EulerAngle
 	{

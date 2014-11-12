@@ -78,7 +78,7 @@ void Scene::initialize()
 			<< vec3(20, 220, -20) << vec3(40, 200, 0) << vec3(60, 180, 20) << vec3(40, 160, 40)
 			<< vec3(20, 140, 60) << vec3(0, 120, 80) << vec3(-20, 100, 100) << vec3(-40, 80, 80)
 			<< vec3(-60, 60, 60) << vec3(-40, 40, 80) << vec3(-20, 20, 90) << vec3(0, 0, 100); 
-	m_BezierPath = Math::makeBezier3D(anchors);
+	m_BezierPath = Math::Spline::makeBezier3D(anchors);
 }
 
 

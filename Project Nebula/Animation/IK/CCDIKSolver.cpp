@@ -103,7 +103,7 @@ bool CCDIKSolver::solveOneConstraint( const IkConstraint& constraint, Skeleton* 
 			if (cosAngle >= 0.999f) continue;
 			float deltaAngle = qRadiansToDegrees(qAcos(cosAngle));
 			// if the angle is too small, or greater than 180 degree(that's not real for a human)
-			if (deltaAngle < 0.1f || qAbs(deltaAngle) > 179.99f || Math::isNaN(deltaAngle))
+			if (deltaAngle < 0.1f ||  Math::isNaN(deltaAngle))
 			{  
 				continue;
 			}
