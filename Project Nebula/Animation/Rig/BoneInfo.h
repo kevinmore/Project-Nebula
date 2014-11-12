@@ -49,8 +49,8 @@ public:
 		aiVector3D	 scaling;
 		aiQuaternion rotation;
 		aiVector3D	 position;
-		globalTransform.Decompose(scaling, rotation, position);
-		
+		globalTransform.Decompose(scaling, rotation, position);		
+
 		m_worldPos = vec3(position.x, position.y, position.z);
 		m_worldScaling = vec3(scaling.x, scaling.y, scaling.z);
 		m_worldQuaternion = QQuaternion(rotation.w, rotation.x, rotation.y, rotation.z);

@@ -121,9 +121,11 @@ namespace Math
 	// Computes the quaternion that is equivalent to a given Euler Angle
 	static QQuaternion QuaternionFromEuler(EulerAngle& ea)
 	{
-		return QQuaternion::fromAxisAndAngle(vec3(0,0,1), ea.m_fRoll) *
-			   QQuaternion::fromAxisAndAngle(vec3(1,0,0), ea.m_fPitch) *
-			   QQuaternion::fromAxisAndAngle(vec3(0,1,0), ea.m_fYaw);
+
+ 		return QQuaternion::fromAxisAndAngle(vec3(0,0,1), ea.m_fRoll) *
+			   QQuaternion::fromAxisAndAngle(vec3(0,1,0), ea.m_fYaw) *
+ 			   QQuaternion::fromAxisAndAngle(vec3(1,0,0), ea.m_fPitch);
+
 	}
 	
 	// return Euler angles
@@ -137,9 +139,9 @@ namespace Math
 		float z = v.z();
 		float w = v.w();
 
-		out.m_fYaw  = qAtan2(2 * (w * x + y * z) , 1 - 2 * (x * x + y * y));
-		out.m_fPitch = qAsin(qBound(-1.0f, 2 * (w * y - x * z), 1.0f));
-		out.m_fRoll   = qAtan2(2 * (w * z + x * y) , 1 - 2 * (y * y + z * z));
+		out.m_fPitch  = qRadiansToDegrees(qAtan2(2 * (w * x + y * z) , 1 - 2 * (x * x + y * y)));
+		out.m_fYaw = qRadiansToDegrees(qSin(2 * (w * y - x * z)));
+		out.m_fRoll   = qRadiansToDegrees(qAtan2(2 * (w * z + x * y) , 1 - 2 * (y * y + z * z)));
 
 		return out;
 	}

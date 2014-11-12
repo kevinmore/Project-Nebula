@@ -2,7 +2,8 @@
 
 
 CCDIKSolver::CCDIKSolver( int iterations )
-	: m_iterations( iterations )
+	: m_iterations( iterations ),
+	  m_lastDistance( 0.0f )
 {}
 
 
@@ -41,10 +42,6 @@ bool CCDIKSolver::solveOneConstraint( const IkConstraint& constraint, Skeleton* 
 	// this step is necessary because the parent of the baseBone might have moved
 	skeleton->sortPose(baseBone, baseBone->m_parent->m_globalNodeTransform);
 
-// 	QQuaternion test = Math::QuaternionFromEuler(Math::EulerAngle(0, 0,1));
-// 	skeleton->getBone("Bip01_L_Finger2")->rotateInWorldSpace(test);
-// 	return true;
-
 	// find the set of bones within this chain
 	QVector<Bone*> boneChain;
 	skeleton->getBoneChain(baseBone, effectorBone, boneChain);
@@ -65,10 +62,14 @@ bool CCDIKSolver::solveOneConstraint( const IkConstraint& constraint, Skeleton* 
 	}
 
 	float rootToTargetLenght = (constraint.m_targetMS - baseBone->getWorldPosition()).length();
+
 	if(totalChainLength < rootToTargetLenght + 10.0f) // to avoid funny results
-	{
 		return false;
-	}
+
+	// check if the last distance is about the same
+	float effectorToTarget = (constraint.m_targetMS - effectorBone->getWorldPosition()).length();
+	if(qAbs(m_lastDistance - effectorToTarget) < 0.5f)
+		return true;
 
 	// begin the iteration
 	for( int iteration = 0; iteration < m_iterations; ++iteration )
@@ -78,11 +79,9 @@ bool CCDIKSolver::solveOneConstraint( const IkConstraint& constraint, Skeleton* 
 		{
 			// check if the target is already reached
 			if ((effectorBone->getWorldPosition() - constraint.m_targetMS).length() < 1.0f)
-			{
 				return true;
-			}
-
-
+			
+			// the joint to rotate
 			Bone* joint = boneChain[jointIndex];
 
 
@@ -100,7 +99,7 @@ bool CCDIKSolver::solveOneConstraint( const IkConstraint& constraint, Skeleton* 
 			float cosAngle = vec3::dotProduct(currentDirection,  targetDirenction);
 
 			// 360 degree
-			if (cosAngle >= 0.999f) continue;
+			if (cosAngle >= 0.99f) continue;
 			float deltaAngle = qRadiansToDegrees(qAcos(cosAngle));
 			// if the angle is too small, or greater than 180 degree(that's not real for a human)
 			if (deltaAngle < 0.1f ||  Math::isNaN(deltaAngle))
@@ -150,6 +149,7 @@ bool CCDIKSolver::solveOneConstraint( const IkConstraint& constraint, Skeleton* 
 		}
 	}
 
+	m_lastDistance = (constraint.m_targetMS - effectorBone->getWorldPosition()).length();
 
 	return true;
 	

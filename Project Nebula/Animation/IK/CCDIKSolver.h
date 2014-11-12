@@ -44,5 +44,8 @@ protected:
 
 	// The number of iterations of the IK solver
 	int m_iterations;
+
+	// The last distance between the effector and the target
+	float m_lastDistance;
 };
 
