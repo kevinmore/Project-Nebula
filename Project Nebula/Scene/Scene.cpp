@@ -69,9 +69,15 @@ void Scene::initialize()
 
 	// generate a bezier curve
 	QVector<vec3> anchors;
-	anchors << vec3(-150, 100, 0) << vec3(-50, 120, 150) << vec3(0, 150, 100) << vec3(50, 80, 20)
-		<< vec3(100, 0, -50) << vec3(150, 80, -100) << vec3(150, 200, -120) << vec3(100, 180, -90)
-		<< vec3(50, 100, -50) << vec3(0, 50, -20) << vec3(-100, 80, -10) << vec3(-150, 100, 0);
+// 	anchors << vec3(-150, 100, 0) << vec3(-50, 120, 150) << vec3(0, 150, 100) << vec3(50, 80, 20)
+// 		<< vec3(100, 0, -50) << vec3(150, 80, -100) << vec3(150, 200, -120) << vec3(100, 180, -90)
+// 		<< vec3(50, 100, -50) << vec3(0, 50, -20) << vec3(-100, 80, -10) << vec3(-150, 100, 0);
+	anchors << vec3(0, 0, 100) << vec3(20, 20, 80) << vec3(40, 40, 60) << vec3(60, 60, 40) << vec3(40, 80, 20)
+			<< vec3(20, 100, -20) << vec3(0, 120, -40) << vec3(-20, 140, -60) << vec3(-40, 160, -80)
+			<< vec3(-60, 180, -100) << vec3(-40, 200, -80) << vec3(-20, 220, -60) << vec3(0, 240, -40)
+			<< vec3(20, 220, -20) << vec3(40, 200, 0) << vec3(60, 180, 20) << vec3(40, 160, 40)
+			<< vec3(20, 140, 60) << vec3(0, 120, 80) << vec3(-20, 100, 100) << vec3(-40, 80, 80)
+			<< vec3(-60, 60, 60) << vec3(-40, 40, 80) << vec3(-20, 20, 90) << vec3(0, 0, 100); 
 	m_BezierPath = Math::makeBezier3D(anchors);
 }
 
@@ -122,7 +128,7 @@ void Scene::update(float t)
 	
 	// make the object to follow a curve path
 	QSharedPointer<StaticModel> target = m_modelManager->getModel("coffecup").dynamicCast<StaticModel>();
-	vec3 curPos = vec3(50*qSin(t*0.5), 150, 50);//m_BezierPath[qFloor(t*1000)%m_BezierPath.size()];
+	vec3 curPos = m_BezierPath[qFloor(t*1000)%m_BezierPath.size()];
 	target->getActor()->setPosition(curPos);
 
 	// pass in the target position to the Rigged Model
