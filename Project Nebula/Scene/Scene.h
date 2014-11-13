@@ -97,7 +97,7 @@ private:
 	QVector<GLuint> m_lightModeSubroutines;
 
 	QOpenGLFunctions_4_3_Core* m_funcs;
-	QVector<vec3> m_BezierPath;
+	QVector<vec3> m_path;
 
 };
 

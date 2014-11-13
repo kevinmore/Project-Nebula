@@ -32,6 +32,31 @@ namespace Math
 						interpolate(v1.z(), v2.z(), fraction));
 		}
 
+		static vec3 interpolate(vec3& p0, vec3& p1, vec3& p2, vec3& p3, float t)
+		{
+			vec3 out;
+
+			float t2 = t * t;
+			float t3 = t2 * t;
+
+			out.setX(0.5f * ((2.0f * p1.x()) +
+					(-p0.x() + p2.x()) * t +
+					(2.0f * p0.x() - 5.0f * p1.x() + 4 * p2.x() - p3.x()) * t2 +
+					(-p0.x() + 3.0f * p1.x() - 3.0f * p2.x() + p3.x()) * t3));
+
+			out.setY(0.5f * ((2.0f * p1.y()) +
+					(-p0.y() + p2.y()) * t +
+					(2.0f * p0.y() - 5.0f * p1.y() + 4 * p2.y() - p3.y()) * t2 +
+					(-p0.y() + 3.0f * p1.y() - 3.0f * p2.y() + p3.y()) * t3));
+
+			out.setZ(0.5f * ((2.0f * p1.z()) +
+				(-p0.z() + p2.z()) * t +
+				(2.0f * p0.z() - 5.0f * p1.z() + 4 * p2.z() - p3.z()) * t2 +
+				(-p0.z() + 3.0f * p1.z() - 3.0f * p2.z() + p3.z()) * t3));
+
+			return out;
+		}
+
 		// simple function to generate a vector of 2d Bezier curve points
 		static QVector<vec2> makeBezier2D(const QVector<vec2>& anchors, float accuracy=10000.0)
 		{
@@ -95,7 +120,30 @@ namespace Math
 
 			return curvePoints;
 		}
-	}
+
+
+		static QVector<vec3> makeCatMullRomSpline(QVector<vec3>& anchors, int numPoints = 10000)
+		{
+			if (anchors.size() < 4)
+				return anchors;
+
+			QVector<vec3> splinePoints;
+
+			for (int i = 0; i < anchors.size() - 3; ++i)
+			{
+				for (int j = 0; j < numPoints; ++j)
+				{
+					splinePoints.push_back(interpolate(anchors[i], anchors[i + 1], anchors[i + 2], anchors[i + 3], (1.0f / numPoints) * j));
+				}
+			}
+
+			splinePoints.push_back(anchors[anchors.size() - 2]);
+
+			return splinePoints;
+		}
+	} // end of Spline namespace
+
+	
 	
 	// EulerAngle structure
 	struct EulerAngle

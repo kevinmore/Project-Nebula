@@ -73,7 +73,8 @@ void Scene::initialize()
 		<< vec3(100, 0, -50) << vec3(150, 80, -100) << vec3(0, 0, 0) << vec3(150, 400, -120) << vec3(100, 380, -90) << vec3(80, 250, -70)
 		<< vec3(50, 100, -50) << vec3(0, 50, -20) << vec3(0, 0, 0) << vec3(-100, 80, -10) << vec3(-100, 0, 200) << vec3(-150, 100, 0);
 
-	m_BezierPath = Math::Spline::makeBezier3D(anchors);
+	m_path = Math::Spline::makeBezier3D(anchors);
+	//m_path = Math::Spline::makeCatMullRomSpline(anchors);
 }
 
 
@@ -117,7 +118,7 @@ void Scene::update(float t)
 	
 	// make the object to follow a curve path
 	QSharedPointer<StaticModel> target = m_modelManager->getModel("coffecup").dynamicCast<StaticModel>();
-	vec3 curPos = m_BezierPath[qFloor(t*500)%m_BezierPath.size()];
+	vec3 curPos = m_path[qFloor(t*500)%m_path.size()];
 	target->getActor()->setPosition(curPos);
 
 	// pass in the target position to the Rigged Model

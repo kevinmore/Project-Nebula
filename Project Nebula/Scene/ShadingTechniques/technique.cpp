@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "technique.h"
+#include "Technique.h"
 
 Technique::Technique()
 {

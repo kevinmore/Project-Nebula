@@ -1,6 +1,6 @@
 #pragma once
 
-#include "technique.h"
+#include "Technique.h"
 #include <Utility/DataTypes.h>
 
 struct BaseLight
