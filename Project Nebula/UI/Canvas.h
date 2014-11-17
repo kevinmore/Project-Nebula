@@ -3,6 +3,9 @@
 #include <QtCore/QElapsedTimer>
 #include <QtGui/QOpenGLContext>
 #include <Scene/Scene.h>
+#include <QtGui/QMouseEvent>
+#include <QtGui/QKeyEvent>
+#include <QtGui/QWheelEvent>
 
 /************************************************************************/
 /*This class is used to initialize the OpenGL context 
@@ -26,6 +29,7 @@ protected:
 	void mousePressEvent(QMouseEvent* e);
 	void mouseReleaseEvent(QMouseEvent* e);
 	void mouseMoveEvent(QMouseEvent* e);
+	void wheelEvent(QWheelEvent *e);
 
 private:
 	void initializeGL();

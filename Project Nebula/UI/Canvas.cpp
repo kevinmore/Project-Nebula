@@ -196,6 +196,33 @@ void Canvas::keyReleaseEvent(QKeyEvent* e)
 
 }
 
+void Canvas::wheelEvent( QWheelEvent *e )
+{
+	int delta = e->delta();
+
+	Scene* pScene = getScene();
+	SceneCamera::CameraTranslationOption option = pScene->isViewCenterFixed()
+		? SceneCamera::DontTranslateViewCenter
+		: SceneCamera::TranslateViewCenter;
+
+	if (e->orientation() == Qt::Vertical) 
+	{
+		if (delta < 0) 
+		{
+			pScene->getCamera()->translate(-pScene->getViewDirection() * 10000, option);
+		} 
+		else if (delta > 0) 
+		{
+			pScene->getCamera()->translate(pScene->getViewDirection(), option);
+
+		}
+	}
+
+	e->accept();
+}
+
+
+
 void Canvas::mousePressEvent(QMouseEvent* e)
 {
 	if(e->button() == Qt::RightButton)
@@ -244,5 +271,3 @@ void Canvas::setCameraSensitivity(double sensitivity)
 {
 	m_cameraSensitivity = sensitivity;
 }
-
-

@@ -37,6 +37,8 @@ public:
 	inline void pan(float angle)  { m_panAngle  = angle; }
 	inline void tilt(float angle) { m_tiltAngle = angle; }
 
+	void updataCamera(const float dt);
+
 	enum LightMode
 	{
 		PerFragmentBlinnPhong = 1,
@@ -50,6 +52,9 @@ public:
 
 	Object3D*    getObject() { return NULL; } //hack! need to improve
 	SceneCamera* getCamera();
+	vec3 getViewDirection() { return m_v; }
+	bool isViewCenterFixed() { return m_viewCenterFixed; }
+
 
 	QSharedPointer<MeshManager>     meshManager();
 	QSharedPointer<TextureManager>  textureManager();

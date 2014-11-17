@@ -83,23 +83,7 @@ void Scene::update(float t)
 	const float dt = t - m_time;
 	m_time = t;
 
-	SceneCamera::CameraTranslationOption option = m_viewCenterFixed
-		? SceneCamera::DontTranslateViewCenter
-		: SceneCamera::TranslateViewCenter;
-
-	m_camera->translate(m_v * dt * m_metersToUnits, option);
-
-	if( ! qFuzzyIsNull(m_panAngle) )
-	{
-		m_camera->pan(m_panAngle, QVector3D(0.0f, 1.0f, 0.0f));
-		m_panAngle = 0.0f;
-	}
-
-	if ( ! qFuzzyIsNull(m_tiltAngle) )
-	{
-		m_camera->tilt(m_tiltAngle);
-		m_tiltAngle = 0.0f;
-	}
+	updataCamera(dt);
 
 	m_funcs->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -218,6 +202,28 @@ SceneCamera* Scene::getCamera()
 	return m_camera;
 }
 
+void Scene::updataCamera( const float dt )
+{
+	SceneCamera::CameraTranslationOption option = m_viewCenterFixed
+		? SceneCamera::DontTranslateViewCenter
+		: SceneCamera::TranslateViewCenter;
+
+	m_camera->translate(m_v * dt * m_metersToUnits, option);
+
+	if( ! qFuzzyIsNull(m_panAngle) )
+	{
+		m_camera->pan(m_panAngle, QVector3D(0.0f, 1.0f, 0.0f));
+		m_panAngle = 0.0f;
+	}
+
+	if ( ! qFuzzyIsNull(m_tiltAngle) )
+	{
+		m_camera->tilt(m_tiltAngle);
+		m_tiltAngle = 0.0f;
+	}
+}
+
+
 QSharedPointer<MeshManager> Scene::meshManager()
 {
 	return m_meshManager;
@@ -232,10 +238,3 @@ QSharedPointer<MaterialManager> Scene::materialManager()
 {
 	return m_materialManager;
 }
-
-
-
-
-
-
-
