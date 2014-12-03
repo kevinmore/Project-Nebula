@@ -52,61 +52,57 @@ namespace Math
 		}
 
 		// build a 3x3 rotation matrix
-		QQuaternion()
+		aiMatrix3x3 m(vRows[0].x(),vRows[1].x(),vRows[2].x(),
+					  vRows[0].y(),vRows[1].y(),vRows[2].y(),
+					  vRows[0].z(),vRows[1].z(),vRows[2].z());
+
+		aiQuaternion r(m);
+		rotationOut.setScalar(r.w);
+		rotationOut.setX(r.x);
+		rotationOut.setY(r.y);
+		rotationOut.setZ(r.z);
 	}
 
 	namespace Spline
 	{
 		// Interpolates between from and to by fraction. fraction is clamped between 0 and 1.
 		// When fraction = 0 returns from. When fraction = 1 return to. When fraction = 0.5 returns the average of from and to.
-		template <typename T>
-		static float lerp(const T& from, const T& to, float fraction)
+		static float lerp(float from, float to, float fraction)
 		{
 			return from + ((to-from) * fraction);
 		}
 
-		
+		static vec3 lerp(vec3& from, vec3& to, float fraction)
+		{
+			return from + ((to-from) * fraction);
+		}
 
-// 		static vec2 lerp(const vec2& v1, const vec2& v2, float fraction)
-// 		{
-// 			return vec2(lerp(v1.x(), v2.x(), fraction),
-// 				        lerp(v1.y(), v2.y(), fraction));
-// 		}
-// 
-// 		static vec3 lerp(const vec3& v1, const vec3& v2, float fraction)
-// 		{
-// 			return vec3(lerp(v1.x(), v2.x(), fraction),
-// 						lerp(v1.y(), v2.y(), fraction),
-// 						lerp(v1.z(), v2.z(), fraction));
-// 		}
-// 
-// 		stat aiVector3D lerp(const aiVector3D& v1, const aiVector3D& v2, float fraction)
-// 		{
-// 			return aiVector3D(lerp(v1.x, v2.x, fraction),
-// 							  lerp(v1.y, v2.y, fraction),
-// 							  lerp(v1.z, v2.z, fraction));
-// 		}
-// 
-		
-// 
-// 		static mat4 lerp(const mat4& from, const mat4& to, float fraction)
-// 		{
-// 			// decompose
-// 			aiVector3D	 scaling_from;
-// 			aiQuaternion rotation_from;
-// 			aiVector3D	 position_from;
-// 			convToAiMat4(from).Decompose(scaling_from, rotation_from, position_from);
-// 
-// 			aiVector3D	 scaling_to;
-// 			aiQuaternion rotation_to;
-// 			aiVector3D	 position_to;
-// 			convToAiMat4(from).Decompose(scaling_from, rotation_from, position_from);
-// 			// lerp for 3 components
-// 
-// 			// compose the result
-// 			mat4 result;
-// 			return result;
-// 		}
+		static mat4 lerp(mat4& from, mat4& to, float fraction)
+		{
+			// decompose
+			vec3	    scaling_from;
+			QQuaternion rotation_from;
+			vec3	    position_from;
+			decomposeMat4(from, scaling_from, rotation_from, position_from);
+
+			vec3	    scaling_to;
+			QQuaternion rotation_to;
+			vec3	    position_to;
+			decomposeMat4(to, scaling_to, rotation_to, position_to);
+
+			// lerp for 3 components
+			vec3 scale(lerp(scaling_from, scaling_to, fraction));
+			QQuaternion rotation(QQuaternion::slerp(rotation_from, rotation_to, fraction));
+			vec3 position(lerp(position_from, position_to, fraction));
+
+			// compose the result
+			mat4 result;
+			result.scale(scale);
+			result.rotate(rotation);
+			result.translate(position);
+
+			return result;
+		}
 
 		// simple function to generate a vector of 2d Bezier curve points
 		static QVector<vec2> makeBezier2D(const QVector<vec2>& anchors, float accuracy = 10000.0f)
