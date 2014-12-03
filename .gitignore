@@ -221,3 +221,4 @@ FakesAssemblies/
 *.tlog
 TempFiles/
 *.suo
+Debug/Project Nebula.exe

@@ -11,54 +11,105 @@ namespace Math
 		return d != d;
 	}
 
+	static void decomposeMat4(mat4& matIn, vec3& scalingOut, QQuaternion& rotationOut, vec3& positionOut)
+	{
+		// extract translation
+		positionOut.setX(matIn(0, 3));
+		positionOut.setY(matIn(1, 3));
+		positionOut.setZ(matIn(2, 3));
+
+		// extract the rows of the matrix
+		vec3 vRows[3] = {
+			vec3(matIn(0, 0), matIn(1, 0), matIn(2, 0)),
+			vec3(matIn(0, 1), matIn(1, 1), matIn(2, 1)),
+			vec3(matIn(0, 2), matIn(1, 2), matIn(2, 2))
+		};
+
+		// extract the scaling factors
+		scalingOut.setX(vRows[0].length());
+		scalingOut.setY(vRows[1].length());
+		scalingOut.setZ(vRows[2].length());
+
+		// and the sign of the scaling
+		if (matIn.determinant() < 0) {
+			scalingOut.setX(-scalingOut.x());
+			scalingOut.setY(-scalingOut.y());
+			scalingOut.setZ(-scalingOut.z());
+		}
+
+		// and remove all scaling from the matrix
+		if(scalingOut.x())
+		{
+			vRows[0] /= scalingOut.x();
+		}
+		if(scalingOut.y())
+		{
+			vRows[1] /= scalingOut.y();
+		}
+		if(scalingOut.z())
+		{
+			vRows[2] /= scalingOut.z();
+		}
+
+		// build a 3x3 rotation matrix
+		QQuaternion()
+	}
+
 	namespace Spline
 	{
-		// simple interpolation function
-		static float interpolate(float n1, float n2, float fraction)
+		// Interpolates between from and to by fraction. fraction is clamped between 0 and 1.
+		// When fraction = 0 returns from. When fraction = 1 return to. When fraction = 0.5 returns the average of from and to.
+		template <typename T>
+		static float lerp(const T& from, const T& to, float fraction)
 		{
-			return n1 + ((n2-n1) * fraction);
+			return from + ((to-from) * fraction);
 		}
 
-		static vec2 interpolate(vec2& v1, vec2& v2, float fraction)
-		{
-			return vec2(interpolate(v1.x(), v2.x(), fraction),
-				        interpolate(v1.y(), v2.y(), fraction));
-		}
+		
 
-		static vec3 interpolate(vec3& v1, vec3& v2, float fraction)
-		{
-			return vec3(interpolate(v1.x(), v2.x(), fraction),
-						interpolate(v1.y(), v2.y(), fraction),
-						interpolate(v1.z(), v2.z(), fraction));
-		}
-
-		static vec3 interpolate(vec3& p0, vec3& p1, vec3& p2, vec3& p3, float t)
-		{
-			vec3 out;
-
-			float t2 = t * t;
-			float t3 = t2 * t;
-
-			out.setX(0.5f * ((2.0f * p1.x()) +
-					(-p0.x() + p2.x()) * t +
-					(2.0f * p0.x() - 5.0f * p1.x() + 4 * p2.x() - p3.x()) * t2 +
-					(-p0.x() + 3.0f * p1.x() - 3.0f * p2.x() + p3.x()) * t3));
-
-			out.setY(0.5f * ((2.0f * p1.y()) +
-					(-p0.y() + p2.y()) * t +
-					(2.0f * p0.y() - 5.0f * p1.y() + 4 * p2.y() - p3.y()) * t2 +
-					(-p0.y() + 3.0f * p1.y() - 3.0f * p2.y() + p3.y()) * t3));
-
-			out.setZ(0.5f * ((2.0f * p1.z()) +
-				(-p0.z() + p2.z()) * t +
-				(2.0f * p0.z() - 5.0f * p1.z() + 4 * p2.z() - p3.z()) * t2 +
-				(-p0.z() + 3.0f * p1.z() - 3.0f * p2.z() + p3.z()) * t3));
-
-			return out;
-		}
+// 		static vec2 lerp(const vec2& v1, const vec2& v2, float fraction)
+// 		{
+// 			return vec2(lerp(v1.x(), v2.x(), fraction),
+// 				        lerp(v1.y(), v2.y(), fraction));
+// 		}
+// 
+// 		static vec3 lerp(const vec3& v1, const vec3& v2, float fraction)
+// 		{
+// 			return vec3(lerp(v1.x(), v2.x(), fraction),
+// 						lerp(v1.y(), v2.y(), fraction),
+// 						lerp(v1.z(), v2.z(), fraction));
+// 		}
+// 
+// 		stat aiVector3D lerp(const aiVector3D& v1, const aiVector3D& v2, float fraction)
+// 		{
+// 			return aiVector3D(lerp(v1.x, v2.x, fraction),
+// 							  lerp(v1.y, v2.y, fraction),
+// 							  lerp(v1.z, v2.z, fraction));
+// 		}
+// 
+		
+// 
+// 		static mat4 lerp(const mat4& from, const mat4& to, float fraction)
+// 		{
+// 			// decompose
+// 			aiVector3D	 scaling_from;
+// 			aiQuaternion rotation_from;
+// 			aiVector3D	 position_from;
+// 			convToAiMat4(from).Decompose(scaling_from, rotation_from, position_from);
+// 
+// 			aiVector3D	 scaling_to;
+// 			aiQuaternion rotation_to;
+// 			aiVector3D	 position_to;
+// 			convToAiMat4(from).Decompose(scaling_from, rotation_from, position_from);
+// 			// lerp for 3 components
+// 
+// 			// compose the result
+// 			mat4 result;
+// 			return result;
+// 		}
 
 		// simple function to generate a vector of 2d Bezier curve points
-		static QVector<vec2> makeBezier2D(const QVector<vec2>& anchors, float accuracy=10000.0)
+		static QVector<vec2> makeBezier2D(const QVector<vec2>& anchors, float accuracy = 10000.0f)
 		{
 			if(anchors.size()<=2)
 				return anchors;
@@ -70,16 +121,16 @@ namespace Math
 			{
 				QVector<vec2> temp;
 				for(int j=1; j<anchors.size(); ++j)
-					temp.push_back(vec2(interpolate(anchors[j-1].x(), anchors[j].x(), i),
-					interpolate(anchors[j-1].y(), anchors[j].y(), i)));
+					temp.push_back(vec2(lerp(anchors[j-1].x(), anchors[j].x(), i),
+					lerp(anchors[j-1].y(), anchors[j].y(), i)));
 
 				while(temp.size()>1)
 				{
 					QVector<vec2> temp2;
 
 					for(int j=1; j<temp.size(); ++j)
-						temp2.push_back(vec2(interpolate(temp[j-1].x(), temp[j].x(), i),
-						interpolate(temp[j-1].y(), temp[j].y(), i)));
+						temp2.push_back(vec2(lerp(temp[j-1].x(), temp[j].x(), i),
+						lerp(temp[j-1].y(), temp[j].y(), i)));
 					temp = temp2;
 				}
 				curvePoints.push_back(temp[0]);
@@ -101,18 +152,18 @@ namespace Math
 			{
 				QVector<vec3> temp;
 				for(int j=1; j<anchors.size(); ++j)
-					temp.push_back(vec3(interpolate(anchors[j-1].x(), anchors[j].x(), i),
-					interpolate(anchors[j-1].y(), anchors[j].y(), i),
-					interpolate(anchors[j-1].z(), anchors[j].z(), i)));
+					temp.push_back(vec3(lerp(anchors[j-1].x(), anchors[j].x(), i),
+					lerp(anchors[j-1].y(), anchors[j].y(), i),
+					lerp(anchors[j-1].z(), anchors[j].z(), i)));
 
 				while(temp.size()>1)
 				{
 					QVector<vec3> temp2;
 
 					for(int j=1; j<temp.size(); ++j)
-						temp2.push_back(vec3(interpolate(temp[j-1].x(), temp[j].x(), i),
-						interpolate(temp[j-1].y(), temp[j].y(), i),
-						interpolate(temp[j-1].z(), temp[j].z(), i)));
+						temp2.push_back(vec3(lerp(temp[j-1].x(), temp[j].x(), i),
+						lerp(temp[j-1].y(), temp[j].y(), i),
+						lerp(temp[j-1].z(), temp[j].z(), i)));
 					temp = temp2;
 				}
 				curvePoints.push_back(temp[0]);
@@ -121,6 +172,30 @@ namespace Math
 			return curvePoints;
 		}
 
+		static vec3 catlerp(vec3& p0, vec3& p1, vec3& p2, vec3& p3, float t)
+		{
+			vec3 out;
+
+			float t2 = t * t;
+			float t3 = t2 * t;
+
+			out.setX(0.5f * ((2.0f * p1.x()) +
+				(-p0.x() + p2.x()) * t +
+				(2.0f * p0.x() - 5.0f * p1.x() + 4 * p2.x() - p3.x()) * t2 +
+				(-p0.x() + 3.0f * p1.x() - 3.0f * p2.x() + p3.x()) * t3));
+
+			out.setY(0.5f * ((2.0f * p1.y()) +
+				(-p0.y() + p2.y()) * t +
+				(2.0f * p0.y() - 5.0f * p1.y() + 4 * p2.y() - p3.y()) * t2 +
+				(-p0.y() + 3.0f * p1.y() - 3.0f * p2.y() + p3.y()) * t3));
+
+			out.setZ(0.5f * ((2.0f * p1.z()) +
+				(-p0.z() + p2.z()) * t +
+				(2.0f * p0.z() - 5.0f * p1.z() + 4 * p2.z() - p3.z()) * t2 +
+				(-p0.z() + 3.0f * p1.z() - 3.0f * p2.z() + p3.z()) * t3));
+
+			return out;
+		}
 
 		static QVector<vec3> makeCatMullRomSpline(QVector<vec3>& anchors, int numPoints = 10000)
 		{
@@ -133,7 +208,7 @@ namespace Math
 			{
 				for (int j = 0; j < numPoints; ++j)
 				{
-					splinePoints.push_back(interpolate(anchors[i], anchors[i + 1], anchors[i + 2], anchors[i + 3], (1.0f / numPoints) * j));
+					splinePoints.push_back(catlerp(anchors[i], anchors[i + 1], anchors[i + 2], anchors[i + 3], (1.0f / numPoints) * j));
 				}
 			}
 
