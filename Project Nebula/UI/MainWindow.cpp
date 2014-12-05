@@ -154,8 +154,8 @@ void MainWindow::initializeParamsArea()
 	nearPlaneValue->setSingleStep(0.01);
 	nearPlaneValue->setValue(0.1);
 
-	farPlaneValue->setRange(1.0, 1024.0);
-	farPlaneValue->setValue(1024.0);
+	farPlaneValue->setRange(1.0, 10240.0);
+	farPlaneValue->setValue(10240.0);
 
 	leftLabel->hide();
 	rightLabel->hide();

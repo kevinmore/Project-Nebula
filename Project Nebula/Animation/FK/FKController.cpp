@@ -78,12 +78,12 @@ void FKController::calcFinalTransforms( float AnimationTime, const aiNode* pNode
 		// that is, the bone is not in the disabled bones list
 		if (m_disabledBones.indexOf(m_BoneInfo[BoneIndex]) == -1)
 		{
-			m_BoneInfo[BoneIndex]->m_nodeTransform = NodeTransformation;
-			m_BoneInfo[BoneIndex]->m_globalNodeTransform = GlobalTransformation;
+			m_BoneInfo[BoneIndex]->m_boneSpaceTransform = NodeTransformation;
+			m_BoneInfo[BoneIndex]->m_modelSpaceTransform = GlobalTransformation;
 			m_BoneInfo[BoneIndex]->m_finalTransform = m_GlobalInverseTransform * GlobalTransformation * m_BoneInfo[BoneIndex]->m_offsetMatrix;
 
-			// update the global position
-			m_BoneInfo[BoneIndex]->calcWorldTransform();
+			// update the model space transform in the skeleton structure
+			m_BoneInfo[BoneIndex]->decomposeModelSpaceTransform();
 		}
 
 	 }

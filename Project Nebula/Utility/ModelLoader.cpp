@@ -234,7 +234,7 @@ void ModelLoader::generateSkeleton( aiNode* pAiRootNode, Bone* pRootSkeleton, ma
 	if (m_BoneMapping.find(nodeName) != m_BoneMapping.end())
 	{
 		uint BoneIndex = m_BoneMapping[nodeName];
-		m_BoneInfo[BoneIndex].m_nodeTransform = Math::convToQMat4(pAiRootNode->mTransformation);
+		m_BoneInfo[BoneIndex].m_boneSpaceTransform = Math::convToQMat4(pAiRootNode->mTransformation);
 
 		Bone bi = m_BoneInfo[BoneIndex];
 		pBone = new Bone(pRootSkeleton);
@@ -242,9 +242,9 @@ void ModelLoader::generateSkeleton( aiNode* pAiRootNode, Bone* pRootSkeleton, ma
 		pBone->m_name = bi.m_name;
 
 		pBone->m_offsetMatrix = bi.m_offsetMatrix;
-		pBone->m_nodeTransform = Math::convToQMat4(pAiRootNode->mTransformation);
-		pBone->m_globalNodeTransform = globalTransformation;
-		pBone->m_finalTransform = m_GlobalInverseTransform * pBone->m_globalNodeTransform * pBone->m_offsetMatrix;
+		pBone->m_boneSpaceTransform = Math::convToQMat4(pAiRootNode->mTransformation);
+		pBone->m_modelSpaceTransform = globalTransformation;
+		pBone->m_finalTransform = m_GlobalInverseTransform * pBone->m_modelSpaceTransform * pBone->m_offsetMatrix;
 	}
 
 	for (uint i = 0 ; i < pAiRootNode->mNumChildren ; ++i) 

@@ -71,7 +71,7 @@ void FABRIKSolver::solveIK( const vec3 &targetPos )
 	/************************************************************************/
 	/* Check if the target is already reached                               */
 	/************************************************************************/
-	if((m_effectorBone->getWorldPosition() - targetPos).length() <= m_tolerance)
+	if((m_effectorBone->getModelSpacePosition() - targetPos).length() <= m_tolerance)
 	{
 		qDebug() << "Target Reached";
 		return;
@@ -80,7 +80,7 @@ void FABRIKSolver::solveIK( const vec3 &targetPos )
 	/************************************************************************/
 	/* Check if the target is reachable                                     */
 	/************************************************************************/
-	vec3 originalRootPosition = m_rootBone->getWorldPosition();
+	vec3 originalRootPosition = m_rootBone->getModelSpacePosition();
 	
 	float rootToTargetLenght = (targetPos - originalRootPosition).length();
 	if(m_totalChainLength - rootToTargetLenght < 0.00001f)
@@ -100,7 +100,7 @@ void FABRIKSolver::solveIK( const vec3 &targetPos )
 	/************************************************************************/
 	uint chainCount = m_skeleton->getBoneCountBetween(m_rootBone, m_effectorBone);
 	uint effectorIndex = chainCount - 1;
-	m_effectorBone->setWorldPosition(targetPos);
+	m_effectorBone->setModelSpacePosition(targetPos);
 	vec3 direction;
 	Bone *currentBone, *parentToCurrent;
 	uint i = effectorIndex;
@@ -112,8 +112,8 @@ void FABRIKSolver::solveIK( const vec3 &targetPos )
 		currentBone = m_boneChain[i];
 		parentToCurrent = m_boneChain[i-1];
 
-		direction = (parentToCurrent->getWorldPosition() - currentBone->getWorldPosition()).normalized();
-		parentToCurrent->setWorldPosition(currentBone->getWorldPosition() + direction * m_distances[i-1]);
+		direction = (parentToCurrent->getModelSpacePosition() - currentBone->getModelSpacePosition()).normalized();
+		parentToCurrent->setModelSpacePosition(currentBone->getModelSpacePosition() + direction * m_distances[i-1]);
 	}
 
 
@@ -125,7 +125,7 @@ void FABRIKSolver::solveIK( const vec3 &targetPos )
 	/************************************************************************/
 	/* Stage 2: Backward Reaching                                           */
 	/************************************************************************/
-	m_rootBone->setWorldPosition(originalRootPosition);
+	m_rootBone->setModelSpacePosition(originalRootPosition);
 	Bone* childOfCurrent;
 
 	// from root to effector
@@ -134,8 +134,8 @@ void FABRIKSolver::solveIK( const vec3 &targetPos )
 		currentBone = m_boneChain[i];
 		childOfCurrent = m_boneChain[i+1];
 
-		direction = (childOfCurrent->getWorldPosition() - currentBone->getWorldPosition()).normalized();
-		childOfCurrent->setWorldPosition(currentBone->getWorldPosition() + direction * m_distances[i]);
+		direction = (childOfCurrent->getModelSpacePosition() - currentBone->getModelSpacePosition()).normalized();
+		childOfCurrent->setModelSpacePosition(currentBone->getModelSpacePosition() + direction * m_distances[i]);
 	}
 
 
@@ -151,7 +151,7 @@ void FABRIKSolver::solveIK( const vec3 &targetPos )
 	/************************************************************************/
 	/* Stage 3: Update the skeleton position                                */
 	/************************************************************************/
-	m_skeleton->sortPose(m_rootBone, m_rootBone->m_parent->m_globalNodeTransform);
+	m_skeleton->sortPose(m_rootBone, m_rootBone->m_parent->m_modelSpaceTransform);
 }
 
 void FABRIKSolver::BoneTransform( Skeleton* skeleton, Bone* baseBone, QVector<mat4>& Transforms )

@@ -14,15 +14,22 @@ public:
 	QString m_name;
 
 	/** Matrixes. **/
+	// bind pose matrix
 	mat4 m_offsetMatrix;
-	mat4 m_nodeTransform;
+
+	// the bone's transform in bone space
+	mat4 m_boneSpaceTransform;
+
+	// the bone's transform in model space
+	mat4 m_modelSpaceTransform;
+
+	// final matrix for the shader
 	mat4 m_finalTransform;
-
-	mat4 m_globalNodeTransform;
-
 
 	/** Parent bode. NULL if this node is the root. **/
 	Bone* m_parent;
+
+	/** Member functions **/
 
 	Bone() 
 	{ 
@@ -39,21 +46,6 @@ public:
 		if(parent) parent->addChild(this);
 
 		m_DOF = DimensionOfFreedom();
-	}
-
-
-	void calcWorldTransform()
-	{
-		aiMatrix4x4 globalTransform = Math::convToAiMat4(m_globalNodeTransform);
-		
-		aiVector3D	 scaling;
-		aiQuaternion rotation;
-		aiVector3D	 position;
-		globalTransform.Decompose(scaling, rotation, position);		
-
-		m_worldPos = vec3(position.x, position.y, position.z);
-		m_worldScaling = vec3(scaling.x, scaling.y, scaling.z);
-		m_worldQuaternion = QQuaternion(rotation.w, rotation.x, rotation.y, rotation.z);
 	}
 
 	void addChild(Bone* child)
@@ -77,43 +69,57 @@ public:
 		return m_children.size();
 	}
 
-	vec3 getWorldPosition()
+	/** Utility functions **/
+
+	// this function decompose the node transform matrix in model space into
+	// 3 components: scaling, rotation, position
+	void decomposeModelSpaceTransform()
 	{
-		return m_worldPos;
+		Math::decomposeMat4(m_modelSpaceTransform, m_modelSpaceScaling, m_modelSpaceRotation, m_modelSpacePosition);
 	}
 
-	QQuaternion getWorldRotation()
+	vec3 getModelSpacePosition()
 	{
-		return m_worldQuaternion;
+		return m_modelSpacePosition;
 	}
 
-	void rotateInWorldSpace(const QQuaternion& deltaRoation)
+	QQuaternion getModelSpaceRotation()
 	{
-		m_globalNodeTransform.rotate(deltaRoation);
-		m_nodeTransform = m_parent->m_globalNodeTransform.inverted() * m_globalNodeTransform;
+		return m_modelSpaceRotation;
+	}
 
-		calcWorldTransform();
+	vec3 getModelSpaceScaling()
+	{
+		return m_modelSpaceScaling;
+	}
+
+	void rotateInModelSpace(const QQuaternion& deltaRoation)
+	{
+		m_modelSpaceTransform.rotate(deltaRoation);
+		m_boneSpaceTransform = m_parent->m_modelSpaceTransform.inverted() * m_modelSpaceTransform;
+
+		decomposeModelSpaceTransform();
 	}
 
 
-	void setWorldPosition(const vec3 &newPos)
+	void setModelSpacePosition(const vec3 &newPos)
 	{
-		vec3 originalPos = m_worldPos;
+		vec3 originalPos = m_modelSpacePosition;
 		vec3 deltaTranslation = newPos - originalPos;
 
 		// clean the rotation updated by the FKController
-		m_globalNodeTransform.setToIdentity();
+		m_modelSpaceTransform.setToIdentity();
 		//m_globalNodeTransform.translate(deltaTranslation);
 
 		// here the bone is translated in the world coordinates
 		// dont use QMatrix4x4.translate(), that only translates in the relative coordinates
-		m_globalNodeTransform(0, 3) += deltaTranslation.x();
-		m_globalNodeTransform(1, 3) += deltaTranslation.y();
-		m_globalNodeTransform(2, 3) += deltaTranslation.z();
+		m_modelSpaceTransform(0, 3) += deltaTranslation.x();
+		m_modelSpaceTransform(1, 3) += deltaTranslation.y();
+		m_modelSpaceTransform(2, 3) += deltaTranslation.z();
 
 
-		m_nodeTransform = m_parent->m_globalNodeTransform.inverted() * m_globalNodeTransform;
-		calcWorldTransform();
+		m_boneSpaceTransform = m_parent->m_modelSpaceTransform.inverted() * m_modelSpaceTransform;
+		decomposeModelSpaceTransform();
 	}
 
 
@@ -184,45 +190,40 @@ public:
 		return result;
 	}
 
-	Math::EulerAngle getLocalEulerAngleInDegrees()
+	// returns the euler angles in degrees
+	Math::EulerAngle getEulerAnglesInBoneSpace()
 	{
-		aiMatrix4x4 localTransform = Math::convToAiMat4(m_nodeTransform);
+		vec3 pos, scale;
+		QQuaternion rot;
+		Math::decomposeMat4(m_boneSpaceTransform, scale, rot, scale);
 
-		aiVector3D	 scaling;
-		aiQuaternion rotation;
-		aiVector3D	 position;
-		localTransform.Decompose(scaling, rotation, position);
-		QQuaternion localRotation = QQuaternion(rotation.w, rotation.x, rotation.y, rotation.z);
-
-		Math::EulerAngle ea = Math::QuaternionToEuler(localRotation);
+		Math::EulerAngle ea = Math::QuaternionToEuler(rot);
 		return Math::EulerAngle(qRadiansToDegrees(ea.m_fRoll), 
 			                    qRadiansToDegrees(ea.m_fPitch),
 			                    qRadiansToDegrees(ea.m_fYaw));
 	}
 
-	Math::EulerAngle getGlobalAngleInDegrees()
+	// returns the euler angles in degrees
+	Math::EulerAngle getEulerAnglesInModelSpace()
 	{
-		aiMatrix4x4 globalTransform = Math::convToAiMat4(m_globalNodeTransform);
+		vec3 pos, scale;
+		QQuaternion rot;
+		Math::decomposeMat4(m_modelSpaceTransform, scale, rot, scale);
 
-		aiVector3D	 scaling;
-		aiQuaternion rotation;
-		aiVector3D	 position;
-		globalTransform.Decompose(scaling, rotation, position);
-		QQuaternion worldQuaternion = QQuaternion(rotation.w, rotation.x, rotation.y, rotation.z);
-
-		Math::EulerAngle ea = Math::QuaternionToEuler(worldQuaternion);
+		Math::EulerAngle ea = Math::QuaternionToEuler(rot);
 		return Math::EulerAngle(qRadiansToDegrees(ea.m_fRoll), 
-			qRadiansToDegrees(ea.m_fPitch),
-			qRadiansToDegrees(ea.m_fYaw));
+								qRadiansToDegrees(ea.m_fPitch),
+								qRadiansToDegrees(ea.m_fYaw));
 	}
+
 private:
 	DimensionOfFreedom m_DOF;
 
 
-	/** Position, rotation, scaling. **/
-	vec3 m_worldPos;
-	vec3 m_worldScaling;
-	QQuaternion m_worldQuaternion;
+	/** Position, rotation, scaling in model space. **/
+	vec3 m_modelSpacePosition;
+	vec3 m_modelSpaceScaling;
+	QQuaternion m_modelSpaceRotation;
 
 	/** The child bones of this bone. **/
 	QVector<Bone*> m_children;

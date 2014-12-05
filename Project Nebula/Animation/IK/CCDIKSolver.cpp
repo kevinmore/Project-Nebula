@@ -6,8 +6,6 @@ CCDIKSolver::CCDIKSolver( int iterations )
 	  m_lastDistance( 0.0f )
 {}
 
-
-
 CCDIKSolver::~CCDIKSolver(void)
 {}
 
@@ -40,7 +38,7 @@ bool CCDIKSolver::solveOneConstraint( const IkConstraint& constraint, Skeleton* 
 	
 	// re-sort the skeleton pose
 	// this step is necessary because the parent of the baseBone might have moved
-	skeleton->sortPose(baseBone, baseBone->m_parent->m_globalNodeTransform);
+	skeleton->sortPose(baseBone, baseBone->m_parent->m_modelSpaceTransform);
 
 	// find the set of bones within this chain
 	QVector<Bone*> boneChain;
@@ -61,13 +59,13 @@ bool CCDIKSolver::solveOneConstraint( const IkConstraint& constraint, Skeleton* 
 		totalChainLength += bone_distances[i];
 	}
 
-	float rootToTargetLenght = (constraint.m_targetMS - baseBone->getWorldPosition()).length();
+	float rootToTargetLenght = (constraint.m_targetMS - baseBone->getModelSpacePosition()).length();
 
 	if(totalChainLength < rootToTargetLenght + 10.0f) // to avoid funny results
 		return false;
 
 	// check if the last distance is about the same
-	float effectorToTarget = (constraint.m_targetMS - effectorBone->getWorldPosition()).length();
+	float effectorToTarget = (constraint.m_targetMS - effectorBone->getModelSpacePosition()).length();
 	if(qAbs(m_lastDistance - effectorToTarget) < 0.5f)
 		return true;
 
@@ -78,15 +76,15 @@ bool CCDIKSolver::solveOneConstraint( const IkConstraint& constraint, Skeleton* 
 		for( int jointIndex = boneChain.size() - 2; jointIndex >= 0; --jointIndex )
 		{
 			// check if the target is already reached
-			if ((effectorBone->getWorldPosition() - constraint.m_targetMS).length() < 1.0f)
+			if ((effectorBone->getModelSpacePosition() - constraint.m_targetMS).length() < 1.0f)
 				return true;
 			
 			// the joint to rotate
 			Bone* joint = boneChain[jointIndex];
 
 
-			const vec3 effectorPos = effectorBone->getWorldPosition();
-			const vec3 jointPos = joint->getWorldPosition();
+			const vec3 effectorPos = effectorBone->getModelSpacePosition();
+			const vec3 jointPos = joint->getModelSpacePosition();
 
 			// joint to effector bone direction
 			vec3 currentDirection = (effectorPos - jointPos).normalized();
@@ -142,17 +140,16 @@ bool CCDIKSolver::solveOneConstraint( const IkConstraint& constraint, Skeleton* 
 
 			
 			// adjust the world rotation of the joint
-			joint->rotateInWorldSpace(deltaRotation);
-
+			joint->rotateInModelSpace(deltaRotation);
 			// re-sort the skeleton pose
-			skeleton->sortPose(baseBone, baseBone->m_parent->m_globalNodeTransform);
-		}
-	}
+			skeleton->sortPose(baseBone, baseBone->m_parent->m_modelSpaceTransform);
+			
+		}// end of 1 iteration
+	}// end of iterations
 
-	m_lastDistance = (constraint.m_targetMS - effectorBone->getWorldPosition()).length();
+	m_lastDistance = (constraint.m_targetMS - effectorBone->getModelSpacePosition()).length();
 
 	return true;
-	
 }
 
 

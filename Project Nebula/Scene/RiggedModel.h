@@ -66,5 +66,6 @@ private:
 	bool ikSolved;
 	float updateIKRate, lastUpdatedTime;
 	vec3 m_targetPos;
+	float solvingDuration;
 };
 

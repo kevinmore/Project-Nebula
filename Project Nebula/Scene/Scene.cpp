@@ -62,10 +62,11 @@ void Scene::initialize()
 	m_textureManager = QSharedPointer<TextureManager>(new TextureManager());
 	m_meshManager = QSharedPointer<MeshManager>(new MeshManager());
 
+
 	// load models for this scene
 	m_modelManager->loadModel("floor", "../Resource/Models/DemoRoom/floor.DAE", ModelLoader::STATIC_MODEL);
 	m_modelManager->loadModel("coffecup", "../Resource/Models/IK_Lab/coffecup.DAE", ModelLoader::STATIC_MODEL);
-	m_modelManager->loadModel("m005", "../Resource/Models/IK_Lab/m005.DAE", ModelLoader::RIGGED_MODEL);
+	m_modelManager->loadModel("m005", "../Resource/Models/Final/m005.DAE", ModelLoader::RIGGED_MODEL);
 
 	// generate a bezier curve
 	QVector<vec3> anchors;
@@ -75,6 +76,7 @@ void Scene::initialize()
 
 	m_path = Math::Spline::makeBezier3D(anchors);
 	//m_path = Math::Spline::makeCatMullRomSpline(anchors);
+
 }
 
 

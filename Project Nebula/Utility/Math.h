@@ -96,12 +96,14 @@ namespace Math
 			vec3 position(lerp(position_from, position_to, fraction));
 
 			// compose the result
-			mat4 result;
-			result.scale(scale);
-			result.rotate(rotation);
-			result.translate(position);
-
-			return result;
+			mat4 scaleM;
+			scaleM.scale(scale);
+			mat4 rotationM;
+			rotationM.rotate(rotation);
+			mat4 translationM;
+			translationM.translate(position);
+			
+			return translationM * rotationM * scaleM;;
 		}
 
 		// simple function to generate a vector of 2d Bezier curve points

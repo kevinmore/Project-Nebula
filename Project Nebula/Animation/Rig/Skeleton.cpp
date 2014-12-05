@@ -31,7 +31,7 @@ void Skeleton::initialize(Bone* pBone)
 		m_BoneMap[pBone->m_name] = pBone;
 
 		// do some calculations by the way
-		pBone->calcWorldTransform();
+		pBone->decomposeModelSpaceTransform();
 	}
 
 	for (int i = 0 ; i < pBone->childCount() ; ++i) 
@@ -43,14 +43,14 @@ void Skeleton::initialize(Bone* pBone)
 void Skeleton::sortPose( Bone* pBone, mat4 &parentTransform )
 {
 	// calculate the global transform
-	pBone->m_globalNodeTransform = parentTransform * pBone->m_nodeTransform;  // P * B
-	pBone->m_finalTransform = m_gloableInverseMatrix * pBone->m_globalNodeTransform * pBone->m_offsetMatrix;
+	pBone->m_modelSpaceTransform = parentTransform * pBone->m_boneSpaceTransform;  // P * B
+	pBone->m_finalTransform = m_gloableInverseMatrix * pBone->m_modelSpaceTransform * pBone->m_offsetMatrix;
 
-	pBone->calcWorldTransform();
+	pBone->decomposeModelSpaceTransform();
 
 	for (int i = 0 ; i < pBone->childCount() ; ++i) 
 	{
-		sortPose(pBone->getChild(i), pBone->m_globalNodeTransform);
+		sortPose(pBone->getChild(i), pBone->m_modelSpaceTransform);
 	}
 }
 
@@ -90,7 +90,7 @@ float Skeleton::getDistanceBetween( Bone* upperBone, Bone* lowerBone )
 	}
 
 	// calculate the world distance
-	return (upperBone->getWorldPosition() - lowerBone->getWorldPosition()).length();
+	return (upperBone->getModelSpacePosition() - lowerBone->getModelSpacePosition()).length();
 }
 
 float Skeleton::getDistanceBetween( const QString& upperBoneName, const QString& lowerBoneName )

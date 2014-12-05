@@ -61,6 +61,7 @@ Canvas::Canvas(QScreen *screen)
 	QTimer* timer = new QTimer(this);
 	connect(timer, SIGNAL(timeout()), this, SLOT(updateScene()));
 	timer->start(0.016); // f = 1 / 16.10e-3 = 60Hz
+
 }
 
 Canvas::~Canvas() {}

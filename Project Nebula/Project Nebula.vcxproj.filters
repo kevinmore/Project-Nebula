@@ -32,6 +32,7 @@
     <ClCompile Include="Scene\ShadingTechniques\ShadingTechnique.cpp" />
     <ClCompile Include="Animation\IK\FABRIKSolver.cpp" />
     <ClCompile Include="Animation\IK\CCDIKSolver.cpp" />
+    <ClCompile Include="Animation\Rig\Pose.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utility\DataTypes.h" />
@@ -62,6 +63,7 @@
     <ClInclude Include="Scene\ShadingTechniques\ShadingTechnique.h" />
     <ClInclude Include="Animation\IK\FABRIKSolver.h" />
     <ClInclude Include="Animation\IK\CCDIKSolver.h" />
+    <ClInclude Include="Animation\Rig\Pose.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Resource\Shaders\skinning.frag" />

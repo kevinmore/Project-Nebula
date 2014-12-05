@@ -1,6 +1,7 @@
 #include "RiggedModel.h"
 #include <Scene/Scene.h>
 #include <QtGui/QOpenGLContext>
+#include <Animation/Rig/Pose.h>
 
 RiggedModel::RiggedModel(Scene* scene, ShadingTechnique* tech, Skeleton* skeleton, FKController* fkCtrl, CCDIKSolver* ikSolver, const GLuint vao)
   : m_scene(scene),
@@ -134,7 +135,7 @@ void RiggedModel::initialize(QVector<ModelDataPtr> modelDataVector)
 	
 
 	pBone = m_skeleton->getBone("Bip01_L_Clavicle");
-	ea = pBone->getGlobalAngleInDegrees();
+	ea = pBone->getEulerAnglesInModelSpace();
 	pitchConstraint = Bone::AngleLimits(ea.m_fPitch, ea.m_fPitch);
 	yawConstraint = Bone::AngleLimits(ea.m_fYaw - 20.0f, ea.m_fYaw + 20.0f);
 	rollConstraint = Bone::AngleLimits(ea.m_fRoll - 20.0f, ea.m_fRoll + 20.0f);
@@ -142,7 +143,7 @@ void RiggedModel::initialize(QVector<ModelDataPtr> modelDataVector)
 	pBone->setDof(dof);
 
 	pBone = m_skeleton->getBone("Bip01_L_UpperArm");
-	ea = pBone->getGlobalAngleInDegrees();
+	ea = pBone->getEulerAnglesInModelSpace();
 	pitchConstraint = Bone::AngleLimits(ea.m_fPitch - 50.0f, ea.m_fPitch + 50.0f);
 	yawConstraint = Bone::AngleLimits(ea.m_fYaw - 120.0f, ea.m_fYaw + 30.0f);
 	rollConstraint = Bone::AngleLimits(ea.m_fRoll - 170.0f, ea.m_fRoll + 40.0f);
@@ -150,7 +151,7 @@ void RiggedModel::initialize(QVector<ModelDataPtr> modelDataVector)
 	pBone->setDof(dof);
 	
 	pBone = m_skeleton->getBone("Bip01_L_Forearm");
-	ea = pBone->getGlobalAngleInDegrees();
+	ea = pBone->getEulerAnglesInModelSpace();
 	pitchConstraint = Bone::AngleLimits(ea.m_fPitch - 5.0f, ea.m_fPitch + 120.0f);
 	yawConstraint = Bone::AngleLimits(ea.m_fYaw - 60.0f, ea.m_fYaw + 20.0f);
 	rollConstraint = Bone::AngleLimits(ea.m_fRoll, ea.m_fRoll);
@@ -158,7 +159,7 @@ void RiggedModel::initialize(QVector<ModelDataPtr> modelDataVector)
 	pBone->setDof(dof);
 
 	pBone = m_skeleton->getBone("Bip01_L_Hand");
-	ea = pBone->getGlobalAngleInDegrees();
+	ea = pBone->getEulerAnglesInModelSpace();
 	pitchConstraint = Bone::AngleLimits(ea.m_fPitch - 10.0f, ea.m_fPitch + 10.0f);
 	yawConstraint = Bone::AngleLimits(ea.m_fYaw - 120.0f, ea.m_fYaw + 30.0f);
 	rollConstraint = Bone::AngleLimits(ea.m_fRoll - 5.0f, ea.m_fRoll + 5.0f);
@@ -173,12 +174,14 @@ void RiggedModel::initialize(QVector<ModelDataPtr> modelDataVector)
 	pBone->setDof(dof);
 
 	pBone = m_skeleton->getBone("Bip01_L_Finger21");
-	ea = pBone->getGlobalAngleInDegrees();
+	ea = pBone->getEulerAnglesInModelSpace();
 	pitchConstraint = Bone::AngleLimits(ea.m_fPitch, ea.m_fPitch);
 	yawConstraint = Bone::AngleLimits(ea.m_fYaw, ea.m_fYaw);
 	rollConstraint = Bone::AngleLimits(ea.m_fRoll - 5.0f, ea.m_fRoll + 90.0f);
 	dof = Bone::DimensionOfFreedom(pitchConstraint, yawConstraint, rollConstraint);
 	pBone->setDof(dof);
+
+	solvingDuration= 1.0f;
 }
 
 void RiggedModel::destroy() {}
@@ -186,7 +189,6 @@ void RiggedModel::destroy() {}
 void RiggedModel::render( float time )
 {
 	m_RenderingEffect->Enable();
-
 
 	QMatrix4x4 modelMatrix = m_actor->modelMatrix();
 	modelMatrix.rotate(90, Math::Vector3D::UNIT_X); // this is for dae files
@@ -201,16 +203,17 @@ void RiggedModel::render( float time )
 	// do the skeleton animation here
 	// check if the model has animation first
 	QVector<QMatrix4x4> Transforms;
+	m_FKController->getBoneTransforms(time, Transforms);
 
+	/*
 	// use IK
-
 	// CCD
 	// set constraint
 	CCDIKSolver::IkConstraint constraint;
 	constraint.m_startBone = m_skeleton->getBone("Bip01_L_Clavicle");
 	constraint.m_endBone = m_skeleton->getBone("Bip01_L_Finger22");
 	constraint.m_targetMS = m_targetPos;
-
+	
 	if (m_CCDSolver->solveOneConstraint( constraint, m_skeleton ))
 	{
 		m_FKController->disableBoneChain(m_skeleton->getBone("Bip01_L_Clavicle"));
@@ -222,16 +225,10 @@ void RiggedModel::render( float time )
 		m_FKController->enableAllBones();
 		m_FKController->getBoneTransforms(time, Transforms);
 	}
-
-	
-	// FABRIK
-// 	{
-// 		m_FABRSolver->solveIK(vec3(25, -100, 20));
-// 		m_FABRSolver->BoneTransform(m_skeleton, m_skeleton->getBone("Bip01_L_UpperArm"), Transforms);
-// 	}
+	*/
 
  	// update the bone positions
-	for (int i = 0 ; i < Transforms.size() ; i++) 
+	for (int i = 0 ; i < Transforms.size() ; ++i) 
 	{
 		m_RenderingEffect->SetBoneTransform(i, Transforms[i]);
 	}

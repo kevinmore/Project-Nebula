@@ -15,6 +15,7 @@
     <ClCompile Include="Animation\Rig\Skeleton.cpp" />
     <ClCompile Include="Animation\IK\FABRIKSolver.cpp" />
     <ClCompile Include="Animation\IK\CCDIKSolver.cpp" />
+    <ClCompile Include="Animation\Rig\Pose.cpp" />
     <ClCompile Include="Scene\SceneCamera_moc.cpp" />
     <ClCompile Include="Scene\AbstractModel.cpp" />
     <ClCompile Include="Scene\AbstractScene.cpp" />
@@ -48,6 +49,7 @@
     <ClInclude Include="Animation\Rig\BoneInfo.h" />
     <ClInclude Include="Animation\IK\FABRIKSolver.h" />
     <ClInclude Include="Animation\IK\CCDIKSolver.h" />
+    <ClInclude Include="Animation\Rig\Pose.h" />
     <ClInclude Include="Scene\Managers\ModelManager.h" />
     <ClInclude Include="Scene\RiggedModel.h" />
     <ClInclude Include="Scene\Scene.h" />
