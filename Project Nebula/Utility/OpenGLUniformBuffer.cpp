@@ -1,10 +1,10 @@
 #include "OpenGLUniformBuffer.h"
 
-#include <QtCore/QDebug>
+#include <QDebug>
 
-#include <QtCore/QAtomicInt>
-#include <QtGui/QOpenGLContext>
-#include <QtGui/QOpenGLFunctions_4_3_Core>
+#include <QAtomicInt>
+#include <QOpenGLContext>
+#include <QOpenGLFunctions_4_3_Core>
 
 class OpenGLUniformBufferPrivate
 {

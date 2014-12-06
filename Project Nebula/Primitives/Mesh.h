@@ -1,5 +1,5 @@
 #pragma once
-#include <QtCore/QString>
+#include <QString>
 
 class Mesh
 {

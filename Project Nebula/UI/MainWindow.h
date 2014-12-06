@@ -1,5 +1,5 @@
 #pragma once
-#include <QtWidgets/QtWidgets>
+#include <QtWidgets>
 #include <UI/Canvas.h>
 #include <Scene/Scene.h>
 #include <Scene/SceneCamera.h>

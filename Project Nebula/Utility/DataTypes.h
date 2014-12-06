@@ -1,14 +1,14 @@
 #pragma once
-#include <QtCore/QVector>
-#include <QtCore/QMap>
-#include <QtGui/QVector2D>
-#include <QtGui/QVector3D>
-#include <QtGui/QVector4D>
-#include <QtGui/QMatrix3x3>
-#include <QtGui/QMatrix4x4>
-#include <QtCore/QString>
-#include <QtGui/QQuaternion>
-#include <QtCore/QtMath>
+#include <QVector>
+#include <QMap>
+#include <QVector2D>
+#include <QVector3D>
+#include <QVector4D>
+#include <QMatrix3x3>
+#include <QMatrix4x4>
+#include <QString>
+#include <QQuaternion>
+#include <QtMath>
 
 typedef QVector2D vec2;
 typedef QVector3D vec3;

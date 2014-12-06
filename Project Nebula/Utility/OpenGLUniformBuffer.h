@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include <QtOpenGL/QtOpenGL>
+#include <QtOpenGL>
 
 using namespace std;
 

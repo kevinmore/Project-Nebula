@@ -1,6 +1,6 @@
 #include "RiggedModel.h"
 #include <Scene/Scene.h>
-#include <QtGui/QOpenGLContext>
+#include <QOpenGLContext>
 #include <Animation/Rig/Pose.h>
 
 RiggedModel::RiggedModel(Scene* scene, ShadingTechnique* tech, Skeleton* skeleton, FKController* fkCtrl, CCDIKSolver* ikSolver, const GLuint vao)

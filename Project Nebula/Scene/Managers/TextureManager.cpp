@@ -1,5 +1,5 @@
 #include "TextureManager.h"
-#include <QtCore/QDebug>
+#include <QDebug>
 
 TextureManager::TextureManager() {}
 TextureManager::~TextureManager() {}

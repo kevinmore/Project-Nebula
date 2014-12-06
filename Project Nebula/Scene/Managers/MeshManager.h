@@ -1,7 +1,7 @@
 #pragma once
-#include <QtCore/QMap>
-#include <QtCore/QString>
-#include <QtCore/QSharedPointer>
+#include <QMap>
+#include <QString>
+#include <QSharedPointer>
 #include <Primitives/Mesh.h>
 
 typedef QSharedPointer<Mesh> MeshPtr;

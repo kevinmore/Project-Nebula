@@ -1,7 +1,7 @@
 #pragma once
-#include <QtGui/QOpenGLFunctions_4_3_Core>
-#include <QtCore/QSharedPointer>
-#include <QtGui/QOpenGLShaderProgram>
+#include <QOpenGLFunctions_4_3_Core>
+#include <QSharedPointer>
+#include <QOpenGLShaderProgram>
 #include <Scene/AbstractScene.h>
 #include <Scene/Light.h>
 #include <Scene/SceneCamera.h>

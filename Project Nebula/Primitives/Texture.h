@@ -1,8 +1,8 @@
 #pragma once
-#include <QtGui/QOpenGLFunctions_4_3_Core>
-#include <QtCore/QString>
+#include <QOpenGLFunctions_4_3_Core>
+#include <QString>
 #include <Magick++.h>
-#include <QtGui/QImage>
+#include <QImage>
 
 
 class Texture

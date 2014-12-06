@@ -1,11 +1,11 @@
 #pragma once
-#include <QtGui/QWindow>
-#include <QtCore/QElapsedTimer>
-#include <QtGui/QOpenGLContext>
+#include <QWindow>
+#include <QElapsedTimer>
+#include <QOpenGLContext>
 #include <Scene/Scene.h>
-#include <QtGui/QMouseEvent>
-#include <QtGui/QKeyEvent>
-#include <QtGui/QWheelEvent>
+#include <QMouseEvent>
+#include <QKeyEvent>
+#include <QWheelEvent>
 
 /************************************************************************/
 /*This class is used to initialize the OpenGL context 

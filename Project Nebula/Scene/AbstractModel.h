@@ -1,9 +1,9 @@
 #pragma once
-#include <QtCore/QString>
-#include <QtCore/QSharedPointer>
-#include <QtGui/QVector4D>
-#include <QtGui/QOpenGLVertexArrayObject>
-#include <QtGui/QOpenGLShaderProgram>
+#include <QString>
+#include <QSharedPointer>
+#include <QVector4D>
+#include <QOpenGLVertexArrayObject>
+#include <QOpenGLShaderProgram>
 
 struct MeshData
 {

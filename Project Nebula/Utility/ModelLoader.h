@@ -2,12 +2,12 @@
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
-#include <QtCore/QSharedPointer>
 #include <Scene/AbstractModel.h>
 #include <Utility/DataTypes.h>
 #include <Animation/Rig/Skeleton.h>
 #include <assert.h>
-#include <QtGui/QOpenGLFunctions_4_3_Core>
+#include <QOpenGLFunctions_4_3_Core>
+#include <QSharedPointer>
 
 
 class ModelLoader : protected QOpenGLFunctions_4_3_Core

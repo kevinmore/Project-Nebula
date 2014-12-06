@@ -1,6 +1,6 @@
 #pragma once
-#include <QtCore/QObject>
-#include <QtGui/QOpenGLContext>
+#include <QObject>
+#include <QOpenGLContext>
 
 class AbstractScene : public QObject
 {

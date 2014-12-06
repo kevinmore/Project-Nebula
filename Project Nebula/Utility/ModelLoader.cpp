@@ -1,5 +1,5 @@
 #include "ModelLoader.h"
-#include <QtCore/QDebug>
+#include <QDebug>
 #include <Utility/Math.h>
 #include <Animation/IK/FABRIKSolver.h>
 

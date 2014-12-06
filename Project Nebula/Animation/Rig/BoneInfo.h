@@ -1,7 +1,7 @@
 #pragma once
 #include <Utility/DataTypes.h>
 #include <assert.h>
-#include <QtGui/QQuaternion>
+#include <QQuaternion>
 #include <assimp/scene.h>
 #include <Utility/Math.h>
 

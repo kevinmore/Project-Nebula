@@ -2,9 +2,9 @@
 #include <Scene/RiggedModel.h>
 #include <Scene/StaticModel.h>
 #include <Utility/ModelLoader.h>
-#include <QtCore/QMap>
-#include <QtCore/QString>
-#include <QtCore/QSharedPointer>
+#include <QMap>
+#include <QString>
+#include <QSharedPointer>
 
 typedef QSharedPointer<AbstractModel> ModelPtr;
 

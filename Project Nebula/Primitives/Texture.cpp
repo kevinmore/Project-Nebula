@@ -1,7 +1,7 @@
 #include <Primitives/Texture.h>
-#include <QtCore/QDebug>
-#include <QtOpenGL/QGLWidget>
-#include <QtGui/QOpenGLContext>
+#include <QDebug>
+#include <QGLWidget>
+#include <QOpenGLContext>
 
 Texture::Texture(const QString& fileName, TextureType type)
 	: m_qimage(),
