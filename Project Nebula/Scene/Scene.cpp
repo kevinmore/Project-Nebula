@@ -65,18 +65,78 @@ void Scene::initialize()
 
 	// load models for this scene
 	m_modelManager->loadModel("floor", "../Resource/Models/DemoRoom/floor.DAE", ModelLoader::STATIC_MODEL);
-	m_modelManager->loadModel("coffecup", "../Resource/Models/IK_Lab/coffecup.DAE", ModelLoader::STATIC_MODEL);
-	m_modelManager->loadModel("m005", "../Resource/Models/Final/m005.DAE", ModelLoader::RIGGED_MODEL);
+	//m_modelManager->loadModel("coffecup", "../Resource/Models/IK_Lab/coffecup.DAE", ModelLoader::STATIC_MODEL);
+
+	// locomotions
+	m_modelManager->loadModel("m_idle", "../Resource/Models/Final/m_idle.DAE", ModelLoader::RIGGED_MODEL);
+	m_modelManager->loadModel("m_run", "../Resource/Models/Final/m_run.DAE", ModelLoader::RIGGED_MODEL);
+	m_modelManager->loadModel("m_run_start", "../Resource/Models/Final/m_run_start.DAE", ModelLoader::RIGGED_MODEL);
+	m_modelManager->loadModel("m_run_stop", "../Resource/Models/Final/m_run_stop.DAE", ModelLoader::RIGGED_MODEL);
+	m_modelManager->loadModel("m_run_to_walk", "../Resource/Models/Final/m_run_to_walk.DAE", ModelLoader::RIGGED_MODEL);
+	m_modelManager->loadModel("m_turn_left_60_to_walk", "../Resource/Models/Final/m_turn_left_60_to_walk.DAE", ModelLoader::RIGGED_MODEL);
+	m_modelManager->loadModel("m_turn_left_120_to_walk", "../Resource/Models/Final/m_turn_left_120_to_walk.DAE", ModelLoader::RIGGED_MODEL);
+	m_modelManager->loadModel("m_turn_left_180_to_walk", "../Resource/Models/Final/m_turn_left_180_to_walk.DAE", ModelLoader::RIGGED_MODEL);
+	m_modelManager->loadModel("m_turn_right_60_to_walk", "../Resource/Models/Final/m_turn_right_60_to_walk.DAE", ModelLoader::RIGGED_MODEL);
+	m_modelManager->loadModel("m_turn_right_120_to_walk", "../Resource/Models/Final/m_turn_right_120_to_walk.DAE", ModelLoader::RIGGED_MODEL);
+	m_modelManager->loadModel("m_turn_right_180_to_walk", "../Resource/Models/Final/m_turn_right_180_to_walk.DAE", ModelLoader::RIGGED_MODEL);
+	m_modelManager->loadModel("m_walk", "../Resource/Models/Final/m_walk.DAE", ModelLoader::RIGGED_MODEL);
+	m_modelManager->loadModel("m_walk_start", "../Resource/Models/Final/m_walk_start.DAE", ModelLoader::RIGGED_MODEL);
+	m_modelManager->loadModel("m_walk_stop", "../Resource/Models/Final/m_walk_stop.DAE", ModelLoader::RIGGED_MODEL);
+	m_modelManager->loadModel("m_walk_to_run", "../Resource/Models/Final/m_walk_to_run.DAE", ModelLoader::RIGGED_MODEL);
 
 	// generate a bezier curve
-	QVector<vec3> anchors;
-	anchors << vec3(-150, 100, 0) << vec3(-50, 120, 150) << vec3(0, 150, 100) << vec3(50, 80, 20) << vec3(80, 380, 0)
-		<< vec3(100, 0, -50) << vec3(150, 80, -100) << vec3(0, 0, 0) << vec3(150, 400, -120) << vec3(100, 380, -90) << vec3(80, 250, -70)
-		<< vec3(50, 100, -50) << vec3(0, 50, -20) << vec3(0, 0, 0) << vec3(-100, 80, -10) << vec3(-100, 0, 200) << vec3(-150, 100, 0);
+// 	QVector<vec3> anchors;
+// 	anchors << vec3(-150, 100, 0) << vec3(-50, 120, 150) << vec3(0, 150, 100) << vec3(50, 80, 20) << vec3(80, 380, 0)
+// 		<< vec3(100, 0, -50) << vec3(150, 80, -100) << vec3(0, 0, 0) << vec3(150, 400, -120) << vec3(100, 380, -90) << vec3(80, 250, -70)
+// 		<< vec3(50, 100, -50) << vec3(0, 50, -20) << vec3(0, 0, 0) << vec3(-100, 80, -10) << vec3(-100, 0, 200) << vec3(-150, 100, 0);
 
-	m_path = Math::Spline::makeBezier3D(anchors);
+	//m_path = Math::Spline::makeBezier3D(anchors);
 	//m_path = Math::Spline::makeCatMullRomSpline(anchors);
+	QSharedPointer<RiggedModel> man;
+	man = m_modelManager->getModel("m_idle").dynamicCast<RiggedModel>();
+	man->getActor()->setPosition(-800, 0, 0);
 
+	man = m_modelManager->getModel("m_run").dynamicCast<RiggedModel>();
+	man->getActor()->setPosition(-700, 0, 0);
+
+	man = m_modelManager->getModel("m_run_start").dynamicCast<RiggedModel>();
+	man->getActor()->setPosition(-600, 0, 0);
+
+	man = m_modelManager->getModel("m_run_stop").dynamicCast<RiggedModel>();
+	man->getActor()->setPosition(-500, 0, 0);
+
+	man = m_modelManager->getModel("m_run_to_walk").dynamicCast<RiggedModel>();
+	man->getActor()->setPosition(-400, 0, 0);
+
+	man = m_modelManager->getModel("m_turn_left_60_to_walk").dynamicCast<RiggedModel>();
+	man->getActor()->setPosition(-300, 0, 0);
+
+	man = m_modelManager->getModel("m_turn_left_120_to_walk").dynamicCast<RiggedModel>();
+	man->getActor()->setPosition(-200, 0, 0);
+
+	man = m_modelManager->getModel("m_turn_left_180_to_walk").dynamicCast<RiggedModel>();
+	man->getActor()->setPosition(-100, 0, 0);
+
+	man = m_modelManager->getModel("m_turn_right_60_to_walk").dynamicCast<RiggedModel>();
+	man->getActor()->setPosition(0, 0, 0);
+
+	man = m_modelManager->getModel("m_turn_right_120_to_walk").dynamicCast<RiggedModel>();
+	man->getActor()->setPosition(100, 0, 0);
+
+	man = m_modelManager->getModel("m_turn_right_180_to_walk").dynamicCast<RiggedModel>();
+	man->getActor()->setPosition(200, 0, 0);
+
+	man = m_modelManager->getModel("m_walk").dynamicCast<RiggedModel>();
+	man->getActor()->setPosition(300, 0, 0);
+
+	man = m_modelManager->getModel("m_walk_start").dynamicCast<RiggedModel>();
+	man->getActor()->setPosition(400, 0, 0);
+
+	man = m_modelManager->getModel("m_walk_stop").dynamicCast<RiggedModel>();
+	man->getActor()->setPosition(500, 0, 0);
+
+	man = m_modelManager->getModel("m_walk_to_run").dynamicCast<RiggedModel>();
+	man->getActor()->setPosition(600, 0, 0);
 }
 
 
@@ -103,14 +163,14 @@ void Scene::update(float t)
 
 	
 	// make the object to follow a curve path
-	QSharedPointer<StaticModel> target = m_modelManager->getModel("coffecup").dynamicCast<StaticModel>();
-	vec3 curPos = m_path[qFloor(t*500)%m_path.size()];
-	target->getActor()->setPosition(curPos);
+// 	QSharedPointer<StaticModel> target = m_modelManager->getModel("coffecup").dynamicCast<StaticModel>();
+// 	vec3 curPos = m_path[qFloor(t*500)%m_path.size()];
+// 	target->getActor()->setPosition(curPos);
 
 	// pass in the target position to the Rigged Model
-	QSharedPointer<RiggedModel> man = m_modelManager->getModel("m005").dynamicCast<RiggedModel>();
-	vec3 modelSpaceTargetPos = vec3(curPos.x(), -curPos.y(), -curPos.z()); // hack, need to multiply by several matrixes
-	man->setReachableTargetPos(modelSpaceTargetPos);
+// 	QSharedPointer<RiggedModel> man = m_modelManager->getModel("m005").dynamicCast<RiggedModel>();
+// 	vec3 modelSpaceTargetPos = vec3(curPos.x(), -curPos.y(), -curPos.z()); // hack, need to multiply by several matrixes
+// 	man->setReachableTargetPos(modelSpaceTargetPos);
 
 	m_modelManager->renderAllModels(t);
 }
