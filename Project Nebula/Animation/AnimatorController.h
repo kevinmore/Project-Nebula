@@ -2,6 +2,7 @@
 #include <Scene/RiggedModel.h>
 #include <Scene/Managers/ModelManager.h>
 #include <QStateMachine>
+#include <QElapsedTimer>
 
 class AnimatorController : public QObject
 {
@@ -22,11 +23,15 @@ public:
 
 	QString currentClip() const { return  m_currentClip; }
 
+	void render();
+
 signals:
 	void currentClipChanged(const QString& clipName);
+	void animationCycleDone();
 
 public slots:
 	void setCurrentClip(const QString& clipName);
+	void restartTimer();
 
 private:
 	QSharedPointer<ModelManager> m_modelManager;
@@ -35,6 +40,7 @@ private:
 
 	QString m_currentClip;
 	float m_durationInSeconds;
+	QElapsedTimer m_timer;
 
 	GameObject* m_actor;
 

@@ -190,6 +190,7 @@ void RiggedModel::destroy() {}
 void RiggedModel::render( float currentTime )
 {
 	float dt = currentTime - lastUpdatedTime;
+	if(dt < 0) dt = 0.0f;
 	//m_actor->setPosition(m_actor->position() + m_actor->globalSpeed() * dt);
 	m_actor->translateInWorld(m_actor->globalSpeed() * dt);
 	

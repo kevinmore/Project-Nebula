@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_AnimatorController_t {
-    QByteArrayData data[7];
-    char stringdata[84];
+    QByteArrayData data[9];
+    char stringdata[116];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -33,12 +33,15 @@ QT_MOC_LITERAL(0, 0, 18),
 QT_MOC_LITERAL(1, 19, 18),
 QT_MOC_LITERAL(2, 38, 0),
 QT_MOC_LITERAL(3, 39, 8),
-QT_MOC_LITERAL(4, 48, 14),
-QT_MOC_LITERAL(5, 63, 11),
-QT_MOC_LITERAL(6, 75, 8)
+QT_MOC_LITERAL(4, 48, 18),
+QT_MOC_LITERAL(5, 67, 14),
+QT_MOC_LITERAL(6, 82, 12),
+QT_MOC_LITERAL(7, 95, 11),
+QT_MOC_LITERAL(8, 107, 8)
     },
     "AnimatorController\0currentClipChanged\0"
-    "\0clipName\0setCurrentClip\0currentClip\0"
+    "\0clipName\0animationCycleDone\0"
+    "setCurrentClip\0restartTimer\0currentClip\0"
     "duration"
 };
 #undef QT_MOC_LITERAL
@@ -49,28 +52,32 @@ static const uint qt_meta_data_AnimatorController[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       2,   14, // methods
-       2,   30, // properties
+       4,   14, // methods
+       2,   42, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       1,       // signalCount
+       2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   24,    2, 0x06 /* Public */,
+       1,    1,   34,    2, 0x06 /* Public */,
+       4,    0,   37,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       4,    1,   27,    2, 0x0a /* Public */,
+       5,    1,   38,    2, 0x0a /* Public */,
+       6,    0,   41,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QString,    3,
+    QMetaType::Void,
 
  // slots: parameters
     QMetaType::Void, QMetaType::QString,    3,
+    QMetaType::Void,
 
  // properties: name, type, flags
-       5, QMetaType::QString, 0x00095103,
-       6, QMetaType::Float, 0x00095103,
+       7, QMetaType::QString, 0x00095103,
+       8, QMetaType::Float, 0x00095103,
 
        0        // eod
 };
@@ -81,7 +88,9 @@ void AnimatorController::qt_static_metacall(QObject *_o, QMetaObject::Call _c, i
         AnimatorController *_t = static_cast<AnimatorController *>(_o);
         switch (_id) {
         case 0: _t->currentClipChanged((*reinterpret_cast< const QString(*)>(_a[1]))); break;
-        case 1: _t->setCurrentClip((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 1: _t->animationCycleDone(); break;
+        case 2: _t->setCurrentClip((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 3: _t->restartTimer(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -91,6 +100,12 @@ void AnimatorController::qt_static_metacall(QObject *_o, QMetaObject::Call _c, i
             typedef void (AnimatorController::*_t)(const QString & );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&AnimatorController::currentClipChanged)) {
                 *result = 0;
+            }
+        }
+        {
+            typedef void (AnimatorController::*_t)();
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&AnimatorController::animationCycleDone)) {
+                *result = 1;
             }
         }
     }
@@ -121,13 +136,13 @@ int AnimatorController::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 2)
+        if (_id < 4)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 2;
+        _id -= 4;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 2)
+        if (_id < 4)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 2;
+        _id -= 4;
     }
 #ifndef QT_NO_PROPERTIES
       else if (_c == QMetaObject::ReadProperty) {
@@ -172,5 +187,11 @@ void AnimatorController::currentClipChanged(const QString & _t1)
 {
     void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
+}
+
+// SIGNAL 1
+void AnimatorController::animationCycleDone()
+{
+    QMetaObject::activate(this, &staticMetaObject, 1, 0);
 }
 QT_END_MOC_NAMESPACE

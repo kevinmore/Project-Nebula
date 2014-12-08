@@ -104,14 +104,6 @@ void Scene::initialize()
 	// set up the animator controller
 	m_animCtrller = new AnimatorController(m_modelManager, m_canvas);
 	m_stateMachine = m_animCtrller->getStateMachine();
-
-	// set a universal actor for all the models in order to sync the MVP matrix
-	QMap<QString, RiggedModel*>::iterator it;
-	for (it = m_modelManager->m_riggedModels.begin(); it != m_modelManager->m_riggedModels.end(); ++it)
-	{
-		it.value()->setActor(m_animCtrller->getActor());
-	}
-
 }
 
 
@@ -151,8 +143,7 @@ void Scene::update(float t)
 	
 	m_modelManager->renderStaticModels(t);
 
-	QSharedPointer<RiggedModel> man = m_modelManager->getModel(m_animCtrller->currentClip()).dynamicCast<RiggedModel>();
-	man->render(t);
+	m_animCtrller->render();
 }
 
 void Scene::render(double currentTime)

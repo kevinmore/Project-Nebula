@@ -6,6 +6,9 @@ AnimatorController::AnimatorController( QSharedPointer<ModelManager> manager, QO
 	  m_actor(new GameObject())
 {
 	buildStateMachine();
+	m_timer.start();
+	// restart the timer whenever an animation is finished
+	connect(this, SIGNAL(animationCycleDone()), this, SLOT(restartTimer()));
 }
 
 
@@ -86,7 +89,7 @@ void AnimatorController::buildStateMachine()
 	idle_to_turnRound->setTargetState(turnRound_to_walk);
 
 
-	QKeyEventTransition* idle_to_walkTrans = new QKeyEventTransition(m_handler, QEvent::KeyPress, Qt::Key_V, idle);
+	QKeyEventTransition* idle_to_walkTrans = new QKeyEventTransition(m_handler, QEvent::KeyPress, Qt::Key_W, idle);
 	idle_to_walkTrans->setObjectName("Press W");
 	idle_to_walkTrans->setTargetState(idle_to_walk);
 
@@ -125,7 +128,7 @@ void AnimatorController::buildStateMachine()
 	for (int i = 0; i < moving_system->children().count(); ++i)
 	{
 		QState* pState = (QState*)moving_system->children()[i];
-		connect(pState, SIGNAL(entered()), m_handler, SLOT(restartTimer()));
+		connect(pState, SIGNAL(entered()), this, SLOT(restartTimer()));
 	}
 
 	// start the state machine
@@ -158,6 +161,9 @@ QState* AnimatorController::createTimedSubState( const QString& stateName, const
 	pState->assignProperty(this, "currentClip", clipName);
 	pState->assignProperty(this, "duration", man->animationDuration());
 
+	qDebug() << clipName << man->animationDuration();
+
+
 	QTimer *timer = new QTimer(pState);
 	timer->setInterval((int)man->animationDuration() * 1000);
 	timer->setSingleShot(true);
@@ -177,4 +183,23 @@ void AnimatorController::syncMovement( QState* pState, const char* signal, const
 	connect(pState, signal, mapper, SLOT(map()));
 	mapper->setMapping(pState, paramString);
 	connect(mapper, SIGNAL(mapped(const QString&)), m_actor, slot);
+}
+
+void AnimatorController::render()
+{
+	RiggedModel* man = m_modelManager->getRiggedModel(m_currentClip);
+	float time = (float)m_timer.elapsed()/1000;
+	man->setActor(m_actor);
+	man->render(time);
+	if (man->animationDuration() - time < 0.01)
+	{
+		emit animationCycleDone();
+		qDebug() << "render cycle done!";
+
+	}
+}
+
+void AnimatorController::restartTimer()
+{
+	m_timer.restart();
 }
