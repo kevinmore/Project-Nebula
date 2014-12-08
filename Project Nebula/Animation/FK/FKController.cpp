@@ -17,9 +17,7 @@ FKController::~FKController(void)
 
 void FKController::getBoneTransforms( float TimeInSeconds, QVector<mat4>& Transforms )
 {
-
 	mat4 Identity;
-	Identity.setToIdentity();
 	float TicksPerSecond = (float)(m_Animations[0]->mTicksPerSecond != 0 ? m_Animations[0]->mTicksPerSecond : 25.0f);
 	float TimeInTicks = TimeInSeconds * TicksPerSecond;
 	float AnimationTime = fmod(TimeInTicks, (float)m_Animations[0]->mDuration);

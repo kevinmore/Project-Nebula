@@ -5,12 +5,13 @@
 #include <Scene/AbstractScene.h>
 #include <Scene/Light.h>
 #include <Scene/SceneCamera.h>
-#include <Scene/Object3D.h>
+#include <Scene/GameObject.h>
 #include <Scene/RiggedModel.h>
 #include <Scene/Managers/TextureManager.h>
 #include <Scene/Managers/MaterialManager.h>
 #include <Scene/Managers/MeshManager.h>
 #include <Scene/Managers/ModelManager.h>
+#include <Animation/AnimatorController.h>
 
 typedef QSharedPointer<QOpenGLShaderProgram> ShadersProgramPtr;
 
@@ -50,7 +51,7 @@ public:
 	void setLightMode(LightMode lightMode) { m_lightMode = lightMode; }
 	LightMode lightMode() const { return m_lightMode; }
 
-	Object3D*    getObject() { return NULL; } //hack! need to improve
+	GameObject*    getObject() { return NULL; } //hack! need to improve
 	SceneCamera* getCamera();
 	vec3 getViewDirection() { return m_v; }
 	bool isViewCenterFixed() { return m_viewCenterFixed; }
@@ -60,7 +61,10 @@ public:
 	QSharedPointer<TextureManager>  textureManager();
 	QSharedPointer<MaterialManager> materialManager();
 
+	QStateMachine* getStateMachine() { return m_stateMachine; }
+
 private:
+	
 
 public slots:
 	void toggleFill(bool state);
@@ -104,5 +108,7 @@ private:
 	QOpenGLFunctions_4_3_Core* m_funcs;
 	QVector<vec3> m_path;
 
+	QStateMachine* m_stateMachine;
+	AnimatorController* m_animCtrller;
 };
 

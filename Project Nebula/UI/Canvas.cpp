@@ -10,7 +10,7 @@ Canvas::Canvas(QScreen *screen)
 	  m_context(new QOpenGLContext),
 	  m_scene(new Scene(this)),
 	  m_rightButtonPressed(false),
-	  m_cameraSpeed(1500.0f),
+	  m_cameraSpeed(5000.0f),
 	  m_cameraSensitivity(0.2f)
 {
 	// It defines the type of the rendering area, in our case it is an OpenGL area
@@ -41,6 +41,7 @@ Canvas::Canvas(QScreen *screen)
 
 	// Define the scene
 	m_scene->setContext(m_context.data());
+	m_scene->setCanvas(this);
 
 	qDebug() << endl <<  "- OpenGL version :" << reinterpret_cast<const char*>(glGetString(GL_VERSION));
 	qDebug() << "- GLSL version :" << reinterpret_cast<const char*>(glGetString(GL_SHADING_LANGUAGE_VERSION));
@@ -134,19 +135,19 @@ void Canvas::keyPressEvent(QKeyEvent* e)
 		QCoreApplication::instance()->quit();
 		break;
 
-	case Qt::Key_D:
+	case Qt::Key_Right:
 		getScene()->setSideSpeed(static_cast<float>(m_cameraSpeed));
 		break;
 
-	case Qt::Key_A:
+	case Qt::Key_Left:
 		getScene()->setSideSpeed(static_cast<float>(-m_cameraSpeed));
 		break;
 
-	case Qt::Key_W:
+	case Qt::Key_Up:
 		getScene()->setForwardSpeed(static_cast<float>(m_cameraSpeed));
 		break;
 
-	case Qt::Key_S:
+	case Qt::Key_Down:
 		getScene()->setForwardSpeed(static_cast<float>(-m_cameraSpeed));
 		break;
 
@@ -158,7 +159,7 @@ void Canvas::keyPressEvent(QKeyEvent* e)
 		getScene()->setVerticalSpeed(static_cast<float>(-m_cameraSpeed));
 		break;
 
-	case Qt::Key_Shift:
+	case Qt::Key_Control:
 		getScene()->setViewCenterFixed(true);
 		break;
 
@@ -172,13 +173,13 @@ void Canvas::keyReleaseEvent(QKeyEvent* e)
 {
 	switch (e->key())
 	{
-	case Qt::Key_D:
-	case Qt::Key_A:
+	case Qt::Key_Right:
+	case Qt::Key_Left:
 		getScene()->setSideSpeed(0.0f);
 		break;
 
-	case Qt::Key_W:
-	case Qt::Key_S:
+	case Qt::Key_Up:
+	case Qt::Key_Down:
 		getScene()->setForwardSpeed(0.0f);
 		break;
 
@@ -187,7 +188,7 @@ void Canvas::keyReleaseEvent(QKeyEvent* e)
 		getScene()->setVerticalSpeed(0.0f);
 		break;
 
-	case Qt::Key_Shift:
+	case Qt::Key_Control:
 		getScene()->setViewCenterFixed(false);
 		break;
 
@@ -271,4 +272,9 @@ void Canvas::setCameraSpeed(double speed)
 void Canvas::setCameraSensitivity(double sensitivity)
 {
 	m_cameraSensitivity = sensitivity;
+}
+
+void Canvas::restartTimer()
+{
+	m_updateTimer.restart();
 }

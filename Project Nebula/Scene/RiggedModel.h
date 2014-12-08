@@ -9,7 +9,7 @@
 #include <Primitives/Texture.h>
 #include <Primitives/Material.h>
 #include <Utility/ModelLoader.h>
-#include <Scene/Object3D.h>
+#include <Scene/GameObject.h>
 #include <Scene/ShadingTechniques/ShadingTechnique.h>
 #include <Animation/FK/FKController.h>
 #include <Animation/IK/CCDIKSolver.h>
@@ -26,10 +26,14 @@ public:
 
 	virtual void render( float time );
 	bool hasAnimation() { return m_hasAnimation; }
-	Object3D* getActor() { return m_actor; }
+	float animationDuration() { return m_animationDuration; }
+	GameObject* getActor() { return m_actor; }
+	void setActor(GameObject* actor) { m_actor = actor; }
 	void setReachableTargetPos(vec3& pos);
 	Skeleton* getSkeleton() { return m_skeleton; }
 
+	// override
+	//void render(float currentTime);
 protected:
 	QVector<MeshPtr> m_meshes;
 	QVector<TexturePtr>  m_textures;
@@ -58,7 +62,7 @@ private:
 	Scene* m_scene;
 	ShadingTechnique* m_RenderingEffect;
 	bool m_hasAnimation;
-	Object3D* m_actor;
+	GameObject* m_actor;
 	Skeleton* m_skeleton;
 	FKController* m_FKController;
 	CCDIKSolver* m_CCDSolver;
@@ -67,5 +71,7 @@ private:
 	float updateIKRate, lastUpdatedTime;
 	vec3 m_targetPos;
 	float solvingDuration;
+
+	float m_animationDuration;
 };
 

@@ -89,6 +89,9 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName , MODEL_TY
 		md->materialData = loadMaterial(i, m_scene->mMaterials[m_scene->mMeshes[i]->mMaterialIndex]);
 		md->hasAnimation = m_scene->HasAnimations();
 
+		// calculate the animation duration in seconds
+		if(m_scene->HasAnimations()) md->animationDuration = (float) m_scene->mAnimations[0]->mDuration;
+
 		numVertices += m_scene->mMeshes[i]->mNumVertices;
 		numIndices  += m_scene->mMeshes[i]->mNumFaces * 3;
 		

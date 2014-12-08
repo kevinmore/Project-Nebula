@@ -9,7 +9,7 @@
 #include <Primitives/Texture.h>
 #include <Primitives/Material.h>
 #include <Utility/ModelLoader.h>
-#include <Scene/Object3D.h>
+#include <Scene/GameObject.h>
 #include <Scene/ShadingTechniques/ShadingTechnique.h>
 
 class Scene;
@@ -23,7 +23,7 @@ public:
 
 	virtual void render( float time );
 	bool hasAnimation() { return m_hasAnimation; }
-	Object3D* getActor() { return m_actor; }
+	GameObject* getActor() { return m_actor; }
 	ShadingTechnique* getShadingTech() { return m_RenderingEffect; }
 
 protected:
@@ -54,6 +54,6 @@ private:
 	Scene* m_scene;
 	ShadingTechnique* m_RenderingEffect;
 	bool m_hasAnimation;
-	Object3D* m_actor;
+	GameObject* m_actor;
 };
 

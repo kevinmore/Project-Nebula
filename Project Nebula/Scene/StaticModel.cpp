@@ -7,7 +7,7 @@ StaticModel::StaticModel(Scene* scene, ShadingTechnique* tech, const GLuint vao)
     m_RenderingEffect(tech),
 	m_vao(vao),
 	m_hasAnimation(false),
-	m_actor(new Object3D)
+	m_actor(new GameObject)
 {
 	initialize();
 }
@@ -17,7 +17,7 @@ StaticModel::StaticModel(Scene* scene, ShadingTechnique* tech, const GLuint vao,
     m_RenderingEffect(tech),
 	m_vao(vao),
 	m_hasAnimation(false),
-	m_actor(new Object3D)
+	m_actor(new GameObject)
 {
 	initialize(modelData);
 }
@@ -121,7 +121,7 @@ void StaticModel::render( float time )
 
 
 	QMatrix4x4 modelMatrix = m_actor->modelMatrix();
-	modelMatrix.rotate(-90, Math::Vector3D::UNIT_X); // this is for dae files
+	//modelMatrix.rotate(-90, Math::Vector3D::UNIT_X); // this is for dae files
 	
 	QMatrix4x4 modelViewMatrix = m_scene->getCamera()->viewMatrix() * modelMatrix;
 	QMatrix3x3 normalMatrix = modelViewMatrix.normalMatrix();

@@ -13,8 +13,20 @@ ModelManager::~ModelManager() {}
 
 ModelPtr ModelManager::getModel( const QString& name )
 {
-	if(m_models.find(name) != m_models.end()) return m_models[name];
+	if(m_allModels.find(name) != m_allModels.end()) return m_allModels[name];
 	else return ModelPtr();
+}
+
+RiggedModel* ModelManager::getRiggedModel( const QString& name )
+{
+	if(m_riggedModels.find(name) != m_riggedModels.end()) return m_riggedModels[name];
+	else return NULL;
+}
+
+StaticModel* ModelManager::getStaticModel( const QString& name )
+{
+	if(m_staticModels.find(name) != m_staticModels.end()) return m_staticModels[name];
+	else return NULL;
 }
 
 ModelPtr ModelManager::loadModel( const QString& name, const QString& filename, ModelLoader::MODEL_TYPE type )
@@ -38,8 +50,9 @@ ModelPtr ModelManager::loadModel( const QString& name, const QString& filename, 
 		// create an IKSolver for the model
 		CCDIKSolver* solver = new CCDIKSolver(128);
 
-		m_models[name] = ModelPtr(new RiggedModel(m_scene, effect, modelLoader->getSkeletom(), controller, solver, modelLoader->getVAO(), modelDataVector));
-
+		RiggedModel* rm = new RiggedModel(m_scene, effect, modelLoader->getSkeletom(), controller, solver, modelLoader->getVAO(), modelDataVector);
+		m_riggedModels[name] = rm;
+		m_allModels[name] = ModelPtr(rm);
 	}
 
 	else if (type == ModelLoader::STATIC_MODEL)
@@ -53,11 +66,13 @@ ModelPtr ModelManager::loadModel( const QString& name, const QString& filename, 
 		ModelLoader* modelLoader = new ModelLoader(effect->getShader()->programId());
 		QVector<ModelDataPtr> modelDataVector = modelLoader->loadModel(filename, type);
 
-		m_models[name] = ModelPtr(new StaticModel(m_scene, effect, modelLoader->getVAO(), modelDataVector));
+		StaticModel* sm = new StaticModel(m_scene, effect, modelLoader->getVAO(), modelDataVector);
+		m_staticModels[name] = sm;
+		m_allModels[name] = ModelPtr(sm);
 
 	}
 
-	return m_models[name];
+	return m_allModels[name];
 
 }
 
@@ -65,9 +80,29 @@ void ModelManager::renderAllModels(float time)
 {
 	QMap<QString, ModelPtr>::Iterator i;
 
-	for (i = m_models.begin(); i != m_models.end(); ++i)
+	for (i = m_allModels.begin(); i != m_allModels.end(); ++i)
 	{
 		i.value()->render(time);
 	}
 
+}
+
+void ModelManager::renderRiggedModels( float time )
+{
+	QMap<QString, RiggedModel*>::Iterator i;
+
+	for (i = m_riggedModels.begin(); i != m_riggedModels.end(); ++i)
+	{
+		i.value()->render(time);
+	}
+}
+
+void ModelManager::renderStaticModels( float time )
+{
+	QMap<QString, StaticModel*>::Iterator i;
+
+	for (i = m_staticModels.begin(); i != m_staticModels.end(); ++i)
+	{
+		i.value()->render(time);
+	}
 }

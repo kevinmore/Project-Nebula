@@ -1,4 +1,12 @@
 #include "MainWindow.h"
+#include <statemachineviewer.h>
+
+StateMachineViewer* showStateMachine(QStateMachine* machine)
+{
+	StateMachineViewer* smv = new StateMachineViewer();
+	smv->setStateMachine(machine);
+	return smv;
+}
 
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent),
@@ -15,6 +23,14 @@ MainWindow::MainWindow(QWidget *parent)
 	initializeCanvas();
 	initializeParamsArea();
 	initializeMenuBar();
+
+	// show the state machine viewer
+	QDockWidget* dock_stateMachine = new QDockWidget("State Machine Viewer", this);
+	StateMachineViewer* smv = showStateMachine(m_scene->getStateMachine());
+	dock_stateMachine->setWidget(smv);
+	dock_stateMachine->setFeatures(QDockWidget::AllDockWidgetFeatures);
+	addDockWidget(Qt::BottomDockWidgetArea, dock_stateMachine);
+
 	resize(1366, 768);
 
 	// this is a trick to refresh the opengl surface to make it fit the window properly!
@@ -229,8 +245,8 @@ void MainWindow::initializeParamsArea()
 	QDoubleSpinBox* cameraSpeedValue       = new QDoubleSpinBox;
 	QDoubleSpinBox* cameraSensitivityValue = new QDoubleSpinBox;
 
-	cameraSpeedValue->setRange(1.0, 2000.0);
-	cameraSpeedValue->setValue(1500.0);
+	cameraSpeedValue->setRange(1.0, 50000.0);
+	cameraSpeedValue->setValue(10000.0);
 	cameraSpeedValue->setMaximumSize(60, 20);
 
 	cameraSensitivityValue->setValue(0.2);

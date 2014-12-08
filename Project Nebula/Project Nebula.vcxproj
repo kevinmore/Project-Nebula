@@ -12,34 +12,36 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animation\FK\FKController.cpp" />
+    <ClCompile Include="Animation\moc_AnimatorController.cc" />
     <ClCompile Include="Animation\Rig\Skeleton.cpp" />
     <ClCompile Include="Animation\IK\FABRIKSolver.cpp" />
     <ClCompile Include="Animation\IK\CCDIKSolver.cpp" />
     <ClCompile Include="Animation\Rig\Pose.cpp" />
-    <ClCompile Include="Scene\SceneCamera_moc.cpp" />
+    <ClCompile Include="Animation\AnimatorController.cpp" />
     <ClCompile Include="Scene\AbstractModel.cpp" />
     <ClCompile Include="Scene\AbstractScene.cpp" />
     <ClCompile Include="Scene\Managers\ModelManager.cpp" />
+    <ClCompile Include="Scene\moc_GameObject.cc" />
+    <ClCompile Include="Scene\moc_Scene.cc" />
+    <ClCompile Include="Scene\moc_SceneCamera.cc" />
     <ClCompile Include="Scene\RiggedModel.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
-    <ClCompile Include="Scene\Scene_moc.cpp" />
     <ClCompile Include="Scene\ShadingTechniques\ShadingTechnique.cpp" />
     <ClCompile Include="Scene\ShadingTechniques\technique.cpp" />
     <ClCompile Include="Scene\StaticModel.cpp" />
-    <ClCompile Include="UI\Canvas_moc.cpp" />
     <ClCompile Include="UI\MainWindow.cpp" />
     <ClCompile Include="UI\Canvas.cpp" />
     <ClCompile Include="UI\MainWindow_moc.cpp" />
+    <ClCompile Include="UI\moc_Canvas.cc" />
     <ClCompile Include="Utility\ModelLoader.cpp" />
     <ClCompile Include="Scene\Managers\MeshManager.cpp" />
     <ClCompile Include="Scene\SceneCamera.cpp" />
-    <ClCompile Include="Scene\Object3D.cpp" />
+    <ClCompile Include="Scene\GameObject.cpp" />
     <ClCompile Include="Scene\Light.cpp" />
     <ClCompile Include="Primitives\Mesh.cpp" />
     <ClCompile Include="Primitives\Material.cpp" />
     <ClCompile Include="Primitives\Texture.cpp" />
     <ClCompile Include="Scene\Managers\MaterialManager.cpp" />
-    <ClCompile Include="Scene\Object3D_moc.cpp" />
     <ClCompile Include="Scene\Managers\TextureManager.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Utility\OpenGLUniformBuffer.cpp" />
@@ -50,21 +52,22 @@
     <ClInclude Include="Animation\IK\FABRIKSolver.h" />
     <ClInclude Include="Animation\IK\CCDIKSolver.h" />
     <ClInclude Include="Animation\Rig\Pose.h" />
+    <QtMOC Include="Animation\AnimatorController.h" />
     <ClInclude Include="Scene\Managers\ModelManager.h" />
     <ClInclude Include="Scene\RiggedModel.h" />
-    <ClInclude Include="Scene\Scene.h" />
+    <QtMOC Include="Scene\Scene.h" />
     <ClInclude Include="Scene\ShadingTechniques\ShadingTechnique.h" />
     <ClInclude Include="Scene\ShadingTechniques\technique.h" />
     <ClInclude Include="Animation\Rig\Skeleton.h" />
     <ClInclude Include="Scene\StaticModel.h" />
     <ClInclude Include="UI\MainWindow.h" />
-    <ClInclude Include="UI\Canvas.h" />
+    <QtMOC Include="UI\Canvas.h" />
     <ClInclude Include="Utility\ModelLoader.h" />
     <ClInclude Include="Scene\AbstractModel.h" />
     <ClInclude Include="Scene\AbstractScene.h" />
     <ClInclude Include="Scene\Managers\MeshManager.h" />
-    <ClInclude Include="Scene\SceneCamera.h" />
-    <ClInclude Include="Scene\Object3D.h" />
+    <QtMOC Include="Scene\SceneCamera.h" />
+    <QtMOC Include="Scene\GameObject.h" />
     <ClInclude Include="Scene\Light.h" />
     <ClInclude Include="Primitives\Mesh.h" />
     <ClInclude Include="Primitives\Material.h" />
@@ -98,6 +101,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
+    <Import Project="..\QtMocRule.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -161,5 +165,6 @@
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\QtMocRule.targets" />
   </ImportGroup>
 </Project>

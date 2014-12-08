@@ -3,7 +3,7 @@
 #include <UI/Canvas.h>
 #include <Scene/Scene.h>
 #include <Scene/SceneCamera.h>
-#include <Scene/Object3D.h>
+#include <Scene/GameObject.h>
 
 class MainWindow : public QMainWindow
 {
@@ -39,7 +39,7 @@ private:
 	QWidget      * m_params,         * m_coordinate,     * m_mvpMatrix;
 	QDockWidget  * m_dockParamsArea, * m_dockMatrixArea;
 	Scene        * m_scene;
-	Object3D     * m_object3D;
+	GameObject     * m_object3D;
 	SceneCamera  * m_camera;
 
 	QLabel * fovLabel,   * leftLabel,

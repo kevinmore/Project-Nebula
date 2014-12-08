@@ -1,6 +1,7 @@
 #pragma once
 #include <QObject>
 #include <QOpenGLContext>
+#include <QElapsedTimer>
 
 class AbstractScene : public QObject
 {
@@ -23,7 +24,7 @@ public:
     virtual void render(double currentTime) = 0;
 
     /**
-     * resize
+     * Resize
      */
     virtual void resize(int width, int height) = 0;
 
@@ -33,7 +34,12 @@ public:
     inline void setContext(QOpenGLContext* context) { m_context = context; }
     inline QOpenGLContext* context() const { return m_context; }
 
+	/**
+     * Associate with the canvas widget
+     */
+	void setCanvas(QObject* widget) { m_canvas = widget; }
+
 protected:
     QOpenGLContext* m_context;
-
+	QObject* m_canvas;
 };

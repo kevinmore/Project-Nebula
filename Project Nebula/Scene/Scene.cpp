@@ -50,7 +50,7 @@ void Scene::initialize()
 	m_funcs->glDepthFunc(GL_LEQUAL);
 	m_funcs->glClearColor(0.39f, 0.39f, 0.39f, 0.0f);
 
-	m_funcs->glEnable(GL_CULL_FACE);
+	//m_funcs->glEnable(GL_CULL_FACE);
 
 //     m_light.setType(Light::SpotLight);
 //     m_light.setUniqueColor(1.0, 1.0, 1.0);
@@ -65,24 +65,25 @@ void Scene::initialize()
 
 	// load models for this scene
 	m_modelManager->loadModel("floor", "../Resource/Models/DemoRoom/floor.DAE", ModelLoader::STATIC_MODEL);
+//	m_modelManager->loadModel("scene", "../Resource/Models/Final/scene/scene.obj", ModelLoader::STATIC_MODEL);
 	//m_modelManager->loadModel("coffecup", "../Resource/Models/IK_Lab/coffecup.DAE", ModelLoader::STATIC_MODEL);
 
 	// locomotions
-	m_modelManager->loadModel("m_idle", "../Resource/Models/Final/m_idle.DAE", ModelLoader::RIGGED_MODEL);
-	m_modelManager->loadModel("m_run", "../Resource/Models/Final/m_run.DAE", ModelLoader::RIGGED_MODEL);
-	m_modelManager->loadModel("m_run_start", "../Resource/Models/Final/m_run_start.DAE", ModelLoader::RIGGED_MODEL);
-	m_modelManager->loadModel("m_run_stop", "../Resource/Models/Final/m_run_stop.DAE", ModelLoader::RIGGED_MODEL);
-	m_modelManager->loadModel("m_run_to_walk", "../Resource/Models/Final/m_run_to_walk.DAE", ModelLoader::RIGGED_MODEL);
-	m_modelManager->loadModel("m_turn_left_60_to_walk", "../Resource/Models/Final/m_turn_left_60_to_walk.DAE", ModelLoader::RIGGED_MODEL);
-	m_modelManager->loadModel("m_turn_left_120_to_walk", "../Resource/Models/Final/m_turn_left_120_to_walk.DAE", ModelLoader::RIGGED_MODEL);
-	m_modelManager->loadModel("m_turn_left_180_to_walk", "../Resource/Models/Final/m_turn_left_180_to_walk.DAE", ModelLoader::RIGGED_MODEL);
-	m_modelManager->loadModel("m_turn_right_60_to_walk", "../Resource/Models/Final/m_turn_right_60_to_walk.DAE", ModelLoader::RIGGED_MODEL);
-	m_modelManager->loadModel("m_turn_right_120_to_walk", "../Resource/Models/Final/m_turn_right_120_to_walk.DAE", ModelLoader::RIGGED_MODEL);
-	m_modelManager->loadModel("m_turn_right_180_to_walk", "../Resource/Models/Final/m_turn_right_180_to_walk.DAE", ModelLoader::RIGGED_MODEL);
+ 	m_modelManager->loadModel("m_idle", "../Resource/Models/Final/m_idle.DAE", ModelLoader::RIGGED_MODEL);
+ 	m_modelManager->loadModel("m_run", "../Resource/Models/Final/m_run.DAE", ModelLoader::RIGGED_MODEL);
+ 	m_modelManager->loadModel("m_run_start", "../Resource/Models/Final/m_run_start.DAE", ModelLoader::RIGGED_MODEL);
+ 	m_modelManager->loadModel("m_run_stop", "../Resource/Models/Final/m_run_stop.DAE", ModelLoader::RIGGED_MODEL);
+ 	m_modelManager->loadModel("m_run_to_walk", "../Resource/Models/Final/m_run_to_walk.DAE", ModelLoader::RIGGED_MODEL);
+ 	m_modelManager->loadModel("m_turn_left_60_to_walk", "../Resource/Models/Final/m_turn_left_60_to_walk.DAE", ModelLoader::RIGGED_MODEL);
+// 	m_modelManager->loadModel("m_turn_left_120_to_walk", "../Resource/Models/Final/m_turn_left_120_to_walk.DAE", ModelLoader::RIGGED_MODEL);
+ 	m_modelManager->loadModel("m_turn_left_180_to_walk", "../Resource/Models/Final/m_turn_left_180_to_walk.DAE", ModelLoader::RIGGED_MODEL);
+ 	m_modelManager->loadModel("m_turn_right_60_to_walk", "../Resource/Models/Final/m_turn_right_60_to_walk.DAE", ModelLoader::RIGGED_MODEL);
+// 	m_modelManager->loadModel("m_turn_right_120_to_walk", "../Resource/Models/Final/m_turn_right_120_to_walk.DAE", ModelLoader::RIGGED_MODEL);
+// 	m_modelManager->loadModel("m_turn_right_180_to_walk", "../Resource/Models/Final/m_turn_right_180_to_walk.DAE", ModelLoader::RIGGED_MODEL);
 	m_modelManager->loadModel("m_walk", "../Resource/Models/Final/m_walk.DAE", ModelLoader::RIGGED_MODEL);
-	m_modelManager->loadModel("m_walk_start", "../Resource/Models/Final/m_walk_start.DAE", ModelLoader::RIGGED_MODEL);
-	m_modelManager->loadModel("m_walk_stop", "../Resource/Models/Final/m_walk_stop.DAE", ModelLoader::RIGGED_MODEL);
-	m_modelManager->loadModel("m_walk_to_run", "../Resource/Models/Final/m_walk_to_run.DAE", ModelLoader::RIGGED_MODEL);
+ 	m_modelManager->loadModel("m_walk_start", "../Resource/Models/Final/m_walk_start.DAE", ModelLoader::RIGGED_MODEL);
+ 	m_modelManager->loadModel("m_walk_stop", "../Resource/Models/Final/m_walk_stop.DAE", ModelLoader::RIGGED_MODEL);
+ 	m_modelManager->loadModel("m_walk_to_run", "../Resource/Models/Final/m_walk_to_run.DAE", ModelLoader::RIGGED_MODEL);
 
 	// generate a bezier curve
 // 	QVector<vec3> anchors;
@@ -92,51 +93,25 @@ void Scene::initialize()
 
 	//m_path = Math::Spline::makeBezier3D(anchors);
 	//m_path = Math::Spline::makeCatMullRomSpline(anchors);
-	QSharedPointer<RiggedModel> man;
-	man = m_modelManager->getModel("m_idle").dynamicCast<RiggedModel>();
-	man->getActor()->setPosition(-800, 0, 0);
 
-	man = m_modelManager->getModel("m_run").dynamicCast<RiggedModel>();
-	man->getActor()->setPosition(-700, 0, 0);
+	QSharedPointer<StaticModel> scene = m_modelManager->getModel("floor").dynamicCast<StaticModel>();
+	scene->getActor()->setRotation(-90.0f, 0.0f, 0.0f);
 
-	man = m_modelManager->getModel("m_run_start").dynamicCast<RiggedModel>();
-	man->getActor()->setPosition(-600, 0, 0);
+ 	QSharedPointer<RiggedModel> man;
+	GameObject* actor;
 
-	man = m_modelManager->getModel("m_run_stop").dynamicCast<RiggedModel>();
-	man->getActor()->setPosition(-500, 0, 0);
 
-	man = m_modelManager->getModel("m_run_to_walk").dynamicCast<RiggedModel>();
-	man->getActor()->setPosition(-400, 0, 0);
+	// set up the animator controller
+	m_animCtrller = new AnimatorController(m_modelManager, m_canvas);
+	m_stateMachine = m_animCtrller->getStateMachine();
 
-	man = m_modelManager->getModel("m_turn_left_60_to_walk").dynamicCast<RiggedModel>();
-	man->getActor()->setPosition(-300, 0, 0);
+	// set a universal actor for all the models in order to sync the MVP matrix
+	QMap<QString, RiggedModel*>::iterator it;
+	for (it = m_modelManager->m_riggedModels.begin(); it != m_modelManager->m_riggedModels.end(); ++it)
+	{
+		it.value()->setActor(m_animCtrller->getActor());
+	}
 
-	man = m_modelManager->getModel("m_turn_left_120_to_walk").dynamicCast<RiggedModel>();
-	man->getActor()->setPosition(-200, 0, 0);
-
-	man = m_modelManager->getModel("m_turn_left_180_to_walk").dynamicCast<RiggedModel>();
-	man->getActor()->setPosition(-100, 0, 0);
-
-	man = m_modelManager->getModel("m_turn_right_60_to_walk").dynamicCast<RiggedModel>();
-	man->getActor()->setPosition(0, 0, 0);
-
-	man = m_modelManager->getModel("m_turn_right_120_to_walk").dynamicCast<RiggedModel>();
-	man->getActor()->setPosition(100, 0, 0);
-
-	man = m_modelManager->getModel("m_turn_right_180_to_walk").dynamicCast<RiggedModel>();
-	man->getActor()->setPosition(200, 0, 0);
-
-	man = m_modelManager->getModel("m_walk").dynamicCast<RiggedModel>();
-	man->getActor()->setPosition(300, 0, 0);
-
-	man = m_modelManager->getModel("m_walk_start").dynamicCast<RiggedModel>();
-	man->getActor()->setPosition(400, 0, 0);
-
-	man = m_modelManager->getModel("m_walk_stop").dynamicCast<RiggedModel>();
-	man->getActor()->setPosition(500, 0, 0);
-
-	man = m_modelManager->getModel("m_walk_to_run").dynamicCast<RiggedModel>();
-	man->getActor()->setPosition(600, 0, 0);
 }
 
 
@@ -172,7 +147,12 @@ void Scene::update(float t)
 // 	vec3 modelSpaceTargetPos = vec3(curPos.x(), -curPos.y(), -curPos.z()); // hack, need to multiply by several matrixes
 // 	man->setReachableTargetPos(modelSpaceTargetPos);
 
-	m_modelManager->renderAllModels(t);
+
+	
+	m_modelManager->renderStaticModels(t);
+
+	QSharedPointer<RiggedModel> man = m_modelManager->getModel(m_animCtrller->currentClip()).dynamicCast<RiggedModel>();
+	man->render(t);
 }
 
 void Scene::render(double currentTime)

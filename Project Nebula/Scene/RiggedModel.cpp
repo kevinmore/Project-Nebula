@@ -11,7 +11,7 @@ RiggedModel::RiggedModel(Scene* scene, ShadingTechnique* tech, Skeleton* skeleto
 	m_FKController(fkCtrl),
 	m_CCDSolver(ikSolver),
 	m_hasAnimation(false),
-	m_actor(new Object3D)
+	m_actor(new GameObject)
 {
 	initialize();
 }
@@ -24,7 +24,7 @@ RiggedModel::RiggedModel(Scene* scene, ShadingTechnique* tech, Skeleton* skeleto
 	m_FKController(fkCtrl),
 	m_CCDSolver(ikSolver),
 	m_hasAnimation(false),
-	m_actor(new Object3D)
+	m_actor(new GameObject)
 {
 	initialize(modelData);
 }
@@ -73,6 +73,7 @@ void RiggedModel::initialize(QVector<ModelDataPtr> modelDataVector)
 		ModelDataPtr data = modelDataVector[i];
 
 		m_hasAnimation = data->hasAnimation;
+		if(m_hasAnimation) m_animationDuration = data->animationDuration;
 
 		// deal with the mesh
 		MeshPtr mesh = m_meshManager->getMesh(data->meshData.name);
@@ -186,8 +187,11 @@ void RiggedModel::initialize(QVector<ModelDataPtr> modelDataVector)
 
 void RiggedModel::destroy() {}
 
-void RiggedModel::render( float time )
+void RiggedModel::render( float currentTime )
 {
+	float dt = currentTime - lastUpdatedTime;
+	m_actor->setPosition(m_actor->position() + m_actor->speed() * dt);
+
 	m_RenderingEffect->Enable();
 
 	QMatrix4x4 modelMatrix = m_actor->modelMatrix();
@@ -203,7 +207,7 @@ void RiggedModel::render( float time )
 	// do the skeleton animation here
 	// check if the model has animation first
 	QVector<QMatrix4x4> Transforms;
-	m_FKController->getBoneTransforms(time, Transforms);
+	m_FKController->getBoneTransforms(currentTime, Transforms);
 
 	/*
 	// use IK
@@ -267,6 +271,7 @@ void RiggedModel::render( float time )
 // 	}
 
 	m_RenderingEffect->Disable();
+	lastUpdatedTime = currentTime;
 }
 
 void RiggedModel::drawElements(unsigned int index, int mode)
