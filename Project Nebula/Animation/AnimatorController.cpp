@@ -52,22 +52,22 @@ void AnimatorController::buildStateMachine()
 
 	// connect the above states to its corresponding character movement
 	// moving
-	syncMovement(idle, SIGNAL(entered()), SLOT(setSpeed(const QString&)), "0, 0, 0");
-	syncMovement(walk, SIGNAL(entered()), SLOT(setSpeed(const QString&)), "0, 0, 100");
-	syncMovement(run,  SIGNAL(entered()), SLOT(setSpeed(const QString&)), "0, 0, 200");
+	syncMovement(idle, SIGNAL(entered()), SLOT(setLocalSpeed(const QString&)), "0, 0, 0");
+	syncMovement(walk, SIGNAL(entered()), SLOT(setLocalSpeed(const QString&)), "0, 0, 150");
+	syncMovement(run,  SIGNAL(entered()), SLOT(setLocalSpeed(const QString&)), "0, 0, 200");
 	
 	//transition states
-	syncMovement(idle_to_walk, SIGNAL(entered()), SLOT(setSpeed(const QString&)), "0, 0, 0");
-	syncMovement(walk_to_idle, SIGNAL(entered()), SLOT(setSpeed(const QString&)), "0, 0, 0");
-	syncMovement(idle_to_run,  SIGNAL(entered()), SLOT(setSpeed(const QString&)), "0, 0, 0");
-	syncMovement(run_to_idle,  SIGNAL(entered()), SLOT(setSpeed(const QString&)), "0, 0, 0");
-	syncMovement(walk_to_run,  SIGNAL(entered()), SLOT(setSpeed(const QString&)), "0, 0, 0");
-	syncMovement(run_to_walk,  SIGNAL(entered()), SLOT(setSpeed(const QString&)), "0, 0, 0");
+	syncMovement(idle_to_walk, SIGNAL(entered()), SLOT(setLocalSpeed(const QString&)), "0, 0, 0");
+	syncMovement(walk_to_idle, SIGNAL(entered()), SLOT(setLocalSpeed(const QString&)), "0, 0, 0");
+	syncMovement(idle_to_run,  SIGNAL(entered()), SLOT(setLocalSpeed(const QString&)), "0, 0, 0");
+	syncMovement(run_to_idle,  SIGNAL(entered()), SLOT(setLocalSpeed(const QString&)), "0, 0, 0");
+	syncMovement(walk_to_run,  SIGNAL(entered()), SLOT(setLocalSpeed(const QString&)), "0, 0, 0");
+	syncMovement(run_to_walk,  SIGNAL(entered()), SLOT(setLocalSpeed(const QString&)), "0, 0, 0");
 
 	// turning
-	syncMovement(turnLeft_to_walk,  SIGNAL(exited()), SLOT(rotate(const QString&)), "Y, 60");
-	syncMovement(turnRight_to_walk, SIGNAL(exited()), SLOT(rotate(const QString&)), "Y, -60");
-	syncMovement(turnRound_to_walk, SIGNAL(exited()), SLOT(rotate(const QString&)), "Y, 180");
+	syncMovement(turnLeft_to_walk,  SIGNAL(exited()), SLOT(rotateInWorld(const QString&)), "Y, 60");
+	syncMovement(turnRight_to_walk, SIGNAL(exited()), SLOT(rotateInWorld(const QString&)), "Y, -60");
+	syncMovement(turnRound_to_walk, SIGNAL(exited()), SLOT(rotateInWorld(const QString&)), "Y, 180");
 
 
 	moving_system->setInitialState(idle);
@@ -86,7 +86,7 @@ void AnimatorController::buildStateMachine()
 	idle_to_turnRound->setTargetState(turnRound_to_walk);
 
 
-	QKeyEventTransition* idle_to_walkTrans = new QKeyEventTransition(m_handler, QEvent::KeyPress, Qt::Key_W, idle);
+	QKeyEventTransition* idle_to_walkTrans = new QKeyEventTransition(m_handler, QEvent::KeyPress, Qt::Key_V, idle);
 	idle_to_walkTrans->setObjectName("Press W");
 	idle_to_walkTrans->setTargetState(idle_to_walk);
 

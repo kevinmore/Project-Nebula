@@ -10,7 +10,7 @@ public:
 
 	void setPosition(const QVector3D& positionVector);
 	void setPosition(float x, float y, float z);
-	void translatePositon(const QVector3D& delta);
+	void translateInWorld(const QVector3D& delta);
 
 	void setRotation(const QVector3D& rotationVector);
 	void setRotation(float x, float y, float z);
@@ -51,8 +51,8 @@ public slots:
 	void setObjectYRotation(int y);
 	void setObjectZRotation(int z);
 
-	void rotate(const QString& paramString);
-	void setSpeed(const QString& paramString);
+	void rotateInWorld(const QString& paramString);
+	void setLocalSpeed(const QString& paramString);
 
 	void reset();
 

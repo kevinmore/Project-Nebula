@@ -191,7 +191,7 @@ void RiggedModel::render( float currentTime )
 {
 	float dt = currentTime - lastUpdatedTime;
 	//m_actor->setPosition(m_actor->position() + m_actor->globalSpeed() * dt);
-	m_actor->translatePositon(m_actor->globalSpeed() * dt);
+	m_actor->translateInWorld(m_actor->globalSpeed() * dt);
 	
 	m_RenderingEffect->Enable();
 

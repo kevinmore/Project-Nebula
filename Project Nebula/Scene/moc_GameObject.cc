@@ -20,7 +20,7 @@
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_GameObject_t {
     QByteArrayData data[15];
-    char stringdata[166];
+    char stringdata[178];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -40,16 +40,16 @@ QT_MOC_LITERAL(7, 73, 1),
 QT_MOC_LITERAL(8, 75, 18),
 QT_MOC_LITERAL(9, 94, 18),
 QT_MOC_LITERAL(10, 113, 18),
-QT_MOC_LITERAL(11, 132, 6),
-QT_MOC_LITERAL(12, 139, 11),
-QT_MOC_LITERAL(13, 151, 8),
-QT_MOC_LITERAL(14, 160, 5)
+QT_MOC_LITERAL(11, 132, 13),
+QT_MOC_LITERAL(12, 146, 11),
+QT_MOC_LITERAL(13, 158, 13),
+QT_MOC_LITERAL(14, 172, 5)
     },
     "GameObject\0setObjectXPosition\0\0x\0"
     "setObjectYPosition\0y\0setObjectZPosition\0"
     "z\0setObjectXRotation\0setObjectYRotation\0"
-    "setObjectZRotation\0rotate\0paramString\0"
-    "setSpeed\0reset"
+    "setObjectZRotation\0rotateInWorld\0"
+    "paramString\0setLocalSpeed\0reset"
 };
 #undef QT_MOC_LITERAL
 
@@ -102,8 +102,8 @@ void GameObject::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 3: _t->setObjectXRotation((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 4: _t->setObjectYRotation((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 5: _t->setObjectZRotation((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 6: _t->rotate((*reinterpret_cast< const QString(*)>(_a[1]))); break;
-        case 7: _t->setSpeed((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 6: _t->rotateInWorld((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 7: _t->setLocalSpeed((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         case 8: _t->reset(); break;
         default: ;
         }
