@@ -308,24 +308,24 @@
       </technique_common>
     </light>
   </library_lights>
-  <library_images>
+    <library_images>
     <image id="m005_body_color_tga">
-      <init_from>../../../../../Havok%20Stuff/Models/complete_characters_hd_havok/male_characters/m005/textures/m005_body_color.tga</init_from>
+      <init_from>./images/0_m005_body_color.tga</init_from>
     </image>
     <image id="m005_body_normal_tga">
-      <init_from>../../../../../Havok%20Stuff/Models/complete_characters_hd_havok/male_characters/m005/textures/m005_body_normal.tga</init_from>
+      <init_from>./images/2_m005_body_normal.tga</init_from>
     </image>
     <image id="m005_body_specular_tga">
-      <init_from>../../../../../Havok%20Stuff/Models/complete_characters_hd_havok/male_characters/m005/textures/m005_body_specular.tga</init_from>
+      <init_from>./images/1_m005_body_specular.tga</init_from>
     </image>
     <image id="m005_head_color_tga">
-      <init_from>../../../../../Havok%20Stuff/Models/complete_characters_hd_havok/male_characters/m005/textures/m005_head_color.tga</init_from>
+      <init_from>./images/3_m005_head_color.tga</init_from>
     </image>
     <image id="m005_head_normal_tga">
-      <init_from>../../../../../Havok%20Stuff/Models/complete_characters_hd_havok/male_characters/m005/textures/m005_head_normal.tga</init_from>
+      <init_from>./images/5_m005_head_normal.tga</init_from>
     </image>
     <image id="m005_head_specular_tga">
-      <init_from>../../../../../Havok%20Stuff/Models/complete_characters_hd_havok/male_characters/m005/textures/m005_head_specular.tga</init_from>
+      <init_from>./images/4_m005_head_specular.tga</init_from>
     </image>
   </library_images>
   <library_visual_scenes>

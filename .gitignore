@@ -222,3 +222,4 @@ FakesAssemblies/
 TempFiles/
 *.suo
 Debug/Project Nebula.exe
+QtMocRule.props

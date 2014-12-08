@@ -215,9 +215,18 @@ void GameObject::setSpeed( const QString& paramString )
 	setSpeed(params[0].toFloat(), params[1].toFloat(), params[2].toFloat());
 }
 
-const QVector3D& GameObject::speed() const
+const QVector3D& GameObject::localSpeed() const
 {
 	return m_speed;
+}
+
+const QVector3D& GameObject::globalSpeed() const
+{
+	QQuaternion rotX = QQuaternion::fromAxisAndAngle(Math::Vector3D::UNIT_X, m_rotation.x());
+	QQuaternion rotY = QQuaternion::fromAxisAndAngle(Math::Vector3D::UNIT_Y, m_rotation.y());
+	QQuaternion rotZ = QQuaternion::fromAxisAndAngle(Math::Vector3D::UNIT_Z, m_rotation.z());
+	QQuaternion rot = rotX * rotY * rotZ;
+	return rot.rotatedVector(m_speed);
 }
 
 void GameObject::rotate( const QString& paramString )
@@ -225,8 +234,14 @@ void GameObject::rotate( const QString& paramString )
 	QStringList params = paramString.split(", ", QString::SkipEmptyParts);
 	QString axis   = params[0];
 	float amount = params[1].toFloat();
-	qDebug() << amount;
+
 	if (axis.toLower() == "x") rotateX(m_rotation.x() + amount);
 	else if (axis.toLower() == "y") rotateY(m_rotation.y() + amount);
 	else if (axis.toLower() == "z") rotateZ(m_rotation.z() + amount);
+}
+
+void GameObject::translatePositon( const QVector3D& delta )
+{
+	m_modelMatrix.translate(delta);
+	m_modelMatrixDirty = false;
 }

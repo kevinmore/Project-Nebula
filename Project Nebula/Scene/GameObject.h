@@ -10,6 +10,7 @@ public:
 
 	void setPosition(const QVector3D& positionVector);
 	void setPosition(float x, float y, float z);
+	void translatePositon(const QVector3D& delta);
 
 	void setRotation(const QVector3D& rotationVector);
 	void setRotation(float x, float y, float z);
@@ -36,7 +37,8 @@ public:
 	const QVector3D& position() const;
 	const QVector3D& rotation() const;
 	const QVector3D& scale()    const;
-	const QVector3D& speed() const;
+	const QVector3D& localSpeed() const;
+	const QVector3D& globalSpeed() const;
 
 	const QMatrix4x4& modelMatrix();
 

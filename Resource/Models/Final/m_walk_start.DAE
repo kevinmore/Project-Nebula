@@ -308,7 +308,7 @@
       </technique_common>
     </light>
   </library_lights>
-  <library_images>
+    <library_images>
     <image id="m005_body_color_tga">
       <init_from>./images/0_m005_body_color.tga</init_from>
     </image>

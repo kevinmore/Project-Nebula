@@ -190,8 +190,9 @@ void RiggedModel::destroy() {}
 void RiggedModel::render( float currentTime )
 {
 	float dt = currentTime - lastUpdatedTime;
-	m_actor->setPosition(m_actor->position() + m_actor->speed() * dt);
-
+	//m_actor->setPosition(m_actor->position() + m_actor->globalSpeed() * dt);
+	m_actor->translatePositon(m_actor->globalSpeed() * dt);
+	
 	m_RenderingEffect->Enable();
 
 	QMatrix4x4 modelMatrix = m_actor->modelMatrix();
