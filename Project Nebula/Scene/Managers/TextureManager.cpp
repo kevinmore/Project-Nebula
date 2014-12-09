@@ -20,7 +20,5 @@ TexturePtr TextureManager::addTexture( const QString& name, const QString& fileN
 	
 	m_textures[name] = TexturePtr(new Texture(fileName));
 
-	//qDebug() << "Loaded texture :" << fileName;
-
 	return m_textures[name];
 }

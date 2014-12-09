@@ -229,25 +229,34 @@ const QVector3D& GameObject::globalSpeed() const
 	return rot.rotatedVector(m_speed);
 }
 
+void GameObject::rotateInWorld( const QQuaternion& delta )
+{
+	m_modelMatrix.rotate(delta);
+	m_modelMatrixDirty = false;
+}
+
 void GameObject::rotateInWorld( const QString& paramString )
 {
 	QStringList params = paramString.split(", ", QString::SkipEmptyParts);
-	QString axis   = params[0];
-	float amount = params[1].toFloat();
+	float w, x, y, z;
 
-// 	if (axis.toLower() == "x") rotateX(m_rotation.x() + amount);
-// 	else if (axis.toLower() == "y") rotateY(m_rotation.y() + amount);
-// 	else if (axis.toLower() == "z") rotateZ(m_rotation.z() + amount);
+	w = params[0].toFloat();
+	x = params[1].toFloat();
+	y = params[2].toFloat();
+	z = params[3].toFloat();
 
-	if (axis.toLower() == "x") m_modelMatrix.rotate(amount, Math::Vector3D::UNIT_X);
-	else if (axis.toLower() == "y") m_modelMatrix.rotate(amount, Math::Vector3D::UNIT_Y);
-	else if (axis.toLower() == "z") m_modelMatrix.rotate(amount, Math::Vector3D::UNIT_Z);
-
-	m_modelMatrixDirty = false;
+	QQuaternion delta = QQuaternion(w, vec3(x, y, z));
+	rotateInWorld(delta);
 }
 
 void GameObject::translateInWorld( const QVector3D& delta )
 {
 	m_modelMatrix.translate(delta);
 	m_modelMatrixDirty = false;
+}
+
+void GameObject::translateInWorld( const QString& paramString )
+{
+	QStringList params = paramString.split(", ", QString::SkipEmptyParts);
+	m_modelMatrix.translate(vec3(params[0].toFloat(), params[1].toFloat(), params[2].toFloat()));
 }

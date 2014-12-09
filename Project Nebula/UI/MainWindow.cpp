@@ -25,11 +25,15 @@ MainWindow::MainWindow(QWidget *parent)
 	initializeMenuBar();
 
 	// show the state machine viewer
-	QDockWidget* dock_stateMachine = new QDockWidget("State Machine Viewer", this);
-	StateMachineViewer* smv = showStateMachine(m_scene->getStateMachine());
-	dock_stateMachine->setWidget(smv);
-	dock_stateMachine->setFeatures(QDockWidget::AllDockWidgetFeatures);
-	addDockWidget(Qt::BottomDockWidgetArea, dock_stateMachine);
+	QStateMachine* machine = m_scene->getStateMachine();
+	if(machine)
+	{
+		QDockWidget* dock_stateMachine = new QDockWidget("State Machine Viewer", this);
+		StateMachineViewer* smv = showStateMachine(machine);
+		dock_stateMachine->setWidget(smv);
+		dock_stateMachine->setFeatures(QDockWidget::AllDockWidgetFeatures);
+		addDockWidget(Qt::BottomDockWidgetArea, dock_stateMachine);
+	}
 
 	resize(1366, 768);
 

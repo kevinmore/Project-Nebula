@@ -26,14 +26,16 @@ public:
 
 	virtual void render( float time );
 	bool hasAnimation() { return m_hasAnimation; }
-	float animationDuration() { return m_animationDuration; }
+	float animationDuration();
 	GameObject* getActor() { return m_actor; }
 	void setActor(GameObject* actor) { m_actor = actor; }
 	void setReachableTargetPos(vec3& pos);
 	Skeleton* getSkeleton() { return m_skeleton; }
+	void setRootTranslation(vec3& delta) { m_rootPositionTranslation = delta; }
+	vec3 getRootTranslation() { return m_rootPositionTranslation; }
+	void setRootRotation(QQuaternion& delta) {m_rootRotationTranslation = delta; }
+	QQuaternion getRootRotation() { return m_rootRotationTranslation; }
 
-	// override
-	//void render(float currentTime);
 protected:
 	QVector<MeshPtr> m_meshes;
 	QVector<TexturePtr>  m_textures;
@@ -73,5 +75,7 @@ private:
 	float solvingDuration;
 
 	float m_animationDuration;
+	vec3 m_rootPositionTranslation;
+	QQuaternion m_rootRotationTranslation;
 };
 

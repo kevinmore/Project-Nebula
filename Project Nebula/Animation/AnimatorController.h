@@ -44,11 +44,18 @@ private:
 
 	GameObject* m_actor;
 
+	enum MOVEMENT_TYPE
+	{
+		TRANSLATION,
+		ROTATION,
+		ALL
+	};
+
 	void buildStateMachine();
 	QState* createBasicState(const QString& stateName, const QString& clipName, QState* parent = 0);
 	QState* createTimedSubState(const QString& stateName, const QString& subStateName, const QString& clipName, 
 								QState* doneState, QState* parent = 0);
 
-	void syncMovement(QState* pState, const char* signal, const char* slot, const QString& paramString);
+	void syncMovement(MOVEMENT_TYPE type, const QString& clipName);
 };
 

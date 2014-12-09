@@ -4,6 +4,7 @@
 class GameObject : public QObject
 {
 	Q_OBJECT
+	Q_PROPERTY(vec3 localSpeed READ localSpeed WRITE setSpeed)
 
 public:
 	GameObject();
@@ -14,6 +15,7 @@ public:
 
 	void setRotation(const QVector3D& rotationVector);
 	void setRotation(float x, float y, float z);
+	void rotateInWorld(const QQuaternion& delta);
 
 	void setScale(const QVector3D& scale);
 	void setScale(float x, float y, float z);
@@ -51,6 +53,7 @@ public slots:
 	void setObjectYRotation(int y);
 	void setObjectZRotation(int z);
 
+	void translateInWorld(const QString& paramString);
 	void rotateInWorld(const QString& paramString);
 	void setLocalSpeed(const QString& paramString);
 

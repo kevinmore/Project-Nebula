@@ -10,6 +10,26 @@ FKController::FKController(ModelLoader* loader, Skeleton* skeleton)
 	m_root = loader->getRootNode();
 	m_skeleton = skeleton;
 	m_BoneInfo = skeleton->getBoneList();
+
+	// calculate the delta translation during the period - HACK
+	mat4 Identity;
+	Bone* pelvis = m_skeleton->getBone("Bip01_Pelvis");
+	calcFinalTransforms(0, m_root, Identity);
+	vec3 startPos = pelvis->getModelSpacePosition();
+	QQuaternion startRot = pelvis->getModelSpaceRotation();
+
+	Identity.setToIdentity();
+	calcFinalTransforms((float)m_Animations[0]->mDuration - 0.001f, m_root, Identity);
+	vec3 endPos = pelvis->getModelSpacePosition();
+	QQuaternion endRot = pelvis->getModelSpaceRotation();
+
+	m_rootPositionTranslation = endPos - startPos;
+	// hack
+	float x = m_rootPositionTranslation.x();
+	float y = m_rootPositionTranslation.y();
+	float z = m_rootPositionTranslation.z();
+	m_rootPositionTranslation = vec3(x, y, -z);
+	m_rootRotationTranslation = endRot - startRot;
 }
 
 FKController::~FKController(void)

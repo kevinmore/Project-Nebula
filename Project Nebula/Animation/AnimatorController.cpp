@@ -35,9 +35,10 @@ void AnimatorController::buildStateMachine()
 	moving_system->setObjectName("Moving System");
 
 	// 3 basic states
-	QState* idle = createBasicState("Idle", "m_idle", moving_system);
+	//QState* idle = createBasicState("Idle", "m_idle", moving_system);
 	QState* walk = createBasicState("Walk", "m_walk", moving_system);
 	QState* run = createBasicState("Run", "m_run", moving_system);
+	QState* idle = createTimedSubState("Idle", "Looping", "m_idle", nullptr, moving_system);
 
 	// 9 smooth transition states
 	QState* idle_to_walk = createTimedSubState("Start Walking", "Starting", "m_walk_start", walk, moving_system);
@@ -55,23 +56,23 @@ void AnimatorController::buildStateMachine()
 
 	// connect the above states to its corresponding character movement
 	// moving
-	syncMovement(idle, SIGNAL(entered()), SLOT(setLocalSpeed(const QString&)), "0, 0, 0");
-	syncMovement(walk, SIGNAL(entered()), SLOT(setLocalSpeed(const QString&)), "0, 0, 150");
-	syncMovement(run,  SIGNAL(entered()), SLOT(setLocalSpeed(const QString&)), "0, 0, 200");
-	
-	//transition states
-	syncMovement(idle_to_walk, SIGNAL(entered()), SLOT(setLocalSpeed(const QString&)), "0, 0, 0");
-	syncMovement(walk_to_idle, SIGNAL(entered()), SLOT(setLocalSpeed(const QString&)), "0, 0, 0");
-	syncMovement(idle_to_run,  SIGNAL(entered()), SLOT(setLocalSpeed(const QString&)), "0, 0, 0");
-	syncMovement(run_to_idle,  SIGNAL(entered()), SLOT(setLocalSpeed(const QString&)), "0, 0, 0");
-	syncMovement(walk_to_run,  SIGNAL(entered()), SLOT(setLocalSpeed(const QString&)), "0, 0, 0");
-	syncMovement(run_to_walk,  SIGNAL(entered()), SLOT(setLocalSpeed(const QString&)), "0, 0, 0");
+	syncMovement(TRANSLATION, "m_walk");
+	syncMovement(TRANSLATION, "m_run");
+ 	
+ 	//transition states
+	syncMovement(TRANSLATION, "m_walk_start");
+	syncMovement(TRANSLATION, "m_walk_stop");
+
+	syncMovement(TRANSLATION, "m_run_start");
+	syncMovement(TRANSLATION, "m_run_stop");
+
+	syncMovement(TRANSLATION, "m_walk_to_run");
+	syncMovement(TRANSLATION, "m_run_to_walk");
 
 	// turning
-	syncMovement(turnLeft_to_walk,  SIGNAL(exited()), SLOT(rotateInWorld(const QString&)), "Y, 60");
-	syncMovement(turnRight_to_walk, SIGNAL(exited()), SLOT(rotateInWorld(const QString&)), "Y, -60");
-	syncMovement(turnRound_to_walk, SIGNAL(exited()), SLOT(rotateInWorld(const QString&)), "Y, 180");
-
+// 	syncMovement(ALL, turnLeft_to_walk, "m_turn_left_60_to_walk", SIGNAL(exited()));
+// 	syncMovement(ALL, turnRight_to_walk, "m_turn_right_60_to_walk", SIGNAL(exited()));
+// 	syncMovement(ROTATION, turnRound_to_walk, "m_turn_left_180_to_walk", SIGNAL(exited()));
 
 	moving_system->setInitialState(idle);
 
@@ -139,6 +140,8 @@ void AnimatorController::buildStateMachine()
 QState* AnimatorController::createBasicState( const QString& stateName, const QString& clipName, QState* parent /*= 0*/ )
 {
 	RiggedModel* man = m_modelManager->getRiggedModel(clipName);
+	vec3 averageSpeed = man->getRootTranslation() / man->animationDuration();
+
 	QState* pState = new QState(parent);
 
 	pState->setObjectName(stateName);
@@ -154,15 +157,13 @@ QState* AnimatorController::createTimedSubState( const QString& stateName, const
 												QState* doneState, QState* parent /*= 0*/ )
 {
 	RiggedModel* man = m_modelManager->getRiggedModel(clipName);
+	vec3 averageSpeed = man->getRootTranslation() / man->animationDuration();
 
 	QState* pState = new QState(parent);
 	
 	pState->setObjectName(stateName);
 	pState->assignProperty(this, "currentClip", clipName);
 	pState->assignProperty(this, "duration", man->animationDuration());
-
-	qDebug() << clipName << man->animationDuration();
-
 
 	QTimer *timer = new QTimer(pState);
 	timer->setInterval((int)man->animationDuration() * 1000);
@@ -177,11 +178,38 @@ QState* AnimatorController::createTimedSubState( const QString& stateName, const
 }
 
 
-void AnimatorController::syncMovement( QState* pState, const char* signal, const char* slot, const QString& paramString )
+void AnimatorController::syncMovement( MOVEMENT_TYPE type, const QString& clipName )
 {
+	RiggedModel* man = m_modelManager->getRiggedModel(clipName);
+	QString paramString;
+	const char* slot;
+	if (type == TRANSLATION)
+	{
+		slot = SLOT(translateInWorld(const QString&));
+		vec3 delta = man->getRootTranslation();
+		paramString = QString::number((float)delta.x()) + ", " + 
+					  QString::number((float)delta.y()) + ", " + 
+					  QString::number((float)delta.z());
+	}
+	else if (type == ROTATION)
+	{
+		slot = SLOT(rotateInWorld(const QString&));
+		QQuaternion delta = man->getRootRotation();
+		paramString = QString::number((float)delta.scalar()) + ", " + 
+					  QString::number((float)delta.x()) + ", " + 
+					  QString::number((float)delta.y()) + ", " + 
+					  QString::number((float)delta.z());
+	}
+	else if (type == ALL)
+	{
+		syncMovement(TRANSLATION, clipName);
+		syncMovement(ROTATION, clipName);
+		return;
+	}
+	
 	QSignalMapper *mapper = new QSignalMapper(this);
-	connect(pState, signal, mapper, SLOT(map()));
-	mapper->setMapping(pState, paramString);
+	connect(this, SIGNAL(animationCycleDone()), mapper, SLOT(map()));
+	mapper->setMapping(this, paramString);
 	connect(mapper, SIGNAL(mapped(const QString&)), m_actor, slot);
 }
 
@@ -191,11 +219,11 @@ void AnimatorController::render()
 	float time = (float)m_timer.elapsed()/1000;
 	man->setActor(m_actor);
 	man->render(time);
-	if (man->animationDuration() - time < 0.01)
+	if (man->animationDuration() - time < 0.01f)
 	{
 		emit animationCycleDone();
 		qDebug() << "render cycle done!";
-
+		// add logic here, animation done
 	}
 }
 

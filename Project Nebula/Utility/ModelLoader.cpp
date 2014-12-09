@@ -45,7 +45,9 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName , MODEL_TY
 
 	if(!m_scene)
 	{
-		qDebug() << "Error loading mesh file: " << fileName << m_importer.GetErrorString();
+		qDebug() << m_importer.GetErrorString();
+		QVector<ModelDataPtr> empty;
+		return empty;
 	}
 	else if(m_scene->HasTextures())
 	{

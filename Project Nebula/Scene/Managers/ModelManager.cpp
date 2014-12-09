@@ -43,6 +43,7 @@ ModelPtr ModelManager::loadModel( const QString& name, const QString& filename, 
 
 		ModelLoader* modelLoader = new ModelLoader(effect->getShader()->programId());
 		QVector<ModelDataPtr> modelDataVector = modelLoader->loadModel(filename, type);
+		if(modelDataVector.size() == 0) return ModelPtr();
 
 		// create a FKController for the model
 		FKController* controller = new FKController(modelLoader, modelLoader->getSkeletom());
@@ -51,6 +52,8 @@ ModelPtr ModelManager::loadModel( const QString& name, const QString& filename, 
 		CCDIKSolver* solver = new CCDIKSolver(128);
 
 		RiggedModel* rm = new RiggedModel(m_scene, effect, modelLoader->getSkeletom(), controller, solver, modelLoader->getVAO(), modelDataVector);
+		rm->setRootTranslation(controller->getRootTranslation());
+		rm->setRootRotation(controller->getRootRotation());
 		m_riggedModels[name] = rm;
 		m_allModels[name] = ModelPtr(rm);
 	}

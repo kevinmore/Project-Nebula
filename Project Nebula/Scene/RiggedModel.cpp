@@ -11,6 +11,7 @@ RiggedModel::RiggedModel(Scene* scene, ShadingTechnique* tech, Skeleton* skeleto
 	m_FKController(fkCtrl),
 	m_CCDSolver(ikSolver),
 	m_hasAnimation(false),
+	m_animationDuration(0.0f),
 	m_actor(new GameObject)
 {
 	initialize();
@@ -24,6 +25,7 @@ RiggedModel::RiggedModel(Scene* scene, ShadingTechnique* tech, Skeleton* skeleto
 	m_FKController(fkCtrl),
 	m_CCDSolver(ikSolver),
 	m_hasAnimation(false),
+	m_animationDuration(0.0f),
 	m_actor(new GameObject)
 {
 	initialize(modelData);
@@ -191,8 +193,7 @@ void RiggedModel::render( float currentTime )
 {
 	float dt = currentTime - lastUpdatedTime;
 	if(dt < 0) dt = 0.0f;
-	//m_actor->setPosition(m_actor->position() + m_actor->globalSpeed() * dt);
-	m_actor->translateInWorld(m_actor->globalSpeed() * dt);
+	//m_actor->translateInWorld(m_actor->globalSpeed() * dt); // this is for inplace locamotion
 	
 	m_RenderingEffect->Enable();
 
@@ -295,4 +296,9 @@ void RiggedModel::drawElements(unsigned int index, int mode)
 void RiggedModel::setReachableTargetPos( vec3& pos )
 {
 	m_targetPos = pos;
+}
+
+float RiggedModel::animationDuration()
+{
+	return m_animationDuration;
 }

@@ -11,6 +11,8 @@ public:
 	void getBoneTransforms(float TimeInSeconds, QVector<mat4>& Transforms);
 	void enableAllBones();
 	void disableBoneChain(Bone* baseBone);
+	vec3 getRootTranslation() { return m_rootPositionTranslation; }
+	QQuaternion getRootRotation() { return m_rootRotationTranslation; }
 
 private:
 	void interpolateScaling(aiVector3D& Out, float AnimationTime, const aiNodeAnim* pNodeAnim);
@@ -31,5 +33,7 @@ private:
 	Skeleton* m_skeleton;
 
 	QVector<Bone*> m_disabledBones;
+	vec3 m_rootPositionTranslation;
+	QQuaternion m_rootRotationTranslation;
 };
 
