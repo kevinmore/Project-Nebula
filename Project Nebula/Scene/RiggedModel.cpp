@@ -192,7 +192,13 @@ void RiggedModel::destroy() {}
 void RiggedModel::render( float currentTime )
 {
 	float dt = currentTime - lastUpdatedTime;
-	if(dt < 0) dt = 0.0f;
+	lastUpdatedTime = currentTime;
+	if(dt < 0)
+	{
+		qDebug() << "dt < 0";
+		dt = 0.0f;
+		//return;
+	}
 	//m_actor->translateInWorld(m_actor->globalSpeed() * dt); // this is for inplace locamotion
 	
 	m_RenderingEffect->Enable();
@@ -274,7 +280,6 @@ void RiggedModel::render( float currentTime )
 // 	}
 
 	m_RenderingEffect->Disable();
-	lastUpdatedTime = currentTime;
 }
 
 void RiggedModel::drawElements(unsigned int index, int mode)

@@ -43,6 +43,8 @@ public:
 	const QVector3D& globalSpeed() const;
 
 	const QMatrix4x4& modelMatrix();
+signals:
+	void synchronized();
 
 public slots:
 	void setObjectXPosition(int x);
@@ -55,6 +57,7 @@ public slots:
 
 	void translateInWorld(const QString& paramString);
 	void rotateInWorld(const QString& paramString);
+	void rotateInWorldAxisAndAngle(const QString& paramString);
 	void setLocalSpeed(const QString& paramString);
 
 	void reset();

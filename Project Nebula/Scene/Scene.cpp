@@ -64,7 +64,7 @@ void Scene::initialize()
 
 
 	// load models for this scene
-	m_modelManager->loadModel("floor", "../Resource/Models/DemoRoom/floor.DAE", ModelLoader::STATIC_MODEL);
+	m_modelManager->loadModel("scene", "../Resource/Models/Final/Scene/scene.DAE", ModelLoader::STATIC_MODEL);
 
 	// locomotions
  	m_modelManager->loadModel("m_idle", "../Resource/Models/Final/m005/m_idle.DAE", ModelLoader::RIGGED_MODEL);
@@ -83,6 +83,21 @@ void Scene::initialize()
  	m_modelManager->loadModel("m_walk_stop", "../Resource/Models/Final/m005/m_walk_stop.DAE", ModelLoader::RIGGED_MODEL);
  	m_modelManager->loadModel("m_walk_to_run", "../Resource/Models/Final/m005/m_walk_to_run.DAE", ModelLoader::RIGGED_MODEL);
 
+	// set up the animator controller
+	m_stateMachine = new QStateMachine();
+	if(m_modelManager->m_riggedModels.size() == 0) return;
+	m_animCtrller = new AnimatorController(m_modelManager);
+	m_stateMachine = m_animCtrller->getStateMachine();
+
+
+	// NPCs
+	RiggedModel* npc;
+	m_modelManager->loadModel("f004_take_picture", "../Resource/Models/Final/NPC/f004_take_picture.DAE", ModelLoader::RIGGED_MODEL);
+ 	npc = m_modelManager->getRiggedModel("f004_take_picture");
+	npc->getActor()->setPosition(0, 0, 300);
+	npc->getActor()->setObjectYRotation(180);
+	m_NPCs << npc;
+
 	// generate a bezier curve
 // 	QVector<vec3> anchors;
 // 	anchors << vec3(-150, 100, 0) << vec3(-50, 120, 150) << vec3(0, 150, 100) << vec3(50, 80, 20) << vec3(80, 380, 0)
@@ -92,14 +107,10 @@ void Scene::initialize()
 	//m_path = Math::Spline::makeBezier3D(anchors);
 	//m_path = Math::Spline::makeCatMullRomSpline(anchors);
 
-	QSharedPointer<StaticModel> scene = m_modelManager->getModel("floor").dynamicCast<StaticModel>();
+	QSharedPointer<StaticModel> scene = m_modelManager->getModel("scene").dynamicCast<StaticModel>();
 	scene->getActor()->setRotation(-90.0f, 0.0f, 0.0f);
-
-	// set up the animator controller
-	m_stateMachine = new QStateMachine();
-	if(m_modelManager->m_riggedModels.size() == 0) return;
-	m_animCtrller = new AnimatorController(m_modelManager, m_canvas);
-	m_stateMachine = m_animCtrller->getStateMachine();
+	scene->getActor()->setPosition(-150, 100, 3000);
+	
 }
 
 
@@ -136,9 +147,16 @@ void Scene::update(float t)
 // 	man->setReachableTargetPos(modelSpaceTargetPos);
 
 
-	
+	// render all static models
 	m_modelManager->renderStaticModels(t);
 
+	// render NPCs
+	for (int i = 0; i < m_NPCs.size(); ++i)
+	{
+		m_NPCs[i]->render(t);
+	}
+
+	// render the character controlled by the user
 	if(m_modelManager->m_riggedModels.size() > 0) m_animCtrller->render();
 }
 

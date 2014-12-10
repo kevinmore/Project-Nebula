@@ -1,14 +1,13 @@
 #include "AnimatorController.h"
 
-AnimatorController::AnimatorController( QSharedPointer<ModelManager> manager, QObject* handelingWidget )
+AnimatorController::AnimatorController( QSharedPointer<ModelManager> manager )
 	: m_modelManager(manager),
-	  m_handler(handelingWidget),
-	  m_actor(new GameObject())
+	  m_actor(new GameObject)
 {
+	initContorlPanel();
+
 	buildStateMachine();
 	m_timer.start();
-	// restart the timer whenever an animation is finished
-	connect(this, SIGNAL(animationCycleDone()), this, SLOT(restartTimer()));
 }
 
 
@@ -35,85 +34,119 @@ void AnimatorController::buildStateMachine()
 	moving_system->setObjectName("Moving System");
 
 	// 3 basic states
-	//QState* idle = createBasicState("Idle", "m_idle", moving_system);
-	QState* walk = createBasicState("Walk", "m_walk", moving_system);
-	QState* run = createBasicState("Run", "m_run", moving_system);
-	QState* idle = createTimedSubState("Idle", "Looping", "m_idle", nullptr, moving_system);
+	QState* idle = createLoopingState("Idle", "m_idle", moving_system);
+	idle->assignProperty(m_controlPanel->moveButton, "text", "Idle");
+	idle->assignProperty(m_controlPanel->fastMoveButton, "text", "Idle");
+
+	QState* walk = createLoopingState("Walk", "m_walk", moving_system);
+	walk->assignProperty(m_controlPanel->moveButton, "text", "Walking");
+	walk->assignProperty(m_controlPanel->turnLeftButton, "enabled", true);
+	walk->assignProperty(m_controlPanel->turnRightButton, "enabled", true);
+	walk->assignProperty(m_controlPanel->turnRoundButton, "enabled", true);
+
+	QState* run = createLoopingState("Run", "m_run", moving_system);
+	run->assignProperty(m_controlPanel->moveButton, "text", "Running");
+	run->assignProperty(m_controlPanel->fastMoveButton, "text", "Running");
 
 	// 9 smooth transition states
-	QState* idle_to_walk = createTimedSubState("Start Walking", "Starting", "m_walk_start", walk, moving_system);
-	QState* walk_to_idle = createTimedSubState("Stop Walking", "Stopping", "m_walk_stop", idle, moving_system);
+	QState* idle_to_walk = createTransitionState("Start Walking", "Starting", "m_walk_start", walk, moving_system);
+	idle_to_walk->assignProperty(m_controlPanel->moveButton, "text", "Idle => Walk");
 
-	QState* idle_to_run  = createTimedSubState("Start Running", "Starting", "m_run_start", run, moving_system);
-	QState* run_to_idle  = createTimedSubState("Stop Running", "Stopping", "m_run_stop", idle, moving_system);
+	QState* walk_to_idle = createTransitionState("Stop Walking", "Stopping", "m_walk_stop", idle, moving_system);
+	walk_to_idle->assignProperty(m_controlPanel->moveButton, "text", "Walk => Idle");
 
-	QState* walk_to_run  = createTimedSubState("Speed Up", "Accelerating", "m_walk_to_run", run, moving_system);
-	QState* run_to_walk  = createTimedSubState("Slow Down", "Decelerating", "m_run_to_walk", walk, moving_system);
+	QState* idle_to_run  = createTransitionState("Start Running", "Starting", "m_run_start", run, moving_system);
+	idle_to_run->assignProperty(m_controlPanel->fastMoveButton, "text", "Idle => Run");
 
-	QState* turnLeft_to_walk = createTimedSubState("Turn Left", "Turning", "m_turn_left_60_to_walk", walk, moving_system);
-	QState* turnRight_to_walk = createTimedSubState("Turn Right", "Turning", "m_turn_right_60_to_walk", walk, moving_system);
-	QState* turnRound_to_walk = createTimedSubState("Turn Round", "Turning", "m_turn_left_180_to_walk", walk, moving_system);
+	QState* run_to_idle  = createTransitionState("Stop Running", "Stopping", "m_run_stop", idle, moving_system);
+	run_to_idle->assignProperty(m_controlPanel->fastMoveButton, "text", "Run => Idle");
 
-	// connect the above states to its corresponding character movement
+	QState* walk_to_run  = createTransitionState("Speed Up", "Accelerating", "m_walk_to_run", run, moving_system);
+	walk_to_run->assignProperty(m_controlPanel->moveButton, "text", "Walk => Run");
+
+	QState* run_to_walk  = createTransitionState("Slow Down", "Decelerating", "m_run_to_walk", walk, moving_system);
+	run_to_walk->assignProperty(m_controlPanel->moveButton, "text", "Run => Walk");
+
+	QState* turnLeft_to_walk = createTransitionState("Turn Left", "Turning", "m_turn_left_60_to_walk", walk, moving_system);
+	turnLeft_to_walk->assignProperty(m_controlPanel->turnLeftButton, "enabled", false);
+
+	QState* turnRight_to_walk = createTransitionState("Turn Right", "Turning", "m_turn_right_60_to_walk", walk, moving_system);
+	turnRight_to_walk->assignProperty(m_controlPanel->turnRightButton, "enabled", false);
+
+	QState* turnRound_to_walk = createTransitionState("Turn Round", "Turning", "m_turn_left_180_to_walk", walk, moving_system);
+	turnRound_to_walk->assignProperty(m_controlPanel->turnRoundButton, "enabled", false);
+
+	// 2 states need to have finishing states for the looping states:
+	// walk -> finishing walking -> any
+	// run  -> finishing running -> any
+	QState* finishing_walking = createFinishingState(walk, "Finishing Walking", "m_walk", moving_system);
+	QState* finishing_running = createFinishingState(run,  "Finishing Running", "m_run",  moving_system);
+
+	// synchronize the above states to its corresponding character movement
 	// moving
-	syncMovement(TRANSLATION, "m_walk");
-	syncMovement(TRANSLATION, "m_run");
- 	
+	syncMovement(TRANSLATION, walk, "m_walk");
+	syncMovement(TRANSLATION, run, "m_run");
+  	
  	//transition states
-	syncMovement(TRANSLATION, "m_walk_start");
-	syncMovement(TRANSLATION, "m_walk_stop");
+	syncMovement(TRANSLATION, idle_to_walk, "m_walk_start");
+	syncMovement(TRANSLATION, walk_to_idle, "m_walk_stop");
 
-	syncMovement(TRANSLATION, "m_run_start");
-	syncMovement(TRANSLATION, "m_run_stop");
+	syncMovement(TRANSLATION, idle_to_run, "m_run_start");
+	syncMovement(TRANSLATION, run_to_idle, "m_run_stop");
 
-	syncMovement(TRANSLATION, "m_walk_to_run");
-	syncMovement(TRANSLATION, "m_run_to_walk");
+	syncMovement(TRANSLATION, walk_to_run, "m_walk_to_run");
+	syncMovement(TRANSLATION, run_to_walk, "m_run_to_walk");
 
 	// turning
-// 	syncMovement(ALL, turnLeft_to_walk, "m_turn_left_60_to_walk", SIGNAL(exited()));
-// 	syncMovement(ALL, turnRight_to_walk, "m_turn_right_60_to_walk", SIGNAL(exited()));
-// 	syncMovement(ROTATION, turnRound_to_walk, "m_turn_left_180_to_walk", SIGNAL(exited()));
+ 	syncMovement(ALL, turnLeft_to_walk, "m_turn_left_60_to_walk", "Y, 60");
+ 	syncMovement(ALL, turnRight_to_walk, "m_turn_right_60_to_walk", "Y, -60");
+ 	syncMovement(ALL, turnRound_to_walk, "m_turn_left_180_to_walk", "Y, 180");
 
 	moving_system->setInitialState(idle);
 
-	// transitions
-	QKeyEventTransition* idle_to_turnLeft = new QKeyEventTransition(m_handler, QEvent::KeyPress, Qt::Key_A, idle);
-	idle_to_turnLeft->setObjectName("Press A");
-	idle_to_turnLeft->setTargetState(turnLeft_to_walk);
-
-	QKeyEventTransition* idle_to_turnRight = new QKeyEventTransition(m_handler, QEvent::KeyPress, Qt::Key_D, idle);
-	idle_to_turnRight->setObjectName("Press D");
-	idle_to_turnRight->setTargetState(turnRight_to_walk);
-
-	QKeyEventTransition* idle_to_turnRound = new QKeyEventTransition(m_handler, QEvent::KeyPress, Qt::Key_S, idle);
-	idle_to_turnRound->setObjectName("Press S");
-	idle_to_turnRound->setTargetState(turnRound_to_walk);
-
-
-	QKeyEventTransition* idle_to_walkTrans = new QKeyEventTransition(m_handler, QEvent::KeyPress, Qt::Key_W, idle);
-	idle_to_walkTrans->setObjectName("Press W");
+	// transition triggers
+	// the normal movement button
+	// idle -> walk -> run -> walk -> idle
+	QEventTransition *idle_to_walkTrans = new QEventTransition(m_controlPanel->moveButton, QEvent::Enter, idle);
+	idle_to_walkTrans->setObjectName("Idle to Walk");
 	idle_to_walkTrans->setTargetState(idle_to_walk);
 
-	QKeyEventTransition* walk_to_idleTrans = new QKeyEventTransition(m_handler, QEvent::KeyRelease, Qt::Key_W, walk);
-	walk_to_idleTrans->setObjectName("Release W");
-	walk_to_idleTrans->setTargetState(walk_to_idle);
-
-	QKeyEventTransition* walk_to_runTrans = new QKeyEventTransition(m_handler, QEvent::KeyPress, Qt::Key_Shift, walk);
-	walk_to_runTrans->setObjectName("Press Shift");
+	QEventTransition *walk_to_runTrans = new QEventTransition(m_controlPanel->moveButton, QEvent::MouseButtonPress, walk);
+	walk_to_runTrans->setObjectName("Walk to Run");
 	walk_to_runTrans->setTargetState(walk_to_run);
 
-	QKeyEventTransition* run_to_walkTrans = new QKeyEventTransition(m_handler, QEvent::KeyRelease, Qt::Key_Shift, run);
-	run_to_walkTrans->setObjectName("Release Shift");
+	QEventTransition *run_to_walkTrans = new QEventTransition(m_controlPanel->moveButton, QEvent::MouseButtonRelease, run);
+	run_to_walkTrans->setObjectName("Run to Walk");
 	run_to_walkTrans->setTargetState(run_to_walk);
 
-	QKeyEventTransition* idle_to_runTrans = new QKeyEventTransition(m_handler, QEvent::KeyPress, Qt::Key_W, idle);
-	idle_to_runTrans->setModifierMask(Qt::ShiftModifier);
-	idle_to_runTrans->setObjectName("Press Shift + W");
+	QEventTransition *walk_to_idleTrans = new QEventTransition(m_controlPanel->moveButton, QEvent::Leave, walk);
+	walk_to_idleTrans->setObjectName("Walk to Idle");
+	walk_to_idleTrans->setTargetState(walk_to_idle);
+
+	// the fast movement button
+	// idle -> run -> idle
+	QEventTransition *idle_to_runTrans = new QEventTransition(m_controlPanel->fastMoveButton, QEvent::MouseButtonPress, idle);
+	idle_to_runTrans->setObjectName("Idle to Run");
 	idle_to_runTrans->setTargetState(idle_to_run);
 
-	QKeyEventTransition* run_to_idleTrans = new QKeyEventTransition(m_handler, QEvent::KeyRelease, Qt::Key_W, run);
-	run_to_idleTrans->setObjectName("Release W");
+	QEventTransition *run_to_idleTrans = new QEventTransition(m_controlPanel->fastMoveButton, QEvent::MouseButtonRelease, run);
+	run_to_idleTrans->setObjectName("Run to Idle");
 	run_to_idleTrans->setTargetState(run_to_idle);
+
+	// the turning buttons
+	// idle - > turn -> walk
+	QEventTransition* idle_to_turnLeft = new QEventTransition(m_controlPanel->turnLeftButton, QEvent::MouseButtonPress, idle);
+	idle_to_turnLeft->setObjectName("Turn Left");
+	idle_to_turnLeft->setTargetState(turnLeft_to_walk);
+
+	QEventTransition* idle_to_turnRight = new QEventTransition(m_controlPanel->turnRightButton, QEvent::MouseButtonPress, idle);
+	idle_to_turnRight->setObjectName("Turn Right");
+	idle_to_turnRight->setTargetState(turnRight_to_walk);
+
+	QEventTransition* idle_to_turnRound = new QEventTransition(m_controlPanel->turnRoundButton, QEvent::MouseButtonPress, idle);
+	idle_to_turnRound->setObjectName("Turn Around");
+	idle_to_turnRound->setTargetState(turnRound_to_walk);
+
 
 	// social system
 	QState* social_system = new QState(m_stateMachine);
@@ -125,13 +158,7 @@ void AnimatorController::buildStateMachine()
 	QState* listen = new QState(social_system);
 	listen->setObjectName("Listen");
 
-	// entering each state should restart the timer in order to play the animation from the beginning
-	for (int i = 0; i < moving_system->children().count(); ++i)
-	{
-		QState* pState = (QState*)moving_system->children()[i];
-		connect(pState, SIGNAL(entered()), this, SLOT(restartTimer()));
-	}
-
+	
 	// start the state machine
 	m_stateMachine->setInitialState(moving_system);
 	m_stateMachine->start();
@@ -140,45 +167,95 @@ void AnimatorController::buildStateMachine()
 QState* AnimatorController::createBasicState( const QString& stateName, const QString& clipName, QState* parent /*= 0*/ )
 {
 	RiggedModel* man = m_modelManager->getRiggedModel(clipName);
-	vec3 averageSpeed = man->getRootTranslation() / man->animationDuration();
 
 	QState* pState = new QState(parent);
 
 	pState->setObjectName(stateName);
 	pState->assignProperty(this, "currentClip", clipName);
-	pState->assignProperty(this, "duration", man->animationDuration());
+
+	// entering this state should restart the timer in order to play the animation from the beginning
+	connect(pState, SIGNAL(entered()), this, SLOT(restartTimer()));
 
 	return pState;
 }
 
 
 
-QState* AnimatorController::createTimedSubState( const QString& stateName, const QString& subStateName, const QString& clipName, 
+QState* AnimatorController::createLoopingState( const QString& stateName, const QString& clipName, QState* parent /*= 0*/ )
+{
+	RiggedModel* man = m_modelManager->getRiggedModel(clipName);
+
+	QState* pState = new QState(parent);
+	pState->setObjectName(stateName);
+	pState->assignProperty(this, "currentClip", clipName);
+
+	QTimer *timer = new QTimer(pState);
+	timer->setInterval((int)(man->animationDuration() * 1000 - 16)); // minus 1 frame duration to keep the animation synchronized
+	timer->setSingleShot(true);
+	QState *timing = new QState(pState);
+	timing->setObjectName("Looping");
+	connect(timing, SIGNAL(entered()), timer, SLOT(start()));
+	timing->addTransition(timer, SIGNAL(timeout()), pState);
+
+	pState->setInitialState(timing);
+
+	// entering this state should restart the timer in order to play the animation from the beginning
+	connect(timing, SIGNAL(entered()), this, SLOT(restartTimer()));
+
+	return pState;
+}
+
+QState* AnimatorController::createTransitionState( const QString& stateName, const QString& subStateName, const QString& clipName, 
 												QState* doneState, QState* parent /*= 0*/ )
 {
 	RiggedModel* man = m_modelManager->getRiggedModel(clipName);
-	vec3 averageSpeed = man->getRootTranslation() / man->animationDuration();
 
 	QState* pState = new QState(parent);
 	
 	pState->setObjectName(stateName);
 	pState->assignProperty(this, "currentClip", clipName);
-	pState->assignProperty(this, "duration", man->animationDuration());
 
 	QTimer *timer = new QTimer(pState);
-	timer->setInterval((int)man->animationDuration() * 1000);
+	timer->setInterval((int)(man->animationDuration() * 1000 - 16)); // minus 1 frame duration to keep the animation synchronized
 	timer->setSingleShot(true);
 	QState *timing = new QState(pState);
 	timing->setObjectName(subStateName);
 	connect(timing, SIGNAL(entered()), timer, SLOT(start()));
 	timing->addTransition(timer, SIGNAL(timeout()), doneState);
+
 	pState->setInitialState(timing);
+
+	// entering this state should restart the timer in order to play the animation from the beginning
+	connect(timing, SIGNAL(entered()), this, SLOT(restartTimer()));
 
 	return pState;
 }
 
 
-void AnimatorController::syncMovement( MOVEMENT_TYPE type, const QString& clipName )
+QState* AnimatorController::createFinishingState( QState* sourceState, const QString& stateName, const QString& clipName, QState* parent /*= 0*/ )
+{
+	RiggedModel* man = m_modelManager->getRiggedModel(clipName);
+
+	QState* pState = new QState(parent);
+	pState->setObjectName(stateName);
+	pState->assignProperty(this, "currentClip", clipName);
+
+	QTimer *timer = new QTimer(pState);
+	// this duration makes sure the source animation is complete
+	timer->setInterval((int)(man->animationDuration() * 1000) - m_timer.elapsed()); 
+	timer->setSingleShot(true);
+	QState *timing = new QState(pState);
+	timing->setObjectName("Finishing");
+	connect(timing, SIGNAL(entered()), timer, SLOT(start()));
+	QFinalState* done = new QFinalState(pState);
+	timing->addTransition(timer, SIGNAL(timeout()), done);
+
+	pState->setInitialState(timing);
+
+	return pState;
+}
+
+void AnimatorController::syncMovement( SYNC_OPTION type, QState* pState, const QString& clipName, const QString& customData /*= ""*/)
 {
 	RiggedModel* man = m_modelManager->getRiggedModel(clipName);
 	QString paramString;
@@ -193,41 +270,46 @@ void AnimatorController::syncMovement( MOVEMENT_TYPE type, const QString& clipNa
 	}
 	else if (type == ROTATION)
 	{
-		slot = SLOT(rotateInWorld(const QString&));
-		QQuaternion delta = man->getRootRotation();
-		paramString = QString::number((float)delta.scalar()) + ", " + 
-					  QString::number((float)delta.x()) + ", " + 
-					  QString::number((float)delta.y()) + ", " + 
-					  QString::number((float)delta.z());
+// 		slot = SLOT(rotateInWorld(const QString&));
+// 		QQuaternion delta = man->getRootRotation();
+// 		paramString = QString::number((float)delta.scalar()) + ", " + 
+// 					  QString::number((float)delta.x()) + ", " + 
+// 					  QString::number((float)delta.y()) + ", " + 
+// 					  QString::number((float)delta.z());
+		slot = SLOT(rotateInWorldAxisAndAngle(const QString&));
+		paramString = customData;
 	}
 	else if (type == ALL)
 	{
-		syncMovement(TRANSLATION, clipName);
-		syncMovement(ROTATION, clipName);
+		syncMovement(TRANSLATION, pState, clipName);
+		syncMovement(ROTATION, pState, clipName, customData);
 		return;
 	}
 	
-	QSignalMapper *mapper = new QSignalMapper(this);
-	connect(this, SIGNAL(animationCycleDone()), mapper, SLOT(map()));
-	mapper->setMapping(this, paramString);
+	QSignalMapper *mapper = new QSignalMapper(pState);
+	connect(pState, SIGNAL(exited()), mapper, SLOT(map()));
+	mapper->setMapping(pState, paramString);
 	connect(mapper, SIGNAL(mapped(const QString&)), m_actor, slot);
+
 }
+
 
 void AnimatorController::render()
 {
 	RiggedModel* man = m_modelManager->getRiggedModel(m_currentClip);
 	float time = (float)m_timer.elapsed()/1000;
+
 	man->setActor(m_actor);
 	man->render(time);
-	if (man->animationDuration() - time < 0.01f)
-	{
-		emit animationCycleDone();
-		qDebug() << "render cycle done!";
-		// add logic here, animation done
-	}
 }
 
 void AnimatorController::restartTimer()
 {
 	m_timer.restart();
+}
+
+void AnimatorController::initContorlPanel()
+{
+	m_controlPanel = new AnimatorPanel();
+	m_controlPanel->show();
 }

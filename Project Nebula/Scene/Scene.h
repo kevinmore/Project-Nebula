@@ -110,5 +110,6 @@ private:
 
 	QStateMachine* m_stateMachine;
 	AnimatorController* m_animCtrller;
+	QVector<RiggedModel*> m_NPCs;
 };
 

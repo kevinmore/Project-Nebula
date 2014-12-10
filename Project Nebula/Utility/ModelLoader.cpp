@@ -102,9 +102,9 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName , MODEL_TY
 
 	prepareVertexBuffers();
 
-	qDebug() << "Loaded" << fileName;
+	qDebug() << endl << "Loaded" << fileName;
 	qDebug() << "Model has" << m_scene->mNumMeshes << "meshes," << numVertices << "vertices," 
-		     << numIndices << "indices and" << m_NumBones << "bones." << endl;
+		     << numIndices << "indices and" << m_NumBones << "bones.";
 
 	// generate the skeleton of the model
 	// specify the root bone

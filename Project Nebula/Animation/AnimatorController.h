@@ -3,23 +3,20 @@
 #include <Scene/Managers/ModelManager.h>
 #include <QStateMachine>
 #include <QElapsedTimer>
+#include "AnimatorPanel.h"
 
 class AnimatorController : public QObject
 {
 	Q_OBJECT
 	Q_PROPERTY(QString currentClip READ currentClip WRITE setCurrentClip)
-	Q_PROPERTY(float duration READ duration WRITE setDuration)
 
 public:
-	AnimatorController(QSharedPointer<ModelManager> manager, QObject* handelingWidget);
+	AnimatorController(QSharedPointer<ModelManager> manager);
 	~AnimatorController();
 
 	GameObject* getActor() { return m_actor; }
 
 	QStateMachine* getStateMachine() { return m_stateMachine; }
-
-	float duration() { return m_durationInSeconds; }
-	void setDuration(float dur) { m_durationInSeconds = dur; }
 
 	QString currentClip() const { return  m_currentClip; }
 
@@ -27,7 +24,6 @@ public:
 
 signals:
 	void currentClipChanged(const QString& clipName);
-	void animationCycleDone();
 
 public slots:
 	void setCurrentClip(const QString& clipName);
@@ -35,7 +31,6 @@ public slots:
 
 private:
 	QSharedPointer<ModelManager> m_modelManager;
-	QObject* m_handler;
 	QStateMachine* m_stateMachine;
 
 	QString m_currentClip;
@@ -44,7 +39,9 @@ private:
 
 	GameObject* m_actor;
 
-	enum MOVEMENT_TYPE
+	AnimatorPanel* m_controlPanel;
+
+	enum SYNC_OPTION
 	{
 		TRANSLATION,
 		ROTATION,
@@ -53,9 +50,13 @@ private:
 
 	void buildStateMachine();
 	QState* createBasicState(const QString& stateName, const QString& clipName, QState* parent = 0);
-	QState* createTimedSubState(const QString& stateName, const QString& subStateName, const QString& clipName, 
+	QState* createLoopingState(const QString& stateName, const QString& clipName, QState* parent = 0);
+	QState* createTransitionState(const QString& stateName, const QString& subStateName, const QString& clipName, 
 								QState* doneState, QState* parent = 0);
+	QState* createFinishingState(QState* sourceState, const QString& stateName, const QString& clipName, QState* parent = 0);
 
-	void syncMovement(MOVEMENT_TYPE type, const QString& clipName);
+	void syncMovement(SYNC_OPTION type, QState* pState, const QString& clipName, const QString& customData = "");
+
+	void initContorlPanel();
 };
 

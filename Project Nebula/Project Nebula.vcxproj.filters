@@ -35,6 +35,7 @@
     <ClCompile Include="Animation\moc_AnimatorController.cc" />
     <ClCompile Include="Scene\GameObject.cpp" />
     <ClCompile Include="Scene\moc_GameObject.cc" />
+    <ClCompile Include="Animation\AnimatorPanel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utility\DataTypes.h" />
@@ -62,6 +63,7 @@
     <ClInclude Include="Animation\IK\FABRIKSolver.h" />
     <ClInclude Include="Animation\IK\CCDIKSolver.h" />
     <ClInclude Include="Animation\Rig\Pose.h" />
+    <ClInclude Include="Animation\AnimatorPanel.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Resource\Shaders\skinning.frag" />
