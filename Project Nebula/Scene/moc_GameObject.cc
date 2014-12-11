@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_GameObject_t {
-    QByteArrayData data[20];
-    char stringdata[250];
+    QByteArrayData data[23];
+    char stringdata[283];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -46,9 +46,12 @@ QT_MOC_LITERAL(13, 162, 11),
 QT_MOC_LITERAL(14, 174, 13),
 QT_MOC_LITERAL(15, 188, 25),
 QT_MOC_LITERAL(16, 214, 13),
-QT_MOC_LITERAL(17, 228, 5),
-QT_MOC_LITERAL(18, 234, 10),
-QT_MOC_LITERAL(19, 245, 4)
+QT_MOC_LITERAL(17, 228, 10),
+QT_MOC_LITERAL(18, 239, 14),
+QT_MOC_LITERAL(19, 254, 5),
+QT_MOC_LITERAL(20, 260, 6),
+QT_MOC_LITERAL(21, 267, 10),
+QT_MOC_LITERAL(22, 278, 4)
     },
     "GameObject\0synchronized\0\0setObjectXPosition\0"
     "x\0setObjectYPosition\0y\0setObjectZPosition\0"
@@ -56,7 +59,8 @@ QT_MOC_LITERAL(19, 245, 4)
     "setObjectZRotation\0translateInWorld\0"
     "paramString\0rotateInWorld\0"
     "rotateInWorldAxisAndAngle\0setLocalSpeed\0"
-    "reset\0localSpeed\0vec3"
+    "resetSpeed\0calculateSpeed\0reset\0moving\0"
+    "localSpeed\0vec3"
 };
 #undef QT_MOC_LITERAL
 
@@ -66,28 +70,30 @@ static const uint qt_meta_data_GameObject[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      12,   14, // methods
-       1,  106, // properties
+      14,   14, // methods
+       2,  118, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   74,    2, 0x06 /* Public */,
+       1,    0,   84,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       3,    1,   75,    2, 0x0a /* Public */,
-       5,    1,   78,    2, 0x0a /* Public */,
-       7,    1,   81,    2, 0x0a /* Public */,
-       9,    1,   84,    2, 0x0a /* Public */,
-      10,    1,   87,    2, 0x0a /* Public */,
-      11,    1,   90,    2, 0x0a /* Public */,
-      12,    1,   93,    2, 0x0a /* Public */,
-      14,    1,   96,    2, 0x0a /* Public */,
-      15,    1,   99,    2, 0x0a /* Public */,
-      16,    1,  102,    2, 0x0a /* Public */,
-      17,    0,  105,    2, 0x0a /* Public */,
+       3,    1,   85,    2, 0x0a /* Public */,
+       5,    1,   88,    2, 0x0a /* Public */,
+       7,    1,   91,    2, 0x0a /* Public */,
+       9,    1,   94,    2, 0x0a /* Public */,
+      10,    1,   97,    2, 0x0a /* Public */,
+      11,    1,  100,    2, 0x0a /* Public */,
+      12,    1,  103,    2, 0x0a /* Public */,
+      14,    1,  106,    2, 0x0a /* Public */,
+      15,    1,  109,    2, 0x0a /* Public */,
+      16,    1,  112,    2, 0x0a /* Public */,
+      17,    0,  115,    2, 0x0a /* Public */,
+      18,    0,  116,    2, 0x0a /* Public */,
+      19,    0,  117,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -104,9 +110,12 @@ static const uint qt_meta_data_GameObject[] = {
     QMetaType::Void, QMetaType::QString,   13,
     QMetaType::Void, QMetaType::QString,   13,
     QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
 
  // properties: name, type, flags
-      18, 0x80000000 | 19, 0x0009500b,
+      20, QMetaType::Bool, 0x00095103,
+      21, 0x80000000 | 22, 0x0009500b,
 
        0        // eod
 };
@@ -127,7 +136,9 @@ void GameObject::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 8: _t->rotateInWorld((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         case 9: _t->rotateInWorldAxisAndAngle((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         case 10: _t->setLocalSpeed((*reinterpret_cast< const QString(*)>(_a[1]))); break;
-        case 11: _t->reset(); break;
+        case 11: _t->resetSpeed(); break;
+        case 12: _t->calculateSpeed(); break;
+        case 13: _t->reset(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -167,45 +178,47 @@ int GameObject::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 12)
+        if (_id < 14)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 12;
+        _id -= 14;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 12)
+        if (_id < 14)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 12;
+        _id -= 14;
     }
 #ifndef QT_NO_PROPERTIES
       else if (_c == QMetaObject::ReadProperty) {
         void *_v = _a[0];
         switch (_id) {
-        case 0: *reinterpret_cast< vec3*>(_v) = localSpeed(); break;
+        case 0: *reinterpret_cast< bool*>(_v) = isMoving(); break;
+        case 1: *reinterpret_cast< vec3*>(_v) = localSpeed(); break;
         default: break;
         }
-        _id -= 1;
+        _id -= 2;
     } else if (_c == QMetaObject::WriteProperty) {
         void *_v = _a[0];
         switch (_id) {
-        case 0: setSpeed(*reinterpret_cast< vec3*>(_v)); break;
+        case 0: setMoving(*reinterpret_cast< bool*>(_v)); break;
+        case 1: setSpeed(*reinterpret_cast< vec3*>(_v)); break;
         default: break;
         }
-        _id -= 1;
+        _id -= 2;
     } else if (_c == QMetaObject::ResetProperty) {
-        _id -= 1;
+        _id -= 2;
     } else if (_c == QMetaObject::QueryPropertyDesignable) {
-        _id -= 1;
+        _id -= 2;
     } else if (_c == QMetaObject::QueryPropertyScriptable) {
-        _id -= 1;
+        _id -= 2;
     } else if (_c == QMetaObject::QueryPropertyStored) {
-        _id -= 1;
+        _id -= 2;
     } else if (_c == QMetaObject::QueryPropertyEditable) {
-        _id -= 1;
+        _id -= 2;
     } else if (_c == QMetaObject::QueryPropertyUser) {
-        _id -= 1;
+        _id -= 2;
     } else if (_c == QMetaObject::RegisterPropertyMetaType) {
-        if (_id < 1)
+        if (_id < 2)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 1;
+        _id -= 2;
     }
 #endif // QT_NO_PROPERTIES
     return _id;

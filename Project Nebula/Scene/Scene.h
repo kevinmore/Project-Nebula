@@ -28,18 +28,6 @@ public:
 	virtual void render(double currentTime);
 	virtual void resize(int width, int height);
 
-	// camera movement
-	inline void setSideSpeed(float vx)     { m_viewDirection.setX(vx); }
-	inline void setVerticalSpeed(float vy) { m_viewDirection.setY(vy); }
-	inline void setForwardSpeed(float vz)  { m_viewDirection.setZ(vz); }
-	inline void setViewCenterFixed(bool b) { m_viewCenterFixed = b; }
-
-	// camera movement rotation
-	inline void setPanAngle(float angle)  { m_panAngle  = angle; }
-	inline void setTiltAngle(float angle) { m_tiltAngle = angle; }
-
-	void updataCamera(const float dt);
-
 	enum LightMode
 	{
 		PerFragmentBlinnPhong = 1,
@@ -53,18 +41,13 @@ public:
 
 	GameObject*    getObject() { return NULL; } //hack! need to improve
 	SceneCamera* getCamera();
-	vec3 getViewDirection() { return m_viewDirection; }
-	bool isViewCenterFixed() { return m_viewCenterFixed; }
-
-
+	
 	QSharedPointer<MeshManager>     meshManager();
 	QSharedPointer<TextureManager>  textureManager();
 	QSharedPointer<MaterialManager> materialManager();
 
 	QStateMachine* getStateMachine() { return m_stateMachine; }
 
-private:
-	
 
 public slots:
 	void toggleFill(bool state);
@@ -92,15 +75,8 @@ private:
 
 	ShadersProgramPtr m_shaderProgram;
 	Light			  m_light;
-	QVector3D		  m_viewDirection;
-
-	bool m_viewCenterFixed;
-
-	float m_panAngle;
-	float m_tiltAngle;
+	
 	float m_time;
-
-	const float m_metersToUnits;
 
 	LightMode       m_lightMode;
 	QVector<GLuint> m_lightModeSubroutines;

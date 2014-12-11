@@ -8,7 +8,7 @@ class SceneCamera : public QObject
 	Q_OBJECT
 
 public:
-	SceneCamera(QObject *parent = 0);
+	SceneCamera(GameObject* followingTarget = 0, QObject *parent = 0);
 	~SceneCamera();
 
 	enum ProjectionType
@@ -96,10 +96,28 @@ public:
 	void rotateAboutViewCenter(const QQuaternion& q);
 
 	// make the camera follow a game object
-	void follow(GameObject* target);
+	void followTarget(GameObject* target);
+
+	vec3 getViewDirection() { return m_viewDirection; }
+	bool isViewCenterFixed() { return m_viewCenterFixed; }
+
+	// camera movement
+	inline void setSideSpeed(float vx)     { m_viewDirection.setX(vx); }
+	inline void setVerticalSpeed(float vy) { m_viewDirection.setY(vy); }
+	inline void setForwardSpeed(float vz)  { m_viewDirection.setZ(vz); }
+	inline void setViewCenterFixed(bool b) { m_viewCenterFixed = b; }
+
+	// camera movement rotation
+	inline void setPanAngle(float angle)  { m_panAngle  = angle; }
+	inline void setTiltAngle(float angle) { m_tiltAngle = angle; }
+
+	void update(const float currentTime);
 
 public slots:
 	void resetCamera();
+	void releaseTarget();
+	void switchToFirstPersonCamera(bool status);
+	void switchToThirdPersonCamera(bool status);
 
 private:
 	QVector3D m_position;
@@ -126,5 +144,17 @@ private:
 
 	mutable bool m_viewMatrixDirty;
 	mutable bool m_viewProjectionMatrixDirty;
+
+	// instantiate variables
+	QVector3D m_viewDirection;
+	bool m_viewCenterFixed;
+	bool m_isFollowing;
+	GameObject* m_followingTarget;
+
+	float m_panAngle;
+	float m_tiltAngle;
+
+	float m_time;
+	const float m_metersToUnits;
 };
 

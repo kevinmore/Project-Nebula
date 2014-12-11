@@ -10,6 +10,7 @@ Canvas::Canvas(QScreen *screen)
 	  m_context(new QOpenGLContext),
 	  m_scene(new Scene(this)),
 	  m_rightButtonPressed(false),
+	  m_middleButtonPressed(false),
 	  m_cameraSpeed(5000.0f),
 	  m_cameraSensitivity(0.2f)
 {
@@ -128,6 +129,8 @@ Scene* Canvas::getScene()
 
 void Canvas::keyPressEvent(QKeyEvent* e)
 {
+	SceneCamera* camera = getScene()->getCamera();
+
 	switch (e->key())
 	{
 	case Qt::Key_Escape:
@@ -136,31 +139,31 @@ void Canvas::keyPressEvent(QKeyEvent* e)
 		break;
 
 	case Qt::Key_Right:
-		getScene()->setSideSpeed(static_cast<float>(m_cameraSpeed));
+		camera->setSideSpeed(static_cast<float>(m_cameraSpeed));
 		break;
 
 	case Qt::Key_Left:
-		getScene()->setSideSpeed(static_cast<float>(-m_cameraSpeed));
+		camera->setSideSpeed(static_cast<float>(-m_cameraSpeed));
 		break;
 
 	case Qt::Key_Up:
-		getScene()->setForwardSpeed(static_cast<float>(m_cameraSpeed));
+		camera->setForwardSpeed(static_cast<float>(m_cameraSpeed));
 		break;
 
 	case Qt::Key_Down:
-		getScene()->setForwardSpeed(static_cast<float>(-m_cameraSpeed));
+		camera->setForwardSpeed(static_cast<float>(-m_cameraSpeed));
 		break;
 
 	case Qt::Key_R:
-		getScene()->setVerticalSpeed(static_cast<float>(m_cameraSpeed));
+		camera->setVerticalSpeed(static_cast<float>(m_cameraSpeed));
 		break;
 
 	case Qt::Key_F:
-		getScene()->setVerticalSpeed(static_cast<float>(-m_cameraSpeed));
+		camera->setVerticalSpeed(static_cast<float>(-m_cameraSpeed));
 		break;
 
 	case Qt::Key_Control:
-		getScene()->setViewCenterFixed(true);
+		camera->setViewCenterFixed(true);
 		break;
 
 	default:
@@ -171,25 +174,27 @@ void Canvas::keyPressEvent(QKeyEvent* e)
 
 void Canvas::keyReleaseEvent(QKeyEvent* e)
 {
+	SceneCamera* camera = getScene()->getCamera();
+
 	switch (e->key())
 	{
 	case Qt::Key_Right:
 	case Qt::Key_Left:
-		getScene()->setSideSpeed(0.0f);
+		camera->setSideSpeed(0.0f);
 		break;
 
 	case Qt::Key_Up:
 	case Qt::Key_Down:
-		getScene()->setForwardSpeed(0.0f);
+		camera->setForwardSpeed(0.0f);
 		break;
 
 	case Qt::Key_R:
 	case Qt::Key_F:
-		getScene()->setVerticalSpeed(0.0f);
+		camera->setVerticalSpeed(0.0f);
 		break;
 
 	case Qt::Key_Control:
-		getScene()->setViewCenterFixed(false);
+		camera->setViewCenterFixed(false);
 		break;
 
 	default:
@@ -201,12 +206,11 @@ void Canvas::keyReleaseEvent(QKeyEvent* e)
 void Canvas::wheelEvent( QWheelEvent *e )
 {
 	int delta = e->delta();
-	Scene* pScene = getScene();
-	SceneCamera::CameraTranslationOption option = pScene->isViewCenterFixed()
+	SceneCamera* camera = getScene()->getCamera();
+
+	SceneCamera::CameraTranslationOption option = camera->isViewCenterFixed()
 		? SceneCamera::DontTranslateViewCenter
 		: SceneCamera::TranslateViewCenter;
-
-	SceneCamera* camera = pScene->getCamera();
 
 	if (e->orientation() == Qt::Vertical) 
 	{
@@ -216,14 +220,17 @@ void Canvas::wheelEvent( QWheelEvent *e )
 	e->accept();
 }
 
-
-
 void Canvas::mousePressEvent(QMouseEvent* e)
 {
+	m_pos = m_prevPos = e->pos();
+
 	if(e->button() == Qt::RightButton)
 	{
 		m_rightButtonPressed = true;
-		m_pos = m_prevPos = e->pos();
+	}
+	else if (e->button() == Qt::MiddleButton)
+	{
+		m_middleButtonPressed = true;
 	}
 
 	QWindow::mousePressEvent(e);
@@ -235,23 +242,36 @@ void Canvas::mouseReleaseEvent(QMouseEvent* e)
 	{
 		m_rightButtonPressed = false;
 	}
-
+	else if (e->button() == Qt::MiddleButton)
+	{
+		SceneCamera* camera = getScene()->getCamera();
+		camera->setSideSpeed(0.0f);
+		camera->setVerticalSpeed(0.0f);
+		m_middleButtonPressed = false;
+	}
 	QWindow::mouseReleaseEvent(e);
 }
 
 void Canvas::mouseMoveEvent(QMouseEvent* e)
 {
+	m_pos = e->pos();
+
+	float dx = static_cast<float>(m_cameraSensitivity) * (static_cast<float>(m_pos.x()) - static_cast<float>(m_prevPos.x()));
+	float dy = static_cast<float>(-m_cameraSensitivity) * (static_cast<float>(m_pos.y()) - static_cast<float>(m_prevPos.y()));
+
+	m_prevPos = m_pos;
+
+	SceneCamera* camera = getScene()->getCamera();
+
 	if(m_rightButtonPressed)
 	{
-		m_pos = e->pos();
-
-		float dx = static_cast<float>(m_cameraSensitivity) * (static_cast<float>(m_pos.x()) - static_cast<float>(m_prevPos.x()));
-		float dy = static_cast<float>(-m_cameraSensitivity) * (static_cast<float>(m_pos.y()) - static_cast<float>(m_prevPos.y()));
-
-		m_prevPos = m_pos;
-
-		getScene()->setPanAngle(dx);
-		getScene()->setTiltAngle(dy);
+		camera->setPanAngle(dx);
+		camera->setTiltAngle(dy);
+	}
+	else if (m_middleButtonPressed)
+	{
+		camera->setSideSpeed(dx * m_cameraSpeed);
+		camera->setVerticalSpeed(dy * m_cameraSpeed);
 	}
 
 	QWindow::mouseMoveEvent(e);

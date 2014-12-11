@@ -589,6 +589,8 @@ void MainWindow::initializeParamsArea()
 	QObject::connect(cameraSpeedValue,       SIGNAL(valueChanged(double)), m_canvas.data(), SLOT(setCameraSpeed(double)));
 	QObject::connect(cameraSensitivityValue, SIGNAL(valueChanged(double)), m_canvas.data(), SLOT(setCameraSensitivity(double)));
 	QObject::connect(resetCamera,            SIGNAL(clicked()),            m_camera,            SLOT(resetCamera()));
+	QObject::connect(firstPerson,            SIGNAL(toggled(bool)),        m_camera,            SLOT(switchToFirstPersonCamera(bool)));
+	QObject::connect(thirdPerson,            SIGNAL(toggled(bool)),        m_camera,            SLOT(switchToThirdPersonCamera(bool)));
 
 	// Object
 	//QObject::connect(translationX, SIGNAL(valueChanged(int)), m_object3D, SLOT(setObjectXPosition(int)));

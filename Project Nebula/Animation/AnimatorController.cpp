@@ -8,6 +8,7 @@ AnimatorController::AnimatorController( QSharedPointer<ModelManager> manager )
 
 	buildStateMachine();
 	m_timer.start();
+	m_actor->setMovingBehaviour(GameObject::DISCRETE);
 }
 
 
@@ -37,6 +38,7 @@ void AnimatorController::buildStateMachine()
 	QState* idle = createLoopingState("Idle", "m_idle", moving_system);
 	idle->assignProperty(m_controlPanel->moveButton, "text", "Idle");
 	idle->assignProperty(m_controlPanel->fastMoveButton, "text", "Idle");
+	connect(idle, SIGNAL(entered()), m_actor, SLOT(resetSpeed()));
 	m_StateClipMap[idle] = "m_idle";
 
 	QState* walk = createLoopingState("Walk", "m_walk", moving_system);
@@ -278,7 +280,7 @@ void AnimatorController::syncMovement( SYNC_OPTION option, QState* pState, const
 }
 
 
-void AnimatorController::render()
+void AnimatorController::render(const float globalTime)
 {
 	RiggedModel* man = m_modelManager->getRiggedModel(m_currentClip);
 	float time = (float)m_timer.elapsed()/1000;

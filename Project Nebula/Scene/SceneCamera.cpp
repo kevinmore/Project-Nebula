@@ -1,7 +1,7 @@
 #include "SceneCamera.h"
 using namespace Math;
 
-SceneCamera::SceneCamera(QObject *parent)
+SceneCamera::SceneCamera(GameObject* followingTarget, QObject *parent)
   : QObject(parent),
 	m_position(Vector3D::UNIT_Z),
 	m_upVector(Vector3D::UNIT_Y),
@@ -18,7 +18,15 @@ SceneCamera::SceneCamera(QObject *parent)
 	m_top(0.5f),
 	m_viewMatrixDirty(true),
 	m_viewProjectionMatrixDirty(true),
-	m_viewType(ThirdPerson)
+	m_viewType(ThirdPerson),
+	m_viewDirection(),
+	m_viewCenterFixed(false),
+	m_panAngle(0.0f),
+	m_tiltAngle(0.0f),
+	m_time(0.0f),
+	m_metersToUnits(0.1f),
+	m_isFollowing(true),
+	m_followingTarget(followingTarget)
 {
 	updatePerspectiveProjection();
 }
@@ -381,7 +389,7 @@ void SceneCamera::tiltAboutViewCenter(const float& angle)
 
 void SceneCamera::panAboutViewCenter(const float& angle)
 {
-	QQuaternion q = panRotation(angle);
+	QQuaternion q = panRotation(angle, Math::Vector3D::UNIT_Y);
 	rotateAboutViewCenter(q);
 }
 
@@ -419,7 +427,72 @@ void SceneCamera::resetCamera()
 	m_viewMatrixDirty = true;
 }
 
-void SceneCamera::follow( GameObject* target )
+void SceneCamera::followTarget( GameObject* target )
 {
-	setViewCenter(target->position());
+	//m_viewCenterFixed = true;
+	m_isFollowing = true;
+	m_followingTarget = target;
+}
+
+void SceneCamera::releaseTarget()
+{
+	//m_viewCenterFixed = false;
+	m_isFollowing = false;
+}
+
+void SceneCamera::update( const float currentTime )
+{
+	const float dt = currentTime - m_time;
+	m_time = currentTime;
+
+	SceneCamera::CameraTranslationOption option = m_viewCenterFixed
+		? SceneCamera::DontTranslateViewCenter
+		: SceneCamera::TranslateViewCenter;
+
+	if (m_isFollowing)
+	{
+// 		m_viewCenter = m_followingTarget->predictedPosition();
+// 		// apply an offset on Y, because we don't want to look at the character's feet
+// 		m_viewCenter.setY(m_viewCenter.y() + 100.0f);
+		if( ! qFuzzyIsNull(m_panAngle) )
+		{
+			panAboutViewCenter(m_panAngle);
+			m_panAngle = 0.0f;
+		}
+
+		if ( ! qFuzzyIsNull(m_tiltAngle) )
+		{
+			tiltAboutViewCenter(m_tiltAngle);
+			m_tiltAngle = 0.0f;
+		}
+		translateWorld(m_followingTarget->globalSpeed() * dt, option);
+	}
+	else
+	{
+		if( ! qFuzzyIsNull(m_panAngle) )
+		{
+			pan(m_panAngle, QVector3D(0.0f, 1.0f, 0.0f));
+			m_panAngle = 0.0f;
+		}
+
+		if ( ! qFuzzyIsNull(m_tiltAngle) )
+		{
+			tilt(m_tiltAngle);
+			m_tiltAngle = 0.0f;
+		}
+		translate(m_viewDirection * dt * m_metersToUnits, option);
+	}
+
+}
+
+void SceneCamera::switchToFirstPersonCamera( bool status )
+{
+	if (status) releaseTarget();
+	else followTarget(m_followingTarget);
+}
+
+void SceneCamera::switchToThirdPersonCamera( bool status )
+{
+	if (status) followTarget(m_followingTarget);
+	else releaseTarget();
 }

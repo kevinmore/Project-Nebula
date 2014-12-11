@@ -2,13 +2,23 @@
 #include <Utility/Math.h>
 using namespace Math;
 
-// dae files, should rotate the model
 GameObject::GameObject()
 	: m_position(Vector3D::ZERO),
 	  m_rotation(Vector3D::ZERO),
 	  m_scale(Vector3D::UNIT_SCALE),
-	  m_modelMatrixDirty(true)
-{}
+	  m_movingBehaviour(CONSECUTIVE),
+	  m_modelMatrixDirty(true),
+	  m_time(0.0f),
+	  m_prevPosition(m_position),
+	  m_isMoving(false)
+{
+	connect(this, SIGNAL(synchronized()), this, SLOT(calculateSpeed()));
+	m_lifeTimer.start();
+}
+
+GameObject::~GameObject()
+{
+}
 
 void GameObject::setPosition(const QVector3D& positionVector)
 {
@@ -121,17 +131,17 @@ void GameObject::scaleZ(float z)
 	m_modelMatrixDirty = true;
 }
 
-const QVector3D& GameObject::position() const
+const QVector3D GameObject::position()
 {
 	return m_position;
 }
 
-const QVector3D& GameObject::rotation() const
+const QVector3D GameObject::rotation()
 {
 	return m_rotation;
 }
 
-const QVector3D& GameObject::scale() const
+const QVector3D GameObject::scale()
 {
 	return m_scale;
 }
@@ -215,17 +225,18 @@ void GameObject::setLocalSpeed( const QString& paramString )
 	setSpeed(params[0].toFloat(), params[1].toFloat(), params[2].toFloat());
 }
 
-const QVector3D& GameObject::localSpeed() const
+const QVector3D GameObject::localSpeed()
 {
 	return m_speed;
 }
 
-const QVector3D& GameObject::globalSpeed() const
+const QVector3D GameObject::globalSpeed()
 {
 	QQuaternion rotX = QQuaternion::fromAxisAndAngle(Math::Vector3D::UNIT_X, m_rotation.x());
 	QQuaternion rotY = QQuaternion::fromAxisAndAngle(Math::Vector3D::UNIT_Y, m_rotation.y());
 	QQuaternion rotZ = QQuaternion::fromAxisAndAngle(Math::Vector3D::UNIT_Z, m_rotation.z());
 	QQuaternion rot = rotX * rotY * rotZ;
+
 	return rot.rotatedVector(m_speed);
 }
 
@@ -238,6 +249,8 @@ void GameObject::rotateInWorld( const QQuaternion& delta )
 void GameObject::translateInWorld( const QVector3D& delta )
 {
 	m_modelMatrix.translate(delta);
+	m_prevPosition = m_position;
+	m_position += delta;
 	m_modelMatrixDirty = false;
 }
 
@@ -245,6 +258,7 @@ void GameObject::translateInWorld( const QString& paramString )
 {
 	QStringList params = paramString.split(", ", QString::SkipEmptyParts);
 	vec3 delta(params[0].toFloat(), params[1].toFloat(), params[2].toFloat());
+	m_prevPosition = m_position;
 	m_position += delta;
 	m_modelMatrix.translate(delta);
 
@@ -296,4 +310,49 @@ void GameObject::rotateInWorldAxisAndAngle( const QString& paramString )
 	qDebug() << "rotation y" << m_rotation.y();
 	m_modelMatrixDirty = false;
 	emit synchronized();
+}
+
+void GameObject::setMovingBehaviour( MovingBehaviour type )
+{
+	m_movingBehaviour = type;
+}
+
+GameObject::MovingBehaviour GameObject::movingBehaviour() const
+{
+	return m_movingBehaviour;
+}
+
+void GameObject::calculateSpeed()
+{
+	float currentTime = (float)m_lifeTimer.elapsed()/1000;
+	const float dt = currentTime - m_time;
+	m_time = currentTime;
+	if(dt < 0.5)
+	{
+		resetSpeed();
+		return;
+	}
+	m_speed = (m_position - m_prevPosition) / dt;
+}
+
+bool GameObject::isMoving() const
+{
+	return m_isMoving;
+}
+
+void GameObject::setMoving( bool status )
+{
+	m_isMoving = status;
+}
+
+void GameObject::resetSpeed()
+{
+	setSpeed(0.0f, 0.0f, 0.0f);
+}
+
+const QVector3D GameObject::predictedPosition()
+{
+	float currentTime = (float)m_lifeTimer.elapsed()/1000;
+	const float dt = currentTime - m_time;
+	return m_prevPosition + m_speed * dt;
 }

@@ -20,7 +20,7 @@ public:
 
 	QString currentClip() const { return  m_currentClip; }
 
-	void render();
+	void render(const float globalTime);
 
 signals:
 	void currentClipChanged(const QString& clipName);

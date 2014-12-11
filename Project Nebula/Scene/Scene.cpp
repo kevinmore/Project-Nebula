@@ -3,14 +3,8 @@
 
 Scene::Scene(QObject* parent)
 	: AbstractScene(parent),
-	  m_camera(new SceneCamera(this)),
+	  m_camera(new SceneCamera(NULL,this)),
 	  m_light("light01"),
-	  m_viewDirection(),
-	  m_viewCenterFixed(false),
-	  m_panAngle(0.0f),
-	  m_tiltAngle(0.0f),
-	  m_time(0.0f),
-	  m_metersToUnits(0.1f),
 	  m_lightMode(PerFragmentPhong),
 	  m_lightModeSubroutines(LightModeCount)
 {
@@ -118,16 +112,13 @@ void Scene::initialize()
 	sceneObject->getActor()->setRotation(-90.0f, 0.0f, 180.0f);
 	sceneObject->getActor()->setPosition(-80, 250, 1100);
 	
-	m_camera->follow(m_animCtrller->getActor());
+	m_camera->followTarget(m_animCtrller->getActor());
 }
 
 
 void Scene::update(float t)
 {
-	const float dt = t - m_time;
-	m_time = t;
-
-	updataCamera(dt);
+	m_camera->update(t);
 
 	m_funcs->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -165,7 +156,7 @@ void Scene::update(float t)
 	}
 
 	// render the character controlled by the user
-	if(m_modelManager->m_riggedModels.size() > 0) m_animCtrller->render();
+	if(m_modelManager->m_riggedModels.size() > 0) m_animCtrller->render(t);
 
 }
 
@@ -257,27 +248,6 @@ SceneCamera* Scene::getCamera()
 {
 	return m_camera;
 }
-
-void Scene::updataCamera( const float dt )
-{
-	SceneCamera::CameraTranslationOption option = m_viewCenterFixed
-		? SceneCamera::DontTranslateViewCenter
-		: SceneCamera::TranslateViewCenter;
-
-	m_camera->translate(m_viewDirection * dt * m_metersToUnits, option);
-	if( ! qFuzzyIsNull(m_panAngle) )
-	{
-		m_camera->pan(m_panAngle, QVector3D(0.0f, 1.0f, 0.0f));
-		m_panAngle = 0.0f;
-	}
-
-	if ( ! qFuzzyIsNull(m_tiltAngle) )
-	{
-		m_camera->tilt(m_tiltAngle);
-		m_tiltAngle = 0.0f;
-	}
-}
-
 
 QSharedPointer<MeshManager> Scene::meshManager()
 {

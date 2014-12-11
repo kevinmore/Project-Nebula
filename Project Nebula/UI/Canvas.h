@@ -58,6 +58,7 @@ private:
 	QPoint m_pos;
 
 	bool m_rightButtonPressed;
+	bool m_middleButtonPressed;
 
 	double m_cameraSpeed;
 	double m_cameraSensitivity;
