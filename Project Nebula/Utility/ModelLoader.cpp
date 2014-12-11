@@ -104,7 +104,12 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName , MODEL_TY
 
 	qDebug() << endl << "Loaded" << fileName;
 	qDebug() << "Model has" << m_scene->mNumMeshes << "meshes," << numVertices << "vertices," 
-		     << numIndices << "indices and" << m_NumBones << "bones.";
+		     << numIndices << "indices";
+	if(m_NumBones)
+		qDebug() << "Contains" << m_NumBones << "bones.";
+	if (m_scene->HasAnimations()) 
+		qDebug() << "Contains a"<< (float) m_scene->mAnimations[0]->mDuration <<"seconds animation.";
+
 
 	// generate the skeleton of the model
 	// specify the root bone

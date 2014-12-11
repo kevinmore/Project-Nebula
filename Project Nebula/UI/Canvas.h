@@ -38,7 +38,6 @@ public slots:
 	void checkAnimate(int state);
 	void setCameraSpeed(double speed);
 	void setCameraSensitivity(double sensitivity);
-	void restartTimer();
 
 protected slots:
 	void resizeGL();

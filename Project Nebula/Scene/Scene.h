@@ -29,14 +29,14 @@ public:
 	virtual void resize(int width, int height);
 
 	// camera movement
-	inline void setSideSpeed(float vx)     { m_v.setX(vx); }
-	inline void setVerticalSpeed(float vy) { m_v.setY(vy); }
-	inline void setForwardSpeed(float vz)  { m_v.setZ(vz); }
+	inline void setSideSpeed(float vx)     { m_viewDirection.setX(vx); }
+	inline void setVerticalSpeed(float vy) { m_viewDirection.setY(vy); }
+	inline void setForwardSpeed(float vz)  { m_viewDirection.setZ(vz); }
 	inline void setViewCenterFixed(bool b) { m_viewCenterFixed = b; }
 
 	// camera movement rotation
-	inline void pan(float angle)  { m_panAngle  = angle; }
-	inline void tilt(float angle) { m_tiltAngle = angle; }
+	inline void setPanAngle(float angle)  { m_panAngle  = angle; }
+	inline void setTiltAngle(float angle) { m_tiltAngle = angle; }
 
 	void updataCamera(const float dt);
 
@@ -53,7 +53,7 @@ public:
 
 	GameObject*    getObject() { return NULL; } //hack! need to improve
 	SceneCamera* getCamera();
-	vec3 getViewDirection() { return m_v; }
+	vec3 getViewDirection() { return m_viewDirection; }
 	bool isViewCenterFixed() { return m_viewCenterFixed; }
 
 
@@ -92,7 +92,7 @@ private:
 
 	ShadersProgramPtr m_shaderProgram;
 	Light			  m_light;
-	QVector3D		  m_v;
+	QVector3D		  m_viewDirection;
 
 	bool m_viewCenterFixed;
 

@@ -1,6 +1,7 @@
 #pragma once
 #include <Utility/DataTypes.h>
 #include <Utility/Math.h>
+#include <Scene/GameObject.h>
 
 class SceneCamera : public QObject
 {
@@ -12,8 +13,14 @@ public:
 
 	enum ProjectionType
 	{
-		OrthogonalProjection,
-		PerspectiveProjection
+		Orthogonal,
+		Perspective
+	};
+
+	enum ViewType
+	{
+		FirstPerson,
+		ThirdPerson
 	};
 
 	enum CameraTranslationOption
@@ -28,35 +35,31 @@ public:
 	QVector3D viewVector() const;
 
 	ProjectionType projectionType() const;
+	void setProjectionType(ProjectionType type);
+	
+	float left()   const;
+	float right()  const;
+	float bottom() const;
+	float top()    const;
+	void setLeft(const float& left);
+	void setRight(const float& right);
+	void setBottom(const float& bottom);
+	void setTop(const float& top);
 
 	float nearPlane()   const;
 	float farPlane()    const;
 	float fieldOfView() const;
 	float aspectRatio() const;
-
-	float left()   const;
-	float right()  const;
-	float bottom() const;
-	float top()    const;
-
+	void setNearPlane(const float& nearPlane);
+	void setFarPlane(const float& nearPlane);
+	void setFieldOfView(const float& fieldOfView);
+	void setAspectRatio(const float& aspectRatio);
+	
 	void updateOrthogonalProjection();
 	void setOrthographicProjection(float left, float right,	float bottom, float top, float nearPlane, float farPlane);
 
 	void updatePerspectiveProjection();
 	void setPerspectiveProjection(float fieldOfView, float aspect, float nearPlane, float farPlane);
-
-
-	void setProjectionType(ProjectionType type);
-
-	void setNearPlane(const float& nearPlane);
-	void setFarPlane(const float& nearPlane);
-	void setFieldOfView(const float& fieldOfView);
-	void setAspectRatio(const float& aspectRatio);
-
-	void setLeft(const float& left);
-	void setRight(const float& right);
-	void setBottom(const float& bottom);
-	void setTop(const float& top);
 
 	QMatrix4x4 viewMatrix() const;
 	QMatrix4x4 projectionMatrix() const;
@@ -68,7 +71,7 @@ public:
 	QQuaternion panRotation(const float& angle) const;
 	QQuaternion panRotation(const float& angle, const QVector3D& axis) const;
 
-public slots:
+
 	void setPosition(const QVector3D& position);
 	void setUpVector(const QVector3D& upVector);
 	void setViewCenter(const QVector3D& viewCenter);
@@ -92,6 +95,10 @@ public slots:
 	void rotate(const QQuaternion& q);
 	void rotateAboutViewCenter(const QQuaternion& q);
 
+	// make the camera follow a game object
+	void follow(GameObject* target);
+
+public slots:
 	void resetCamera();
 
 private:
@@ -101,6 +108,7 @@ private:
 	QVector3D m_cameraToCenter;
 
 	ProjectionType m_projectionType;
+	ViewType m_viewType;
 
 	float m_nearPlane;
 	float m_farPlane;
@@ -118,6 +126,5 @@ private:
 
 	mutable bool m_viewMatrixDirty;
 	mutable bool m_viewProjectionMatrixDirty;
-
 };
 

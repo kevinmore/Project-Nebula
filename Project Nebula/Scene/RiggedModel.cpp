@@ -195,9 +195,7 @@ void RiggedModel::render( float currentTime )
 	lastUpdatedTime = currentTime;
 	if(dt < 0)
 	{
-		qDebug() << "dt < 0";
 		dt = 0.0f;
-		//return;
 	}
 	//m_actor->translateInWorld(m_actor->globalSpeed() * dt); // this is for inplace locamotion
 	

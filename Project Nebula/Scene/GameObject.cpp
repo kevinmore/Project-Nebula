@@ -244,7 +244,9 @@ void GameObject::translateInWorld( const QVector3D& delta )
 void GameObject::translateInWorld( const QString& paramString )
 {
 	QStringList params = paramString.split(", ", QString::SkipEmptyParts);
-	m_modelMatrix.translate(vec3(params[0].toFloat(), params[1].toFloat(), params[2].toFloat()));
+	vec3 delta(params[0].toFloat(), params[1].toFloat(), params[2].toFloat());
+	m_position += delta;
+	m_modelMatrix.translate(delta);
 
 	m_modelMatrixDirty = false;
 	emit synchronized();
@@ -270,10 +272,28 @@ void GameObject::rotateInWorldAxisAndAngle( const QString& paramString )
 	QStringList params = paramString.split(", ", QString::SkipEmptyParts);
 	QString axis   = params[0];
 	float amount = params[1].toFloat();
-	if (axis.toLower() == "x") m_modelMatrix.rotate(amount, Math::Vector3D::UNIT_X);
-	else if (axis.toLower() == "y") m_modelMatrix.rotate(amount, Math::Vector3D::UNIT_Y);
-	else if (axis.toLower() == "z") m_modelMatrix.rotate(amount, Math::Vector3D::UNIT_Z);
-
+	if (axis.toLower() == "x") 
+	{
+		m_modelMatrix.rotate(amount, Math::Vector3D::UNIT_X);
+		m_rotation.setX(m_rotation.x() + amount);
+		if(m_rotation.x() > 180.0f) m_rotation.setX(m_rotation.x() - 360.0f);
+		if(m_rotation.x() <= -180.0f) m_rotation.setX(m_rotation.x() + 360.0f);
+	}
+	else if (axis.toLower() == "y") 
+	{
+		m_modelMatrix.rotate(amount, Math::Vector3D::UNIT_Y);
+		m_rotation.setY(m_rotation.y() + amount);
+		if(m_rotation.y() > 180.0f) m_rotation.setY(m_rotation.y() - 360.0f);
+		if(m_rotation.y() <= -180.0f) m_rotation.setY(m_rotation.y() + 360.0f);
+	}
+	else if (axis.toLower() == "z") 
+	{
+		m_modelMatrix.rotate(amount, Math::Vector3D::UNIT_Z);
+		m_rotation.setZ(m_rotation.z() + amount);
+		if(m_rotation.z() > 180.0f) m_rotation.setZ(m_rotation.z() - 360.0f);
+		if(m_rotation.z() <= -180.0f) m_rotation.setZ(m_rotation.z() + 360.0f);
+	}
+	qDebug() << "rotation y" << m_rotation.y();
 	m_modelMatrixDirty = false;
 	emit synchronized();
 }

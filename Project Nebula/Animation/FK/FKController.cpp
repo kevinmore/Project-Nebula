@@ -26,6 +26,7 @@ FKController::FKController(ModelLoader* loader, Skeleton* skeleton)
 	m_rootPositionTranslation = endPos - startPos;
 	// hack
 	m_rootPositionTranslation.setZ(-m_rootPositionTranslation.z());
+	m_rootPositionTranslation.setY(0);
 	m_rootRotationTranslation = endRot - startRot;
 	float x = m_rootRotationTranslation.x();
 	float y = m_rootRotationTranslation.y();

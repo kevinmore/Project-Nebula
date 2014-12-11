@@ -7,9 +7,9 @@ SceneCamera::SceneCamera(QObject *parent)
 	m_upVector(Vector3D::UNIT_Y),
 	m_viewCenter(Vector3D::ZERO),
 	m_cameraToCenter(Vector3D::NEGATIVE_UNIT_Z),
-	m_projectionType(PerspectiveProjection),
+	m_projectionType(Perspective),
 	m_nearPlane(0.1f),
-	m_farPlane(10240.0f),
+	m_farPlane(20000.0f),
 	m_fieldOfView(60.0f),
 	m_aspectRatio(1.0f),
 	m_left(-0.5f),
@@ -17,9 +17,10 @@ SceneCamera::SceneCamera(QObject *parent)
 	m_bottom(-0.5f),
 	m_top(0.5f),
 	m_viewMatrixDirty(true),
-	m_viewProjectionMatrixDirty(true)
+	m_viewProjectionMatrixDirty(true),
+	m_viewType(ThirdPerson)
 {
-	updateOrthogonalProjection();
+	updatePerspectiveProjection();
 }
 
 SceneCamera::~SceneCamera()
@@ -41,7 +42,7 @@ void SceneCamera::setOrthographicProjection( float left, float right, float bott
 	m_top = top;
 	m_nearPlane = nearPlane;
 	m_farPlane = farPlane;
-	m_projectionType = OrthogonalProjection;
+	m_projectionType = Orthogonal;
 
 	updateOrthogonalProjection();
 }
@@ -60,7 +61,7 @@ void SceneCamera::setPerspectiveProjection( float fieldOfView, float aspect, flo
 	m_aspectRatio = aspect;
 	m_nearPlane = nearPlane;
 	m_farPlane = farPlane;
-	m_projectionType = PerspectiveProjection;
+	m_projectionType = Perspective;
 
 	updatePerspectiveProjection();
 }
@@ -122,7 +123,7 @@ void SceneCamera::setNearPlane(const float& nearPlane)
 
 	m_nearPlane = nearPlane;
 
-	if(m_projectionType == PerspectiveProjection)
+	if(m_projectionType == Perspective)
 		updatePerspectiveProjection();
 }
 
@@ -138,7 +139,7 @@ void SceneCamera::setFarPlane(const float& farPlane)
 
 	m_farPlane = farPlane;
 
-	if(m_projectionType == PerspectiveProjection)
+	if(m_projectionType == Perspective)
 		updatePerspectiveProjection();
 }
 
@@ -154,7 +155,7 @@ void SceneCamera::setFieldOfView(const float& fieldOfView)
 
 	m_fieldOfView = fieldOfView;
 
-	if(m_projectionType == PerspectiveProjection)
+	if(m_projectionType == Perspective)
 		updatePerspectiveProjection();
 }
 
@@ -170,7 +171,7 @@ void SceneCamera::setAspectRatio(const float& aspectRatio)
 
 	m_aspectRatio = aspectRatio;
 
-	if(m_projectionType == PerspectiveProjection)
+	if(m_projectionType == Perspective)
 		updatePerspectiveProjection();
 }
 
@@ -186,7 +187,7 @@ void SceneCamera::setLeft(const float& left)
 
 	m_left = left;
 
-	if(m_projectionType == OrthogonalProjection)
+	if(m_projectionType == Orthogonal)
 		updateOrthogonalProjection();
 }
 
@@ -202,7 +203,7 @@ void SceneCamera::setRight(const float& right)
 
 	m_right = right;
 
-	if(m_projectionType == OrthogonalProjection)
+	if(m_projectionType == Orthogonal)
 		updateOrthogonalProjection();
 }
 
@@ -218,7 +219,7 @@ void SceneCamera::setBottom(const float& bottom)
 
 	m_bottom = bottom;
 
-	if(m_projectionType == OrthogonalProjection)
+	if(m_projectionType == Orthogonal)
 		updateOrthogonalProjection();
 }
 
@@ -234,7 +235,7 @@ void SceneCamera::setTop(const float& top)
 
 	m_top = top;
 
-	if(m_projectionType == OrthogonalProjection)
+	if(m_projectionType == Orthogonal)
 		updateOrthogonalProjection();
 }
 
@@ -410,13 +411,15 @@ void SceneCamera::rotateAboutViewCenter(const QQuaternion& q)
 
 void SceneCamera::resetCamera()
 {
-// 	m_position = QVector3D(Vector3D::UNIT_Z);
-// 	m_upVector = QVector3D(Vector3D::UNIT_Y);
-// 	m_viewCenter = QVector3D(Vector3D::ZERO);
-// 	m_cameraToCenter = QVector3D(Vector3D::NEGATIVE_UNIT_Z);
-	m_position = QVector3D(0.0f, 6.0f, 6.0f);
-	m_upVector = QVector3D(0.0f, 3.6f, 0.0f);
-	m_viewCenter = QVector3D(0.0f, 1.0f, 0.0f);
+	m_position = QVector3D(Vector3D::UNIT_Z);
+	m_upVector = QVector3D(Vector3D::UNIT_Y);
+	m_viewCenter = QVector3D(Vector3D::ZERO);
 	m_cameraToCenter = QVector3D(Vector3D::NEGATIVE_UNIT_Z);
+
 	m_viewMatrixDirty = true;
+}
+
+void SceneCamera::follow( GameObject* target )
+{
+	setViewCenter(target->position());
 }

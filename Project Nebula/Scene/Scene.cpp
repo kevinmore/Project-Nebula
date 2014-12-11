@@ -5,12 +5,12 @@ Scene::Scene(QObject* parent)
 	: AbstractScene(parent),
 	  m_camera(new SceneCamera(this)),
 	  m_light("light01"),
-	  m_v(),
+	  m_viewDirection(),
 	  m_viewCenterFixed(false),
 	  m_panAngle(0.0f),
 	  m_tiltAngle(0.0f),
 	  m_time(0.0f),
-	  m_metersToUnits(0.05f),
+	  m_metersToUnits(0.1f),
 	  m_lightMode(PerFragmentPhong),
 	  m_lightModeSubroutines(LightModeCount)
 {
@@ -64,7 +64,8 @@ void Scene::initialize()
 
 
 	// load models for this scene
-	m_modelManager->loadModel("scene", "../Resource/Models/Final/Scene/scene.DAE", ModelLoader::STATIC_MODEL);
+	m_modelManager->loadModel("temple", "../Resource/Models/Final/scene/temple/temple.DAE", ModelLoader::STATIC_MODEL);
+	m_modelManager->loadModel("mountain", "../Resource/Models/Final/scene/mountain/mountain.DAE", ModelLoader::STATIC_MODEL);
 
 	// locomotions
  	m_modelManager->loadModel("m_idle", "../Resource/Models/Final/m005/m_idle.DAE", ModelLoader::RIGGED_MODEL);
@@ -107,10 +108,17 @@ void Scene::initialize()
 	//m_path = Math::Spline::makeBezier3D(anchors);
 	//m_path = Math::Spline::makeCatMullRomSpline(anchors);
 
-	QSharedPointer<StaticModel> scene = m_modelManager->getModel("scene").dynamicCast<StaticModel>();
-	scene->getActor()->setRotation(-90.0f, 0.0f, 0.0f);
-	scene->getActor()->setPosition(-150, 100, 3000);
+	StaticModel* sceneObject = m_modelManager->getStaticModel("temple");
+	sceneObject->getActor()->setScale(0.5);
+	sceneObject->getActor()->setRotation(-90.0f, 0.0f, 0.0f);
+	sceneObject->getActor()->setPosition(-100, 50, 1500);
+
+	sceneObject = m_modelManager->getStaticModel("mountain");
+	sceneObject->getActor()->setScale(0.5);
+	sceneObject->getActor()->setRotation(-90.0f, 0.0f, 180.0f);
+	sceneObject->getActor()->setPosition(-80, 250, 1100);
 	
+	m_camera->follow(m_animCtrller->getActor());
 }
 
 
@@ -158,6 +166,7 @@ void Scene::update(float t)
 
 	// render the character controlled by the user
 	if(m_modelManager->m_riggedModels.size() > 0) m_animCtrller->render();
+
 }
 
 void Scene::render(double currentTime)
@@ -177,7 +186,7 @@ void Scene::resize(int width, int height)
 {
 	glViewport(0, 0, width, height);
 
-	if(m_camera->projectionType() == SceneCamera::PerspectiveProjection)
+	if(m_camera->projectionType() == SceneCamera::Perspective)
 	{
 		float aspect = static_cast<float>(width) / static_cast<float>(height);
 
@@ -186,7 +195,7 @@ void Scene::resize(int width, int height)
 										   m_camera->nearPlane(),
 										   m_camera->farPlane());
 	}
-	else if(m_camera->projectionType() == SceneCamera::OrthogonalProjection)
+	else if(m_camera->projectionType() == SceneCamera::Orthogonal)
 	{
 		m_camera->setOrthographicProjection(m_camera->left(),
 											m_camera->right(),
@@ -255,8 +264,7 @@ void Scene::updataCamera( const float dt )
 		? SceneCamera::DontTranslateViewCenter
 		: SceneCamera::TranslateViewCenter;
 
-	m_camera->translate(m_v * dt * m_metersToUnits, option);
-
+	m_camera->translate(m_viewDirection * dt * m_metersToUnits, option);
 	if( ! qFuzzyIsNull(m_panAngle) )
 	{
 		m_camera->pan(m_panAngle, QVector3D(0.0f, 1.0f, 0.0f));

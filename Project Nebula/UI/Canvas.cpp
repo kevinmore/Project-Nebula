@@ -201,23 +201,16 @@ void Canvas::keyReleaseEvent(QKeyEvent* e)
 void Canvas::wheelEvent( QWheelEvent *e )
 {
 	int delta = e->delta();
-
 	Scene* pScene = getScene();
 	SceneCamera::CameraTranslationOption option = pScene->isViewCenterFixed()
 		? SceneCamera::DontTranslateViewCenter
 		: SceneCamera::TranslateViewCenter;
 
+	SceneCamera* camera = pScene->getCamera();
+
 	if (e->orientation() == Qt::Vertical) 
 	{
-		if (delta < 0) 
-		{
-			pScene->getCamera()->translate(-pScene->getViewDirection() * 10000, option);
-		} 
-		else if (delta > 0) 
-		{
-			pScene->getCamera()->translate(pScene->getViewDirection(), option);
-
-		}
+		camera->translate(vec3(0, 0, 0.5 * delta), option);
 	}
 
 	e->accept();
@@ -257,8 +250,8 @@ void Canvas::mouseMoveEvent(QMouseEvent* e)
 
 		m_prevPos = m_pos;
 
-		getScene()->pan(dx);
-		getScene()->tilt(dy);
+		getScene()->setPanAngle(dx);
+		getScene()->setTiltAngle(dy);
 	}
 
 	QWindow::mouseMoveEvent(e);
@@ -272,9 +265,4 @@ void Canvas::setCameraSpeed(double speed)
 void Canvas::setCameraSensitivity(double sensitivity)
 {
 	m_cameraSensitivity = sensitivity;
-}
-
-void Canvas::restartTimer()
-{
-	m_updateTimer.restart();
 }

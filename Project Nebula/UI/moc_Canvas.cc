@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_Canvas_t {
-    QByteArrayData data[13];
-    char stringdata[139];
+    QByteArrayData data[12];
+    char stringdata[126];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -38,15 +38,14 @@ QT_MOC_LITERAL(5, 43, 14),
 QT_MOC_LITERAL(6, 58, 5),
 QT_MOC_LITERAL(7, 64, 20),
 QT_MOC_LITERAL(8, 85, 11),
-QT_MOC_LITERAL(9, 97, 12),
-QT_MOC_LITERAL(10, 110, 8),
-QT_MOC_LITERAL(11, 119, 7),
-QT_MOC_LITERAL(12, 127, 11)
+QT_MOC_LITERAL(9, 97, 8),
+QT_MOC_LITERAL(10, 106, 7),
+QT_MOC_LITERAL(11, 114, 11)
     },
     "Canvas\0updateFramerate\0\0checkAnimate\0"
     "state\0setCameraSpeed\0speed\0"
     "setCameraSensitivity\0sensitivity\0"
-    "restartTimer\0resizeGL\0paintGL\0updateScene"
+    "resizeGL\0paintGL\0updateScene"
 };
 #undef QT_MOC_LITERAL
 
@@ -56,7 +55,7 @@ static const uint qt_meta_data_Canvas[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       8,   14, // methods
+       7,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -64,16 +63,15 @@ static const uint qt_meta_data_Canvas[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   54,    2, 0x06 /* Public */,
+       1,    0,   49,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       3,    1,   55,    2, 0x0a /* Public */,
-       5,    1,   58,    2, 0x0a /* Public */,
-       7,    1,   61,    2, 0x0a /* Public */,
-       9,    0,   64,    2, 0x0a /* Public */,
-      10,    0,   65,    2, 0x09 /* Protected */,
-      11,    0,   66,    2, 0x09 /* Protected */,
-      12,    0,   67,    2, 0x09 /* Protected */,
+       3,    1,   50,    2, 0x0a /* Public */,
+       5,    1,   53,    2, 0x0a /* Public */,
+       7,    1,   56,    2, 0x0a /* Public */,
+       9,    0,   59,    2, 0x09 /* Protected */,
+      10,    0,   60,    2, 0x09 /* Protected */,
+      11,    0,   61,    2, 0x09 /* Protected */,
 
  // signals: parameters
     QMetaType::Void,
@@ -82,7 +80,6 @@ static const uint qt_meta_data_Canvas[] = {
     QMetaType::Void, QMetaType::Int,    4,
     QMetaType::Void, QMetaType::Double,    6,
     QMetaType::Void, QMetaType::Double,    8,
-    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -99,10 +96,9 @@ void Canvas::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         case 1: _t->checkAnimate((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 2: _t->setCameraSpeed((*reinterpret_cast< double(*)>(_a[1]))); break;
         case 3: _t->setCameraSensitivity((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 4: _t->restartTimer(); break;
-        case 5: _t->resizeGL(); break;
-        case 6: _t->paintGL(); break;
-        case 7: _t->updateScene(); break;
+        case 4: _t->resizeGL(); break;
+        case 5: _t->paintGL(); break;
+        case 6: _t->updateScene(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -142,13 +138,13 @@ int Canvas::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 8)
+        if (_id < 7)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 8;
+        _id -= 7;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 8)
+        if (_id < 7)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 8;
+        _id -= 7;
     }
     return _id;
 }

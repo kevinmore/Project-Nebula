@@ -174,8 +174,8 @@ void MainWindow::initializeParamsArea()
 	nearPlaneValue->setSingleStep(0.01);
 	nearPlaneValue->setValue(0.1);
 
-	farPlaneValue->setRange(1.0, 10240.0);
-	farPlaneValue->setValue(10240.0);
+	farPlaneValue->setRange(1.0, 50000.0);
+	farPlaneValue->setValue(20000.0);
 
 	leftLabel->hide();
 	rightLabel->hide();
@@ -235,7 +235,7 @@ void MainWindow::initializeParamsArea()
 	QRadioButton* firstPerson = new QRadioButton("First person");
 	QRadioButton* thirdPerson = new QRadioButton("Third person");
 
-	firstPerson->setChecked(true);
+	thirdPerson->setChecked(true);
 
 	QFrame* hLineCamera1 = new QFrame;
 	QFrame* hLineCamera2 = new QFrame;
@@ -615,7 +615,7 @@ void MainWindow::setViewProperties(bool state)
 {
 	if(state)
 	{
-		m_camera->setProjectionType(SceneCamera::PerspectiveProjection);
+		m_camera->setProjectionType(SceneCamera::Perspective);
 		m_scene->resize(m_canvas->width(), m_canvas->height());
 
 		fovLabel->show();
@@ -633,7 +633,7 @@ void MainWindow::setViewProperties(bool state)
 	}
 	else
 	{
-		m_camera->setProjectionType(SceneCamera::OrthogonalProjection);
+		m_camera->setProjectionType(SceneCamera::Orthogonal);
 		m_scene->resize(m_canvas->width(), m_canvas->height());
 
 		fovLabel->hide();
