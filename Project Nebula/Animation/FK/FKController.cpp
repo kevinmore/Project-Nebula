@@ -13,7 +13,9 @@ FKController::FKController(ModelLoader* loader, Skeleton* skeleton)
 
 	// calculate the delta translation during the period - HACK
 	mat4 Identity;
-	Bone* pelvis = m_skeleton->getBone("Bip01_Pelvis");
+// 	Bone* pelvis = m_skeleton->getBone("Bip01_Pelvis");
+// 	if(!pelvis) pelvis = m_skeleton->getBone("dog Pelvis");
+	Bone* pelvis = m_skeleton->getRoot()->getChild(0);
 	calcFinalTransforms(0, m_root, Identity);
 	vec3 startPos = pelvis->getModelSpacePosition();
 	QQuaternion startRot = pelvis->getModelSpaceRotation();

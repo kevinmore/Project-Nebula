@@ -12,6 +12,7 @@
 #include <Scene/Managers/MeshManager.h>
 #include <Scene/Managers/ModelManager.h>
 #include <Animation/AnimatorController.h>
+#include <Animation/NPCController.h>
 
 typedef QSharedPointer<QOpenGLShaderProgram> ShadersProgramPtr;
 
@@ -85,7 +86,7 @@ private:
 	QVector<vec3> m_path;
 
 	QStateMachine* m_stateMachine;
-	AnimatorController* m_animCtrller;
-	QVector<RiggedModel*> m_NPCs;
+	AnimatorController* m_playerController;
+	QVector<NPCController*> m_NPCs;
 };
 

@@ -122,69 +122,69 @@ void RiggedModel::initialize(QVector<ModelDataPtr> modelDataVector)
 	}
 
 
-	ikSolved = false;
-	lastUpdatedTime = 0.0f;
-	updateIKRate = 0.5f;
-
-	m_FABRSolver = new FABRIKSolver(m_skeleton, 0.1f);
-	m_FABRSolver->enableIKChain("Bip01_L_UpperArm", "Bip01_L_Hand");
-
-
-	// set bone DOFs
-	Bone* pBone;
-	Bone::AngleLimits pitchConstraint, yawConstraint, rollConstraint;
-	Bone::DimensionOfFreedom dof;
-	Math::EulerAngle ea;
-	
-
-	pBone = m_skeleton->getBone("Bip01_L_Clavicle");
-	ea = pBone->getEulerAnglesInModelSpace();
-	pitchConstraint = Bone::AngleLimits(ea.m_fPitch, ea.m_fPitch);
-	yawConstraint = Bone::AngleLimits(ea.m_fYaw - 20.0f, ea.m_fYaw + 20.0f);
-	rollConstraint = Bone::AngleLimits(ea.m_fRoll - 20.0f, ea.m_fRoll + 20.0f);
-	dof = Bone::DimensionOfFreedom(pitchConstraint, yawConstraint, rollConstraint);
-	pBone->setDof(dof);
-
-	pBone = m_skeleton->getBone("Bip01_L_UpperArm");
-	ea = pBone->getEulerAnglesInModelSpace();
-	pitchConstraint = Bone::AngleLimits(ea.m_fPitch - 50.0f, ea.m_fPitch + 50.0f);
-	yawConstraint = Bone::AngleLimits(ea.m_fYaw - 120.0f, ea.m_fYaw + 30.0f);
-	rollConstraint = Bone::AngleLimits(ea.m_fRoll - 170.0f, ea.m_fRoll + 40.0f);
-	dof = Bone::DimensionOfFreedom(pitchConstraint, yawConstraint, rollConstraint);
-	pBone->setDof(dof);
-	
-	pBone = m_skeleton->getBone("Bip01_L_Forearm");
-	ea = pBone->getEulerAnglesInModelSpace();
-	pitchConstraint = Bone::AngleLimits(ea.m_fPitch - 5.0f, ea.m_fPitch + 120.0f);
-	yawConstraint = Bone::AngleLimits(ea.m_fYaw - 60.0f, ea.m_fYaw + 20.0f);
-	rollConstraint = Bone::AngleLimits(ea.m_fRoll, ea.m_fRoll);
-	dof = Bone::DimensionOfFreedom(pitchConstraint, yawConstraint, rollConstraint);
-	pBone->setDof(dof);
-
-	pBone = m_skeleton->getBone("Bip01_L_Hand");
-	ea = pBone->getEulerAnglesInModelSpace();
-	pitchConstraint = Bone::AngleLimits(ea.m_fPitch - 10.0f, ea.m_fPitch + 10.0f);
-	yawConstraint = Bone::AngleLimits(ea.m_fYaw - 120.0f, ea.m_fYaw + 30.0f);
-	rollConstraint = Bone::AngleLimits(ea.m_fRoll - 5.0f, ea.m_fRoll + 5.0f);
-	dof = Bone::DimensionOfFreedom(pitchConstraint, yawConstraint, rollConstraint);
-	pBone->setDof(dof);
-
-	pBone = m_skeleton->getBone("Bip01_L_Finger2");
-	pitchConstraint = Bone::AngleLimits(ea.m_fPitch, ea.m_fPitch);
-	yawConstraint = Bone::AngleLimits(ea.m_fYaw, ea.m_fYaw);
-	rollConstraint = Bone::AngleLimits(ea.m_fRoll - 5.0f, ea.m_fRoll + 90.0f);
-	dof = Bone::DimensionOfFreedom(pitchConstraint, yawConstraint, rollConstraint);
-	pBone->setDof(dof);
-
-	pBone = m_skeleton->getBone("Bip01_L_Finger21");
-	ea = pBone->getEulerAnglesInModelSpace();
-	pitchConstraint = Bone::AngleLimits(ea.m_fPitch, ea.m_fPitch);
-	yawConstraint = Bone::AngleLimits(ea.m_fYaw, ea.m_fYaw);
-	rollConstraint = Bone::AngleLimits(ea.m_fRoll - 5.0f, ea.m_fRoll + 90.0f);
-	dof = Bone::DimensionOfFreedom(pitchConstraint, yawConstraint, rollConstraint);
-	pBone->setDof(dof);
-
-	solvingDuration= 1.0f;
+// 	ikSolved = false;
+// 	lastUpdatedTime = 0.0f;
+// 	updateIKRate = 0.5f;
+// 
+// 	m_FABRSolver = new FABRIKSolver(m_skeleton, 0.1f);
+// 	m_FABRSolver->enableIKChain("Bip01_L_UpperArm", "Bip01_L_Hand");
+// 
+// 
+// 	// set bone DOFs
+// 	Bone* pBone;
+// 	Bone::AngleLimits pitchConstraint, yawConstraint, rollConstraint;
+// 	Bone::DimensionOfFreedom dof;
+// 	Math::EulerAngle ea;
+// 	
+// 
+// 	pBone = m_skeleton->getBone("Bip01_L_Clavicle");
+// 	ea = pBone->getEulerAnglesInModelSpace();
+// 	pitchConstraint = Bone::AngleLimits(ea.m_fPitch, ea.m_fPitch);
+// 	yawConstraint = Bone::AngleLimits(ea.m_fYaw - 20.0f, ea.m_fYaw + 20.0f);
+// 	rollConstraint = Bone::AngleLimits(ea.m_fRoll - 20.0f, ea.m_fRoll + 20.0f);
+// 	dof = Bone::DimensionOfFreedom(pitchConstraint, yawConstraint, rollConstraint);
+// 	pBone->setDof(dof);
+// 
+// 	pBone = m_skeleton->getBone("Bip01_L_UpperArm");
+// 	ea = pBone->getEulerAnglesInModelSpace();
+// 	pitchConstraint = Bone::AngleLimits(ea.m_fPitch - 50.0f, ea.m_fPitch + 50.0f);
+// 	yawConstraint = Bone::AngleLimits(ea.m_fYaw - 120.0f, ea.m_fYaw + 30.0f);
+// 	rollConstraint = Bone::AngleLimits(ea.m_fRoll - 170.0f, ea.m_fRoll + 40.0f);
+// 	dof = Bone::DimensionOfFreedom(pitchConstraint, yawConstraint, rollConstraint);
+// 	pBone->setDof(dof);
+// 	
+// 	pBone = m_skeleton->getBone("Bip01_L_Forearm");
+// 	ea = pBone->getEulerAnglesInModelSpace();
+// 	pitchConstraint = Bone::AngleLimits(ea.m_fPitch - 5.0f, ea.m_fPitch + 120.0f);
+// 	yawConstraint = Bone::AngleLimits(ea.m_fYaw - 60.0f, ea.m_fYaw + 20.0f);
+// 	rollConstraint = Bone::AngleLimits(ea.m_fRoll, ea.m_fRoll);
+// 	dof = Bone::DimensionOfFreedom(pitchConstraint, yawConstraint, rollConstraint);
+// 	pBone->setDof(dof);
+// 
+// 	pBone = m_skeleton->getBone("Bip01_L_Hand");
+// 	ea = pBone->getEulerAnglesInModelSpace();
+// 	pitchConstraint = Bone::AngleLimits(ea.m_fPitch - 10.0f, ea.m_fPitch + 10.0f);
+// 	yawConstraint = Bone::AngleLimits(ea.m_fYaw - 120.0f, ea.m_fYaw + 30.0f);
+// 	rollConstraint = Bone::AngleLimits(ea.m_fRoll - 5.0f, ea.m_fRoll + 5.0f);
+// 	dof = Bone::DimensionOfFreedom(pitchConstraint, yawConstraint, rollConstraint);
+// 	pBone->setDof(dof);
+// 
+// 	pBone = m_skeleton->getBone("Bip01_L_Finger2");
+// 	pitchConstraint = Bone::AngleLimits(ea.m_fPitch, ea.m_fPitch);
+// 	yawConstraint = Bone::AngleLimits(ea.m_fYaw, ea.m_fYaw);
+// 	rollConstraint = Bone::AngleLimits(ea.m_fRoll - 5.0f, ea.m_fRoll + 90.0f);
+// 	dof = Bone::DimensionOfFreedom(pitchConstraint, yawConstraint, rollConstraint);
+// 	pBone->setDof(dof);
+// 
+// 	pBone = m_skeleton->getBone("Bip01_L_Finger21");
+// 	ea = pBone->getEulerAnglesInModelSpace();
+// 	pitchConstraint = Bone::AngleLimits(ea.m_fPitch, ea.m_fPitch);
+// 	yawConstraint = Bone::AngleLimits(ea.m_fYaw, ea.m_fYaw);
+// 	rollConstraint = Bone::AngleLimits(ea.m_fRoll - 5.0f, ea.m_fRoll + 90.0f);
+// 	dof = Bone::DimensionOfFreedom(pitchConstraint, yawConstraint, rollConstraint);
+// 	pBone->setDof(dof);
+// 
+// 	solvingDuration= 1.0f;
 }
 
 void RiggedModel::destroy() {}

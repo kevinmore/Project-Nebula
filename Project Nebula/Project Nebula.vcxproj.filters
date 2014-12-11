@@ -36,6 +36,8 @@
     <ClCompile Include="Scene\GameObject.cpp" />
     <ClCompile Include="Scene\moc_GameObject.cc" />
     <ClCompile Include="Animation\AnimatorPanel.cpp" />
+    <ClCompile Include="Animation\NPCController.cpp" />
+    <ClCompile Include="Animation\moc_NPCController.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utility\DataTypes.h" />
@@ -75,5 +77,6 @@
     <QtMOC Include="Scene\SceneCamera.h" />
     <QtMOC Include="Animation\AnimatorController.h" />
     <QtMOC Include="Scene\GameObject.h" />
+    <QtMOC Include="Animation\NPCController.h" />
   </ItemGroup>
 </Project>

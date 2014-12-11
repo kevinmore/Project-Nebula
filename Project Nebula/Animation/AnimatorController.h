@@ -5,6 +5,7 @@
 #include <QElapsedTimer>
 #include "AnimatorPanel.h"
 
+class NPCController;
 class AnimatorController : public QObject
 {
 	Q_OBJECT
@@ -22,6 +23,10 @@ public:
 
 	void render(const float globalTime);
 
+	void addSocialTargets(NPCController* target) { m_socialTargets << target; }
+	QVector<NPCController*> getSocialTargets() { return m_socialTargets; }
+	virtual void buildStateMachine();
+
 signals:
 	void currentClipChanged(const QString& clipName);
 
@@ -31,7 +36,7 @@ public slots:
 	void stateMachineFinised();
 	void finishingLoopingState();
 
-private:
+protected:
 	QSharedPointer<ModelManager> m_modelManager;
 	QStateMachine* m_stateMachine;
 
@@ -45,6 +50,8 @@ private:
 
 	QMap<QState*, QString> m_StateClipMap;
 
+	QVector<NPCController*> m_socialTargets;
+
 	enum SYNC_OPTION
 	{
 		TRANSLATION,
@@ -52,7 +59,6 @@ private:
 		ALL
 	};
 
-	void buildStateMachine();
 	QState* createBasicState(const QString& stateName, const QString& clipName, QState* parent = 0);
 	QState* createLoopingState(const QString& stateName, const QString& clipName, QState* parent = 0);
 	QState* createTransitionState(const QString& stateName, const QString& subStateName, const QString& clipName, 
@@ -61,5 +67,6 @@ private:
 	void syncMovement(SYNC_OPTION option, QState* pState, const QString& customData = "");
 
 	void initContorlPanel();
+	void mappingConnection(QObject *sender, const char *signal, const QString& paramString, QObject *receiver, const char *slot);
 };
 

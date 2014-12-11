@@ -1,14 +1,11 @@
 #include "AnimatorController.h"
+#include "NPCController.h"
 
 AnimatorController::AnimatorController( QSharedPointer<ModelManager> manager )
 	: m_modelManager(manager),
 	  m_actor(new GameObject)
 {
-	initContorlPanel();
-
-	buildStateMachine();
 	m_timer.start();
-	m_actor->setMovingBehaviour(GameObject::DISCRETE);
 }
 
 
@@ -26,6 +23,9 @@ void AnimatorController::setCurrentClip( const QString& clipName )
 
 void AnimatorController::buildStateMachine()
 {
+	initContorlPanel();
+	m_actor->setMovingBehaviour(GameObject::DISCRETE);
+
 	// build the state machine
 	m_stateMachine = new QStateMachine();
 	m_stateMachine->setObjectName("Character State Machine");
@@ -38,6 +38,7 @@ void AnimatorController::buildStateMachine()
 	QState* idle = createLoopingState("Idle", "m_idle", moving_system);
 	idle->assignProperty(m_controlPanel->moveButton, "text", "Idle");
 	idle->assignProperty(m_controlPanel->fastMoveButton, "text", "Idle");
+	idle->assignProperty(m_controlPanel->interactButton, "text", "Interact");
 	connect(idle, SIGNAL(entered()), m_actor, SLOT(resetSpeed()));
 	m_StateClipMap[idle] = "m_idle";
 
@@ -156,18 +157,44 @@ void AnimatorController::buildStateMachine()
 	idle_to_turnRound->setObjectName("Turn Around");
 	idle_to_turnRound->setTargetState(turnRound_to_walk);
 
-
 	// social system
 	QState* social_system = new QState(m_stateMachine);
 	social_system->setObjectName("Social System");
 
-	QState* talk = new QState(social_system);
-	talk->setObjectName("Talk");
+	QState* greet = createTransitionState("Greet", "Greeting", "m_wave", idle, social_system);
+	greet->assignProperty(m_controlPanel->interactButton, "text", "Greeting...");
+	m_StateClipMap[greet] = "m_wave";
 
-	QState* listen = new QState(social_system);
-	listen->setObjectName("Listen");
+	QState* talk = createTransitionState("Talk", "Talking", "m_talk", idle, social_system);
+	talk->assignProperty(m_controlPanel->interactButton, "text", "Talking...");
+	m_StateClipMap[talk] = "m_talk";
 
+	QState* listen = createTransitionState("Listen", "Listening", "m_listen", idle, social_system);
+	listen->assignProperty(m_controlPanel->interactButton, "text", "Listening...");
+	m_StateClipMap[listen] = "m_listen";
 	
+	// transition triggers
+	// the interact button
+	QEventTransition* idle_to_wave = new QEventTransition(m_controlPanel->interactButton, QEvent::Enter, idle);
+	idle_to_wave->setObjectName("Waving Hand");
+	idle_to_wave->setTargetState(greet);
+
+	QEventTransition* idle_to_talk = new QEventTransition(m_controlPanel->interactButton, QEvent::MouseButtonPress, idle);
+	idle_to_talk->setObjectName("Start Talking");
+	idle_to_talk->setTargetState(talk);
+
+	QEventTransition* idle_to_listen = new QEventTransition(m_controlPanel->interactButton, QEvent::Leave, idle);
+	idle_to_listen->setObjectName("Start Listening");
+	idle_to_listen->setTargetState(listen);
+
+	// send signals when the player make a social behaviour
+	for (int i = 0; i < m_socialTargets.size(); ++i)
+	{
+		mappingConnection(greet, SIGNAL(entered()), m_StateClipMap[greet], m_socialTargets[i], SLOT(listenToEvents(const QString&)));
+		mappingConnection(talk, SIGNAL(entered()), m_StateClipMap[talk], m_socialTargets[i], SLOT(listenToEvents(const QString&)));
+		mappingConnection(listen, SIGNAL(entered()), m_StateClipMap[listen], m_socialTargets[i], SLOT(listenToEvents(const QString&)));
+	}
+
 	// start the state machine
 	m_stateMachine->setInitialState(moving_system);
 	m_stateMachine->start();
@@ -273,16 +300,18 @@ void AnimatorController::syncMovement( SYNC_OPTION option, QState* pState, const
 		return;
 	}
 	
-	QSignalMapper *mapper = new QSignalMapper(pState);
-	connect(pState, SIGNAL(exited()), mapper, SLOT(map()));
-	mapper->setMapping(pState, paramString);
-	connect(mapper, SIGNAL(mapped(const QString&)), m_actor, slot);
+	mappingConnection(pState, SIGNAL(exited()), paramString, m_actor, slot);
 }
 
 
 void AnimatorController::render(const float globalTime)
 {
 	RiggedModel* man = m_modelManager->getRiggedModel(m_currentClip);
+	if(!man) 
+	{
+		qDebug() << "Animation Clip Invalid. Clip Name:" << m_currentClip;
+		return;
+	}
 	float time = (float)m_timer.elapsed()/1000;
 
 	man->setActor(m_actor);
@@ -318,4 +347,12 @@ void AnimatorController::finishingLoopingState()
 		vec3 delta = - man->getRootTranslation() * (1 - time / duration);
 		man->getActor()->translateInWorld(delta);
 	}
+}
+
+void AnimatorController::mappingConnection( QObject *sender, const char *signal, const QString& paramString, QObject *receiver, const char *slot )
+{
+	QSignalMapper *mapper = new QSignalMapper(sender);
+	connect(sender, signal, mapper, SLOT(map()));
+	mapper->setMapping(sender, paramString);
+	connect(mapper, SIGNAL(mapped(const QString&)), receiver, slot);
 }

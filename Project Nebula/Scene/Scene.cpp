@@ -1,6 +1,5 @@
 #include "Scene.h"
 
-
 Scene::Scene(QObject* parent)
 	: AbstractScene(parent),
 	  m_camera(new SceneCamera(NULL,this)),
@@ -44,7 +43,7 @@ void Scene::initialize()
 	m_funcs->glDepthFunc(GL_LEQUAL);
 	m_funcs->glClearColor(0.39f, 0.39f, 0.39f, 0.0f);
 
-	//m_funcs->glEnable(GL_CULL_FACE);
+	m_funcs->glEnable(GL_CULL_FACE);
 
 //     m_light.setType(Light::SpotLight);
 //     m_light.setUniqueColor(1.0, 1.0, 1.0);
@@ -76,22 +75,45 @@ void Scene::initialize()
 	m_modelManager->loadModel("m_walk", "../Resource/Models/Final/m005/m_walk.DAE", ModelLoader::RIGGED_MODEL);
  	m_modelManager->loadModel("m_walk_start", "../Resource/Models/Final/m005/m_walk_start.DAE", ModelLoader::RIGGED_MODEL);
  	m_modelManager->loadModel("m_walk_stop", "../Resource/Models/Final/m005/m_walk_stop.DAE", ModelLoader::RIGGED_MODEL);
- 	m_modelManager->loadModel("m_walk_to_run", "../Resource/Models/Final/m005/m_walk_to_run.DAE", ModelLoader::RIGGED_MODEL);
+	m_modelManager->loadModel("m_walk_to_run", "../Resource/Models/Final/m005/m_walk_to_run.DAE", ModelLoader::RIGGED_MODEL);
+	m_modelManager->loadModel("m_wave", "../Resource/Models/Final/m005/m_wave.DAE", ModelLoader::RIGGED_MODEL);
+	m_modelManager->loadModel("m_talk", "../Resource/Models/Final/m005/m_talk.DAE", ModelLoader::RIGGED_MODEL);
+ 	m_modelManager->loadModel("m_listen", "../Resource/Models/Final/m005/m_listen.DAE", ModelLoader::RIGGED_MODEL);
 
 	// set up the animator controller
 	m_stateMachine = new QStateMachine();
 	if(m_modelManager->m_riggedModels.size() == 0) return;
-	m_animCtrller = new AnimatorController(m_modelManager);
-	m_stateMachine = m_animCtrller->getStateMachine();
+	m_playerController = new AnimatorController(m_modelManager);
+	
 
 
 	// NPCs
-	RiggedModel* npc;
-	m_modelManager->loadModel("f004_take_picture", "../Resource/Models/Final/NPC/f004_take_picture.DAE", ModelLoader::RIGGED_MODEL);
- 	npc = m_modelManager->getRiggedModel("f004_take_picture");
-	npc->getActor()->setPosition(0, 0, 300);
-	npc->getActor()->setObjectYRotation(180);
-	m_NPCs << npc;
+	m_modelManager->loadModel("f004_touch_hair", "../Resource/Models/Final/NPC/f004_touch_hair.DAE", ModelLoader::RIGGED_MODEL);
+	m_modelManager->loadModel("f004_wave", "../Resource/Models/Final/NPC/f004_wave.DAE", ModelLoader::RIGGED_MODEL);
+	NPCController* npc1 = new NPCController(m_modelManager, "f004_touch_hair", "f004_wave");
+	npc1->getActor()->setPosition(0, 0, -600);
+	m_NPCs << npc1;
+	m_playerController->addSocialTargets(npc1);
+
+	m_modelManager->loadModel("f013_waiting", "../Resource/Models/Final/NPC/f013_waiting.DAE", ModelLoader::RIGGED_MODEL);
+	m_modelManager->loadModel("f013_wave", "../Resource/Models/Final/NPC/f013_wave.DAE", ModelLoader::RIGGED_MODEL);
+	NPCController* npc2 = new NPCController(m_modelManager, "f013_waiting", "f013_wave");
+	npc2->getActor()->setPosition(-600, 0, 100);
+	npc2->getActor()->setObjectYRotation(120);
+	m_NPCs << npc2;
+	m_playerController->addSocialTargets(npc2);
+
+	m_modelManager->loadModel("dog_idle", "../Resource/Models/Final/NPC/dog_idle.DAE", ModelLoader::RIGGED_MODEL);
+	m_modelManager->loadModel("dog_bark", "../Resource/Models/Final/NPC/dog_bark.DAE", ModelLoader::RIGGED_MODEL);
+	NPCController* npc3 = new NPCController(m_modelManager, "dog_idle", "dog_bark");
+	npc3->getActor()->setPosition(600, 0, 100);
+	npc3->getActor()->setObjectYRotation(-120);
+	m_NPCs << npc3;
+	m_playerController->addSocialTargets(npc3);
+
+	m_playerController->buildStateMachine();
+	m_stateMachine = m_playerController->getStateMachine();
+
 
 	// generate a bezier curve
 // 	QVector<vec3> anchors;
@@ -112,7 +134,8 @@ void Scene::initialize()
 	sceneObject->getActor()->setRotation(-90.0f, 0.0f, 180.0f);
 	sceneObject->getActor()->setPosition(-80, 250, 1100);
 	
-	m_camera->followTarget(m_animCtrller->getActor());
+	m_camera->followTarget(m_playerController->getActor());
+
 }
 
 
@@ -153,10 +176,18 @@ void Scene::update(float t)
 	for (int i = 0; i < m_NPCs.size(); ++i)
 	{
 		m_NPCs[i]->render(t);
+		// checking distance to the player
+		QVector<NPCController*> socialTargets = m_playerController->getSocialTargets();
+		float distance = (m_NPCs[i]->getActor()->position() - m_playerController->getActor()->position()).length();
+		int index = socialTargets.indexOf(m_NPCs[i]);
+		if (distance > 200.0f && index > -1)
+			socialTargets.removeAt(index);
+		if (distance <= 200.0f && index == -1)
+			socialTargets.push_back(m_NPCs[i]);
 	}
 
 	// render the character controlled by the user
-	if(m_modelManager->m_riggedModels.size() > 0) m_animCtrller->render(t);
+	if(m_modelManager->m_riggedModels.size() > 0) m_playerController->render(t);
 
 }
 
