@@ -57,9 +57,14 @@ void Scene::initialize()
 
 
 	// load models for this scene
-	m_modelManager->loadModel("temple", "../Resource/Models/Final/scene/temple/temple.DAE", ModelLoader::STATIC_MODEL);
-	m_modelManager->loadModel("mountain", "../Resource/Models/Final/scene/mountain/mountain.DAE", ModelLoader::STATIC_MODEL);
+	//m_modelManager->loadModel("temple", "../Resource/Models/Final/scene/temple/temple.DAE", ModelLoader::STATIC_MODEL);
+	//m_modelManager->loadModel("mountain", "../Resource/Models/Final/scene/mountain/mountain.DAE", ModelLoader::STATIC_MODEL);
+	//m_modelManager->loadModel("floor", "../Resource/Models/DemoRoom/floor.DAE", ModelLoader::STATIC_MODEL);
+	m_modelManager->loadModel("trolley", "../Resource/Models/static/trolley.DAE", ModelLoader::STATIC_MODEL);
+	m_modelManager->loadModel("trolley2", "../Resource/Models/static/trolley2.DAE", ModelLoader::STATIC_MODEL);
+	m_stateMachine = new QStateMachine();
 
+	/*
 	// locomotions
  	m_modelManager->loadModel("m_idle", "../Resource/Models/Final/m005/m_idle.DAE", ModelLoader::RIGGED_MODEL);
  	m_modelManager->loadModel("m_run", "../Resource/Models/Final/m005/m_run.DAE", ModelLoader::RIGGED_MODEL);
@@ -67,11 +72,8 @@ void Scene::initialize()
  	m_modelManager->loadModel("m_run_stop", "../Resource/Models/Final/m005/m_run_stop.DAE", ModelLoader::RIGGED_MODEL);
  	m_modelManager->loadModel("m_run_to_walk", "../Resource/Models/Final/m005/m_run_to_walk.DAE", ModelLoader::RIGGED_MODEL);
  	m_modelManager->loadModel("m_turn_left_60_to_walk", "../Resource/Models/Final/m005/m_turn_left_60_to_walk.DAE", ModelLoader::RIGGED_MODEL);
-// 	m_modelManager->loadModel("m_turn_left_120_to_walk", "../Resource/Models/Final/m005/m_turn_left_120_to_walk.DAE", ModelLoader::RIGGED_MODEL);
  	m_modelManager->loadModel("m_turn_left_180_to_walk", "../Resource/Models/Final/m005/m_turn_left_180_to_walk.DAE", ModelLoader::RIGGED_MODEL);
  	m_modelManager->loadModel("m_turn_right_60_to_walk", "../Resource/Models/Final/m005/m_turn_right_60_to_walk.DAE", ModelLoader::RIGGED_MODEL);
-// 	m_modelManager->loadModel("m_turn_right_120_to_walk", "../Resource/Models/Final/m005/m_turn_right_120_to_walk.DAE", ModelLoader::RIGGED_MODEL);
-// 	m_modelManager->loadModel("m_turn_right_180_to_walk", "../Resource/Models/Final/m005/m_turn_right_180_to_walk.DAE", ModelLoader::RIGGED_MODEL);
 	m_modelManager->loadModel("m_walk", "../Resource/Models/Final/m005/m_walk.DAE", ModelLoader::RIGGED_MODEL);
  	m_modelManager->loadModel("m_walk_start", "../Resource/Models/Final/m005/m_walk_start.DAE", ModelLoader::RIGGED_MODEL);
  	m_modelManager->loadModel("m_walk_stop", "../Resource/Models/Final/m005/m_walk_stop.DAE", ModelLoader::RIGGED_MODEL);
@@ -88,32 +90,32 @@ void Scene::initialize()
 
 
 	// NPCs
-	m_modelManager->loadModel("f004_touch_hair", "../Resource/Models/Final/NPC/f004_touch_hair.DAE", ModelLoader::RIGGED_MODEL);
-	m_modelManager->loadModel("f004_wave", "../Resource/Models/Final/NPC/f004_wave.DAE", ModelLoader::RIGGED_MODEL);
-	NPCController* npc1 = new NPCController(m_modelManager, "f004_touch_hair", "f004_wave");
-	npc1->getActor()->setPosition(0, 0, -600);
-	m_NPCs << npc1;
-	m_playerController->addSocialTargets(npc1);
-
-	m_modelManager->loadModel("f013_waiting", "../Resource/Models/Final/NPC/f013_waiting.DAE", ModelLoader::RIGGED_MODEL);
-	m_modelManager->loadModel("f013_wave", "../Resource/Models/Final/NPC/f013_wave.DAE", ModelLoader::RIGGED_MODEL);
-	NPCController* npc2 = new NPCController(m_modelManager, "f013_waiting", "f013_wave");
-	npc2->getActor()->setPosition(-600, 0, 100);
-	npc2->getActor()->setObjectYRotation(120);
-	m_NPCs << npc2;
-	m_playerController->addSocialTargets(npc2);
-
-	m_modelManager->loadModel("dog_idle", "../Resource/Models/Final/NPC/dog_idle.DAE", ModelLoader::RIGGED_MODEL);
-	m_modelManager->loadModel("dog_bark", "../Resource/Models/Final/NPC/dog_bark.DAE", ModelLoader::RIGGED_MODEL);
-	NPCController* npc3 = new NPCController(m_modelManager, "dog_idle", "dog_bark");
-	npc3->getActor()->setPosition(600, 0, 100);
-	npc3->getActor()->setObjectYRotation(-120);
-	m_NPCs << npc3;
-	m_playerController->addSocialTargets(npc3);
+// 	m_modelManager->loadModel("f004_touch_hair", "../Resource/Models/Final/NPC/f004_touch_hair.DAE", ModelLoader::RIGGED_MODEL);
+// 	m_modelManager->loadModel("f004_wave", "../Resource/Models/Final/NPC/f004_wave.DAE", ModelLoader::RIGGED_MODEL);
+// 	NPCController* npc1 = new NPCController(m_modelManager, "f004_touch_hair", "f004_wave");
+// 	npc1->getActor()->setPosition(0, 0, -600);
+// 	m_NPCs << npc1;
+// 	m_playerController->addSocialTargets(npc1);
+// 
+// 	m_modelManager->loadModel("f013_waiting", "../Resource/Models/Final/NPC/f013_waiting.DAE", ModelLoader::RIGGED_MODEL);
+// 	m_modelManager->loadModel("f013_wave", "../Resource/Models/Final/NPC/f013_wave.DAE", ModelLoader::RIGGED_MODEL);
+// 	NPCController* npc2 = new NPCController(m_modelManager, "f013_waiting", "f013_wave");
+// 	npc2->getActor()->setPosition(-600, 0, 100);
+// 	npc2->getActor()->setObjectYRotation(120);
+// 	m_NPCs << npc2;
+// 	m_playerController->addSocialTargets(npc2);
+// 
+// 	m_modelManager->loadModel("dog_idle", "../Resource/Models/Final/NPC/dog_idle.DAE", ModelLoader::RIGGED_MODEL);
+// 	m_modelManager->loadModel("dog_bark", "../Resource/Models/Final/NPC/dog_bark.DAE", ModelLoader::RIGGED_MODEL);
+// 	NPCController* npc3 = new NPCController(m_modelManager, "dog_idle", "dog_bark");
+// 	npc3->getActor()->setPosition(600, 0, 100);
+// 	npc3->getActor()->setObjectYRotation(-120);
+// 	m_NPCs << npc3;
+// 	m_playerController->addSocialTargets(npc3);
 
 	m_playerController->buildStateMachine();
 	m_stateMachine = m_playerController->getStateMachine();
-
+	*/
 
 	// generate a bezier curve
 // 	QVector<vec3> anchors;
@@ -124,17 +126,27 @@ void Scene::initialize()
 	//m_path = Math::Spline::makeBezier3D(anchors);
 	//m_path = Math::Spline::makeCatMullRomSpline(anchors);
 
-	StaticModel* sceneObject = m_modelManager->getStaticModel("temple");
-	sceneObject->getActor()->setScale(0.5);
-	sceneObject->getActor()->setRotation(-90.0f, 0.0f, 0.0f);
-	sceneObject->getActor()->setPosition(-100, 50, 1500);
+// 	StaticModel* sceneObject = m_modelManager->getStaticModel("temple");
+// 	sceneObject->getActor()->setScale(0.5);
+// 	sceneObject->getActor()->setRotation(-90.0f, 0.0f, 0.0f);
+// 	sceneObject->getActor()->setPosition(-100, 50, 1500);
 
-	sceneObject = m_modelManager->getStaticModel("mountain");
-	sceneObject->getActor()->setScale(0.5);
-	sceneObject->getActor()->setRotation(-90.0f, 0.0f, 180.0f);
-	sceneObject->getActor()->setPosition(-80, 250, 1100);
+// 	sceneObject = m_modelManager->getStaticModel("mountain");
+// 	sceneObject->getActor()->setScale(0.5);
+// 	sceneObject->getActor()->setRotation(-90.0f, 0.0f, 180.0f);
+// 	sceneObject->getActor()->setPosition(-80, 250, 1100);
+	StaticModel* sceneObject;
+// 	sceneObject = m_modelManager->getStaticModel("floor");
+// 	sceneObject->getActor()->setRotation(-90.0f, 0.0f, 0.0f);
 	
-	m_camera->followTarget(m_playerController->getActor());
+	sceneObject = m_modelManager->getStaticModel("trolley");
+	sceneObject->getActor()->setRotation(-90.0f, 0.0f, 0.0f);
+
+	sceneObject = m_modelManager->getStaticModel("trolley2");
+	sceneObject->getActor()->setRotation(-90.0f, 0.0f, 0.0f);
+	sceneObject->getActor()->setPosition(100.0f, 0, 0);
+
+	m_camera->followTarget(sceneObject->getActor());
 
 }
 
@@ -172,6 +184,7 @@ void Scene::update(float t)
 	// render all static models
 	m_modelManager->renderStaticModels(t);
 
+	/*
 	// render NPCs
 	for (int i = 0; i < m_NPCs.size(); ++i)
 	{
@@ -188,7 +201,7 @@ void Scene::update(float t)
 
 	// render the character controlled by the user
 	if(m_modelManager->m_riggedModels.size() > 0) m_playerController->render(t);
-
+	*/
 }
 
 void Scene::render(double currentTime)

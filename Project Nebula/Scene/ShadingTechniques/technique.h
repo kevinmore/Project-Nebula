@@ -3,6 +3,8 @@
 #include <list>
 #include <QtGui/QOpenGLFunctions_4_3_Core>
 #include <QtGui/QOpenGLShaderProgram>
+#define INVALID_UNIFORM_LOCATION 0xffffffff
+
 class Technique : protected QOpenGLFunctions_4_3_Core
 {
 public:

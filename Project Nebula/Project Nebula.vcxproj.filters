@@ -31,13 +31,14 @@
     <ClCompile Include="UI\moc_Canvas.cc" />
     <ClCompile Include="Scene\moc_SceneCamera.cc" />
     <ClCompile Include="Scene\moc_Scene.cc" />
-    <ClCompile Include="Animation\AnimatorController.cpp" />
-    <ClCompile Include="Animation\moc_AnimatorController.cc" />
     <ClCompile Include="Scene\GameObject.cpp" />
     <ClCompile Include="Scene\moc_GameObject.cc" />
-    <ClCompile Include="Animation\AnimatorPanel.cpp" />
-    <ClCompile Include="Animation\NPCController.cpp" />
-    <ClCompile Include="Animation\moc_NPCController.cc" />
+    <ClCompile Include="Animation\StateMachine\AnimatorController.cpp" />
+    <ClCompile Include="Animation\StateMachine\AnimatorPanel.cpp" />
+    <ClCompile Include="Animation\StateMachine\moc_AnimatorController.cc" />
+    <ClCompile Include="Animation\StateMachine\moc_NPCController.cc" />
+    <ClCompile Include="Animation\StateMachine\NPCController.cpp" />
+    <ClCompile Include="Scene\ShadingTechniques\ShadowMapFBO.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utility\DataTypes.h" />
@@ -55,7 +56,6 @@
     <ClInclude Include="Scene\Managers\TextureManager.h" />
     <ClInclude Include="Utility\OpenGLUniformBuffer.h" />
     <ClInclude Include="UI\MainWindow.h" />
-    <ClInclude Include="Scene\ShadingTechniques\technique.h" />
     <ClInclude Include="Animation\FK\FKController.h" />
     <ClInclude Include="Animation\Rig\Skeleton.h" />
     <ClInclude Include="Animation\Rig\BoneInfo.h" />
@@ -65,7 +65,9 @@
     <ClInclude Include="Animation\IK\FABRIKSolver.h" />
     <ClInclude Include="Animation\IK\CCDIKSolver.h" />
     <ClInclude Include="Animation\Rig\Pose.h" />
-    <ClInclude Include="Animation\AnimatorPanel.h" />
+    <ClInclude Include="Animation\StateMachine\AnimatorPanel.h" />
+    <ClInclude Include="Scene\ShadingTechniques\ShadowMapFBO.h" />
+    <ClInclude Include="Scene\ShadingTechniques\technique.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Resource\Shaders\skinning.frag" />
@@ -75,8 +77,8 @@
     <QtMOC Include="UI\Canvas.h" />
     <QtMOC Include="Scene\Scene.h" />
     <QtMOC Include="Scene\SceneCamera.h" />
-    <QtMOC Include="Animation\AnimatorController.h" />
     <QtMOC Include="Scene\GameObject.h" />
-    <QtMOC Include="Animation\NPCController.h" />
+    <QtMOC Include="Animation\StateMachine\NPCController.h" />
+    <QtMOC Include="Animation\StateMachine\AnimatorController.h" />
   </ItemGroup>
 </Project>

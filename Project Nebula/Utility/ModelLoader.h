@@ -77,6 +77,7 @@ private:
 		INDEX_BUFFER,
 		POS_VB,
 		NORMAL_VB,
+		TANGENT_VB,
 		TEXCOORD_VB,
 		BONE_VB,
 		NUM_VBs            

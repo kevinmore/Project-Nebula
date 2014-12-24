@@ -12,15 +12,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animation\FK\FKController.cpp" />
-    <ClCompile Include="Animation\moc_AnimatorController.cc" />
-    <ClCompile Include="Animation\moc_NPCController.cc" />
+    <ClCompile Include="Animation\StateMachine\moc_AnimatorController.cc" />
+    <ClCompile Include="Animation\StateMachine\moc_NPCController.cc" />
     <ClCompile Include="Animation\Rig\Skeleton.cpp" />
     <ClCompile Include="Animation\IK\FABRIKSolver.cpp" />
     <ClCompile Include="Animation\IK\CCDIKSolver.cpp" />
     <ClCompile Include="Animation\Rig\Pose.cpp" />
-    <ClCompile Include="Animation\AnimatorController.cpp" />
-    <ClCompile Include="Animation\AnimatorPanel.cpp" />
-    <ClCompile Include="Animation\NPCController.cpp" />
+    <ClCompile Include="Animation\StateMachine\AnimatorController.cpp" />
+    <ClCompile Include="Animation\StateMachine\AnimatorPanel.cpp" />
+    <ClCompile Include="Animation\StateMachine\NPCController.cpp" />
     <ClCompile Include="Scene\AbstractModel.cpp" />
     <ClCompile Include="Scene\AbstractScene.cpp" />
     <ClCompile Include="Scene\Managers\ModelManager.cpp" />
@@ -32,6 +32,7 @@
     <ClCompile Include="Scene\ShadingTechniques\ShadingTechnique.cpp" />
     <ClCompile Include="Scene\ShadingTechniques\technique.cpp" />
     <ClCompile Include="Scene\StaticModel.cpp" />
+    <ClCompile Include="Scene\ShadingTechniques\ShadowMapFBO.cpp" />
     <ClCompile Include="UI\MainWindow.cpp" />
     <ClCompile Include="UI\Canvas.cpp" />
     <ClCompile Include="UI\MainWindow_moc.cpp" />
@@ -55,9 +56,9 @@
     <ClInclude Include="Animation\IK\FABRIKSolver.h" />
     <ClInclude Include="Animation\IK\CCDIKSolver.h" />
     <ClInclude Include="Animation\Rig\Pose.h" />
-    <QtMOC Include="Animation\AnimatorController.h" />
-    <ClInclude Include="Animation\AnimatorPanel.h" />
-    <QtMOC Include="Animation\NPCController.h" />
+    <QtMOC Include="Animation\StateMachine\AnimatorController.h" />
+    <ClInclude Include="Animation\StateMachine\AnimatorPanel.h" />
+    <QtMOC Include="Animation\StateMachine\NPCController.h" />
     <ClInclude Include="Scene\Managers\ModelManager.h" />
     <ClInclude Include="Scene\RiggedModel.h" />
     <QtMOC Include="Scene\Scene.h" />
@@ -65,6 +66,7 @@
     <ClInclude Include="Scene\ShadingTechniques\technique.h" />
     <ClInclude Include="Animation\Rig\Skeleton.h" />
     <ClInclude Include="Scene\StaticModel.h" />
+    <ClInclude Include="Scene\ShadingTechniques\ShadowMapFBO.h" />
     <ClInclude Include="UI\MainWindow.h" />
     <QtMOC Include="UI\Canvas.h" />
     <ClInclude Include="Utility\ModelLoader.h" />

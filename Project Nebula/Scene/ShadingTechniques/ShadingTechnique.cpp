@@ -2,17 +2,17 @@
 #include <string>
 #include <assert.h>
 #include "ShadingTechnique.h"
+#include <QtMath>
 
-#define INVALID_UNIFORM_LOCATION 0xffffffff
 #define SNPRINTF _snprintf_s
-#define ToRadian(x) (float)(((x) * M_PI / 180.0f))
-#define ToDegree(x) (float)(((x) * 180.0f / M_PI))
+
 
 using namespace std;
 
-ShadingTechnique::ShadingTechnique(const QString &vertShaderFile, const QString &fragShaderFile)
+ShadingTechnique::ShadingTechnique(const QString &vertShaderFile, const QString &fragShaderFile, ShaderType shaderType)
 	: m_vertShaderFile(vertShaderFile),
-	  m_fragShaderFile(fragShaderFile)
+	  m_fragShaderFile(fragShaderFile),
+	  m_shaderType(shaderType)
 {}
 
 
@@ -27,8 +27,11 @@ bool ShadingTechnique::Init()
 	m_shader->link();
     
     m_WVPLocation = GetUniformLocation("gWVP");
+	m_LightWVPLocation = GetUniformLocation("gLightWVP");
     m_WorldMatrixLocation = GetUniformLocation("gWorld");
     m_colorTextureLocation = GetUniformLocation("gColorMap");
+	m_shadowMapLocation = GetUniformLocation("gShadowMap");
+	m_normalMapLocation = GetUniformLocation("gNormalMap");
     m_eyeWorldPosLocation = GetUniformLocation("gEyeWorldPos");
     m_dirLightLocation.Color = GetUniformLocation("gDirectionalLight.Base.Color");
     m_dirLightLocation.AmbientIntensity = GetUniformLocation("gDirectionalLight.Base.AmbientIntensity");
@@ -41,8 +44,11 @@ bool ShadingTechnique::Init()
 
     if (m_dirLightLocation.AmbientIntensity == INVALID_UNIFORM_LOCATION ||
         m_WVPLocation == INVALID_UNIFORM_LOCATION ||
+		m_LightWVPLocation == INVALID_UNIFORM_LOCATION ||
         m_WorldMatrixLocation == INVALID_UNIFORM_LOCATION ||
         m_colorTextureLocation == INVALID_UNIFORM_LOCATION ||
+		m_shadowMapLocation == INVALID_UNIFORM_LOCATION ||
+		m_normalMapLocation == INVALID_UNIFORM_LOCATION ||
         m_eyeWorldPosLocation == INVALID_UNIFORM_LOCATION ||
         m_dirLightLocation.Color == INVALID_UNIFORM_LOCATION ||
         m_dirLightLocation.DiffuseIntensity == INVALID_UNIFORM_LOCATION ||
@@ -132,19 +138,27 @@ bool ShadingTechnique::Init()
         }
     }
 
-    for (unsigned int i = 0 ; i < ARRAY_SIZE_IN_ELEMENTS(m_boneLocation) ; i++) {
-        char Name[128];
-        memset(Name, 0, sizeof(Name));
-        SNPRINTF(Name, sizeof(Name), "gBones[%d]", i);
-        m_boneLocation[i] = GetUniformLocation(Name);
-    }
-
+	if (m_shaderType == RIGGED)
+	{
+		for (unsigned int i = 0 ; i < ARRAY_SIZE_IN_ELEMENTS(m_boneLocation) ; i++) {
+			char Name[128];
+			memset(Name, 0, sizeof(Name));
+			SNPRINTF(Name, sizeof(Name), "gBones[%d]", i);
+			m_boneLocation[i] = GetUniformLocation(Name);
+		}
+	}
+    
     return true;
 }
 
 void ShadingTechnique::SetWVP(const mat4& WVP)
 {
     glUniformMatrix4fv(m_WVPLocation, 1, GL_FALSE, WVP.data());    
+}
+
+void ShadingTechnique::SetLightWVP(const mat4& LightWVP)
+{
+	glUniformMatrix4fv(m_LightWVPLocation, 1, GL_FALSE, LightWVP.data());
 }
 
 
@@ -159,6 +173,15 @@ void ShadingTechnique::SetColorTextureUnit(unsigned int TextureUnit)
     glUniform1i(m_colorTextureLocation, TextureUnit);
 }
 
+void ShadingTechnique::SetShadowMapTextureUnit(unsigned int TextureUnit)
+{
+	glUniform1i(m_shadowMapLocation, TextureUnit);
+}
+
+void ShadingTechnique::SetNormalMapTextureUnit(unsigned int TextureUnit)
+{
+	glUniform1i(m_normalMapLocation, TextureUnit);
+}
 
 void ShadingTechnique::SetDirectionalLight(const DirectionalLight& Light)
 {
@@ -216,7 +239,7 @@ void ShadingTechnique::SetSpotLights(unsigned int NumLights, const SpotLight* pL
         vec3 Direction = pLights[i].Direction;
         Direction.normalize();
         glUniform3f(m_spotLightsLocation[i].Direction, Direction.x(), Direction.y(), Direction.z());
-        glUniform1f(m_spotLightsLocation[i].Cutoff, cosf(ToRadian(pLights[i].Cutoff)));
+        glUniform1f(m_spotLightsLocation[i].Cutoff, cosf(qDegreesToRadians(pLights[i].Cutoff)));
         glUniform1f(m_spotLightsLocation[i].Atten.Constant, pLights[i].Attenuation.Constant);
         glUniform1f(m_spotLightsLocation[i].Atten.Linear,   pLights[i].Attenuation.Linear);
         glUniform1f(m_spotLightsLocation[i].Atten.Exp,      pLights[i].Attenuation.Exp);

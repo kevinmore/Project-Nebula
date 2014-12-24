@@ -231,6 +231,7 @@ void Canvas::mousePressEvent(QMouseEvent* e)
 	else if (e->button() == Qt::MiddleButton)
 	{
 		m_middleButtonPressed = true;
+		setCursor(QCursor(Qt::ClosedHandCursor));
 	}
 
 	QWindow::mousePressEvent(e);
@@ -248,6 +249,7 @@ void Canvas::mouseReleaseEvent(QMouseEvent* e)
 		camera->setSideSpeed(0.0f);
 		camera->setVerticalSpeed(0.0f);
 		m_middleButtonPressed = false;
+		setCursor(QCursor(Qt::ArrowCursor));
 	}
 	QWindow::mouseReleaseEvent(e);
 }

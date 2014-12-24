@@ -13,7 +13,9 @@ public:
 	~TextureManager(void);
 
 	TexturePtr getTexture(const QString& name);
-	TexturePtr addTexture(const QString& name, const QString& fileName);
+	TexturePtr addTexture(const QString& name, const QString& fileName, 
+						  Texture::TextureType type = Texture::Texture2D, 
+						  Texture::TextureUsage usage = Texture::ColorMap);
 
 private:
 	QMap<QString, TexturePtr> m_textures;

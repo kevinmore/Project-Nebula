@@ -4,6 +4,9 @@
 #include <Magick++.h>
 #include <QImage>
 
+#define COLOR_TEXTURE_UNIT GL_TEXTURE0
+#define SHADOW_TEXTURE_UNIT GL_TEXTURE1
+#define NORMAL_TEXTURE_UNIT GL_TEXTURE2
 
 class Texture
 {
@@ -18,8 +21,16 @@ public:
 		TextureCubeMap = GL_TEXTURE_CUBE_MAP
 	};
 
-	Texture(const QString& fileName, TextureType type = Texture2D);
-	Texture(const QImage& image, TextureType type = Texture2D);
+	enum TextureUsage
+	{
+		ColorMap,
+		NormalMap,
+		SpecularMap,
+		ShadowMap
+	};
+
+	Texture(const QString& fileName, TextureType type = Texture2D, TextureUsage usage = ColorMap);
+	Texture(const QImage& image, TextureType type = Texture2D, TextureUsage usage = ColorMap);
 	virtual ~Texture();
 
 	void bind(GLenum textureUnit);
@@ -27,6 +38,7 @@ public:
 	void destroy();
 
 	TextureType type() const { return m_type; }
+	TextureUsage usage() const { return m_usage; }
 	GLuint textureId() const { return m_textureId; }
 
 private:
@@ -40,6 +52,7 @@ private:
 
 	QString m_fileName;
 	TextureType m_type;
+	TextureUsage m_usage;
 	GLuint      m_textureId;
 
 	QOpenGLFunctions_4_3_Core *m_funcs;

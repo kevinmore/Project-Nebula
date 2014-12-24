@@ -39,7 +39,14 @@ void Technique::Disable()
 
 GLint Technique::GetUniformLocation(const char* pUniformName)
 {
-    return m_shader->uniformLocation(pUniformName);
+    GLuint location = m_shader->uniformLocation(pUniformName);
+
+	if (location == INVALID_UNIFORM_LOCATION) 
+	{
+		fprintf(stderr, "Warning! Unable to get the location of uniform '%s'\n", pUniformName);
+	}
+
+	return location;
 }
 
 GLint Technique::GetProgramParam(GLint param)

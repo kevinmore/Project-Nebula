@@ -61,14 +61,23 @@ void StaticModel::initialize(QVector<ModelDataPtr> modelDataVector)
 		// deal with the texture
 		if(data->textureData.hasTexture)
 		{
-			TexturePtr  texture = m_textureManager->getTexture(data->textureData.filename);
-
-			if(!texture)
+			TexturePtr  texture_colorMap = m_textureManager->getTexture(data->textureData.colorMap);
+			if(!texture_colorMap)
 			{
-				texture = m_textureManager->addTexture(data->textureData.filename, data->textureData.filename);
+				texture_colorMap = m_textureManager->addTexture(data->textureData.colorMap, data->textureData.colorMap);
 			}
+			m_textures.push_back(texture_colorMap);
 
-			m_textures.push_back(texture);
+			if (!data->textureData.normalMap.isEmpty())
+			{
+				TexturePtr  texture_normalMap = m_textureManager->getTexture(data->textureData.normalMap);
+				if(!texture_normalMap)
+				{
+					texture_normalMap = m_textureManager->addTexture(data->textureData.normalMap, data->textureData.normalMap, Texture::Texture2D, Texture::NormalMap);
+				}
+				m_textures.push_back(texture_normalMap);
+			}
+			
 		}
 		else m_textures.push_back(TexturePtr(nullptr));
 
@@ -106,6 +115,7 @@ void StaticModel::initRenderingEffect()
 
 	m_RenderingEffect->Enable();
 	m_RenderingEffect->SetColorTextureUnit(0);
+	m_RenderingEffect->SetNormalMapTextureUnit(2);
 	m_RenderingEffect->SetDirectionalLight(directionalLight);
 	m_RenderingEffect->SetMatSpecularIntensity(0.0f);
 	m_RenderingEffect->SetMatSpecularPower(0);
@@ -121,7 +131,6 @@ void StaticModel::render( float time )
 
 
 	QMatrix4x4 modelMatrix = m_actor->modelMatrix();
-	//modelMatrix.rotate(-90, Math::Vector3D::UNIT_X); // this is for dae files
 	
 	QMatrix4x4 modelViewMatrix = m_scene->getCamera()->viewMatrix() * modelMatrix;
 	QMatrix3x3 normalMatrix = modelViewMatrix.normalMatrix();
@@ -134,10 +143,21 @@ void StaticModel::render( float time )
 	{
 		/*if( m_materials[i] != nullptr && ! m_materials[i]->isTranslucent())*/
 		{
-			if(m_textures[i] != nullptr)
+			for(int j = 0; j < m_textures.size(); ++j)
 			{
-				m_textures[i]->bind(GL_TEXTURE0);
+				if(m_textures[j] != nullptr)
+				{
+					if (m_textures[j]->usage() == Texture::ColorMap)
+					{
+						m_textures[j]->bind(COLOR_TEXTURE_UNIT);
+					}
+					else if (m_textures[j]->usage() == Texture::NormalMap)
+					{
+						m_textures[j]->bind(NORMAL_TEXTURE_UNIT);
+					}
+				}
 			}
+			
 
 			//m_materials[i]->bind();
 

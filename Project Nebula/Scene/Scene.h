@@ -11,8 +11,8 @@
 #include <Scene/Managers/MaterialManager.h>
 #include <Scene/Managers/MeshManager.h>
 #include <Scene/Managers/ModelManager.h>
-#include <Animation/AnimatorController.h>
-#include <Animation/NPCController.h>
+#include <Animation/StateMachine/AnimatorController.h>
+#include <Animation/StateMachine/NPCController.h>
 
 typedef QSharedPointer<QOpenGLShaderProgram> ShadersProgramPtr;
 

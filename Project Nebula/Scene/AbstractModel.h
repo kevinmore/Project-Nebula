@@ -17,7 +17,7 @@ struct MeshData
 
 struct TextureData
 {
-	QString filename;
+	QString colorMap, normalMap;
 	bool hasTexture;
 };
 

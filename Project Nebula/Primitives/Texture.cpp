@@ -3,11 +3,12 @@
 #include <QGLWidget>
 #include <QOpenGLContext>
 
-Texture::Texture(const QString& fileName, TextureType type)
+Texture::Texture(const QString& fileName, TextureType type, TextureUsage usage)
 	: m_qimage(),
 	  m_image(),
 	  m_fileName(fileName),
 	  m_type(type),
+	  m_usage(usage),
 	  m_textureId(0),
 	  m_funcs(nullptr)
 {
@@ -15,11 +16,12 @@ Texture::Texture(const QString& fileName, TextureType type)
 	load();
 }
 
-Texture::Texture(const QImage& image, TextureType type)
+Texture::Texture(const QImage& image, TextureType type, TextureUsage usage)
 	: m_qimage(QGLWidget::convertToGLFormat(image)),
 	m_image(),
 	m_fileName(""),
 	m_type(type),
+	m_usage(usage),
 	m_textureId(0),
 	m_funcs(nullptr)
 {
@@ -91,6 +93,9 @@ bool Texture::load()
 
 	m_funcs->glTexParameterf(m_type, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	m_funcs->glTexParameterf(m_type, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	m_funcs->glBindTexture(m_type, 0);
+
+	qDebug() << "Loaded texture:" << m_fileName;
 
 	return true;
 }

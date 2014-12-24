@@ -35,10 +35,10 @@ ModelPtr ModelManager::loadModel( const QString& name, const QString& filename, 
 	if (type == ModelLoader::RIGGED_MODEL)
 	{
 
-		ShadingTechnique* effect = new ShadingTechnique("../Resource/Shaders/skinning.vert", "../Resource/Shaders/skinning.frag");
+		ShadingTechnique* effect = new ShadingTechnique("../Resource/Shaders/skinning.vert", "../Resource/Shaders/skinning.frag", ShadingTechnique::RIGGED);
 		if (!effect->Init()) 
 		{
-			printf("Error initializing the lighting technique\n");
+			printf("Error initializing the shading technique\n");
 		}
 
 		ModelLoader* modelLoader = new ModelLoader(effect->getShader()->programId());
@@ -63,7 +63,7 @@ ModelPtr ModelManager::loadModel( const QString& name, const QString& filename, 
 		ShadingTechnique* effect = new ShadingTechnique("../Resource/Shaders/static.vert", "../Resource/Shaders/static.frag");
 		if (!effect->Init()) 
 		{
-			printf("Error initializing the lighting technique\n");
+			printf("Error initializing the shading technique\n");
 		}
 
 		ModelLoader* modelLoader = new ModelLoader(effect->getShader()->programId());

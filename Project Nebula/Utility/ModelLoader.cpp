@@ -303,6 +303,12 @@ void ModelLoader::prepareVertexBuffers()
 	glEnableVertexAttribArray(NORMAL_LOCATION);
 	glVertexAttribPointer(NORMAL_LOCATION, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
+	glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[TANGENT_VB]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(m_tangents[0]) * m_tangents.size(), m_tangents.data(), usage);
+	GLuint TANGENT_LOCATION = glGetAttribLocation(m_shaderProgramID, "Tangent");
+	glEnableVertexAttribArray(TANGENT_LOCATION);
+	glVertexAttribPointer(TANGENT_LOCATION, 3, GL_FLOAT, GL_FALSE, 0, 0);
+
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_Buffers[INDEX_BUFFER]);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(m_indices[0]) * m_indices.size(), m_indices.data(), usage);
 
@@ -455,16 +461,24 @@ TextureData ModelLoader::loadTexture(const QString& fileName, const aiMaterial* 
 		if(material->GetTexture(aiTextureType_DIFFUSE, 0, &path) == AI_SUCCESS)
 		{
 			QString texturePath = dir + "/" + path.data;
-			data.filename = texturePath;
+			data.colorMap = texturePath;
 			data.hasTexture = true;
 		}
 	}
-	else if(material->GetTextureCount(aiTextureType_OPACITY) > 0)
+	if(material->GetTextureCount(aiTextureType_NORMALS) > 0)
+	{
+		if(material->GetTexture(aiTextureType_NORMALS, 0, &path) == AI_SUCCESS)
+		{
+			QString texturePath = dir + "/" + path.data;
+			data.normalMap = texturePath;
+		}
+	}
+	if(material->GetTextureCount(aiTextureType_OPACITY) > 0)
 	{
 		if(material->GetTexture(aiTextureType_OPACITY, 0, &path) == AI_SUCCESS)
 		{
 			QString texturePath = dir + "/" + path.data;
-			data.filename = texturePath;
+			data.colorMap = texturePath;
 			data.hasTexture = true;
 		}
 	}

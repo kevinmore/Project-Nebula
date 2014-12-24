@@ -429,14 +429,14 @@ void SceneCamera::resetCamera()
 
 void SceneCamera::followTarget( GameObject* target )
 {
-	//m_viewCenterFixed = true;
+	m_viewCenterFixed = true;
 	m_isFollowing = true;
 	m_followingTarget = target;
 }
 
 void SceneCamera::releaseTarget()
 {
-	//m_viewCenterFixed = false;
+	m_viewCenterFixed = false;
 	m_isFollowing = false;
 }
 
@@ -451,9 +451,9 @@ void SceneCamera::update( const float currentTime )
 
 	if (m_isFollowing)
 	{
-// 		m_viewCenter = m_followingTarget->predictedPosition();
-// 		// apply an offset on Y, because we don't want to look at the character's feet
-// 		m_viewCenter.setY(m_viewCenter.y() + 100.0f);
+		//m_viewCenter = m_followingTarget->predictedPosition();
+		// apply an offset on Y, because we don't want to look at the character's feet
+		//m_viewCenter.setY(m_viewCenter.y() + 100.0f);
 		if( ! qFuzzyIsNull(m_panAngle) )
 		{
 			panAboutViewCenter(m_panAngle);

@@ -67,13 +67,22 @@ public:
     static const uint MAX_SPOT_LIGHTS = 2;
     static const uint MAX_BONES = 200;
 
-    ShadingTechnique(const QString &vertShaderFile, const QString &fragShaderFile);
+	enum ShaderType
+	{
+		STATIC,
+		RIGGED
+	};
+
+    ShadingTechnique(const QString &vertShaderFile, const QString &fragShaderFile, ShaderType shaderType = STATIC);
 
     virtual bool Init();
 
     void SetWVP(const mat4& WVP);
+	void SetLightWVP(const mat4& LightWVP);
     void SetWorldMatrix(const mat4& WVP);
     void SetColorTextureUnit(uint TextureUnit);
+	void SetShadowMapTextureUnit(uint TextureUnit);
+	void SetNormalMapTextureUnit(uint TextureUnit);
     void SetDirectionalLight(const DirectionalLight& Light);
     void SetPointLights(uint NumLights, const PointLight* pLights);
     void SetSpotLights(uint NumLights, const SpotLight* pLights);
@@ -85,10 +94,14 @@ public:
 private:
     
 	QString m_vertShaderFile, m_fragShaderFile;
+	ShaderType m_shaderType;
 
     GLuint m_WVPLocation;
+	GLuint m_LightWVPLocation;
     GLuint m_WorldMatrixLocation;
     GLuint m_colorTextureLocation;
+	GLuint m_shadowMapLocation;
+	GLuint m_normalMapLocation;
     GLuint m_eyeWorldPosLocation;
     GLuint m_matSpecularIntensityLocation;
     GLuint m_matSpecularPowerLocation;

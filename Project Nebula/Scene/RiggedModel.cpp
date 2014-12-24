@@ -89,11 +89,11 @@ void RiggedModel::initialize(QVector<ModelDataPtr> modelDataVector)
 		// deal with the texture
 		if(data->textureData.hasTexture)
 		{
-			TexturePtr  texture = m_textureManager->getTexture(data->textureData.filename);
+			TexturePtr  texture = m_textureManager->getTexture(data->textureData.colorMap);
 
 			if(!texture)
 			{
-				texture = m_textureManager->addTexture(data->textureData.filename, data->textureData.filename);
+				texture = m_textureManager->addTexture(data->textureData.colorMap, data->textureData.colorMap);
 			}
 
 			m_textures.push_back(texture);
