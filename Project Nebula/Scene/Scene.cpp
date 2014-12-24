@@ -61,7 +61,7 @@ void Scene::initialize()
 	//m_modelManager->loadModel("mountain", "../Resource/Models/Final/scene/mountain/mountain.DAE", ModelLoader::STATIC_MODEL);
 	//m_modelManager->loadModel("floor", "../Resource/Models/DemoRoom/floor.DAE", ModelLoader::STATIC_MODEL);
 	m_modelManager->loadModel("trolley", "../Resource/Models/static/trolley.DAE", ModelLoader::STATIC_MODEL);
-	m_modelManager->loadModel("trolley2", "../Resource/Models/static/trolley2.DAE", ModelLoader::STATIC_MODEL);
+	m_modelManager->loadModel("trolley2", "../Resource/Models/Final/m005/m_idle.DAE", ModelLoader::STATIC_MODEL);
 	m_stateMachine = new QStateMachine();
 
 	/*

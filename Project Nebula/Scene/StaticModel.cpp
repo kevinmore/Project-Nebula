@@ -43,6 +43,7 @@ void StaticModel::initialize(QVector<ModelDataPtr> modelDataVector)
 	m_materialManager = m_scene->materialManager();
 
 	// traverse modelData vector
+	m_textures.resize(modelDataVector.size());
 	for (int i = 0; i < modelDataVector.size(); ++i)
 	{
 		ModelDataPtr data = modelDataVector[i];
@@ -66,7 +67,7 @@ void StaticModel::initialize(QVector<ModelDataPtr> modelDataVector)
 			{
 				texture_colorMap = m_textureManager->addTexture(data->textureData.colorMap, data->textureData.colorMap);
 			}
-			m_textures.push_back(texture_colorMap);
+			m_textures[i].push_back(texture_colorMap);
 
 			if (!data->textureData.normalMap.isEmpty())
 			{
@@ -75,11 +76,11 @@ void StaticModel::initialize(QVector<ModelDataPtr> modelDataVector)
 				{
 					texture_normalMap = m_textureManager->addTexture(data->textureData.normalMap, data->textureData.normalMap, Texture::Texture2D, Texture::NormalMap);
 				}
-				m_textures.push_back(texture_normalMap);
+				m_textures[i].push_back(texture_normalMap);
 			}
 			
 		}
-		else m_textures.push_back(TexturePtr(nullptr));
+		else m_textures[i].push_back(TexturePtr(nullptr));
 
 		// deal with the material
 		MaterialPtr material = m_materialManager->getMaterial(data->materialData.name);
@@ -145,15 +146,16 @@ void StaticModel::render( float time )
 		{
 			for(int j = 0; j < m_textures.size(); ++j)
 			{
-				if(m_textures[j] != nullptr)
+				TexturePtr pTexture = m_textures[i][j];
+				if(pTexture)
 				{
-					if (m_textures[j]->usage() == Texture::ColorMap)
+					if (pTexture->usage() == Texture::ColorMap)
 					{
-						m_textures[j]->bind(COLOR_TEXTURE_UNIT);
+						pTexture->bind(COLOR_TEXTURE_UNIT);
 					}
-					else if (m_textures[j]->usage() == Texture::NormalMap)
+					else if (pTexture->usage() == Texture::NormalMap)
 					{
-						m_textures[j]->bind(NORMAL_TEXTURE_UNIT);
+						pTexture->bind(NORMAL_TEXTURE_UNIT);
 					}
 				}
 			}
