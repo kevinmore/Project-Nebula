@@ -144,7 +144,7 @@ void StaticModel::render( float time )
 	{
 		/*if( m_materials[i] != nullptr && ! m_materials[i]->isTranslucent())*/
 		{
-			for(int j = 0; j < m_textures.size(); ++j)
+			for(int j = 0; j < m_textures[i].size(); ++j)
 			{
 				TexturePtr pTexture = m_textures[i][j];
 				if(pTexture)
@@ -182,6 +182,7 @@ void StaticModel::render( float time )
 // 			glDepthMask(GL_TRUE);
 // 		}
 // 	}
+
 
 	m_RenderingEffect->Disable();	
 }
