@@ -129,7 +129,7 @@ Scene* Canvas::getScene()
 
 void Canvas::keyPressEvent(QKeyEvent* e)
 {
-	SceneCamera* camera = getScene()->getCamera();
+	Camera* camera = getScene()->getCamera();
 
 	switch (e->key())
 	{
@@ -174,7 +174,7 @@ void Canvas::keyPressEvent(QKeyEvent* e)
 
 void Canvas::keyReleaseEvent(QKeyEvent* e)
 {
-	SceneCamera* camera = getScene()->getCamera();
+	Camera* camera = getScene()->getCamera();
 
 	switch (e->key())
 	{
@@ -206,11 +206,11 @@ void Canvas::keyReleaseEvent(QKeyEvent* e)
 void Canvas::wheelEvent( QWheelEvent *e )
 {
 	int delta = e->delta();
-	SceneCamera* camera = getScene()->getCamera();
+	Camera* camera = getScene()->getCamera();
 
-	SceneCamera::CameraTranslationOption option = camera->isViewCenterFixed()
-		? SceneCamera::DontTranslateViewCenter
-		: SceneCamera::TranslateViewCenter;
+	Camera::CameraTranslationOption option = camera->isViewCenterFixed()
+		? Camera::DontTranslateViewCenter
+		: Camera::TranslateViewCenter;
 
 	if (e->orientation() == Qt::Vertical) 
 	{
@@ -245,7 +245,7 @@ void Canvas::mouseReleaseEvent(QMouseEvent* e)
 	}
 	else if (e->button() == Qt::MiddleButton)
 	{
-		SceneCamera* camera = getScene()->getCamera();
+		Camera* camera = getScene()->getCamera();
 		camera->setSideSpeed(0.0f);
 		camera->setVerticalSpeed(0.0f);
 		m_middleButtonPressed = false;
@@ -263,7 +263,7 @@ void Canvas::mouseMoveEvent(QMouseEvent* e)
 
 	m_prevPos = m_pos;
 
-	SceneCamera* camera = getScene()->getCamera();
+	Camera* camera = getScene()->getCamera();
 
 	if(m_rightButtonPressed)
 	{

@@ -24,9 +24,9 @@
     <ClCompile Include="Scene\AbstractModel.cpp" />
     <ClCompile Include="Scene\AbstractScene.cpp" />
     <ClCompile Include="Scene\Managers\ModelManager.cpp" />
+    <ClCompile Include="Scene\moc_Camera.cc" />
     <ClCompile Include="Scene\moc_GameObject.cc" />
     <ClCompile Include="Scene\moc_Scene.cc" />
-    <ClCompile Include="Scene\moc_SceneCamera.cc" />
     <ClCompile Include="Scene\RiggedModel.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\ShadingTechniques\ShadingTechnique.cpp" />
@@ -39,7 +39,7 @@
     <ClCompile Include="UI\moc_Canvas.cc" />
     <ClCompile Include="Utility\ModelLoader.cpp" />
     <ClCompile Include="Scene\Managers\MeshManager.cpp" />
-    <ClCompile Include="Scene\SceneCamera.cpp" />
+    <ClCompile Include="Scene\Camera.cpp" />
     <ClCompile Include="Scene\GameObject.cpp" />
     <ClCompile Include="Scene\Light.cpp" />
     <ClCompile Include="Primitives\Mesh.cpp" />
@@ -73,7 +73,7 @@
     <ClInclude Include="Scene\AbstractModel.h" />
     <ClInclude Include="Scene\AbstractScene.h" />
     <ClInclude Include="Scene\Managers\MeshManager.h" />
-    <QtMOC Include="Scene\SceneCamera.h" />
+    <QtMOC Include="Scene\Camera.h" />
     <QtMOC Include="Scene\GameObject.h" />
     <ClInclude Include="Scene\Light.h" />
     <ClInclude Include="Primitives\Mesh.h" />
@@ -84,10 +84,6 @@
     <ClInclude Include="Utility\Math.h" />
     <ClInclude Include="Utility\DataTypes.h" />
     <ClInclude Include="Utility\OpenGLUniformBuffer.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\Resource\Shaders\skinning.frag" />
-    <None Include="..\Resource\Shaders\skinning.vert" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{89A9A61D-5047-460C-91C1-C99FC990ABD7}</ProjectGuid>

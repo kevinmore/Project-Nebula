@@ -2,7 +2,7 @@
 #include <QtWidgets>
 #include <UI/Canvas.h>
 #include <Scene/Scene.h>
-#include <Scene/SceneCamera.h>
+#include <Scene/Camera.h>
 #include <Scene/GameObject.h>
 
 class MainWindow : public QMainWindow
@@ -40,7 +40,7 @@ private:
 	QDockWidget  * m_dockParamsArea, * m_dockMatrixArea;
 	Scene        * m_scene;
 	GameObject     * m_object3D;
-	SceneCamera  * m_camera;
+	Camera  * m_camera;
 
 	QLabel * fovLabel,   * leftLabel,
 		   * rightLabel, * bottomLabel,

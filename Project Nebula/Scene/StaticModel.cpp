@@ -2,19 +2,19 @@
 #include <Scene/Scene.h>
 #include <QtGui/QOpenGLContext>
 
-StaticModel::StaticModel(Scene* scene, ShadingTechnique* tech, const GLuint vao)
+StaticModel::StaticModel(Scene* scene, ShadingTechnique* tech)
   : m_scene(scene),
     m_RenderingEffect(tech),
-	m_vao(vao),
+	m_vao(tech->getVAO()),
 	m_actor(new GameObject)
 {
 	initialize();
 }
 
-StaticModel::StaticModel(Scene* scene, ShadingTechnique* tech, const GLuint vao, QVector<ModelDataPtr> modelData)
+StaticModel::StaticModel(Scene* scene, ShadingTechnique* tech, QVector<ModelDataPtr> modelData)
   : m_scene(scene),
     m_RenderingEffect(tech),
-	m_vao(vao),
+	m_vao(tech->getVAO()),
 	m_actor(new GameObject)
 {
 	initialize(modelData);

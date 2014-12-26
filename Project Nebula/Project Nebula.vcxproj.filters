@@ -6,7 +6,6 @@
     <ClCompile Include="Primitives\Material.cpp" />
     <ClCompile Include="Primitives\Mesh.cpp" />
     <ClCompile Include="Scene\Light.cpp" />
-    <ClCompile Include="Scene\SceneCamera.cpp" />
     <ClCompile Include="Scene\Managers\MaterialManager.cpp" />
     <ClCompile Include="Scene\Managers\MeshManager.cpp" />
     <ClCompile Include="Scene\Managers\TextureManager.cpp" />
@@ -29,7 +28,6 @@
     <ClCompile Include="Animation\IK\CCDIKSolver.cpp" />
     <ClCompile Include="Animation\Rig\Pose.cpp" />
     <ClCompile Include="UI\moc_Canvas.cc" />
-    <ClCompile Include="Scene\moc_SceneCamera.cc" />
     <ClCompile Include="Scene\moc_Scene.cc" />
     <ClCompile Include="Scene\GameObject.cpp" />
     <ClCompile Include="Scene\moc_GameObject.cc" />
@@ -39,6 +37,8 @@
     <ClCompile Include="Animation\StateMachine\moc_NPCController.cc" />
     <ClCompile Include="Animation\StateMachine\NPCController.cpp" />
     <ClCompile Include="Scene\ShadingTechniques\ShadowMapFBO.cpp" />
+    <ClCompile Include="Scene\Camera.cpp" />
+    <ClCompile Include="Scene\moc_Camera.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utility\DataTypes.h" />
@@ -70,15 +70,11 @@
     <ClInclude Include="Scene\ShadingTechniques\technique.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Resource\Shaders\skinning.frag" />
-    <None Include="..\Resource\Shaders\skinning.vert" />
-  </ItemGroup>
-  <ItemGroup>
     <QtMOC Include="UI\Canvas.h" />
     <QtMOC Include="Scene\Scene.h" />
-    <QtMOC Include="Scene\SceneCamera.h" />
     <QtMOC Include="Scene\GameObject.h" />
     <QtMOC Include="Animation\StateMachine\NPCController.h" />
     <QtMOC Include="Animation\StateMachine\AnimatorController.h" />
+    <QtMOC Include="Scene\Camera.h" />
   </ItemGroup>
 </Project>

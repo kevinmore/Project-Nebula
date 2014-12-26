@@ -1,7 +1,7 @@
-#include "SceneCamera.h"
+#include "Camera.h"
 using namespace Math;
 
-SceneCamera::SceneCamera(GameObject* followingTarget, QObject *parent)
+Camera::Camera(GameObject* followingTarget, QObject *parent)
   : QObject(parent),
 	m_position(Vector3D::UNIT_Z),
 	m_upVector(Vector3D::UNIT_Y),
@@ -31,18 +31,18 @@ SceneCamera::SceneCamera(GameObject* followingTarget, QObject *parent)
 	updatePerspectiveProjection();
 }
 
-SceneCamera::~SceneCamera()
+Camera::~Camera()
 {
 }
 
-void SceneCamera::updateOrthogonalProjection()
+void Camera::updateOrthogonalProjection()
 {
 	m_projectionMatrix.setToIdentity();
 	m_projectionMatrix.ortho(m_left, m_right, m_bottom, m_top, m_nearPlane, m_farPlane);
 	m_viewProjectionMatrixDirty = true;
 }
 
-void SceneCamera::setOrthographicProjection( float left, float right, float bottom, float top, float nearPlane, float farPlane )
+void Camera::setOrthographicProjection( float left, float right, float bottom, float top, float nearPlane, float farPlane )
 {
 	m_left = left;
 	m_right = right;
@@ -56,14 +56,14 @@ void SceneCamera::setOrthographicProjection( float left, float right, float bott
 }
 
 
-void SceneCamera::updatePerspectiveProjection()
+void Camera::updatePerspectiveProjection()
 {
 	m_projectionMatrix.setToIdentity();
 	m_projectionMatrix.perspective(m_fieldOfView, m_aspectRatio, m_nearPlane, m_farPlane);
 	m_viewProjectionMatrixDirty = true;
 }
 
-void SceneCamera::setPerspectiveProjection( float fieldOfView, float aspect, float nearPlane, float farPlane )
+void Camera::setPerspectiveProjection( float fieldOfView, float aspect, float nearPlane, float farPlane )
 {
 	m_fieldOfView = fieldOfView;
 	m_aspectRatio = aspect;
@@ -74,57 +74,57 @@ void SceneCamera::setPerspectiveProjection( float fieldOfView, float aspect, flo
 	updatePerspectiveProjection();
 }
 
-SceneCamera::ProjectionType SceneCamera::projectionType() const
+Camera::ProjectionType Camera::projectionType() const
 {
 	return m_projectionType;
 }
 
-void SceneCamera::setProjectionType(ProjectionType type)
+void Camera::setProjectionType(ProjectionType type)
 {
 	m_projectionType = type;
 }
 
-QVector3D SceneCamera::position() const
+QVector3D Camera::position() const
 {
 	return m_position;
 }
 
-void SceneCamera::setPosition(const QVector3D& position)
+void Camera::setPosition(const QVector3D& position)
 {
 	m_position = position;
 	m_cameraToCenter = m_viewCenter - position;
 	m_viewMatrixDirty = true;
 }
 
-void SceneCamera::setUpVector(const QVector3D& upVector)
+void Camera::setUpVector(const QVector3D& upVector)
 {
 	m_upVector = upVector;
 	m_viewMatrixDirty = true;
 }
 
-QVector3D SceneCamera::upVector() const
+QVector3D Camera::upVector() const
 {
 	return m_upVector;
 }
 
-void SceneCamera::setViewCenter(const QVector3D& viewCenter)
+void Camera::setViewCenter(const QVector3D& viewCenter)
 {
 	m_viewCenter = viewCenter;
 	m_cameraToCenter = viewCenter - m_position;
 	m_viewMatrixDirty = true;
 }
 
-QVector3D SceneCamera::viewCenter() const
+QVector3D Camera::viewCenter() const
 {
 	return m_viewCenter;
 }
 
-QVector3D SceneCamera::viewVector() const
+QVector3D Camera::viewVector() const
 {
 	return m_cameraToCenter;
 }
 
-void SceneCamera::setNearPlane(const float& nearPlane)
+void Camera::setNearPlane(const float& nearPlane)
 {
 	if(qFuzzyCompare(m_nearPlane, nearPlane))
 		return;
@@ -135,12 +135,12 @@ void SceneCamera::setNearPlane(const float& nearPlane)
 		updatePerspectiveProjection();
 }
 
-float SceneCamera::nearPlane() const
+float Camera::nearPlane() const
 {
 	return m_nearPlane;
 }
 
-void SceneCamera::setFarPlane(const float& farPlane)
+void Camera::setFarPlane(const float& farPlane)
 {
 	if(qFuzzyCompare(m_farPlane, farPlane))
 		return;
@@ -151,12 +151,12 @@ void SceneCamera::setFarPlane(const float& farPlane)
 		updatePerspectiveProjection();
 }
 
-float SceneCamera::farPlane() const
+float Camera::farPlane() const
 {
 	return m_farPlane;
 }
 
-void SceneCamera::setFieldOfView(const float& fieldOfView)
+void Camera::setFieldOfView(const float& fieldOfView)
 {
 	if(qFuzzyCompare(m_fieldOfView, fieldOfView))
 		return;
@@ -167,12 +167,12 @@ void SceneCamera::setFieldOfView(const float& fieldOfView)
 		updatePerspectiveProjection();
 }
 
-float SceneCamera::fieldOfView() const
+float Camera::fieldOfView() const
 {
 	return m_fieldOfView;
 }
 
-void SceneCamera::setAspectRatio(const float& aspectRatio)
+void Camera::setAspectRatio(const float& aspectRatio)
 {
 	if(qFuzzyCompare(m_aspectRatio, aspectRatio))
 		return;
@@ -183,12 +183,12 @@ void SceneCamera::setAspectRatio(const float& aspectRatio)
 		updatePerspectiveProjection();
 }
 
-float SceneCamera::aspectRatio() const
+float Camera::aspectRatio() const
 {
 	return m_aspectRatio;
 }
 
-void SceneCamera::setLeft(const float& left)
+void Camera::setLeft(const float& left)
 {
 	if(qFuzzyCompare(m_left, left))
 		return;
@@ -199,12 +199,12 @@ void SceneCamera::setLeft(const float& left)
 		updateOrthogonalProjection();
 }
 
-float SceneCamera::left() const
+float Camera::left() const
 {
 	return m_left;
 }
 
-void SceneCamera::setRight(const float& right)
+void Camera::setRight(const float& right)
 {
 	if(qFuzzyCompare(m_right, right))
 		return;
@@ -215,12 +215,12 @@ void SceneCamera::setRight(const float& right)
 		updateOrthogonalProjection();
 }
 
-float SceneCamera::right() const
+float Camera::right() const
 {
 	return m_right;
 }
 
-void SceneCamera::setBottom(const float& bottom)
+void Camera::setBottom(const float& bottom)
 {
 	if(qFuzzyCompare(m_bottom, bottom))
 		return;
@@ -231,12 +231,12 @@ void SceneCamera::setBottom(const float& bottom)
 		updateOrthogonalProjection();
 }
 
-float SceneCamera::bottom() const
+float Camera::bottom() const
 {
 	return m_bottom;
 }
 
-void SceneCamera::setTop(const float& top)
+void Camera::setTop(const float& top)
 {
 	if (qFuzzyCompare(m_top, top))
 		return;
@@ -247,12 +247,12 @@ void SceneCamera::setTop(const float& top)
 		updateOrthogonalProjection();
 }
 
-float SceneCamera::top() const
+float Camera::top() const
 {
 	return m_top;
 }
 
-QMatrix4x4 SceneCamera::viewMatrix() const
+QMatrix4x4 Camera::viewMatrix() const
 {
 	if(m_viewMatrixDirty)
 	{
@@ -264,12 +264,12 @@ QMatrix4x4 SceneCamera::viewMatrix() const
 	return m_viewMatrix;
 }
 
-QMatrix4x4 SceneCamera::projectionMatrix() const
+QMatrix4x4 Camera::projectionMatrix() const
 {
 	return m_projectionMatrix;
 }
 
-QMatrix4x4 SceneCamera::viewProjectionMatrix() const
+QMatrix4x4 Camera::viewProjectionMatrix() const
 {
 	if(m_viewMatrixDirty || m_viewProjectionMatrixDirty)
 	{
@@ -280,7 +280,7 @@ QMatrix4x4 SceneCamera::viewProjectionMatrix() const
 	return m_viewProjectionMatrix;
 }
 
-void SceneCamera::translate(const QVector3D& vLocal, CameraTranslationOption option)
+void Camera::translate(const QVector3D& vLocal, CameraTranslationOption option)
 {
 	// Calculate the amount to move by in world coordinates
 	QVector3D vWorld;
@@ -320,7 +320,7 @@ void SceneCamera::translate(const QVector3D& vLocal, CameraTranslationOption opt
 	m_viewMatrixDirty = true;
 }
 
-void SceneCamera::translateWorld(const QVector3D& vWorld , CameraTranslationOption option)
+void Camera::translateWorld(const QVector3D& vWorld , CameraTranslationOption option)
 {
 	// Update the camera position using the calculated world vector
 	m_position += vWorld;
@@ -335,71 +335,71 @@ void SceneCamera::translateWorld(const QVector3D& vWorld , CameraTranslationOpti
 	m_viewMatrixDirty = true;
 }
 
-QQuaternion SceneCamera::tiltRotation(const float& angle) const
+QQuaternion Camera::tiltRotation(const float& angle) const
 {
 	QVector3D xBasis = QVector3D::crossProduct(m_upVector, m_cameraToCenter.normalized()).normalized();
 
 	return QQuaternion::fromAxisAndAngle(xBasis, -angle);
 }
 
-QQuaternion SceneCamera::panRotation(const float& angle) const
+QQuaternion Camera::panRotation(const float& angle) const
 {
 	return QQuaternion::fromAxisAndAngle(m_upVector, angle);
 }
 
-QQuaternion SceneCamera::panRotation(const float& angle, const QVector3D& axis) const
+QQuaternion Camera::panRotation(const float& angle, const QVector3D& axis) const
 {
 	return QQuaternion::fromAxisAndAngle(axis, angle);
 }
 
-QQuaternion SceneCamera::rollRotation(const float& angle) const
+QQuaternion Camera::rollRotation(const float& angle) const
 {
 	return QQuaternion::fromAxisAndAngle(m_cameraToCenter, -angle);
 }
 
-void SceneCamera::tilt(const float& angle)
+void Camera::tilt(const float& angle)
 {
 	QQuaternion q = tiltRotation(angle);
 	rotate(q);
 }
 
-void SceneCamera::pan(const float& angle)
+void Camera::pan(const float& angle)
 {
 	QQuaternion q = panRotation(-angle);
 	rotate(q);
 }
 
-void SceneCamera::pan(const float& angle, const QVector3D& axis)
+void Camera::pan(const float& angle, const QVector3D& axis)
 {
 	QQuaternion q = panRotation(-angle, axis);
 	rotate(q);
 }
 
-void SceneCamera::roll(const float& angle)
+void Camera::roll(const float& angle)
 {
 	QQuaternion q = rollRotation(-angle);
 	rotate(q);
 }
 
-void SceneCamera::tiltAboutViewCenter(const float& angle)
+void Camera::tiltAboutViewCenter(const float& angle)
 {
 	QQuaternion q = tiltRotation(-angle);
 	rotateAboutViewCenter(q);
 }
 
-void SceneCamera::panAboutViewCenter(const float& angle)
+void Camera::panAboutViewCenter(const float& angle)
 {
 	QQuaternion q = panRotation(angle, Math::Vector3D::UNIT_Y);
 	rotateAboutViewCenter(q);
 }
 
-void SceneCamera::rollAboutViewCenter(const float& angle)
+void Camera::rollAboutViewCenter(const float& angle)
 {
 	QQuaternion q = rollRotation(angle);
 	rotateAboutViewCenter(q);
 }
 
-void SceneCamera::rotate(const QQuaternion& q)
+void Camera::rotate(const QQuaternion& q)
 {
 	m_upVector = q.rotatedVector(m_upVector);
 	m_cameraToCenter = q.rotatedVector(m_cameraToCenter);
@@ -408,7 +408,7 @@ void SceneCamera::rotate(const QQuaternion& q)
 	m_viewMatrixDirty = true;
 }
 
-void SceneCamera::rotateAboutViewCenter(const QQuaternion& q)
+void Camera::rotateAboutViewCenter(const QQuaternion& q)
 {
 	m_upVector = q.rotatedVector(m_upVector);
 	m_cameraToCenter = q.rotatedVector(m_cameraToCenter);
@@ -417,7 +417,7 @@ void SceneCamera::rotateAboutViewCenter(const QQuaternion& q)
 	m_viewMatrixDirty = true;
 }
 
-void SceneCamera::resetCamera()
+void Camera::resetCamera()
 {
 	m_position = QVector3D(Vector3D::UNIT_Z);
 	m_upVector = QVector3D(Vector3D::UNIT_Y);
@@ -427,27 +427,27 @@ void SceneCamera::resetCamera()
 	m_viewMatrixDirty = true;
 }
 
-void SceneCamera::followTarget( GameObject* target )
+void Camera::followTarget( GameObject* target )
 {
 	m_viewCenterFixed = true;
 	m_isFollowing = true;
 	m_followingTarget = target;
 }
 
-void SceneCamera::releaseTarget()
+void Camera::releaseTarget()
 {
 	m_viewCenterFixed = false;
 	m_isFollowing = false;
 }
 
-void SceneCamera::update( const float currentTime )
+void Camera::update( const float currentTime )
 {
 	const float dt = currentTime - m_time;
 	m_time = currentTime;
 
-	SceneCamera::CameraTranslationOption option = m_viewCenterFixed
-		? SceneCamera::DontTranslateViewCenter
-		: SceneCamera::TranslateViewCenter;
+	Camera::CameraTranslationOption option = m_viewCenterFixed
+		? Camera::DontTranslateViewCenter
+		: Camera::TranslateViewCenter;
 
 	if (m_isFollowing)
 	{
@@ -465,6 +465,7 @@ void SceneCamera::update( const float currentTime )
 			tiltAboutViewCenter(m_tiltAngle);
 			m_tiltAngle = 0.0f;
 		}
+		translate(m_viewDirection * dt * m_metersToUnits, option);
 		translateWorld(m_followingTarget->globalSpeed() * dt, option);
 	}
 	else
@@ -485,13 +486,13 @@ void SceneCamera::update( const float currentTime )
 
 }
 
-void SceneCamera::switchToFirstPersonCamera( bool status )
+void Camera::switchToFirstPersonCamera( bool status )
 {
 	if (status) releaseTarget();
 	else followTarget(m_followingTarget);
 }
 
-void SceneCamera::switchToThirdPersonCamera( bool status )
+void Camera::switchToThirdPersonCamera( bool status )
 {
 	if (status) followTarget(m_followingTarget);
 	else releaseTarget();

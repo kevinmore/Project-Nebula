@@ -20,14 +20,15 @@ class Scene;
 class RiggedModel : public AbstractModel
 {
 public:
-	RiggedModel(Scene* scene, ShadingTechnique* tech, Skeleton* skeleton, FKController* fkCtrl, CCDIKSolver* ikSolver, const GLuint vao);
-	RiggedModel(Scene* scene, ShadingTechnique* tech, Skeleton* skeleton, FKController* fkCtrl, CCDIKSolver* ikSolver, const GLuint vao, QVector<ModelDataPtr> modelDataVector);
-	virtual ~RiggedModel(void);
+	RiggedModel(Scene* scene, ShadingTechnique* tech, Skeleton* skeleton, FKController* fkCtrl, CCDIKSolver* ikSolver);
+	RiggedModel(Scene* scene, ShadingTechnique* tech, Skeleton* skeleton, FKController* fkCtrl, CCDIKSolver* ikSolver, QVector<ModelDataPtr> modelDataVector);
+	virtual ~RiggedModel();
 
 	virtual void render( float time );
+	GameObject* getActor() { return m_actor; }
+
 	bool hasAnimation() { return m_hasAnimation; }
 	float animationDuration();
-	GameObject* getActor() { return m_actor; }
 	void setActor(GameObject* actor) { m_actor = actor; }
 	void setReachableTargetPos(vec3& pos);
 	Skeleton* getSkeleton() { return m_skeleton; }

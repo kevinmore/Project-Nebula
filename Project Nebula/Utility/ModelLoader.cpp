@@ -294,6 +294,7 @@ void ModelLoader::prepareVertexBuffers()
 
 	// Make sure the VAO is not changed from the outside
 	glBindVertexArray(0);
+	m_effect->setVAO(m_VAO);
 }
 
 void ModelLoader::loadBones( uint MeshIndex, const aiMesh* paiMesh )

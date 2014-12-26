@@ -2,7 +2,7 @@
 
 Scene::Scene(QObject* parent)
 	: AbstractScene(parent),
-	  m_camera(new SceneCamera(NULL,this)),
+	  m_camera(new Camera(NULL,this)),
 	  m_light("light01"),
 	  m_lightMode(PerFragmentPhong),
 	  m_lightModeSubroutines(LightModeCount)
@@ -224,7 +224,7 @@ void Scene::resize(int width, int height)
 {
 	glViewport(0, 0, width, height);
 
-	if(m_camera->projectionType() == SceneCamera::Perspective)
+	if(m_camera->projectionType() == Camera::Perspective)
 	{
 		float aspect = static_cast<float>(width) / static_cast<float>(height);
 
@@ -233,7 +233,7 @@ void Scene::resize(int width, int height)
 										   m_camera->nearPlane(),
 										   m_camera->farPlane());
 	}
-	else if(m_camera->projectionType() == SceneCamera::Orthogonal)
+	else if(m_camera->projectionType() == Camera::Orthogonal)
 	{
 		m_camera->setOrthographicProjection(m_camera->left(),
 											m_camera->right(),
@@ -291,7 +291,7 @@ void Scene::toggleAA(bool state)
 	(state) ? glEnable(GL_MULTISAMPLE) : glDisable(GL_MULTISAMPLE);
 }
 
-SceneCamera* Scene::getCamera()
+Camera* Scene::getCamera()
 {
 	return m_camera;
 }

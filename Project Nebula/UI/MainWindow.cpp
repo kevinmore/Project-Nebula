@@ -617,7 +617,7 @@ void MainWindow::setViewProperties(bool state)
 {
 	if(state)
 	{
-		m_camera->setProjectionType(SceneCamera::Perspective);
+		m_camera->setProjectionType(Camera::Perspective);
 		m_scene->resize(m_canvas->width(), m_canvas->height());
 
 		fovLabel->show();
@@ -635,7 +635,7 @@ void MainWindow::setViewProperties(bool state)
 	}
 	else
 	{
-		m_camera->setProjectionType(SceneCamera::Orthogonal);
+		m_camera->setProjectionType(Camera::Orthogonal);
 		m_scene->resize(m_canvas->width(), m_canvas->height());
 
 		fovLabel->hide();

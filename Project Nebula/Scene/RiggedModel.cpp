@@ -3,10 +3,10 @@
 #include <QOpenGLContext>
 #include <Animation/Rig/Pose.h>
 
-RiggedModel::RiggedModel(Scene* scene, ShadingTechnique* tech, Skeleton* skeleton, FKController* fkCtrl, CCDIKSolver* ikSolver, const GLuint vao)
+RiggedModel::RiggedModel(Scene* scene, ShadingTechnique* tech, Skeleton* skeleton, FKController* fkCtrl, CCDIKSolver* ikSolver)
   : m_scene(scene),
     m_RenderingEffect(tech),
-	m_vao(vao),
+	m_vao(tech->getVAO()),
 	m_skeleton(skeleton),
 	m_FKController(fkCtrl),
 	m_CCDSolver(ikSolver),
@@ -17,10 +17,10 @@ RiggedModel::RiggedModel(Scene* scene, ShadingTechnique* tech, Skeleton* skeleto
 	initialize();
 }
 
-RiggedModel::RiggedModel(Scene* scene, ShadingTechnique* tech, Skeleton* skeleton, FKController* fkCtrl, CCDIKSolver* ikSolver, const GLuint vao, QVector<ModelDataPtr> modelData)
+RiggedModel::RiggedModel(Scene* scene, ShadingTechnique* tech, Skeleton* skeleton, FKController* fkCtrl, CCDIKSolver* ikSolver, QVector<ModelDataPtr> modelData)
   : m_scene(scene),
     m_RenderingEffect(tech),
-	m_vao(vao),
+	m_vao(tech->getVAO()),
 	m_skeleton(skeleton),
 	m_FKController(fkCtrl),
 	m_CCDSolver(ikSolver),

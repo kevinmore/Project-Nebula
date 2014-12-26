@@ -4,7 +4,7 @@
 #include <QOpenGLShaderProgram>
 #include <Scene/AbstractScene.h>
 #include <Scene/Light.h>
-#include <Scene/SceneCamera.h>
+#include <Scene/Camera.h>
 #include <Scene/GameObject.h>
 #include <Scene/RiggedModel.h>
 #include <Scene/Managers/TextureManager.h>
@@ -41,7 +41,7 @@ public:
 	LightMode lightMode() const { return m_lightMode; }
 
 	GameObject*    getObject() { return NULL; } //hack! need to improve
-	SceneCamera* getCamera();
+	Camera* getCamera();
 	
 	QSharedPointer<MeshManager>     meshManager();
 	QSharedPointer<TextureManager>  textureManager();
@@ -65,7 +65,7 @@ signals:
 	void renderCycleDone();
 
 private:
-	SceneCamera* m_camera;
+	Camera* m_camera;
 
 	ModelPtr m_model;
 

@@ -3,13 +3,13 @@
 #include <Utility/Math.h>
 #include <Scene/GameObject.h>
 
-class SceneCamera : public QObject
+class Camera : public QObject
 {
 	Q_OBJECT
 
 public:
-	SceneCamera(GameObject* followingTarget = 0, QObject *parent = 0);
-	~SceneCamera();
+	Camera(GameObject* followingTarget = 0, QObject *parent = 0);
+	~Camera();
 
 	enum ProjectionType
 	{

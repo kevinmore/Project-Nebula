@@ -17,9 +17,9 @@ class Scene;
 class StaticModel : public AbstractModel
 {
 public:
-	StaticModel(Scene* scene, ShadingTechnique* tech, const GLuint vao);
-	StaticModel(Scene* scene, ShadingTechnique* tech, const GLuint vao, QVector<ModelDataPtr> modelDataVector);
-	virtual ~StaticModel(void);
+	StaticModel(Scene* scene, ShadingTechnique* tech);
+	StaticModel(Scene* scene, ShadingTechnique* tech, QVector<ModelDataPtr> modelDataVector);
+	virtual ~StaticModel();
 
 	virtual void render( float time );
 	GameObject* getActor() { return m_actor; }

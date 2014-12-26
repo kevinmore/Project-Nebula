@@ -1,16 +1,16 @@
 /****************************************************************************
-** Meta object code from reading C++ file 'SceneCamera.h'
+** Meta object code from reading C++ file 'Camera.h'
 **
 ** Created by: The Qt Meta Object Compiler version 67 (Qt 5.3.2)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include "SceneCamera.h"
+#include "Camera.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
-#error "The header file 'SceneCamera.h' doesn't include <QObject>."
+#error "The header file 'Camera.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
 #error "This file was generated using the moc from 5.3.2. It"
 #error "cannot be used with the include files from this version of Qt."
@@ -18,32 +18,32 @@
 #endif
 
 QT_BEGIN_MOC_NAMESPACE
-struct qt_meta_stringdata_SceneCamera_t {
+struct qt_meta_stringdata_Camera_t {
     QByteArrayData data[7];
-    char stringdata[98];
+    char stringdata[93];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
-    qptrdiff(offsetof(qt_meta_stringdata_SceneCamera_t, stringdata) + ofs \
+    qptrdiff(offsetof(qt_meta_stringdata_Camera_t, stringdata) + ofs \
         - idx * sizeof(QByteArrayData)) \
     )
-static const qt_meta_stringdata_SceneCamera_t qt_meta_stringdata_SceneCamera = {
+static const qt_meta_stringdata_Camera_t qt_meta_stringdata_Camera = {
     {
-QT_MOC_LITERAL(0, 0, 11),
-QT_MOC_LITERAL(1, 12, 11),
-QT_MOC_LITERAL(2, 24, 0),
-QT_MOC_LITERAL(3, 25, 13),
-QT_MOC_LITERAL(4, 39, 25),
-QT_MOC_LITERAL(5, 65, 6),
-QT_MOC_LITERAL(6, 72, 25)
+QT_MOC_LITERAL(0, 0, 6),
+QT_MOC_LITERAL(1, 7, 11),
+QT_MOC_LITERAL(2, 19, 0),
+QT_MOC_LITERAL(3, 20, 13),
+QT_MOC_LITERAL(4, 34, 25),
+QT_MOC_LITERAL(5, 60, 6),
+QT_MOC_LITERAL(6, 67, 25)
     },
-    "SceneCamera\0resetCamera\0\0releaseTarget\0"
+    "Camera\0resetCamera\0\0releaseTarget\0"
     "switchToFirstPersonCamera\0status\0"
     "switchToThirdPersonCamera"
 };
 #undef QT_MOC_LITERAL
 
-static const uint qt_meta_data_SceneCamera[] = {
+static const uint qt_meta_data_Camera[] = {
 
  // content:
        7,       // revision
@@ -71,10 +71,10 @@ static const uint qt_meta_data_SceneCamera[] = {
        0        // eod
 };
 
-void SceneCamera::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+void Camera::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
-        SceneCamera *_t = static_cast<SceneCamera *>(_o);
+        Camera *_t = static_cast<Camera *>(_o);
         switch (_id) {
         case 0: _t->resetCamera(); break;
         case 1: _t->releaseTarget(); break;
@@ -85,26 +85,26 @@ void SceneCamera::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
     }
 }
 
-const QMetaObject SceneCamera::staticMetaObject = {
-    { &QObject::staticMetaObject, qt_meta_stringdata_SceneCamera.data,
-      qt_meta_data_SceneCamera,  qt_static_metacall, 0, 0}
+const QMetaObject Camera::staticMetaObject = {
+    { &QObject::staticMetaObject, qt_meta_stringdata_Camera.data,
+      qt_meta_data_Camera,  qt_static_metacall, 0, 0}
 };
 
 
-const QMetaObject *SceneCamera::metaObject() const
+const QMetaObject *Camera::metaObject() const
 {
     return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
 }
 
-void *SceneCamera::qt_metacast(const char *_clname)
+void *Camera::qt_metacast(const char *_clname)
 {
     if (!_clname) return 0;
-    if (!strcmp(_clname, qt_meta_stringdata_SceneCamera.stringdata))
-        return static_cast<void*>(const_cast< SceneCamera*>(this));
+    if (!strcmp(_clname, qt_meta_stringdata_Camera.stringdata))
+        return static_cast<void*>(const_cast< Camera*>(this));
     return QObject::qt_metacast(_clname);
 }
 
-int SceneCamera::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int Camera::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QObject::qt_metacall(_c, _id, _a);
     if (_id < 0)

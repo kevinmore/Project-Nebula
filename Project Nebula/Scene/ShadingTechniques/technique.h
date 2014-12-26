@@ -22,6 +22,8 @@ public:
 
 
 	QOpenGLShaderProgram* getShader() { return m_shader; }
+	GLuint getVAO() { return m_VAO; };
+	void setVAO(GLuint vaoID) { m_VAO = vaoID; }
 
 protected:
 	virtual bool compileShader() = 0;
@@ -33,6 +35,7 @@ protected:
     GLint GetProgramParam(GLint param);
     
 	QOpenGLShaderProgram* m_shader;
+	GLuint m_VAO;
 };
 
 
