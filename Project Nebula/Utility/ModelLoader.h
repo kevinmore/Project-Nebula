@@ -8,12 +8,13 @@
 #include <assert.h>
 #include <QOpenGLFunctions_4_3_Core>
 #include <QSharedPointer>
+#include <Scene/ShadingTechniques/ShadingTechnique.h>
 
 
 class ModelLoader : protected QOpenGLFunctions_4_3_Core
 {
 public:
-	ModelLoader(GLuint shaderProgramID);
+	ModelLoader();
 	virtual ~ModelLoader();
 
 	enum MODEL_TYPE
@@ -39,6 +40,7 @@ public:
 	QVector<Bone> getBoneInfo() const {	return m_BoneInfo; }
 	aiNode* getRootNode() const	{ return m_scene->mRootNode; }
 	Skeleton* getSkeletom() const { return m_skeleton; }
+	ShadingTechnique* getRenderingEffect() { return m_effect; }
 
 
 private:
@@ -51,11 +53,21 @@ private:
 	void loadBones(uint MeshIndex, const aiMesh* paiMesh);
 	void prepareVertexContainers(unsigned int index, const aiMesh* mesh);
 	void generateSkeleton(aiNode* pAiRootNode, Bone* pRootSkeleton, mat4& parentTransform);
+	void initShader();
 	/*
 	 *	Clean up
 	 */
 	void clear();
 
+
+	/*
+	 *	Model Features
+	 */
+	struct ModelFeatures
+	{
+		bool hasColorMap;
+		bool hasNormalMap;
+	} m_modelFeatures;
 
 	/*
 	 *	Vertex Data Containers
@@ -100,6 +112,7 @@ private:
 	QVector<Bone> m_BoneInfo;
 	mat4 m_GlobalInverseTransform;
 	MODEL_TYPE m_modelType;
+	ShadingTechnique* m_effect;
 };
 
 

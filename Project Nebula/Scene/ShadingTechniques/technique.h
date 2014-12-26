@@ -9,12 +9,14 @@ class Technique : protected QOpenGLFunctions_4_3_Core
 {
 public:
 
-    Technique();
+    Technique(const QString& shaderFileName = "");
 
     virtual ~Technique();
 
     virtual bool Init();
 
+	void SetShaderFilePath(const QString& path);
+	void ApplyShader(const QString &shaderName);
     void Enable();
 	void Disable();
 
@@ -22,8 +24,9 @@ public:
 	QOpenGLShaderProgram* getShader() { return m_shader; }
 
 protected:
-
-    bool Finalize();
+	virtual bool compileShader() = 0;
+	QString m_shaderFilePath;
+	QString m_shaderFileName;
 
     GLint GetUniformLocation(const char* pUniformName);
     

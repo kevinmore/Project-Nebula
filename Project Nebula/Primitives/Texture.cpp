@@ -95,7 +95,7 @@ bool Texture::load()
 	m_funcs->glTexParameterf(m_type, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	m_funcs->glBindTexture(m_type, 0);
 
-	qDebug() << "Loaded texture:" << m_fileName;
+	//qDebug() << "Loaded texture:" << m_fileName;
 
 	return true;
 }

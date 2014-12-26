@@ -6,7 +6,6 @@ StaticModel::StaticModel(Scene* scene, ShadingTechnique* tech, const GLuint vao)
   : m_scene(scene),
     m_RenderingEffect(tech),
 	m_vao(vao),
-	m_hasAnimation(false),
 	m_actor(new GameObject)
 {
 	initialize();
@@ -16,7 +15,6 @@ StaticModel::StaticModel(Scene* scene, ShadingTechnique* tech, const GLuint vao,
   : m_scene(scene),
     m_RenderingEffect(tech),
 	m_vao(vao),
-	m_hasAnimation(false),
 	m_actor(new GameObject)
 {
 	initialize(modelData);
@@ -26,6 +24,25 @@ StaticModel::StaticModel(Scene* scene, ShadingTechnique* tech, const GLuint vao,
 StaticModel::~StaticModel() 
 {
 }
+
+void StaticModel::initRenderingEffect()
+{ 	
+
+	DirectionalLight directionalLight;
+	directionalLight.Color = vec3(1.0f, 1.0f, 1.0f);
+	directionalLight.AmbientIntensity = 0.55f;
+	directionalLight.DiffuseIntensity = 0.9f;
+	directionalLight.Direction = vec3(-1.0f, 0.0, 1.0);
+
+	m_RenderingEffect->Enable();
+	m_RenderingEffect->SetColorTextureUnit(0);
+	m_RenderingEffect->SetNormalMapTextureUnit(2);
+	m_RenderingEffect->SetDirectionalLight(directionalLight);
+	m_RenderingEffect->SetMatSpecularIntensity(0.0f);
+	m_RenderingEffect->SetMatSpecularPower(0);
+	m_RenderingEffect->Disable();
+}
+
 
 void StaticModel::initialize(QVector<ModelDataPtr> modelDataVector)
 {
@@ -47,8 +64,6 @@ void StaticModel::initialize(QVector<ModelDataPtr> modelDataVector)
 	for (int i = 0; i < modelDataVector.size(); ++i)
 	{
 		ModelDataPtr data = modelDataVector[i];
-
-		m_hasAnimation = data->hasAnimation;
 
 		// deal with the mesh
 		MeshPtr mesh = m_meshManager->getMesh(data->meshData.name);
@@ -104,25 +119,6 @@ void StaticModel::initialize(QVector<ModelDataPtr> modelDataVector)
 	}
 
 }
-
-void StaticModel::initRenderingEffect()
-{ 	
-
-	DirectionalLight directionalLight;
-	directionalLight.Color = vec3(1.0f, 1.0f, 1.0f);
-	directionalLight.AmbientIntensity = 0.55f;
-	directionalLight.DiffuseIntensity = 0.9f;
-	directionalLight.Direction = vec3(-1.0f, 0.0, 1.0);
-
-	m_RenderingEffect->Enable();
-	m_RenderingEffect->SetColorTextureUnit(0);
-	m_RenderingEffect->SetNormalMapTextureUnit(2);
-	m_RenderingEffect->SetDirectionalLight(directionalLight);
-	m_RenderingEffect->SetMatSpecularIntensity(0.0f);
-	m_RenderingEffect->SetMatSpecularPower(0);
-	m_RenderingEffect->Disable();
-}
-
 
 void StaticModel::destroy() {}
 
@@ -183,6 +179,18 @@ void StaticModel::render( float time )
 // 		}
 // 	}
 
+	for (int i = 0; i < m_textures.size(); ++i)
+	{
+		for(int j = 0; j < m_textures[i].size(); ++j)
+		{
+			TexturePtr pTexture = m_textures[i][j];
+			if(pTexture)
+			{
+				pTexture->release();
+			}
+		}
+	}
+	
 
 	m_RenderingEffect->Disable();	
 }

@@ -73,7 +73,7 @@ public:
 		RIGGED
 	};
 
-    ShadingTechnique(const QString &vertShaderFile, const QString &fragShaderFile, ShaderType shaderType = STATIC);
+    ShadingTechnique(const QString &shaderName = "", ShaderType shaderType = STATIC);
 
     virtual bool Init();
 
@@ -93,7 +93,8 @@ public:
 
 private:
     
-	QString m_vertShaderFile, m_fragShaderFile;
+	bool compileShader();
+
 	ShaderType m_shaderType;
 
     GLuint m_WVPLocation;

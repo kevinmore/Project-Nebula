@@ -3,8 +3,7 @@
 #include <Utility/Math.h>
 #include <Animation/IK/FABRIKSolver.h>
 
-ModelLoader::ModelLoader(GLuint shaderProgramID)
-	: m_shaderProgramID(shaderProgramID)
+ModelLoader::ModelLoader()
 {
 	initializeOpenGLFunctions();
 	clear();
@@ -29,6 +28,9 @@ void ModelLoader::clear()
 		glDeleteVertexArrays(1, &m_VAO);
 		m_VAO = 0;
 	}
+
+	m_modelFeatures.hasColorMap = false;
+	m_modelFeatures.hasNormalMap = false;
 	
 }
 
@@ -39,6 +41,7 @@ ModelLoader::~ModelLoader()
 
 QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName , MODEL_TYPE type)
 {
+	clear();
 	m_modelType = type;
 
 	m_scene = m_importer.ReadFile(fileName.toStdString(), aiProcessPreset_TargetRealtime_Quality | aiProcess_FlipUVs);
@@ -100,6 +103,10 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName , MODEL_TY
 		modelDataVector[i] = ModelDataPtr(md);
 	}
 
+	// init the shader
+	initShader();
+	
+
 	prepareVertexBuffers();
 
 	qDebug() << endl << "Loaded" << fileName;
@@ -109,7 +116,6 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName , MODEL_TY
 		qDebug() << "Contains" << m_NumBones << "bones.";
 	if (m_scene->HasAnimations()) 
 		qDebug() << "Contains a"<< (float) m_scene->mAnimations[0]->mDuration <<"seconds animation.";
-
 
 	// generate the skeleton of the model
 	// specify the root bone
@@ -192,6 +198,104 @@ void ModelLoader::prepareVertexContainers(unsigned int index, const aiMesh* mesh
 	}
 }
 
+void ModelLoader::initShader()
+{
+	QString shaderName, shaderPrefix, shaderFeatures;
+	ShadingTechnique::ShaderType shaderType;
+
+	// process shader prefix (skinning or static)
+	if (m_modelType == RIGGED_MODEL)
+	{
+		shaderType = ShadingTechnique::RIGGED;
+		shaderPrefix = "skinning";
+	}
+	else if (m_modelType == STATIC_MODEL)
+	{
+		shaderType = ShadingTechnique::STATIC;
+		shaderPrefix = "static";
+	}
+
+	// process shader features (diffuse, bump, specular ...)
+	if (m_modelFeatures.hasColorMap) shaderFeatures += "_diffuse";
+	if (m_modelFeatures.hasNormalMap) shaderFeatures += "_bump";
+
+	// combine the shader name
+	shaderName = shaderPrefix + shaderFeatures;
+	m_effect = new ShadingTechnique(shaderName, shaderType);
+
+	if (!m_effect->Init()) 
+	{
+		qDebug() << shaderName << "may not be initialized successfully.";
+	}
+	m_shaderProgramID = m_effect->getShader()->programId();
+}
+
+void ModelLoader::prepareVertexBuffers()
+{
+	// Create the VAO
+	glGenVertexArrays(1, &m_VAO);   
+	glBindVertexArray(m_VAO);
+	GLenum usage;
+	if(m_modelType == RIGGED_MODEL) 
+	{
+		m_Buffers.resize(NUM_VBs);
+		usage = GL_STREAM_DRAW;
+	}
+	else
+	{
+		m_Buffers.resize(NUM_VBs - 1);
+		usage = GL_STATIC_DRAW;
+	}
+
+	// Create the buffers for the vertices attributes
+	glGenBuffers(m_Buffers.size(), m_Buffers.data());
+
+	// Generate and populate the buffers with vertex attributes and the indices
+	glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[POS_VB]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(m_positions[0]) * m_positions.size(), m_positions.data(), usage);
+	GLuint POSITION_LOCATION = glGetAttribLocation(m_shaderProgramID, "Position");
+	glEnableVertexAttribArray(POSITION_LOCATION);
+	glVertexAttribPointer(POSITION_LOCATION, 3, GL_FLOAT, GL_FALSE, 0, 0);    
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[TEXCOORD_VB]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(m_texCoords[0]) * m_texCoords.size(), m_texCoords.data(), usage);
+	GLuint TEX_COORD_LOCATION = glGetAttribLocation(m_shaderProgramID, "TexCoord");
+	glEnableVertexAttribArray(TEX_COORD_LOCATION);
+	glVertexAttribPointer(TEX_COORD_LOCATION, 2, GL_FLOAT, GL_FALSE, 0, 0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[NORMAL_VB]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(m_normals[0]) * m_normals.size(), m_normals.data(), usage);
+	GLuint NORMAL_LOCATION = glGetAttribLocation(m_shaderProgramID, "Normal");
+	glEnableVertexAttribArray(NORMAL_LOCATION);
+	glVertexAttribPointer(NORMAL_LOCATION, 3, GL_FLOAT, GL_FALSE, 0, 0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[TANGENT_VB]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(m_tangents[0]) * m_tangents.size(), m_tangents.data(), usage);
+	GLuint TANGENT_LOCATION = glGetAttribLocation(m_shaderProgramID, "Tangent");
+	glEnableVertexAttribArray(TANGENT_LOCATION);
+	glVertexAttribPointer(TANGENT_LOCATION, 3, GL_FLOAT, GL_FALSE, 0, 0);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_Buffers[INDEX_BUFFER]);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(m_indices[0]) * m_indices.size(), m_indices.data(), usage);
+
+	if (m_modelType == RIGGED_MODEL)
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[BONE_VB]);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(m_Bones[0]) * m_Bones.size(), m_Bones.data(), usage);
+
+		GLuint BONE_ID_LOCATION = glGetAttribLocation(m_shaderProgramID, "BoneIDs");
+		glEnableVertexAttribArray(BONE_ID_LOCATION);
+		glVertexAttribIPointer(BONE_ID_LOCATION, 4, GL_INT, sizeof(VertexBoneData), (const GLvoid*)0);
+
+		GLuint BONE_WEIGHT_LOCATION = glGetAttribLocation(m_shaderProgramID, "Weights");
+		glEnableVertexAttribArray(BONE_WEIGHT_LOCATION);    
+		glVertexAttribPointer(BONE_WEIGHT_LOCATION, 4, GL_FLOAT, GL_FALSE, sizeof(VertexBoneData), (const GLvoid*)16);
+	}
+
+	// Make sure the VAO is not changed from the outside
+	glBindVertexArray(0);
+}
+
 void ModelLoader::loadBones( uint MeshIndex, const aiMesh* paiMesh )
 {
 	for (uint i = 0; i < paiMesh->mNumBones; ++i)
@@ -262,72 +366,6 @@ void ModelLoader::generateSkeleton( aiNode* pAiRootNode, Bone* pRootSkeleton, ma
 		if(pBone) generateSkeleton(pAiRootNode->mChildren[i], pBone, globalTransformation);
 		else generateSkeleton(pAiRootNode->mChildren[i], pRootSkeleton, globalTransformation);
 	}
-}
-
-void ModelLoader::prepareVertexBuffers()
-{
-	// Create the VAO
-	glGenVertexArrays(1, &m_VAO);   
-	glBindVertexArray(m_VAO);
-	GLenum usage;
-	if(m_modelType == RIGGED_MODEL) 
-	{
-		m_Buffers.resize(NUM_VBs);
-		usage = GL_STREAM_DRAW;
-	}
-	else
-	{
-		m_Buffers.resize(NUM_VBs - 1);
-		usage = GL_STATIC_DRAW;
-	}
-
-	// Create the buffers for the vertices attributes
-	glGenBuffers(m_Buffers.size(), m_Buffers.data());
-
-	// Generate and populate the buffers with vertex attributes and the indices
-	glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[POS_VB]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(m_positions[0]) * m_positions.size(), m_positions.data(), usage);
-	GLuint POSITION_LOCATION = glGetAttribLocation(m_shaderProgramID, "Position");
-	glEnableVertexAttribArray(POSITION_LOCATION);
-	glVertexAttribPointer(POSITION_LOCATION, 3, GL_FLOAT, GL_FALSE, 0, 0);    
-
-	glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[TEXCOORD_VB]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(m_texCoords[0]) * m_texCoords.size(), m_texCoords.data(), usage);
-	GLuint TEX_COORD_LOCATION = glGetAttribLocation(m_shaderProgramID, "TexCoord");
-	glEnableVertexAttribArray(TEX_COORD_LOCATION);
-	glVertexAttribPointer(TEX_COORD_LOCATION, 2, GL_FLOAT, GL_FALSE, 0, 0);
-
-	glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[NORMAL_VB]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(m_normals[0]) * m_normals.size(), m_normals.data(), usage);
-	GLuint NORMAL_LOCATION = glGetAttribLocation(m_shaderProgramID, "Normal");
-	glEnableVertexAttribArray(NORMAL_LOCATION);
-	glVertexAttribPointer(NORMAL_LOCATION, 3, GL_FLOAT, GL_FALSE, 0, 0);
-
-	glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[TANGENT_VB]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(m_tangents[0]) * m_tangents.size(), m_tangents.data(), usage);
-	GLuint TANGENT_LOCATION = glGetAttribLocation(m_shaderProgramID, "Tangent");
-	glEnableVertexAttribArray(TANGENT_LOCATION);
-	glVertexAttribPointer(TANGENT_LOCATION, 3, GL_FLOAT, GL_FALSE, 0, 0);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_Buffers[INDEX_BUFFER]);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(m_indices[0]) * m_indices.size(), m_indices.data(), usage);
-
-	if (m_modelType == RIGGED_MODEL)
-	{
-		glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[BONE_VB]);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(m_Bones[0]) * m_Bones.size(), m_Bones.data(), usage);
-
-		GLuint BONE_ID_LOCATION = glGetAttribLocation(m_shaderProgramID, "BoneIDs");
-		glEnableVertexAttribArray(BONE_ID_LOCATION);
-		glVertexAttribIPointer(BONE_ID_LOCATION, 4, GL_INT, sizeof(VertexBoneData), (const GLvoid*)0);
-
-		GLuint BONE_WEIGHT_LOCATION = glGetAttribLocation(m_shaderProgramID, "Weights");
-		glEnableVertexAttribArray(BONE_WEIGHT_LOCATION);    
-		glVertexAttribPointer(BONE_WEIGHT_LOCATION, 4, GL_FLOAT, GL_FALSE, sizeof(VertexBoneData), (const GLvoid*)16);
-	}
-
-	// Make sure the VAO is not changed from the outside
-	glBindVertexArray(0);
 }
 
 MaterialData ModelLoader::loadMaterial(unsigned int index, const aiMaterial* material)
@@ -463,6 +501,7 @@ TextureData ModelLoader::loadTexture(const QString& fileName, const aiMaterial* 
 			QString texturePath = dir + "/" + path.data;
 			data.colorMap = texturePath;
 			data.hasTexture = true;
+			m_modelFeatures.hasColorMap = true;
 		}
 	}
 	if(material->GetTextureCount(aiTextureType_NORMALS) > 0)
@@ -471,6 +510,7 @@ TextureData ModelLoader::loadTexture(const QString& fileName, const aiMaterial* 
 		{
 			QString texturePath = dir + "/" + path.data;
 			data.normalMap = texturePath;
+			m_modelFeatures.hasNormalMap = true;
 		}
 	}
 	if(material->GetTextureCount(aiTextureType_OPACITY) > 0)

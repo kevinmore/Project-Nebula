@@ -22,7 +22,6 @@ public:
 	virtual ~StaticModel(void);
 
 	virtual void render( float time );
-	bool hasAnimation() { return m_hasAnimation; }
 	GameObject* getActor() { return m_actor; }
 	ShadingTechnique* getShadingTech() { return m_RenderingEffect; }
 
@@ -53,7 +52,6 @@ private:
 	QOpenGLFunctions_4_3_Core* m_funcs;
 	Scene* m_scene;
 	ShadingTechnique* m_RenderingEffect;
-	bool m_hasAnimation;
 	GameObject* m_actor;
 };
 

@@ -60,11 +60,11 @@ void Scene::initialize()
 	//m_modelManager->loadModel("temple", "../Resource/Models/Final/scene/temple/temple.DAE", ModelLoader::STATIC_MODEL);
 	//m_modelManager->loadModel("mountain", "../Resource/Models/Final/scene/mountain/mountain.DAE", ModelLoader::STATIC_MODEL);
 	//m_modelManager->loadModel("floor", "../Resource/Models/DemoRoom/floor.DAE", ModelLoader::STATIC_MODEL);
-	m_modelManager->loadModel("trolley", "../Resource/Models/static/trolley.DAE", ModelLoader::STATIC_MODEL);
-	m_modelManager->loadModel("trolley2", "../Resource/Models/Final/m005/m_idle.DAE", ModelLoader::STATIC_MODEL);
-	m_stateMachine = new QStateMachine();
+// 	m_modelManager->loadModel("trolley", "../Resource/Models/static/trolley.DAE", ModelLoader::STATIC_MODEL);
+// 	m_modelManager->loadModel("brick2", "../Resource/Models/static/brick2.DAE", ModelLoader::STATIC_MODEL);
+ 	m_modelManager->loadModel("brick", "../Resource/Models/static/brick.DAE", ModelLoader::STATIC_MODEL);
 
-	/*
+	
 	// locomotions
  	m_modelManager->loadModel("m_idle", "../Resource/Models/Final/m005/m_idle.DAE", ModelLoader::RIGGED_MODEL);
  	m_modelManager->loadModel("m_run", "../Resource/Models/Final/m005/m_run.DAE", ModelLoader::RIGGED_MODEL);
@@ -115,7 +115,7 @@ void Scene::initialize()
 
 	m_playerController->buildStateMachine();
 	m_stateMachine = m_playerController->getStateMachine();
-	*/
+	
 
 	// generate a bezier curve
 // 	QVector<vec3> anchors;
@@ -139,14 +139,17 @@ void Scene::initialize()
 // 	sceneObject = m_modelManager->getStaticModel("floor");
 // 	sceneObject->getActor()->setRotation(-90.0f, 0.0f, 0.0f);
 	
-	sceneObject = m_modelManager->getStaticModel("trolley");
-	sceneObject->getActor()->setRotation(-90.0f, 0.0f, 0.0f);
+// 	sceneObject = m_modelManager->getStaticModel("trolley");
+// 	sceneObject->getActor()->setRotation(-90.0f, 0.0f, 0.0f);
+// 	sceneObject->getActor()->setPosition(100.0f, 0, 0);
+// 
+// 	sceneObject = m_modelManager->getStaticModel("brick");
+// 	sceneObject->getActor()->setPosition(-100.0f, 0, 0);
+// 
+// 	sceneObject = m_modelManager->getStaticModel("brick2");
+// 	sceneObject->getActor()->setPosition(-100.0f, 100, 0);
 
-	sceneObject = m_modelManager->getStaticModel("trolley2");
-	sceneObject->getActor()->setRotation(-90.0f, 0.0f, 0.0f);
-	sceneObject->getActor()->setPosition(100.0f, 0, 0);
-
-	m_camera->followTarget(sceneObject->getActor());
+	m_camera->followTarget(m_playerController->getActor());
 
 }
 
@@ -198,10 +201,10 @@ void Scene::update(float t)
 		if (distance <= 200.0f && index == -1)
 			socialTargets.push_back(m_NPCs[i]);
 	}
+	*/
 
 	// render the character controlled by the user
 	if(m_modelManager->m_riggedModels.size() > 0) m_playerController->render(t);
-	*/
 }
 
 void Scene::render(double currentTime)

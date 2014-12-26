@@ -47,6 +47,7 @@ void RiggedModel::initRenderingEffect()
 
 	m_RenderingEffect->Enable();
 	m_RenderingEffect->SetColorTextureUnit(0);
+	m_RenderingEffect->SetNormalMapTextureUnit(2);
 	m_RenderingEffect->SetDirectionalLight(directionalLight);
 	m_RenderingEffect->SetMatSpecularIntensity(0.0f);
 	m_RenderingEffect->SetMatSpecularPower(0);
@@ -70,6 +71,7 @@ void RiggedModel::initialize(QVector<ModelDataPtr> modelDataVector)
 	m_materialManager = m_scene->materialManager();
 
 	// traverse modelData vector
+	m_textures.resize(modelDataVector.size());
 	for (int i = 0; i < modelDataVector.size(); ++i)
 	{
 		ModelDataPtr data = modelDataVector[i];
@@ -89,16 +91,24 @@ void RiggedModel::initialize(QVector<ModelDataPtr> modelDataVector)
 		// deal with the texture
 		if(data->textureData.hasTexture)
 		{
-			TexturePtr  texture = m_textureManager->getTexture(data->textureData.colorMap);
-
-			if(!texture)
+			TexturePtr  texture_colorMap = m_textureManager->getTexture(data->textureData.colorMap);
+			if(!texture_colorMap)
 			{
-				texture = m_textureManager->addTexture(data->textureData.colorMap, data->textureData.colorMap);
+				texture_colorMap = m_textureManager->addTexture(data->textureData.colorMap, data->textureData.colorMap);
 			}
+			m_textures[i].push_back(texture_colorMap);
 
-			m_textures.push_back(texture);
+			if (!data->textureData.normalMap.isEmpty())
+			{
+				TexturePtr  texture_normalMap = m_textureManager->getTexture(data->textureData.normalMap);
+				if(!texture_normalMap)
+				{
+					texture_normalMap = m_textureManager->addTexture(data->textureData.normalMap, data->textureData.normalMap, Texture::Texture2D, Texture::NormalMap);
+				}
+				m_textures[i].push_back(texture_normalMap);
+			}
 		}
-		else m_textures.push_back(TexturePtr(nullptr));
+		else m_textures[i].push_back(TexturePtr(nullptr));
 
 		// deal with the material
 		MaterialPtr material = m_materialManager->getMaterial(data->materialData.name);
@@ -250,9 +260,20 @@ void RiggedModel::render( float currentTime )
 	{
 		/*if( m_materials[i] != nullptr && ! m_materials[i]->isTranslucent())*/
 		{
-			if(m_textures[i] != nullptr)
+			for(int j = 0; j < m_textures[i].size(); ++j)
 			{
-				m_textures[i]->bind(GL_TEXTURE0);
+				TexturePtr pTexture = m_textures[i][j];
+				if(pTexture)
+				{
+					if (pTexture->usage() == Texture::ColorMap)
+					{
+						pTexture->bind(COLOR_TEXTURE_UNIT);
+					}
+					else if (pTexture->usage() == Texture::NormalMap)
+					{
+						pTexture->bind(NORMAL_TEXTURE_UNIT);
+					}
+				}
 			}
 
 			//m_materials[i]->bind();
@@ -276,6 +297,18 @@ void RiggedModel::render( float currentTime )
 // 			glDepthMask(GL_TRUE);
 // 		}
 // 	}
+
+	for (int i = 0; i < m_textures.size(); ++i)
+	{
+		for(int j = 0; j < m_textures[i].size(); ++j)
+		{
+			TexturePtr pTexture = m_textures[i][j];
+			if(pTexture)
+			{
+				pTexture->release();
+			}
+		}
+	}
 
 	m_RenderingEffect->Disable();
 }
