@@ -3,7 +3,7 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 #include <Scene/AbstractModel.h>
-#include <Utility/DataTypes.h>
+#include <Utility/EngineCommon.h>
 #include <Animation/Rig/Skeleton.h>
 #include <assert.h>
 #include <QOpenGLFunctions_4_3_Core>
@@ -53,7 +53,7 @@ private:
 	void loadBones(uint MeshIndex, const aiMesh* paiMesh);
 	void prepareVertexContainers(unsigned int index, const aiMesh* mesh);
 	void generateSkeleton(aiNode* pAiRootNode, Bone* pRootSkeleton, mat4& parentTransform);
-	void initShader();
+	void installShader();
 	/*
 	 *	Clean up
 	 */

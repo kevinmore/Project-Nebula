@@ -21,8 +21,8 @@ Scene::Scene(QObject* parent)
 
 Scene::~Scene()
 {
-	delete m_camera;
-	m_camera = nullptr;
+	SAFE_DELETE(m_camera);
+	SAFE_DELETE(m_stateMachine);
 }
 
 void Scene::initialize()

@@ -103,20 +103,6 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName , MODEL_TY
 		modelDataVector[i] = ModelDataPtr(md);
 	}
 
-	// init the shader
-	initShader();
-	
-
-	prepareVertexBuffers();
-
-	qDebug() << endl << "Loaded" << fileName;
-	qDebug() << "Model has" << m_scene->mNumMeshes << "meshes," << numVertices << "vertices," 
-		     << numIndices << "indices";
-	if(m_NumBones)
-		qDebug() << "Contains" << m_NumBones << "bones.";
-	if (m_scene->HasAnimations()) 
-		qDebug() << "Contains a"<< (float) m_scene->mAnimations[0]->mDuration <<"seconds animation.";
-
 	// generate the skeleton of the model
 	// specify the root bone
 	if(m_BoneMapping.size() > 0 && m_modelType == RIGGED_MODEL)
@@ -129,11 +115,26 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName , MODEL_TY
 		generateSkeleton(m_scene->mRootNode, skeleton_root, identity);
 		m_skeleton = new Skeleton(skeleton_root, m_GlobalInverseTransform);
 
-
+		// print out the skeleton
 		//m_skeleton->dumpSkeleton(skeleton_root, 0);
 	}
-	
 
+	// install the shader
+	installShader();
+	
+	// prepare the vertex buffers (position, texcoord, normal, tangents...)
+	prepareVertexBuffers();
+
+	// print out the summary
+	qDebug() << endl << "Loaded" << fileName;
+	qDebug() << "Model has" << m_scene->mNumMeshes << "meshes," << numVertices << "vertices," 
+		     << numIndices << "indices";
+	if(m_NumBones)
+		qDebug() << "Contains" << m_NumBones << "bones.";
+	if (m_scene->HasAnimations()) 
+		qDebug() << "Contains a"<< (float) m_scene->mAnimations[0]->mDuration <<"seconds animation.";
+
+	
 	return modelDataVector;
 }
 
@@ -198,7 +199,7 @@ void ModelLoader::prepareVertexContainers(unsigned int index, const aiMesh* mesh
 	}
 }
 
-void ModelLoader::initShader()
+void ModelLoader::installShader()
 {
 	QString shaderName, shaderPrefix, shaderFeatures;
 	ShadingTechnique::ShaderType shaderType;

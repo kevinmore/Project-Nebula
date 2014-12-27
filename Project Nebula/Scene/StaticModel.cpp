@@ -23,6 +23,7 @@ StaticModel::StaticModel(Scene* scene, ShadingTechnique* tech, QVector<ModelData
 
 StaticModel::~StaticModel() 
 {
+	SAFE_DELETE(m_actor);
 }
 
 void StaticModel::initRenderingEffect()

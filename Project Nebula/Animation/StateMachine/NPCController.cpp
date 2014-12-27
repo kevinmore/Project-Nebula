@@ -11,6 +11,8 @@ NPCController::NPCController(QSharedPointer<ModelManager> manager, const QString
 
 NPCController::~NPCController()
 {
+	SAFE_DELETE(m_actor);
+	SAFE_DELETE(m_stateMachine);
 }
 
 void NPCController::listenToEvents( const QString& event )

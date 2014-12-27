@@ -30,11 +30,11 @@
     <ClCompile Include="Scene\RiggedModel.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\ShadingTechniques\ShadingTechnique.cpp" />
-    <ClCompile Include="Scene\ShadingTechniques\technique.cpp" />
+    <ClCompile Include="Scene\ShadingTechniques\Technique.cpp" />
     <ClCompile Include="Scene\StaticModel.cpp" />
     <ClCompile Include="Scene\ShadingTechniques\ShadowMapFBO.cpp" />
-    <ClCompile Include="UI\MainWindow.cpp" />
     <ClCompile Include="UI\Canvas.cpp" />
+    <ClCompile Include="UI\MainWindow.cpp" />
     <ClCompile Include="UI\MainWindow_moc.cpp" />
     <ClCompile Include="UI\moc_Canvas.cc" />
     <ClCompile Include="Utility\ModelLoader.cpp" />
@@ -63,12 +63,12 @@
     <ClInclude Include="Scene\RiggedModel.h" />
     <QtMOC Include="Scene\Scene.h" />
     <ClInclude Include="Scene\ShadingTechniques\ShadingTechnique.h" />
-    <ClInclude Include="Scene\ShadingTechniques\technique.h" />
     <ClInclude Include="Animation\Rig\Skeleton.h" />
+    <ClInclude Include="Scene\ShadingTechniques\Technique.h" />
     <ClInclude Include="Scene\StaticModel.h" />
     <ClInclude Include="Scene\ShadingTechniques\ShadowMapFBO.h" />
+    <ClInclude Include="UI\Canvas.h" />
     <ClInclude Include="UI\MainWindow.h" />
-    <QtMOC Include="UI\Canvas.h" />
     <ClInclude Include="Utility\ModelLoader.h" />
     <ClInclude Include="Scene\AbstractModel.h" />
     <ClInclude Include="Scene\AbstractScene.h" />
@@ -82,7 +82,7 @@
     <ClInclude Include="Scene\Managers\MaterialManager.h" />
     <ClInclude Include="Scene\Managers\TextureManager.h" />
     <ClInclude Include="Utility\Math.h" />
-    <ClInclude Include="Utility\DataTypes.h" />
+    <ClInclude Include="Utility\EngineCommon.h" />
     <ClInclude Include="Utility\OpenGLUniformBuffer.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

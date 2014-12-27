@@ -10,7 +10,10 @@ AnimatorController::AnimatorController( QSharedPointer<ModelManager> manager )
 
 
 AnimatorController::~AnimatorController()
-{}
+{
+	SAFE_DELETE(m_actor);
+	SAFE_DELETE(m_stateMachine);
+}
 
 void AnimatorController::setCurrentClip( const QString& clipName )
 {

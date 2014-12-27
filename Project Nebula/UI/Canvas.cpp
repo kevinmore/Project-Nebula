@@ -66,7 +66,10 @@ Canvas::Canvas(QScreen *screen)
 
 }
 
-Canvas::~Canvas() {}
+Canvas::~Canvas() 
+{
+	SAFE_DELETE(m_scene);
+}
 
 /**
  * @brief Initializing the rendering area

@@ -1,6 +1,6 @@
 #pragma once
 #include "BoneInfo.h"
-#include <Utility/DataTypes.h>
+#include <Utility/EngineCommon.h>
 
 class Skeleton
 {

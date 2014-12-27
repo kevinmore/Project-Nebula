@@ -6,7 +6,7 @@ class FKController
 {
 public:
 	FKController(ModelLoader* loader, Skeleton* skeleton);
-	~FKController(void);
+	~FKController();
 
 	void getBoneTransforms(float TimeInSeconds, QVector<mat4>& Transforms);
 	void enableAllBones();

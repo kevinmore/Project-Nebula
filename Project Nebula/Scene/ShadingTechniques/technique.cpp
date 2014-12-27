@@ -2,6 +2,7 @@
 #include <string.h>
 
 #include "Technique.h"
+#include <Utility/EngineCommon.h>
 
 Technique::Technique( const QString& shaderFileName /*= ""*/ )
 {
@@ -14,6 +15,7 @@ Technique::Technique( const QString& shaderFileName /*= ""*/ )
 Technique::~Technique()
 {
     m_shader->release();
+	SAFE_DELETE(m_shader);
 }
 
 

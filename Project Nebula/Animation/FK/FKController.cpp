@@ -37,8 +37,12 @@ FKController::FKController(ModelLoader* loader, Skeleton* skeleton)
 
 }
 
-FKController::~FKController(void)
-{}
+FKController::~FKController()
+{
+	SAFE_DELETE(m_Animations);
+	SAFE_DELETE(m_root);
+	SAFE_DELETE(m_skeleton);
+}
 
 void FKController::getBoneTransforms( float TimeInSeconds, QVector<mat4>& Transforms )
 {

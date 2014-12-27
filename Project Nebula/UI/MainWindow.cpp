@@ -1,9 +1,8 @@
 #include "MainWindow.h"
-#include <statemachineviewer.h>
 
-StateMachineViewer* showStateMachine(QStateMachine* machine)
+StateMachineViewer* MainWindow::showStateMachine(QStateMachine* machine)
 {
-	StateMachineViewer* smv = new StateMachineViewer();
+	StateMachineViewer* smv = new StateMachineViewer(this);
 	smv->setStateMachine(machine);
 	return smv;
 }
@@ -20,20 +19,21 @@ MainWindow::MainWindow(QWidget *parent)
 	m_object3D = m_scene->getObject();
 	m_camera   = m_scene->getCamera();
 
-	initializeCanvas();
-	initializeParamsArea();
-	initializeMenuBar();
-
 	// show the state machine viewer
 	QStateMachine* machine = m_scene->getStateMachine();
 	if(machine)
 	{
-		QDockWidget* dock_stateMachine = new QDockWidget("State Machine Viewer", this);
+		m_stateMachineViewer = new QDockWidget("State Machine Viewer", this);
 		StateMachineViewer* smv = showStateMachine(machine);
-		dock_stateMachine->setWidget(smv);
-		dock_stateMachine->setFeatures(QDockWidget::AllDockWidgetFeatures);
-		addDockWidget(Qt::BottomDockWidgetArea, dock_stateMachine);
+		m_stateMachineViewer->setWidget(smv);
+		m_stateMachineViewer->setFeatures(QDockWidget::AllDockWidgetFeatures);
+		addDockWidget(Qt::BottomDockWidgetArea, m_stateMachineViewer);
+		m_stateMachineViewer->hide();
 	}
+
+	initializeCanvas();
+	initializeParamsArea();
+	initializeMenuBar();
 
 	resize(1366, 768);
 
@@ -42,7 +42,9 @@ MainWindow::MainWindow(QWidget *parent)
 	showNormal();
 }
 
-MainWindow::~MainWindow() {}
+MainWindow::~MainWindow() 
+{
+}
 
 void MainWindow::initializeCanvas() 
 {
@@ -68,11 +70,23 @@ void MainWindow::initializeMenuBar()
 	msaaAction->setChecked(true);
 	msaaAction->setShortcut(QKeySequence(Qt::Key_M));
 
+// 	QAction* toggleStateMachineViewer = new QAction("&Show State Machine", this);
+// 	toggleStateMachineViewer->setCheckable(true);
+// 	toggleStateMachineViewer->setChecked(false);
+
+	QAction* toggleSettingsTab = m_dockParamsArea->toggleViewAction();
+	toggleSettingsTab->setText("Show Settings Window");
+
+	QAction* toggleStateMachineViewer = m_stateMachineViewer->toggleViewAction();
+	toggleStateMachineViewer->setText("Show State Machine");
+
 	QMenu *fileMenu = menuBar()->addMenu("&File");
 	fileMenu->addAction(exitAction);
 
 	QMenu *windowMenu = menuBar()->addMenu("&Window");
 	windowMenu->addAction(fullscreenAction);
+	windowMenu->addAction(toggleSettingsTab);
+	windowMenu->addAction(toggleStateMachineViewer);
 
 	QMenu *antialiasingMenu = menuBar()->addMenu("&Anti-aliasing");
 	antialiasingMenu->addAction(msaaAction);

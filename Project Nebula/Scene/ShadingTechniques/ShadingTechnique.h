@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Technique.h"
-#include <Utility/DataTypes.h>
+#include <Utility/EngineCommon.h>
 
 struct BaseLight
 {

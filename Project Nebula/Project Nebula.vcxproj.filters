@@ -15,10 +15,6 @@
     <ClCompile Include="Scene\AbstractModel.cpp" />
     <ClCompile Include="Scene\AbstractScene.cpp" />
     <ClCompile Include="Utility\OpenGLUniformBuffer.cpp" />
-    <ClCompile Include="UI\MainWindow.cpp" />
-    <ClCompile Include="UI\Canvas.cpp" />
-    <ClCompile Include="UI\MainWindow_moc.cpp" />
-    <ClCompile Include="Scene\ShadingTechniques\technique.cpp" />
     <ClCompile Include="Animation\FK\FKController.cpp" />
     <ClCompile Include="Animation\Rig\Skeleton.cpp" />
     <ClCompile Include="Scene\RiggedModel.cpp" />
@@ -27,7 +23,6 @@
     <ClCompile Include="Animation\IK\FABRIKSolver.cpp" />
     <ClCompile Include="Animation\IK\CCDIKSolver.cpp" />
     <ClCompile Include="Animation\Rig\Pose.cpp" />
-    <ClCompile Include="UI\moc_Canvas.cc" />
     <ClCompile Include="Scene\moc_Scene.cc" />
     <ClCompile Include="Scene\GameObject.cpp" />
     <ClCompile Include="Scene\moc_GameObject.cc" />
@@ -39,9 +34,13 @@
     <ClCompile Include="Scene\ShadingTechniques\ShadowMapFBO.cpp" />
     <ClCompile Include="Scene\Camera.cpp" />
     <ClCompile Include="Scene\moc_Camera.cc" />
+    <ClCompile Include="Scene\ShadingTechniques\Technique.cpp" />
+    <ClCompile Include="UI\Canvas.cpp" />
+    <ClCompile Include="UI\moc_Canvas.cc" />
+    <ClCompile Include="UI\MainWindow.cpp" />
+    <ClCompile Include="UI\MainWindow_moc.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Utility\DataTypes.h" />
     <ClInclude Include="Primitives\Texture.h" />
     <ClInclude Include="Primitives\Material.h" />
     <ClInclude Include="Primitives\Mesh.h" />
@@ -55,7 +54,6 @@
     <ClInclude Include="Scene\Managers\ModelManager.h" />
     <ClInclude Include="Scene\Managers\TextureManager.h" />
     <ClInclude Include="Utility\OpenGLUniformBuffer.h" />
-    <ClInclude Include="UI\MainWindow.h" />
     <ClInclude Include="Animation\FK\FKController.h" />
     <ClInclude Include="Animation\Rig\Skeleton.h" />
     <ClInclude Include="Animation\Rig\BoneInfo.h" />
@@ -67,10 +65,12 @@
     <ClInclude Include="Animation\Rig\Pose.h" />
     <ClInclude Include="Animation\StateMachine\AnimatorPanel.h" />
     <ClInclude Include="Scene\ShadingTechniques\ShadowMapFBO.h" />
-    <ClInclude Include="Scene\ShadingTechniques\technique.h" />
+    <ClInclude Include="Utility\EngineCommon.h" />
+    <ClInclude Include="Scene\ShadingTechniques\Technique.h" />
+    <ClInclude Include="UI\Canvas.h" />
+    <ClInclude Include="UI\MainWindow.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtMOC Include="UI\Canvas.h" />
     <QtMOC Include="Scene\Scene.h" />
     <QtMOC Include="Scene\GameObject.h" />
     <QtMOC Include="Animation\StateMachine\NPCController.h" />

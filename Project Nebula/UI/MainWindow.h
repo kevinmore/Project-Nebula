@@ -4,6 +4,7 @@
 #include <Scene/Scene.h>
 #include <Scene/Camera.h>
 #include <Scene/GameObject.h>
+#include <statemachineviewer.h>
 
 class MainWindow : public QMainWindow
 {
@@ -20,6 +21,8 @@ private:
 	void initializeCanvas();
 	void initializeMenuBar();
 	void initializeParamsArea();
+	StateMachineViewer* showStateMachine(QStateMachine* machine);
+
 private slots:
 	void setFullScreen(bool state);
 	void setViewProperties(bool state);
@@ -37,7 +40,7 @@ private:
 	QScopedPointer<Canvas> m_canvas;
 
 	QWidget      * m_params,         * m_coordinate,     * m_mvpMatrix;
-	QDockWidget  * m_dockParamsArea, * m_dockMatrixArea;
+	QDockWidget  * m_dockParamsArea, * m_dockMatrixArea, * m_stateMachineViewer;
 	Scene        * m_scene;
 	GameObject     * m_object3D;
 	Camera  * m_camera;

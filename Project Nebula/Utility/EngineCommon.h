@@ -18,3 +18,4 @@ typedef QMatrix4x4 mat4;
 
 #define ZERO_MEM(a) memset(a, 0, sizeof(a))
 #define ARRAY_SIZE_IN_ELEMENTS(a) (sizeof(a)/sizeof(*a))
+#define SAFE_DELETE(p) if (p) { delete p; p = NULL; }

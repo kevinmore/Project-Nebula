@@ -34,6 +34,7 @@ RiggedModel::RiggedModel(Scene* scene, ShadingTechnique* tech, Skeleton* skeleto
 
 RiggedModel::~RiggedModel() 
 {
+	SAFE_DELETE(m_actor);
 }
 
 void RiggedModel::initRenderingEffect()

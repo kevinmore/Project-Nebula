@@ -1,5 +1,5 @@
 #pragma once
-#include <Utility/DataTypes.h>
+#include <Utility/EngineCommon.h>
 #include <Utility/OpenGLUniformBuffer.h>
 class Material
 {
