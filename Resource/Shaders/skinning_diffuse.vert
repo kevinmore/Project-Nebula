@@ -10,7 +10,6 @@ layout (location = 5) in vec4 Weights;
 const int MAX_BONES = 200;
 
 uniform mat4 gWVP;                                                                  
-uniform mat4 gLightWVP;                                                             
 uniform mat4 gWorld;  
 uniform mat4 gBones[MAX_BONES];
 
@@ -30,7 +29,6 @@ void main()
 
 	
     vec4 PosL    = BoneTransform * vec4(Position, 1.0);
-	LightSpacePos0 = gLightWVP * PosL;
     gl_Position  = gWVP * PosL;
     TexCoord0    = TexCoord;
     vec4 NormalL = BoneTransform * vec4(Normal, 0.0);

@@ -26,7 +26,7 @@ public:
 	/*
 	 *	This is the core functionality
 	 */
-	QVector<ModelDataPtr> loadModel(const QString& filename, MODEL_TYPE type);
+	QVector<ModelDataPtr> loadModel(const QString& filename);
 
 
 	/*
@@ -41,7 +41,7 @@ public:
 	aiNode* getRootNode() const	{ return m_scene->mRootNode; }
 	Skeleton* getSkeletom() const { return m_skeleton; }
 	ShadingTechnique* getRenderingEffect() { return m_effect; }
-
+	MODEL_TYPE getModelType() { return m_modelType; }
 
 private:
 	/*

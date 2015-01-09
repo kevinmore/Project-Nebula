@@ -18,6 +18,7 @@ void ModelLoader::clear()
 	m_normals.clear();
 	m_tangents.clear();
 	m_indices.clear();
+	m_Bones.clear();
 
 	if (m_Buffers.size()) 
 		glDeleteBuffers(m_Buffers.size(), m_Buffers.data());
@@ -39,10 +40,9 @@ ModelLoader::~ModelLoader()
 	clear();
 }
 
-QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName , MODEL_TYPE type)
+QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName )
 {
 	clear();
-	m_modelType = type;
 
 	m_scene = m_importer.ReadFile(fileName.toStdString(), aiProcessPreset_TargetRealtime_Quality | aiProcess_FlipUVs);
 
@@ -59,6 +59,7 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName , MODEL_TY
 	
    	m_GlobalInverseTransform = Math::convToQMat4(m_scene->mRootNode->mTransformation.Inverse());
 
+	m_modelType = m_scene->HasAnimations() ? RIGGED_MODEL : STATIC_MODEL;
 
 	unsigned int numVertices = 0;
 	unsigned int numIndices  = 0;

@@ -53,6 +53,7 @@ bool ShadingTechnique::compileShader()
 	m_numPointLightsLocation = GetUniformLocation("gNumPointLights");
 	m_numSpotLightsLocation = GetUniformLocation("gNumSpotLights");
 
+	/*
 	if (m_dirLightLocation.AmbientIntensity == INVALID_UNIFORM_LOCATION ||
 		m_WVPLocation == INVALID_UNIFORM_LOCATION ||
 		m_LightWVPLocation == INVALID_UNIFORM_LOCATION ||
@@ -70,7 +71,7 @@ bool ShadingTechnique::compileShader()
 		m_numSpotLightsLocation == INVALID_UNIFORM_LOCATION) {
 			return false;
 	}
-
+	*/
 	for (unsigned int i = 0 ; i < ARRAY_SIZE_IN_ELEMENTS(m_pointLightsLocation) ; i++) {
 		char Name[128];
 		memset(Name, 0, sizeof(Name));

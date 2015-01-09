@@ -22,6 +22,18 @@
  * THE SOFTWARE.
  */
 
+ QFileDialog
+{
+ 
+	color: silver;
+    background-color: #302F2F;
+    selection-background-color:#78879b;
+    selection-color: black;
+    background-clip: border;
+    border-image: none;
+    outline: 0;
+ }
+ 
 QProgressBar:horizontal {
     border: 1px solid #3A3939;
     text-align: center;

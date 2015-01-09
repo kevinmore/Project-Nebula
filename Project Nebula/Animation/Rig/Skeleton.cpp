@@ -10,7 +10,7 @@ Skeleton::Skeleton( Bone* root , mat4& globalInverseMatrix)
 
 	// make the bone list
 	m_BoneList.resize(getSkeletonSize());
-	QMap<QString, Bone*>::iterator it;
+	QMap<QString, Bone*>::Iterator it;
 	for (it = m_BoneMap.begin(); it != m_BoneMap.end(); ++it)
 	{
 		m_BoneList[it.value()->m_ID] = it.value();

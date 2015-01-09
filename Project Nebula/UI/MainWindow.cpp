@@ -58,6 +58,8 @@ void MainWindow::initializeCanvas()
 
 void MainWindow::initializeMenuBar()
 {
+	QAction *loadModelAction = new QAction("Load Model", this);
+
 	QAction *exitAction = new QAction("&Exit", this);
 	exitAction->setShortcut(QKeySequence("Ctrl+Q"));
 
@@ -81,6 +83,8 @@ void MainWindow::initializeMenuBar()
 	toggleStateMachineViewer->setText("Show State Machine");
 
 	QMenu *fileMenu = menuBar()->addMenu("&File");
+	fileMenu->addAction(loadModelAction);
+	fileMenu->addSeparator();
 	fileMenu->addAction(exitAction);
 
 	QMenu *windowMenu = menuBar()->addMenu("&Window");
@@ -92,6 +96,7 @@ void MainWindow::initializeMenuBar()
 	antialiasingMenu->addAction(msaaAction);
 
 
+	QObject::connect(loadModelAction,  SIGNAL(triggered()),     m_scene, SLOT(showLoadModelDialog()));
 	QObject::connect(exitAction,       SIGNAL(triggered()),     qApp,    SLOT(quit()));
 	QObject::connect(fullscreenAction, SIGNAL(triggered(bool)), this,    SLOT(setFullScreen(bool)));
 	QObject::connect(msaaAction,       SIGNAL(triggered(bool)), m_scene, SLOT(toggleAA(bool)));

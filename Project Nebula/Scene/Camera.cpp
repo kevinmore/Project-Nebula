@@ -466,7 +466,7 @@ void Camera::update( const float currentTime )
 			m_tiltAngle = 0.0f;
 		}
 		translate(m_viewDirection * dt * m_metersToUnits, option);
-		translateWorld(m_followingTarget->globalSpeed() * dt, option);
+		if(m_followingTarget) translateWorld(m_followingTarget->globalSpeed() * dt, option);
 	}
 	else
 	{

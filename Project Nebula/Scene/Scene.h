@@ -46,6 +46,7 @@ public:
 	QSharedPointer<MeshManager>     meshManager();
 	QSharedPointer<TextureManager>  textureManager();
 	QSharedPointer<MaterialManager> materialManager();
+	QSharedPointer<ModelManager>    modelManager();
 
 	QStateMachine* getStateMachine() { return m_stateMachine; }
 
@@ -60,6 +61,7 @@ public slots:
 	void toggleRimLighting(bool state);
 
 	void toggleAA(bool state);
+	void showLoadModelDialog();
 
 signals:
 	void renderCycleDone();

@@ -20,7 +20,7 @@ public:
 	RiggedModel* getRiggedModel(const QString& name);
 	StaticModel* getStaticModel(const QString& name);
 
-	ModelPtr loadModel(const QString& name, const QString& filename, ModelLoader::MODEL_TYPE type);
+	ModelPtr loadModel(const QString& name, const QString& filename);
 	void renderAllModels(float time);
 	void renderRiggedModels(float time);
 	void renderStaticModels(float time);
