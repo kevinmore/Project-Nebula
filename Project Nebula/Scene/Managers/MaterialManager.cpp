@@ -37,3 +37,13 @@ MaterialPtr MaterialManager::addMaterial(const QString& name,
 
 	return m_materials[name];
 }
+
+void MaterialManager::clear()
+{
+	for (auto it = m_materials.begin(); it != m_materials.end(); )
+	{
+		m_materials.erase(it++);
+	}
+
+	m_materials.clear();
+}

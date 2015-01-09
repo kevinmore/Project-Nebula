@@ -6,7 +6,6 @@
 ModelLoader::ModelLoader()
 {
 	initializeOpenGLFunctions();
-	clear();
 }
 
 
@@ -22,22 +21,19 @@ void ModelLoader::clear()
 
 	if (m_Buffers.size()) 
 		glDeleteBuffers(m_Buffers.size(), m_Buffers.data());
-	
-
-	if (m_VAO != 0) 
-	{
-		glDeleteVertexArrays(1, &m_VAO);
-		m_VAO = 0;
-	}
 
 	m_modelFeatures.hasColorMap = false;
 	m_modelFeatures.hasNormalMap = false;
-	
 }
 
 ModelLoader::~ModelLoader()
 {
 	clear();
+	if (m_VAO != 0) 
+	{
+		glDeleteVertexArrays(1, &m_VAO);
+		m_VAO = 0;
+	}
 }
 
 QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName )
@@ -136,6 +132,7 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName )
 		qDebug() << "Contains a"<< (float) m_scene->mAnimations[0]->mDuration <<"seconds animation.";
 
 	
+	clear();
 	return modelDataVector;
 }
 

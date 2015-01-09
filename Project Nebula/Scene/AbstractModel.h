@@ -4,6 +4,7 @@
 #include <QVector4D>
 #include <QOpenGLVertexArrayObject>
 #include <QOpenGLShaderProgram>
+#include <Scene/GameObject.h>
 
 struct MeshData
 {
@@ -65,4 +66,8 @@ public:
 	virtual ~AbstractModel() = 0;
 
 	virtual void render(float time) = 0;
+	virtual GameObject* getActor() = 0;
+protected:
+	GameObject* m_actor;
+
 };

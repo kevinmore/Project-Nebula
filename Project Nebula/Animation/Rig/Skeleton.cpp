@@ -10,8 +10,7 @@ Skeleton::Skeleton( Bone* root , mat4& globalInverseMatrix)
 
 	// make the bone list
 	m_BoneList.resize(getSkeletonSize());
-	QMap<QString, Bone*>::Iterator it;
-	for (it = m_BoneMap.begin(); it != m_BoneMap.end(); ++it)
+	for (auto it = m_BoneMap.begin(); it != m_BoneMap.end(); ++it)
 	{
 		m_BoneList[it.value()->m_ID] = it.value();
 	}
@@ -20,7 +19,7 @@ Skeleton::Skeleton( Bone* root , mat4& globalInverseMatrix)
 
 Skeleton::~Skeleton()
 {
-	freeSkeleton(m_root);
+	clear();
 }
 
 void Skeleton::initialize(Bone* pBone)
@@ -65,16 +64,12 @@ void Skeleton::dumpSkeleton( Bone* pBone, uint level )
 		dumpSkeleton(pBone->getChild(i), level + 1);
 }
 
-Bone* Skeleton::freeSkeleton( Bone* root )
+void Skeleton::clear()
 {
-	if(!root) return NULL; // empty skeleton
-	free(root);
-	for (int i = 0; i < root->childCount(); ++i)
+	for (int i = 0; i < m_BoneList.size(); ++i)
 	{
-		freeSkeleton(root->getChild(i));
+		SAFE_DELETE(m_BoneList[i]);
 	}
-
-	return NULL;
 }
 
 float Skeleton::getDistanceBetween( Bone* upperBone, Bone* lowerBone )

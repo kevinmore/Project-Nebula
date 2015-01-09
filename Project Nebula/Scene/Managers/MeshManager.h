@@ -15,6 +15,8 @@ public:
 	MeshPtr getMesh(const QString& name);
 	MeshPtr addMesh(const QString& name, unsigned int numIndices, unsigned int baseVertex, unsigned int baseIndex);
 
+	void clear();
+
 private:
 	QMap<QString, MeshPtr> m_meshes;
 

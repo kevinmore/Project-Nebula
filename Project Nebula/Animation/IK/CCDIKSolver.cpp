@@ -6,7 +6,7 @@ CCDIKSolver::CCDIKSolver( int iterations )
 	  m_lastDistance( 0.0f )
 {}
 
-CCDIKSolver::~CCDIKSolver(void)
+CCDIKSolver::~CCDIKSolver()
 {}
 
 bool CCDIKSolver::solve( const QVector<IkConstraint>& constraints, Skeleton* skeleton )

@@ -19,7 +19,7 @@ public:
 
 
 	// clean up the skeleton
-	Bone* freeSkeleton(Bone* root);
+	void clear();
 	
 	mat4 getBoneGlobalTransform(Bone* pBone);
 

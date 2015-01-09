@@ -21,6 +21,7 @@
     <ClCompile Include="Animation\StateMachine\AnimatorController.cpp" />
     <ClCompile Include="Animation\StateMachine\AnimatorPanel.cpp" />
     <ClCompile Include="Animation\StateMachine\NPCController.cpp" />
+    <ClCompile Include="Utility\LoaderThread.cpp" />
     <ClCompile Include="Scene\AbstractModel.cpp" />
     <ClCompile Include="Scene\AbstractScene.cpp" />
     <ClCompile Include="Scene\Managers\ModelManager.cpp" />
@@ -37,6 +38,7 @@
     <ClCompile Include="UI\MainWindow.cpp" />
     <ClCompile Include="UI\MainWindow_moc.cpp" />
     <ClCompile Include="UI\moc_Canvas.cc" />
+    <ClCompile Include="Utility\moc_LoaderThread.cc" />
     <ClCompile Include="Utility\ModelLoader.cpp" />
     <ClCompile Include="Scene\Managers\MeshManager.cpp" />
     <ClCompile Include="Scene\Camera.cpp" />
@@ -59,6 +61,7 @@
     <QtMOC Include="Animation\StateMachine\AnimatorController.h" />
     <ClInclude Include="Animation\StateMachine\AnimatorPanel.h" />
     <QtMOC Include="Animation\StateMachine\NPCController.h" />
+    <QtMOC Include="Utility\LoaderThread.h" />
     <ClInclude Include="Scene\Managers\ModelManager.h" />
     <ClInclude Include="Scene\RiggedModel.h" />
     <QtMOC Include="Scene\Scene.h" />

@@ -26,6 +26,8 @@ public:
 							bool alphaBlending,
 							bool hasTexture);
 
+	void clear();
+
 private:
 	QMap<QString, MaterialPtr> m_materials;
 	GLuint m_programHandle;

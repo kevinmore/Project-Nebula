@@ -39,6 +39,8 @@
     <ClCompile Include="UI\moc_Canvas.cc" />
     <ClCompile Include="UI\MainWindow.cpp" />
     <ClCompile Include="UI\MainWindow_moc.cpp" />
+    <ClCompile Include="Utility\LoaderThread.cpp" />
+    <ClCompile Include="Utility\moc_LoaderThread.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Primitives\Texture.h" />
@@ -76,5 +78,6 @@
     <QtMOC Include="Animation\StateMachine\NPCController.h" />
     <QtMOC Include="Animation\StateMachine\AnimatorController.h" />
     <QtMOC Include="Scene\Camera.h" />
+    <QtMOC Include="Utility\LoaderThread.h" />
   </ItemGroup>
 </Project>

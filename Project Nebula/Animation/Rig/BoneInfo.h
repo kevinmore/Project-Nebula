@@ -4,6 +4,7 @@
 #include <QQuaternion>
 #include <assimp/scene.h>
 #include <Utility/Math.h>
+#include <QObject>
 
 class Bone
 {
@@ -47,6 +48,9 @@ public:
 
 		m_DOF = DimensionOfFreedom();
 	}
+	
+	~Bone()
+	{}
 
 	void addChild(Bone* child)
 	{

@@ -37,12 +37,16 @@ bool ShadingTechnique::compileShader()
 	m_shader->addShaderFromSourceFile(QOpenGLShader::Fragment, m_shaderFilePath + m_shaderFileName + ".frag");
 	m_shader->link();
 
+	// if using normal map
+	if (m_shaderFileName.contains("bump"))
+	{
+		m_normalMapLocation = GetUniformLocation("gNormalMap");
+	}
+
 	m_WVPLocation = GetUniformLocation("gWVP");
-	m_LightWVPLocation = GetUniformLocation("gLightWVP");
 	m_WorldMatrixLocation = GetUniformLocation("gWorld");
 	m_colorTextureLocation = GetUniformLocation("gColorMap");
 	m_shadowMapLocation = GetUniformLocation("gShadowMap");
-	m_normalMapLocation = GetUniformLocation("gNormalMap");
 	m_eyeWorldPosLocation = GetUniformLocation("gEyeWorldPos");
 	m_dirLightLocation.Color = GetUniformLocation("gDirectionalLight.Base.Color");
 	m_dirLightLocation.AmbientIntensity = GetUniformLocation("gDirectionalLight.Base.AmbientIntensity");
@@ -53,25 +57,44 @@ bool ShadingTechnique::compileShader()
 	m_numPointLightsLocation = GetUniformLocation("gNumPointLights");
 	m_numSpotLightsLocation = GetUniformLocation("gNumSpotLights");
 
-	/*
-	if (m_dirLightLocation.AmbientIntensity == INVALID_UNIFORM_LOCATION ||
-		m_WVPLocation == INVALID_UNIFORM_LOCATION ||
-		m_LightWVPLocation == INVALID_UNIFORM_LOCATION ||
-		m_WorldMatrixLocation == INVALID_UNIFORM_LOCATION ||
-		m_colorTextureLocation == INVALID_UNIFORM_LOCATION ||
-		m_shadowMapLocation == INVALID_UNIFORM_LOCATION ||
-		m_normalMapLocation == INVALID_UNIFORM_LOCATION ||
-		m_eyeWorldPosLocation == INVALID_UNIFORM_LOCATION ||
-		m_dirLightLocation.Color == INVALID_UNIFORM_LOCATION ||
-		m_dirLightLocation.DiffuseIntensity == INVALID_UNIFORM_LOCATION ||
-		m_dirLightLocation.Direction == INVALID_UNIFORM_LOCATION ||
-		m_matSpecularIntensityLocation == INVALID_UNIFORM_LOCATION ||
-		m_matSpecularPowerLocation == INVALID_UNIFORM_LOCATION ||
-		m_numPointLightsLocation == INVALID_UNIFORM_LOCATION ||
-		m_numSpotLightsLocation == INVALID_UNIFORM_LOCATION) {
-			return false;
+	if (m_shaderFileName.contains("bump"))
+	{
+		if (m_dirLightLocation.AmbientIntensity == INVALID_UNIFORM_LOCATION ||
+			m_WVPLocation == INVALID_UNIFORM_LOCATION ||
+			m_WorldMatrixLocation == INVALID_UNIFORM_LOCATION ||
+			m_colorTextureLocation == INVALID_UNIFORM_LOCATION ||
+			m_shadowMapLocation == INVALID_UNIFORM_LOCATION ||
+			m_normalMapLocation == INVALID_UNIFORM_LOCATION ||
+			m_eyeWorldPosLocation == INVALID_UNIFORM_LOCATION ||
+			m_dirLightLocation.Color == INVALID_UNIFORM_LOCATION ||
+			m_dirLightLocation.DiffuseIntensity == INVALID_UNIFORM_LOCATION ||
+			m_dirLightLocation.Direction == INVALID_UNIFORM_LOCATION ||
+			m_matSpecularIntensityLocation == INVALID_UNIFORM_LOCATION ||
+			m_matSpecularPowerLocation == INVALID_UNIFORM_LOCATION ||
+			m_numPointLightsLocation == INVALID_UNIFORM_LOCATION ||
+			m_numSpotLightsLocation == INVALID_UNIFORM_LOCATION) {
+				return false;
+		}
 	}
-	*/
+	else
+	{
+		if (m_dirLightLocation.AmbientIntensity == INVALID_UNIFORM_LOCATION ||
+			m_WVPLocation == INVALID_UNIFORM_LOCATION ||
+			m_WorldMatrixLocation == INVALID_UNIFORM_LOCATION ||
+			m_colorTextureLocation == INVALID_UNIFORM_LOCATION ||
+			m_shadowMapLocation == INVALID_UNIFORM_LOCATION ||
+			m_eyeWorldPosLocation == INVALID_UNIFORM_LOCATION ||
+			m_dirLightLocation.Color == INVALID_UNIFORM_LOCATION ||
+			m_dirLightLocation.DiffuseIntensity == INVALID_UNIFORM_LOCATION ||
+			m_dirLightLocation.Direction == INVALID_UNIFORM_LOCATION ||
+			m_matSpecularIntensityLocation == INVALID_UNIFORM_LOCATION ||
+			m_matSpecularPowerLocation == INVALID_UNIFORM_LOCATION ||
+			m_numPointLightsLocation == INVALID_UNIFORM_LOCATION ||
+			m_numSpotLightsLocation == INVALID_UNIFORM_LOCATION) {
+				return false;
+		}
+	}
+	
 	for (unsigned int i = 0 ; i < ARRAY_SIZE_IN_ELEMENTS(m_pointLightsLocation) ; i++) {
 		char Name[128];
 		memset(Name, 0, sizeof(Name));

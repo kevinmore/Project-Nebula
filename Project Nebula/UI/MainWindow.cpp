@@ -58,45 +58,53 @@ void MainWindow::initializeCanvas()
 
 void MainWindow::initializeMenuBar()
 {
+	// File Menu
+	QMenu *fileMenu = menuBar()->addMenu("&File");
+
 	QAction *loadModelAction = new QAction("Load Model", this);
+	fileMenu->addAction(loadModelAction);
+
+	fileMenu->addSeparator();
 
 	QAction *exitAction = new QAction("&Exit", this);
 	exitAction->setShortcut(QKeySequence("Ctrl+Q"));
+	fileMenu->addAction(exitAction);
+
+	// Scene Menu
+	QMenu *sceneMenu = menuBar()->addMenu("&Scene");
+	
+	QAction* clearSceneAction = new QAction("Clear", this);
+	sceneMenu->addAction(clearSceneAction);
+
+	// Window Menu
+	QMenu *windowMenu = menuBar()->addMenu("&Window");
 
 	QAction *fullscreenAction = new QAction("&Fullscreen", this);
 	fullscreenAction->setCheckable(true);
 	fullscreenAction->setShortcut(QKeySequence(Qt::Key_F11));
+	windowMenu->addAction(fullscreenAction);
 
+	QAction* toggleSettingsTab = m_dockParamsArea->toggleViewAction();
+	toggleSettingsTab->setText("Show Settings Window");
+	windowMenu->addAction(toggleSettingsTab);
+
+	QAction* toggleStateMachineViewer = m_stateMachineViewer->toggleViewAction();
+	toggleStateMachineViewer->setText("Show State Machine");
+	windowMenu->addAction(toggleStateMachineViewer);
+
+	// Options Menu
+	QMenu *optionMenu = menuBar()->addMenu("&Anti-aliasing");
 	QAction *msaaAction = new QAction("&MSAA x4", this);
 	msaaAction->setCheckable(true);
 	msaaAction->setChecked(true);
 	msaaAction->setShortcut(QKeySequence(Qt::Key_M));
-
-// 	QAction* toggleStateMachineViewer = new QAction("&Show State Machine", this);
-// 	toggleStateMachineViewer->setCheckable(true);
-// 	toggleStateMachineViewer->setChecked(false);
-
-	QAction* toggleSettingsTab = m_dockParamsArea->toggleViewAction();
-	toggleSettingsTab->setText("Show Settings Window");
-
-	QAction* toggleStateMachineViewer = m_stateMachineViewer->toggleViewAction();
-	toggleStateMachineViewer->setText("Show State Machine");
-
-	QMenu *fileMenu = menuBar()->addMenu("&File");
-	fileMenu->addAction(loadModelAction);
-	fileMenu->addSeparator();
-	fileMenu->addAction(exitAction);
-
-	QMenu *windowMenu = menuBar()->addMenu("&Window");
-	windowMenu->addAction(fullscreenAction);
-	windowMenu->addAction(toggleSettingsTab);
-	windowMenu->addAction(toggleStateMachineViewer);
-
-	QMenu *antialiasingMenu = menuBar()->addMenu("&Anti-aliasing");
-	antialiasingMenu->addAction(msaaAction);
+	optionMenu->addAction(msaaAction);
 
 
+
+	// Singals and Slots
 	QObject::connect(loadModelAction,  SIGNAL(triggered()),     m_scene, SLOT(showLoadModelDialog()));
+	QObject::connect(clearSceneAction, SIGNAL(triggered()),     m_scene, SLOT(clearScene()));
 	QObject::connect(exitAction,       SIGNAL(triggered()),     qApp,    SLOT(quit()));
 	QObject::connect(fullscreenAction, SIGNAL(triggered(bool)), this,    SLOT(setFullScreen(bool)));
 	QObject::connect(msaaAction,       SIGNAL(triggered(bool)), m_scene, SLOT(toggleAA(bool)));

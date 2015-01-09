@@ -54,11 +54,11 @@ private:
 	void prepareVertexContainers(unsigned int index, const aiMesh* mesh);
 	void generateSkeleton(aiNode* pAiRootNode, Bone* pRootSkeleton, mat4& parentTransform);
 	void installShader();
+
 	/*
 	 *	Clean up
 	 */
 	void clear();
-
 
 	/*
 	 *	Model Features

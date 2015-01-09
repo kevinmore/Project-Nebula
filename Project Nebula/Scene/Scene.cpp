@@ -1,4 +1,5 @@
 #include "Scene.h"
+#include <Utility/LoaderThread.h>
 
 Scene::Scene(QObject* parent)
 	: AbstractScene(parent),
@@ -319,13 +320,19 @@ QSharedPointer<ModelManager> Scene::modelManager()
 
 void Scene::showLoadModelDialog()
 {
-	QString fileName = QFileDialog::getOpenFileName(0, tr("Load Model"),
-		"../Resource/Models",
-		tr("3D Models (*.dae *.obj *.3ds)"));
+	LoaderThread loader(this);
+	loader.run();
+}
 
-	if (!fileName.isEmpty())
-	{
-		ModelPtr model = m_modelManager->loadModel(fileName, fileName);
-		//m_camera->followTarget(model)
-	}
+void Scene::clearScene()
+{
+	m_materialManager->clear();
+	m_textureManager->clear();
+	m_meshManager->clear();
+	m_modelManager->clear();
+
+	// load the floor
+	m_modelManager->loadModel("floor", "../Resource/Models/DemoRoom/floor.DAE");
+	StaticModel* sceneObject = m_modelManager->getStaticModel("floor");
+	sceneObject->getActor()->setRotation(-90.0f, 0.0f, 0.0f);
 }

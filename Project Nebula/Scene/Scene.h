@@ -62,6 +62,7 @@ public slots:
 
 	void toggleAA(bool state);
 	void showLoadModelDialog();
+	void clearScene();
 
 signals:
 	void renderCycleDone();

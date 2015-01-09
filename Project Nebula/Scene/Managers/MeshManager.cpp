@@ -21,3 +21,13 @@ MeshPtr MeshManager::addMesh( const QString& name, unsigned int numIndices, unsi
 
 	return m_meshes[name];
 }
+
+void MeshManager::clear()
+{
+	for (auto it = m_meshes.begin(); it != m_meshes.end(); )
+	{
+		m_meshes.erase(it++);
+	}
+
+	m_meshes.clear();
+}

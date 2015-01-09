@@ -35,6 +35,10 @@ RiggedModel::RiggedModel(Scene* scene, ShadingTechnique* tech, Skeleton* skeleto
 RiggedModel::~RiggedModel() 
 {
 	SAFE_DELETE(m_actor);
+	SAFE_DELETE(m_RenderingEffect);
+ 	SAFE_DELETE(m_skeleton);
+ 	SAFE_DELETE(m_CCDSolver);
+	SAFE_DELETE(m_FKController);
 }
 
 void RiggedModel::initRenderingEffect()

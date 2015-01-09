@@ -55,6 +55,7 @@ ModelPtr ModelManager::loadModel( const QString& name, const QString& filename )
 		m_allModels[name] = ModelPtr(rm);
 	}
 
+	m_modelLoaders.push_back(m_modelLoader);
 	return m_allModels[name];
 }
 
@@ -80,4 +81,23 @@ void ModelManager::renderStaticModels( float time )
 	{
 		model->render(time);
 	}
+}
+
+void ModelManager::clear()
+{
+
+	for (int i = 0; i < m_modelLoaders.size(); ++i)
+	{
+		SAFE_DELETE(m_modelLoaders[i]);
+	}
+
+	for (auto it = m_allModels.begin(); it != m_allModels.end(); )
+	{
+		m_allModels.erase(it++);
+	}
+
+	m_modelLoaders.clear();
+	m_staticModels.clear();
+	m_riggedModels.clear();
+	m_allModels.clear();
 }

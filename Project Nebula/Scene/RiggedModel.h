@@ -9,7 +9,6 @@
 #include <Primitives/Texture.h>
 #include <Primitives/Material.h>
 #include <Utility/ModelLoader.h>
-#include <Scene/GameObject.h>
 #include <Scene/ShadingTechniques/ShadingTechnique.h>
 #include <Animation/FK/FKController.h>
 #include <Animation/IK/CCDIKSolver.h>

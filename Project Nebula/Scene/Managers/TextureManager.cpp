@@ -22,3 +22,13 @@ TexturePtr TextureManager::addTexture( const QString& name, const QString& fileN
 
 	return m_textures[name];
 }
+
+void TextureManager::clear()
+{
+	for (auto it = m_textures.begin(); it != m_textures.end(); )
+	{
+		m_textures.erase(it++);
+	}
+
+	m_textures.clear();
+}

@@ -25,9 +25,13 @@ public:
 	void renderRiggedModels(float time);
 	void renderStaticModels(float time);
 
+	void clear();
+
 	QMap<QString, ModelPtr> m_allModels;
 	QMap<QString, RiggedModel*> m_riggedModels;
 	QMap<QString, StaticModel*> m_staticModels;
+
+	QVector<ModelLoader*> m_modelLoaders;
 
 private:
 	Scene* m_scene;
