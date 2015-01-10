@@ -58,11 +58,14 @@ void MainWindow::initializeCanvas()
 
 void MainWindow::initializeMenuBar()
 {
-	// File Menu
+	// ############ File Menu ############
 	QMenu *fileMenu = menuBar()->addMenu("&File");
 
-	QAction *loadModelAction = new QAction("Load Model", this);
+	QAction *loadModelAction = new QAction("&Load Model", this);
 	fileMenu->addAction(loadModelAction);
+
+	QAction *openSceneAction = new QAction("&Open Scene", this);
+	fileMenu->addAction(openSceneAction);
 
 	fileMenu->addSeparator();
 
@@ -70,13 +73,13 @@ void MainWindow::initializeMenuBar()
 	exitAction->setShortcut(QKeySequence("Ctrl+Q"));
 	fileMenu->addAction(exitAction);
 
-	// Scene Menu
+	// ############ Scene Menu ############
 	QMenu *sceneMenu = menuBar()->addMenu("&Scene");
 	
 	QAction* clearSceneAction = new QAction("Clear", this);
 	sceneMenu->addAction(clearSceneAction);
 
-	// Window Menu
+	// ############ Window Menu ############
 	QMenu *windowMenu = menuBar()->addMenu("&Window");
 
 	QAction *fullscreenAction = new QAction("&Fullscreen", this);
@@ -92,8 +95,8 @@ void MainWindow::initializeMenuBar()
 	toggleStateMachineViewer->setText("Show State Machine");
 	windowMenu->addAction(toggleStateMachineViewer);
 
-	// Options Menu
-	QMenu *optionMenu = menuBar()->addMenu("&Anti-aliasing");
+	// ############ Options Menu ############
+	QMenu *optionMenu = menuBar()->addMenu("&Options");
 	QAction *msaaAction = new QAction("&MSAA x4", this);
 	msaaAction->setCheckable(true);
 	msaaAction->setChecked(true);
@@ -102,7 +105,8 @@ void MainWindow::initializeMenuBar()
 
 
 
-	// Singals and Slots
+	// ############ Signals & Slots ############
+	QObject::connect(openSceneAction,  SIGNAL(triggered()),     m_scene, SLOT(showOpenSceneDialog()));
 	QObject::connect(loadModelAction,  SIGNAL(triggered()),     m_scene, SLOT(showLoadModelDialog()));
 	QObject::connect(clearSceneAction, SIGNAL(triggered()),     m_scene, SLOT(clearScene()));
 	QObject::connect(exitAction,       SIGNAL(triggered()),     qApp,    SLOT(quit()));

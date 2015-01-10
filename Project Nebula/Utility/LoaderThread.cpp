@@ -19,12 +19,12 @@ void LoaderThread::run()
 
 	QString fileName = QFileDialog::getOpenFileName(0, tr("Load Model"),
 		"../Resource/Models",
-		tr("3D Models (*.dae *.obj *.3ds)"));
+		tr("3D Model File (*.dae *.obj *.3ds)"));
 
 	if (!fileName.isEmpty())
 	{
 		ModelPtr model = m_scene->modelManager()->loadModel(fileName, fileName);
-		//m_scene->getCamera()->followTarget(model->getActor());
+		m_scene->getCamera()->followTarget(model->getActor());
 	}
 
 	mutex.unlock();

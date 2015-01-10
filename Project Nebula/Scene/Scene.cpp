@@ -336,3 +336,10 @@ void Scene::clearScene()
 	StaticModel* sceneObject = m_modelManager->getStaticModel("floor");
 	sceneObject->getActor()->setRotation(-90.0f, 0.0f, 0.0f);
 }
+
+void Scene::showOpenSceneDialog()
+{
+	QString fileName = QFileDialog::getOpenFileName(0, tr("Open Scene"),
+		"../Resource/Scenes",
+		tr("Scene File (*.nebula)"));
+}
