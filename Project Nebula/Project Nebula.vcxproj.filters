@@ -71,6 +71,7 @@
     <ClInclude Include="Scene\ShadingTechniques\Technique.h" />
     <ClInclude Include="UI\Canvas.h" />
     <ClInclude Include="UI\MainWindow.h" />
+    <ClInclude Include="Utility\Serialization.h" />
   </ItemGroup>
   <ItemGroup>
     <QtMOC Include="Scene\Scene.h" />

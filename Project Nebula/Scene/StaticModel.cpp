@@ -25,7 +25,6 @@ StaticModel::~StaticModel()
 {
 	SAFE_DELETE(m_actor);
 	SAFE_DELETE(m_RenderingEffect);
-	SAFE_DELETE(m_funcs);
 }
 
 void StaticModel::initRenderingEffect()

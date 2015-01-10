@@ -67,6 +67,9 @@ void MainWindow::initializeMenuBar()
 	QAction *openSceneAction = new QAction("&Open Scene", this);
 	fileMenu->addAction(openSceneAction);
 
+	QAction *saveAction = new QAction("&Save", this);
+	fileMenu->addAction(saveAction);
+
 	fileMenu->addSeparator();
 
 	QAction *exitAction = new QAction("&Exit", this);
@@ -76,8 +79,11 @@ void MainWindow::initializeMenuBar()
 	// ############ Scene Menu ############
 	QMenu *sceneMenu = menuBar()->addMenu("&Scene");
 	
-	QAction* clearSceneAction = new QAction("Clear", this);
+	QAction* clearSceneAction = new QAction("&Clear All Objects", this);
 	sceneMenu->addAction(clearSceneAction);
+
+	QAction* resetSceneAction = new QAction("&Reset to Default", this);
+	sceneMenu->addAction(resetSceneAction);
 
 	// ############ Window Menu ############
 	QMenu *windowMenu = menuBar()->addMenu("&Window");
@@ -108,6 +114,8 @@ void MainWindow::initializeMenuBar()
 	// ############ Signals & Slots ############
 	QObject::connect(openSceneAction,  SIGNAL(triggered()),     m_scene, SLOT(showOpenSceneDialog()));
 	QObject::connect(loadModelAction,  SIGNAL(triggered()),     m_scene, SLOT(showLoadModelDialog()));
+	QObject::connect(saveAction,       SIGNAL(triggered()),     m_scene, SLOT(showSaveDialog()));
+	QObject::connect(resetSceneAction, SIGNAL(triggered()),     m_scene, SLOT(resetToDefaultScene()));
 	QObject::connect(clearSceneAction, SIGNAL(triggered()),     m_scene, SLOT(clearScene()));
 	QObject::connect(exitAction,       SIGNAL(triggered()),     qApp,    SLOT(quit()));
 	QObject::connect(fullscreenAction, SIGNAL(triggered(bool)), this,    SLOT(setFullScreen(bool)));

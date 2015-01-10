@@ -62,13 +62,16 @@ public slots:
 
 	void toggleAA(bool state);
 	void showLoadModelDialog();
+	void resetToDefaultScene();
 	void clearScene();
 	void showOpenSceneDialog();
+	void showSaveDialog();
 
 signals:
 	void renderCycleDone();
 
 private:
+
 	Camera* m_camera;
 
 	ModelPtr m_model;

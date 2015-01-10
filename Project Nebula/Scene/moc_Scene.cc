@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_Scene_t {
-    QByteArrayData data[14];
-    char stringdata[176];
+    QByteArrayData data[16];
+    char stringdata[211];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -41,15 +41,18 @@ QT_MOC_LITERAL(8, 81, 16),
 QT_MOC_LITERAL(9, 98, 17),
 QT_MOC_LITERAL(10, 116, 8),
 QT_MOC_LITERAL(11, 125, 19),
-QT_MOC_LITERAL(12, 145, 10),
-QT_MOC_LITERAL(13, 156, 19)
+QT_MOC_LITERAL(12, 145, 19),
+QT_MOC_LITERAL(13, 165, 10),
+QT_MOC_LITERAL(14, 176, 19),
+QT_MOC_LITERAL(15, 196, 14)
     },
     "Scene\0renderCycleDone\0\0toggleFill\0"
     "state\0toggleWireframe\0togglePoints\0"
     "togglePhong\0toggleBlinnPhong\0"
     "toggleRimLighting\0toggleAA\0"
-    "showLoadModelDialog\0clearScene\0"
-    "showOpenSceneDialog"
+    "showLoadModelDialog\0resetToDefaultScene\0"
+    "clearScene\0showOpenSceneDialog\0"
+    "showSaveDialog"
 };
 #undef QT_MOC_LITERAL
 
@@ -59,7 +62,7 @@ static const uint qt_meta_data_Scene[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      11,   14, // methods
+      13,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -67,19 +70,21 @@ static const uint qt_meta_data_Scene[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   69,    2, 0x06 /* Public */,
+       1,    0,   79,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       3,    1,   70,    2, 0x0a /* Public */,
-       5,    1,   73,    2, 0x0a /* Public */,
-       6,    1,   76,    2, 0x0a /* Public */,
-       7,    1,   79,    2, 0x0a /* Public */,
-       8,    1,   82,    2, 0x0a /* Public */,
-       9,    1,   85,    2, 0x0a /* Public */,
-      10,    1,   88,    2, 0x0a /* Public */,
-      11,    0,   91,    2, 0x0a /* Public */,
-      12,    0,   92,    2, 0x0a /* Public */,
-      13,    0,   93,    2, 0x0a /* Public */,
+       3,    1,   80,    2, 0x0a /* Public */,
+       5,    1,   83,    2, 0x0a /* Public */,
+       6,    1,   86,    2, 0x0a /* Public */,
+       7,    1,   89,    2, 0x0a /* Public */,
+       8,    1,   92,    2, 0x0a /* Public */,
+       9,    1,   95,    2, 0x0a /* Public */,
+      10,    1,   98,    2, 0x0a /* Public */,
+      11,    0,  101,    2, 0x0a /* Public */,
+      12,    0,  102,    2, 0x0a /* Public */,
+      13,    0,  103,    2, 0x0a /* Public */,
+      14,    0,  104,    2, 0x0a /* Public */,
+      15,    0,  105,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -92,6 +97,8 @@ static const uint qt_meta_data_Scene[] = {
     QMetaType::Void, QMetaType::Bool,    4,
     QMetaType::Void, QMetaType::Bool,    4,
     QMetaType::Void, QMetaType::Bool,    4,
+    QMetaType::Void,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -113,8 +120,10 @@ void Scene::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void 
         case 6: _t->toggleRimLighting((*reinterpret_cast< bool(*)>(_a[1]))); break;
         case 7: _t->toggleAA((*reinterpret_cast< bool(*)>(_a[1]))); break;
         case 8: _t->showLoadModelDialog(); break;
-        case 9: _t->clearScene(); break;
-        case 10: _t->showOpenSceneDialog(); break;
+        case 9: _t->resetToDefaultScene(); break;
+        case 10: _t->clearScene(); break;
+        case 11: _t->showOpenSceneDialog(); break;
+        case 12: _t->showSaveDialog(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -154,13 +163,13 @@ int Scene::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 11)
+        if (_id < 13)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 11;
+        _id -= 13;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 11)
+        if (_id < 13)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 11;
+        _id -= 13;
     }
     return _id;
 }

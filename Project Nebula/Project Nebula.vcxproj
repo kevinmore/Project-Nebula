@@ -58,6 +58,7 @@
     <ClInclude Include="Animation\IK\FABRIKSolver.h" />
     <ClInclude Include="Animation\IK\CCDIKSolver.h" />
     <ClInclude Include="Animation\Rig\Pose.h" />
+    <ClInclude Include="Utility\Serialization.h" />
     <QtMOC Include="Animation\StateMachine\AnimatorController.h" />
     <ClInclude Include="Animation\StateMachine\AnimatorPanel.h" />
     <QtMOC Include="Animation\StateMachine\NPCController.h" />

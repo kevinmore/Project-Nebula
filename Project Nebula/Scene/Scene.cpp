@@ -1,5 +1,6 @@
 #include "Scene.h"
 #include <Utility/LoaderThread.h>
+#include <Utility/Serialization.h>
 
 Scene::Scene(QObject* parent)
 	: AbstractScene(parent),
@@ -8,11 +9,6 @@ Scene::Scene(QObject* parent)
 	  m_lightMode(PerFragmentPhong),
 	  m_lightModeSubroutines(LightModeCount)
 {
-	// Initializing the position and orientation of the camera
-	m_camera->setPosition(QVector3D(0.0f, 200.0f, 200.0f));
-	m_camera->setViewCenter(QVector3D(0.0f, 100.0f, 0.0f));
-	m_camera->setUpVector(Math::Vector3D::UNIT_Y);
-
 	// Initializing the lights
 	for(int i = 1; i < LightModeCount; ++i)
 	{
@@ -56,9 +52,7 @@ void Scene::initialize()
 	m_textureManager = QSharedPointer<TextureManager>(new TextureManager());
 	m_meshManager = QSharedPointer<MeshManager>(new MeshManager());
 
-	m_modelManager->loadModel("floor", "../Resource/Models/DemoRoom/floor.DAE");
-	StaticModel* sceneObject = m_modelManager->getStaticModel("floor");
-	sceneObject->getActor()->setRotation(-90.0f, 0.0f, 0.0f);
+	resetToDefaultScene();
 
 
 	/*
@@ -330,6 +324,12 @@ void Scene::clearScene()
 	m_textureManager->clear();
 	m_meshManager->clear();
 	m_modelManager->clear();
+}
+
+void Scene::resetToDefaultScene()
+{
+	clearScene();
+	m_camera->resetCamera();
 
 	// load the floor
 	m_modelManager->loadModel("floor", "../Resource/Models/DemoRoom/floor.DAE");
@@ -337,9 +337,50 @@ void Scene::clearScene()
 	sceneObject->getActor()->setRotation(-90.0f, 0.0f, 0.0f);
 }
 
+void Scene::showSaveDialog()
+{
+	QString fileName = QFileDialog::getSaveFileName(0, tr("Save Scene"),
+		"../Resource/Scenes",
+		tr("Scene File (*.nebula)"));
+
+	QFile file(fileName);
+	if (!file.open(QIODevice::WriteOnly))
+	{
+		qWarning() << "Unable to save to file:" << fileName;
+		return;
+	}
+	
+	QDataStream out(&file);
+	out.setVersion(QDataStream::Qt_5_3);
+
+	StaticModel* sceneObject = m_modelManager->getStaticModel("floor");
+
+	out << sceneObject->getActor();
+
+	file.flush();
+	file.close();
+}
+
 void Scene::showOpenSceneDialog()
 {
 	QString fileName = QFileDialog::getOpenFileName(0, tr("Open Scene"),
 		"../Resource/Scenes",
 		tr("Scene File (*.nebula)"));
+
+	QFile file(fileName);
+	if (!file.open(QIODevice::ReadOnly))
+	{
+		qWarning() << "Unable to open file:" << fileName;
+		return;
+	}
+
+	QDataStream in(&file);
+	in.setVersion(QDataStream::Qt_5_3);
+
+	GameObject test;
+	in >> test;
+
+	qDebug() << test.rotation();
+
+	file.close();
 }
