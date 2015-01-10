@@ -97,6 +97,7 @@ public:
 
 	// make the camera follow a game object
 	void followTarget(GameObject* target);
+	bool isFollowingTarget() { return m_isFollowing; }
 
 	vec3 getViewDirection() { return m_viewDirection; }
 	bool isViewCenterFixed() { return m_viewCenterFixed; }

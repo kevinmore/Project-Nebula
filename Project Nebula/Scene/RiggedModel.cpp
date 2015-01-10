@@ -3,30 +3,30 @@
 #include <QOpenGLContext>
 #include <Animation/Rig/Pose.h>
 
-RiggedModel::RiggedModel(Scene* scene, ShadingTechnique* tech, Skeleton* skeleton, FKController* fkCtrl, CCDIKSolver* ikSolver)
-  : m_scene(scene),
+RiggedModel::RiggedModel(const QString& name, Scene* scene, ShadingTechnique* tech, Skeleton* skeleton, FKController* fkCtrl, CCDIKSolver* ikSolver)
+  : AbstractModel(name, new GameObject),
+    m_scene(scene),
     m_RenderingEffect(tech),
 	m_vao(tech->getVAO()),
 	m_skeleton(skeleton),
 	m_FKController(fkCtrl),
 	m_CCDSolver(ikSolver),
 	m_hasAnimation(false),
-	m_animationDuration(0.0f),
-	m_actor(new GameObject)
+	m_animationDuration(0.0f)
 {
 	initialize();
 }
 
-RiggedModel::RiggedModel(Scene* scene, ShadingTechnique* tech, Skeleton* skeleton, FKController* fkCtrl, CCDIKSolver* ikSolver, QVector<ModelDataPtr> modelData)
-  : m_scene(scene),
+RiggedModel::RiggedModel(const QString& name, Scene* scene, ShadingTechnique* tech, Skeleton* skeleton, FKController* fkCtrl, CCDIKSolver* ikSolver, QVector<ModelDataPtr> modelData)
+  : AbstractModel(name, new GameObject),
+    m_scene(scene),
     m_RenderingEffect(tech),
 	m_vao(tech->getVAO()),
 	m_skeleton(skeleton),
 	m_FKController(fkCtrl),
 	m_CCDSolver(ikSolver),
 	m_hasAnimation(false),
-	m_animationDuration(0.0f),
-	m_actor(new GameObject)
+	m_animationDuration(0.0f)
 {
 	initialize(modelData);
 }

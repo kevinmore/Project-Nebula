@@ -334,10 +334,10 @@ void Scene::resetToDefaultScene()
 	// load the floor
 	m_modelManager->loadModel("floor", "../Resource/Models/DemoRoom/floor.DAE");
 	StaticModel* sceneObject = m_modelManager->getStaticModel("floor");
-	sceneObject->getActor()->setRotation(-90.0f, 0.0f, 0.0f);
+	sceneObject->gameObject()->setRotation(-90.0f, 0.0f, 0.0f);
 }
 
-void Scene::showSaveDialog()
+void Scene::showSaveSceneDialog()
 {
 	QString fileName = QFileDialog::getSaveFileName(0, tr("Save Scene"),
 		"../Resource/Scenes",
@@ -353,9 +353,9 @@ void Scene::showSaveDialog()
 	QDataStream out(&file);
 	out.setVersion(QDataStream::Qt_5_3);
 
-	StaticModel* sceneObject = m_modelManager->getStaticModel("floor");
+	m_modelManager->gatherModelsInfo();
 
-	out << sceneObject->getActor();
+	out << m_modelManager;
 
 	file.flush();
 	file.close();
@@ -377,10 +377,11 @@ void Scene::showOpenSceneDialog()
 	QDataStream in(&file);
 	in.setVersion(QDataStream::Qt_5_3);
 
-	GameObject test;
-	in >> test;
-
-	qDebug() << test.rotation();
-
+	in >> m_modelManager;
+	for (int i = 0; i < m_modelManager->m_modelsInfo.size(); ++i)
+	{
+		qDebug() << m_modelManager->m_modelsInfo[i].first;
+		qDebug() << m_modelManager->m_modelsInfo[i].second->rotation();
+	}
 	file.close();
 }

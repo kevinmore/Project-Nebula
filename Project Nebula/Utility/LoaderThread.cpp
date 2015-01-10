@@ -23,8 +23,17 @@ void LoaderThread::run()
 
 	if (!fileName.isEmpty())
 	{
-		ModelPtr model = m_scene->modelManager()->loadModel(fileName, fileName);
-		m_scene->getCamera()->followTarget(model->getActor());
+		// extract the file name
+		int left = fileName.lastIndexOf("/");
+		int right = fileName.lastIndexOf(".");
+		QString customName = fileName.mid(left + 1, right - left - 1);
+
+		// extract the relative path
+		QDir dir;
+		QString relativePath = dir.relativeFilePath(fileName);
+
+		ModelPtr model = m_scene->modelManager()->loadModel(customName, relativePath);
+		m_scene->getCamera()->followTarget(model->gameObject());
 	}
 
 	mutex.unlock();

@@ -62,12 +62,15 @@ class AbstractModel
 
 
 public:
-	AbstractModel();
+	AbstractModel(const QString& fileName, GameObject* go);
 	virtual ~AbstractModel() = 0;
 
 	virtual void render(float time) = 0;
-	virtual GameObject* getActor() = 0;
-protected:
-	GameObject* m_actor;
 
+	const QString fileName() { return m_fileName; }
+	GameObject* gameObject() { return m_actor; }
+
+protected:
+	QString m_fileName;
+	GameObject* m_actor;
 };

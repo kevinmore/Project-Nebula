@@ -114,7 +114,7 @@ void MainWindow::initializeMenuBar()
 	// ############ Signals & Slots ############
 	QObject::connect(openSceneAction,  SIGNAL(triggered()),     m_scene, SLOT(showOpenSceneDialog()));
 	QObject::connect(loadModelAction,  SIGNAL(triggered()),     m_scene, SLOT(showLoadModelDialog()));
-	QObject::connect(saveAction,       SIGNAL(triggered()),     m_scene, SLOT(showSaveDialog()));
+	QObject::connect(saveAction,       SIGNAL(triggered()),     m_scene, SLOT(showSaveSceneDialog()));
 	QObject::connect(resetSceneAction, SIGNAL(triggered()),     m_scene, SLOT(resetToDefaultScene()));
 	QObject::connect(clearSceneAction, SIGNAL(triggered()),     m_scene, SLOT(clearScene()));
 	QObject::connect(exitAction,       SIGNAL(triggered()),     qApp,    SLOT(quit()));

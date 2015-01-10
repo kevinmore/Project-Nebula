@@ -65,7 +65,7 @@ public slots:
 	void resetToDefaultScene();
 	void clearScene();
 	void showOpenSceneDialog();
-	void showSaveDialog();
+	void showSaveSceneDialog();
 
 signals:
 	void renderCycleDone();

@@ -20,7 +20,7 @@
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_Scene_t {
     QByteArrayData data[16];
-    char stringdata[211];
+    char stringdata[216];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -44,7 +44,7 @@ QT_MOC_LITERAL(11, 125, 19),
 QT_MOC_LITERAL(12, 145, 19),
 QT_MOC_LITERAL(13, 165, 10),
 QT_MOC_LITERAL(14, 176, 19),
-QT_MOC_LITERAL(15, 196, 14)
+QT_MOC_LITERAL(15, 196, 19)
     },
     "Scene\0renderCycleDone\0\0toggleFill\0"
     "state\0toggleWireframe\0togglePoints\0"
@@ -52,7 +52,7 @@ QT_MOC_LITERAL(15, 196, 14)
     "toggleRimLighting\0toggleAA\0"
     "showLoadModelDialog\0resetToDefaultScene\0"
     "clearScene\0showOpenSceneDialog\0"
-    "showSaveDialog"
+    "showSaveSceneDialog"
 };
 #undef QT_MOC_LITERAL
 
@@ -123,7 +123,7 @@ void Scene::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void 
         case 9: _t->resetToDefaultScene(); break;
         case 10: _t->clearScene(); break;
         case 11: _t->showOpenSceneDialog(); break;
-        case 12: _t->showSaveDialog(); break;
+        case 12: _t->showSaveSceneDialog(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {

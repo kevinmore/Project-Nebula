@@ -19,12 +19,11 @@ class Scene;
 class RiggedModel : public AbstractModel
 {
 public:
-	RiggedModel(Scene* scene, ShadingTechnique* tech, Skeleton* skeleton, FKController* fkCtrl, CCDIKSolver* ikSolver);
-	RiggedModel(Scene* scene, ShadingTechnique* tech, Skeleton* skeleton, FKController* fkCtrl, CCDIKSolver* ikSolver, QVector<ModelDataPtr> modelDataVector);
+	RiggedModel(const QString& name, Scene* scene, ShadingTechnique* tech, Skeleton* skeleton, FKController* fkCtrl, CCDIKSolver* ikSolver);
+	RiggedModel(const QString& name, Scene* scene, ShadingTechnique* tech, Skeleton* skeleton, FKController* fkCtrl, CCDIKSolver* ikSolver, QVector<ModelDataPtr> modelDataVector);
 	virtual ~RiggedModel();
 
 	virtual void render( float time );
-	GameObject* getActor() { return m_actor; }
 
 	bool hasAnimation() { return m_hasAnimation; }
 	float animationDuration();
@@ -64,7 +63,6 @@ private:
 	Scene* m_scene;
 	ShadingTechnique* m_RenderingEffect;
 	bool m_hasAnimation;
-	GameObject* m_actor;
 	Skeleton* m_skeleton;
 	FKController* m_FKController;
 	CCDIKSolver* m_CCDSolver;

@@ -253,6 +253,7 @@ void Canvas::mouseReleaseEvent(QMouseEvent* e)
 		camera->setVerticalSpeed(0.0f);
 		m_middleButtonPressed = false;
 		setCursor(QCursor(Qt::ArrowCursor));
+		if(camera->isFollowingTarget()) camera->setViewCenterFixed(true);
 	}
 	QWindow::mouseReleaseEvent(e);
 }
@@ -275,8 +276,16 @@ void Canvas::mouseMoveEvent(QMouseEvent* e)
 	}
 	else if (m_middleButtonPressed)
 	{
-		camera->setSideSpeed(dx * m_cameraSpeed);
-		camera->setVerticalSpeed(dy * m_cameraSpeed);
+		if (camera->isFollowingTarget())
+		{
+			camera->setViewCenterFixed(false);
+			camera->setVerticalSpeed(dy * m_cameraSpeed);
+		}
+		else
+		{
+			camera->setSideSpeed(dx * m_cameraSpeed);
+			camera->setVerticalSpeed(dy * m_cameraSpeed);
+		}
 	}
 
 	QWindow::mouseMoveEvent(e);

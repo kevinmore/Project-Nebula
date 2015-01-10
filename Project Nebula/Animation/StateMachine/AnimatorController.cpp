@@ -348,7 +348,7 @@ void AnimatorController::finishingLoopingState()
 	{
 		// the game object need to move back words
 		vec3 delta = - man->getRootTranslation() * (1 - time / duration);
-		man->getActor()->translateInWorld(delta);
+		man->gameObject()->translateInWorld(delta);
 	}
 }
 
