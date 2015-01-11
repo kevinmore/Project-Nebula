@@ -1,39 +1,46 @@
 #include "LoaderThread.h"
 #include <QFileDialog>
 #include <Scene/Scene.h>
-LoaderThread::LoaderThread(Scene* scene, QObject* parent)
+LoaderThread::LoaderThread(Scene* scene, const QString fileName, GameObject* go, QObject* parent)
 	: QThread(parent),
-	  m_scene(scene)
+	  m_scene(scene),
+	  m_fileName(fileName),
+	  m_actor(go)
 {
 	connect(this, SIGNAL(jobDone()), this, SLOT(quit()));
 }
 
 
 LoaderThread::~LoaderThread()
-{}
+{
+	qDebug() << "Thread:" << m_fileName << "is destroyed!";
+}
 
 void LoaderThread::run()
 {
 	QMutex mutex;
 	mutex.lock();
 
-	QString fileName = QFileDialog::getOpenFileName(0, tr("Load Model"),
-		"../Resource/Models",
-		tr("3D Model File (*.dae *.obj *.3ds)"));
-
-	if (!fileName.isEmpty())
+	if (!m_fileName.isEmpty())
 	{
 		// extract the file name
-		int left = fileName.lastIndexOf("/");
-		int right = fileName.lastIndexOf(".");
-		QString customName = fileName.mid(left + 1, right - left - 1);
+		int left = m_fileName.lastIndexOf("/");
+		int right = m_fileName.lastIndexOf(".");
+		QString customName = m_fileName.mid(left + 1, right - left - 1);
 
 		// extract the relative path
 		QDir dir;
-		QString relativePath = dir.relativeFilePath(fileName);
+		QString relativePath = dir.relativeFilePath(m_fileName);
 
 		ModelPtr model = m_scene->modelManager()->loadModel(customName, relativePath);
-		m_scene->getCamera()->followTarget(model->gameObject());
+
+		// apply transformation to this model
+		if (m_actor)
+		{
+			model->gameObject()->setPosition(m_actor->position());
+			model->gameObject()->setRotation(m_actor->rotation());
+			model->gameObject()->setScale(m_actor->scale());
+		}
 	}
 
 	mutex.unlock();

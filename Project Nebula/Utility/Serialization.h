@@ -51,32 +51,40 @@ QDataStream& operator >> (QDataStream& in, GameObject* object)
 /*
 * Model Manager
 */
-QDataStream& operator << (QDataStream& out, ModelManager& object)
-{
-	out << object.m_modelsInfo;
-	return out;
-}
-
-QDataStream& operator >> (QDataStream& in, ModelManager& object)
-{
-	QVector<QPair<QString, GameObject*>> modelsInfo;
-	in >> modelsInfo;
-	object.m_modelsInfo = modelsInfo;
-
-	return in;
-}
-
+// Order: vector size -> each pair(filename, gameobject)
 QDataStream& operator << (QDataStream& out, QSharedPointer<ModelManager> object)
 {
-	out << object->m_modelsInfo;
+	int size = object->m_modelsInfo.size();
+	out << size;
+
+	for (int i = 0; i < size; ++i)
+	{
+		qDebug() << "Out Stream" << object->m_modelsInfo[i].first << object->m_modelsInfo[i].second->rotation();
+		out << object->m_modelsInfo[i].first << object->m_modelsInfo[i].second;
+	}
+	
 	return out;
 }
 
 QDataStream& operator >> (QDataStream& in, QSharedPointer<ModelManager> object)
 {
-	QVector<QPair<QString, GameObject*>> modelsInfo;
-	in >> modelsInfo;
-	object->m_modelsInfo = modelsInfo;
+	QVector<QPair<QString, GameObject*>> modelsInfoVector;
 
+	int size;
+	in >> size;
+
+	QString fileName;
+	GameObject* go = new GameObject;
+
+	object->m_modelsInfo.clear();
+
+	for (int i = 0; i < size; ++i)
+	{
+		in >> fileName >> go;
+		qDebug() << "In Stream" << fileName << go->rotation();
+
+		object->m_modelsInfo.push_back(qMakePair(fileName, go));
+	}
+	
 	return in;
 }

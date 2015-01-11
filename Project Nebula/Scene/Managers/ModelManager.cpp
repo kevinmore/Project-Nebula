@@ -91,7 +91,6 @@ void ModelManager::renderStaticModels( float time )
 
 void ModelManager::clear()
 {
-
 	for (int i = 0; i < m_modelLoaders.size(); ++i)
 	{
 		SAFE_DELETE(m_modelLoaders[i]);
@@ -106,11 +105,11 @@ void ModelManager::clear()
 	m_staticModels.clear();
 	m_riggedModels.clear();
 	m_allModels.clear();
-	m_modelsInfo.clear();
 }
 
 void ModelManager::gatherModelsInfo()
 {
+	m_modelsInfo.clear();
 	foreach(ModelPtr model, m_allModels.values())
 	{
 		m_modelsInfo.push_back(qMakePair(model->fileName(), model->gameObject()));

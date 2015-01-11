@@ -314,7 +314,11 @@ QSharedPointer<ModelManager> Scene::modelManager()
 
 void Scene::showLoadModelDialog()
 {
-	LoaderThread loader(this);
+	QString fileName = QFileDialog::getOpenFileName(0, tr("Load Model"),
+		"../Resource/Models",
+		tr("3D Model File (*.dae *.obj *.3ds)"));
+
+	LoaderThread loader(this, fileName);
 	loader.run();
 }
 
@@ -377,11 +381,19 @@ void Scene::showOpenSceneDialog()
 	QDataStream in(&file);
 	in.setVersion(QDataStream::Qt_5_3);
 
-	in >> m_modelManager;
+ 	in >> m_modelManager;
+	
+	// clear the scene and load the models
+	clearScene();
+
 	for (int i = 0; i < m_modelManager->m_modelsInfo.size(); ++i)
 	{
-		qDebug() << m_modelManager->m_modelsInfo[i].first;
-		qDebug() << m_modelManager->m_modelsInfo[i].second->rotation();
+		QString modelFileName = m_modelManager->m_modelsInfo[i].first;
+		GameObject* go = m_modelManager->m_modelsInfo[i].second;
+		qDebug() << modelFileName << go->rotation();
+		LoaderThread loader(this, modelFileName, go);
+ 		loader.run();
 	}
+
 	file.close();
 }
