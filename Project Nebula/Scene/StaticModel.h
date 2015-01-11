@@ -16,8 +16,8 @@ class Scene;
 class StaticModel : public AbstractModel
 {
 public:
-	StaticModel(const QString& name, Scene* scene, ShadingTechnique* tech);
-	StaticModel(const QString& name, Scene* scene, ShadingTechnique* tech, QVector<ModelDataPtr> modelDataVector);
+	StaticModel(const QString& name, Scene* scene, ShadingTechnique* tech, QObject* parent = 0);
+	StaticModel(const QString& name, Scene* scene, ShadingTechnique* tech, QVector<ModelDataPtr> modelDataVector, QObject* parent = 0);
 	virtual ~StaticModel();
 
 	virtual void render( float time );

@@ -20,7 +20,7 @@ public:
 	RiggedModel* getRiggedModel(const QString& name);
 	StaticModel* getStaticModel(const QString& name);
 
-	ModelPtr loadModel(const QString& customName, const QString& fileName);
+	ModelPtr loadModel(const QString& customName, const QString& fileName, QObject* parent = 0);
 	void renderAllModels(float time);
 	void renderRiggedModels(float time);
 	void renderStaticModels(float time);

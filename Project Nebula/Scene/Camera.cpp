@@ -20,7 +20,7 @@ Camera::Camera(GameObject* followingTarget, QObject *parent)
 	m_viewProjectionMatrixDirty(true),
 	m_viewType(ThirdPerson),
 	m_viewDirection(),
-	m_viewCenterFixed(false),
+	m_viewCenterFixed(true),
 	m_panAngle(0.0f),
 	m_tiltAngle(0.0f),
 	m_time(0.0f),
@@ -82,6 +82,16 @@ Camera::ProjectionType Camera::projectionType() const
 void Camera::setProjectionType(ProjectionType type)
 {
 	m_projectionType = type;
+}
+
+Camera::ViewType Camera::viewType() const
+{
+	return m_viewType;
+}
+
+void Camera::setViewType(ViewType type)
+{
+	m_viewType = type;
 }
 
 QVector3D Camera::position() const
@@ -422,9 +432,7 @@ void Camera::resetCamera()
 	m_position = QVector3D(QVector3D(0.0f, 200.0f, 200.0f));
 	m_upVector = QVector3D(Vector3D::UNIT_Y);
 	m_viewCenter = QVector3D(Vector3D::ZERO);
-	m_cameraToCenter = QVector3D(Vector3D::NEGATIVE_UNIT_Z);
-
-
+	m_cameraToCenter = m_viewCenter - m_position;
 
 	m_viewMatrixDirty = true;
 }
@@ -434,12 +442,16 @@ void Camera::followTarget( GameObject* target )
 	m_viewCenterFixed = true;
 	m_isFollowing = true;
 	m_followingTarget = target;
+
+	m_viewType = ThirdPerson;
 }
 
 void Camera::releaseTarget()
 {
 	m_viewCenterFixed = false;
 	m_isFollowing = false;
+
+	m_viewType = FirstPerson;
 }
 
 void Camera::update( const float currentTime )

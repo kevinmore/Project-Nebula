@@ -49,7 +49,7 @@ public:
 	QSharedPointer<ModelManager>    modelManager();
 
 	QStateMachine* getStateMachine() { return m_stateMachine; }
-
+	GameObject* sceneNode() { return m_sceneNode; }
 
 public slots:
 	void toggleFill(bool state);
@@ -71,6 +71,7 @@ signals:
 	void renderCycleDone();
 
 private:
+	GameObject* m_sceneNode;
 
 	Camera* m_camera;
 

@@ -37,6 +37,9 @@ public:
 	ProjectionType projectionType() const;
 	void setProjectionType(ProjectionType type);
 	
+	ViewType viewType() const;
+	void setViewType(ViewType type);
+
 	float left()   const;
 	float right()  const;
 	float bottom() const;

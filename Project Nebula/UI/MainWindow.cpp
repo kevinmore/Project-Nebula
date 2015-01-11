@@ -35,7 +35,7 @@ MainWindow::MainWindow(QWidget *parent)
 	initializeParamsArea();
 	initializeMenuBar();
 
-	resize(1366, 768);
+	resize(1600, 900);
 
 	// this is a trick to refresh the opengl surface to make it fit the window properly!
 	showFullScreen();
@@ -67,7 +67,7 @@ void MainWindow::initializeMenuBar()
 	QAction *openSceneAction = new QAction("&Open Scene", this);
 	fileMenu->addAction(openSceneAction);
 
-	QAction *saveAction = new QAction("&Save", this);
+	QAction *saveAction = new QAction("&Save Scene", this);
 	fileMenu->addAction(saveAction);
 
 	fileMenu->addSeparator();
@@ -160,9 +160,9 @@ void MainWindow::initializeParamsArea()
 
 	// ############ OPTION TAB - RENDERING MODE GROUPBOX ############
 
-	QRadioButton* fill      = new QRadioButton("fill");
-	QRadioButton* wireframe = new QRadioButton("wireframe");
-	QRadioButton* points    = new QRadioButton("points");
+	QRadioButton* fill      = new QRadioButton("Fill");
+	QRadioButton* wireframe = new QRadioButton("Wireframe");
+	QRadioButton* points    = new QRadioButton("Points");
 
 	fill->setChecked(true);
 
@@ -176,8 +176,8 @@ void MainWindow::initializeParamsArea()
 
 	// ############ OPTION TAB - PROJECTION TYPE GROUPBOX ############
 
-	QRadioButton* perspective = new QRadioButton("perspective");
-	QRadioButton* orthographic = new QRadioButton("orthographic");
+	QRadioButton* perspective = new QRadioButton("Perspective");
+	QRadioButton* orthographic = new QRadioButton("Orthographic");
 
 	perspective->setChecked(true);
 
@@ -313,7 +313,7 @@ void MainWindow::initializeParamsArea()
 	cameraLayout->addWidget(hLineCamera2);
 	cameraLayout->addWidget(resetCamera);
 
-	QGroupBox* cameraGroupBox = new QGroupBox("CAMERA");
+	QGroupBox* cameraGroupBox = new QGroupBox("Camera");
 	cameraGroupBox->setLayout(cameraLayout);
 
 	//############ OBJECT TAB - TRANSLATION GROUPBOX ############

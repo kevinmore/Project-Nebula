@@ -4,11 +4,13 @@
 
 Scene::Scene(QObject* parent)
 	: AbstractScene(parent),
+	  m_sceneNode(new GameObject),
 	  m_camera(new Camera(NULL,this)),
 	  m_light("light01"),
 	  m_lightMode(PerFragmentPhong),
 	  m_lightModeSubroutines(LightModeCount)
 {
+	m_sceneNode->setObjectName("Scene Root");
 	// Initializing the lights
 	for(int i = 1; i < LightModeCount; ++i)
 	{
@@ -336,7 +338,7 @@ void Scene::resetToDefaultScene()
 	m_camera->resetCamera();
 
 	// load the floor
-	m_modelManager->loadModel("floor", "../Resource/Models/DemoRoom/floor.DAE");
+	m_modelManager->loadModel("floor", "../Resource/Models/DemoRoom/floor.DAE", this);
 	StaticModel* sceneObject = m_modelManager->getStaticModel("floor");
 	sceneObject->gameObject()->setRotation(-90.0f, 0.0f, 0.0f);
 }
@@ -359,7 +361,7 @@ void Scene::showSaveSceneDialog()
 
 	m_modelManager->gatherModelsInfo();
 
-	out << m_modelManager;
+	out << this;
 
 	file.flush();
 	file.close();
@@ -381,7 +383,7 @@ void Scene::showOpenSceneDialog()
 	QDataStream in(&file);
 	in.setVersion(QDataStream::Qt_5_3);
 
- 	in >> m_modelManager;
+ 	in >> this;
 	
 	// clear the scene and load the models
 	clearScene();
@@ -390,10 +392,12 @@ void Scene::showOpenSceneDialog()
 	{
 		QString modelFileName = m_modelManager->m_modelsInfo[i].first;
 		GameObject* go = m_modelManager->m_modelsInfo[i].second;
-		qDebug() << modelFileName << go->rotation();
-		LoaderThread loader(this, modelFileName, go);
+
+		LoaderThread loader(this, modelFileName, go, m_sceneNode);
  		loader.run();
 	}
+
+	m_sceneNode->dumpObjectTree();
 
 	file.close();
 }

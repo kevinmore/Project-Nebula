@@ -22,9 +22,13 @@
  * THE SOFTWARE.
  */
 
+ QWidget
+ {
+	font-family: "Microsoft YaHei", "Arial", "黑体", "宋体", sans-serif;
+ }
+ 
  QFileDialog
 {
- 
 	color: silver;
     background-color: #302F2F;
     selection-background-color:#78879b;

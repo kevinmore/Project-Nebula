@@ -3,28 +3,28 @@
 #include <QOpenGLContext>
 #include <Animation/Rig/Pose.h>
 
-RiggedModel::RiggedModel(const QString& name, Scene* scene, ShadingTechnique* tech, Skeleton* skeleton, FKController* fkCtrl, CCDIKSolver* ikSolver)
-  : AbstractModel(name, new GameObject),
+RiggedModel::RiggedModel(const QString& name, Scene* scene, ShadingTechnique* tech, Skeleton* skeleton, QObject* parent)
+  : AbstractModel(name, new GameObject, parent),
     m_scene(scene),
     m_RenderingEffect(tech),
 	m_vao(tech->getVAO()),
 	m_skeleton(skeleton),
-	m_FKController(fkCtrl),
-	m_CCDSolver(ikSolver),
+	m_FKController(0),
+	m_IKSolver(0),
 	m_hasAnimation(false),
 	m_animationDuration(0.0f)
 {
 	initialize();
 }
 
-RiggedModel::RiggedModel(const QString& name, Scene* scene, ShadingTechnique* tech, Skeleton* skeleton, FKController* fkCtrl, CCDIKSolver* ikSolver, QVector<ModelDataPtr> modelData)
-  : AbstractModel(name, new GameObject),
+RiggedModel::RiggedModel(const QString& name, Scene* scene, ShadingTechnique* tech, Skeleton* skeleton, QVector<ModelDataPtr> modelData, QObject* parent)
+  : AbstractModel(name, new GameObject, parent),
     m_scene(scene),
     m_RenderingEffect(tech),
 	m_vao(tech->getVAO()),
 	m_skeleton(skeleton),
-	m_FKController(fkCtrl),
-	m_CCDSolver(ikSolver),
+	m_FKController(0),
+	m_IKSolver(0),
 	m_hasAnimation(false),
 	m_animationDuration(0.0f)
 {
@@ -37,7 +37,7 @@ RiggedModel::~RiggedModel()
 	SAFE_DELETE(m_actor);
 	SAFE_DELETE(m_RenderingEffect);
  	SAFE_DELETE(m_skeleton);
- 	SAFE_DELETE(m_CCDSolver);
+ 	SAFE_DELETE(m_IKSolver);
 	SAFE_DELETE(m_FKController);
 }
 
@@ -342,4 +342,14 @@ void RiggedModel::setReachableTargetPos( vec3& pos )
 float RiggedModel::animationDuration()
 {
 	return m_animationDuration;
+}
+
+void RiggedModel::setFKController( FKController* fkCtrl )
+{
+	m_FKController = fkCtrl;
+}
+
+void RiggedModel::setIKSolver( CCDIKSolver* ikSolver )
+{
+	m_IKSolver = ikSolver;
 }

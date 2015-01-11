@@ -9,7 +9,7 @@ class GameObject : public QObject
 	Q_PROPERTY(vec3 localSpeed READ localSpeed WRITE setSpeed)
 
 public:
-	GameObject();
+	GameObject(QObject* parent = 0);
 	~GameObject();
 
 	bool isMoving() const;

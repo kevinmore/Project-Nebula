@@ -7,13 +7,13 @@ LoaderThread::LoaderThread(Scene* scene, const QString fileName, GameObject* go,
 	  m_fileName(fileName),
 	  m_actor(go)
 {
-	connect(this, SIGNAL(jobDone()), this, SLOT(quit()));
 }
 
 
 LoaderThread::~LoaderThread()
 {
-	qDebug() << "Thread:" << m_fileName << "is destroyed!";
+	// delete the reference game object pointer created in the In Stream
+	SAFE_DELETE(m_actor);
 }
 
 void LoaderThread::run()
@@ -32,7 +32,7 @@ void LoaderThread::run()
 		QDir dir;
 		QString relativePath = dir.relativeFilePath(m_fileName);
 
-		ModelPtr model = m_scene->modelManager()->loadModel(customName, relativePath);
+		ModelPtr model = m_scene->modelManager()->loadModel(customName, relativePath, parent());
 
 		// apply transformation to this model
 		if (m_actor)
@@ -44,5 +44,5 @@ void LoaderThread::run()
 	}
 
 	mutex.unlock();
-	emit jobDone();
+	quit();
 }

@@ -1,8 +1,6 @@
 #pragma once
 #include <QtCore>
-#include <Scene/GameObject.h>
-#include <Scene/Camera.h>
-#include <Scene/Managers/ModelManager.h>
+#include <Scene/Scene.h>
 
 /************************************************************************/
 /*                           IO Streams                                 */
@@ -51,7 +49,7 @@ QDataStream& operator >> (QDataStream& in, GameObject* object)
 /*
 * Model Manager
 */
-// Order: vector size -> each pair(filename, gameobject)
+// Order: Vector Size -> Each Pair(filename, gameobject)
 QDataStream& operator << (QDataStream& out, QSharedPointer<ModelManager> object)
 {
 	int size = object->m_modelsInfo.size();
@@ -59,7 +57,6 @@ QDataStream& operator << (QDataStream& out, QSharedPointer<ModelManager> object)
 
 	for (int i = 0; i < size; ++i)
 	{
-		qDebug() << "Out Stream" << object->m_modelsInfo[i].first << object->m_modelsInfo[i].second->rotation();
 		out << object->m_modelsInfo[i].first << object->m_modelsInfo[i].second;
 	}
 	
@@ -74,17 +71,58 @@ QDataStream& operator >> (QDataStream& in, QSharedPointer<ModelManager> object)
 	in >> size;
 
 	QString fileName;
-	GameObject* go = new GameObject;
 
 	object->m_modelsInfo.clear();
 
 	for (int i = 0; i < size; ++i)
 	{
+		GameObject* go = new GameObject;
 		in >> fileName >> go;
-		qDebug() << "In Stream" << fileName << go->rotation();
 
 		object->m_modelsInfo.push_back(qMakePair(fileName, go));
 	}
 	
+	return in;
+}
+
+/*
+* Camera
+*/
+// Order: Position -> Up Vector -> View Center
+QDataStream& operator << (QDataStream& out, Camera* object)
+{
+	out << object->position() << object->upVector() << object->viewCenter();
+
+	return out;
+}
+
+QDataStream& operator >> (QDataStream& in, Camera* object)
+{
+	vec3 pos, up, center;
+
+	in >> pos >> up >> center;
+
+	object->setPosition(pos);
+	object->setUpVector(up);
+	object->setViewCenter(center);
+
+	return in;
+}
+
+/*
+* Scene
+*/
+// Order: Model Manager -> Camera
+QDataStream& operator << (QDataStream& out, Scene* object)
+{
+	out << object->modelManager() << object->getCamera();
+
+	return out;
+}
+
+QDataStream& operator >> (QDataStream& in, Scene* object)
+{
+	in >> object->modelManager() >> object->getCamera();
+
 	return in;
 }

@@ -28,7 +28,7 @@ StaticModel* ModelManager::getStaticModel( const QString& name )
 	else return NULL;
 }
 
-ModelPtr ModelManager::loadModel( const QString& customName, const QString& fileName )
+ModelPtr ModelManager::loadModel( const QString& customName, const QString& fileName, QObject* parent )
 {
 	ModelLoader* m_modelLoader = new ModelLoader();
 	QVector<ModelDataPtr> modelDataArray = m_modelLoader->loadModel(fileName);
@@ -40,7 +40,8 @@ ModelPtr ModelManager::loadModel( const QString& customName, const QString& file
 
 	if (m_modelLoader->getModelType() == ModelLoader::STATIC_MODEL)
 	{
-		StaticModel* sm = new StaticModel(fileName, m_scene, m_modelLoader->getRenderingEffect(), modelDataArray);
+		StaticModel* sm = new StaticModel(fileName, m_scene, m_modelLoader->getRenderingEffect(), modelDataArray, parent);
+		sm->setObjectName(name);
 
 		m_staticModels[name] = sm;
 		m_allModels[name] = ModelPtr(sm);
@@ -53,9 +54,12 @@ ModelPtr ModelManager::loadModel( const QString& customName, const QString& file
 		// create an IKSolver for the model
 		CCDIKSolver* solver = new CCDIKSolver(128);
 
-		RiggedModel* rm = new RiggedModel(fileName, m_scene, m_modelLoader->getRenderingEffect(), m_modelLoader->getSkeletom(), controller, solver, modelDataArray);
+		RiggedModel* rm = new RiggedModel(fileName, m_scene, m_modelLoader->getRenderingEffect(), m_modelLoader->getSkeletom(), modelDataArray, parent);
+		rm->setFKController(controller);
+		rm->setIKSolver(solver);
 		rm->setRootTranslation(controller->getRootTranslation());
 		rm->setRootRotation(controller->getRootRotation());
+		rm->setObjectName(name);
 
 		m_riggedModels[name] = rm;
 		m_allModels[name] = ModelPtr(rm);

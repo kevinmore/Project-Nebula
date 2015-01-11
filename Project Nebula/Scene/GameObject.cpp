@@ -2,8 +2,9 @@
 #include <Utility/Math.h>
 using namespace Math;
 
-GameObject::GameObject()
-	: m_position(Vector3D::ZERO),
+GameObject::GameObject(QObject* parent)
+	: QObject(parent),
+	  m_position(Vector3D::ZERO),
 	  m_rotation(Vector3D::ZERO),
 	  m_scale(Vector3D::UNIT_SCALE),
 	  m_movingBehaviour(CONSECUTIVE),
