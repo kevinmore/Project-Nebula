@@ -20,14 +20,12 @@ HierarchyWidget::~HierarchyWidget()
 
 void HierarchyWidget::resetTree()
 {
-	qDebug() << "reseting!";
 	ui->treeWidget->clear();
 
 	QTreeWidgetItem* rootItem = new QTreeWidgetItem(ui->treeWidget);
 	rootItem->setText(0, m_scene->sceneNode()->objectName());
 
 	QObjectList childrenList = m_scene->sceneNode()->children();
-	qDebug() << "size:" << childrenList.count();
 	foreach(QObject* obj, childrenList)
 	{
 		QTreeWidgetItem* item = new QTreeWidgetItem(rootItem);

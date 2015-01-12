@@ -73,6 +73,9 @@ signals:
 	void updateHierarchy();
 
 private:
+	void loadScene(QString& fileName);
+	void saveScene(QString& fileName);
+
 	GameObject* m_sceneNode;
 
 	Camera* m_camera;

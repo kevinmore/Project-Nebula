@@ -54,7 +54,6 @@ void Scene::initialize()
 	m_textureManager = QSharedPointer<TextureManager>(new TextureManager());
 	m_meshManager = QSharedPointer<MeshManager>(new MeshManager());
 
-	resetToDefaultScene();
 
 
 	/*
@@ -145,6 +144,7 @@ void Scene::initialize()
 
 	//m_camera->followTarget(m_playerController->getActor());
 
+	resetToDefaultScene();
 }
 
 
@@ -314,16 +314,6 @@ QSharedPointer<ModelManager> Scene::modelManager()
 	return m_modelManager;
 }
 
-void Scene::showLoadModelDialog()
-{
-	QString fileName = QFileDialog::getOpenFileName(0, tr("Load Model"),
-		"../Resource/Models",
-		tr("3D Model File (*.dae *.obj *.3ds)"));
-
-	LoaderThread loader(this, fileName, 0, m_sceneNode);
-	loader.run();
-}
-
 void Scene::clearScene()
 {
 	m_materialManager->clear();
@@ -340,35 +330,18 @@ void Scene::resetToDefaultScene()
 	m_camera->resetCamera();
 
 	// load the floor
-	m_modelManager->loadModel("floor", "../Resource/Models/DemoRoom/floor.DAE", m_sceneNode);
-	StaticModel* sceneObject = m_modelManager->getStaticModel("floor");
-	sceneObject->gameObject()->setRotation(-90.0f, 0.0f, 0.0f);
-
-	emit updateHierarchy();
+	GameObject* floorRef = new GameObject;
+	floorRef->setRotation(-90.0f, 0.0f, 0.0f);
+	LoaderThread loader(this, "../Resource/Models/DemoRoom/floor.DAE", floorRef, m_sceneNode);
 }
 
-void Scene::showSaveSceneDialog()
+void Scene::showLoadModelDialog()
 {
-	QString fileName = QFileDialog::getSaveFileName(0, tr("Save Scene"),
-		"../Resource/Scenes",
-		tr("Scene File (*.nebula)"));
+	QString fileName = QFileDialog::getOpenFileName(0, tr("Load Model"),
+		"../Resource/Models",
+		tr("3D Model File (*.dae *.obj *.3ds)"));
 
-	QFile file(fileName);
-	if (!file.open(QIODevice::WriteOnly))
-	{
-		qWarning() << "Unable to save to file:" << fileName;
-		return;
-	}
-	
-	QDataStream out(&file);
-	out.setVersion(QDataStream::Qt_5_3);
-
-	m_modelManager->gatherModelsInfo();
-
-	out << this;
-
-	file.flush();
-	file.close();
+	LoaderThread loader(this, fileName, 0, m_sceneNode);
 }
 
 void Scene::showOpenSceneDialog()
@@ -377,6 +350,20 @@ void Scene::showOpenSceneDialog()
 		"../Resource/Scenes",
 		tr("Scene File (*.nebula)"));
 
+	loadScene(fileName);
+}
+
+void Scene::showSaveSceneDialog()
+{
+	QString fileName = QFileDialog::getSaveFileName(0, tr("Save Scene"),
+		"../Resource/Scenes",
+		tr("Scene File (*.nebula)"));
+
+	saveScene(fileName);
+}
+
+void Scene::loadScene( QString& fileName )
+{
 	QFile file(fileName);
 	if (!file.open(QIODevice::ReadOnly))
 	{
@@ -387,8 +374,8 @@ void Scene::showOpenSceneDialog()
 	QDataStream in(&file);
 	in.setVersion(QDataStream::Qt_5_3);
 
- 	in >> this;
-	
+	in >> this;
+
 	// clear the scene and load the models
 	clearScene();
 
@@ -398,9 +385,28 @@ void Scene::showOpenSceneDialog()
 		GameObject* go = m_modelManager->m_modelsInfo[i].second;
 
 		LoaderThread loader(this, modelFileName, go, m_sceneNode);
- 		loader.run();
 	}
 
+	file.close();
+}
+
+void Scene::saveScene( QString& fileName )
+{
+	QFile file(fileName);
+	if (!file.open(QIODevice::WriteOnly))
+	{
+		qWarning() << "Unable to save to file:" << fileName;
+		return;
+	}
+
+	QDataStream out(&file);
+	out.setVersion(QDataStream::Qt_5_3);
+
+	m_modelManager->gatherModelsInfo();
+
+	out << this;
+
+	file.flush();
 	file.close();
 }
 

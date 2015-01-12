@@ -20,7 +20,7 @@
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_Scene_t {
     QByteArrayData data[18];
-    char stringdata[255];
+    char stringdata[244];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -32,29 +32,29 @@ static const qt_meta_stringdata_Scene_t qt_meta_stringdata_Scene = {
 QT_MOC_LITERAL(0, 0, 5),
 QT_MOC_LITERAL(1, 6, 15),
 QT_MOC_LITERAL(2, 22, 0),
-QT_MOC_LITERAL(3, 23, 11),
-QT_MOC_LITERAL(4, 35, 10),
-QT_MOC_LITERAL(5, 46, 5),
-QT_MOC_LITERAL(6, 52, 15),
-QT_MOC_LITERAL(7, 68, 12),
-QT_MOC_LITERAL(8, 81, 11),
-QT_MOC_LITERAL(9, 93, 16),
-QT_MOC_LITERAL(10, 110, 17),
-QT_MOC_LITERAL(11, 128, 8),
-QT_MOC_LITERAL(12, 137, 19),
-QT_MOC_LITERAL(13, 157, 19),
-QT_MOC_LITERAL(14, 177, 10),
-QT_MOC_LITERAL(15, 188, 19),
-QT_MOC_LITERAL(16, 208, 19),
-QT_MOC_LITERAL(17, 228, 26)
+QT_MOC_LITERAL(3, 23, 15),
+QT_MOC_LITERAL(4, 39, 10),
+QT_MOC_LITERAL(5, 50, 5),
+QT_MOC_LITERAL(6, 56, 15),
+QT_MOC_LITERAL(7, 72, 12),
+QT_MOC_LITERAL(8, 85, 11),
+QT_MOC_LITERAL(9, 97, 16),
+QT_MOC_LITERAL(10, 114, 17),
+QT_MOC_LITERAL(11, 132, 8),
+QT_MOC_LITERAL(12, 141, 19),
+QT_MOC_LITERAL(13, 161, 19),
+QT_MOC_LITERAL(14, 181, 10),
+QT_MOC_LITERAL(15, 192, 19),
+QT_MOC_LITERAL(16, 212, 19),
+QT_MOC_LITERAL(17, 232, 11)
     },
-    "Scene\0renderCycleDone\0\0modelLoaded\0"
+    "Scene\0renderCycleDone\0\0updateHierarchy\0"
     "toggleFill\0state\0toggleWireframe\0"
     "togglePoints\0togglePhong\0toggleBlinnPhong\0"
     "toggleRimLighting\0toggleAA\0"
     "showLoadModelDialog\0resetToDefaultScene\0"
     "clearScene\0showOpenSceneDialog\0"
-    "showSaveSceneDialog\0threadFinishedLoadingModel"
+    "showSaveSceneDialog\0modelLoaded"
 };
 #undef QT_MOC_LITERAL
 

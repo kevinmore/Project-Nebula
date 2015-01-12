@@ -1,19 +1,20 @@
 #include "LoaderThread.h"
 #include <QFileDialog>
 #include <Scene/Scene.h>
-LoaderThread::LoaderThread(Scene* scene, const QString fileName, GameObject* go, QObject* parent)
-	: QThread(parent),
+LoaderThread::LoaderThread(Scene* scene, const QString fileName, GameObject* reference, GameObject* objectParent)
+	: QThread(scene),
 	  m_scene(scene),
 	  m_fileName(fileName),
-	  m_actor(go)
+	  m_actor(reference),
+	  m_objectParent(objectParent)
 {
 	connect(this, SIGNAL(jobDone()), m_scene, SLOT(modelLoaded()));
+	run();
 }
-
 
 LoaderThread::~LoaderThread()
 {
-	// delete the reference game object pointer created in the In Stream
+	// delete the reference game object pointer
 	SAFE_DELETE(m_actor);
 }
 
@@ -33,7 +34,7 @@ void LoaderThread::run()
 		QDir dir;
 		QString relativePath = dir.relativeFilePath(m_fileName);
 
-		ModelPtr model = m_scene->modelManager()->loadModel(customName, relativePath, parent());
+		ModelPtr model = m_scene->modelManager()->loadModel(customName, relativePath, m_objectParent);
 
 		// apply transformation to this model
 		if (m_actor)
@@ -48,6 +49,5 @@ void LoaderThread::run()
 
 	// emit the signal and destroy the thread
 	emit jobDone();
-	//msleep(100);
 	quit();
 }
