@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[21];
-    char stringdata[216];
+    QByteArrayData data[20];
+    char stringdata[203];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -35,29 +35,27 @@ QT_MOC_LITERAL(2, 25, 0),
 QT_MOC_LITERAL(3, 26, 5),
 QT_MOC_LITERAL(4, 32, 17),
 QT_MOC_LITERAL(5, 50, 12),
-QT_MOC_LITERAL(6, 63, 12),
-QT_MOC_LITERAL(7, 76, 17),
-QT_MOC_LITERAL(8, 94, 3),
-QT_MOC_LITERAL(9, 98, 15),
-QT_MOC_LITERAL(10, 114, 9),
-QT_MOC_LITERAL(11, 124, 14),
-QT_MOC_LITERAL(12, 139, 8),
-QT_MOC_LITERAL(13, 148, 10),
-QT_MOC_LITERAL(14, 159, 4),
-QT_MOC_LITERAL(15, 164, 11),
-QT_MOC_LITERAL(16, 176, 5),
-QT_MOC_LITERAL(17, 182, 12),
-QT_MOC_LITERAL(18, 195, 6),
-QT_MOC_LITERAL(19, 202, 9),
-QT_MOC_LITERAL(20, 212, 3)
+QT_MOC_LITERAL(6, 63, 17),
+QT_MOC_LITERAL(7, 81, 3),
+QT_MOC_LITERAL(8, 85, 15),
+QT_MOC_LITERAL(9, 101, 9),
+QT_MOC_LITERAL(10, 111, 14),
+QT_MOC_LITERAL(11, 126, 8),
+QT_MOC_LITERAL(12, 135, 10),
+QT_MOC_LITERAL(13, 146, 4),
+QT_MOC_LITERAL(14, 151, 11),
+QT_MOC_LITERAL(15, 163, 5),
+QT_MOC_LITERAL(16, 169, 12),
+QT_MOC_LITERAL(17, 182, 6),
+QT_MOC_LITERAL(18, 189, 9),
+QT_MOC_LITERAL(19, 199, 3)
     },
     "MainWindow\0setFullScreen\0\0state\0"
     "setViewProperties\0setFramerate\0"
-    "updateMatrix\0updateFieldOfView\0fov\0"
-    "updateNearPlane\0nearPlane\0updateFarPlane\0"
-    "farPlane\0updateLeft\0left\0updateRight\0"
-    "right\0updateBottom\0bottom\0updateTop\0"
-    "top"
+    "updateFieldOfView\0fov\0updateNearPlane\0"
+    "nearPlane\0updateFarPlane\0farPlane\0"
+    "updateLeft\0left\0updateRight\0right\0"
+    "updateBottom\0bottom\0updateTop\0top"
 };
 #undef QT_MOC_LITERAL
 
@@ -67,7 +65,7 @@ static const uint qt_meta_data_MainWindow[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      11,   14, // methods
+      10,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -75,30 +73,28 @@ static const uint qt_meta_data_MainWindow[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    1,   69,    2, 0x08 /* Private */,
-       4,    1,   72,    2, 0x08 /* Private */,
-       5,    0,   75,    2, 0x08 /* Private */,
-       6,    0,   76,    2, 0x08 /* Private */,
-       7,    1,   77,    2, 0x08 /* Private */,
-       9,    1,   80,    2, 0x08 /* Private */,
-      11,    1,   83,    2, 0x08 /* Private */,
-      13,    1,   86,    2, 0x08 /* Private */,
-      15,    1,   89,    2, 0x08 /* Private */,
-      17,    1,   92,    2, 0x08 /* Private */,
-      19,    1,   95,    2, 0x08 /* Private */,
+       1,    1,   64,    2, 0x08 /* Private */,
+       4,    1,   67,    2, 0x08 /* Private */,
+       5,    0,   70,    2, 0x08 /* Private */,
+       6,    1,   71,    2, 0x08 /* Private */,
+       8,    1,   74,    2, 0x08 /* Private */,
+      10,    1,   77,    2, 0x08 /* Private */,
+      12,    1,   80,    2, 0x08 /* Private */,
+      14,    1,   83,    2, 0x08 /* Private */,
+      16,    1,   86,    2, 0x08 /* Private */,
+      18,    1,   89,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void, QMetaType::Bool,    3,
     QMetaType::Void, QMetaType::Bool,    3,
     QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void, QMetaType::Double,    8,
-    QMetaType::Void, QMetaType::Double,   10,
-    QMetaType::Void, QMetaType::Double,   12,
-    QMetaType::Void, QMetaType::Double,   14,
-    QMetaType::Void, QMetaType::Double,   16,
-    QMetaType::Void, QMetaType::Double,   18,
-    QMetaType::Void, QMetaType::Double,   20,
+    QMetaType::Void, QMetaType::Double,    7,
+    QMetaType::Void, QMetaType::Double,    9,
+    QMetaType::Void, QMetaType::Double,   11,
+    QMetaType::Void, QMetaType::Double,   13,
+    QMetaType::Void, QMetaType::Double,   15,
+    QMetaType::Void, QMetaType::Double,   17,
+    QMetaType::Void, QMetaType::Double,   19,
 
        0        // eod
 };
@@ -111,14 +107,13 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 0: _t->setFullScreen((*reinterpret_cast< bool(*)>(_a[1]))); break;
         case 1: _t->setViewProperties((*reinterpret_cast< bool(*)>(_a[1]))); break;
         case 2: _t->setFramerate(); break;
-        case 3: _t->updateMatrix(); break;
-        case 4: _t->updateFieldOfView((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 5: _t->updateNearPlane((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 6: _t->updateFarPlane((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 7: _t->updateLeft((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 8: _t->updateRight((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 9: _t->updateBottom((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 10: _t->updateTop((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 3: _t->updateFieldOfView((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 4: _t->updateNearPlane((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 5: _t->updateFarPlane((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 6: _t->updateLeft((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 7: _t->updateRight((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 8: _t->updateBottom((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 9: _t->updateTop((*reinterpret_cast< double(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -149,13 +144,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 11)
+        if (_id < 10)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 11;
+        _id -= 10;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 11)
+        if (_id < 10)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 11;
+        _id -= 10;
     }
     return _id;
 }

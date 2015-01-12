@@ -49,7 +49,6 @@ Canvas::Canvas(QScreen *screen)
 	qDebug() << "- Vendor :" << reinterpret_cast<const char*>(glGetString(GL_VENDOR));
 	qDebug() << "- Renderer (GPU) :" << reinterpret_cast<const char*>(glGetString(GL_RENDERER)) << endl;
 
-	m_renderTimer.invalidate(); // Timer for rendering the area (animation ... etc)
 	m_updateTimer.start(); // Timer for updating the scene (camera ... etc)
 
 	initializeGL();
@@ -88,7 +87,6 @@ void Canvas::paintGL()
     if(isExposed())
     {
         m_context->makeCurrent(this);
-        m_scene->render(static_cast<double>(m_renderTimer.elapsed())/1000);
         m_context->swapBuffers(this);
 
         emit updateFramerate();
@@ -113,17 +111,7 @@ void Canvas::updateScene()
     paintGL();
 }
 
-/**
- * @brief Checking the animation of the scene
- */
-void Canvas::checkAnimate(int state)
-{
-    if(state == Qt::Checked)
-        m_renderTimer.start();
 
-    if(state == Qt::Unchecked)
-        m_renderTimer.invalidate();
-}
 
 Scene* Canvas::getScene()
 {

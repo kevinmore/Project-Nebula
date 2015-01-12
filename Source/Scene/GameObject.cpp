@@ -78,55 +78,55 @@ void GameObject::setScale(float scaleFactor)
 	m_modelMatrixDirty = true;
 }
 
-void GameObject::translateX(float x)
+void GameObject::translateX(double x)
 {
 	m_position.setX(x);
 	m_modelMatrixDirty = true;
 }
 
-void GameObject::translateY(float y)
+void GameObject::translateY(double y)
 {
 	m_position.setY(y);
 	m_modelMatrixDirty = true;
 }
 
-void GameObject::translateZ(float z)
+void GameObject::translateZ(double z)
 {
 	m_position.setZ(z);
 	m_modelMatrixDirty = true;
 }
 
-void GameObject::rotateX(float x)
+void GameObject::rotateX(double x)
 {
 	m_rotation.setX(x);
 	m_modelMatrixDirty = true;
 }
 
-void GameObject::rotateY(float y)
+void GameObject::rotateY(double y)
 {
 	m_rotation.setY(y);
 	m_modelMatrixDirty = true;
 }
 
-void GameObject::rotateZ(float z)
+void GameObject::rotateZ(double z)
 {
 	m_rotation.setZ(z);
 	m_modelMatrixDirty = true;
 }
 
-void GameObject::scaleX(float x)
+void GameObject::scaleX(double x)
 {
 	m_scale.setX(x);
 	m_modelMatrixDirty = true;
 }
 
-void GameObject::scaleY(float y)
+void GameObject::scaleY(double y)
 {
 	m_scale.setY(y);
 	m_modelMatrixDirty = true;
 }
 
-void GameObject::scaleZ(float z)
+void GameObject::scaleZ(double z)
 {
 	m_scale.setZ(z);
 	m_modelMatrixDirty = true;
@@ -163,42 +163,6 @@ const QMatrix4x4& GameObject::modelMatrix()
 	}
 
 	return m_modelMatrix;
-}
-
-void GameObject::setObjectXPosition(int x)
-{
-	m_position.setX(static_cast<float>(x)/100.0f);
-	m_modelMatrixDirty = true;
-}
-
-void GameObject::setObjectYPosition(int y)
-{
-	m_position.setY(static_cast<float>(y)/100.0f);
-	m_modelMatrixDirty = true;
-}
-
-void GameObject::setObjectZPosition(int z)
-{
-	m_position.setZ(static_cast<float>(z)/100.0f);
-	m_modelMatrixDirty = true;
-}
-
-void GameObject::setObjectXRotation(int x)
-{
-	m_rotation.setX(static_cast<float>(x));
-	m_modelMatrixDirty = true;
-}
-
-void GameObject::setObjectYRotation(int y)
-{
-	m_rotation.setY(static_cast<float>(y));
-	m_modelMatrixDirty = true;
-}
-
-void GameObject::setObjectZRotation(int z)
-{
-	m_rotation.setZ(static_cast<float>(z));
-	m_modelMatrixDirty = true;
 }
 
 void GameObject::reset()

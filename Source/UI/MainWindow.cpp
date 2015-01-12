@@ -12,12 +12,10 @@ MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent),
 	  m_canvas(new Canvas),
 	  m_scene(nullptr),
-	  m_object3D(nullptr),
 	  m_camera(nullptr)
 {
 	
 	m_scene    = m_canvas->getScene();
-	m_object3D = m_scene->getObject();
 	m_camera   = m_scene->getCamera();
 
 	// show the state machine viewer
@@ -32,15 +30,10 @@ MainWindow::MainWindow(QWidget *parent)
 		m_stateMachineViewer->hide();
 	}
 
-	// show the hierarchy inspector
-	m_heirarchyViewer = new QDockWidget("Hierarchy Inspector", this);
-	HierarchyWidget* inspector = new HierarchyWidget(m_scene, this);
-	m_heirarchyViewer->setWidget(inspector);
-	m_heirarchyViewer->setFeatures(QDockWidget::AllDockWidgetFeatures);
-	addDockWidget(Qt::LeftDockWidgetArea, m_heirarchyViewer);
+	
 
 	initializeCanvas();
-	initializeParamsArea();
+	initializeRightDockableArea();
 	initializeMenuBar();
 
 	resize(1600, 900);
@@ -105,7 +98,7 @@ void MainWindow::initializeMenuBar()
 	toggleHierarchyInspector->setText("Show Hierarchy Inspector");
 	windowMenu->addAction(toggleHierarchyInspector);
 
-	QAction* toggleSettingsTab = m_dockParamsArea->toggleViewAction();
+	QAction* toggleSettingsTab = m_dockSettingsArea->toggleViewAction();
 	toggleSettingsTab->setText("Show Settings Window");
 	windowMenu->addAction(toggleSettingsTab);
 
@@ -134,18 +127,29 @@ void MainWindow::initializeMenuBar()
 	QObject::connect(msaaAction,       SIGNAL(triggered(bool)), m_scene, SLOT(toggleAA(bool)));
 }
 
+void MainWindow::initializeRightDockableArea()
+{
+	initializeParamsArea();
+
+	// create hierarchy inspector
+	m_heirarchyViewer = new QDockWidget("Hierarchy Inspector", this);
+	HierarchyWidget* inspector = new HierarchyWidget(m_scene, this);
+	m_heirarchyViewer->setWidget(inspector);
+	m_heirarchyViewer->setFeatures(QDockWidget::AllDockWidgetFeatures);
+	//addDockWidget(Qt::RightDockWidgetArea, m_heirarchyViewer);
+	tabifyDockWidget(m_dockSettingsArea, m_heirarchyViewer);
+}
+
 void MainWindow::initializeParamsArea()
 {
 	
+	// ############ SETTINGS AREA ############
 
-
-	// ############ DOCK RIGHT ############
-
-	m_dockParamsArea = new QDockWidget("Parameters", this);
-	addDockWidget(Qt::RightDockWidgetArea, m_dockParamsArea);
+	m_dockSettingsArea = new QDockWidget("Settings", this);
+	addDockWidget(Qt::RightDockWidgetArea, m_dockSettingsArea);
 
 	m_params = new QWidget;
-	m_dockParamsArea->setWidget(m_params);
+	m_dockSettingsArea->setWidget(m_params);
 
 	fpsCounter = new QLCDNumber(2);
 	fpsCounter->setSegmentStyle(QLCDNumber::Flat);
@@ -155,11 +159,9 @@ void MainWindow::initializeParamsArea()
 	QTabWidget* tab = new QTabWidget;
 
 	QWidget* lightTab   = new QWidget;
-	QWidget* objectTab  = new QWidget;
 	QWidget* optionsTab = new QWidget;
 
 	tab->addTab(optionsTab, "Options");
-	tab->addTab(objectTab, "Object");
 	tab->addTab(lightTab, "Light");
 
 	QVBoxLayout* paramsLayout = new QVBoxLayout;
@@ -168,10 +170,6 @@ void MainWindow::initializeParamsArea()
 	paramsLayout->addStretch();
 
 	m_params->setLayout(paramsLayout);
-
-	// ############ OPTION TAB ############
-
-	QCheckBox* animate = new QCheckBox("Animate");
 
 	// ############ OPTION TAB - RENDERING MODE GROUPBOX ############
 
@@ -331,74 +329,6 @@ void MainWindow::initializeParamsArea()
 	QGroupBox* cameraGroupBox = new QGroupBox("Camera");
 	cameraGroupBox->setLayout(cameraLayout);
 
-	//############ OBJECT TAB - TRANSLATION GROUPBOX ############
-
-	QSlider* translationX = new QSlider(Qt::Horizontal);
-	QSlider* translationY = new QSlider(Qt::Horizontal);
-	QSlider* translationZ = new QSlider(Qt::Horizontal);
-
-	QLabel* translationXLabel = new QLabel("X");
-	QLabel* translationYLabel = new QLabel("Y");
-	QLabel* translationZLabel = new QLabel("Z");
-
-	translationX->setRange(-150, 150);
-	translationX->setValue(0);
-	translationY->setRange(-150, 150);
-	translationY->setValue(0);
-	translationZ->setRange(-150, 150);
-	translationZ->setValue(0);
-
-	QHBoxLayout* translationXLayout = new QHBoxLayout;
-	translationXLayout->addWidget(translationXLabel);
-	translationXLayout->addWidget(translationX);
-
-	QHBoxLayout* translationYLayout = new QHBoxLayout;
-	translationYLayout->addWidget(translationYLabel);
-	translationYLayout->addWidget(translationY);
-
-	QHBoxLayout* translationZLayout = new QHBoxLayout;
-	translationZLayout->addWidget(translationZLabel);
-	translationZLayout->addWidget(translationZ);
-
-	QVBoxLayout* translationLayout = new QVBoxLayout;
-	translationLayout->addLayout(translationXLayout);
-	translationLayout->addLayout(translationYLayout);
-	translationLayout->addLayout(translationZLayout);
-
-	QGroupBox* translationGroupBox = new QGroupBox("TRANSLATION");
-	translationGroupBox->setLayout(translationLayout);
-
-	// ############ OBJECT TAB - ROTATION GROUPBOX ############
-
-	QDial* rotationX = new QDial;
-	QDial* rotationY = new QDial;
-	QDial* rotationZ = new QDial;
-
-	QLabel* rotationXLabel = new QLabel("X");
-	QLabel* rotationYLabel = new QLabel("Y");
-	QLabel* rotationZLabel = new QLabel("Z");
-
-	rotationX->setRange(0, 360);
-	rotationX->setValue(0);
-	rotationY->setRange(0, 360);
-	rotationY->setValue(0);
-	rotationZ->setRange(0, 360);
-	rotationZ->setValue(0);
-
-	rotationXLabel->setAlignment(Qt::AlignCenter);
-	rotationYLabel->setAlignment(Qt::AlignCenter);
-	rotationZLabel->setAlignment(Qt::AlignCenter);
-
-	QVBoxLayout* rotationLayout = new QVBoxLayout;
-	rotationLayout->addWidget(rotationXLabel);
-	rotationLayout->addWidget(rotationX);
-	rotationLayout->addWidget(rotationYLabel);
-	rotationLayout->addWidget(rotationY);
-	rotationLayout->addWidget(rotationZLabel);
-	rotationLayout->addWidget(rotationZ);
-
-	QGroupBox* rotationGroupBox = new QGroupBox("ROTATION");
-	rotationGroupBox->setLayout(rotationLayout);
 
 	// ############ LIGHT TAB - LIGHT EFFECT GROUPBOX ############
 
@@ -423,17 +353,10 @@ void MainWindow::initializeParamsArea()
 	optionsTabLayout->addWidget(projectionTypeGroupBox);
 	optionsTabLayout->addWidget(viewGroupBox);
 	optionsTabLayout->addWidget(cameraGroupBox);
-	optionsTabLayout->addWidget(animate, 0, Qt::AlignHCenter);
 	optionsTabLayout->addStretch();
 
 	optionsTab->setLayout(optionsTabLayout);
 
-	QVBoxLayout* objectTabLayout = new QVBoxLayout;
-	objectTabLayout->addWidget(translationGroupBox);
-	objectTabLayout->addWidget(rotationGroupBox);
-	objectTabLayout->addStretch();
-
-	objectTab->setLayout(objectTabLayout);
 
 	QVBoxLayout* lightTabLayout = new QVBoxLayout;
 	lightTabLayout->addWidget(lightEffectGroupBox);
@@ -441,186 +364,8 @@ void MainWindow::initializeParamsArea()
 
 	lightTab->setLayout(lightTabLayout);
 
-	// ############ DOCK BOTTOM ############
-	/*
-	m_dockMatrixArea = new QDockWidget("Model View Projection Matrix", this);
-	addDockWidget(Qt::BottomDockWidgetArea, m_dockMatrixArea);
-
-	m_mvpMatrix = new QWidget;
-	m_dockMatrixArea->setWidget(m_mvpMatrix);
-
-	modelMatrix00 = new QLabel("0.00");
-	modelMatrix01 = new QLabel("0.00");
-	modelMatrix02 = new QLabel("0.00");
-	modelMatrix03 = new QLabel("0.00");
-
-	modelMatrix10 = new QLabel("0.00");
-	modelMatrix11 = new QLabel("0.00");
-	modelMatrix12 = new QLabel("0.00");
-	modelMatrix13 = new QLabel("0.00");
-
-	modelMatrix20 = new QLabel("0.00");
-	modelMatrix21 = new QLabel("0.00");
-	modelMatrix22 = new QLabel("0.00");
-	modelMatrix23 = new QLabel("0.00");
-
-	modelMatrix30 = new QLabel("0.00");
-	modelMatrix31 = new QLabel("0.00");
-	modelMatrix32 = new QLabel("0.00");
-	modelMatrix33 = new QLabel("0.00");
-
-	viewMatrix00 = new QLabel("0.00");
-	viewMatrix01 = new QLabel("0.00");
-	viewMatrix02 = new QLabel("0.00");
-	viewMatrix03 = new QLabel("0.00");
-
-	viewMatrix10 = new QLabel("0.00");
-	viewMatrix11 = new QLabel("0.00");
-	viewMatrix12 = new QLabel("0.00");
-	viewMatrix13 = new QLabel("0.00");
-
-	viewMatrix20 = new QLabel("0.00");
-	viewMatrix21 = new QLabel("0.00");
-	viewMatrix22 = new QLabel("0.00");
-	viewMatrix23 = new QLabel("0.00");
-
-	viewMatrix30 = new QLabel("0.00");
-	viewMatrix31 = new QLabel("0.00");
-	viewMatrix32 = new QLabel("0.00");
-	viewMatrix33 = new QLabel("0.00");
-
-	projectionMatrix00 = new QLabel("0.00");
-	projectionMatrix01 = new QLabel("0.00");
-	projectionMatrix02 = new QLabel("0.00");
-	projectionMatrix03 = new QLabel("0.00");
-
-	projectionMatrix10 = new QLabel("0.00");
-	projectionMatrix11 = new QLabel("0.00");
-	projectionMatrix12 = new QLabel("0.00");
-	projectionMatrix13 = new QLabel("0.00");
-
-	projectionMatrix20 = new QLabel("0.00");
-	projectionMatrix21 = new QLabel("0.00");
-	projectionMatrix22 = new QLabel("0.00");
-	projectionMatrix23 = new QLabel("0.00");
-
-	projectionMatrix30 = new QLabel("0.00");
-	projectionMatrix31 = new QLabel("0.00");
-	projectionMatrix32 = new QLabel("0.00");
-	projectionMatrix33 = new QLabel("0.00");
-
-	QGridLayout* modelMatrixLayout      = new QGridLayout;
-	QGridLayout* viewMatrixLayout       = new QGridLayout;
-	QGridLayout* projectionMatrixLayout = new QGridLayout;
-
-	modelMatrixLayout->setSpacing(15);
-	viewMatrixLayout->setSpacing(15);
-	projectionMatrixLayout->setSpacing(15);
-
-	modelMatrixLayout->addWidget(modelMatrix00, 0, 0, Qt::AlignHCenter);
-	modelMatrixLayout->addWidget(modelMatrix01, 0, 1, Qt::AlignHCenter);
-	modelMatrixLayout->addWidget(modelMatrix02, 0, 2, Qt::AlignHCenter);
-	modelMatrixLayout->addWidget(modelMatrix03, 0, 3, Qt::AlignHCenter);
-
-	modelMatrixLayout->addWidget(modelMatrix10, 1, 0, Qt::AlignHCenter);
-	modelMatrixLayout->addWidget(modelMatrix11, 1, 1, Qt::AlignHCenter);
-	modelMatrixLayout->addWidget(modelMatrix12, 1, 2, Qt::AlignHCenter);
-	modelMatrixLayout->addWidget(modelMatrix13, 1, 3, Qt::AlignHCenter);
-
-	modelMatrixLayout->addWidget(modelMatrix20, 2, 0, Qt::AlignHCenter);
-	modelMatrixLayout->addWidget(modelMatrix21, 2, 1, Qt::AlignHCenter);
-	modelMatrixLayout->addWidget(modelMatrix22, 2, 2, Qt::AlignHCenter);
-	modelMatrixLayout->addWidget(modelMatrix23, 2, 3, Qt::AlignHCenter);
-
-	modelMatrixLayout->addWidget(modelMatrix30, 3, 0, Qt::AlignHCenter);
-	modelMatrixLayout->addWidget(modelMatrix31, 3, 1, Qt::AlignHCenter);
-	modelMatrixLayout->addWidget(modelMatrix32, 3, 2, Qt::AlignHCenter);
-	modelMatrixLayout->addWidget(modelMatrix33, 3, 3, Qt::AlignHCenter);
-
-	viewMatrixLayout->addWidget(viewMatrix00, 0, 0, Qt::AlignHCenter);
-	viewMatrixLayout->addWidget(viewMatrix01, 0, 1, Qt::AlignHCenter);
-	viewMatrixLayout->addWidget(viewMatrix02, 0, 2, Qt::AlignHCenter);
-	viewMatrixLayout->addWidget(viewMatrix03, 0, 3, Qt::AlignHCenter);
-
-	viewMatrixLayout->addWidget(viewMatrix10, 1, 0, Qt::AlignHCenter);
-	viewMatrixLayout->addWidget(viewMatrix11, 1, 1, Qt::AlignHCenter);
-	viewMatrixLayout->addWidget(viewMatrix12, 1, 2, Qt::AlignHCenter);
-	viewMatrixLayout->addWidget(viewMatrix13, 1, 3, Qt::AlignHCenter);
-
-	viewMatrixLayout->addWidget(viewMatrix20, 2, 0, Qt::AlignHCenter);
-	viewMatrixLayout->addWidget(viewMatrix21, 2, 1, Qt::AlignHCenter);
-	viewMatrixLayout->addWidget(viewMatrix22, 2, 2, Qt::AlignHCenter);
-	viewMatrixLayout->addWidget(viewMatrix23, 2, 3, Qt::AlignHCenter);
-
-	viewMatrixLayout->addWidget(viewMatrix30, 3, 0, Qt::AlignHCenter);
-	viewMatrixLayout->addWidget(viewMatrix31, 3, 1, Qt::AlignHCenter);
-	viewMatrixLayout->addWidget(viewMatrix32, 3, 2, Qt::AlignHCenter);
-	viewMatrixLayout->addWidget(viewMatrix33, 3, 3, Qt::AlignHCenter);
-
-	projectionMatrixLayout->addWidget(projectionMatrix00, 0, 0, Qt::AlignHCenter);
-	projectionMatrixLayout->addWidget(projectionMatrix01, 0, 1, Qt::AlignHCenter);
-	projectionMatrixLayout->addWidget(projectionMatrix02, 0, 2, Qt::AlignHCenter);
-	projectionMatrixLayout->addWidget(projectionMatrix03, 0, 3, Qt::AlignHCenter);
-
-	projectionMatrixLayout->addWidget(projectionMatrix10, 1, 0, Qt::AlignHCenter);
-	projectionMatrixLayout->addWidget(projectionMatrix11, 1, 1, Qt::AlignHCenter);
-	projectionMatrixLayout->addWidget(projectionMatrix12, 1, 2, Qt::AlignHCenter);
-	projectionMatrixLayout->addWidget(projectionMatrix13, 1, 3, Qt::AlignHCenter);
-
-	projectionMatrixLayout->addWidget(projectionMatrix20, 2, 0, Qt::AlignHCenter);
-	projectionMatrixLayout->addWidget(projectionMatrix21, 2, 1, Qt::AlignHCenter);
-	projectionMatrixLayout->addWidget(projectionMatrix22, 2, 2, Qt::AlignHCenter);
-	projectionMatrixLayout->addWidget(projectionMatrix23, 2, 3, Qt::AlignHCenter);
-
-	projectionMatrixLayout->addWidget(projectionMatrix30, 3, 0, Qt::AlignHCenter);
-	projectionMatrixLayout->addWidget(projectionMatrix31, 3, 1, Qt::AlignHCenter);
-	projectionMatrixLayout->addWidget(projectionMatrix32, 3, 2, Qt::AlignHCenter);
-	projectionMatrixLayout->addWidget(projectionMatrix33, 3, 3, Qt::AlignHCenter);
-
-	QGroupBox* modelMatrixGroupBox      = new QGroupBox("MODEL");
-	QGroupBox* viewMatrixGroupBox       = new QGroupBox("VIEW");
-	QGroupBox* projectionMatrixGroupBox = new QGroupBox("PROJECTION");
-
-	modelMatrixGroupBox->setLayout(modelMatrixLayout);
-	viewMatrixGroupBox->setLayout(viewMatrixLayout);
-	projectionMatrixGroupBox->setLayout(projectionMatrixLayout);
-
-	modelMatrixGroupBox->setAlignment(Qt::AlignHCenter);
-	viewMatrixGroupBox->setAlignment(Qt::AlignHCenter);
-	projectionMatrixGroupBox->setAlignment(Qt::AlignHCenter);
-
-	modelMatrixGroupBox->setMinimumWidth(300);
-	modelMatrixGroupBox->setMaximumWidth(300);
-	viewMatrixGroupBox->setMinimumWidth(300);
-	viewMatrixGroupBox->setMaximumWidth(300);
-	projectionMatrixGroupBox->setMinimumWidth(300);
-	projectionMatrixGroupBox->setMaximumWidth(300);
-
-	QLabel* operator1 = new QLabel("x");
-	QLabel* operator2 = new QLabel("x");
-
-	operator1->setMargin(30);
-	operator2->setMargin(30);
-	operator1->setAlignment(Qt::AlignCenter);
-	operator2->setAlignment(Qt::AlignCenter);
-	operator1->setFont(QFont("Arial", 14));
-	operator2->setFont(QFont("Arial", 14));
-
-	QHBoxLayout* matrixLayout = new QHBoxLayout;
-	matrixLayout->addStretch();
-	matrixLayout->addWidget(modelMatrixGroupBox);
-	matrixLayout->addWidget(operator1);
-	matrixLayout->addWidget(viewMatrixGroupBox);
-	matrixLayout->addWidget(operator2);
-	matrixLayout->addWidget(projectionMatrixGroupBox);
-	matrixLayout->addStretch();
-	matrixLayout->addStrut(102);
-
-	m_mvpMatrix->setLayout(matrixLayout);
-	*/
 	// ############ SIGNALS/SLOTS ############
 
-	QObject::connect(animate, SIGNAL(stateChanged(int)), m_canvas.data(), SLOT(checkAnimate(int)));
 
 	// Rendering mode
 	QObject::connect(fill,      SIGNAL(toggled(bool)), m_scene, SLOT(toggleFill(bool)));
@@ -646,15 +391,6 @@ void MainWindow::initializeParamsArea()
 	QObject::connect(firstPerson,            SIGNAL(toggled(bool)),        m_camera,            SLOT(switchToFirstPersonCamera(bool)));
 	QObject::connect(thirdPerson,            SIGNAL(toggled(bool)),        m_camera,            SLOT(switchToThirdPersonCamera(bool)));
 
-	// Object
-	//QObject::connect(translationX, SIGNAL(valueChanged(int)), m_object3D, SLOT(setObjectXPosition(int)));
-	//QObject::connect(translationY, SIGNAL(valueChanged(int)), m_object3D, SLOT(setObjectYPosition(int)));
-	//QObject::connect(translationZ, SIGNAL(valueChanged(int)), m_object3D, SLOT(setObjectZPosition(int)));
-	//
-	//QObject::connect(rotationX, SIGNAL(valueChanged(int)), m_object3D, SLOT(setObjectXRotation(int)));
-	//QObject::connect(rotationY, SIGNAL(valueChanged(int)), m_object3D, SLOT(setObjectYRotation(int)));
-	//QObject::connect(rotationZ, SIGNAL(valueChanged(int)), m_object3D, SLOT(setObjectZRotation(int)));
-
 	// Light Effect
 	QObject::connect(PVPhong,      SIGNAL(toggled(bool)), m_scene, SLOT(togglePhong(bool)));
 	QObject::connect(PVBlinnPhong, SIGNAL(toggled(bool)), m_scene, SLOT(toggleBlinnPhong(bool)));
@@ -663,8 +399,6 @@ void MainWindow::initializeParamsArea()
 	// Update framerate
 	QObject::connect(m_canvas.data(), SIGNAL(updateFramerate()), this, SLOT(setFramerate()));
 
-	// Update MVP matrix
-	//QObject::connect(m_scene, SIGNAL(renderCycleDone()), this, SLOT(updateMatrix()));
 }
 
 void MainWindow::setViewProperties(bool state)
@@ -737,82 +471,6 @@ void MainWindow::setFramerate()
 
 		count   = 0;
 		average = 0;
-	}
-}
-
-void MainWindow::updateMatrix()
-{
-	static int count = 0;
-
-	count++;
-
-	if(count == 15) // Mise ид jour des matrices toutes les 1/4 de secondes
-	{
-		const float* modelMatrixData      = m_object3D->modelMatrix().data();
-		const float* viewMatrixData       = m_camera->viewMatrix().data();
-		const float* projectionMatrixData = m_camera->projectionMatrix().data();
-
-		modelMatrix00->setNum(modelMatrixData[0]);
-		modelMatrix01->setNum(modelMatrixData[4]);
-		modelMatrix02->setNum(modelMatrixData[8]);
-		modelMatrix03->setNum(modelMatrixData[12]);
-
-		modelMatrix10->setNum(modelMatrixData[1]);
-		modelMatrix11->setNum(modelMatrixData[5]);
-		modelMatrix12->setNum(modelMatrixData[9]);
-		modelMatrix13->setNum(modelMatrixData[13]);
-
-		modelMatrix20->setNum(modelMatrixData[2]);
-		modelMatrix21->setNum(modelMatrixData[6]);
-		modelMatrix22->setNum(modelMatrixData[10]);
-		modelMatrix23->setNum(modelMatrixData[14]);
-
-		modelMatrix30->setNum(modelMatrixData[3]);
-		modelMatrix31->setNum(modelMatrixData[7]);
-		modelMatrix32->setNum(modelMatrixData[11]);
-		modelMatrix33->setNum(modelMatrixData[15]);
-
-		viewMatrix00->setNum(viewMatrixData[0]);
-		viewMatrix01->setNum(viewMatrixData[4]);
-		viewMatrix02->setNum(viewMatrixData[8]);
-		viewMatrix03->setNum(viewMatrixData[12]);
-
-		viewMatrix10->setNum(viewMatrixData[1]);
-		viewMatrix11->setNum(viewMatrixData[5]);
-		viewMatrix12->setNum(viewMatrixData[9]);
-		viewMatrix13->setNum(viewMatrixData[13]);
-
-		viewMatrix20->setNum(viewMatrixData[2]);
-		viewMatrix21->setNum(viewMatrixData[6]);
-		viewMatrix22->setNum(viewMatrixData[10]);
-		viewMatrix23->setNum(viewMatrixData[14]);
-
-		viewMatrix30->setNum(viewMatrixData[3]);
-		viewMatrix31->setNum(viewMatrixData[7]);
-		viewMatrix32->setNum(viewMatrixData[11]);
-		viewMatrix33->setNum(viewMatrixData[15]);
-
-		projectionMatrix00->setNum(projectionMatrixData[0]);
-		projectionMatrix01->setNum(projectionMatrixData[4]);
-		projectionMatrix02->setNum(projectionMatrixData[8]);
-		projectionMatrix03->setNum(projectionMatrixData[12]);
-
-		projectionMatrix10->setNum(projectionMatrixData[1]);
-		projectionMatrix11->setNum(projectionMatrixData[5]);
-		projectionMatrix12->setNum(projectionMatrixData[9]);
-		projectionMatrix13->setNum(projectionMatrixData[13]);
-
-		projectionMatrix20->setNum(projectionMatrixData[2]);
-		projectionMatrix21->setNum(projectionMatrixData[6]);
-		projectionMatrix22->setNum(projectionMatrixData[10]);
-		projectionMatrix23->setNum(projectionMatrixData[14]);
-
-		projectionMatrix30->setNum(projectionMatrixData[3]);
-		projectionMatrix31->setNum(projectionMatrixData[7]);
-		projectionMatrix32->setNum(projectionMatrixData[11]);
-		projectionMatrix33->setNum(projectionMatrixData[15]);
-
-		count = 0;
 	}
 }
 

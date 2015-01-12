@@ -17,8 +17,17 @@ public:
 private:
 	Ui::HierarchyViewer *ui;
 	Scene* m_scene;
+	GameObject* m_currentObject;
+
+	void readHierarchy(GameObject* go, QTreeWidgetItem* parentItem); // go through the game objects
+
+private slots:
+	void connectCurrentObject();
+	void disconnectPreviousObject();
+	void clearTransformationArea();
+	void updateTransformation(QTreeWidgetItem* current, QTreeWidgetItem* previous);
 
 public slots:
-	void resetTree();
+	void updateObjectTree();
 };
 

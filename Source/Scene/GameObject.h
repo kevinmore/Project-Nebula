@@ -27,18 +27,6 @@ public:
 	void setScale(float x, float y, float z);
 	void setScale(float scaleFactor);
 
-	void translateX(float x);
-	void translateY(float y);
-	void translateZ(float z);
-
-	void rotateX(float x);
-	void rotateY(float y);
-	void rotateZ(float z);
-
-	void scaleX(float x);
-	void scaleY(float y);
-	void scaleZ(float z);
-
 	void setSpeed(const QVector3D& speed);
 	void setSpeed(float x, float y, float z);
 
@@ -64,13 +52,17 @@ signals:
 	void synchronized();
 
 public slots:
-	void setObjectXPosition(int x);
-	void setObjectYPosition(int y);
-	void setObjectZPosition(int z);
+	void translateX(double x);
+	void translateY(double y);
+	void translateZ(double z);
 
-	void setObjectXRotation(int x);
-	void setObjectYRotation(int y);
-	void setObjectZRotation(int z);
+	void rotateX(double x);
+	void rotateY(double y);
+	void rotateZ(double z);
+
+	void scaleX(double x);
+	void scaleY(double y);
+	void scaleZ(double z);
 
 	void translateInWorld(const QString& paramString);
 	void rotateInWorld(const QString& paramString);

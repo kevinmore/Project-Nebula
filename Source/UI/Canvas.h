@@ -35,7 +35,6 @@ private:
 	void initializeGL();
 
 public slots:
-	void checkAnimate(int state);
 	void setCameraSpeed(double speed);
 	void setCameraSensitivity(double sensitivity);
 
@@ -51,7 +50,6 @@ private:
 	QScopedPointer<QOpenGLContext> m_context;
 	AbstractScene* m_scene;
 
-	QElapsedTimer m_renderTimer;
 	QElapsedTimer m_updateTimer;
 
 	QPoint m_prevPos;

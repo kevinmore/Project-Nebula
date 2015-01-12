@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_Canvas_t {
-    QByteArrayData data[12];
-    char stringdata[126];
+    QByteArrayData data[10];
+    char stringdata[107];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -32,19 +32,16 @@ static const qt_meta_stringdata_Canvas_t qt_meta_stringdata_Canvas = {
 QT_MOC_LITERAL(0, 0, 6),
 QT_MOC_LITERAL(1, 7, 15),
 QT_MOC_LITERAL(2, 23, 0),
-QT_MOC_LITERAL(3, 24, 12),
-QT_MOC_LITERAL(4, 37, 5),
-QT_MOC_LITERAL(5, 43, 14),
-QT_MOC_LITERAL(6, 58, 5),
-QT_MOC_LITERAL(7, 64, 20),
-QT_MOC_LITERAL(8, 85, 11),
-QT_MOC_LITERAL(9, 97, 8),
-QT_MOC_LITERAL(10, 106, 7),
-QT_MOC_LITERAL(11, 114, 11)
+QT_MOC_LITERAL(3, 24, 14),
+QT_MOC_LITERAL(4, 39, 5),
+QT_MOC_LITERAL(5, 45, 20),
+QT_MOC_LITERAL(6, 66, 11),
+QT_MOC_LITERAL(7, 78, 8),
+QT_MOC_LITERAL(8, 87, 7),
+QT_MOC_LITERAL(9, 95, 11)
     },
-    "Canvas\0updateFramerate\0\0checkAnimate\0"
-    "state\0setCameraSpeed\0speed\0"
-    "setCameraSensitivity\0sensitivity\0"
+    "Canvas\0updateFramerate\0\0setCameraSpeed\0"
+    "speed\0setCameraSensitivity\0sensitivity\0"
     "resizeGL\0paintGL\0updateScene"
 };
 #undef QT_MOC_LITERAL
@@ -55,7 +52,7 @@ static const uint qt_meta_data_Canvas[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       7,   14, // methods
+       6,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -63,23 +60,21 @@ static const uint qt_meta_data_Canvas[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   49,    2, 0x06 /* Public */,
+       1,    0,   44,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       3,    1,   50,    2, 0x0a /* Public */,
-       5,    1,   53,    2, 0x0a /* Public */,
-       7,    1,   56,    2, 0x0a /* Public */,
-       9,    0,   59,    2, 0x09 /* Protected */,
-      10,    0,   60,    2, 0x09 /* Protected */,
-      11,    0,   61,    2, 0x09 /* Protected */,
+       3,    1,   45,    2, 0x0a /* Public */,
+       5,    1,   48,    2, 0x0a /* Public */,
+       7,    0,   51,    2, 0x09 /* Protected */,
+       8,    0,   52,    2, 0x09 /* Protected */,
+       9,    0,   53,    2, 0x09 /* Protected */,
 
  // signals: parameters
     QMetaType::Void,
 
  // slots: parameters
-    QMetaType::Void, QMetaType::Int,    4,
+    QMetaType::Void, QMetaType::Double,    4,
     QMetaType::Void, QMetaType::Double,    6,
-    QMetaType::Void, QMetaType::Double,    8,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -93,12 +88,11 @@ void Canvas::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         Canvas *_t = static_cast<Canvas *>(_o);
         switch (_id) {
         case 0: _t->updateFramerate(); break;
-        case 1: _t->checkAnimate((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 2: _t->setCameraSpeed((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 3: _t->setCameraSensitivity((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 4: _t->resizeGL(); break;
-        case 5: _t->paintGL(); break;
-        case 6: _t->updateScene(); break;
+        case 1: _t->setCameraSpeed((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 2: _t->setCameraSensitivity((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 3: _t->resizeGL(); break;
+        case 4: _t->paintGL(); break;
+        case 5: _t->updateScene(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -138,13 +132,13 @@ int Canvas::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 7)
+        if (_id < 6)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 7;
+        _id -= 6;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 7)
+        if (_id < 6)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 7;
+        _id -= 6;
     }
     return _id;
 }

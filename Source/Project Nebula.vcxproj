@@ -21,8 +21,12 @@
     <ClCompile Include="Animation\StateMachine\AnimatorController.cpp" />
     <ClCompile Include="Animation\StateMachine\AnimatorPanel.cpp" />
     <ClCompile Include="Animation\StateMachine\NPCController.cpp" />
+    <ClCompile Include="UI\Canvas.cpp" />
     <ClCompile Include="UI\HierarchyWidget.cpp" />
+    <ClCompile Include="UI\MainWindow.cpp" />
+    <ClCompile Include="UI\moc_Canvas.cc" />
     <ClCompile Include="UI\moc_HierarchyWidget.cc" />
+    <ClCompile Include="UI\moc_MainWindow.cc" />
     <ClCompile Include="Utility\LoaderThread.cpp" />
     <ClCompile Include="Scene\AbstractModel.cpp" />
     <ClCompile Include="Scene\AbstractScene.cpp" />
@@ -36,10 +40,6 @@
     <ClCompile Include="Scene\ShadingTechniques\Technique.cpp" />
     <ClCompile Include="Scene\StaticModel.cpp" />
     <ClCompile Include="Scene\ShadingTechniques\ShadowMapFBO.cpp" />
-    <ClCompile Include="UI\Canvas.cpp" />
-    <ClCompile Include="UI\MainWindow.cpp" />
-    <ClCompile Include="UI\MainWindow_moc.cpp" />
-    <ClCompile Include="UI\moc_Canvas.cc" />
     <ClCompile Include="Utility\moc_LoaderThread.cc" />
     <ClCompile Include="Utility\ModelLoader.cpp" />
     <ClCompile Include="Scene\Managers\MeshManager.cpp" />
@@ -60,7 +60,9 @@
     <ClInclude Include="Animation\IK\FABRIKSolver.h" />
     <ClInclude Include="Animation\IK\CCDIKSolver.h" />
     <ClInclude Include="Animation\Rig\Pose.h" />
+    <QtMOC Include="UI\Canvas.h" />
     <QtMOC Include="UI\HierarchyWidget.h" />
+    <QtMOC Include="UI\MainWindow.h" />
     <ClInclude Include="UI\ui_HierarchyWidget.h" />
     <ClInclude Include="Utility\Serialization.h" />
     <QtMOC Include="Animation\StateMachine\AnimatorController.h" />
@@ -75,8 +77,6 @@
     <ClInclude Include="Scene\ShadingTechniques\Technique.h" />
     <ClInclude Include="Scene\StaticModel.h" />
     <ClInclude Include="Scene\ShadingTechniques\ShadowMapFBO.h" />
-    <ClInclude Include="UI\Canvas.h" />
-    <ClInclude Include="UI\MainWindow.h" />
     <ClInclude Include="Utility\ModelLoader.h" />
     <ClInclude Include="Scene\AbstractModel.h" />
     <ClInclude Include="Scene\AbstractScene.h" />
@@ -94,9 +94,7 @@
     <ClInclude Include="Utility\OpenGLUniformBuffer.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="UI\HierarchyWidget.ui">
-      <FileType>Document</FileType>
-    </None>
+    <None Include="UI\HierarchyWidget.ui" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{89A9A61D-5047-460C-91C1-C99FC990ABD7}</ProjectGuid>

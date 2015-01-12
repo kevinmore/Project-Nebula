@@ -35,14 +35,14 @@
     <ClCompile Include="Scene\Camera.cpp" />
     <ClCompile Include="Scene\moc_Camera.cc" />
     <ClCompile Include="Scene\ShadingTechniques\Technique.cpp" />
-    <ClCompile Include="UI\Canvas.cpp" />
-    <ClCompile Include="UI\moc_Canvas.cc" />
-    <ClCompile Include="UI\MainWindow.cpp" />
-    <ClCompile Include="UI\MainWindow_moc.cpp" />
     <ClCompile Include="Utility\LoaderThread.cpp" />
     <ClCompile Include="Utility\moc_LoaderThread.cc" />
+    <ClCompile Include="UI\Canvas.cpp" />
     <ClCompile Include="UI\HierarchyWidget.cpp" />
+    <ClCompile Include="UI\MainWindow.cpp" />
+    <ClCompile Include="UI\moc_Canvas.cc" />
     <ClCompile Include="UI\moc_HierarchyWidget.cc" />
+    <ClCompile Include="UI\moc_MainWindow.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Primitives\Texture.h" />
@@ -71,8 +71,6 @@
     <ClInclude Include="Scene\ShadingTechniques\ShadowMapFBO.h" />
     <ClInclude Include="Utility\EngineCommon.h" />
     <ClInclude Include="Scene\ShadingTechniques\Technique.h" />
-    <ClInclude Include="UI\Canvas.h" />
-    <ClInclude Include="UI\MainWindow.h" />
     <ClInclude Include="Utility\Serialization.h" />
     <ClInclude Include="UI\ui_HierarchyWidget.h" />
   </ItemGroup>
@@ -83,7 +81,9 @@
     <QtMOC Include="Animation\StateMachine\AnimatorController.h" />
     <QtMOC Include="Scene\Camera.h" />
     <QtMOC Include="Utility\LoaderThread.h" />
+    <QtMOC Include="UI\MainWindow.h" />
     <QtMOC Include="UI\HierarchyWidget.h" />
+    <QtMOC Include="UI\Canvas.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="UI\HierarchyWidget.ui" />

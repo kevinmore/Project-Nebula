@@ -40,7 +40,6 @@ public:
 	void setLightMode(LightMode lightMode) { m_lightMode = lightMode; }
 	LightMode lightMode() const { return m_lightMode; }
 
-	GameObject*    getObject() { return NULL; } //hack! need to improve
 	Camera* getCamera();
 	
 	QSharedPointer<MeshManager>     meshManager();
