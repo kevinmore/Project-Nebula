@@ -41,6 +41,8 @@
     <ClCompile Include="UI\MainWindow_moc.cpp" />
     <ClCompile Include="Utility\LoaderThread.cpp" />
     <ClCompile Include="Utility\moc_LoaderThread.cc" />
+    <ClCompile Include="UI\HierarchyWidget.cpp" />
+    <ClCompile Include="UI\moc_HierarchyWidget.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Primitives\Texture.h" />
@@ -72,6 +74,7 @@
     <ClInclude Include="UI\Canvas.h" />
     <ClInclude Include="UI\MainWindow.h" />
     <ClInclude Include="Utility\Serialization.h" />
+    <ClInclude Include="UI\ui_HierarchyWidget.h" />
   </ItemGroup>
   <ItemGroup>
     <QtMOC Include="Scene\Scene.h" />
@@ -80,5 +83,9 @@
     <QtMOC Include="Animation\StateMachine\AnimatorController.h" />
     <QtMOC Include="Scene\Camera.h" />
     <QtMOC Include="Utility\LoaderThread.h" />
+    <QtMOC Include="UI\HierarchyWidget.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="UI\HierarchyWidget.ui" />
   </ItemGroup>
 </Project>

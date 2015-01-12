@@ -52,17 +52,6 @@
       DisplayName="Execution Description"
       IncludeInCommandLine="False"
       Visible="False" />
-	<StringProperty
-	  Subtype="AdditionalOptions"
-	  Name="AdditionalOptions"
-	  Category="Command Line">
-	  <StringProperty.DisplayName>
-	    <sys:String>Additional Options</sys:String>
-	  </StringProperty.DisplayName>
-      <StringProperty.Description>
-	    <sys:String>Additional Options</sys:String>
-	  </StringProperty.Description>
-	</StringProperty>
   </Rule>
   <ItemType
     Name="QtUIC"

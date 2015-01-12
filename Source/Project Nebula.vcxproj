@@ -21,6 +21,8 @@
     <ClCompile Include="Animation\StateMachine\AnimatorController.cpp" />
     <ClCompile Include="Animation\StateMachine\AnimatorPanel.cpp" />
     <ClCompile Include="Animation\StateMachine\NPCController.cpp" />
+    <ClCompile Include="UI\HierarchyWidget.cpp" />
+    <ClCompile Include="UI\moc_HierarchyWidget.cc" />
     <ClCompile Include="Utility\LoaderThread.cpp" />
     <ClCompile Include="Scene\AbstractModel.cpp" />
     <ClCompile Include="Scene\AbstractScene.cpp" />
@@ -58,6 +60,8 @@
     <ClInclude Include="Animation\IK\FABRIKSolver.h" />
     <ClInclude Include="Animation\IK\CCDIKSolver.h" />
     <ClInclude Include="Animation\Rig\Pose.h" />
+    <QtMOC Include="UI\HierarchyWidget.h" />
+    <ClInclude Include="UI\ui_HierarchyWidget.h" />
     <ClInclude Include="Utility\Serialization.h" />
     <QtMOC Include="Animation\StateMachine\AnimatorController.h" />
     <ClInclude Include="Animation\StateMachine\AnimatorPanel.h" />
@@ -88,6 +92,11 @@
     <ClInclude Include="Utility\Math.h" />
     <ClInclude Include="Utility\EngineCommon.h" />
     <ClInclude Include="Utility\OpenGLUniformBuffer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="UI\HierarchyWidget.ui">
+      <FileType>Document</FileType>
+    </None>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{89A9A61D-5047-460C-91C1-C99FC990ABD7}</ProjectGuid>
@@ -173,6 +182,6 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\BuildRules\QtMocRule.targets" />
-    <Import Project="..\BuildRules\QtUICRule.targets" />
+    <Import Project="..\BuildRules\QtUicGlobal.targets" />
   </ImportGroup>
 </Project>

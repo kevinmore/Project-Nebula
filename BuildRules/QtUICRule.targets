@@ -16,7 +16,6 @@
   <Target
     Name="_QtUIC"
     BeforeTargets="ClCompile"
-    AfterTargets="CustomBuild"
     Condition="'@(QtUIC)' != ''"
     Outputs="%(QtUIC.OutputFileName)"
     Inputs="%(QtUIC.Identity);$(MSBuildProjectFile)"
@@ -34,13 +33,12 @@
       Text="%(QtUIC.ExecutionDescription)" />
 	<WriteLinesToFile
 		Condition="'@(QtUIC_tlog)' != '' and '%(QtUIC_tlog.ExcludedFromBuild)' != 'true'"
-		File="$(IntDir)$(ProjectName).moc.1.tlog"
+		File="$(IntDir)$(ProjectName).uic.1.tlog"
 		Lines="^%(QtUIC_tlog.Source);@(QtUIC_tlog-&gt;'%(Fullpath)')"/>
 	<QtUIC
 	  Condition="'@(QtUIC)' != '' and '%(QtUIC.ExcludedFromBuild)' != 'true'"
       CommandLineTemplate="%(QtUIC.CommandLineTemplate)"
 	  OutputFileName="%(QtUIC.OutputFileName)"
-	  AdditionalOptions="%(QtUIC.AdditionalOptions)"
       Inputs="%(QtUIC.Identity)" />
   </Target>
 </Project>

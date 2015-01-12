@@ -320,7 +320,7 @@ void Scene::showLoadModelDialog()
 		"../Resource/Models",
 		tr("3D Model File (*.dae *.obj *.3ds)"));
 
-	LoaderThread loader(this, fileName);
+	LoaderThread loader(this, fileName, 0, m_sceneNode);
 	loader.run();
 }
 
@@ -330,6 +330,8 @@ void Scene::clearScene()
 	m_textureManager->clear();
 	m_meshManager->clear();
 	m_modelManager->clear();
+
+	emit updateHierarchy();
 }
 
 void Scene::resetToDefaultScene()
@@ -338,9 +340,11 @@ void Scene::resetToDefaultScene()
 	m_camera->resetCamera();
 
 	// load the floor
-	m_modelManager->loadModel("floor", "../Resource/Models/DemoRoom/floor.DAE", this);
+	m_modelManager->loadModel("floor", "../Resource/Models/DemoRoom/floor.DAE", m_sceneNode);
 	StaticModel* sceneObject = m_modelManager->getStaticModel("floor");
 	sceneObject->gameObject()->setRotation(-90.0f, 0.0f, 0.0f);
+
+	emit updateHierarchy();
 }
 
 void Scene::showSaveSceneDialog()
@@ -397,7 +401,10 @@ void Scene::showOpenSceneDialog()
  		loader.run();
 	}
 
-	m_sceneNode->dumpObjectTree();
-
 	file.close();
+}
+
+void Scene::modelLoaded()
+{
+	emit updateHierarchy();
 }

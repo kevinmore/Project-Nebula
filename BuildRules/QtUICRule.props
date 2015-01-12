@@ -2,9 +2,9 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemDefinitionGroup>
 	<QtUIC>
-	  <OutputFileName>%(RootDir)%(Directory)moc_%(FileName).cc</OutputFileName>
-      <CommandLineTemplate>D:\Qt\5.3\msvc2010_opengl\bin\uic.exe [AllOptions] [Inputs]</CommandLineTemplate>
-      <ExecutionDescription>Compiling UI %(Filename)%(Extension)...</ExecutionDescription>
+	  <OutputFileName>%(RootDir)%(Directory)ui_%(FileName).h</OutputFileName>
+      <CommandLineTemplate>D:\Qt\5.3\msvc2010_opengl\bin\uic.exe [Inputs] [Outputs]</CommandLineTemplate>
+      <ExecutionDescription>Uic'ing %(Filename)%(Extension)...</ExecutionDescription>
     </QtUIC>
   </ItemDefinitionGroup>
 </Project>

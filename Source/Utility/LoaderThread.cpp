@@ -7,6 +7,7 @@ LoaderThread::LoaderThread(Scene* scene, const QString fileName, GameObject* go,
 	  m_fileName(fileName),
 	  m_actor(go)
 {
+	connect(this, SIGNAL(jobDone()), m_scene, SLOT(modelLoaded()));
 }
 
 
@@ -44,5 +45,9 @@ void LoaderThread::run()
 	}
 
 	mutex.unlock();
+
+	// emit the signal and destroy the thread
+	emit jobDone();
+	//msleep(100);
 	quit();
 }

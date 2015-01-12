@@ -12,10 +12,7 @@ class MainWindow : public QMainWindow
 
 public:
 	MainWindow(QWidget* parent = 0);
-
-
-
-	~MainWindow(void);
+	~MainWindow();
 
 private:
 	void initializeCanvas();
@@ -40,7 +37,7 @@ private:
 	QScopedPointer<Canvas> m_canvas;
 
 	QWidget      * m_params,         * m_coordinate,     * m_mvpMatrix;
-	QDockWidget  * m_dockParamsArea, * m_dockMatrixArea, * m_stateMachineViewer;
+	QDockWidget  * m_dockParamsArea, * m_dockMatrixArea, * m_stateMachineViewer, * m_heirarchyViewer;
 	Scene        * m_scene;
 	GameObject     * m_object3D;
 	Camera  * m_camera;

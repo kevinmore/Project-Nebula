@@ -1,4 +1,5 @@
 #include "MainWindow.h"
+#include "HierarchyWidget.h"
 
 StateMachineViewer* MainWindow::showStateMachine(QStateMachine* machine)
 {
@@ -30,6 +31,13 @@ MainWindow::MainWindow(QWidget *parent)
 		addDockWidget(Qt::BottomDockWidgetArea, m_stateMachineViewer);
 		m_stateMachineViewer->hide();
 	}
+
+	// show the hierarchy inspector
+	m_heirarchyViewer = new QDockWidget("Hierarchy Inspector", this);
+	HierarchyWidget* inspector = new HierarchyWidget(m_scene, this);
+	m_heirarchyViewer->setWidget(inspector);
+	m_heirarchyViewer->setFeatures(QDockWidget::AllDockWidgetFeatures);
+	addDockWidget(Qt::LeftDockWidgetArea, m_heirarchyViewer);
 
 	initializeCanvas();
 	initializeParamsArea();
@@ -93,6 +101,10 @@ void MainWindow::initializeMenuBar()
 	fullscreenAction->setShortcut(QKeySequence(Qt::Key_F11));
 	windowMenu->addAction(fullscreenAction);
 
+	QAction* toggleHierarchyInspector = m_heirarchyViewer->toggleViewAction();
+	toggleHierarchyInspector->setText("Show Hierarchy Inspector");
+	windowMenu->addAction(toggleHierarchyInspector);
+
 	QAction* toggleSettingsTab = m_dockParamsArea->toggleViewAction();
 	toggleSettingsTab->setText("Show Settings Window");
 	windowMenu->addAction(toggleSettingsTab);
@@ -124,6 +136,9 @@ void MainWindow::initializeMenuBar()
 
 void MainWindow::initializeParamsArea()
 {
+	
+
+
 	// ############ DOCK RIGHT ############
 
 	m_dockParamsArea = new QDockWidget("Parameters", this);
@@ -161,7 +176,7 @@ void MainWindow::initializeParamsArea()
 	// ############ OPTION TAB - RENDERING MODE GROUPBOX ############
 
 	QRadioButton* fill      = new QRadioButton("Fill");
-	QRadioButton* wireframe = new QRadioButton("Wireframe");
+	QRadioButton* wireframe = new QRadioButton("Wire Frame");
 	QRadioButton* points    = new QRadioButton("Points");
 
 	fill->setChecked(true);
@@ -214,7 +229,7 @@ void MainWindow::initializeParamsArea()
 	nearPlaneValue->setValue(0.1);
 
 	farPlaneValue->setRange(1.0, 50000.0);
-	farPlaneValue->setValue(20000.0);
+	farPlaneValue->setValue(1000.0);
 
 	leftLabel->hide();
 	rightLabel->hide();
@@ -226,21 +241,21 @@ void MainWindow::initializeParamsArea()
 	bottomValue->hide();
 	topValue->hide();
 
-	leftValue->setRange(-50.0, 0.0);
+	leftValue->setRange(-200.0, 0.0);
 	leftValue->setSingleStep(0.5);
-	leftValue->setValue(-0.5);
+	leftValue->setValue(-100);
 
-	rightValue->setRange(0.0, 50.0);
+	rightValue->setRange(0.0, 200.0);
 	rightValue->setSingleStep(0.5);
-	rightValue->setValue(0.5);
+	rightValue->setValue(100);
 
-	bottomValue->setRange(-50.0, 0.0);
+	bottomValue->setRange(-200.0, 0.0);
 	bottomValue->setSingleStep(0.5);
-	bottomValue->setValue(-0.5);
+	bottomValue->setValue(-100);
 
-	topValue->setRange(0.0, 50.0);
+	topValue->setRange(0.0, 200.0);
 	topValue->setSingleStep(0.5);
-	topValue->setValue(0.5);
+	topValue->setValue(100);
 
 	QGridLayout* viewLayout = new QGridLayout;
 	viewLayout->addWidget(fovLabel, 0, 0);
@@ -264,7 +279,7 @@ void MainWindow::initializeParamsArea()
 	viewLayout->addWidget(topLabel, 6, 0);
 	viewLayout->addWidget(topValue, 6, 1);
 
-	QGroupBox* viewGroupBox = new QGroupBox("VIEW");
+	QGroupBox* viewGroupBox = new QGroupBox("View");
 	viewGroupBox->setLayout(viewLayout);
 
 	// ############ OPTION TAB - CAMERA GROUPBOX ############

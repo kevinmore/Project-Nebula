@@ -66,9 +66,11 @@ public slots:
 	void clearScene();
 	void showOpenSceneDialog();
 	void showSaveSceneDialog();
+	void modelLoaded();
 
 signals:
 	void renderCycleDone();
+	void updateHierarchy();
 
 private:
 	GameObject* m_sceneNode;
