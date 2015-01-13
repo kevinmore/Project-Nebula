@@ -14,7 +14,7 @@ public:
 private:
 	Scene* m_scene;
 	QString m_fileName;
-	GameObject* m_actor;
+	GameObject* m_reference;
 	GameObject* m_objectParent;
 
 signals:

@@ -16,26 +16,26 @@ public:
 	void setMoving(bool status);
 
 	void setPosition(const QVector3D& positionVector);
-	void setPosition(float x, float y, float z);
+	void setPosition(double x, double y, double z);
 	void translateInWorld(const QVector3D& delta);
 
 	void setRotation(const QVector3D& rotationVector);
-	void setRotation(float x, float y, float z);
+	void setRotation(double x, double y, double z);
 	void rotateInWorld(const QQuaternion& delta);
 
 	void setScale(const QVector3D& scale);
-	void setScale(float x, float y, float z);
-	void setScale(float scaleFactor);
+	void setScale(double x, double y, double z);
+	void setScale(double scaleFactor);
 
 	void setSpeed(const QVector3D& speed);
-	void setSpeed(float x, float y, float z);
+	void setSpeed(double x, double y, double z);
 
-	const QVector3D position();
-	const QVector3D predictedPosition();
-	const QVector3D rotation();
-	const QVector3D scale();
-	const QVector3D localSpeed();
-	const QVector3D globalSpeed();
+	QVector3D position() const;
+	QVector3D predictedPosition() const;
+	QVector3D rotation() const;
+	QVector3D scale() const;
+	QVector3D localSpeed() const;
+	QVector3D globalSpeed() const;
 
 	const QMatrix4x4& modelMatrix();
 

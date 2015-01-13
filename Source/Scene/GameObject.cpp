@@ -28,7 +28,7 @@ void GameObject::setPosition(const QVector3D& positionVector)
 	m_modelMatrixDirty = true;
 }
 
-void GameObject::setPosition(float x, float y, float z)
+void GameObject::setPosition(double x, double y, double z)
 {
 	m_position.setX(x);
 	m_position.setY(y);
@@ -44,7 +44,7 @@ void GameObject::setRotation(const QVector3D& rotationVector)
 	m_modelMatrixDirty = true;
 }
 
-void GameObject::setRotation(float x, float y, float z)
+void GameObject::setRotation(double x, double y, double z)
 {
 	m_rotation.setX(x);
 	m_rotation.setY(y);
@@ -60,7 +60,7 @@ void GameObject::setScale(const QVector3D& scale)
 	m_modelMatrixDirty = true;
 }
 
-void GameObject::setScale(float x, float y, float z)
+void GameObject::setScale(double x, double y, double z)
 {
 	m_scale.setX(x);
 	m_scale.setY(y);
@@ -69,7 +69,7 @@ void GameObject::setScale(float x, float y, float z)
 	m_modelMatrixDirty = true;
 }
 
-void GameObject::setScale(float scaleFactor)
+void GameObject::setScale(double scaleFactor)
 {
 	m_scale.setX(scaleFactor);
 	m_scale.setY(scaleFactor);
@@ -132,17 +132,17 @@ void GameObject::scaleZ(double z)
 	m_modelMatrixDirty = true;
 }
 
-const QVector3D GameObject::position()
+QVector3D GameObject::position() const
 {
 	return m_position;
 }
 
-const QVector3D GameObject::rotation()
+QVector3D GameObject::rotation() const
 {
 	return m_rotation;
 }
 
-const QVector3D GameObject::scale()
+QVector3D GameObject::scale() const
 {
 	return m_scale;
 }
@@ -177,7 +177,7 @@ void GameObject::setSpeed( const QVector3D& speed )
 	m_speed = speed;
 }
 
-void GameObject::setSpeed( float x, float y, float z )
+void GameObject::setSpeed( double x, double y, double z )
 {
 	m_speed.setX(x);
 	m_speed.setY(y);
@@ -190,12 +190,12 @@ void GameObject::setLocalSpeed( const QString& paramString )
 	setSpeed(params[0].toFloat(), params[1].toFloat(), params[2].toFloat());
 }
 
-const QVector3D GameObject::localSpeed()
+QVector3D GameObject::localSpeed() const
 {
 	return m_speed;
 }
 
-const QVector3D GameObject::globalSpeed()
+QVector3D GameObject::globalSpeed() const
 {
 	QQuaternion rotX = QQuaternion::fromAxisAndAngle(Math::Vector3D::UNIT_X, m_rotation.x());
 	QQuaternion rotY = QQuaternion::fromAxisAndAngle(Math::Vector3D::UNIT_Y, m_rotation.y());
@@ -315,7 +315,7 @@ void GameObject::resetSpeed()
 	setSpeed(0.0f, 0.0f, 0.0f);
 }
 
-const QVector3D GameObject::predictedPosition()
+QVector3D GameObject::predictedPosition()  const
 {
 	float currentTime = (float)m_lifeTimer.elapsed()/1000;
 	const float dt = currentTime - m_time;

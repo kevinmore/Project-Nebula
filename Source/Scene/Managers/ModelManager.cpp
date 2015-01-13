@@ -42,6 +42,7 @@ ModelPtr ModelManager::loadModel( const QString& customName, const QString& file
 	{
 		StaticModel* sm = new StaticModel(fileName, m_scene, m_modelLoader->getRenderingEffect(), modelDataArray, parent);
 		sm->setObjectName(name);
+		sm->gameObject()->setObjectName(name);
 
 		m_staticModels[name] = sm;
 		m_allModels[name] = ModelPtr(sm);
@@ -60,6 +61,7 @@ ModelPtr ModelManager::loadModel( const QString& customName, const QString& file
 		rm->setRootTranslation(controller->getRootTranslation());
 		rm->setRootRotation(controller->getRootRotation());
 		rm->setObjectName(name);
+		rm->gameObject()->setObjectName(name);
 
 		m_riggedModels[name] = rm;
 		m_allModels[name] = ModelPtr(rm);

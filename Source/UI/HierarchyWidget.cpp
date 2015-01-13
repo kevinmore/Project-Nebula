@@ -15,7 +15,7 @@ HierarchyWidget::HierarchyWidget(Scene* scene, QWidget *parent)
 		    this, SLOT(updateTransformation(QTreeWidgetItem*, QTreeWidgetItem*)));
 
 	// reset button
-	connect(ui->pushButton_Reset, SIGNAL(clicked()), this, SLOT(clearTransformationArea()));
+	connect(ui->pushButton_Reset, SIGNAL(clicked()), this, SLOT(resetSelectedObject()));
 	
 	updateObjectTree();
 }
@@ -50,6 +50,33 @@ void HierarchyWidget::readHierarchy( GameObject* go, QTreeWidgetItem* parentItem
 	{
 		readHierarchy((GameObject*)obj, item);
 	}
+}
+
+void HierarchyWidget::resetHierarchy( GameObject* go )
+{
+	if (!go) return;
+
+	go->reset();
+//////////////////////////////////////////////////////////////////////////
+	// BUG BELOW!!!!!!!!!!!!!!!!!!
+// 	foreach(QObject* obj, go->children())
+// 	{
+// 		resetHierarchy((GameObject*)obj);
+// 	}
+}
+
+void HierarchyWidget::resetSelectedObject()
+{
+	// get the selected game object
+	QTreeWidgetItem* current = ui->treeWidget->currentItem();
+	if(!current) return;
+	else if (current == ui->treeWidget->topLevelItem(0))
+		m_currentObject = m_scene->sceneNode();
+	else
+		m_currentObject = m_scene->modelManager()->getModel(current->text(0))->gameObject();
+
+	clearTransformationArea();
+	resetHierarchy(m_currentObject);
 }
 
 void HierarchyWidget::updateTransformation(QTreeWidgetItem* current, QTreeWidgetItem* previous)
@@ -110,9 +137,9 @@ void HierarchyWidget::connectCurrentObject()
 	connect(ui->doubleSpinBox_RotationX, SIGNAL(valueChanged(double)), m_currentObject, SLOT(rotateX(double)));
 	connect(ui->doubleSpinBox_RotationY, SIGNAL(valueChanged(double)), m_currentObject, SLOT(rotateY(double)));
 	connect(ui->doubleSpinBox_RotationZ, SIGNAL(valueChanged(double)), m_currentObject, SLOT(rotateZ(double)));
-	connect(ui->doubleSpinBox_ScaleX, SIGNAL(valueChanged(double)), m_currentObject, SLOT(scaleX(double)));
-	connect(ui->doubleSpinBox_ScaleY, SIGNAL(valueChanged(double)), m_currentObject, SLOT(scaleY(double)));
-	connect(ui->doubleSpinBox_ScaleZ, SIGNAL(valueChanged(double)), m_currentObject, SLOT(scaleZ(double)));
+	connect(ui->doubleSpinBox_ScaleX,	 SIGNAL(valueChanged(double)), m_currentObject, SLOT(scaleX(double)));
+	connect(ui->doubleSpinBox_ScaleY,	 SIGNAL(valueChanged(double)), m_currentObject, SLOT(scaleY(double)));
+	connect(ui->doubleSpinBox_ScaleZ,	 SIGNAL(valueChanged(double)), m_currentObject, SLOT(scaleZ(double)));
 }
 
 void HierarchyWidget::disconnectPreviousObject()
@@ -124,7 +151,7 @@ void HierarchyWidget::disconnectPreviousObject()
 	disconnect(ui->doubleSpinBox_RotationX, SIGNAL(valueChanged(double)), 0, 0);
 	disconnect(ui->doubleSpinBox_RotationY, SIGNAL(valueChanged(double)), 0, 0);
 	disconnect(ui->doubleSpinBox_RotationZ, SIGNAL(valueChanged(double)), 0, 0);
-	disconnect(ui->doubleSpinBox_ScaleX, SIGNAL(valueChanged(double)), 0, 0);
-	disconnect(ui->doubleSpinBox_ScaleY, SIGNAL(valueChanged(double)), 0, 0);
-	disconnect(ui->doubleSpinBox_ScaleZ, SIGNAL(valueChanged(double)), 0, 0);
+	disconnect(ui->doubleSpinBox_ScaleX,		SIGNAL(valueChanged(double)), 0, 0);
+	disconnect(ui->doubleSpinBox_ScaleY,		SIGNAL(valueChanged(double)), 0, 0);
+	disconnect(ui->doubleSpinBox_ScaleZ,		SIGNAL(valueChanged(double)), 0, 0);
 }

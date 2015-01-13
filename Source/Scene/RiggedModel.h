@@ -28,15 +28,17 @@ public:
 	void setFKController(FKController* fkCtrl);
 	void setIKSolver(CCDIKSolver* ikSolver);
 
-	bool hasAnimation() { return m_hasAnimation; }
-	float animationDuration();
+	bool hasAnimation() const { return m_hasAnimation; }
+	float animationDuration() const { return m_animationDuration; }
+
 	void setActor(GameObject* actor) { m_actor = actor; }
 	void setReachableTargetPos(vec3& pos);
-	Skeleton* getSkeleton() { return m_skeleton; }
+
+	Skeleton* getSkeleton() const { return m_skeleton; }
 	void setRootTranslation(vec3& delta) { m_rootPositionTranslation = delta; }
-	vec3 getRootTranslation() { return m_rootPositionTranslation; }
+	vec3 getRootTranslation() const { return m_rootPositionTranslation; }
 	void setRootRotation(QQuaternion& delta) {m_rootRotationTranslation = delta; }
-	QQuaternion getRootRotation() { return m_rootRotationTranslation; }
+	QQuaternion getRootRotation() const { return m_rootRotationTranslation; }
 
 protected:
 	QVector<MeshPtr> m_meshes;

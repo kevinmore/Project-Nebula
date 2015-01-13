@@ -339,11 +339,6 @@ void RiggedModel::setReachableTargetPos( vec3& pos )
 	m_targetPos = pos;
 }
 
-float RiggedModel::animationDuration()
-{
-	return m_animationDuration;
-}
-
 void RiggedModel::setFKController( FKController* fkCtrl )
 {
 	m_FKController = fkCtrl;

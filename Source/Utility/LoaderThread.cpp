@@ -5,7 +5,7 @@ LoaderThread::LoaderThread(Scene* scene, const QString fileName, GameObject* ref
 	: QThread(scene),
 	  m_scene(scene),
 	  m_fileName(fileName),
-	  m_actor(reference),
+	  m_reference(reference),
 	  m_objectParent(objectParent)
 {
 	connect(this, SIGNAL(jobDone()), m_scene, SLOT(modelLoaded()));
@@ -15,7 +15,7 @@ LoaderThread::LoaderThread(Scene* scene, const QString fileName, GameObject* ref
 LoaderThread::~LoaderThread()
 {
 	// delete the reference game object pointer
-	SAFE_DELETE(m_actor);
+	SAFE_DELETE(m_reference);
 }
 
 void LoaderThread::run()
@@ -37,11 +37,11 @@ void LoaderThread::run()
 		ModelPtr model = m_scene->modelManager()->loadModel(customName, relativePath, m_objectParent);
 
 		// apply transformation to this model
-		if (m_actor)
+		if (m_reference)
 		{
-			model->gameObject()->setPosition(m_actor->position());
-			model->gameObject()->setRotation(m_actor->rotation());
-			model->gameObject()->setScale(m_actor->scale());
+			model->gameObject()->setPosition(m_reference->position());
+			model->gameObject()->setRotation(m_reference->rotation());
+			model->gameObject()->setScale(m_reference->scale());
 		}
 	}
 

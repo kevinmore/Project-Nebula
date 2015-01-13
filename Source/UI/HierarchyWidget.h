@@ -20,12 +20,14 @@ private:
 	GameObject* m_currentObject;
 
 	void readHierarchy(GameObject* go, QTreeWidgetItem* parentItem); // go through the game objects
+	void resetHierarchy(GameObject* go); // reset every game object from the given one
+	void clearTransformationArea();
 
 private slots:
 	void connectCurrentObject();
 	void disconnectPreviousObject();
-	void clearTransformationArea();
 	void updateTransformation(QTreeWidgetItem* current, QTreeWidgetItem* previous);
+	void resetSelectedObject();
 
 public slots:
 	void updateObjectTree();

@@ -65,8 +65,8 @@ public:
 
 	virtual void render(float time) = 0;
 
-	const QString fileName() { return m_fileName; }
-	GameObject* gameObject() { return m_actor; }
+	QString fileName() const { return m_fileName; }
+	GameObject* gameObject() const { return m_actor; }
 
 protected:
 	QString m_fileName;

@@ -20,7 +20,7 @@
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_HierarchyWidget_t {
     QByteArrayData data[10];
-    char stringdata[159];
+    char stringdata[155];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -33,17 +33,17 @@ QT_MOC_LITERAL(0, 0, 15),
 QT_MOC_LITERAL(1, 16, 20),
 QT_MOC_LITERAL(2, 37, 0),
 QT_MOC_LITERAL(3, 38, 24),
-QT_MOC_LITERAL(4, 63, 23),
-QT_MOC_LITERAL(5, 87, 20),
-QT_MOC_LITERAL(6, 108, 16),
-QT_MOC_LITERAL(7, 125, 7),
-QT_MOC_LITERAL(8, 133, 8),
-QT_MOC_LITERAL(9, 142, 16)
+QT_MOC_LITERAL(4, 63, 20),
+QT_MOC_LITERAL(5, 84, 16),
+QT_MOC_LITERAL(6, 101, 7),
+QT_MOC_LITERAL(7, 109, 8),
+QT_MOC_LITERAL(8, 118, 19),
+QT_MOC_LITERAL(9, 138, 16)
     },
     "HierarchyWidget\0connectCurrentObject\0"
     "\0disconnectPreviousObject\0"
-    "clearTransformationArea\0updateTransformation\0"
-    "QTreeWidgetItem*\0current\0previous\0"
+    "updateTransformation\0QTreeWidgetItem*\0"
+    "current\0previous\0resetSelectedObject\0"
     "updateObjectTree"
 };
 #undef QT_MOC_LITERAL
@@ -64,15 +64,15 @@ static const uint qt_meta_data_HierarchyWidget[] = {
  // slots: name, argc, parameters, tag, flags
        1,    0,   39,    2, 0x08 /* Private */,
        3,    0,   40,    2, 0x08 /* Private */,
-       4,    0,   41,    2, 0x08 /* Private */,
-       5,    2,   42,    2, 0x08 /* Private */,
+       4,    2,   41,    2, 0x08 /* Private */,
+       8,    0,   46,    2, 0x08 /* Private */,
        9,    0,   47,    2, 0x0a /* Public */,
 
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 5, 0x80000000 | 5,    6,    7,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 6, 0x80000000 | 6,    7,    8,
     QMetaType::Void,
 
        0        // eod
@@ -85,8 +85,8 @@ void HierarchyWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         switch (_id) {
         case 0: _t->connectCurrentObject(); break;
         case 1: _t->disconnectPreviousObject(); break;
-        case 2: _t->clearTransformationArea(); break;
-        case 3: _t->updateTransformation((*reinterpret_cast< QTreeWidgetItem*(*)>(_a[1])),(*reinterpret_cast< QTreeWidgetItem*(*)>(_a[2]))); break;
+        case 2: _t->updateTransformation((*reinterpret_cast< QTreeWidgetItem*(*)>(_a[1])),(*reinterpret_cast< QTreeWidgetItem*(*)>(_a[2]))); break;
+        case 3: _t->resetSelectedObject(); break;
         case 4: _t->updateObjectTree(); break;
         default: ;
         }

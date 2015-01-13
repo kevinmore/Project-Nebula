@@ -47,8 +47,8 @@ public:
 	QSharedPointer<MaterialManager> materialManager();
 	QSharedPointer<ModelManager>    modelManager();
 
-	QStateMachine* getStateMachine() { return m_stateMachine; }
-	GameObject* sceneNode() { return m_sceneNode; }
+	QStateMachine* getStateMachine() const { return m_stateMachine; }
+	GameObject* sceneNode() const { return m_sceneNode; }
 
 public slots:
 	void toggleFill(bool state);
