@@ -11,9 +11,13 @@ HierarchyWidget::HierarchyWidget(Scene* scene, QWidget *parent)
 	ui->setupUi(this);
 	// tree widget related
 	connect(m_scene, SIGNAL(updateHierarchy()), this, SLOT(updateObjectTree()));
+
 	connect(ui->treeWidget, SIGNAL(currentItemChanged(QTreeWidgetItem*, QTreeWidgetItem*)), 
 		    this, SLOT(updateTransformation(QTreeWidgetItem*, QTreeWidgetItem*)));
 
+	connect(ui->treeWidget, SIGNAL(itemDoubleClicked(QTreeWidgetItem*, int)), 
+		    this, SLOT(renameGameObject(QTreeWidgetItem*, int)));
+	
 	// reset button
 	connect(ui->pushButton_Reset, SIGNAL(clicked()), this, SLOT(resetSelectedObject()));
 	
@@ -81,6 +85,7 @@ void HierarchyWidget::resetSelectedObject()
 
 void HierarchyWidget::updateTransformation(QTreeWidgetItem* current, QTreeWidgetItem* previous)
 {
+	qDebug() << "currentItemChanged changed!";
 	if (!current) return;
 
 	// disconnect previous connections
@@ -154,4 +159,10 @@ void HierarchyWidget::disconnectPreviousObject()
 	disconnect(ui->doubleSpinBox_ScaleX,		SIGNAL(valueChanged(double)), 0, 0);
 	disconnect(ui->doubleSpinBox_ScaleY,		SIGNAL(valueChanged(double)), 0, 0);
 	disconnect(ui->doubleSpinBox_ScaleZ,		SIGNAL(valueChanged(double)), 0, 0);
+}
+
+void HierarchyWidget::renameGameObject( QTreeWidgetItem * item, int column )
+{
+	item->setFlags(item->flags() | Qt::ItemIsEditable);
+	//ui->treeWidget->openPersistentEditor(item, column);
 }

@@ -172,6 +172,7 @@ public:
         sizePolicy2.setHeightForWidth(doubleSpinBox_PositionZ->sizePolicy().hasHeightForWidth());
         doubleSpinBox_PositionZ->setSizePolicy(sizePolicy2);
         doubleSpinBox_PositionZ->setMinimum(-100000);
+		doubleSpinBox_PositionZ->setMaximum(100000);
         doubleSpinBox_PositionZ->setSingleStep(50);
         doubleSpinBox_PositionZ->setValue(0);
 

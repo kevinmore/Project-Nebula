@@ -37,6 +37,7 @@ private:
 public slots:
 	void setCameraSpeed(double speed);
 	void setCameraSensitivity(double sensitivity);
+	void showGPUInfo();
 
 protected slots:
 	void resizeGL();

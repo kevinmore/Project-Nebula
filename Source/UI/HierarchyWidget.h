@@ -28,6 +28,7 @@ private slots:
 	void disconnectPreviousObject();
 	void updateTransformation(QTreeWidgetItem* current, QTreeWidgetItem* previous);
 	void resetSelectedObject();
+	void renameGameObject(QTreeWidgetItem * item, int column);
 
 public slots:
 	void updateObjectTree();

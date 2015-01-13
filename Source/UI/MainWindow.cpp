@@ -77,6 +77,15 @@ void MainWindow::initializeMenuBar()
 	exitAction->setShortcut(QKeySequence("Ctrl+Q"));
 	fileMenu->addAction(exitAction);
 
+	// ############ Game Object ############
+	QMenu *gameObjectMenu = menuBar()->addMenu("&Game Object");
+	QAction *createEmpty = new QAction("&Create Empty", this);
+	gameObjectMenu->addAction(createEmpty);
+
+	QMenu* createGameObjectMenu = gameObjectMenu->addMenu("&Create Other");
+	QAction *createParticleSystemAction = new QAction("&Particle System", this);
+	createGameObjectMenu->addAction(createParticleSystemAction);
+
 	// ############ Scene Menu ############
 	QMenu *sceneMenu = menuBar()->addMenu("&Scene");
 	
@@ -111,9 +120,12 @@ void MainWindow::initializeMenuBar()
 	QAction *msaaAction = new QAction("&MSAA x4", this);
 	msaaAction->setCheckable(true);
 	msaaAction->setChecked(true);
-	msaaAction->setShortcut(QKeySequence(Qt::Key_M));
 	optionMenu->addAction(msaaAction);
 
+	// ############ System Menu ############
+	QMenu *sytemMenu = menuBar()->addMenu("System");
+	QAction *gpuInfoAction = new QAction("&GPU Info", this);
+	sytemMenu->addAction(gpuInfoAction);
 
 
 	// ############ Signals & Slots ############
@@ -125,6 +137,7 @@ void MainWindow::initializeMenuBar()
 	QObject::connect(exitAction,       SIGNAL(triggered()),     qApp,    SLOT(quit()));
 	QObject::connect(fullscreenAction, SIGNAL(triggered(bool)), this,    SLOT(setFullScreen(bool)));
 	QObject::connect(msaaAction,       SIGNAL(triggered(bool)), m_scene, SLOT(toggleAA(bool)));
+	QObject::connect(gpuInfoAction,    SIGNAL(triggered()),     m_canvas.data(), SLOT(showGPUInfo()));
 }
 
 void MainWindow::initializeRightDockableArea()

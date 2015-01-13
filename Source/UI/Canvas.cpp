@@ -44,11 +44,6 @@ Canvas::Canvas(QScreen *screen)
 	m_scene->setContext(m_context.data());
 	m_scene->setCanvas(this);
 
-	qDebug() << endl <<  "- OpenGL version :" << reinterpret_cast<const char*>(glGetString(GL_VERSION));
-	qDebug() << "- GLSL version :" << reinterpret_cast<const char*>(glGetString(GL_SHADING_LANGUAGE_VERSION));
-	qDebug() << "- Vendor :" << reinterpret_cast<const char*>(glGetString(GL_VENDOR));
-	qDebug() << "- Renderer (GPU) :" << reinterpret_cast<const char*>(glGetString(GL_RENDERER)) << endl;
-
 	m_updateTimer.start(); // Timer for updating the scene (camera ... etc)
 
 	initializeGL();
@@ -287,4 +282,18 @@ void Canvas::setCameraSpeed(double speed)
 void Canvas::setCameraSensitivity(double sensitivity)
 {
 	m_cameraSensitivity = sensitivity;
+}
+
+void Canvas::showGPUInfo()
+{
+	QString info =  "OpenGL version - ";
+	info += reinterpret_cast<const char*>(glGetString(GL_VERSION));
+	info += "\n\nGLSL version - ";
+	info += reinterpret_cast<const char*>(glGetString(GL_SHADING_LANGUAGE_VERSION));
+	info += "\n\nVendor - ";
+	info += reinterpret_cast<const char*>(glGetString(GL_VENDOR));
+	info += "\n\nRenderer (GPU) - ";
+	info += reinterpret_cast<const char*>(glGetString(GL_RENDERER));
+
+	QMessageBox::about(0, tr("GPU Information"), info);
 }
