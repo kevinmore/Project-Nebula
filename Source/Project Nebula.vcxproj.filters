@@ -43,6 +43,8 @@
     <ClCompile Include="UI\moc_Canvas.cc" />
     <ClCompile Include="UI\moc_HierarchyWidget.cc" />
     <ClCompile Include="UI\moc_MainWindow.cc" />
+    <ClCompile Include="Utility\LogCenter.cpp" />
+    <ClCompile Include="Utility\moc_LogCenter.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Primitives\Texture.h" />
@@ -84,6 +86,7 @@
     <QtMOC Include="UI\MainWindow.h" />
     <QtMOC Include="UI\HierarchyWidget.h" />
     <QtMOC Include="UI\Canvas.h" />
+    <QtMOC Include="Utility\LogCenter.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="UI\HierarchyWidget.ui" />

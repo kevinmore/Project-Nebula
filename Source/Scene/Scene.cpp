@@ -36,7 +36,6 @@ void Scene::initialize()
 
 	m_funcs->initializeOpenGLFunctions();
 
-
 	m_funcs->glClearDepth( 1.0 );
 	m_funcs->glEnable(GL_DEPTH_TEST);
 	m_funcs->glDepthFunc(GL_LEQUAL);
@@ -412,5 +411,13 @@ void Scene::saveScene( QString& fileName )
 
 void Scene::modelLoaded()
 {
+	emit updateHierarchy();
+}
+
+void Scene::createEmptyGameObject()
+{
+	m_modelManager->createGameObject("Game Object", m_sceneNode);
+	qDebug() << "Created an empty Game Object";
+
 	emit updateHierarchy();
 }

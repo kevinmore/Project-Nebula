@@ -21,6 +21,7 @@
     <ClCompile Include="Animation\StateMachine\AnimatorController.cpp" />
     <ClCompile Include="Animation\StateMachine\AnimatorPanel.cpp" />
     <ClCompile Include="Animation\StateMachine\NPCController.cpp" />
+    <ClCompile Include="Utility\LogCenter.cpp" />
     <ClCompile Include="UI\Canvas.cpp" />
     <ClCompile Include="UI\HierarchyWidget.cpp" />
     <ClCompile Include="UI\MainWindow.cpp" />
@@ -41,6 +42,7 @@
     <ClCompile Include="Scene\StaticModel.cpp" />
     <ClCompile Include="Scene\ShadingTechniques\ShadowMapFBO.cpp" />
     <ClCompile Include="Utility\moc_LoaderThread.cc" />
+    <ClCompile Include="Utility\moc_LogCenter.cc" />
     <ClCompile Include="Utility\ModelLoader.cpp" />
     <ClCompile Include="Scene\Managers\MeshManager.cpp" />
     <ClCompile Include="Scene\Camera.cpp" />
@@ -63,6 +65,7 @@
     <QtMOC Include="UI\Canvas.h" />
     <QtMOC Include="UI\HierarchyWidget.h" />
     <QtMOC Include="UI\MainWindow.h" />
+    <QtMOC Include="Utility\LogCenter.h" />
     <ClInclude Include="UI\ui_HierarchyWidget.h" />
     <ClInclude Include="Utility\Serialization.h" />
     <QtMOC Include="Animation\StateMachine\AnimatorController.h" />

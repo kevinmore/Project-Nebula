@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[20];
-    char stringdata[203];
+    QByteArrayData data[26];
+    char stringdata[261];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -48,14 +48,22 @@ QT_MOC_LITERAL(15, 163, 5),
 QT_MOC_LITERAL(16, 169, 12),
 QT_MOC_LITERAL(17, 182, 6),
 QT_MOC_LITERAL(18, 189, 9),
-QT_MOC_LITERAL(19, 199, 3)
+QT_MOC_LITERAL(19, 199, 3),
+QT_MOC_LITERAL(20, 203, 11),
+QT_MOC_LITERAL(21, 215, 9),
+QT_MOC_LITERAL(22, 225, 4),
+QT_MOC_LITERAL(23, 230, 18),
+QT_MOC_LITERAL(24, 249, 7),
+QT_MOC_LITERAL(25, 257, 3)
     },
     "MainWindow\0setFullScreen\0\0state\0"
     "setViewProperties\0setFramerate\0"
     "updateFieldOfView\0fov\0updateNearPlane\0"
     "nearPlane\0updateFarPlane\0farPlane\0"
     "updateLeft\0left\0updateRight\0right\0"
-    "updateBottom\0bottom\0updateTop\0top"
+    "updateBottom\0bottom\0updateTop\0top\0"
+    "showMessage\0QtMsgType\0type\0"
+    "QMessageLogContext\0context\0msg"
 };
 #undef QT_MOC_LITERAL
 
@@ -65,7 +73,7 @@ static const uint qt_meta_data_MainWindow[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      10,   14, // methods
+      11,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -73,16 +81,17 @@ static const uint qt_meta_data_MainWindow[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    1,   64,    2, 0x08 /* Private */,
-       4,    1,   67,    2, 0x08 /* Private */,
-       5,    0,   70,    2, 0x08 /* Private */,
-       6,    1,   71,    2, 0x08 /* Private */,
-       8,    1,   74,    2, 0x08 /* Private */,
-      10,    1,   77,    2, 0x08 /* Private */,
-      12,    1,   80,    2, 0x08 /* Private */,
-      14,    1,   83,    2, 0x08 /* Private */,
-      16,    1,   86,    2, 0x08 /* Private */,
-      18,    1,   89,    2, 0x08 /* Private */,
+       1,    1,   69,    2, 0x08 /* Private */,
+       4,    1,   72,    2, 0x08 /* Private */,
+       5,    0,   75,    2, 0x08 /* Private */,
+       6,    1,   76,    2, 0x08 /* Private */,
+       8,    1,   79,    2, 0x08 /* Private */,
+      10,    1,   82,    2, 0x08 /* Private */,
+      12,    1,   85,    2, 0x08 /* Private */,
+      14,    1,   88,    2, 0x08 /* Private */,
+      16,    1,   91,    2, 0x08 /* Private */,
+      18,    1,   94,    2, 0x08 /* Private */,
+      20,    3,   97,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void, QMetaType::Bool,    3,
@@ -95,6 +104,7 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void, QMetaType::Double,   15,
     QMetaType::Void, QMetaType::Double,   17,
     QMetaType::Void, QMetaType::Double,   19,
+    QMetaType::Void, 0x80000000 | 21, 0x80000000 | 23, QMetaType::QString,   22,   24,   25,
 
        0        // eod
 };
@@ -114,6 +124,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 7: _t->updateRight((*reinterpret_cast< double(*)>(_a[1]))); break;
         case 8: _t->updateBottom((*reinterpret_cast< double(*)>(_a[1]))); break;
         case 9: _t->updateTop((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 10: _t->showMessage((*reinterpret_cast< QtMsgType(*)>(_a[1])),(*reinterpret_cast< const QMessageLogContext(*)>(_a[2])),(*reinterpret_cast< const QString(*)>(_a[3]))); break;
         default: ;
         }
     }
@@ -144,13 +155,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 10)
+        if (_id < 11)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 10;
+        _id -= 11;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 10)
+        if (_id < 11)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 10;
+        _id -= 11;
     }
     return _id;
 }

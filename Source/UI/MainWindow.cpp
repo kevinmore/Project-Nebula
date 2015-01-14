@@ -1,5 +1,6 @@
 #include "MainWindow.h"
 #include "HierarchyWidget.h"
+#include <Utility/LogCenter.h>
 
 StateMachineViewer* MainWindow::showStateMachine(QStateMachine* machine)
 {
@@ -10,27 +11,13 @@ StateMachineViewer* MainWindow::showStateMachine(QStateMachine* machine)
 
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent),
-	  m_canvas(new Canvas),
+	  m_canvas(nullptr),
 	  m_scene(nullptr),
 	  m_camera(nullptr)
 {
-	
-	m_scene    = m_canvas->getScene();
-	m_camera   = m_scene->getCamera();
 
-	// show the state machine viewer
-	QStateMachine* machine = m_scene->getStateMachine();
-	if(machine)
-	{
-		m_stateMachineViewer = new QDockWidget("State Machine Viewer", this);
-		StateMachineViewer* smv = showStateMachine(machine);
-		m_stateMachineViewer->setWidget(smv);
-		m_stateMachineViewer->setFeatures(QDockWidget::AllDockWidgetFeatures);
-		addDockWidget(Qt::BottomDockWidgetArea, m_stateMachineViewer);
-		m_stateMachineViewer->hide();
-	}
-
-	
+	connect(LogCenter::instance(), SIGNAL(message(QtMsgType, QMessageLogContext, QString)), 
+		this, SLOT(showMessage(QtMsgType, QMessageLogContext, QString)));
 
 	initializeCanvas();
 	initializeRightDockableArea();
@@ -49,6 +36,22 @@ MainWindow::~MainWindow()
 
 void MainWindow::initializeCanvas() 
 {
+	m_canvas.reset(new Canvas);
+	m_scene    = m_canvas->getScene();
+	m_camera   = m_scene->getCamera();
+
+	// show the state machine viewer
+	QStateMachine* machine = m_scene->getStateMachine();
+	if(machine)
+	{
+		m_stateMachineViewer = new QDockWidget("State Machine Viewer", this);
+		StateMachineViewer* smv = showStateMachine(machine);
+		m_stateMachineViewer->setWidget(smv);
+		m_stateMachineViewer->setFeatures(QDockWidget::AllDockWidgetFeatures);
+		addDockWidget(Qt::BottomDockWidgetArea, m_stateMachineViewer);
+		m_stateMachineViewer->hide();
+	}
+
 	QWidget* canvas = QWidget::createWindowContainer(m_canvas.data());
 	QDockWidget* dock_canvas = new QDockWidget("Scene", this);
 	dock_canvas->setWidget(canvas);
@@ -79,11 +82,11 @@ void MainWindow::initializeMenuBar()
 
 	// ############ Game Object ############
 	QMenu *gameObjectMenu = menuBar()->addMenu("&Game Object");
-	QAction *createEmpty = new QAction("&Create Empty", this);
+	QAction *createEmpty = new QAction("Create Empty", this);
 	gameObjectMenu->addAction(createEmpty);
 
-	QMenu* createGameObjectMenu = gameObjectMenu->addMenu("&Create Other");
-	QAction *createParticleSystemAction = new QAction("&Particle System", this);
+	QMenu* createGameObjectMenu = gameObjectMenu->addMenu("Create Other");
+	QAction *createParticleSystemAction = new QAction("Particle System", this);
 	createGameObjectMenu->addAction(createParticleSystemAction);
 
 	// ############ Scene Menu ############
@@ -115,18 +118,17 @@ void MainWindow::initializeMenuBar()
 	toggleStateMachineViewer->setText("Show State Machine");
 	windowMenu->addAction(toggleStateMachineViewer);
 
-	// ############ Options Menu ############
-	QMenu *optionMenu = menuBar()->addMenu("&Options");
+	// ############ System Menu ############
+	QMenu *sytemMenu = menuBar()->addMenu("System");
+	
+	QMenu *optionMenu = sytemMenu->addMenu("&Options");
 	QAction *msaaAction = new QAction("&MSAA x4", this);
 	msaaAction->setCheckable(true);
 	msaaAction->setChecked(true);
 	optionMenu->addAction(msaaAction);
 
-	// ############ System Menu ############
-	QMenu *sytemMenu = menuBar()->addMenu("System");
 	QAction *gpuInfoAction = new QAction("&GPU Info", this);
 	sytemMenu->addAction(gpuInfoAction);
-
 
 	// ############ Signals & Slots ############
 	QObject::connect(openSceneAction,  SIGNAL(triggered()),     m_scene, SLOT(showOpenSceneDialog()));
@@ -134,6 +136,7 @@ void MainWindow::initializeMenuBar()
 	QObject::connect(saveAction,       SIGNAL(triggered()),     m_scene, SLOT(showSaveSceneDialog()));
 	QObject::connect(resetSceneAction, SIGNAL(triggered()),     m_scene, SLOT(resetToDefaultScene()));
 	QObject::connect(clearSceneAction, SIGNAL(triggered()),     m_scene, SLOT(clearScene()));
+	QObject::connect(createEmpty,      SIGNAL(triggered()),     m_scene, SLOT(createEmptyGameObject()));
 	QObject::connect(exitAction,       SIGNAL(triggered()),     qApp,    SLOT(quit()));
 	QObject::connect(fullscreenAction, SIGNAL(triggered(bool)), this,    SLOT(setFullScreen(bool)));
 	QObject::connect(msaaAction,       SIGNAL(triggered(bool)), m_scene, SLOT(toggleAA(bool)));
@@ -414,6 +417,7 @@ void MainWindow::initializeParamsArea()
 
 }
 
+
 void MainWindow::setViewProperties(bool state)
 {
 	if(state)
@@ -520,4 +524,9 @@ void MainWindow::updateBottom(double bottom)
 void MainWindow::updateTop(double top)
 {
 	m_camera->setTop(static_cast<float>(top));
+}
+
+void MainWindow::showMessage( QtMsgType type, const QMessageLogContext &context, const QString &msg )
+{
+	statusBar()->showMessage(msg);
 }

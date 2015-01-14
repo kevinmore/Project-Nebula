@@ -123,14 +123,17 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName )
 	prepareVertexBuffers();
 
 	// print out the summary
-	qDebug() << endl << "Loaded" << fileName;
-	qDebug() << "Model has" << m_scene->mNumMeshes << "meshes," << numVertices << "vertices," 
-		     << numIndices << "indices";
-	if(m_NumBones)
-		qDebug() << "Contains" << m_NumBones << "bones.";
-	if (m_scene->HasAnimations()) 
-		qDebug() << "Contains a"<< (float) m_scene->mAnimations[0]->mDuration <<"seconds animation.";
+	QString summary = "Loaded " + fileName + ". Model has " 
+		            + QString::number(m_scene->mNumMeshes) + " meshes, " 
+					+ QString::number(numVertices) + " vertices, " 
+					+ QString::number(numIndices) + " indices.";
 
+	if(m_NumBones)
+		summary += " Contains " + QString::number(m_NumBones) + " bones.";
+	if (m_scene->HasAnimations()) 
+		summary += " Contains " + QString::number(m_scene->mAnimations[0]->mDuration) + " seconds animation.";
+
+	qDebug() << summary;
 	
 	clear();
 	return modelDataVector;

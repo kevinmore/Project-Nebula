@@ -57,10 +57,10 @@ typedef QSharedPointer<ModelData> ModelDataPtr;
 typedef QSharedPointer<QOpenGLShaderProgram> QOpenGLShaderProgramPtr;
 typedef QSharedPointer<QOpenGLVertexArrayObject> QOpenGLVertexArrayObjectPtr;
 
-class AbstractModel : public QObject
+class AbstractModel
 {
 public:
-	AbstractModel(const QString& fileName, GameObject* go, QObject* parent = 0);
+	AbstractModel(const QString& fileName, GameObject* go);
 	virtual ~AbstractModel() = 0;
 
 	virtual void render(float time) = 0;

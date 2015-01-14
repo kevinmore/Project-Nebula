@@ -10,6 +10,12 @@ ModelManager::ModelManager(Scene* scene)
 
 ModelManager::~ModelManager() {}
 
+GameObject* ModelManager::getGameObject( const QString& name )
+{
+	if(m_gameObjects.find(name) != m_gameObjects.end()) return m_gameObjects[name];
+	else return 0;
+}
+
 ModelPtr ModelManager::getModel( const QString& name )
 {
 	if(m_allModels.find(name) != m_allModels.end()) return m_allModels[name];
@@ -28,7 +34,7 @@ StaticModel* ModelManager::getStaticModel( const QString& name )
 	else return NULL;
 }
 
-ModelPtr ModelManager::loadModel( const QString& customName, const QString& fileName, QObject* parent )
+ModelPtr ModelManager::loadModel( const QString& customName, const QString& fileName, GameObject* parent )
 {
 	ModelLoader* m_modelLoader = new ModelLoader();
 	QVector<ModelDataPtr> modelDataArray = m_modelLoader->loadModel(fileName);
@@ -36,14 +42,22 @@ ModelPtr ModelManager::loadModel( const QString& customName, const QString& file
 
 	QString name = customName;
 	// check if this model has been loaded previously
-	if (getModel(customName)) name += "_" + QString::number(m_allModels.count(customName) + 1);
+	int duplication = 0;
+	foreach(QString key, m_allModels.keys())
+	{
+		if(key.contains(customName)) 
+			++duplication;
+	}
+	if (duplication) 
+		name += "_" + QString::number(duplication);
 
 	if (m_modelLoader->getModelType() == ModelLoader::STATIC_MODEL)
 	{
-		StaticModel* sm = new StaticModel(fileName, m_scene, m_modelLoader->getRenderingEffect(), modelDataArray, parent);
-		sm->setObjectName(name);
+		StaticModel* sm = new StaticModel(fileName, m_scene, m_modelLoader->getRenderingEffect(), modelDataArray);
+		sm->gameObject()->setParent(parent);
 		sm->gameObject()->setObjectName(name);
 
+		m_gameObjects[name] = sm->gameObject();
 		m_staticModels[name] = sm;
 		m_allModels[name] = ModelPtr(sm);
 	}
@@ -55,14 +69,15 @@ ModelPtr ModelManager::loadModel( const QString& customName, const QString& file
 		// create an IKSolver for the model
 		CCDIKSolver* solver = new CCDIKSolver(128);
 
-		RiggedModel* rm = new RiggedModel(fileName, m_scene, m_modelLoader->getRenderingEffect(), m_modelLoader->getSkeletom(), modelDataArray, parent);
+		RiggedModel* rm = new RiggedModel(fileName, m_scene, m_modelLoader->getRenderingEffect(), m_modelLoader->getSkeletom(), modelDataArray);
 		rm->setFKController(controller);
 		rm->setIKSolver(solver);
 		rm->setRootTranslation(controller->getRootTranslation());
 		rm->setRootRotation(controller->getRootRotation());
-		rm->setObjectName(name);
+		rm->gameObject()->setParent(parent);
 		rm->gameObject()->setObjectName(name);
 
+		m_gameObjects[name] = rm->gameObject();
 		m_riggedModels[name] = rm;
 		m_allModels[name] = ModelPtr(rm);
 	}
@@ -111,6 +126,7 @@ void ModelManager::clear()
 	m_staticModels.clear();
 	m_riggedModels.clear();
 	m_allModels.clear();
+	m_gameObjects.clear();
 }
 
 void ModelManager::gatherModelsInfo()
@@ -120,4 +136,36 @@ void ModelManager::gatherModelsInfo()
 	{
 		m_modelsInfo.push_back(qMakePair(model->fileName(), model->gameObject()));
 	}
+}
+
+GameObject* ModelManager::createGameObject( const QString& customName, GameObject* parent /*= 0*/ )
+{
+	QString name = customName;
+	// check if this object has the same name with another
+	int duplication = 0;
+	foreach(QString key, m_gameObjects.keys())
+	{
+		if(key.contains(customName)) 
+			++duplication;
+	}
+	if (duplication) 
+		name += "_" + QString::number(duplication);
+
+	GameObject* go = new GameObject(parent);
+	go->setObjectName(name);
+	m_gameObjects[name] = go;
+
+	return go;
+}
+
+void ModelManager::deleteObject( const QString& name )
+{
+	if(getGameObject(name)) 
+		m_gameObjects.take(name);
+	if(getModel(name)) 
+		m_allModels.take(name);
+	if (getStaticModel(name)) 
+		m_staticModels.take(name);
+	if(getRiggedModel(name)) 
+		m_riggedModels.take(name);
 }

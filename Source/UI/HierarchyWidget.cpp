@@ -15,13 +15,21 @@ HierarchyWidget::HierarchyWidget(Scene* scene, QWidget *parent)
 	connect(ui->treeWidget, SIGNAL(currentItemChanged(QTreeWidgetItem*, QTreeWidgetItem*)), 
 		    this, SLOT(updateTransformation(QTreeWidgetItem*, QTreeWidgetItem*)));
 
-	connect(ui->treeWidget, SIGNAL(itemDoubleClicked(QTreeWidgetItem*, int)), 
+	connect(ui->treeWidget, SIGNAL(itemChanged(QTreeWidgetItem*, int)), 
 		    this, SLOT(renameGameObject(QTreeWidgetItem*, int)));
 	
 	// reset button
 	connect(ui->pushButton_Reset, SIGNAL(clicked()), this, SLOT(resetSelectedObject()));
 	
+	// popup menu
+	m_deleteAction = new QAction("Delete", this);
+	ui->treeWidget->setContextMenuPolicy(Qt::CustomContextMenu);
+	connect(ui->treeWidget, SIGNAL(customContextMenuRequested(const QPoint)), this, SLOT(showMouseRightButton(const QPoint)));
+	connect(m_deleteAction, SIGNAL(triggered()), this, SLOT(deleteGameObject()));
+
 	updateObjectTree();
+	QTreeWidgetItem* root = ui->treeWidget->topLevelItem(0);
+	root->setFlags(root->flags() & ~Qt::ItemIsEditable);
 }
 
 HierarchyWidget::~HierarchyWidget()
@@ -31,9 +39,13 @@ HierarchyWidget::~HierarchyWidget()
 
 void HierarchyWidget::updateObjectTree()
 {
+	// block the signals emitted from the tree when updating
+	// to avoid emitting itemChanged signal
+	ui->treeWidget->blockSignals(true);
 	ui->treeWidget->clear();
 	readHierarchy(m_scene->sceneNode(), 0);
 	ui->treeWidget->expandAll();
+	ui->treeWidget->blockSignals(false);
 }
 
 void HierarchyWidget::readHierarchy( GameObject* go, QTreeWidgetItem* parentItem )
@@ -48,7 +60,11 @@ void HierarchyWidget::readHierarchy( GameObject* go, QTreeWidgetItem* parentItem
 	{
 		item = new QTreeWidgetItem(ui->treeWidget);
 	}
+
+	// each item displays the name of the game object
+	// each item should be editable
 	item->setText(0, go->objectName());
+	item->setFlags(item->flags() | Qt::ItemIsEditable);
 
 	foreach(QObject* obj, go->children())
 	{
@@ -77,7 +93,7 @@ void HierarchyWidget::resetSelectedObject()
 	else if (current == ui->treeWidget->topLevelItem(0))
 		m_currentObject = m_scene->sceneNode();
 	else
-		m_currentObject = m_scene->modelManager()->getModel(current->text(0))->gameObject();
+		m_currentObject = m_scene->modelManager()->getGameObject(current->text(0));
 
 	clearTransformationArea();
 	resetHierarchy(m_currentObject);
@@ -85,7 +101,6 @@ void HierarchyWidget::resetSelectedObject()
 
 void HierarchyWidget::updateTransformation(QTreeWidgetItem* current, QTreeWidgetItem* previous)
 {
-	qDebug() << "currentItemChanged changed!";
 	if (!current) return;
 
 	// disconnect previous connections
@@ -99,7 +114,8 @@ void HierarchyWidget::updateTransformation(QTreeWidgetItem* current, QTreeWidget
 	}
 
 	// get the selected game object
-	m_currentObject = m_scene->modelManager()->getModel(current->text(0))->gameObject();
+	m_currentObject = m_scene->modelManager()->getGameObject(current->text(0));
+	if(!m_currentObject) return;
 
 	// map the transformation into the spin boxes
 	ui->doubleSpinBox_PositionX->setValue(m_currentObject->position().x());
@@ -163,6 +179,37 @@ void HierarchyWidget::disconnectPreviousObject()
 
 void HierarchyWidget::renameGameObject( QTreeWidgetItem * item, int column )
 {
-	item->setFlags(item->flags() | Qt::ItemIsEditable);
-	//ui->treeWidget->openPersistentEditor(item, column);
+	// ignore the root node
+	if(item == ui->treeWidget->topLevelItem(0)) return;
+
+	// delete the current one
+	m_scene->modelManager()->m_gameObjects.take(m_currentObject->objectName());
+
+	// add the new record
+	m_currentObject->setObjectName(item->text(column));
+	m_scene->modelManager()->m_gameObjects[m_currentObject->objectName()] = m_currentObject;
+}
+
+void HierarchyWidget::showMouseRightButton( const QPoint& point )
+{
+	QTreeWidgetItem* selected = ui->treeWidget->itemAt(point);
+	if(!selected || selected == ui->treeWidget->topLevelItem(0)) return;
+
+	QMenu* popMenu = new QMenu(ui->treeWidget);
+	popMenu->addAction(m_deleteAction);
+	popMenu->exec(QCursor::pos());
+}
+
+void HierarchyWidget::deleteGameObject()
+{
+	// take the object from the map, and delete it
+	ModelPtr model = m_scene->modelManager()->m_allModels.take(m_currentObject->objectName());
+	if(model) model.clear();
+	else
+	{
+		m_scene->modelManager()->m_gameObjects.take(m_currentObject->objectName());
+		SAFE_DELETE(m_currentObject);
+	}
+
+	updateObjectTree();
 }

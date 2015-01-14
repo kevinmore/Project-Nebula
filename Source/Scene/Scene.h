@@ -66,6 +66,7 @@ public slots:
 	void showOpenSceneDialog();
 	void showSaveSceneDialog();
 	void modelLoaded();
+	void createEmptyGameObject();
 
 signals:
 	void renderCycleDone();
