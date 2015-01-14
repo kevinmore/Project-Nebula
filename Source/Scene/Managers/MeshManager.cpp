@@ -24,9 +24,9 @@ MeshPtr MeshManager::addMesh( const QString& name, unsigned int numIndices, unsi
 
 void MeshManager::clear()
 {
-	for (auto it = m_meshes.begin(); it != m_meshes.end(); )
+	foreach(MeshPtr mesh, m_meshes)
 	{
-		m_meshes.erase(it++);
+		mesh.clear();
 	}
 
 	m_meshes.clear();

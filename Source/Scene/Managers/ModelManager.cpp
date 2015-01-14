@@ -86,19 +86,8 @@ void ModelManager::renderAllModels(float time)
 
 void ModelManager::clear()
 {
-	// delete every loader
-	for (int i = 0; i < m_modelLoaders.size(); ++i)
-	{
-		m_modelLoaders[i].clear();
-	}
-
-	// delete every game object
-	foreach(GameObjectPtr go, m_gameObjectMap.values())
-	{
-		go.clear();
-	}
-
 	// clean up
+	// since we are using QSharedPointer here, there's no need to destroy each object individually
 	m_modelLoaders.clear();
 	m_gameObjectMap.clear();
 }

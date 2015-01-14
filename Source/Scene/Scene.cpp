@@ -20,6 +20,7 @@ Scene::Scene(QObject* parent)
 
 Scene::~Scene()
 {
+	clearScene();
 	SAFE_DELETE(m_camera);
 	SAFE_DELETE(m_stateMachine);
 	SAFE_DELETE(m_sceneRootNode);
