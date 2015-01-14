@@ -6,9 +6,10 @@
 #include <QVector4D>
 #include <QMatrix3x3>
 #include <QMatrix4x4>
-#include <QString>
 #include <QQuaternion>
+#include <QString>
 #include <QtMath>
+#include <QSharedPointer>
 
 typedef QVector2D vec2;
 typedef QVector3D vec3;

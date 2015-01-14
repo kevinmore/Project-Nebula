@@ -4,6 +4,7 @@
 #include <QVector4D>
 #include <QOpenGLVertexArrayObject>
 #include <QOpenGLShaderProgram>
+
 #include <Scene/GameObject.h>
 
 struct MeshData

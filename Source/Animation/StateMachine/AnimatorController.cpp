@@ -205,8 +205,8 @@ void AnimatorController::buildStateMachine()
 
 QState* AnimatorController::createBasicState( const QString& stateName, const QString& clipName, QState* parent /*= 0*/ )
 {
-	RiggedModel* man = m_modelManager->getRiggedModel(clipName);
-
+	ModelPtr p = m_modelManager->getModel(clipName);
+	RiggedModel* man = (RiggedModel*)p.data();
 	QState* pState = new QState(parent);
 
 	pState->setObjectName(stateName);
@@ -221,7 +221,8 @@ QState* AnimatorController::createBasicState( const QString& stateName, const QS
 
 QState* AnimatorController::createLoopingState( const QString& stateName, const QString& clipName, QState* parent /*= 0*/ )
 {
-	RiggedModel* man = m_modelManager->getRiggedModel(clipName);
+	ModelPtr p = m_modelManager->getModel(clipName);
+	RiggedModel* man = (RiggedModel*)p.data();
 
 	QState* pState = new QState(parent);
 	pState->setObjectName(stateName);
@@ -247,7 +248,8 @@ QState* AnimatorController::createLoopingState( const QString& stateName, const 
 QState* AnimatorController::createTransitionState( const QString& stateName, const QString& subStateName, const QString& clipName, 
 												QState* doneState, QState* parent /*= 0*/ )
 {
-	RiggedModel* man = m_modelManager->getRiggedModel(clipName);
+	ModelPtr p = m_modelManager->getModel(clipName);
+	RiggedModel* man = (RiggedModel*)p.data();
 
 	QState* pState = new QState(parent);
 	
@@ -274,7 +276,8 @@ QState* AnimatorController::createTransitionState( const QString& stateName, con
 void AnimatorController::syncMovement( SYNC_OPTION option, QState* pState, const QString& customData /*= ""*/)
 {
 	QString clipName = m_StateClipMap[pState];
-	RiggedModel* man = m_modelManager->getRiggedModel(clipName);
+	ModelPtr p = m_modelManager->getModel(clipName);
+	RiggedModel* man = (RiggedModel*)p.data();
 	QString paramString;
 	const char* slot;
 	if (option == TRANSLATION)
@@ -309,7 +312,8 @@ void AnimatorController::syncMovement( SYNC_OPTION option, QState* pState, const
 
 void AnimatorController::render(const float globalTime)
 {
-	RiggedModel* man = m_modelManager->getRiggedModel(m_currentClip);
+	ModelPtr p = m_modelManager->getModel(m_currentClip);
+	RiggedModel* man = (RiggedModel*)p.data();
 	if(!man) 
 	{
 		qDebug() << "Animation Clip Invalid. Clip Name:" << m_currentClip;
@@ -340,7 +344,8 @@ void AnimatorController::stateMachineFinised()
 void AnimatorController::finishingLoopingState()
 {
 	float time = (float)m_timer.elapsed()/1000;
-	RiggedModel* man = m_modelManager->getRiggedModel(m_currentClip);
+	ModelPtr p = m_modelManager->getModel(m_currentClip);
+	RiggedModel* man = (RiggedModel*)p.data();
 	float duration = man->animationDuration();
 	// if the animation stops before the time duration for it
 	// synchronize the game object position

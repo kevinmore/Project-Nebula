@@ -1,5 +1,4 @@
 #pragma once
-#include <Scene/RiggedModel.h>
 #include <Scene/Managers/ModelManager.h>
 #include <QStateMachine>
 #include <QElapsedTimer>

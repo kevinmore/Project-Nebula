@@ -1,5 +1,6 @@
 #pragma once
 #include <Utility/EngineCommon.h>
+#include <QSharedPointer>
 #include <QElapsedTimer>
 
 class GameObject : public QObject
@@ -89,5 +90,6 @@ private:
 	float m_time;
 	QElapsedTimer m_lifeTimer;
 	bool m_isMoving;
+
 };
 

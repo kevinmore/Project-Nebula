@@ -22,18 +22,6 @@ ModelPtr ModelManager::getModel( const QString& name )
 	else return ModelPtr();
 }
 
-RiggedModel* ModelManager::getRiggedModel( const QString& name )
-{
-	if(m_riggedModels.find(name) != m_riggedModels.end()) return m_riggedModels[name];
-	else return NULL;
-}
-
-StaticModel* ModelManager::getStaticModel( const QString& name )
-{
-	if(m_staticModels.find(name) != m_staticModels.end()) return m_staticModels[name];
-	else return NULL;
-}
-
 ModelPtr ModelManager::loadModel( const QString& customName, const QString& fileName, GameObject* parent )
 {
 	ModelLoader* m_modelLoader = new ModelLoader();
@@ -58,7 +46,6 @@ ModelPtr ModelManager::loadModel( const QString& customName, const QString& file
 		sm->gameObject()->setObjectName(name);
 
 		m_gameObjects[name] = sm->gameObject();
-		m_staticModels[name] = sm;
 		m_allModels[name] = ModelPtr(sm);
 	}
 	else if (m_modelLoader->getModelType() == ModelLoader::RIGGED_MODEL)
@@ -78,7 +65,6 @@ ModelPtr ModelManager::loadModel( const QString& customName, const QString& file
 		rm->gameObject()->setObjectName(name);
 
 		m_gameObjects[name] = rm->gameObject();
-		m_riggedModels[name] = rm;
 		m_allModels[name] = ModelPtr(rm);
 	}
 
@@ -89,22 +75,6 @@ ModelPtr ModelManager::loadModel( const QString& customName, const QString& file
 void ModelManager::renderAllModels(float time)
 {
 	foreach(ModelPtr model, m_allModels.values())
-	{
-		model->render(time);
-	}
-}
-
-void ModelManager::renderRiggedModels( float time )
-{
-	foreach(RiggedModel* model, m_riggedModels.values())
-	{
-		model->render(time);
-	}
-}
-
-void ModelManager::renderStaticModels( float time )
-{
-	foreach(StaticModel* model, m_staticModels.values())
 	{
 		model->render(time);
 	}
@@ -123,8 +93,6 @@ void ModelManager::clear()
 	}
 
 	m_modelLoaders.clear();
-	m_staticModels.clear();
-	m_riggedModels.clear();
 	m_allModels.clear();
 	m_gameObjects.clear();
 }
@@ -164,8 +132,4 @@ void ModelManager::deleteObject( const QString& name )
 		m_gameObjects.take(name);
 	if(getModel(name)) 
 		m_allModels.take(name);
-	if (getStaticModel(name)) 
-		m_staticModels.take(name);
-	if(getRiggedModel(name)) 
-		m_riggedModels.take(name);
 }
