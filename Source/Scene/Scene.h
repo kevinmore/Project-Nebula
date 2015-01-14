@@ -48,7 +48,7 @@ public:
 	QSharedPointer<ModelManager>    modelManager();
 
 	QStateMachine* getStateMachine() const { return m_stateMachine; }
-	GameObject* sceneNode() const { return m_sceneNode; }
+	GameObject* sceneNode() const { return m_sceneRootNode; }
 
 public slots:
 	void toggleFill(bool state);
@@ -76,7 +76,7 @@ private:
 	void loadScene(QString& fileName);
 	void saveScene(QString& fileName);
 
-	GameObject* m_sceneNode;
+	GameObject* m_sceneRootNode;
 
 	Camera* m_camera;
 

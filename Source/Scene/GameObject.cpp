@@ -1,5 +1,6 @@
 #include "GameObject.h"
 #include <Utility/Math.h>
+#include <Scene/AbstractModel.h>
 using namespace Math;
 
 GameObject::GameObject(QObject* parent)
@@ -11,7 +12,8 @@ GameObject::GameObject(QObject* parent)
 	  m_modelMatrixDirty(true),
 	  m_time(0.0f),
 	  m_prevPosition(m_position),
-	  m_isMoving(false)
+	  m_isMoving(false),
+	  m_model(NULL)
 {
 	connect(this, SIGNAL(synchronized()), this, SLOT(calculateSpeed()));
 	m_lifeTimer.start();
@@ -320,4 +322,15 @@ QVector3D GameObject::predictedPosition()  const
 	float currentTime = (float)m_lifeTimer.elapsed()/1000;
 	const float dt = currentTime - m_time;
 	return m_prevPosition + m_speed * dt;
+}
+
+void GameObject::attachModel( QSharedPointer<AbstractModel> pModel )
+{
+	m_model = pModel;
+	pModel->linkGameObject(this);
+}
+
+QSharedPointer<AbstractModel> GameObject::getModel()
+{
+	return m_model;
 }

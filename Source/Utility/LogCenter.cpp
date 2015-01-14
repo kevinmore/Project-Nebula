@@ -17,7 +17,7 @@ void static logCenterFunction(QtMsgType type, const QMessageLogContext &context,
 	switch (type)
 	{
 	case QtDebugMsg:
-		strLog += QString("<Log>\n%1\n").arg(msg);
+		strLog += QString("<Info>\n%1\n").arg(msg);
 		break;
 	case QtWarningMsg:
 		strLog += QString("<Warning>\n%1\n").arg(msg);

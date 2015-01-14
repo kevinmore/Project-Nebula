@@ -23,7 +23,6 @@ StaticModel::StaticModel(const QString& name, Scene* scene, ShadingTechnique* te
 
 StaticModel::~StaticModel() 
 {
-	SAFE_DELETE(m_actor);
 	SAFE_DELETE(m_RenderingEffect);
 }
 

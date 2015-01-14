@@ -5,6 +5,8 @@
 
 #include <Utility/EngineCommon.h>
 typedef QSharedPointer<AbstractModel> ModelPtr;
+typedef QSharedPointer<GameObject> GameObjectPtr;
+typedef QSharedPointer<ModelLoader> ModelLoaderPtr;
 
 class Scene;
 
@@ -12,12 +14,12 @@ class ModelManager
 {
 public:
 	ModelManager(Scene* scene);
-	~ModelManager(void);
+	~ModelManager();
 
-	GameObject* getGameObject(const QString& name);
+	GameObjectPtr getGameObject(const QString& name);
 	ModelPtr getModel(const QString& name);
 
-	GameObject* createGameObject(const QString& customName, GameObject* parent = 0);
+	GameObjectPtr createGameObject(const QString& customName, GameObject* parent = 0);
 	ModelPtr loadModel(const QString& customName, const QString& fileName, GameObject* parent = 0);
 	void renderAllModels(float time);
 
@@ -26,10 +28,9 @@ public:
 	void clear();
 	void gatherModelsInfo();
 
-	QMap<QString, GameObject*> m_gameObjectMap;
-	QMap<QString, ModelPtr> m_modelMap;
+	QMap<QString, GameObjectPtr> m_gameObjectMap;
 
-	QVector<ModelLoader*> m_modelLoaders;
+	QVector<ModelLoaderPtr> m_modelLoaders;
 	QVector<QPair<QString, GameObject*>> m_modelsInfo;
 
 private:

@@ -34,7 +34,6 @@ RiggedModel::RiggedModel(const QString& name, Scene* scene, ShadingTechnique* te
 
 RiggedModel::~RiggedModel() 
 {
-	SAFE_DELETE(m_actor);
 	SAFE_DELETE(m_RenderingEffect);
  	SAFE_DELETE(m_skeleton);
  	SAFE_DELETE(m_IKSolver);

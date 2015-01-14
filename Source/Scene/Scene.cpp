@@ -4,13 +4,13 @@
 
 Scene::Scene(QObject* parent)
 	: AbstractScene(parent),
-	  m_sceneNode(new GameObject),
+	  m_sceneRootNode(new GameObject),
 	  m_camera(new Camera(NULL,this)),
 	  m_light("light01"),
 	  m_lightMode(PerFragmentPhong),
 	  m_lightModeSubroutines(LightModeCount)
 {
-	m_sceneNode->setObjectName("Scene Root");
+	m_sceneRootNode->setObjectName("Scene Root");
 	// Initializing the lights
 	for(int i = 1; i < LightModeCount; ++i)
 	{
@@ -22,6 +22,7 @@ Scene::~Scene()
 {
 	SAFE_DELETE(m_camera);
 	SAFE_DELETE(m_stateMachine);
+	SAFE_DELETE(m_sceneRootNode);
 }
 
 void Scene::initialize()
@@ -331,7 +332,7 @@ void Scene::resetToDefaultScene()
 	// load the floor
 	GameObject* floorRef = new GameObject;
 	floorRef->setRotation(-90.0f, 0.0f, 0.0f);
-	LoaderThread loader(this, "../Resource/Models/DemoRoom/floor.DAE", floorRef, m_sceneNode);
+	LoaderThread loader(this, "../Resource/Models/DemoRoom/floor.DAE", floorRef, m_sceneRootNode);
 }
 
 void Scene::showLoadModelDialog()
@@ -340,7 +341,7 @@ void Scene::showLoadModelDialog()
 		"../Resource/Models",
 		tr("3D Model File (*.dae *.obj *.3ds)"));
 
-	LoaderThread loader(this, fileName, 0, m_sceneNode);
+	LoaderThread loader(this, fileName, 0, m_sceneRootNode);
 }
 
 void Scene::showOpenSceneDialog()
@@ -383,10 +384,12 @@ void Scene::loadScene( QString& fileName )
 		QString modelFileName = m_modelManager->m_modelsInfo[i].first;
 		GameObject* go = m_modelManager->m_modelsInfo[i].second;
 
-		LoaderThread loader(this, modelFileName, go, m_sceneNode);
+		LoaderThread loader(this, modelFileName, go, m_sceneRootNode);
 	}
 
 	file.close();
+
+	qDebug() << "Opened scene from" << fileName;
 }
 
 void Scene::saveScene( QString& fileName )
@@ -407,6 +410,8 @@ void Scene::saveScene( QString& fileName )
 
 	file.flush();
 	file.close();
+
+	qDebug() << "Saved scene to" << fileName;
 }
 
 void Scene::modelLoaded()
@@ -416,7 +421,7 @@ void Scene::modelLoaded()
 
 void Scene::createEmptyGameObject()
 {
-	m_modelManager->createGameObject("Game Object", m_sceneNode);
+	m_modelManager->createGameObject("Game Object", m_sceneRootNode);
 	qDebug() << "Created an empty Game Object";
 
 	emit updateHierarchy();

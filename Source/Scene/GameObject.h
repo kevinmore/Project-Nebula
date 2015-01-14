@@ -3,6 +3,7 @@
 #include <QSharedPointer>
 #include <QElapsedTimer>
 
+class AbstractModel;
 class GameObject : public QObject
 {
 	Q_OBJECT
@@ -39,6 +40,9 @@ public:
 	QVector3D globalSpeed() const;
 
 	const QMatrix4x4& modelMatrix();
+
+	void attachModel(QSharedPointer<AbstractModel> pModel);
+	QSharedPointer<AbstractModel> getModel();
 
 	enum MovingBehaviour
 	{
@@ -90,6 +94,6 @@ private:
 	float m_time;
 	QElapsedTimer m_lifeTimer;
 	bool m_isMoving;
-
+	QSharedPointer<AbstractModel> m_model;
 };
 

@@ -10,21 +10,21 @@ ModelManager::ModelManager(Scene* scene)
 
 ModelManager::~ModelManager() {}
 
-GameObject* ModelManager::getGameObject( const QString& name )
+GameObjectPtr ModelManager::getGameObject( const QString& name )
 {
 	if(m_gameObjectMap.find(name) != m_gameObjectMap.end()) return m_gameObjectMap[name];
-	else return 0;
+	else return GameObjectPtr();
 }
 
 ModelPtr ModelManager::getModel( const QString& name )
 {
-	if(m_modelMap.find(name) != m_modelMap.end()) return m_modelMap[name];
+	if(m_gameObjectMap.find(name) != m_gameObjectMap.end()) return m_gameObjectMap[name]->getModel();
 	else return ModelPtr();
 }
 
 ModelPtr ModelManager::loadModel( const QString& customName, const QString& fileName, GameObject* parent )
 {
-	ModelLoader* m_modelLoader = new ModelLoader();
+	ModelLoaderPtr m_modelLoader(new ModelLoader);
 	QVector<ModelDataPtr> modelDataArray = m_modelLoader->loadModel(fileName);
 	if(modelDataArray.size() == 0) return ModelPtr();
 
@@ -34,7 +34,7 @@ ModelPtr ModelManager::loadModel( const QString& customName, const QString& file
 	// check if this model has been loaded previously
 	QString name = customName;
 	int duplication = 0;
-	foreach(QString key, m_modelMap.keys())
+	foreach(QString key, m_gameObjectMap.keys())
 	{
 		if(key.contains(customName)) 
 			++duplication;
@@ -51,7 +51,7 @@ ModelPtr ModelManager::loadModel( const QString& customName, const QString& file
 	else if (m_modelLoader->getModelType() == ModelLoader::RIGGED_MODEL)
 	{
 		// create a FKController for the model
-		FKController* controller = new FKController(m_modelLoader, m_modelLoader->getSkeletom());
+		FKController* controller = new FKController(m_modelLoader.data(), m_modelLoader->getSkeletom());
 
 		// create an IKSolver for the model
 		CCDIKSolver* solver = new CCDIKSolver(128);
@@ -64,15 +64,13 @@ ModelPtr ModelManager::loadModel( const QString& customName, const QString& file
 		pModel.reset(rm);
 	}
 
-	// link this model to a new game object
-	GameObject* go  = new GameObject(parent);
-	pModel->linkGameObject(go);
-	pModel->gameObject()->setParent(parent);
-	pModel->gameObject()->setObjectName(name);
+	// attach this model to a new game object
+	GameObjectPtr go(new GameObject(parent));
+	go->setObjectName(name);
+	go->attachModel(pModel);
 
 	// add the data into the maps
-	m_gameObjectMap[name] = pModel->gameObject();
-	m_modelMap[name] = pModel;
+	m_gameObjectMap[name] = go;
 	m_modelLoaders.push_back(m_modelLoader);
 
 	return pModel;
@@ -80,39 +78,41 @@ ModelPtr ModelManager::loadModel( const QString& customName, const QString& file
 
 void ModelManager::renderAllModels(float time)
 {
-	foreach(ModelPtr model, m_modelMap.values())
+	foreach(GameObjectPtr go, m_gameObjectMap.values())
 	{
-		model->render(time);
+		go->getModel()->render(time);
 	}
 }
 
 void ModelManager::clear()
 {
+	// delete every loader
 	for (int i = 0; i < m_modelLoaders.size(); ++i)
 	{
-		SAFE_DELETE(m_modelLoaders[i]);
+		m_modelLoaders[i].clear();
 	}
 
-	foreach(ModelPtr model, m_modelMap.values())
+	// delete every game object
+	foreach(GameObjectPtr go, m_gameObjectMap.values())
 	{
-		model.clear();
+		go.clear();
 	}
 
+	// clean up
 	m_modelLoaders.clear();
-	m_modelMap.clear();
 	m_gameObjectMap.clear();
 }
 
 void ModelManager::gatherModelsInfo()
 {
 	m_modelsInfo.clear();
-	foreach(ModelPtr model, m_modelMap.values())
+	foreach(GameObjectPtr go, m_gameObjectMap.values())
 	{
-		m_modelsInfo.push_back(qMakePair(model->fileName(), model->gameObject()));
+		m_modelsInfo.push_back(qMakePair(go->getModel()->fileName(), go.data()));
 	}
 }
 
-GameObject* ModelManager::createGameObject( const QString& customName, GameObject* parent /*= 0*/ )
+GameObjectPtr ModelManager::createGameObject( const QString& customName, GameObject* parent /*= 0*/ )
 {
 	// check if this object has the same name with another
 	QString name = customName;
@@ -125,7 +125,7 @@ GameObject* ModelManager::createGameObject( const QString& customName, GameObjec
 	if (duplication) 
 		name += "_" + QString::number(duplication);
 
-	GameObject* go = new GameObject(parent);
+	GameObjectPtr go(new GameObject(parent));
 	go->setObjectName(name);
 	m_gameObjectMap[name] = go;
 
@@ -136,6 +136,4 @@ void ModelManager::deleteObject( const QString& name )
 {
 	if(getGameObject(name)) 
 		m_gameObjectMap.take(name);
-	if(getModel(name)) 
-		m_modelMap.take(name);
 }
