@@ -61,13 +61,15 @@ typedef QSharedPointer<QOpenGLVertexArrayObject> QOpenGLVertexArrayObjectPtr;
 class AbstractModel
 {
 public:
-	AbstractModel(const QString& fileName, GameObject* go);
+	AbstractModel(const QString& fileName);
 	virtual ~AbstractModel() = 0;
 
 	virtual void render(float time) = 0;
 
 	QString fileName() const { return m_fileName; }
 	GameObject* gameObject() const { return m_actor; }
+
+	void linkGameObject(GameObject* go) { m_actor = go; }
 
 protected:
 	QString m_fileName;

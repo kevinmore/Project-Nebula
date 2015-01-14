@@ -183,11 +183,11 @@ void HierarchyWidget::renameGameObject( QTreeWidgetItem * item, int column )
 	if(item == ui->treeWidget->topLevelItem(0)) return;
 
 	// delete the current one
-	m_scene->modelManager()->m_gameObjects.take(m_currentObject->objectName());
+	m_scene->modelManager()->m_gameObjectMap.take(m_currentObject->objectName());
 
 	// add the new record
 	m_currentObject->setObjectName(item->text(column));
-	m_scene->modelManager()->m_gameObjects[m_currentObject->objectName()] = m_currentObject;
+	m_scene->modelManager()->m_gameObjectMap[m_currentObject->objectName()] = m_currentObject;
 }
 
 void HierarchyWidget::showMouseRightButton( const QPoint& point )
@@ -203,11 +203,11 @@ void HierarchyWidget::showMouseRightButton( const QPoint& point )
 void HierarchyWidget::deleteGameObject()
 {
 	// take the object from the map, and delete it
-	ModelPtr model = m_scene->modelManager()->m_allModels.take(m_currentObject->objectName());
+	ModelPtr model = m_scene->modelManager()->m_modelMap.take(m_currentObject->objectName());
 	if(model) model.clear();
 	else
 	{
-		m_scene->modelManager()->m_gameObjects.take(m_currentObject->objectName());
+		m_scene->modelManager()->m_gameObjectMap.take(m_currentObject->objectName());
 		SAFE_DELETE(m_currentObject);
 	}
 

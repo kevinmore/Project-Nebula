@@ -1,6 +1,6 @@
 #include "AbstractModel.h"
-AbstractModel::AbstractModel(const QString& fileName, GameObject* go) 
+AbstractModel::AbstractModel(const QString& fileName) 
 	: m_fileName(fileName),
-	  m_actor(go)
+	  m_actor(0)
 {}
 AbstractModel::~AbstractModel() {}

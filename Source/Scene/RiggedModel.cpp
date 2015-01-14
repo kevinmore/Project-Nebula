@@ -4,7 +4,7 @@
 #include <Animation/Rig/Pose.h>
 
 RiggedModel::RiggedModel(const QString& name, Scene* scene, ShadingTechnique* tech, Skeleton* skeleton)
-  : AbstractModel(name, new GameObject),
+  : AbstractModel(name),
     m_scene(scene),
     m_RenderingEffect(tech),
 	m_vao(tech->getVAO()),
@@ -18,7 +18,7 @@ RiggedModel::RiggedModel(const QString& name, Scene* scene, ShadingTechnique* te
 }
 
 RiggedModel::RiggedModel(const QString& name, Scene* scene, ShadingTechnique* tech, Skeleton* skeleton, QVector<ModelDataPtr> modelData)
-  : AbstractModel(name, new GameObject),
+  : AbstractModel(name),
     m_scene(scene),
     m_RenderingEffect(tech),
 	m_vao(tech->getVAO()),

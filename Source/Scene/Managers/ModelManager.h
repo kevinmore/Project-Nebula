@@ -26,8 +26,8 @@ public:
 	void clear();
 	void gatherModelsInfo();
 
-	QMap<QString, GameObject*> m_gameObjects;
-	QMap<QString, ModelPtr> m_allModels;
+	QMap<QString, GameObject*> m_gameObjectMap;
+	QMap<QString, ModelPtr> m_modelMap;
 
 	QVector<ModelLoader*> m_modelLoaders;
 	QVector<QPair<QString, GameObject*>> m_modelsInfo;

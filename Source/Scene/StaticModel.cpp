@@ -3,7 +3,7 @@
 #include <QtGui/QOpenGLContext>
 
 StaticModel::StaticModel(const QString& name, Scene* scene, ShadingTechnique* tech)
-  : AbstractModel(name, new GameObject),
+  : AbstractModel(name),
 	m_scene(scene),
     m_RenderingEffect(tech),
 	m_vao(tech->getVAO())
@@ -12,7 +12,7 @@ StaticModel::StaticModel(const QString& name, Scene* scene, ShadingTechnique* te
 }
 
 StaticModel::StaticModel(const QString& name, Scene* scene, ShadingTechnique* tech, QVector<ModelDataPtr> modelData)
-  : AbstractModel(name, new GameObject),
+  : AbstractModel(name),
     m_scene(scene),
     m_RenderingEffect(tech),
 	m_vao(tech->getVAO())

@@ -12,13 +12,13 @@ ModelManager::~ModelManager() {}
 
 GameObject* ModelManager::getGameObject( const QString& name )
 {
-	if(m_gameObjects.find(name) != m_gameObjects.end()) return m_gameObjects[name];
+	if(m_gameObjectMap.find(name) != m_gameObjectMap.end()) return m_gameObjectMap[name];
 	else return 0;
 }
 
 ModelPtr ModelManager::getModel( const QString& name )
 {
-	if(m_allModels.find(name) != m_allModels.end()) return m_allModels[name];
+	if(m_modelMap.find(name) != m_modelMap.end()) return m_modelMap[name];
 	else return ModelPtr();
 }
 
@@ -28,10 +28,13 @@ ModelPtr ModelManager::loadModel( const QString& customName, const QString& file
 	QVector<ModelDataPtr> modelDataArray = m_modelLoader->loadModel(fileName);
 	if(modelDataArray.size() == 0) return ModelPtr();
 
-	QString name = customName;
+	// if the model has mesh data, load it
+	ModelPtr pModel;
+
 	// check if this model has been loaded previously
+	QString name = customName;
 	int duplication = 0;
-	foreach(QString key, m_allModels.keys())
+	foreach(QString key, m_modelMap.keys())
 	{
 		if(key.contains(customName)) 
 			++duplication;
@@ -39,14 +42,11 @@ ModelPtr ModelManager::loadModel( const QString& customName, const QString& file
 	if (duplication) 
 		name += "_" + QString::number(duplication);
 
+	// create different types of models
 	if (m_modelLoader->getModelType() == ModelLoader::STATIC_MODEL)
 	{
 		StaticModel* sm = new StaticModel(fileName, m_scene, m_modelLoader->getRenderingEffect(), modelDataArray);
-		sm->gameObject()->setParent(parent);
-		sm->gameObject()->setObjectName(name);
-
-		m_gameObjects[name] = sm->gameObject();
-		m_allModels[name] = ModelPtr(sm);
+		pModel.reset(sm);
 	}
 	else if (m_modelLoader->getModelType() == ModelLoader::RIGGED_MODEL)
 	{
@@ -61,20 +61,26 @@ ModelPtr ModelManager::loadModel( const QString& customName, const QString& file
 		rm->setIKSolver(solver);
 		rm->setRootTranslation(controller->getRootTranslation());
 		rm->setRootRotation(controller->getRootRotation());
-		rm->gameObject()->setParent(parent);
-		rm->gameObject()->setObjectName(name);
-
-		m_gameObjects[name] = rm->gameObject();
-		m_allModels[name] = ModelPtr(rm);
+		pModel.reset(rm);
 	}
 
+	// link this model to a new game object
+	GameObject* go  = new GameObject(parent);
+	pModel->linkGameObject(go);
+	pModel->gameObject()->setParent(parent);
+	pModel->gameObject()->setObjectName(name);
+
+	// add the data into the maps
+	m_gameObjectMap[name] = pModel->gameObject();
+	m_modelMap[name] = pModel;
 	m_modelLoaders.push_back(m_modelLoader);
-	return m_allModels[name];
+
+	return pModel;
 }
 
 void ModelManager::renderAllModels(float time)
 {
-	foreach(ModelPtr model, m_allModels.values())
+	foreach(ModelPtr model, m_modelMap.values())
 	{
 		model->render(time);
 	}
@@ -87,20 +93,20 @@ void ModelManager::clear()
 		SAFE_DELETE(m_modelLoaders[i]);
 	}
 
-	for (auto it = m_allModels.begin(); it != m_allModels.end(); )
+	foreach(ModelPtr model, m_modelMap.values())
 	{
-		m_allModels.erase(it++);
+		model.clear();
 	}
 
 	m_modelLoaders.clear();
-	m_allModels.clear();
-	m_gameObjects.clear();
+	m_modelMap.clear();
+	m_gameObjectMap.clear();
 }
 
 void ModelManager::gatherModelsInfo()
 {
 	m_modelsInfo.clear();
-	foreach(ModelPtr model, m_allModels.values())
+	foreach(ModelPtr model, m_modelMap.values())
 	{
 		m_modelsInfo.push_back(qMakePair(model->fileName(), model->gameObject()));
 	}
@@ -108,10 +114,10 @@ void ModelManager::gatherModelsInfo()
 
 GameObject* ModelManager::createGameObject( const QString& customName, GameObject* parent /*= 0*/ )
 {
-	QString name = customName;
 	// check if this object has the same name with another
+	QString name = customName;
 	int duplication = 0;
-	foreach(QString key, m_gameObjects.keys())
+	foreach(QString key, m_gameObjectMap.keys())
 	{
 		if(key.contains(customName)) 
 			++duplication;
@@ -121,7 +127,7 @@ GameObject* ModelManager::createGameObject( const QString& customName, GameObjec
 
 	GameObject* go = new GameObject(parent);
 	go->setObjectName(name);
-	m_gameObjects[name] = go;
+	m_gameObjectMap[name] = go;
 
 	return go;
 }
@@ -129,7 +135,7 @@ GameObject* ModelManager::createGameObject( const QString& customName, GameObjec
 void ModelManager::deleteObject( const QString& name )
 {
 	if(getGameObject(name)) 
-		m_gameObjects.take(name);
+		m_gameObjectMap.take(name);
 	if(getModel(name)) 
-		m_allModels.take(name);
+		m_modelMap.take(name);
 }
