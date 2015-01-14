@@ -40,10 +40,5 @@ MaterialPtr MaterialManager::addMaterial(const QString& name,
 
 void MaterialManager::clear()
 {
-	foreach(MaterialPtr mat, m_materials)
-	{
-		mat.clear();
-	}
-
 	m_materials.clear();
 }

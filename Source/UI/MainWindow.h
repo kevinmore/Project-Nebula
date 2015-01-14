@@ -33,13 +33,13 @@ private slots:
 	void updateBottom(double bottom);
 	void updateTop(double top);
 	void showMessage(QtMsgType type, const QMessageLogContext &context, const QString &msg);
+	void showSystemLog();
 
 private:
 	QScopedPointer<Canvas> m_canvas;
 
 	QWidget      * m_params,         * m_coordinate,     * m_mvpMatrix;
 	QDockWidget  * m_dockSettingsArea, * m_dockMatrixArea, * m_stateMachineViewer, * m_heirarchyViewer;
-
 	Scene        * m_scene;
 	Camera  * m_camera;
 

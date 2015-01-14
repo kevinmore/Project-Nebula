@@ -127,20 +127,30 @@ void MainWindow::initializeMenuBar()
 	msaaAction->setChecked(true);
 	optionMenu->addAction(msaaAction);
 
+	QAction *writeLogAction = new QAction("&Write Log Into File", this);
+	writeLogAction->setCheckable(true);
+	writeLogAction->setChecked(false);
+	optionMenu->addAction(writeLogAction);
+
 	QAction *gpuInfoAction = new QAction("&GPU Info", this);
 	sytemMenu->addAction(gpuInfoAction);
 
+	QAction *systemLogAction = new QAction("&System Log", this);
+	sytemMenu->addAction(systemLogAction);
+
 	// ############ Signals & Slots ############
-	QObject::connect(openSceneAction,  SIGNAL(triggered()),     m_scene, SLOT(showOpenSceneDialog()));
-	QObject::connect(loadModelAction,  SIGNAL(triggered()),     m_scene, SLOT(showLoadModelDialog()));
-	QObject::connect(saveAction,       SIGNAL(triggered()),     m_scene, SLOT(showSaveSceneDialog()));
-	QObject::connect(resetSceneAction, SIGNAL(triggered()),     m_scene, SLOT(resetToDefaultScene()));
-	QObject::connect(clearSceneAction, SIGNAL(triggered()),     m_scene, SLOT(clearScene()));
-	QObject::connect(createEmpty,      SIGNAL(triggered()),     m_scene, SLOT(createEmptyGameObject()));
-	QObject::connect(exitAction,       SIGNAL(triggered()),     qApp,    SLOT(quit()));
-	QObject::connect(fullscreenAction, SIGNAL(triggered(bool)), this,    SLOT(setFullScreen(bool)));
-	QObject::connect(msaaAction,       SIGNAL(triggered(bool)), m_scene, SLOT(toggleAA(bool)));
-	QObject::connect(gpuInfoAction,    SIGNAL(triggered()),     m_canvas.data(), SLOT(showGPUInfo()));
+	connect(openSceneAction,  SIGNAL(triggered()),     m_scene, SLOT(showOpenSceneDialog()));
+	connect(loadModelAction,  SIGNAL(triggered()),     m_scene, SLOT(showLoadModelDialog()));
+	connect(saveAction,       SIGNAL(triggered()),     m_scene, SLOT(showSaveSceneDialog()));
+	connect(resetSceneAction, SIGNAL(triggered()),     m_scene, SLOT(resetToDefaultScene()));
+	connect(clearSceneAction, SIGNAL(triggered()),     m_scene, SLOT(clearScene()));
+	connect(createEmpty,      SIGNAL(triggered()),     m_scene, SLOT(createEmptyGameObject()));
+	connect(exitAction,       SIGNAL(triggered()),     qApp,    SLOT(quit()));
+	connect(fullscreenAction, SIGNAL(triggered(bool)), this,    SLOT(setFullScreen(bool)));
+	connect(msaaAction,       SIGNAL(triggered(bool)), m_scene, SLOT(toggleAA(bool)));
+	connect(systemLogAction,  SIGNAL(triggered()),     this,    SLOT(showSystemLog()));
+	connect(writeLogAction,   SIGNAL(triggered(bool)), LogCenter::instance(), SLOT(toggleWriteToFile(bool)));
+	connect(gpuInfoAction,    SIGNAL(triggered()),     m_canvas.data(), SLOT(showGPUInfo()));
 }
 
 void MainWindow::initializeRightDockableArea()
@@ -384,36 +394,36 @@ void MainWindow::initializeParamsArea()
 
 
 	// Rendering mode
-	QObject::connect(fill,      SIGNAL(toggled(bool)), m_scene, SLOT(toggleFill(bool)));
-	QObject::connect(wireframe, SIGNAL(toggled(bool)), m_scene, SLOT(toggleWireframe(bool)));
-	QObject::connect(points,    SIGNAL(toggled(bool)), m_scene, SLOT(togglePoints(bool)));
+	connect(fill,      SIGNAL(toggled(bool)), m_scene, SLOT(toggleFill(bool)));
+	connect(wireframe, SIGNAL(toggled(bool)), m_scene, SLOT(toggleWireframe(bool)));
+	connect(points,    SIGNAL(toggled(bool)), m_scene, SLOT(togglePoints(bool)));
 
 	// Projection type
-	QObject::connect(perspective, SIGNAL(toggled(bool)), this, SLOT(setViewProperties(bool)));
+	connect(perspective, SIGNAL(toggled(bool)), this, SLOT(setViewProperties(bool)));
 
 	// View
-	QObject::connect(fovValue,       SIGNAL(valueChanged(double)), this, SLOT(updateFieldOfView(double)));
-	QObject::connect(nearPlaneValue, SIGNAL(valueChanged(double)), this, SLOT(updateNearPlane(double)));
-	QObject::connect(farPlaneValue,  SIGNAL(valueChanged(double)), this, SLOT(updateFarPlane(double)));
-	QObject::connect(leftValue,      SIGNAL(valueChanged(double)), this, SLOT(updateLeft(double)));
-	QObject::connect(rightValue,     SIGNAL(valueChanged(double)), this, SLOT(updateRight(double)));
-	QObject::connect(bottomValue,    SIGNAL(valueChanged(double)), this, SLOT(updateBottom(double)));
-	QObject::connect(topValue,       SIGNAL(valueChanged(double)), this, SLOT(updateTop(double)));
+	connect(fovValue,       SIGNAL(valueChanged(double)), this, SLOT(updateFieldOfView(double)));
+	connect(nearPlaneValue, SIGNAL(valueChanged(double)), this, SLOT(updateNearPlane(double)));
+	connect(farPlaneValue,  SIGNAL(valueChanged(double)), this, SLOT(updateFarPlane(double)));
+	connect(leftValue,      SIGNAL(valueChanged(double)), this, SLOT(updateLeft(double)));
+	connect(rightValue,     SIGNAL(valueChanged(double)), this, SLOT(updateRight(double)));
+	connect(bottomValue,    SIGNAL(valueChanged(double)), this, SLOT(updateBottom(double)));
+	connect(topValue,       SIGNAL(valueChanged(double)), this, SLOT(updateTop(double)));
 
 	// Camera
-	QObject::connect(cameraSpeedValue,       SIGNAL(valueChanged(double)), m_canvas.data(), SLOT(setCameraSpeed(double)));
-	QObject::connect(cameraSensitivityValue, SIGNAL(valueChanged(double)), m_canvas.data(), SLOT(setCameraSensitivity(double)));
-	QObject::connect(resetCamera,            SIGNAL(clicked()),            m_camera,            SLOT(resetCamera()));
-	QObject::connect(firstPerson,            SIGNAL(toggled(bool)),        m_camera,            SLOT(switchToFirstPersonCamera(bool)));
-	QObject::connect(thirdPerson,            SIGNAL(toggled(bool)),        m_camera,            SLOT(switchToThirdPersonCamera(bool)));
+	connect(cameraSpeedValue,       SIGNAL(valueChanged(double)), m_canvas.data(), SLOT(setCameraSpeed(double)));
+	connect(cameraSensitivityValue, SIGNAL(valueChanged(double)), m_canvas.data(), SLOT(setCameraSensitivity(double)));
+	connect(resetCamera,            SIGNAL(clicked()),            m_camera,            SLOT(resetCamera()));
+	connect(firstPerson,            SIGNAL(toggled(bool)),        m_camera,            SLOT(switchToFirstPersonCamera(bool)));
+	connect(thirdPerson,            SIGNAL(toggled(bool)),        m_camera,            SLOT(switchToThirdPersonCamera(bool)));
 
 	// Light Effect
-	QObject::connect(PVPhong,      SIGNAL(toggled(bool)), m_scene, SLOT(togglePhong(bool)));
-	QObject::connect(PVBlinnPhong, SIGNAL(toggled(bool)), m_scene, SLOT(toggleBlinnPhong(bool)));
-	QObject::connect(RimLighting,  SIGNAL(toggled(bool)), m_scene, SLOT(toggleRimLighting(bool)));
+	connect(PVPhong,      SIGNAL(toggled(bool)), m_scene, SLOT(togglePhong(bool)));
+	connect(PVBlinnPhong, SIGNAL(toggled(bool)), m_scene, SLOT(toggleBlinnPhong(bool)));
+	connect(RimLighting,  SIGNAL(toggled(bool)), m_scene, SLOT(toggleRimLighting(bool)));
 
 	// Update framerate
-	QObject::connect(m_canvas.data(), SIGNAL(updateFramerate()), this, SLOT(setFramerate()));
+	connect(m_canvas.data(), SIGNAL(updateFramerate()), this, SLOT(setFramerate()));
 
 }
 
@@ -529,4 +539,9 @@ void MainWindow::updateTop(double top)
 void MainWindow::showMessage( QtMsgType type, const QMessageLogContext &context, const QString &msg )
 {
 	statusBar()->showMessage(msg);
+}
+
+void MainWindow::showSystemLog()
+{
+	QDesktopServices::openUrl(QUrl::fromLocalFile("./Log.log"));
 }

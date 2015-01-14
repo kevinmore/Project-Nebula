@@ -25,9 +25,5 @@ TexturePtr TextureManager::addTexture( const QString& name, const QString& fileN
 
 void TextureManager::clear()
 {
-	foreach(TexturePtr texture, m_textures)
-	{
-		texture.clear();
-	}
 	m_textures.clear();
 }

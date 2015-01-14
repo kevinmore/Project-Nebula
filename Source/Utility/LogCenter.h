@@ -6,9 +6,13 @@ class LogCenter : public QObject
 
 public:
 	static LogCenter* instance();
+	bool m_wirteToFile;
 
 signals:
 	void message(QtMsgType type, const QMessageLogContext &context, const QString &msg);
+
+public slots:
+	void toggleWriteToFile(bool state);
 
 private:
 	LogCenter();

@@ -24,10 +24,5 @@ MeshPtr MeshManager::addMesh( const QString& name, unsigned int numIndices, unsi
 
 void MeshManager::clear()
 {
-	foreach(MeshPtr mesh, m_meshes)
-	{
-		mesh.clear();
-	}
-
 	m_meshes.clear();
 }

@@ -41,6 +41,7 @@ void static logCenterFunction(QtMsgType type, const QMessageLogContext &context,
 	fprintf(stderr, "%s", strLog.toLocal8Bit().constData());
 
 	// save the outputs into a log file
+	if(!LogCenter::instance()->m_wirteToFile) return;
 	QFile logFile("./Log.log");
 
 	if (!logFile.open(QIODevice::WriteOnly | QIODevice::Append))
@@ -70,7 +71,8 @@ LogCenter * LogCenter::instance()
 }
 
 LogCenter::LogCenter()
-	: QObject(qApp)
+	: QObject(qApp),
+	  m_wirteToFile(false)
 {
 	qRegisterMetaType<QtMsgType>("QtMsgType");
 	qInstallMessageHandler(logCenterFunction);
@@ -79,5 +81,10 @@ LogCenter::LogCenter()
 
 LogCenter::~LogCenter(void)
 {
+}
+
+void LogCenter::toggleWriteToFile( bool state )
+{
+	m_wirteToFile = state;
 }
 
