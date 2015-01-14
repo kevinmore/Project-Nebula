@@ -10,11 +10,11 @@ typedef QSharedPointer<ModelLoader> ModelLoaderPtr;
 
 class Scene;
 
-class ModelManager
+class ObjectManager
 {
 public:
-	ModelManager(Scene* scene);
-	~ModelManager();
+	ObjectManager(Scene* scene);
+	~ObjectManager();
 
 	GameObjectPtr getGameObject(const QString& name);
 	ModelPtr getModel(const QString& name);

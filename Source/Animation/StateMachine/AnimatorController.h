@@ -1,5 +1,5 @@
 #pragma once
-#include <Scene/Managers/ModelManager.h>
+#include <Scene/Managers/ObjectManager.h>
 #include <QStateMachine>
 #include <QElapsedTimer>
 #include "AnimatorPanel.h"
@@ -11,19 +11,19 @@ class AnimatorController : public QObject
 	Q_PROPERTY(QString currentClip READ currentClip WRITE setCurrentClip)
 
 public:
-	AnimatorController(QSharedPointer<ModelManager> manager);
+	AnimatorController(QSharedPointer<ObjectManager> manager);
 	~AnimatorController();
 
-	GameObject* getActor() { return m_actor; }
+	inline GameObject* getActor() { return m_actor; }
 
-	QStateMachine* getStateMachine() { return m_stateMachine; }
+	inline QStateMachine* getStateMachine() { return m_stateMachine; }
 
-	QString currentClip() const { return  m_currentClip; }
+	inline QString currentClip() const { return  m_currentClip; }
 
 	void render(const float globalTime);
 
 	void addSocialTargets(NPCController* target) { m_socialTargets << target; }
-	QVector<NPCController*> getSocialTargets() { return m_socialTargets; }
+	inline QVector<NPCController*> getSocialTargets() { return m_socialTargets; }
 	virtual void buildStateMachine();
 
 signals:
@@ -36,7 +36,7 @@ public slots:
 	void finishingLoopingState();
 
 protected:
-	QSharedPointer<ModelManager> m_modelManager;
+	QSharedPointer<ObjectManager> m_modelManager;
 	QStateMachine* m_stateMachine;
 
 	QString m_currentClip;

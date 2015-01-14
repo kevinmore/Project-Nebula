@@ -50,7 +50,7 @@ QDataStream& operator >> (QDataStream& in, GameObject* object)
 * Model Manager
 */
 // Order: Vector Size -> Each Pair(filename, gameobject)
-QDataStream& operator << (QDataStream& out, QSharedPointer<ModelManager> object)
+QDataStream& operator << (QDataStream& out, QSharedPointer<ObjectManager> object)
 {
 	int size = object->m_modelsInfo.size();
 	out << size;
@@ -63,7 +63,7 @@ QDataStream& operator << (QDataStream& out, QSharedPointer<ModelManager> object)
 	return out;
 }
 
-QDataStream& operator >> (QDataStream& in, QSharedPointer<ModelManager> object)
+QDataStream& operator >> (QDataStream& in, QSharedPointer<ObjectManager> object)
 {
 	QVector<QPair<QString, GameObject*>> modelsInfoVector;
 

@@ -1,7 +1,5 @@
 #include "GameObject.h"
-#include <Utility/Math.h>
 #include <Scene/AbstractModel.h>
-using namespace Math;
 
 GameObject::GameObject(QObject* parent)
 	: QObject(parent),
@@ -134,38 +132,23 @@ void GameObject::scaleZ(double z)
 	m_modelMatrixDirty = true;
 }
 
-QVector3D GameObject::position() const
-{
-	return m_position;
-}
-
-QVector3D GameObject::rotation() const
-{
-	return m_rotation;
-}
-
-QVector3D GameObject::scale() const
-{
-	return m_scale;
-}
-
-const QMatrix4x4& GameObject::modelMatrix()
-{
-	if(m_modelMatrixDirty)
-	{
-		m_modelMatrix.setToIdentity();
-
-		m_modelMatrix.translate(m_position);
-		m_modelMatrix.rotate(m_rotation.x(), Vector3D::UNIT_X);
-		m_modelMatrix.rotate(m_rotation.y(), Vector3D::UNIT_Y);
-		m_modelMatrix.rotate(m_rotation.z(), Vector3D::UNIT_Z);
-		m_modelMatrix.scale(m_scale);
-
-		m_modelMatrixDirty = false;
-	}
-
-	return m_modelMatrix;
-}
+// const QMatrix4x4& GameObject::modelMatrix()
+// {
+// 	if(m_modelMatrixDirty)
+// 	{
+// 		m_modelMatrix.setToIdentity();
+// 
+// 		m_modelMatrix.translate(m_position);
+// 		m_modelMatrix.rotate(m_rotation.x(), Vector3D::UNIT_X);
+// 		m_modelMatrix.rotate(m_rotation.y(), Vector3D::UNIT_Y);
+// 		m_modelMatrix.rotate(m_rotation.z(), Vector3D::UNIT_Z);
+// 		m_modelMatrix.scale(m_scale);
+// 
+// 		m_modelMatrixDirty = false;
+// 	}
+// 
+// 	return m_modelMatrix;
+// }
 
 void GameObject::reset()
 {
@@ -192,10 +175,6 @@ void GameObject::setLocalSpeed( const QString& paramString )
 	setSpeed(params[0].toFloat(), params[1].toFloat(), params[2].toFloat());
 }
 
-QVector3D GameObject::localSpeed() const
-{
-	return m_speed;
-}
 
 QVector3D GameObject::globalSpeed() const
 {

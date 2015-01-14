@@ -31,7 +31,7 @@
     <ClCompile Include="Utility\LoaderThread.cpp" />
     <ClCompile Include="Scene\AbstractModel.cpp" />
     <ClCompile Include="Scene\AbstractScene.cpp" />
-    <ClCompile Include="Scene\Managers\ModelManager.cpp" />
+    <ClCompile Include="Scene\Managers\ObjectManager.cpp" />
     <ClCompile Include="Scene\moc_Camera.cc" />
     <ClCompile Include="Scene\moc_GameObject.cc" />
     <ClCompile Include="Scene\moc_Scene.cc" />
@@ -72,7 +72,7 @@
     <ClInclude Include="Animation\StateMachine\AnimatorPanel.h" />
     <QtMOC Include="Animation\StateMachine\NPCController.h" />
     <QtMOC Include="Utility\LoaderThread.h" />
-    <ClInclude Include="Scene\Managers\ModelManager.h" />
+    <ClInclude Include="Scene\Managers\ObjectManager.h" />
     <ClInclude Include="Scene\RiggedModel.h" />
     <QtMOC Include="Scene\Scene.h" />
     <ClInclude Include="Scene\ShadingTechniques\ShadingTechnique.h" />

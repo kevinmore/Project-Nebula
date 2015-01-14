@@ -50,7 +50,7 @@ void Scene::initialize()
 //     m_light.setAttenuation(1.0f, 0.14f, 0.07f);
 //     m_light.setIntensity(3.0f);
 
-	m_modelManager = QSharedPointer<ModelManager>(new ModelManager(this));
+	m_modelManager = QSharedPointer<ObjectManager>(new ObjectManager(this));
 	m_materialManager = QSharedPointer<MaterialManager>(new MaterialManager(1));// hack, fix it later!
 	m_textureManager = QSharedPointer<TextureManager>(new TextureManager());
 	m_meshManager = QSharedPointer<MeshManager>(new MeshManager());
@@ -310,7 +310,7 @@ QSharedPointer<MaterialManager> Scene::materialManager()
 	return m_materialManager;
 }
 
-QSharedPointer<ModelManager> Scene::modelManager()
+QSharedPointer<ObjectManager> Scene::modelManager()
 {
 	return m_modelManager;
 }

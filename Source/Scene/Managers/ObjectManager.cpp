@@ -1,28 +1,28 @@
-#include "ModelManager.h"
+#include "ObjectManager.h"
 #include <Scene/Scene.h>
 #include <Animation/FK/FKController.h>
 #include <Animation/IK/FABRIKSolver.h>
 
-ModelManager::ModelManager(Scene* scene)
+ObjectManager::ObjectManager(Scene* scene)
 	: m_scene(scene)
 {}
 
 
-ModelManager::~ModelManager() {}
+ObjectManager::~ObjectManager() {}
 
-GameObjectPtr ModelManager::getGameObject( const QString& name )
+GameObjectPtr ObjectManager::getGameObject( const QString& name )
 {
 	if(m_gameObjectMap.find(name) != m_gameObjectMap.end()) return m_gameObjectMap[name];
 	else return GameObjectPtr();
 }
 
-ModelPtr ModelManager::getModel( const QString& name )
+ModelPtr ObjectManager::getModel( const QString& name )
 {
 	if(m_gameObjectMap.find(name) != m_gameObjectMap.end()) return m_gameObjectMap[name]->getModel();
 	else return ModelPtr();
 }
 
-ModelPtr ModelManager::loadModel( const QString& customName, const QString& fileName, GameObject* parent )
+ModelPtr ObjectManager::loadModel( const QString& customName, const QString& fileName, GameObject* parent )
 {
 	ModelLoaderPtr m_modelLoader(new ModelLoader);
 	QVector<ModelDataPtr> modelDataArray = m_modelLoader->loadModel(fileName);
@@ -76,15 +76,19 @@ ModelPtr ModelManager::loadModel( const QString& customName, const QString& file
 	return pModel;
 }
 
-void ModelManager::renderAllModels(float time)
+void ObjectManager::renderAllModels(float time)
 {
 	foreach(GameObjectPtr go, m_gameObjectMap.values())
 	{
-		go->getModel()->render(time);
+		ModelPtr model = go->getModel();
+		if (!model.isNull())
+		{
+			model->render(time);
+		}
 	}
 }
 
-void ModelManager::clear()
+void ObjectManager::clear()
 {
 	// clean up
 	// since we are using QSharedPointer here, there's no need to destroy each object individually
@@ -92,7 +96,7 @@ void ModelManager::clear()
 	m_gameObjectMap.clear();
 }
 
-void ModelManager::gatherModelsInfo()
+void ObjectManager::gatherModelsInfo()
 {
 	m_modelsInfo.clear();
 	foreach(GameObjectPtr go, m_gameObjectMap.values())
@@ -101,7 +105,7 @@ void ModelManager::gatherModelsInfo()
 	}
 }
 
-GameObjectPtr ModelManager::createGameObject( const QString& customName, GameObject* parent /*= 0*/ )
+GameObjectPtr ObjectManager::createGameObject( const QString& customName, GameObject* parent /*= 0*/ )
 {
 	// check if this object has the same name with another
 	QString name = customName;
@@ -121,7 +125,7 @@ GameObjectPtr ModelManager::createGameObject( const QString& customName, GameObj
 	return go;
 }
 
-void ModelManager::deleteObject( const QString& name )
+void ObjectManager::deleteObject( const QString& name )
 {
 	if(getGameObject(name)) 
 		m_gameObjectMap.take(name);

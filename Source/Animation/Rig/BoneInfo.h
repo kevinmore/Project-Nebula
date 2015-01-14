@@ -57,18 +57,18 @@ public:
 		m_children.push_back(child);
 	}
 
-	QVector<Bone*> getChildren()
+	inline QVector<Bone*> getChildren()
 	{
 		return m_children;
 	}
 
-	Bone* getChild(uint i)
+	inline Bone* getChild(uint i)
 	{
 		if(m_children.isEmpty()) return NULL;
 		else return m_children[i];
 	}
 
-	int childCount()
+	inline int childCount()
 	{
 		return m_children.size();
 	}
@@ -82,17 +82,17 @@ public:
 		Math::decomposeMat4(m_modelSpaceTransform, m_modelSpaceScaling, m_modelSpaceRotation, m_modelSpacePosition);
 	}
 
-	vec3 getModelSpacePosition()
+	inline vec3 getModelSpacePosition()
 	{
 		return m_modelSpacePosition;
 	}
 
-	QQuaternion getModelSpaceRotation()
+	inline QQuaternion getModelSpaceRotation()
 	{
 		return m_modelSpaceRotation;
 	}
 
-	vec3 getModelSpaceScaling()
+	inline vec3 getModelSpaceScaling()
 	{
 		return m_modelSpaceScaling;
 	}

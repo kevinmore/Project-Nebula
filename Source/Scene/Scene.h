@@ -10,7 +10,7 @@
 #include <Scene/Managers/TextureManager.h>
 #include <Scene/Managers/MaterialManager.h>
 #include <Scene/Managers/MeshManager.h>
-#include <Scene/Managers/ModelManager.h>
+#include <Scene/Managers/ObjectManager.h>
 #include <Animation/StateMachine/AnimatorController.h>
 #include <Animation/StateMachine/NPCController.h>
 
@@ -45,7 +45,7 @@ public:
 	QSharedPointer<MeshManager>     meshManager();
 	QSharedPointer<TextureManager>  textureManager();
 	QSharedPointer<MaterialManager> materialManager();
-	QSharedPointer<ModelManager>    modelManager();
+	QSharedPointer<ObjectManager>    modelManager();
 
 	QStateMachine* getStateMachine() const { return m_stateMachine; }
 	GameObject* sceneNode() const { return m_sceneRootNode; }
@@ -82,7 +82,7 @@ private:
 
 	ModelPtr m_model;
 
-	QSharedPointer<ModelManager>    m_modelManager;
+	QSharedPointer<ObjectManager>    m_modelManager;
 	QSharedPointer<MeshManager>     m_meshManager;
 	QSharedPointer<TextureManager>  m_textureManager;
 	QSharedPointer<MaterialManager> m_materialManager;

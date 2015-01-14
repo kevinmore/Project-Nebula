@@ -11,7 +11,6 @@
     <ClCompile Include="Scene\Managers\TextureManager.cpp" />
     <ClCompile Include="Utility\ModelLoader.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
-    <ClCompile Include="Scene\Managers\ModelManager.cpp" />
     <ClCompile Include="Scene\AbstractModel.cpp" />
     <ClCompile Include="Scene\AbstractScene.cpp" />
     <ClCompile Include="Utility\OpenGLUniformBuffer.cpp" />
@@ -45,6 +44,7 @@
     <ClCompile Include="UI\moc_MainWindow.cc" />
     <ClCompile Include="Utility\LogCenter.cpp" />
     <ClCompile Include="Utility\moc_LogCenter.cc" />
+    <ClCompile Include="Scene\Managers\ObjectManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Primitives\Texture.h" />
@@ -57,7 +57,6 @@
     <ClInclude Include="Scene\Managers\MeshManager.h" />
     <ClInclude Include="Scene\Managers\MaterialManager.h" />
     <ClInclude Include="Utility\ModelLoader.h" />
-    <ClInclude Include="Scene\Managers\ModelManager.h" />
     <ClInclude Include="Scene\Managers\TextureManager.h" />
     <ClInclude Include="Utility\OpenGLUniformBuffer.h" />
     <ClInclude Include="Animation\FK\FKController.h" />
@@ -75,6 +74,7 @@
     <ClInclude Include="Scene\ShadingTechniques\Technique.h" />
     <ClInclude Include="Utility\Serialization.h" />
     <ClInclude Include="UI\ui_HierarchyWidget.h" />
+    <ClInclude Include="Scene\Managers\ObjectManager.h" />
   </ItemGroup>
   <ItemGroup>
     <QtMOC Include="Scene\Scene.h" />

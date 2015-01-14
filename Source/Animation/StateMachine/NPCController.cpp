@@ -1,6 +1,6 @@
 #include "NPCController.h"
 
-NPCController::NPCController(QSharedPointer<ModelManager> manager, const QString& defualtClip, const QString& responding)
+NPCController::NPCController(QSharedPointer<ObjectManager> manager, const QString& defualtClip, const QString& responding)
 	: AnimatorController(manager),
 	  m_defaultClip(defualtClip),
 	  m_respondingClip(responding)

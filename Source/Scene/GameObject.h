@@ -1,7 +1,9 @@
 #pragma once
 #include <Utility/EngineCommon.h>
+#include <Utility/Math.h>
 #include <QSharedPointer>
 #include <QElapsedTimer>
+using namespace Math;
 
 class AbstractModel;
 class GameObject : public QObject
@@ -32,14 +34,33 @@ public:
 	void setSpeed(const QVector3D& speed);
 	void setSpeed(double x, double y, double z);
 
-	QVector3D position() const;
-	QVector3D predictedPosition() const;
-	QVector3D rotation() const;
-	QVector3D scale() const;
-	QVector3D localSpeed() const;
 	QVector3D globalSpeed() const;
+	QVector3D predictedPosition() const;
 
-	const QMatrix4x4& modelMatrix();
+	/////////////////////////////inline section///////////////////////////////////
+	inline QVector3D position() const { return m_position; }
+	inline QVector3D rotation() const { return m_rotation; }
+	inline QVector3D scale() const { return m_scale; }
+	inline QVector3D localSpeed() const { return m_speed; }
+
+	inline const QMatrix4x4& modelMatrix()
+	{
+		if(m_modelMatrixDirty)
+		{
+			m_modelMatrix.setToIdentity();
+
+			m_modelMatrix.translate(m_position);
+			m_modelMatrix.rotate(m_rotation.x(), Vector3D::UNIT_X);
+			m_modelMatrix.rotate(m_rotation.y(), Vector3D::UNIT_Y);
+			m_modelMatrix.rotate(m_rotation.z(), Vector3D::UNIT_Z);
+			m_modelMatrix.scale(m_scale);
+
+			m_modelMatrixDirty = false;
+		}
+
+		return m_modelMatrix;
+	}
+	/////////////////////////////inline section///////////////////////////////////
 
 	void attachModel(QSharedPointer<AbstractModel> pModel);
 	QSharedPointer<AbstractModel> getModel();

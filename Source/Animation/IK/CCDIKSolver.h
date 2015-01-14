@@ -33,10 +33,10 @@ public:
 	bool solveOneConstraint(const IkConstraint& constraint, Skeleton* skeleton);
 
 	// Sets the number of iterations
-	void setIterations( int number ) { if (number > 0) m_iterations = number; }
+	inline void setIterations( int number ) { if (number > 0) m_iterations = number; }
 
 	// Gets the number of iterations
-	uint getIterations() const { return m_iterations; }
+	inline uint getIterations() const { return m_iterations; }
 	
 	void getBoneTransforms( Skeleton* skeleton, Bone* baseBone, QVector<mat4>& Transforms );
 

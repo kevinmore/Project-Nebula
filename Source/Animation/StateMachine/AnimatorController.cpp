@@ -1,7 +1,7 @@
 #include "AnimatorController.h"
 #include "NPCController.h"
 
-AnimatorController::AnimatorController( QSharedPointer<ModelManager> manager )
+AnimatorController::AnimatorController( QSharedPointer<ObjectManager> manager )
 	: m_modelManager(manager),
 	  m_actor(new GameObject)
 {

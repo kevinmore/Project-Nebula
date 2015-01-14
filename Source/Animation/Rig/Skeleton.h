@@ -36,7 +36,7 @@ public:
 
 	uint getBoneCountBetween(Bone* upperBone, Bone* lowerBone);
 
-	Bone* getRoot() { return m_root; }
+	inline Bone* getRoot() { return m_root; }
 
 	void getBoneChain(Bone* start, Bone* end, QVector<Bone*> &boneChain);
 
