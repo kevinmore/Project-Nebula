@@ -155,6 +155,8 @@ void Scene::update(float t)
 
 	m_funcs->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	// render all rigged models
+	m_modelManager->renderAllModels(t);
 
 // 	m_shaderProgram->bind();
 // 	m_shaderProgram->setUniformValue("normalMatrix", normalMatrix);
@@ -182,8 +184,7 @@ void Scene::update(float t)
 	// render all static models
 	//m_modelManager->renderStaticModels(t);
 
-	// render all rigged models
-	m_modelManager->renderAllModels(t);
+	
 	//m_modelManager->renderRiggedModels(t);
 
 	/*
@@ -204,6 +205,8 @@ void Scene::update(float t)
 
 	// render the character controlled by the user
 	//if(m_modelManager->m_riggedModels.size() > 0) m_playerController->render(t);
+
+	
 }
 
 void Scene::render(double currentTime)

@@ -1,5 +1,6 @@
 #pragma once
 #include <QString>
+#include <QSharedPointer>
 
 class Mesh
 {
@@ -23,3 +24,4 @@ private:
 	unsigned int m_baseIndex;
 };
 
+typedef QSharedPointer<Mesh> MeshPtr;

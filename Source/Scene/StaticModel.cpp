@@ -1,6 +1,6 @@
 #include "StaticModel.h"
 #include <Scene/Scene.h>
-#include <QtGui/QOpenGLContext>
+#include <QOpenGLContext>
 
 StaticModel::StaticModel(const QString& name, Scene* scene, ShadingTechnique* tech)
   : AbstractModel(name),

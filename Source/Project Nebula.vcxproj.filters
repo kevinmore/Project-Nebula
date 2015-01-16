@@ -45,6 +45,11 @@
     <ClCompile Include="Utility\LogCenter.cpp" />
     <ClCompile Include="Utility\moc_LogCenter.cc" />
     <ClCompile Include="Scene\Managers\ObjectManager.cpp" />
+    <ClCompile Include="Physicis\Particles\Particle.cpp" />
+    <ClCompile Include="Physicis\Particles\ParticleEffect.cpp" />
+    <ClCompile Include="Physicis\Particles\SphereEmitter.cpp" />
+    <ClCompile Include="Physicis\Particles\CubeEmitter.cpp" />
+    <ClCompile Include="Primitives\Component.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Primitives\Texture.h" />
@@ -75,6 +80,12 @@
     <ClInclude Include="Utility\Serialization.h" />
     <ClInclude Include="UI\ui_HierarchyWidget.h" />
     <ClInclude Include="Scene\Managers\ObjectManager.h" />
+    <ClInclude Include="Physicis\Particles\Particle.h" />
+    <ClInclude Include="Physicis\Particles\ParticleEffect.h" />
+    <ClInclude Include="Physicis\Particles\AbstractEmitter.h" />
+    <ClInclude Include="Physicis\Particles\SphereEmitter.h" />
+    <ClInclude Include="Physicis\Particles\CubeEmitter.h" />
+    <ClInclude Include="Primitives\Component.h" />
   </ItemGroup>
   <ItemGroup>
     <QtMOC Include="Scene\Scene.h" />

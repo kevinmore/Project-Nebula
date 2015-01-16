@@ -1,6 +1,6 @@
 #pragma once
+#include <QOpenGLFunctions_4_3_Core>
 
-#include <QtGui/QOpenGLFunctions_4_3_Core>
 class ShadowMapFBO : protected QOpenGLFunctions_4_3_Core
 {
 public:

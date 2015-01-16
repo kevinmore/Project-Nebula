@@ -1,8 +1,6 @@
 #pragma once
 #include <Utility/EngineCommon.h>
 #include <Primitives/Texture.h>
-typedef QSharedPointer<Texture> TexturePtr;
-
 
 class TextureManager
 {
@@ -18,6 +16,5 @@ public:
 
 private:
 	QMap<QString, TexturePtr> m_textures;
-
 };
 

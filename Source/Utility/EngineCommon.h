@@ -1,6 +1,7 @@
 #pragma once
-#include <QVector>
 #include <QMap>
+#include <QLinkedList>
+#include <QVector>
 #include <QVector2D>
 #include <QVector3D>
 #include <QVector4D>

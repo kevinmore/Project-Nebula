@@ -3,6 +3,7 @@
 #include <QString>
 #include <Magick++.h>
 #include <QImage>
+#include <QSharedPointer>
 
 #define COLOR_TEXTURE_UNIT GL_TEXTURE0
 #define SHADOW_TEXTURE_UNIT GL_TEXTURE1
@@ -58,3 +59,4 @@ private:
 	QOpenGLFunctions_4_3_Core *m_funcs;
 };
 
+typedef QSharedPointer<Texture> TexturePtr;

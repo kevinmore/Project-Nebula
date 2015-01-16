@@ -1,6 +1,8 @@
 #pragma once
 #include <Utility/EngineCommon.h>
 #include <Utility/OpenGLUniformBuffer.h>
+#include <QSharedPointer>
+
 class Material
 {
 public:
@@ -54,3 +56,4 @@ private:
 	OpenGLUniformBuffer m_uniformsBuffer;
 };
 
+typedef QSharedPointer<Material> MaterialPtr;

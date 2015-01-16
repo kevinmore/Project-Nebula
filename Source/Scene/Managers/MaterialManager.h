@@ -2,8 +2,6 @@
 #include <Utility/EngineCommon.h>
 #include <Primitives/Material.h>
 
-typedef QSharedPointer<Material> MaterialPtr;
-
 class MaterialManager
 {
 public:

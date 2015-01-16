@@ -63,6 +63,29 @@ namespace Math
 		rotationOut.setZ(r.z);
 	}
 
+	namespace Random
+	{
+		static float random()
+		{
+			return rand() / (float)RAND_MAX;
+		}
+
+		static float random( float fMin, float fMax )
+		{
+			if ( fMin > fMax ) std::swap( fMin, fMax );
+			return ( random() * ( fMax - fMin ) ) + fMin;
+		}
+
+		inline vec3 randUnitVec3()
+		{
+			float x = ( random() * 2.0f ) - 1.0f;
+			float y = ( random() * 2.0f ) - 1.0f;
+			float z = ( random() * 2.0f ) - 1.0f;
+
+			return vec3(x,y,z).normalized();
+		}
+	}
+	
 	namespace Spline
 	{
 		// Interpolates between from and to by fraction. fraction is clamped between 0 and 1.
