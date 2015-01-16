@@ -13,6 +13,7 @@
 #include <Scene/Managers/ObjectManager.h>
 #include <Animation/StateMachine/AnimatorController.h>
 #include <Animation/StateMachine/NPCController.h>
+#include <Physicis/Particles/ParticleSystem.h>
 
 typedef QSharedPointer<QOpenGLShaderProgram> ShadersProgramPtr;
 
@@ -101,5 +102,6 @@ private:
 	QStateMachine* m_stateMachine;
 	AnimatorController* m_playerController;
 	QVector<NPCController*> m_NPCs;
+	ParticleSystem* m_particleSystem;
 };
 

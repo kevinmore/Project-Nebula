@@ -5,9 +5,6 @@
 #include <Scene/Managers/MeshManager.h>
 #include <Scene/Managers/MaterialManager.h>
 #include <Scene/Managers/TextureManager.h>
-#include <Primitives/Mesh.h>
-#include <Primitives/Texture.h>
-#include <Primitives/Material.h>
 #include <Utility/ModelLoader.h>
 #include <Scene/ShadingTechniques/ShadingTechnique.h>
 

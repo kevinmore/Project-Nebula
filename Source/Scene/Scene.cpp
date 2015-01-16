@@ -8,7 +8,8 @@ Scene::Scene(QObject* parent)
 	  m_camera(new Camera(NULL,this)),
 	  m_light("light01"),
 	  m_lightMode(PerFragmentPhong),
-	  m_lightModeSubroutines(LightModeCount)
+	  m_lightModeSubroutines(LightModeCount),
+	  m_time(0.0f)
 {
 	m_sceneRootNode->setObjectName("Scene Root");
 	// Initializing the lights
@@ -56,107 +57,42 @@ void Scene::initialize()
 	m_meshManager = QSharedPointer<MeshManager>(new MeshManager());
 
 
-
-	/*
-	// locomotions
- 	m_modelManager->loadModel("m_idle", "../Resource/Models/Final/m005/m_idle.DAE");
- 	m_modelManager->loadModel("m_run", "../Resource/Models/Final/m005/m_run.DAE");
- 	m_modelManager->loadModel("m_run_start", "../Resource/Models/Final/m005/m_run_start.DAE");
- 	m_modelManager->loadModel("m_run_stop", "../Resource/Models/Final/m005/m_run_stop.DAE");
- 	m_modelManager->loadModel("m_run_to_walk", "../Resource/Models/Final/m005/m_run_to_walk.DAE");
- 	m_modelManager->loadModel("m_turn_left_60_to_walk", "../Resource/Models/Final/m005/m_turn_left_60_to_walk.DAE");
- 	m_modelManager->loadModel("m_turn_left_180_to_walk", "../Resource/Models/Final/m005/m_turn_left_180_to_walk.DAE");
- 	m_modelManager->loadModel("m_turn_right_60_to_walk", "../Resource/Models/Final/m005/m_turn_right_60_to_walk.DAE");
-	m_modelManager->loadModel("m_walk", "../Resource/Models/Final/m005/m_walk.DAE");
- 	m_modelManager->loadModel("m_walk_start", "../Resource/Models/Final/m005/m_walk_start.DAE");
- 	m_modelManager->loadModel("m_walk_stop", "../Resource/Models/Final/m005/m_walk_stop.DAE");
-	m_modelManager->loadModel("m_walk_to_run", "../Resource/Models/Final/m005/m_walk_to_run.DAE");
-	m_modelManager->loadModel("m_wave", "../Resource/Models/Final/m005/m_wave.DAE");
-	m_modelManager->loadModel("m_talk", "../Resource/Models/Final/m005/m_talk.DAE");
- 	m_modelManager->loadModel("m_listen", "../Resource/Models/Final/m005/m_listen.DAE");
-
-	// set up the animator controller
-	if(m_modelManager->m_riggedModels.size() == 0) return;
-	m_playerController = new AnimatorController(m_modelManager);
-	
-
 	m_stateMachine = new QStateMachine();
 
-	// NPCs
-// 	m_modelManager->loadModel("f004_touch_hair", "../Resource/Models/Final/NPC/f004_touch_hair.DAE");
-// 	m_modelManager->loadModel("f004_wave", "../Resource/Models/Final/NPC/f004_wave.DAE");
-// 	NPCController* npc1 = new NPCController(m_modelManager, "f004_touch_hair", "f004_wave");
-// 	npc1->getActor()->setPosition(0, 0, -600);
-// 	m_NPCs << npc1;
-// 	m_playerController->addSocialTargets(npc1);
-// 
-// 	m_modelManager->loadModel("f013_waiting", "../Resource/Models/Final/NPC/f013_waiting.DAE");
-// 	m_modelManager->loadModel("f013_wave", "../Resource/Models/Final/NPC/f013_wave.DAE");
-// 	NPCController* npc2 = new NPCController(m_modelManager, "f013_waiting", "f013_wave");
-// 	npc2->getActor()->setPosition(-600, 0, 100);
-// 	npc2->getActor()->setObjectYRotation(120);
-// 	m_NPCs << npc2;
-// 	m_playerController->addSocialTargets(npc2);
-// 
-// 	m_modelManager->loadModel("dog_idle", "../Resource/Models/Final/NPC/dog_idle.DAE");
-// 	m_modelManager->loadModel("dog_bark", "../Resource/Models/Final/NPC/dog_bark.DAE");
-// 	NPCController* npc3 = new NPCController(m_modelManager, "dog_idle", "dog_bark");
-// 	npc3->getActor()->setPosition(600, 0, 100);
-// 	npc3->getActor()->setObjectYRotation(-120);
-// 	m_NPCs << npc3;
-// 	m_playerController->addSocialTargets(npc3);
-
-	m_playerController->buildStateMachine();
-	m_stateMachine = m_playerController->getStateMachine();
-	*/
-	m_stateMachine = new QStateMachine();
-
-
-	// generate a bezier curve
-// 	QVector<vec3> anchors;
-// 	anchors << vec3(-150, 100, 0) << vec3(-50, 120, 150) << vec3(0, 150, 100) << vec3(50, 80, 20) << vec3(80, 380, 0)
-// 		<< vec3(100, 0, -50) << vec3(150, 80, -100) << vec3(0, 0, 0) << vec3(150, 400, -120) << vec3(100, 380, -90) << vec3(80, 250, -70)
-// 		<< vec3(50, 100, -50) << vec3(0, 50, -20) << vec3(0, 0, 0) << vec3(-100, 80, -10) << vec3(-100, 0, 200) << vec3(-150, 100, 0);
-
-	//m_path = Math::Spline::makeBezier3D(anchors);
-	//m_path = Math::Spline::makeCatMullRomSpline(anchors);
-
-// 	StaticModel* sceneObject = m_modelManager->getStaticModel("temple");
-// 	sceneObject->getActor()->setScale(0.5);
-// 	sceneObject->getActor()->setRotation(-90.0f, 0.0f, 0.0f);
-// 	sceneObject->getActor()->setPosition(-100, 50, 1500);
-
-// 	sceneObject = m_modelManager->getStaticModel("mountain");
-// 	sceneObject->getActor()->setScale(0.5);
-// 	sceneObject->getActor()->setRotation(-90.0f, 0.0f, 180.0f);
-// 	sceneObject->getActor()->setPosition(-80, 250, 1100);
-// 	sceneObject = m_modelManager->getStaticModel("floor");
-// 	sceneObject->getActor()->setRotation(-90.0f, 0.0f, 0.0f);
-	
-// 	sceneObject = m_modelManager->getStaticModel("trolley");
-// 	sceneObject->getActor()->setRotation(-90.0f, 0.0f, 0.0f);
-// 	sceneObject->getActor()->setPosition(100.0f, 0, 0);
-// 
-// 	sceneObject = m_modelManager->getStaticModel("brick");
-// 	sceneObject->getActor()->setPosition(-100.0f, 0, 0);
-// 
-// 	sceneObject = m_modelManager->getStaticModel("brick2");
-// 	sceneObject->getActor()->setPosition(-100.0f, 100, 0);
-
-	//m_camera->followTarget(m_playerController->getActor());
 
 	resetToDefaultScene();
+
+	// particle system
+	m_particleSystem = new ParticleSystem(this);
+	m_particleSystem->InitalizeParticleSystem();
+	m_particleSystem->SetGeneratorProperties(
+		vec3(0.0f, 50.0f, 0.0f), // Where the particles are generated
+		vec3(-5, 0, -5), // Minimal velocity
+		vec3(5, 20, 5), // Maximal velocity
+		vec3(0, -20, 0), // Gravity force applied to particles
+		vec3(0.0f, 0.5f, 1.0f), // Color (light blue)
+		1.5f, // Minimum lifetime in seconds
+		3.0f, // Maximum lifetime in seconds
+		0.75f, // Rendered size
+		0.05f, // Spawn every 0.05 seconds
+		50); // And spawn 30 particles
 }
 
 
 void Scene::update(float t)
 {
+	float dt = t - m_time;
+	m_time = t;
 	m_camera->update(t);
 
 	m_funcs->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// render all rigged models
 	m_modelManager->renderAllModels(t);
+
+	m_particleSystem->SetMatrices();
+	m_particleSystem->UpdateParticles(dt);
+	m_particleSystem->RenderParticles();
 
 // 	m_shaderProgram->bind();
 // 	m_shaderProgram->setUniformValue("normalMatrix", normalMatrix);

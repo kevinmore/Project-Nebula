@@ -23,7 +23,7 @@ Canvas::Canvas(QScreen *screen)
 	format.setDepthBufferSize(24);
 	format.setMajorVersion(4);
 	format.setMinorVersion(3);
-	format.setSamples(16); // Multisampling x16
+	format.setSamples(16); // Multi-sampling x16
 	format.setProfile(QSurfaceFormat::CoreProfile); // Functionality deprecated in OpenGL version 3.0 is not available.
 	format.setOption(QSurfaceFormat::DebugContext); // Used to request a debug context with extra debugging information.
 	format.setRenderableType(QSurfaceFormat::OpenGL); // Desktop OpenGL rendering
@@ -119,24 +119,24 @@ void Canvas::keyPressEvent(QKeyEvent* e)
 
 	switch (e->key())
 	{
-	case Qt::Key_Escape:
+// 	case Qt::Key_Escape:
+// 
+// 		QCoreApplication::instance()->quit();
+// 		break;
 
-		QCoreApplication::instance()->quit();
-		break;
-
-	case Qt::Key_Right:
+	case Qt::Key_D:
 		camera->setSideSpeed(static_cast<float>(m_cameraSpeed));
 		break;
 
-	case Qt::Key_Left:
+	case Qt::Key_A:
 		camera->setSideSpeed(static_cast<float>(-m_cameraSpeed));
 		break;
 
-	case Qt::Key_Up:
+	case Qt::Key_W:
 		camera->setForwardSpeed(static_cast<float>(m_cameraSpeed));
 		break;
 
-	case Qt::Key_Down:
+	case Qt::Key_S:
 		camera->setForwardSpeed(static_cast<float>(-m_cameraSpeed));
 		break;
 
@@ -164,13 +164,13 @@ void Canvas::keyReleaseEvent(QKeyEvent* e)
 
 	switch (e->key())
 	{
-	case Qt::Key_Right:
-	case Qt::Key_Left:
+	case Qt::Key_D:
+	case Qt::Key_A:
 		camera->setSideSpeed(0.0f);
 		break;
 
-	case Qt::Key_Up:
-	case Qt::Key_Down:
+	case Qt::Key_W:
+	case Qt::Key_S:
 		camera->setForwardSpeed(0.0f);
 		break;
 

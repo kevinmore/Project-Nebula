@@ -50,6 +50,7 @@
     <ClCompile Include="Physicis\Particles\SphereEmitter.cpp" />
     <ClCompile Include="Physicis\Particles\CubeEmitter.cpp" />
     <ClCompile Include="Primitives\Component.cpp" />
+    <ClCompile Include="Physicis\Particles\ParticleSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Primitives\Texture.h" />
@@ -86,6 +87,7 @@
     <ClInclude Include="Physicis\Particles\SphereEmitter.h" />
     <ClInclude Include="Physicis\Particles\CubeEmitter.h" />
     <ClInclude Include="Primitives\Component.h" />
+    <ClInclude Include="Physicis\Particles\ParticleSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <QtMOC Include="Scene\Scene.h" />

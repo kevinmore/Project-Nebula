@@ -21,6 +21,7 @@
     <ClCompile Include="Animation\StateMachine\AnimatorController.cpp" />
     <ClCompile Include="Animation\StateMachine\AnimatorPanel.cpp" />
     <ClCompile Include="Animation\StateMachine\NPCController.cpp" />
+    <ClCompile Include="Physicis\Particles\ParticleSystem.cpp" />
     <ClCompile Include="Physicis\Particles\CubeEmitter.cpp" />
     <ClCompile Include="Physicis\Particles\ParticleEffect.cpp" />
     <ClCompile Include="Physicis\Particles\Particle.cpp" />
@@ -71,6 +72,7 @@
     <QtMOC Include="UI\HierarchyWidget.h" />
     <QtMOC Include="UI\MainWindow.h" />
     <QtMOC Include="Utility\LogCenter.h" />
+    <ClInclude Include="Physicis\Particles\ParticleSystem.h" />
     <ClInclude Include="Physicis\Particles\CubeEmitter.h" />
     <ClInclude Include="Physicis\Particles\ParticleEffect.h" />
     <ClInclude Include="Physicis\Particles\Particle.h" />
