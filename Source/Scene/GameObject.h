@@ -5,7 +5,11 @@
 #include <QElapsedTimer>
 using namespace Math;
 
+class Component;
 class AbstractModel;
+typedef QSharedPointer<Component> ComponentPtr;
+typedef QSharedPointer<AbstractModel> ModelPtr;
+
 class GameObject : public QObject
 {
 	Q_OBJECT
@@ -62,8 +66,10 @@ public:
 	}
 	/////////////////////////////inline section///////////////////////////////////
 
-	void attachModel(QSharedPointer<AbstractModel> pModel);
-	QSharedPointer<AbstractModel> getModel();
+	void attachModel(ModelPtr pModel);
+	ModelPtr getModel();
+
+	void attachComponent(ComponentPtr pComponent);
 
 	enum MovingBehaviour
 	{
@@ -115,6 +121,7 @@ private:
 	float m_time;
 	QElapsedTimer m_lifeTimer;
 	bool m_isMoving;
-	QSharedPointer<AbstractModel> m_model;
+	ModelPtr m_model;
+	QVector<ComponentPtr> m_components;
 };
 

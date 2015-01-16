@@ -6,6 +6,7 @@
 #include <QOpenGLShaderProgram>
 
 #include <Scene/GameObject.h>
+#include <Primitives/Component.h>
 
 struct MeshData
 {
@@ -58,7 +59,7 @@ typedef QSharedPointer<ModelData> ModelDataPtr;
 typedef QSharedPointer<QOpenGLShaderProgram> QOpenGLShaderProgramPtr;
 typedef QSharedPointer<QOpenGLVertexArrayObject> QOpenGLVertexArrayObjectPtr;
 
-class AbstractModel
+class AbstractModel : public Component
 {
 public:
 	AbstractModel(const QString& fileName);
@@ -67,11 +68,7 @@ public:
 	virtual void render(float time) = 0;
 
 	QString fileName() const { return m_fileName; }
-	GameObject* gameObject() const { return m_actor; }
-
-	void linkGameObject(GameObject* go) { m_actor = go; }
 
 protected:
 	QString m_fileName;
-	GameObject* m_actor;
 };

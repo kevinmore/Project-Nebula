@@ -1,6 +1,12 @@
 #include "Component.h"
 #include <Scene/GameObject.h>
 
+Component::Component()
+	:m_actor(0)
+{}
+
+Component::~Component()
+{}
 
 GameObject* Component::gameObject() const
 {
@@ -10,10 +16,4 @@ GameObject* Component::gameObject() const
 void Component::linkGameObject( GameObject* go )
 {
 	m_actor = go;
-}
-
-Component::Component()
-	:m_actor(0)
-{
-
 }

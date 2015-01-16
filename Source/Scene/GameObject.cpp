@@ -303,13 +303,19 @@ QVector3D GameObject::predictedPosition()  const
 	return m_prevPosition + m_speed * dt;
 }
 
-void GameObject::attachModel( QSharedPointer<AbstractModel> pModel )
+void GameObject::attachModel( ModelPtr pModel )
 {
 	m_model = pModel;
-	pModel->linkGameObject(this);
+	attachComponent(pModel);
 }
 
-QSharedPointer<AbstractModel> GameObject::getModel()
+ModelPtr GameObject::getModel()
 {
 	return m_model;
+}
+
+void GameObject::attachComponent( ComponentPtr pComponent )
+{
+	m_components.push_back(pComponent);
+	pComponent->linkGameObject(this);
 }

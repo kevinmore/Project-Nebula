@@ -127,7 +127,6 @@ void StaticModel::render( float time )
 {
 	m_RenderingEffect->Enable();
 
-
 	QMatrix4x4 modelMatrix = m_actor->modelMatrix();
 	
 	QMatrix4x4 modelViewMatrix = m_scene->getCamera()->viewMatrix() * modelMatrix;

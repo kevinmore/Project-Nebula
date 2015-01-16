@@ -1,6 +1,6 @@
 #include "AbstractModel.h"
 AbstractModel::AbstractModel(const QString& fileName) 
-	: m_fileName(fileName),
-	  m_actor(0)
+	: Component(),
+	  m_fileName(fileName)
 {}
 AbstractModel::~AbstractModel() {}
