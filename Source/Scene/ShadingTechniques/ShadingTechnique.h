@@ -16,8 +16,8 @@ public:
 		RIGGED
 	};
 
-    ShadingTechnique(const QString &shaderName = "", ShaderType shaderType = STATIC);
-
+    ShadingTechnique(const QString &shaderName, ShaderType shaderType = STATIC);
+	~ShadingTechnique() {}
     virtual bool init();
 
     void setWVP(const mat4& WVP);
@@ -36,7 +36,7 @@ public:
 
 private:
     
-	bool compileShader();
+	virtual bool compileShader();
 
 	ShaderType m_shaderType;
 

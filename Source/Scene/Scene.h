@@ -68,6 +68,7 @@ public slots:
 	void showSaveSceneDialog();
 	void modelLoaded();
 	void createEmptyGameObject();
+	void createParticleSystem();
 
 signals:
 	void renderCycleDone();
@@ -83,7 +84,7 @@ private:
 
 	ModelPtr m_model;
 
-	QSharedPointer<ObjectManager>    m_modelManager;
+	QSharedPointer<ObjectManager>    m_objectManager;
 	QSharedPointer<MeshManager>     m_meshManager;
 	QSharedPointer<TextureManager>  m_textureManager;
 	QSharedPointer<MaterialManager> m_materialManager;

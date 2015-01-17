@@ -51,7 +51,7 @@ void Scene::initialize()
 //     m_light.setAttenuation(1.0f, 0.14f, 0.07f);
 //     m_light.setIntensity(3.0f);
 
-	m_modelManager = QSharedPointer<ObjectManager>(new ObjectManager(this));
+	m_objectManager = QSharedPointer<ObjectManager>(new ObjectManager(this));
 	m_materialManager = QSharedPointer<MaterialManager>(new MaterialManager(1));// hack, fix it later!
 	m_textureManager = QSharedPointer<TextureManager>(new TextureManager());
 	m_meshManager = QSharedPointer<MeshManager>(new MeshManager());
@@ -61,21 +61,6 @@ void Scene::initialize()
 
 
 	resetToDefaultScene();
-
-	// particle system
-	m_particleSystem = new ParticleSystem(this);
-	m_particleSystem->InitalizeParticleSystem();
-	m_particleSystem->SetGeneratorProperties(
-		vec3(0.0f, 50.0f, 0.0f), // Where the particles are generated
-		vec3(-20, 80, -20), // Minimal velocity
-		vec3(20, 100, 20), // Maximal velocity
-		vec3(0, -20, 0), // Gravity force applied to particles
-		vec3(0.0f, 0.5f, 1.0f), // Color (light blue)
-		10.0f, // Minimum lifetime in seconds
-		20.0f, // Maximum lifetime in seconds
-		0.75f, // Rendered size
-		0.01f, // Spawn every 0.05 seconds
-		50); // And spawn 30 particles
 }
 
 
@@ -88,12 +73,8 @@ void Scene::update(float currentTime)
 
 	m_funcs->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	// render all rigged models
-	m_modelManager->renderAllModels(currentTime);
-
-	m_particleSystem->SetMatrices();
-	m_particleSystem->UpdateParticles(dt);
-	m_particleSystem->RenderParticles();
+	// render all
+	m_objectManager->renderAll(currentTime);
 
 // 	m_shaderProgram->bind();
 // 	m_shaderProgram->setUniformValue("normalMatrix", normalMatrix);
@@ -252,7 +233,7 @@ QSharedPointer<MaterialManager> Scene::materialManager()
 
 QSharedPointer<ObjectManager> Scene::modelManager()
 {
-	return m_modelManager;
+	return m_objectManager;
 }
 
 void Scene::clearScene()
@@ -260,7 +241,7 @@ void Scene::clearScene()
 	m_materialManager->clear();
 	m_textureManager->clear();
 	m_meshManager->clear();
-	m_modelManager->clear();
+	m_objectManager->clear();
 
 	emit updateHierarchy();
 }
@@ -320,10 +301,10 @@ void Scene::loadScene( QString& fileName )
 	// clear the scene and load the models
 	clearScene();
 
-	for (int i = 0; i < m_modelManager->m_modelsInfo.size(); ++i)
+	for (int i = 0; i < m_objectManager->m_modelsInfo.size(); ++i)
 	{
-		QString modelFileName = m_modelManager->m_modelsInfo[i].first;
-		GameObject* go = m_modelManager->m_modelsInfo[i].second;
+		QString modelFileName = m_objectManager->m_modelsInfo[i].first;
+		GameObject* go = m_objectManager->m_modelsInfo[i].second;
 
 		LoaderThread loader(this, modelFileName, go, m_sceneRootNode);
 	}
@@ -345,7 +326,7 @@ void Scene::saveScene( QString& fileName )
 	QDataStream out(&file);
 	out.setVersion(QDataStream::Qt_5_3);
 
-	m_modelManager->gatherModelsInfo();
+	m_objectManager->gatherModelsInfo();
 
 	out << this;
 
@@ -362,8 +343,29 @@ void Scene::modelLoaded()
 
 void Scene::createEmptyGameObject()
 {
-	m_modelManager->createGameObject("Game Object", m_sceneRootNode);
-	qDebug() << "Created an empty Game Object";
+	m_objectManager->createGameObject("Game Object", m_sceneRootNode);
 
 	emit updateHierarchy();
+}
+
+void Scene::createParticleSystem()
+{
+	GameObjectPtr ref = m_objectManager->createGameObject("Particle System", m_sceneRootNode);
+	emit updateHierarchy();
+
+	// particle system
+	ParticleSystemPtr ps(new ParticleSystem(this));
+	ref->attachComponent(ps);
+	ps->initParticleSystem();
+	ps->setGeneratorProperties(
+		vec3(-20, 50, -20), // Minimal velocity
+		vec3(20, 80, 20), // Maximal velocity
+		vec3(0, -9.8, 0), // Gravity force applied to particles
+		vec3(0.0f, 0.5f, 1.0f), // Color (light blue)
+		30.0f, // Minimum lifetime in seconds
+		40.0f, // Maximum lifetime in seconds
+		0.75f, // Rendered size
+		0.01f, // Spawn every 0.05 seconds
+		50); // And spawn 30 particles
+
 }

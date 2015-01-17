@@ -227,7 +227,7 @@ void ModelLoader::installShader()
 
 	if (!m_effect->init()) 
 	{
-		qDebug() << shaderName << "may not be initialized successfully.";
+		qWarning() << shaderName << "may not be initialized successfully.";
 	}
 	m_shaderProgramID = m_effect->getShaderProgram()->programId();
 }

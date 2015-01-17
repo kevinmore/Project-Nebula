@@ -20,7 +20,7 @@ public:
 	RiggedModel(const QString& name, Scene* scene, ShadingTechnique* tech, Skeleton* skeleton, QVector<ModelDataPtr> modelDataVector);
 	virtual ~RiggedModel();
 
-	virtual void render( float time );
+	virtual void render( const float currentTime );
 
 	void setFKController(FKController* fkCtrl);
 	void setIKSolver(CCDIKSolver* ikSolver);

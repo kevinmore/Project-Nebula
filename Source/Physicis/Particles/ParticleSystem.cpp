@@ -1,10 +1,12 @@
 #include "ParticleSystem.h"
 #include <Scene/Scene.h>
+#include <Utility/Math.h>
 
 ParticleSystem::ParticleSystem(Scene* scene)
-	: Component(),
+	: Component(true, 1),// get rendered last
 	  bInitialized(false),
 	  iCurReadBuffer(0),
+	  fElapsedTime(0.0f),
 	  m_scene(scene)
 {
 }
@@ -12,44 +14,56 @@ ParticleSystem::ParticleSystem(Scene* scene)
 ParticleSystem::~ParticleSystem()
 {}
 
-bool ParticleSystem::InitalizeParticleSystem()
+bool ParticleSystem::initParticleSystem()
 {
-	if(bInitialized)return false;
+	if(bInitialized)
+		return false;
 
 	Q_ASSERT(initializeOpenGLFunctions());	
 
-	const char* sVaryings[NUM_PARTICLE_ATTRIBUTES] = 
-	{
-		"vPositionOut",
-		"vVelocityOut",
-		"vColorOut",
-		"fLifeTimeOut",
-		"fSizeOut",
-		"iTypeOut",
-	};
+	installShaders();
 
+	prepareTransformFeedback();
+
+
+	iCurReadBuffer = 0;
+	iNumParticles = 1;
+
+	bInitialized = true;
+
+	// load texture
+	m_Texture = m_scene->textureManager()->addTexture("particle", "../Resource/Textures/particle.bmp");
+
+	return true;
+}
+
+
+void ParticleSystem::installShaders()
+{
 	// Updating program
-	spUpdateParticles = new QOpenGLShaderProgram();
-	spUpdateParticles->addShaderFromSourceFile(QOpenGLShader::Vertex, "../Resource/Shaders/particles_update.vert");
-	spUpdateParticles->addShaderFromSourceFile(QOpenGLShader::Geometry, "../Resource/Shaders/particles_update.geom");
-	for (int i = 0; i < NUM_PARTICLE_ATTRIBUTES; ++i)
+	spUpdateParticles = new ParticleTechnique("particles_update", ParticleTechnique::UPDATE);
+	if (!spUpdateParticles->init()) 
 	{
-		glTransformFeedbackVaryings(spUpdateParticles->programId(), 6, sVaryings, GL_INTERLEAVED_ATTRIBS);
+		qWarning() << "particles_update initializing failed.";
+		return;
 	}
-	spUpdateParticles->link();
 
 	// Rendering program
-	spRenderParticles = new QOpenGLShaderProgram();
-	spRenderParticles->addShaderFromSourceFile(QOpenGLShader::Vertex, "../Resource/Shaders/particles_render.vert");
-	spRenderParticles->addShaderFromSourceFile(QOpenGLShader::Geometry, "../Resource/Shaders/particles_render.geom");
-	spRenderParticles->addShaderFromSourceFile(QOpenGLShader::Fragment, "../Resource/Shaders/particles_render.frag");
-	spRenderParticles->link();
+	spRenderParticles = new ParticleTechnique("particles_render", ParticleTechnique::RENDER);
+	if (!spRenderParticles->init()) 
+	{
+		qWarning() << "particles_render initializing failed.";
+		return;
+	}
+}
 
+void ParticleSystem::prepareTransformFeedback()
+{
 	glGenTransformFeedbacks(1, &uiTransformFeedbackBuffer);
 	glGenQueries(1, &uiQuery);
 
-	glGenBuffers(2, uiParticleBuffer);
 	glGenVertexArrays(2, uiVAO);
+	glGenBuffers(2, uiParticleBuffer);
 
 	CParticle partInitialization;
 	partInitialization.iType = PARTICLE_TYPE_GENERATOR;
@@ -75,54 +89,40 @@ bool ParticleSystem::InitalizeParticleSystem()
 		glVertexAttribPointer(5, 1, GL_INT,	  GL_FALSE, sizeof(CParticle), (const GLvoid*)44); // Type
 	}
 
-	iCurReadBuffer = 0;
-	iNumParticles = 1;
-
-	bInitialized = true;
-
-	// texture
-	m_Texture = m_scene->textureManager()->addTexture("particle", "../Resource/Textures/particle.bmp");
-
-	return true;
+	spUpdateParticles->setVAO(uiVAO[0]);
+	spRenderParticles->setVAO(uiVAO[1]);
 }
 
-float grandf(float fMin, float fAdd)
-{
-	float fRandom = float(rand()%(RAND_MAX+1))/float(RAND_MAX);
-	return fMin+fAdd*fRandom;
-}
 
-void ParticleSystem::UpdateParticles( float fTimePassed )
+void ParticleSystem::updateParticles( float fTimePassed )
 {
 	if(!bInitialized)return;
-	spUpdateParticles->bind();
+	spUpdateParticles->enable();
+	vGenPosition = m_actor->position();
 
-	vec3 vUpload;
-	spUpdateParticles->setUniformValue("fTimePassed", fTimePassed);
-	spUpdateParticles->setUniformValue("vGenPosition", vGenPosition);
-	spUpdateParticles->setUniformValue("vGenVelocityMin", vGenVelocityMin);
-	spUpdateParticles->setUniformValue("vGenVelocityRange", vGenVelocityRange);
-	spUpdateParticles->setUniformValue("vGenColor", vGenColor);
-	spUpdateParticles->setUniformValue("vGenGravityVector", vGenGravityVector);
+	spUpdateParticles->getShaderProgram()->setUniformValue("fTimePassed", fTimePassed);
+	spUpdateParticles->getShaderProgram()->setUniformValue("vGenPosition", vGenPosition);
+	spUpdateParticles->getShaderProgram()->setUniformValue("vGenVelocityMin", vGenVelocityMin);
+	spUpdateParticles->getShaderProgram()->setUniformValue("vGenVelocityRange", vGenVelocityRange);
+	spUpdateParticles->getShaderProgram()->setUniformValue("vGenColor", vGenColor);
+	spUpdateParticles->getShaderProgram()->setUniformValue("vGenGravityVector", vGenGravityVector);
 
-	spUpdateParticles->setUniformValue("fGenLifeMin", fGenLifeMin);
-	spUpdateParticles->setUniformValue("fGenLifeRange", fGenLifeRange);
+	spUpdateParticles->getShaderProgram()->setUniformValue("fGenLifeMin", fGenLifeMin);
+	spUpdateParticles->getShaderProgram()->setUniformValue("fGenLifeRange", fGenLifeRange);
 
-	spUpdateParticles->setUniformValue("fGenLifeMin", fGenLifeMin);
-	spUpdateParticles->setUniformValue("fGenLifeRange", fGenLifeRange);
+	spUpdateParticles->getShaderProgram()->setUniformValue("fGenLifeMin", fGenLifeMin);
+	spUpdateParticles->getShaderProgram()->setUniformValue("fGenLifeRange", fGenLifeRange);
 
-	spUpdateParticles->setUniformValue("fGenSize", fGenSize);
-	spUpdateParticles->setUniformValue("iNumToGenerate", 0);
-
-	fElapsedTime += fTimePassed;
+	spUpdateParticles->getShaderProgram()->setUniformValue("fGenSize", fGenSize);
+	spUpdateParticles->getShaderProgram()->setUniformValue("iNumToGenerate", 0);
 
 	if (fElapsedTime > fNextGenerationTime)
 	{
-		spUpdateParticles->setUniformValue("iNumToGenerate", iNumToGenerate);
+		spUpdateParticles->getShaderProgram()->setUniformValue("iNumToGenerate", iNumToGenerate);
 		fElapsedTime -= fNextGenerationTime;
 
-		vec3 vRandomSeed = vec3(grandf(-10.0f, 20.0f), grandf(-10.0f, 20.0f), grandf(-10.0f, 20.0f));
-		spUpdateParticles->setUniformValue("vRandomSeed", vRandomSeed);
+		vec3 vRandomSeed =  Math::Random::randUnitVec3();
+		spUpdateParticles->getShaderProgram()->setUniformValue("vRandomSeed", vRandomSeed);
 	}
 
 	glEnable(GL_RASTERIZER_DISCARD);
@@ -148,44 +148,45 @@ void ParticleSystem::UpdateParticles( float fTimePassed )
 	glBindTransformFeedback(GL_TRANSFORM_FEEDBACK, 0);
 }
 
-void ParticleSystem::RenderParticles()
+void ParticleSystem::render(const float currentTime)
 {
 	if(!bInitialized)return;
+
+	float dt = currentTime - fElapsedTime;
+	fElapsedTime = currentTime;
+
+	updateParticles(dt);
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 	glDepthMask(0);
 
 	glDisable(GL_RASTERIZER_DISCARD);
-	spRenderParticles->bind();
+	spRenderParticles->enable();
 	m_Texture->bind(COLOR_TEXTURE_UNIT);
+
 	mat4 matProjection = m_scene->getCamera()->projectionMatrix();
 	mat4 matView = m_scene->getCamera()->viewMatrix();
+	vQuad1 = vec3::crossProduct(m_scene->getCamera()->viewVector(), m_scene->getCamera()->upVector()).normalized();
+	vQuad2 = vec3::crossProduct(m_scene->getCamera()->viewVector(), vQuad1).normalized();
 
-	spRenderParticles->setUniformValue("matrices.mProj", matProjection);
-	spRenderParticles->setUniformValue("matrices.mView", matView);
-	spRenderParticles->setUniformValue("vQuad1", vQuad1);
-	spRenderParticles->setUniformValue("vQuad2", vQuad2);
-	spRenderParticles->setUniformValue("gSampler", 0);
+	spRenderParticles->getShaderProgram()->setUniformValue("matrices.mProj", matProjection);
+	spRenderParticles->getShaderProgram()->setUniformValue("matrices.mView", matView);
+	spRenderParticles->getShaderProgram()->setUniformValue("vQuad1", vQuad1);
+	spRenderParticles->getShaderProgram()->setUniformValue("vQuad2", vQuad2);
+	spRenderParticles->getShaderProgram()->setUniformValue("gSampler", COLOR_TEXTURE_UNIT);
 
 	glBindVertexArray(uiVAO[iCurReadBuffer]);
 	glDisableVertexAttribArray(1); // Disable velocity, because we don't need it for rendering
 
 	glDrawArrays(GL_POINTS, 0, iNumParticles);
-
 	glDepthMask(1);	
 	glDisable(GL_BLEND);
 }
 
-void ParticleSystem::SetMatrices()
-{
-	vQuad1 = vec3::crossProduct(m_scene->getCamera()->viewVector(), m_scene->getCamera()->upVector()).normalized();
-	vQuad2 = vec3::crossProduct(m_scene->getCamera()->viewVector(), vQuad1).normalized();
-}
 
-void ParticleSystem::SetGeneratorProperties( vec3 a_vGenPosition, vec3 a_vGenVelocityMin, vec3 a_vGenVelocityMax, vec3 a_vGenGravityVector, vec3 a_vGenColor, float a_fGenLifeMin, float a_fGenLifeMax, float a_fGenSize, float fEvery, int a_iNumToGenerate )
+void ParticleSystem::setGeneratorProperties( vec3 a_vGenVelocityMin, vec3 a_vGenVelocityMax, vec3 a_vGenGravityVector, vec3 a_vGenColor, float a_fGenLifeMin, float a_fGenLifeMax, float a_fGenSize, float fEvery, int a_iNumToGenerate )
 {
-	vGenPosition = a_vGenPosition;
 	vGenVelocityMin = a_vGenVelocityMin;
 	vGenVelocityRange = a_vGenVelocityMax - a_vGenVelocityMin;
 
@@ -197,13 +198,11 @@ void ParticleSystem::SetGeneratorProperties( vec3 a_vGenPosition, vec3 a_vGenVel
 	fGenLifeRange = a_fGenLifeMax - a_fGenLifeMin;
 
 	fNextGenerationTime = fEvery;
-	fElapsedTime = 0.8f;
 
 	iNumToGenerate = a_iNumToGenerate;
 }
 
-int ParticleSystem::GetNumParticles()
+int ParticleSystem::getNumParticles()
 {
 	return iNumParticles;
 }
-

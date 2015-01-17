@@ -203,7 +203,7 @@ void RiggedModel::initialize(QVector<ModelDataPtr> modelDataVector)
 
 void RiggedModel::destroy() {}
 
-void RiggedModel::render( float currentTime )
+void RiggedModel::render( const float currentTime )
 {
 	float dt = currentTime - lastUpdatedTime;
 	lastUpdatedTime = currentTime;

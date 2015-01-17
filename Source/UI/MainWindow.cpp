@@ -145,6 +145,7 @@ void MainWindow::initializeMenuBar()
 	connect(resetSceneAction, SIGNAL(triggered()),     m_scene, SLOT(resetToDefaultScene()));
 	connect(clearSceneAction, SIGNAL(triggered()),     m_scene, SLOT(clearScene()));
 	connect(createEmpty,      SIGNAL(triggered()),     m_scene, SLOT(createEmptyGameObject()));
+	connect(createParticleSystemAction, SIGNAL(triggered()), m_scene, SLOT(createParticleSystem()));
 	connect(exitAction,       SIGNAL(triggered()),     qApp,    SLOT(quit()));
 	connect(fullscreenAction, SIGNAL(triggered(bool)), this,    SLOT(setFullScreen(bool)));
 	connect(msaaAction,       SIGNAL(triggered(bool)), m_scene, SLOT(toggleAA(bool)));
@@ -253,7 +254,7 @@ void MainWindow::initializeParamsArea()
 	nearPlaneValue->setValue(0.1);
 
 	farPlaneValue->setRange(1.0, 50000.0);
-	farPlaneValue->setValue(1000.0);
+	farPlaneValue->setValue(10000.0);
 
 	leftLabel->hide();
 	rightLabel->hide();

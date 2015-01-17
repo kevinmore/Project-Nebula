@@ -61,7 +61,7 @@ public:
 	AbstractModel(const QString& fileName);
 	virtual ~AbstractModel() = 0;
 
-	virtual void render(float time) = 0;
+	virtual void render(const float currentTime) = 0;
 
 	QString fileName() const { return m_fileName; }
 

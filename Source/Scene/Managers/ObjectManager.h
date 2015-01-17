@@ -15,12 +15,13 @@ public:
 	ObjectManager(Scene* scene);
 	~ObjectManager();
 
+	void registerGameObject(const QString& name, GameObjectPtr go);
 	GameObjectPtr getGameObject(const QString& name);
 	ModelPtr getModel(const QString& name);
 
 	GameObjectPtr createGameObject(const QString& customName, GameObject* parent = 0);
 	ModelPtr loadModel(const QString& customName, const QString& fileName, GameObject* parent = 0);
-	void renderAllModels(float time);
+	void renderAll(const float currentTime);
 
 	void deleteObject(const QString& name);
 

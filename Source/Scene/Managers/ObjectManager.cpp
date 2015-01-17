@@ -10,6 +10,11 @@ ObjectManager::ObjectManager(Scene* scene)
 
 ObjectManager::~ObjectManager() {}
 
+void ObjectManager::registerGameObject( const QString& name, GameObjectPtr go )
+{
+	m_gameObjectMap[name] = go;
+}
+
 GameObjectPtr ObjectManager::getGameObject( const QString& name )
 {
 	if(m_gameObjectMap.find(name) != m_gameObjectMap.end()) return m_gameObjectMap[name];
@@ -67,25 +72,42 @@ ModelPtr ObjectManager::loadModel( const QString& customName, const QString& fil
 	// attach this model to a new game object
 	GameObjectPtr go(new GameObject(parent));
 	go->setObjectName(name);
-	go->attachModel(pModel);
+	go->attachComponent(pModel);
 
 	// add the data into the maps
-	m_gameObjectMap[name] = go;
-	m_modelLoaders.push_back(m_modelLoader);
+	registerGameObject(name, go);
 
+	m_modelLoaders.push_back(m_modelLoader);
 	return pModel;
 }
 
-void ObjectManager::renderAllModels(float time)
+void ObjectManager::renderAll(const float currentTime)
 {
+	// render particles last
+	// hack!!!
 	foreach(GameObjectPtr go, m_gameObjectMap.values())
 	{
-		ModelPtr model = go->getModel();
-		if (!model.isNull())
+		foreach(ComponentPtr comp, go->getComponents())
 		{
-			model->render(time);
+			if (go->renderOrder() == 0 && !comp.isNull() && comp->isRenderable())
+				comp->render(currentTime);
 		}
 	}
+
+	int totalParticles = 0;
+	foreach(GameObjectPtr go, m_gameObjectMap.values())
+	{
+		foreach(ComponentPtr comp, go->getComponents())
+		{
+			if (go->renderOrder() == 1 && !comp.isNull() && comp->isRenderable())
+			{
+				comp->render(currentTime);
+				totalParticles += comp.dynamicCast<ParticleSystem>()->getNumParticles();
+			}
+		}
+	}
+	if(totalParticles) qDebug() << "Alive Particles:" << totalParticles;
+
 }
 
 void ObjectManager::clear()
@@ -120,7 +142,8 @@ GameObjectPtr ObjectManager::createGameObject( const QString& customName, GameOb
 
 	GameObjectPtr go(new GameObject(parent));
 	go->setObjectName(name);
-	m_gameObjectMap[name] = go;
+
+	registerGameObject(name, go);
 
 	return go;
 }

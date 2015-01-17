@@ -9,7 +9,7 @@ Camera::Camera(GameObject* followingTarget, QObject *parent)
 	m_cameraToCenter(Vector3D::NEGATIVE_UNIT_Z),
 	m_projectionType(Perspective),
 	m_nearPlane(0.1f),
-	m_farPlane(1000.0f),
+	m_farPlane(10000.0f),
 	m_fieldOfView(60.0f),
 	m_aspectRatio(1.0f),
 	m_left(-100.0f),

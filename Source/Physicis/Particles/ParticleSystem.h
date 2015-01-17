@@ -5,12 +5,7 @@
 #include <Utility/EngineCommon.h>
 #include <Primitives/Component.h>
 #include <Primitives/Texture.h>
-
-#define NUM_PARTICLE_ATTRIBUTES 6
-#define MAX_PARTICLES_ON_SCENE 100000
-
-#define PARTICLE_TYPE_GENERATOR 0
-#define PARTICLE_TYPE_NORMAL 1
+#include <Scene/ShadingTechniques/ParticleTechnique.h>
 
 /*****************************************************
 
@@ -46,19 +41,20 @@ public:
 	ParticleSystem(Scene* scene);
 	~ParticleSystem();
 
-	bool InitalizeParticleSystem();
+	bool initParticleSystem();
+	void installShaders();
+	void prepareTransformFeedback();
 
-	void UpdateParticles(float fTimePassed);
-	void RenderParticles();
+	void updateParticles(float fTimePassed);
+	virtual void render(const float currentTime);
 
-	void SetGeneratorProperties(vec3 a_vGenPosition, vec3 a_vGenVelocityMin, vec3 a_vGenVelocityMax, vec3 a_vGenGravityVector, vec3 a_vGenColor, float a_fGenLifeMin, float a_fGenLifeMax, float a_fGenSize, float fEvery, int a_iNumToGenerate);
+	void setGeneratorProperties(vec3 a_vGenVelocityMin, vec3 a_vGenVelocityMax, vec3 a_vGenGravityVector, vec3 a_vGenColor, float a_fGenLifeMin, float a_fGenLifeMax, float a_fGenSize, float fEvery, int a_iNumToGenerate);
 
 	void ClearAllParticles();
 	bool ReleaseParticleSystem();
 
-	int GetNumParticles();
+	int getNumParticles();
 
-	void SetMatrices();
 	
 
 private:
@@ -90,7 +86,9 @@ private:
 
 	int iNumToGenerate;
 
-	QOpenGLShaderProgram *spRenderParticles, *spUpdateParticles;
+	ParticleTechnique *spRenderParticles, *spUpdateParticles;
 	Scene* m_scene;
 	TexturePtr m_Texture;
 };
+
+typedef QSharedPointer<ParticleSystem> ParticleSystemPtr;

@@ -11,7 +11,8 @@ GameObject::GameObject(QObject* parent)
 	  m_time(0.0f),
 	  m_prevPosition(m_position),
 	  m_isMoving(false),
-	  m_model(NULL)
+	  m_model(NULL),
+	  m_renderOrder(-1)
 {
 	connect(this, SIGNAL(synchronized()), this, SLOT(calculateSpeed()));
 	m_lifeTimer.start();
@@ -253,7 +254,6 @@ void GameObject::rotateInWorldAxisAndAngle( const QString& paramString )
 		if(m_rotation.z() > 180.0f) m_rotation.setZ(m_rotation.z() - 360.0f);
 		if(m_rotation.z() <= -180.0f) m_rotation.setZ(m_rotation.z() + 360.0f);
 	}
-	qDebug() << "rotation y" << m_rotation.y();
 	m_modelMatrixDirty = false;
 	emit synchronized();
 }
@@ -316,6 +316,42 @@ ModelPtr GameObject::getModel()
 
 void GameObject::attachComponent( ComponentPtr pComponent )
 {
-	m_components.push_back(pComponent);
+	// make sure that the component with a smaller render order is in the front
+	int target = pComponent->renderOrder();
+	if (m_components.isEmpty()) 
+		m_components.push_back(pComponent);
+	else
+	{
+		if (target <= m_components.front()->renderOrder())
+		{
+			m_components.prepend(pComponent);
+		}
+		else if (target >= m_components.last()->renderOrder())
+		{
+			m_components.push_back(pComponent);
+		}
+		else
+		{
+			for (int i = 1; i < m_components.size(); ++i)
+			{
+				int prev = m_components[i - 1]->renderOrder();
+				int next = m_components[i]->renderOrder();
+				if (target >= prev && target <= next)
+				{
+					m_components.insert(i, pComponent);
+					break;
+				}
+				else
+					m_components.push_back(pComponent);
+			}
+		}
+		
+	}
 	pComponent->linkGameObject(this);
+	m_renderOrder = qMax(m_renderOrder, target);
+}
+
+QVector<ComponentPtr> GameObject::getComponents()
+{
+	return m_components;
 }

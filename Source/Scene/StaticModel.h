@@ -17,7 +17,7 @@ public:
 	StaticModel(const QString& name, Scene* scene, ShadingTechnique* tech, QVector<ModelDataPtr> modelDataVector);
 	virtual ~StaticModel();
 
-	virtual void render( float time );
+	virtual void render( const float currentTime );
 	ShadingTechnique* getShadingTech() { return m_RenderingEffect; }
 
 protected:
