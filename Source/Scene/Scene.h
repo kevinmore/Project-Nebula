@@ -26,7 +26,7 @@ public:
 	virtual ~Scene();
 
 	virtual void initialize();
-	virtual void update(float t);
+	virtual void update(float currentTime);
 	virtual void render(double currentTime);
 	virtual void resize(int width, int height);
 

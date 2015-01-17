@@ -16,46 +16,41 @@ ShadingTechnique::ShadingTechnique(const QString &shaderName, ShaderType shaderT
 }
 
 
-bool ShadingTechnique::Init()
+bool ShadingTechnique::init()
 {
-    if (!Technique::Init()) {
+    if (!Technique::init() || m_shaderFileName.isEmpty()) 
+	{
         return false;
     }
 
-	if (m_shaderFileName.isEmpty())
-	{
-		return true;
-	}
-
 	return compileShader();
-    
 }
 
 bool ShadingTechnique::compileShader()
 {
-	m_shader->addShaderFromSourceFile(QOpenGLShader::Vertex, m_shaderFilePath + m_shaderFileName + ".vert");
-	m_shader->addShaderFromSourceFile(QOpenGLShader::Fragment, m_shaderFilePath + m_shaderFileName + ".frag");
-	m_shader->link();
+	m_shaderProgram->addShaderFromSourceFile(QOpenGLShader::Vertex, m_shaderFilePath + m_shaderFileName + ".vert");
+	m_shaderProgram->addShaderFromSourceFile(QOpenGLShader::Fragment, m_shaderFilePath + m_shaderFileName + ".frag");
+	m_shaderProgram->link();
 
 	// if using normal map
 	if (m_shaderFileName.contains("bump"))
 	{
-		m_normalMapLocation = GetUniformLocation("gNormalMap");
+		m_normalMapLocation = getUniformLocation("gNormalMap");
 	}
 
-	m_WVPLocation = GetUniformLocation("gWVP");
-	m_WorldMatrixLocation = GetUniformLocation("gWorld");
-	m_colorTextureLocation = GetUniformLocation("gColorMap");
-	m_shadowMapLocation = GetUniformLocation("gShadowMap");
-	m_eyeWorldPosLocation = GetUniformLocation("gEyeWorldPos");
-	m_dirLightLocation.Color = GetUniformLocation("gDirectionalLight.Base.Color");
-	m_dirLightLocation.AmbientIntensity = GetUniformLocation("gDirectionalLight.Base.AmbientIntensity");
-	m_dirLightLocation.Direction = GetUniformLocation("gDirectionalLight.Direction");
-	m_dirLightLocation.DiffuseIntensity = GetUniformLocation("gDirectionalLight.Base.DiffuseIntensity");
-	m_matSpecularIntensityLocation = GetUniformLocation("gMatSpecularIntensity");
-	m_matSpecularPowerLocation = GetUniformLocation("gSpecularPower");
-	m_numPointLightsLocation = GetUniformLocation("gNumPointLights");
-	m_numSpotLightsLocation = GetUniformLocation("gNumSpotLights");
+	m_WVPLocation = getUniformLocation("gWVP");
+	m_WorldMatrixLocation = getUniformLocation("gWorld");
+	m_colorTextureLocation = getUniformLocation("gColorMap");
+	m_shadowMapLocation = getUniformLocation("gShadowMap");
+	m_eyeWorldPosLocation = getUniformLocation("gEyeWorldPos");
+	m_dirLightLocation.Color = getUniformLocation("gDirectionalLight.Base.Color");
+	m_dirLightLocation.AmbientIntensity = getUniformLocation("gDirectionalLight.Base.AmbientIntensity");
+	m_dirLightLocation.Direction = getUniformLocation("gDirectionalLight.Direction");
+	m_dirLightLocation.DiffuseIntensity = getUniformLocation("gDirectionalLight.Base.DiffuseIntensity");
+	m_matSpecularIntensityLocation = getUniformLocation("gMatSpecularIntensity");
+	m_matSpecularPowerLocation = getUniformLocation("gSpecularPower");
+	m_numPointLightsLocation = getUniformLocation("gNumPointLights");
+	m_numSpotLightsLocation = getUniformLocation("gNumSpotLights");
 
 	if (m_shaderFileName.contains("bump"))
 	{
@@ -99,25 +94,25 @@ bool ShadingTechnique::compileShader()
 		char Name[128];
 		memset(Name, 0, sizeof(Name));
 		SNPRINTF(Name, sizeof(Name), "gPointLights[%d].Base.Color", i);
-		m_pointLightsLocation[i].Color = GetUniformLocation(Name);
+		m_pointLightsLocation[i].Color = getUniformLocation(Name);
 
 		SNPRINTF(Name, sizeof(Name), "gPointLights[%d].Base.AmbientIntensity", i);
-		m_pointLightsLocation[i].AmbientIntensity = GetUniformLocation(Name);
+		m_pointLightsLocation[i].AmbientIntensity = getUniformLocation(Name);
 
 		SNPRINTF(Name, sizeof(Name), "gPointLights[%d].Position", i);
-		m_pointLightsLocation[i].Position = GetUniformLocation(Name);
+		m_pointLightsLocation[i].Position = getUniformLocation(Name);
 
 		SNPRINTF(Name, sizeof(Name), "gPointLights[%d].Base.DiffuseIntensity", i);
-		m_pointLightsLocation[i].DiffuseIntensity = GetUniformLocation(Name);
+		m_pointLightsLocation[i].DiffuseIntensity = getUniformLocation(Name);
 
 		SNPRINTF(Name, sizeof(Name), "gPointLights[%d].Atten.Constant", i);
-		m_pointLightsLocation[i].Atten.Constant = GetUniformLocation(Name);
+		m_pointLightsLocation[i].Atten.Constant = getUniformLocation(Name);
 
 		SNPRINTF(Name, sizeof(Name), "gPointLights[%d].Atten.Linear", i);
-		m_pointLightsLocation[i].Atten.Linear = GetUniformLocation(Name);
+		m_pointLightsLocation[i].Atten.Linear = getUniformLocation(Name);
 
 		SNPRINTF(Name, sizeof(Name), "gPointLights[%d].Atten.Exp", i);
-		m_pointLightsLocation[i].Atten.Exp = GetUniformLocation(Name);
+		m_pointLightsLocation[i].Atten.Exp = getUniformLocation(Name);
 
 		if (m_pointLightsLocation[i].Color == INVALID_UNIFORM_LOCATION ||
 			m_pointLightsLocation[i].AmbientIntensity == INVALID_UNIFORM_LOCATION ||
@@ -134,31 +129,31 @@ bool ShadingTechnique::compileShader()
 		char Name[128];
 		memset(Name, 0, sizeof(Name));
 		SNPRINTF(Name, sizeof(Name), "gSpotLights[%d].Base.Base.Color", i);
-		m_spotLightsLocation[i].Color = GetUniformLocation(Name);
+		m_spotLightsLocation[i].Color = getUniformLocation(Name);
 
 		SNPRINTF(Name, sizeof(Name), "gSpotLights[%d].Base.Base.AmbientIntensity", i);
-		m_spotLightsLocation[i].AmbientIntensity = GetUniformLocation(Name);
+		m_spotLightsLocation[i].AmbientIntensity = getUniformLocation(Name);
 
 		SNPRINTF(Name, sizeof(Name), "gSpotLights[%d].Base.Position", i);
-		m_spotLightsLocation[i].Position = GetUniformLocation(Name);
+		m_spotLightsLocation[i].Position = getUniformLocation(Name);
 
 		SNPRINTF(Name, sizeof(Name), "gSpotLights[%d].Direction", i);
-		m_spotLightsLocation[i].Direction = GetUniformLocation(Name);
+		m_spotLightsLocation[i].Direction = getUniformLocation(Name);
 
 		SNPRINTF(Name, sizeof(Name), "gSpotLights[%d].Cutoff", i);
-		m_spotLightsLocation[i].Cutoff = GetUniformLocation(Name);
+		m_spotLightsLocation[i].Cutoff = getUniformLocation(Name);
 
 		SNPRINTF(Name, sizeof(Name), "gSpotLights[%d].Base.Base.DiffuseIntensity", i);
-		m_spotLightsLocation[i].DiffuseIntensity = GetUniformLocation(Name);
+		m_spotLightsLocation[i].DiffuseIntensity = getUniformLocation(Name);
 
 		SNPRINTF(Name, sizeof(Name), "gSpotLights[%d].Base.Atten.Constant", i);
-		m_spotLightsLocation[i].Atten.Constant = GetUniformLocation(Name);
+		m_spotLightsLocation[i].Atten.Constant = getUniformLocation(Name);
 
 		SNPRINTF(Name, sizeof(Name), "gSpotLights[%d].Base.Atten.Linear", i);
-		m_spotLightsLocation[i].Atten.Linear = GetUniformLocation(Name);
+		m_spotLightsLocation[i].Atten.Linear = getUniformLocation(Name);
 
 		SNPRINTF(Name, sizeof(Name), "gSpotLights[%d].Base.Atten.Exp", i);
-		m_spotLightsLocation[i].Atten.Exp = GetUniformLocation(Name);
+		m_spotLightsLocation[i].Atten.Exp = getUniformLocation(Name);
 
 		if (m_spotLightsLocation[i].Color == INVALID_UNIFORM_LOCATION ||
 			m_spotLightsLocation[i].AmbientIntensity == INVALID_UNIFORM_LOCATION ||
@@ -179,46 +174,46 @@ bool ShadingTechnique::compileShader()
 			char Name[128];
 			memset(Name, 0, sizeof(Name));
 			SNPRINTF(Name, sizeof(Name), "gBones[%d]", i);
-			m_boneLocation[i] = GetUniformLocation(Name);
+			m_boneLocation[i] = getUniformLocation(Name);
 		}
 	}
 
 	return true;
 }
 
-void ShadingTechnique::SetWVP(const mat4& WVP)
+void ShadingTechnique::setWVP(const mat4& WVP)
 {
     glUniformMatrix4fv(m_WVPLocation, 1, GL_FALSE, WVP.data());    
 }
 
-void ShadingTechnique::SetLightWVP(const mat4& LightWVP)
+void ShadingTechnique::setLightWVP(const mat4& LightWVP)
 {
 	glUniformMatrix4fv(m_LightWVPLocation, 1, GL_FALSE, LightWVP.data());
 }
 
 
-void ShadingTechnique::SetWorldMatrix(const mat4& World)
+void ShadingTechnique::setWorldMatrix(const mat4& World)
 {
     glUniformMatrix4fv(m_WorldMatrixLocation, 1, GL_FALSE, World.data());
 }
 
 
-void ShadingTechnique::SetColorTextureUnit(unsigned int TextureUnit)
+void ShadingTechnique::setColorTextureUnit(unsigned int TextureUnit)
 {
     glUniform1i(m_colorTextureLocation, TextureUnit);
 }
 
-void ShadingTechnique::SetShadowMapTextureUnit(unsigned int TextureUnit)
+void ShadingTechnique::setShadowMapTextureUnit(unsigned int TextureUnit)
 {
 	glUniform1i(m_shadowMapLocation, TextureUnit);
 }
 
-void ShadingTechnique::SetNormalMapTextureUnit(unsigned int TextureUnit)
+void ShadingTechnique::setNormalMapTextureUnit(unsigned int TextureUnit)
 {
 	glUniform1i(m_normalMapLocation, TextureUnit);
 }
 
-void ShadingTechnique::SetDirectionalLight(const DirectionalLight& Light)
+void ShadingTechnique::setDirectionalLight(const DirectionalLight& Light)
 {
     glUniform3f(m_dirLightLocation.Color, Light.Color.x(), Light.Color.y(), Light.Color.z());
     glUniform1f(m_dirLightLocation.AmbientIntensity, Light.AmbientIntensity);
@@ -229,25 +224,25 @@ void ShadingTechnique::SetDirectionalLight(const DirectionalLight& Light)
 }
 
 
-void ShadingTechnique::SetEyeWorldPos(const vec3& EyeWorldPos)
+void ShadingTechnique::setEyeWorldPos(const vec3& EyeWorldPos)
 {
     glUniform3f(m_eyeWorldPosLocation, EyeWorldPos.x(), EyeWorldPos.y(), EyeWorldPos.z());
 }
 
 
-void ShadingTechnique::SetMatSpecularIntensity(float Intensity)
+void ShadingTechnique::setMatSpecularIntensity(float Intensity)
 {
     glUniform1f(m_matSpecularIntensityLocation, Intensity);
 }
 
 
-void ShadingTechnique::SetMatSpecularPower(float Power)
+void ShadingTechnique::setMatSpecularPower(float Power)
 {
     glUniform1f(m_matSpecularPowerLocation, Power);
 }
 
 
-void ShadingTechnique::SetPointLights(unsigned int NumLights, const PointLight* pLights)
+void ShadingTechnique::setPointLights(unsigned int NumLights, const PointLight* pLights)
 {
     glUniform1i(m_numPointLightsLocation, NumLights);
     
@@ -262,7 +257,7 @@ void ShadingTechnique::SetPointLights(unsigned int NumLights, const PointLight* 
     }
 }
 
-void ShadingTechnique::SetSpotLights(unsigned int NumLights, const SpotLight* pLights)
+void ShadingTechnique::setSpotLights(unsigned int NumLights, const SpotLight* pLights)
 {
     glUniform1i(m_numSpotLightsLocation, NumLights);
 
@@ -282,9 +277,9 @@ void ShadingTechnique::SetSpotLights(unsigned int NumLights, const SpotLight* pL
 }
 
 
-void ShadingTechnique::SetBoneTransform(uint Index, const mat4& Transform)
+void ShadingTechnique::setBoneTransform(uint Index, const mat4& Transform)
 {
     assert(Index < MAX_BONES);
-    //Transform.Print();
+
     glUniformMatrix4fv(m_boneLocation[Index], 1, GL_FALSE, (const GLfloat*)Transform.data());       
 }

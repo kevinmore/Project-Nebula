@@ -51,6 +51,7 @@
     <ClCompile Include="Physicis\Particles\CubeEmitter.cpp" />
     <ClCompile Include="Primitives\Component.cpp" />
     <ClCompile Include="Physicis\Particles\ParticleSystem.cpp" />
+    <ClCompile Include="Scene\ShadingTechniques\ParticleTechnique.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Primitives\Texture.h" />
@@ -88,6 +89,7 @@
     <ClInclude Include="Physicis\Particles\CubeEmitter.h" />
     <ClInclude Include="Primitives\Component.h" />
     <ClInclude Include="Physicis\Particles\ParticleSystem.h" />
+    <ClInclude Include="Scene\ShadingTechniques\ParticleTechnique.h" />
   </ItemGroup>
   <ItemGroup>
     <QtMOC Include="Scene\Scene.h" />

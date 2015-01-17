@@ -1,27 +1,22 @@
-#include <stdio.h>
-#include <string.h>
-
 #include "Technique.h"
 #include <Utility/EngineCommon.h>
 
 Technique::Technique( const QString& shaderFileName /*= ""*/ )
-{
-	m_shader = nullptr;
-	m_shaderFilePath = "../Resource/Shaders/";
-	m_shaderFileName = shaderFileName;
-}
+	: m_shaderProgram(0),
+	  m_shaderFilePath("../Resource/Shaders/"),
+	  m_shaderFileName(shaderFileName)
+{}
 
 
 Technique::~Technique()
 {
-    m_shader->release();
-	SAFE_DELETE(m_shader);
+    m_shaderProgram->release();
 }
 
 
-bool Technique::Init()
+bool Technique::init()
 {
-	m_shader = new QOpenGLShaderProgram();
+	m_shaderProgram = QOpenGLShaderProgramPtr(new QOpenGLShaderProgram);
 
 	Q_ASSERT(initializeOpenGLFunctions());	
 
@@ -29,20 +24,20 @@ bool Technique::Init()
 }
 
 
-void Technique::Enable()
+void Technique::enable()
 {
-    m_shader->bind();
+    m_shaderProgram->bind();
 }
 
 
-void Technique::Disable()
+void Technique::disable()
 {
-	m_shader->release();
+	m_shaderProgram->release();
 }
 
-GLint Technique::GetUniformLocation(const char* pUniformName)
+GLint Technique::getUniformLocation(const char* pUniformName)
 {
-    GLuint location = m_shader->uniformLocation(pUniformName);
+    GLuint location = m_shaderProgram->uniformLocation(pUniformName);
 
 	if (location == INVALID_UNIFORM_LOCATION) 
 	{
@@ -52,19 +47,19 @@ GLint Technique::GetUniformLocation(const char* pUniformName)
 	return location;
 }
 
-GLint Technique::GetProgramParam(GLint param)
+GLint Technique::getProgramParam(GLint param)
 {
     GLint ret;
-    glGetProgramiv(m_shader->programId(), param, &ret);
+    glGetProgramiv(m_shaderProgram->programId(), param, &ret);
     return ret;
 }
 
-void Technique::SetShaderFilePath( const QString& path )
+void Technique::setShaderFilePath( const QString& path )
 {
 	m_shaderFilePath = path;
 }
 
-void Technique::ApplyShader( const QString &shaderName )
+void Technique::applyShader( const QString &shaderName )
 {
 	m_shaderFileName = shaderName;
 	compileShader();

@@ -115,7 +115,7 @@ public:
 	inline void setPanAngle(float angle)  { m_panAngle  = angle; }
 	inline void setTiltAngle(float angle) { m_tiltAngle = angle; }
 
-	void update(const float currentTime);
+	void update(const float dt);
 
 public slots:
 	void resetCamera();
@@ -158,7 +158,6 @@ private:
 	float m_panAngle;
 	float m_tiltAngle;
 
-	float m_time;
 	const float m_metersToUnits;
 };
 

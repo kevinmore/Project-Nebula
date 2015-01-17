@@ -23,7 +23,6 @@ Camera::Camera(GameObject* followingTarget, QObject *parent)
 	m_viewCenterFixed(true),
 	m_panAngle(0.0f),
 	m_tiltAngle(0.0f),
-	m_time(0.0f),
 	m_metersToUnits(0.1f),
 	m_isFollowing(true),
 	m_followingTarget(followingTarget)
@@ -454,11 +453,8 @@ void Camera::releaseTarget()
 	m_viewType = FirstPerson;
 }
 
-void Camera::update( const float currentTime )
+void Camera::update( const float dt )
 {
-	const float dt = currentTime - m_time;
-	m_time = currentTime;
-
 	Camera::CameraTranslationOption option = m_viewCenterFixed
 		? Camera::DontTranslateViewCenter
 		: Camera::TranslateViewCenter;

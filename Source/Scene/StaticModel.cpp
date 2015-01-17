@@ -35,13 +35,13 @@ void StaticModel::initRenderingEffect()
 	directionalLight.DiffuseIntensity = 0.9f;
 	directionalLight.Direction = vec3(-1.0f, 0.0, 1.0);
 
-	m_RenderingEffect->Enable();
-	m_RenderingEffect->SetColorTextureUnit(0);
-	m_RenderingEffect->SetNormalMapTextureUnit(2);
-	m_RenderingEffect->SetDirectionalLight(directionalLight);
-	m_RenderingEffect->SetMatSpecularIntensity(0.0f);
-	m_RenderingEffect->SetMatSpecularPower(0);
-	m_RenderingEffect->Disable();
+	m_RenderingEffect->enable();
+	m_RenderingEffect->setColorTextureUnit(0);
+	m_RenderingEffect->setNormalMapTextureUnit(2);
+	m_RenderingEffect->setDirectionalLight(directionalLight);
+	m_RenderingEffect->setMatSpecularIntensity(0.0f);
+	m_RenderingEffect->setMatSpecularPower(0);
+	m_RenderingEffect->disable();
 }
 
 
@@ -125,15 +125,15 @@ void StaticModel::destroy() {}
 
 void StaticModel::render( float time )
 {
-	m_RenderingEffect->Enable();
+	m_RenderingEffect->enable();
 
 	QMatrix4x4 modelMatrix = m_actor->modelMatrix();
 	
 	QMatrix4x4 modelViewMatrix = m_scene->getCamera()->viewMatrix() * modelMatrix;
 	QMatrix3x3 normalMatrix = modelViewMatrix.normalMatrix();
-	m_RenderingEffect->SetEyeWorldPos(m_scene->getCamera()->position());
-	m_RenderingEffect->SetWVP(m_scene->getCamera()->projectionMatrix() * modelViewMatrix);
-	m_RenderingEffect->SetWorldMatrix(modelMatrix); 
+	m_RenderingEffect->setEyeWorldPos(m_scene->getCamera()->position());
+	m_RenderingEffect->setWVP(m_scene->getCamera()->projectionMatrix() * modelViewMatrix);
+	m_RenderingEffect->setWorldMatrix(modelMatrix); 
 
 
 	for(int i = 0; i < m_meshes.size(); ++i)
@@ -192,7 +192,7 @@ void StaticModel::render( float time )
 	}
 	
 
-	m_RenderingEffect->Disable();	
+	m_RenderingEffect->disable();	
 }
 
 void StaticModel::drawElements(unsigned int index, int mode)

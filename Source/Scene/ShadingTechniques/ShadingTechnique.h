@@ -1,63 +1,6 @@
 #pragma once
 
 #include "Technique.h"
-#include <Utility/EngineCommon.h>
-
-struct BaseLight
-{
-    vec3 Color;
-    float AmbientIntensity;
-    float DiffuseIntensity;
-
-    BaseLight()
-    {
-        Color = vec3(0.0f, 0.0f, 0.0f);
-        AmbientIntensity = 0.0f;
-        DiffuseIntensity = 0.0f;
-    }
-};
-
-struct DirectionalLight : public BaseLight
-{        
-    vec3 Direction;
-
-    DirectionalLight()
-    {
-        Direction = vec3(0.0f, 0.0f, 0.0f);
-    }
-};
-
-struct PointLight : public BaseLight
-{
-    vec3 Position;
-
-    struct
-    {
-        float Constant;
-        float Linear;
-        float Exp;
-    } Attenuation;
-
-    PointLight()
-    {
-        Position = vec3(0.0f, 0.0f, 0.0f);
-        Attenuation.Constant = 1.0f;
-        Attenuation.Linear = 0.0f;
-        Attenuation.Exp = 0.0f;
-    }
-};
-
-struct SpotLight : public PointLight
-{
-    vec3 Direction;
-    float Cutoff;
-
-    SpotLight()
-    {
-        Direction = vec3(0.0f, 0.0f, 0.0f);
-        Cutoff = 0.0f;
-    }
-};
 
 class ShadingTechnique : public Technique 
 {
@@ -75,21 +18,21 @@ public:
 
     ShadingTechnique(const QString &shaderName = "", ShaderType shaderType = STATIC);
 
-    virtual bool Init();
+    virtual bool init();
 
-    void SetWVP(const mat4& WVP);
-	void SetLightWVP(const mat4& LightWVP);
-    void SetWorldMatrix(const mat4& WVP);
-    void SetColorTextureUnit(uint TextureUnit);
-	void SetShadowMapTextureUnit(uint TextureUnit);
-	void SetNormalMapTextureUnit(uint TextureUnit);
-    void SetDirectionalLight(const DirectionalLight& Light);
-    void SetPointLights(uint NumLights, const PointLight* pLights);
-    void SetSpotLights(uint NumLights, const SpotLight* pLights);
-    void SetEyeWorldPos(const vec3& EyeWorldPos);
-    void SetMatSpecularIntensity(float Intensity);
-    void SetMatSpecularPower(float Power);
-    void SetBoneTransform(uint Index, const mat4& Transform);
+    void setWVP(const mat4& WVP);
+	void setLightWVP(const mat4& LightWVP);
+    void setWorldMatrix(const mat4& WVP);
+    void setColorTextureUnit(uint TextureUnit);
+	void setShadowMapTextureUnit(uint TextureUnit);
+	void setNormalMapTextureUnit(uint TextureUnit);
+    void setDirectionalLight(const DirectionalLight& Light);
+    void setPointLights(uint NumLights, const PointLight* pLights);
+    void setSpotLights(uint NumLights, const SpotLight* pLights);
+    void setEyeWorldPos(const vec3& EyeWorldPos);
+    void setMatSpecularIntensity(float Intensity);
+    void setMatSpecularPower(float Power);
+    void setBoneTransform(uint Index, const mat4& Transform);
 
 private:
     

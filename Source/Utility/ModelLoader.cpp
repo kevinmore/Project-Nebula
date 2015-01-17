@@ -225,11 +225,11 @@ void ModelLoader::installShader()
 	shaderName = shaderPrefix + shaderFeatures;
 	m_effect = new ShadingTechnique(shaderName, shaderType);
 
-	if (!m_effect->Init()) 
+	if (!m_effect->init()) 
 	{
 		qDebug() << shaderName << "may not be initialized successfully.";
 	}
-	m_shaderProgramID = m_effect->getShader()->programId();
+	m_shaderProgramID = m_effect->getShaderProgram()->programId();
 }
 
 void ModelLoader::prepareVertexBuffers()

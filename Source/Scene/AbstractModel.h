@@ -55,10 +55,6 @@ typedef QSharedPointer<TextureData> TextureDataPtr;
 typedef QSharedPointer<MaterialData> MaterialDataPtr;
 typedef QSharedPointer<ModelData> ModelDataPtr;
 
-
-typedef QSharedPointer<QOpenGLShaderProgram> QOpenGLShaderProgramPtr;
-typedef QSharedPointer<QOpenGLVertexArrayObject> QOpenGLVertexArrayObjectPtr;
-
 class AbstractModel : public Component
 {
 public:

@@ -67,28 +67,29 @@ void Scene::initialize()
 	m_particleSystem->InitalizeParticleSystem();
 	m_particleSystem->SetGeneratorProperties(
 		vec3(0.0f, 50.0f, 0.0f), // Where the particles are generated
-		vec3(-5, 0, -5), // Minimal velocity
-		vec3(5, 20, 5), // Maximal velocity
+		vec3(-20, 80, -20), // Minimal velocity
+		vec3(20, 100, 20), // Maximal velocity
 		vec3(0, -20, 0), // Gravity force applied to particles
 		vec3(0.0f, 0.5f, 1.0f), // Color (light blue)
-		1.5f, // Minimum lifetime in seconds
-		3.0f, // Maximum lifetime in seconds
+		10.0f, // Minimum lifetime in seconds
+		20.0f, // Maximum lifetime in seconds
 		0.75f, // Rendered size
-		0.05f, // Spawn every 0.05 seconds
+		0.01f, // Spawn every 0.05 seconds
 		50); // And spawn 30 particles
 }
 
 
-void Scene::update(float t)
+void Scene::update(float currentTime)
 {
-	float dt = t - m_time;
-	m_time = t;
-	m_camera->update(t);
+	float dt = currentTime - m_time;
+	m_time = currentTime;
+
+	m_camera->update(dt);
 
 	m_funcs->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// render all rigged models
-	m_modelManager->renderAllModels(t);
+	m_modelManager->renderAllModels(currentTime);
 
 	m_particleSystem->SetMatrices();
 	m_particleSystem->UpdateParticles(dt);
