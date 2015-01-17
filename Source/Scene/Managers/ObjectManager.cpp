@@ -83,8 +83,6 @@ ModelPtr ObjectManager::loadModel( const QString& customName, const QString& fil
 
 void ObjectManager::renderAll(const float currentTime)
 {
-	// render particles last
-	// hack!!!
 	foreach(GameObjectPtr go, m_gameObjectMap.values())
 	{
 		foreach(ComponentPtr comp, go->getComponents())
@@ -94,6 +92,8 @@ void ObjectManager::renderAll(const float currentTime)
 		}
 	}
 
+	// render particles last
+	// hack!!!
 	int totalParticles = 0;
 	foreach(GameObjectPtr go, m_gameObjectMap.values())
 	{
@@ -102,7 +102,7 @@ void ObjectManager::renderAll(const float currentTime)
 			if (go->renderOrder() == 1 && !comp.isNull() && comp->isRenderable())
 			{
 				comp->render(currentTime);
-				totalParticles += comp.dynamicCast<ParticleSystem>()->getNumParticles();
+				totalParticles += comp.dynamicCast<ParticleSystem>()->getAliveParticles();
 			}
 		}
 	}

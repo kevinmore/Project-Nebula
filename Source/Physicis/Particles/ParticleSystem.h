@@ -41,35 +41,35 @@ public:
 	ParticleSystem(Scene* scene);
 	~ParticleSystem();
 
-	bool initParticleSystem();
+	void initParticleSystem();
 	void installShaders();
 	void prepareTransformFeedback();
 
 	void updateParticles(float fTimePassed);
 	virtual void render(const float currentTime);
 
-	void setGeneratorProperties(vec3 a_vGenVelocityMin, vec3 a_vGenVelocityMax, vec3 a_vGenGravityVector, vec3 a_vGenColor, float a_fGenLifeMin, float a_fGenLifeMax, float a_fGenSize, float fEvery, int a_iNumToGenerate);
+	void setEmitterProperties(float particleMass, vec3 a_vGenVelocityMin, vec3 a_vGenVelocityMax, vec3 a_vGenGravityVector, vec3 a_vGenColor, float a_fGenLifeMin, float a_fGenLifeMax, float a_fGenSize, float fEvery, int a_iNumToGenerate);
 
 	void ClearAllParticles();
 	bool ReleaseParticleSystem();
 
-	int getNumParticles();
+	int getAliveParticles();
 
 	
 
 private:
 	bool bInitialized;
 
-	uint uiTransformFeedbackBuffer;
+	uint m_transformFeedbackBuffer;
 
-	uint uiParticleBuffer[2];
-	uint uiVAO[2];
+	uint m_particleBuffer[2];
+	uint m_VAO[2];
 
 	uint uiQuery;
 	uint uiTexture;
 
-	int iCurReadBuffer;
-	int iNumParticles;
+	int m_curReadBufferIndex;
+	int m_aliveParticles;
 
 	vec3 vQuad1, vQuad2;
 
@@ -78,15 +78,16 @@ private:
 
 	vec3 vGenPosition;
 	vec3 vGenVelocityMin, vGenVelocityRange;
-	vec3 vGenGravityVector;
+	vec3 vForce;
 	vec3 vGenColor;
 
 	float fGenLifeMin, fGenLifeRange;
 	float fGenSize;
+	float fParticleMass;
 
 	int iNumToGenerate;
 
-	ParticleTechnique *spRenderParticles, *spUpdateParticles;
+	ParticleTechniquePtr particleRenderer, particleUpdater;
 	Scene* m_scene;
 	TexturePtr m_Texture;
 };

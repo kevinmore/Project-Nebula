@@ -119,7 +119,7 @@ void MainWindow::initializeMenuBar()
 	windowMenu->addAction(toggleStateMachineViewer);
 
 	// ############ System Menu ############
-	QMenu *sytemMenu = menuBar()->addMenu("System");
+	QMenu *sytemMenu = menuBar()->addMenu("&System");
 	
 	QMenu *optionMenu = sytemMenu->addMenu("&Options");
 	QAction *msaaAction = new QAction("&MSAA x4", this);

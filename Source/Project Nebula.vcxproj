@@ -23,10 +23,6 @@
     <ClCompile Include="Animation\StateMachine\NPCController.cpp" />
     <ClCompile Include="Scene\ShadingTechniques\ParticleTechnique.cpp" />
     <ClCompile Include="Physicis\Particles\ParticleSystem.cpp" />
-    <ClCompile Include="Physicis\Particles\CubeEmitter.cpp" />
-    <ClCompile Include="Physicis\Particles\ParticleEffect.cpp" />
-    <ClCompile Include="Physicis\Particles\Particle.cpp" />
-    <ClCompile Include="Physicis\Particles\SphereEmitter.cpp" />
     <ClCompile Include="Primitives\Component.cpp" />
     <ClCompile Include="Utility\LogCenter.cpp" />
     <ClCompile Include="UI\Canvas.cpp" />
@@ -75,11 +71,6 @@
     <QtMOC Include="Utility\LogCenter.h" />
     <ClInclude Include="Scene\ShadingTechniques\ParticleTechnique.h" />
     <ClInclude Include="Physicis\Particles\ParticleSystem.h" />
-    <ClInclude Include="Physicis\Particles\CubeEmitter.h" />
-    <ClInclude Include="Physicis\Particles\ParticleEffect.h" />
-    <ClInclude Include="Physicis\Particles\Particle.h" />
-    <ClInclude Include="Physicis\Particles\AbstractEmitter.h" />
-    <ClInclude Include="Physicis\Particles\SphereEmitter.h" />
     <ClInclude Include="Primitives\Component.h" />
     <ClInclude Include="UI\ui_HierarchyWidget.h" />
     <ClInclude Include="Utility\Serialization.h" />

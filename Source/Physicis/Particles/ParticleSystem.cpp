@@ -4,76 +4,71 @@
 
 ParticleSystem::ParticleSystem(Scene* scene)
 	: Component(true, 1),// get rendered last
-	  bInitialized(false),
-	  iCurReadBuffer(0),
+	  m_curReadBufferIndex(0),
+	  m_aliveParticles(0),
 	  fElapsedTime(0.0f),
-	  m_scene(scene)
+	  m_scene(scene),
+	  bInitialized(false)
 {
 }
 
 ParticleSystem::~ParticleSystem()
 {}
 
-bool ParticleSystem::initParticleSystem()
+void ParticleSystem::initParticleSystem()
 {
-	if(bInitialized)
-		return false;
-
 	Q_ASSERT(initializeOpenGLFunctions());	
 
 	installShaders();
 
 	prepareTransformFeedback();
 
-
-	iCurReadBuffer = 0;
-	iNumParticles = 1;
-
-	bInitialized = true;
-
 	// load texture
 	m_Texture = m_scene->textureManager()->addTexture("particle", "../Resource/Textures/particle.bmp");
-
-	return true;
 }
 
 
 void ParticleSystem::installShaders()
 {
 	// Updating program
-	spUpdateParticles = new ParticleTechnique("particles_update", ParticleTechnique::UPDATE);
-	if (!spUpdateParticles->init()) 
+	particleUpdater = ParticleTechniquePtr(new ParticleTechnique("particles_update", ParticleTechnique::UPDATE));
+	if (!particleUpdater->init()) 
 	{
 		qWarning() << "particles_update initializing failed.";
 		return;
 	}
 
 	// Rendering program
-	spRenderParticles = new ParticleTechnique("particles_render", ParticleTechnique::RENDER);
-	if (!spRenderParticles->init()) 
+	particleRenderer = ParticleTechniquePtr(new ParticleTechnique("particles_render", ParticleTechnique::RENDER));
+	if (!particleRenderer->init()) 
 	{
 		qWarning() << "particles_render initializing failed.";
 		return;
 	}
+
+	bInitialized = true;
 }
 
 void ParticleSystem::prepareTransformFeedback()
 {
-	glGenTransformFeedbacks(1, &uiTransformFeedbackBuffer);
+	if(!bInitialized) return;
+
+	glGenTransformFeedbacks(1, &m_transformFeedbackBuffer);
 	glGenQueries(1, &uiQuery);
 
-	glGenVertexArrays(2, uiVAO);
-	glGenBuffers(2, uiParticleBuffer);
+	glGenVertexArrays(2, m_VAO);
+	glGenBuffers(2, m_particleBuffer);
 
-	CParticle partInitialization;
-	partInitialization.iType = PARTICLE_TYPE_GENERATOR;
+	CParticle firstParticle;
+	firstParticle.iType = PARTICLE_TYPE_GENERATOR;
+	m_aliveParticles = 1;
 
 	for (int i = 0; i < 2; ++i)
 	{
-		glBindVertexArray(uiVAO[i]);
-		glBindBuffer(GL_ARRAY_BUFFER, uiParticleBuffer[i]);
+		glBindVertexArray(m_VAO[i]);
+		glBindBuffer(GL_ARRAY_BUFFER, m_particleBuffer[i]);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(CParticle)*MAX_PARTICLES_ON_SCENE, NULL, GL_DYNAMIC_DRAW);
-		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(CParticle), &partInitialization);
+		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(CParticle), &firstParticle);
 
 		for (int j = 0; j < NUM_PARTICLE_ATTRIBUTES; ++j)
 		{
@@ -89,69 +84,73 @@ void ParticleSystem::prepareTransformFeedback()
 		glVertexAttribPointer(5, 1, GL_INT,	  GL_FALSE, sizeof(CParticle), (const GLvoid*)44); // Type
 	}
 
-	spUpdateParticles->setVAO(uiVAO[0]);
-	spRenderParticles->setVAO(uiVAO[1]);
+	particleUpdater->setVAO(m_VAO[0]);
+	particleRenderer->setVAO(m_VAO[1]);
 }
 
 
 void ParticleSystem::updateParticles( float fTimePassed )
 {
-	if(!bInitialized)return;
-	spUpdateParticles->enable();
+	particleUpdater->enable();
 	vGenPosition = m_actor->position();
+	vec3 rot = m_actor->rotation();
+	QQuaternion rotation = QQuaternion::fromAxisAndAngle(Math::Vector3D::UNIT_X, rot.x())
+						 * QQuaternion::fromAxisAndAngle(Math::Vector3D::UNIT_Y, rot.y())
+						 * QQuaternion::fromAxisAndAngle(Math::Vector3D::UNIT_Z, rot.z());
 
-	spUpdateParticles->getShaderProgram()->setUniformValue("fTimePassed", fTimePassed);
-	spUpdateParticles->getShaderProgram()->setUniformValue("vGenPosition", vGenPosition);
-	spUpdateParticles->getShaderProgram()->setUniformValue("vGenVelocityMin", vGenVelocityMin);
-	spUpdateParticles->getShaderProgram()->setUniformValue("vGenVelocityRange", vGenVelocityRange);
-	spUpdateParticles->getShaderProgram()->setUniformValue("vGenColor", vGenColor);
-	spUpdateParticles->getShaderProgram()->setUniformValue("vGenGravityVector", vGenGravityVector);
+	particleUpdater->getShaderProgram()->setUniformValue("fTimePassed", fTimePassed);
+	particleUpdater->getShaderProgram()->setUniformValue("fParticleMass", fParticleMass);
+	particleUpdater->getShaderProgram()->setUniformValue("vGenPosition", vGenPosition);
+	particleUpdater->getShaderProgram()->setUniformValue("vGenVelocityMin", rotation.rotatedVector(vGenVelocityMin));
+	particleUpdater->getShaderProgram()->setUniformValue("vGenVelocityRange", rotation.rotatedVector(vGenVelocityRange));
+	particleUpdater->getShaderProgram()->setUniformValue("vGenColor", vGenColor);
+	particleUpdater->getShaderProgram()->setUniformValue("vForce", vForce);
 
-	spUpdateParticles->getShaderProgram()->setUniformValue("fGenLifeMin", fGenLifeMin);
-	spUpdateParticles->getShaderProgram()->setUniformValue("fGenLifeRange", fGenLifeRange);
+	particleUpdater->getShaderProgram()->setUniformValue("fGenLifeMin", fGenLifeMin);
+	particleUpdater->getShaderProgram()->setUniformValue("fGenLifeRange", fGenLifeRange);
 
-	spUpdateParticles->getShaderProgram()->setUniformValue("fGenLifeMin", fGenLifeMin);
-	spUpdateParticles->getShaderProgram()->setUniformValue("fGenLifeRange", fGenLifeRange);
+	particleUpdater->getShaderProgram()->setUniformValue("fGenLifeMin", fGenLifeMin);
+	particleUpdater->getShaderProgram()->setUniformValue("fGenLifeRange", fGenLifeRange);
 
-	spUpdateParticles->getShaderProgram()->setUniformValue("fGenSize", fGenSize);
-	spUpdateParticles->getShaderProgram()->setUniformValue("iNumToGenerate", 0);
+	particleUpdater->getShaderProgram()->setUniformValue("fGenSize", fGenSize);
+	particleUpdater->getShaderProgram()->setUniformValue("iNumToGenerate", 0);
 
 	if (fElapsedTime > fNextGenerationTime)
 	{
-		spUpdateParticles->getShaderProgram()->setUniformValue("iNumToGenerate", iNumToGenerate);
+		particleUpdater->getShaderProgram()->setUniformValue("iNumToGenerate", iNumToGenerate);
 		fElapsedTime -= fNextGenerationTime;
 
 		vec3 vRandomSeed =  Math::Random::randUnitVec3();
-		spUpdateParticles->getShaderProgram()->setUniformValue("vRandomSeed", vRandomSeed);
+		particleUpdater->getShaderProgram()->setUniformValue("vRandomSeed", vRandomSeed);
 	}
 
 	glEnable(GL_RASTERIZER_DISCARD);
-	glBindTransformFeedback(GL_TRANSFORM_FEEDBACK, uiTransformFeedbackBuffer);
+	glBindTransformFeedback(GL_TRANSFORM_FEEDBACK, m_transformFeedbackBuffer);
 
-	glBindVertexArray(uiVAO[iCurReadBuffer]);
+	glBindVertexArray(m_VAO[m_curReadBufferIndex]);
 	glEnableVertexAttribArray(1); // Re-enable velocity
 
-	glBindBufferBase(GL_TRANSFORM_FEEDBACK_BUFFER, 0, uiParticleBuffer[1-iCurReadBuffer]);
+	// store the results of transform feedback
+	glBindBufferBase(GL_TRANSFORM_FEEDBACK_BUFFER, 0, m_particleBuffer[1-m_curReadBufferIndex]);
 
 	glBeginQuery(GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN, uiQuery);
 	glBeginTransformFeedback(GL_POINTS);
 
-	glDrawArrays(GL_POINTS, 0, iNumParticles);
+	glDrawArrays(GL_POINTS, 0, m_aliveParticles);
 
 	glEndTransformFeedback();
 
 	glEndQuery(GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN);
-	glGetQueryObjectiv(uiQuery, GL_QUERY_RESULT, &iNumParticles);
+	glGetQueryObjectiv(uiQuery, GL_QUERY_RESULT, &m_aliveParticles);
 
-	iCurReadBuffer = 1-iCurReadBuffer;
+	m_curReadBufferIndex = 1-m_curReadBufferIndex;
 
 	glBindTransformFeedback(GL_TRANSFORM_FEEDBACK, 0);
 }
 
 void ParticleSystem::render(const float currentTime)
 {
-	if(!bInitialized)return;
-
+	if(!bInitialized) return;
 	float dt = currentTime - fElapsedTime;
 	fElapsedTime = currentTime;
 
@@ -162,7 +161,7 @@ void ParticleSystem::render(const float currentTime)
 	glDepthMask(0);
 
 	glDisable(GL_RASTERIZER_DISCARD);
-	spRenderParticles->enable();
+	particleRenderer->enable();
 	m_Texture->bind(COLOR_TEXTURE_UNIT);
 
 	mat4 matProjection = m_scene->getCamera()->projectionMatrix();
@@ -170,39 +169,41 @@ void ParticleSystem::render(const float currentTime)
 	vQuad1 = vec3::crossProduct(m_scene->getCamera()->viewVector(), m_scene->getCamera()->upVector()).normalized();
 	vQuad2 = vec3::crossProduct(m_scene->getCamera()->viewVector(), vQuad1).normalized();
 
-	spRenderParticles->getShaderProgram()->setUniformValue("matrices.mProj", matProjection);
-	spRenderParticles->getShaderProgram()->setUniformValue("matrices.mView", matView);
-	spRenderParticles->getShaderProgram()->setUniformValue("vQuad1", vQuad1);
-	spRenderParticles->getShaderProgram()->setUniformValue("vQuad2", vQuad2);
-	spRenderParticles->getShaderProgram()->setUniformValue("gSampler", COLOR_TEXTURE_UNIT);
+	particleRenderer->getShaderProgram()->setUniformValue("matrices.mProj", matProjection);
+	particleRenderer->getShaderProgram()->setUniformValue("matrices.mView", matView);
+	particleRenderer->getShaderProgram()->setUniformValue("vQuad1", vQuad1);
+	particleRenderer->getShaderProgram()->setUniformValue("vQuad2", vQuad2);
+	particleRenderer->getShaderProgram()->setUniformValue("gSampler", COLOR_TEXTURE_UNIT);
 
-	glBindVertexArray(uiVAO[iCurReadBuffer]);
+	glBindVertexArray(m_VAO[m_curReadBufferIndex]);
 	glDisableVertexAttribArray(1); // Disable velocity, because we don't need it for rendering
 
-	glDrawArrays(GL_POINTS, 0, iNumParticles);
+	glDrawArrays(GL_POINTS, 0, m_aliveParticles);
 	glDepthMask(1);	
 	glDisable(GL_BLEND);
 }
 
 
-void ParticleSystem::setGeneratorProperties( vec3 a_vGenVelocityMin, vec3 a_vGenVelocityMax, vec3 a_vGenGravityVector, vec3 a_vGenColor, float a_fGenLifeMin, float a_fGenLifeMax, float a_fGenSize, float fEvery, int a_iNumToGenerate )
+void ParticleSystem::setEmitterProperties( float particleMass, vec3 a_vGenVelocityMin, vec3 a_vGenVelocityMax, vec3 a_vGenGravityVector, vec3 a_vGenColor, float a_fGenLifeMin, float a_fGenLifeMax, float a_fGenSize, float fEmitRate, int a_iNumToGenerate )
 {
+	fParticleMass = particleMass;
+	
 	vGenVelocityMin = a_vGenVelocityMin;
 	vGenVelocityRange = a_vGenVelocityMax - a_vGenVelocityMin;
 
-	vGenGravityVector = a_vGenGravityVector;
+	vForce = a_vGenGravityVector;
 	vGenColor = a_vGenColor;
 	fGenSize = a_fGenSize;
 
 	fGenLifeMin = a_fGenLifeMin;
 	fGenLifeRange = a_fGenLifeMax - a_fGenLifeMin;
 
-	fNextGenerationTime = fEvery;
+	fNextGenerationTime = fEmitRate;
 
 	iNumToGenerate = a_iNumToGenerate;
 }
 
-int ParticleSystem::getNumParticles()
+int ParticleSystem::getAliveParticles()
 {
-	return iNumParticles;
+	return m_aliveParticles;
 }

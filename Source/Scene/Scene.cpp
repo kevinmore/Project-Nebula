@@ -357,10 +357,11 @@ void Scene::createParticleSystem()
 	ParticleSystemPtr ps(new ParticleSystem(this));
 	ref->attachComponent(ps);
 	ps->initParticleSystem();
-	ps->setGeneratorProperties(
-		vec3(-20, 50, -20), // Minimal velocity
-		vec3(20, 80, 20), // Maximal velocity
-		vec3(0, -9.8, 0), // Gravity force applied to particles
+	ps->setEmitterProperties(
+		1.0f,
+		vec3(-20, 80, -20), // Minimal velocity
+		vec3(20, 100, 20), // Maximal velocity
+		vec3(0, -9.8f, 0), // Gravity force applied to particles
 		vec3(0.0f, 0.5f, 1.0f), // Color (light blue)
 		30.0f, // Minimum lifetime in seconds
 		40.0f, // Maximum lifetime in seconds

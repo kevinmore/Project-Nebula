@@ -29,3 +29,4 @@ private:
 	ShaderType m_shaderType;
 };
 
+typedef QSharedPointer<ParticleTechnique> ParticleTechniquePtr;

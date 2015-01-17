@@ -1,4 +1,4 @@
-#version 330
+#version 430
 
 layout(points) in;
 layout(points) out;
@@ -22,8 +22,9 @@ out float fLifeTimeOut;
 out float fSizeOut;
 out int iTypeOut;
 
+uniform float fParticleMass; // Mass of the particle
 uniform vec3 vGenPosition; // Position where new particles are spawned
-uniform vec3 vGenGravityVector; // Gravity vector for particles - updates velocity of particles 
+uniform vec3 vForce; // Gravity vector for particles - updates velocity of particles 
 uniform vec3 vGenVelocityMin; // Velocity of new particle - from min to (min+range)
 uniform vec3 vGenVelocityRange;
 
@@ -58,14 +59,20 @@ void main()
 
   vPositionOut = vPositionPass[0];
   vVelocityOut = vVelocityPass[0];
-  if(iTypePass[0] != 0)vPositionOut += vVelocityOut*fTimePassed;
-  if(iTypePass[0] != 0)vVelocityOut += vGenGravityVector*fTimePassed;
+
+  if(iTypePass[0] != 0)
+  {
+    vPositionOut += vVelocityOut * fTimePassed; // update the position
+	vec3 acc = vForce / fParticleMass; // calculate the accelaration
+	vVelocityOut += acc * fTimePassed; // update the velocity
+  }
 
   vColorOut = vColorPass[0];
   fLifeTimeOut = fLifeTimePass[0]-fTimePassed;
   fSizeOut = fSizePass[0];
   iTypeOut = iTypePass[0];
     
+  // generator
   if(iTypeOut == 0)
   {
     EmitVertex();
@@ -83,6 +90,7 @@ void main()
       EndPrimitive();
     }
   }
+  // normal particle
   else if(fLifeTimeOut > 0.0)
   {
       EmitVertex();

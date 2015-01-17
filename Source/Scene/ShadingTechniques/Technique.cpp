@@ -64,3 +64,8 @@ void Technique::applyShader( const QString &shaderName )
 	m_shaderFileName = shaderName;
 	compileShader();
 }
+
+void Technique::setVAO( GLuint vaoID )
+{
+	m_VAO = vaoID;
+}
