@@ -73,6 +73,7 @@ public:
 
 	void attachComponent(ComponentPtr pComponent);
 	QVector<ComponentPtr> getComponents();
+	ComponentPtr getComponent(const QString& name);
 
 	enum MovingBehaviour
 	{

@@ -23,6 +23,7 @@ out float fSizeOut;
 out int iTypeOut;
 
 uniform float fParticleMass; // Mass of the particle
+uniform float fGravityFactor; // Factor which determines how much gravity would influence the particle
 uniform vec3 vGenPosition; // Position where new particles are spawned
 uniform vec3 vForce; // Gravity vector for particles - updates velocity of particles 
 uniform vec3 vGenVelocityMin; // Velocity of new particle - from min to (min+range)
@@ -62,7 +63,7 @@ void main()
 
   if(iTypePass[0] != 0)
   {
-    vec3 netForce = vForce + fParticleMass * vec3(0, -9.8, 0);
+    vec3 netForce = vForce + fParticleMass * fGravityFactor * vec3(0, -9.8, 0);
 	vec3 acc = netForce * (1/fParticleMass);  // calculate the accelaration
 	vVelocityOut += acc * fTimePassed; // update the velocity
     vPositionOut += vVelocityOut * fTimePassed; // update the position

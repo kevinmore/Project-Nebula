@@ -466,7 +466,7 @@
             <x>0</x>
             <y>0</y>
             <width>249</width>
-            <height>351</height>
+            <height>402</height>
            </rect>
           </property>
          </widget>
@@ -488,9 +488,9 @@
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>-21</y>
-            <width>245</width>
-            <height>361</height>
+            <y>0</y>
+            <width>249</width>
+            <height>402</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_13">
@@ -704,20 +704,63 @@
                  </item>
                 </layout>
                </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_31">
+                 <item>
+                  <widget class="QLabel" name="label_34">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="text">
+                    <string>Color</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>100</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <widget class="QCheckBox" name="checkBox_RandomColor">
+                   <property name="text">
+                    <string>Random</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QGraphicsView" name="graphicsView_ColorPicker">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>20</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
               </layout>
-             </item>
-             <item>
-              <spacer name="verticalSpacer_2">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>40</height>
-                </size>
-               </property>
-              </spacer>
              </item>
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout_19">
@@ -1098,12 +1141,12 @@
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>176</x>
-     <y>570</y>
+     <x>204</x>
+     <y>558</y>
     </hint>
     <hint type="destinationlabel">
-     <x>224</x>
-     <y>570</y>
+     <x>256</x>
+     <y>560</y>
     </hint>
    </hints>
   </connection>
@@ -1114,12 +1157,12 @@
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>218</x>
-     <y>572</y>
+     <x>256</x>
+     <y>560</y>
     </hint>
     <hint type="destinationlabel">
      <x>204</x>
-     <y>573</y>
+     <y>558</y>
     </hint>
    </hints>
   </connection>

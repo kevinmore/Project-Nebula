@@ -24,6 +24,8 @@ private:
 	void readHierarchy(GameObject* go, QTreeWidgetItem* parentItem); // go through the game objects
 	void resetHierarchy(GameObject* go); // reset every game object from the given one
 	void clearTransformationArea();
+	void connectParticleSystemTab(ParticleSystemPtr ps);
+	void readParticleSystemConfig(ParticleSystemPtr ps);
 
 private slots:
 	void connectCurrentObject();
@@ -33,8 +35,12 @@ private slots:
 	void renameGameObject(QTreeWidgetItem * item, int column);
 	void deleteGameObject();
 	void showMouseRightButton(const QPoint& point);
+	void setColorPickerEnabled(bool status);
 
 public slots:
 	void updateObjectTree();
+
+protected:
+	bool eventFilter(QObject *obj, QEvent *ev); // install a filter event for the color picker
 };
 

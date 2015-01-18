@@ -100,11 +100,16 @@ void ParticleSystem::updateParticles( float fTimePassed )
 
 	particleUpdater->getShaderProgram()->setUniformValue("fTimePassed", fTimePassed);
 	particleUpdater->getShaderProgram()->setUniformValue("fParticleMass", m_fParticleMass);
+	particleUpdater->getShaderProgram()->setUniformValue("fGravityFactor", m_fGravityFactor);
 	particleUpdater->getShaderProgram()->setUniformValue("vGenPosition", vGenPosition);
 	particleUpdater->getShaderProgram()->setUniformValue("vGenVelocityMin", rotation.rotatedVector(m_minVelocity));
 	particleUpdater->getShaderProgram()->setUniformValue("vGenVelocityRange", rotation.rotatedVector(vGenVelocityRange));
-	particleUpdater->getShaderProgram()->setUniformValue("vGenColor", vGenColor);
 	particleUpdater->getShaderProgram()->setUniformValue("vForce", m_force);
+
+	if (bRandomColor)
+		particleUpdater->getShaderProgram()->setUniformValue("vGenColor", Math::Random::randUnitVec3());
+	else
+		particleUpdater->getShaderProgram()->setUniformValue("vGenColor", vGenColor);
 
 	particleUpdater->getShaderProgram()->setUniformValue("fGenLifeMin", m_fMinLife);
 	particleUpdater->getShaderProgram()->setUniformValue("fGenLifeRange", fGenLifeRange);
@@ -187,12 +192,14 @@ void ParticleSystem::render(const float currentTime)
 void ParticleSystem::setEmitterProperties( float particleMass, vec3 a_vGenVelocityMin, vec3 a_vGenVelocityMax, vec3 a_vGenGravityVector, vec3 a_vGenColor, float a_fGenLifeMin, float a_fGenLifeMax, float a_fGenSize, float emitRate, int a_iNumToGenerate )
 {
 	m_fParticleMass = particleMass;
-	
+	m_fGravityFactor = 1.0f;
+
 	m_minVelocity = a_vGenVelocityMin;
 	m_maxVelocity = a_vGenVelocityMax;
 	vGenVelocityRange = m_maxVelocity - m_minVelocity;
 
 	m_force = a_vGenGravityVector;
+	bRandomColor = false;
 	vGenColor = a_vGenColor;
 	m_fGenSize = a_fGenSize;
 
@@ -208,4 +215,16 @@ void ParticleSystem::setEmitterProperties( float particleMass, vec3 a_vGenVeloci
 int ParticleSystem::getAliveParticles()
 {
 	return m_aliveParticles;
+}
+
+QColor ParticleSystem::getParticleColor() const
+{
+	return QColor(vGenColor.x() * 255, vGenColor.y() * 255, vGenColor.z() * 255);
+}
+
+void ParticleSystem::setParticleColor( const QColor& col )
+{
+	vGenColor.setX(col.red()/255.0f); 
+	vGenColor.setY(col.green()/255.0f); 
+	vGenColor.setZ(col.blue()/255.0f);
 }

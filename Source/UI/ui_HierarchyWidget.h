@@ -13,7 +13,9 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QDoubleSpinBox>
+#include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
@@ -107,7 +109,11 @@ public:
     QHBoxLayout *horizontalLayout_18;
     QLabel *label_19;
     QDoubleSpinBox *doubleSpinBox_MaxLife;
-    QSpacerItem *verticalSpacer_2;
+    QHBoxLayout *horizontalLayout_31;
+    QLabel *label_34;
+    QSpacerItem *horizontalSpacer;
+    QCheckBox *checkBox_RandomColor;
+    QGraphicsView *graphicsView_ColorPicker;
     QHBoxLayout *horizontalLayout_19;
     QVBoxLayout *verticalLayout_9;
     QLabel *label_20;
@@ -434,7 +440,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 249, 351));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 249, 402));
         scrollArea->setWidget(scrollAreaWidgetContents);
 
         verticalLayout_6->addWidget(scrollArea);
@@ -449,7 +455,7 @@ public:
         scrollArea_2->setWidgetResizable(true);
         scrollAreaWidgetContents_2 = new QWidget();
         scrollAreaWidgetContents_2->setObjectName(QStringLiteral("scrollAreaWidgetContents_2"));
-        scrollAreaWidgetContents_2->setGeometry(QRect(0, -21, 245, 361));
+        scrollAreaWidgetContents_2->setGeometry(QRect(0, 0, 249, 402));
         verticalLayout_13 = new QVBoxLayout(scrollAreaWidgetContents_2);
         verticalLayout_13->setObjectName(QStringLiteral("verticalLayout_13"));
         verticalLayout_12 = new QVBoxLayout();
@@ -602,12 +608,38 @@ public:
 
         verticalLayout_8->addLayout(horizontalLayout_18);
 
+        horizontalLayout_31 = new QHBoxLayout();
+        horizontalLayout_31->setObjectName(QStringLiteral("horizontalLayout_31"));
+        label_34 = new QLabel(scrollAreaWidgetContents_2);
+        label_34->setObjectName(QStringLiteral("label_34"));
+        sizePolicy3.setHeightForWidth(label_34->sizePolicy().hasHeightForWidth());
+        label_34->setSizePolicy(sizePolicy3);
+        label_34->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
+
+        horizontalLayout_31->addWidget(label_34);
+
+        horizontalSpacer = new QSpacerItem(100, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_31->addItem(horizontalSpacer);
+
+        checkBox_RandomColor = new QCheckBox(scrollAreaWidgetContents_2);
+        checkBox_RandomColor->setObjectName(QStringLiteral("checkBox_RandomColor"));
+
+        horizontalLayout_31->addWidget(checkBox_RandomColor);
+
+        graphicsView_ColorPicker = new QGraphicsView(scrollAreaWidgetContents_2);
+        graphicsView_ColorPicker->setObjectName(QStringLiteral("graphicsView_ColorPicker"));
+        sizePolicy2.setHeightForWidth(graphicsView_ColorPicker->sizePolicy().hasHeightForWidth());
+        graphicsView_ColorPicker->setSizePolicy(sizePolicy2);
+        graphicsView_ColorPicker->setMinimumSize(QSize(20, 20));
+
+        horizontalLayout_31->addWidget(graphicsView_ColorPicker);
+
+
+        verticalLayout_8->addLayout(horizontalLayout_31);
+
 
         verticalLayout_12->addLayout(verticalLayout_8);
-
-        verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-
-        verticalLayout_12->addItem(verticalSpacer_2);
 
         horizontalLayout_19 = new QHBoxLayout();
         horizontalLayout_19->setObjectName(QStringLiteral("horizontalLayout_19"));
@@ -888,6 +920,8 @@ public:
         label_17->setText(QApplication::translate("HierarchyViewer", "Emit Amount", 0));
         label_18->setText(QApplication::translate("HierarchyViewer", "Min Life", 0));
         label_19->setText(QApplication::translate("HierarchyViewer", "Max Life", 0));
+        label_34->setText(QApplication::translate("HierarchyViewer", "Color", 0));
+        checkBox_RandomColor->setText(QApplication::translate("HierarchyViewer", "Random", 0));
         label_20->setText(QApplication::translate("HierarchyViewer", "Force", 0));
         label_21->setText(QApplication::translate("HierarchyViewer", "X", 0));
         label_22->setText(QApplication::translate("HierarchyViewer", "Y", 0));

@@ -30,6 +30,10 @@ HierarchyWidget::HierarchyWidget(Scene* scene, QWidget *parent)
 	// tab widget
 	particleSystemTab = ui->tabWidget->widget(2);
 	ui->tabWidget->removeTab(2);
+	ui->tabWidget->setCurrentIndex(0);
+	ui->graphicsView_ColorPicker->setScene(new QGraphicsScene(this));
+	ui->graphicsView_ColorPicker->installEventFilter(this);
+	connect(ui->checkBox_RandomColor, SIGNAL(toggled(bool)), this, SLOT(setColorPickerEnabled(bool)));
 
 	setMaximumWidth(345);
 	updateObjectTree();
@@ -138,49 +142,17 @@ void HierarchyWidget::readGameObject(QTreeWidgetItem* current, QTreeWidgetItem* 
 	// if the game object has a particle system attached to
 	// show the particle system tab
 	ui->tabWidget->removeTab(ui->tabWidget->indexOf(particleSystemTab));
+	ui->tabWidget->setCurrentIndex(0);
 	foreach(ComponentPtr comp, m_currentObject->getComponents())
 	{
 		if (comp->className() == "ParticleSystem")
 		{
 			ParticleSystemPtr ps = comp.dynamicCast<ParticleSystem>();
 			ui->tabWidget->addTab(particleSystemTab, "Particle System");
-			// map the particle system configurations into the spin boxes
-			ui->doubleSpinBox_Mass->setValue(ps->getParticleMass());
-			ui->doubleSpinBox_Size->setValue(ps->getParticleSize());
-			ui->doubleSpinBox_EmitRate->setValue(ps->getEmitRate());
-			ui->horizontalSlider_EmitAmount->setValue(ps->getEmitAmount());
-			ui->spinBox_EmitAmount->setValue(ps->getEmitAmount());
-			ui->doubleSpinBox_MinLife->setValue(ps->getMinLife());
-			ui->doubleSpinBox_MaxLife->setValue(ps->getMaxLife());
-			ui->doubleSpinBox_ForceX->setValue(ps->getForce().x());
-			ui->doubleSpinBox_ForceY->setValue(ps->getForce().y());
-			ui->doubleSpinBox_ForceZ->setValue(ps->getForce().z());
-			ui->doubleSpinBox_MinVelocityX->setValue(ps->getMinVel().x());
-			ui->doubleSpinBox_MinVelocityY->setValue(ps->getMinVel().y());
-			ui->doubleSpinBox_MinVelocityZ->setValue(ps->getMinVel().z());
-			ui->doubleSpinBox_MaxVelocityX->setValue(ps->getMaxVel().x());
-			ui->doubleSpinBox_MaxVelocityY->setValue(ps->getMaxVel().y());
-			ui->doubleSpinBox_MaxVelocityZ->setValue(ps->getMaxVel().z());
-
-			// connect
-			connect(ui->doubleSpinBox_Mass,			 SIGNAL(valueChanged(double)), ps.data(), SLOT(setParticleMass(double)));
-			connect(ui->doubleSpinBox_Size,			 SIGNAL(valueChanged(double)), ps.data(), SLOT(setParticleSize(double)));
-			connect(ui->doubleSpinBox_EmitRate,		 SIGNAL(valueChanged(double)), ps.data(), SLOT(setEmitRate(double)));
-			connect(ui->spinBox_EmitAmount,			 SIGNAL(valueChanged(int)),	   ps.data(), SLOT(setEmitAmount(int)));
-			connect(ui->horizontalSlider_EmitAmount,	 SIGNAL(valueChanged(int)),	   ps.data(), SLOT(setEmitAmount(int)));
-			connect(ui->doubleSpinBox_MinLife,		 SIGNAL(valueChanged(double)), ps.data(), SLOT(setMinLife(double)));
-			connect(ui->doubleSpinBox_MaxLife,		 SIGNAL(valueChanged(double)), ps.data(), SLOT(setMaxLife(double)));
-			connect(ui->doubleSpinBox_ForceX,		 SIGNAL(valueChanged(double)), ps.data(), SLOT(setForceX(double)));
-			connect(ui->doubleSpinBox_ForceY,		 SIGNAL(valueChanged(double)), ps.data(), SLOT(setForceY(double)));
-			connect(ui->doubleSpinBox_ForceZ,		 SIGNAL(valueChanged(double)), ps.data(), SLOT(setForceZ(double)));
-			connect(ui->doubleSpinBox_MinVelocityX,	 SIGNAL(valueChanged(double)), ps.data(), SLOT(setMinVelX(double)));
-			connect(ui->doubleSpinBox_MinVelocityY,	 SIGNAL(valueChanged(double)), ps.data(), SLOT(setMinVelY(double)));
-			connect(ui->doubleSpinBox_MinVelocityZ,	 SIGNAL(valueChanged(double)), ps.data(), SLOT(setMinVelZ(double)));
-			connect(ui->doubleSpinBox_MaxVelocityX,	 SIGNAL(valueChanged(double)), ps.data(), SLOT(setMaxVelX(double)));
-			connect(ui->doubleSpinBox_MaxVelocityY,	 SIGNAL(valueChanged(double)), ps.data(), SLOT(setMaxVelY(double)));
-			connect(ui->doubleSpinBox_MaxVelocityZ,	 SIGNAL(valueChanged(double)), ps.data(), SLOT(setMaxVelZ(double)));
-			connect(ui->spinBox_EmitAmount,			 SIGNAL(valueChanged(int)),	   ui->horizontalSlider_EmitAmount, SLOT(setValue(int)));
-			connect(ui->horizontalSlider_EmitAmount,	 SIGNAL(valueChanged(int)),	   ui->spinBox_EmitAmount, SLOT(setValue(int)));
+			ui->tabWidget->setCurrentWidget(particleSystemTab);
+			readParticleSystemConfig(ps);
+			connectParticleSystemTab(ps);
+			
 			break;
 		}
 	}
@@ -230,6 +202,7 @@ void HierarchyWidget::disconnectPreviousObject()
 
 	// particle system tab related
 	disconnect(ui->doubleSpinBox_Mass,			SIGNAL(valueChanged(double)), 0, 0);
+	disconnect(ui->doubleSpinBox_GravityFactor,	SIGNAL(valueChanged(double)), 0, 0);
 	disconnect(ui->doubleSpinBox_Size,			SIGNAL(valueChanged(double)), 0, 0);
 	disconnect(ui->doubleSpinBox_EmitRate,		SIGNAL(valueChanged(double)), 0, 0);
 	disconnect(ui->spinBox_EmitAmount,			SIGNAL(valueChanged(int)),	  0, 0);
@@ -245,6 +218,7 @@ void HierarchyWidget::disconnectPreviousObject()
 	disconnect(ui->doubleSpinBox_MaxVelocityX,	SIGNAL(valueChanged(double)), 0, 0);
 	disconnect(ui->doubleSpinBox_MaxVelocityY,	SIGNAL(valueChanged(double)), 0, 0);
 	disconnect(ui->doubleSpinBox_MaxVelocityZ,	SIGNAL(valueChanged(double)), 0, 0);
+	disconnect(ui->checkBox_RandomColor,			SIGNAL(toggled(bool)),		  0, 0);
 }
 
 void HierarchyWidget::renameGameObject( QTreeWidgetItem * item, int column )
@@ -277,4 +251,82 @@ void HierarchyWidget::deleteGameObject()
 	go.clear();
 
 	updateObjectTree();
+}
+
+void HierarchyWidget::connectParticleSystemTab(ParticleSystemPtr ps)
+{
+	// particle system tab related
+	connect(ui->doubleSpinBox_Mass,			 SIGNAL(valueChanged(double)), ps.data(), SLOT(setParticleMass(double)));
+	connect(ui->doubleSpinBox_GravityFactor,	 SIGNAL(valueChanged(double)), ps.data(), SLOT(setGravityFactor(double)));
+	connect(ui->doubleSpinBox_Size,			 SIGNAL(valueChanged(double)), ps.data(), SLOT(setParticleSize(double)));
+	connect(ui->doubleSpinBox_EmitRate,		 SIGNAL(valueChanged(double)), ps.data(), SLOT(setEmitRate(double)));
+	connect(ui->spinBox_EmitAmount,			 SIGNAL(valueChanged(int)),	   ps.data(), SLOT(setEmitAmount(int)));
+	connect(ui->horizontalSlider_EmitAmount,	 SIGNAL(valueChanged(int)),	   ps.data(), SLOT(setEmitAmount(int)));
+	connect(ui->doubleSpinBox_MinLife,		 SIGNAL(valueChanged(double)), ps.data(), SLOT(setMinLife(double)));
+	connect(ui->doubleSpinBox_MaxLife,		 SIGNAL(valueChanged(double)), ps.data(), SLOT(setMaxLife(double)));
+	connect(ui->doubleSpinBox_ForceX,		 SIGNAL(valueChanged(double)), ps.data(), SLOT(setForceX(double)));
+	connect(ui->doubleSpinBox_ForceY,		 SIGNAL(valueChanged(double)), ps.data(), SLOT(setForceY(double)));
+	connect(ui->doubleSpinBox_ForceZ,		 SIGNAL(valueChanged(double)), ps.data(), SLOT(setForceZ(double)));
+	connect(ui->doubleSpinBox_MinVelocityX,	 SIGNAL(valueChanged(double)), ps.data(), SLOT(setMinVelX(double)));
+	connect(ui->doubleSpinBox_MinVelocityY,	 SIGNAL(valueChanged(double)), ps.data(), SLOT(setMinVelY(double)));
+	connect(ui->doubleSpinBox_MinVelocityZ,	 SIGNAL(valueChanged(double)), ps.data(), SLOT(setMinVelZ(double)));
+	connect(ui->doubleSpinBox_MaxVelocityX,	 SIGNAL(valueChanged(double)), ps.data(), SLOT(setMaxVelX(double)));
+	connect(ui->doubleSpinBox_MaxVelocityY,	 SIGNAL(valueChanged(double)), ps.data(), SLOT(setMaxVelY(double)));
+	connect(ui->doubleSpinBox_MaxVelocityZ,	 SIGNAL(valueChanged(double)), ps.data(), SLOT(setMaxVelZ(double)));
+	connect(ui->spinBox_EmitAmount,			 SIGNAL(valueChanged(int)),	   ui->horizontalSlider_EmitAmount, SLOT(setValue(int)));
+	connect(ui->horizontalSlider_EmitAmount,	 SIGNAL(valueChanged(int)),	   ui->spinBox_EmitAmount, SLOT(setValue(int)));
+	connect(ui->checkBox_RandomColor, SIGNAL(toggled(bool)), ps.data(), SLOT(toggleRandomColor(bool)));
+}
+
+void HierarchyWidget::readParticleSystemConfig( ParticleSystemPtr ps )
+{
+	// map the particle system configurations into the spin boxes
+	ui->doubleSpinBox_Mass->setValue(ps->getParticleMass());
+	ui->doubleSpinBox_GravityFactor->setValue(ps->getGravityFactor());
+	ui->doubleSpinBox_Size->setValue(ps->getParticleSize());
+	ui->doubleSpinBox_EmitRate->setValue(ps->getEmitRate());
+	ui->horizontalSlider_EmitAmount->setValue(ps->getEmitAmount());
+	ui->spinBox_EmitAmount->setValue(ps->getEmitAmount());
+	ui->doubleSpinBox_MinLife->setValue(ps->getMinLife());
+	ui->doubleSpinBox_MaxLife->setValue(ps->getMaxLife());
+	ui->doubleSpinBox_ForceX->setValue(ps->getForce().x());
+	ui->doubleSpinBox_ForceY->setValue(ps->getForce().y());
+	ui->doubleSpinBox_ForceZ->setValue(ps->getForce().z());
+	ui->doubleSpinBox_MinVelocityX->setValue(ps->getMinVel().x());
+	ui->doubleSpinBox_MinVelocityY->setValue(ps->getMinVel().y());
+	ui->doubleSpinBox_MinVelocityZ->setValue(ps->getMinVel().z());
+	ui->doubleSpinBox_MaxVelocityX->setValue(ps->getMaxVel().x());
+	ui->doubleSpinBox_MaxVelocityY->setValue(ps->getMaxVel().y());
+	ui->doubleSpinBox_MaxVelocityZ->setValue(ps->getMaxVel().z());
+	ui->graphicsView_ColorPicker->setBackgroundBrush(QBrush(ps->getParticleColor(), Qt::DiagCrossPattern));
+	ui->checkBox_RandomColor->setChecked(ps->isColorRandom());
+}
+
+void HierarchyWidget::setColorPickerEnabled( bool status )
+{
+	// if the random check box is checked, disable the color picker
+	ui->graphicsView_ColorPicker->setEnabled(!status);
+}
+
+bool HierarchyWidget::eventFilter( QObject *obj, QEvent *ev )
+{
+	// pop up a color dialog when the user clicks the picker
+	if (obj == ui->graphicsView_ColorPicker 
+		&& ui->graphicsView_ColorPicker->isEnabled()
+		&& ev->type() == QEvent::MouseButtonPress)
+	{
+		ParticleSystemPtr ps = m_currentObject->getComponent("ParticleSystem").dynamicCast<ParticleSystem>();
+		QColor col = QColorDialog::getColor(ps->getParticleColor(), this);
+		if(col.isValid()) 
+		{
+			// apply the color to the particle system and color picker both
+			ps->setParticleColor(col);
+			ui->graphicsView_ColorPicker->setBackgroundBrush(QBrush(col, Qt::DiagCrossPattern));
+		}
+		return true;
+	}
+	else
+	{
+		return QWidget::eventFilter(obj, ev);
+	}
 }

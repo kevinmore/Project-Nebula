@@ -355,3 +355,15 @@ QVector<ComponentPtr> GameObject::getComponents()
 {
 	return m_components;
 }
+
+ComponentPtr GameObject::getComponent( const QString& name )
+{
+	foreach(ComponentPtr comp, m_components)
+	{
+		if (comp->className() == name)
+		{
+			return comp;
+		}
+	}
+	return ComponentPtr();
+}

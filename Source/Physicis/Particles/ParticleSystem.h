@@ -2,6 +2,7 @@
 #include <QOpenGLShader>
 #include <QOpenGLShaderProgram>
 #include <QOpenGLFunctions_4_3_Core>
+#include <QColor>
 #include <Utility/EngineCommon.h>
 #include <Primitives/Component.h>
 #include <Primitives/Texture.h>
@@ -60,6 +61,7 @@ public:
 
 public slots:
 	void setParticleMass(double m) { m_fParticleMass = (float)m; }
+	void setGravityFactor(double f){ m_fGravityFactor = (float)f; }
 	void setParticleSize(double s) { m_fGenSize = (float)s; }
 	void setEmitRate(double r)     { m_fEmitRate = (float)r; }
 	void setEmitAmount(int a)	   { m_EmitAmount= a; }
@@ -79,8 +81,11 @@ public slots:
 	void setMaxVelY(double v) { m_maxVelocity.setY((float)v); vGenVelocityRange = m_maxVelocity - m_minVelocity;}
 	void setMaxVelZ(double v) { m_maxVelocity.setZ((float)v); vGenVelocityRange = m_maxVelocity - m_minVelocity;}
 
+	void toggleRandomColor(bool status) { bRandomColor = status; }
+
 public:
 	float getParticleMass() const { return m_fParticleMass; }
+	float getGravityFactor()const { return m_fGravityFactor; }
 	float getParticleSize() const { return m_fGenSize; }
 	float getEmitRate()     const { return m_fEmitRate; }
 	int   getEmitAmount()   const { return m_EmitAmount; }
@@ -90,6 +95,10 @@ public:
 	vec3 getForce()  const { return m_force; }
 	vec3 getMinVel() const { return m_minVelocity; }
 	vec3 getMaxVel() const { return m_maxVelocity; }
+
+	bool isColorRandom() const { return bRandomColor; }
+	QColor getParticleColor() const;
+	void setParticleColor(const QColor& col);
 
 private:
 	bool bInitialized;
@@ -114,10 +123,12 @@ private:
 	vec3 m_minVelocity, m_maxVelocity, vGenVelocityRange;
 	vec3 m_force;
 	vec3 vGenColor;
+	bool bRandomColor;
 
 	float m_fMinLife, m_fMaxLife, fGenLifeRange;
 	float m_fGenSize;
 	float m_fParticleMass;
+	float m_fGravityFactor;
 
 	int m_EmitAmount;
 

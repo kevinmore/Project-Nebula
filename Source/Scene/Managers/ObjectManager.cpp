@@ -106,8 +106,8 @@ void ObjectManager::renderAll(const float currentTime)
 			}
 		}
 	}
-	if(totalParticles) qDebug() << "Alive Particles:" << totalParticles;
-
+	// print out the particles count
+	//if(totalParticles) qDebug() << "Alive Particles:" << totalParticles;
 }
 
 void ObjectManager::clear()
