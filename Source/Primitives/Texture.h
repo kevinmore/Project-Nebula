@@ -41,6 +41,9 @@ public:
 	TextureType type() const { return m_type; }
 	TextureUsage usage() const { return m_usage; }
 	GLuint textureId() const { return m_textureId; }
+	QString fileName() const { return m_fileName; }
+
+	QPixmap generateQPixmap();
 
 private:
 	void init();

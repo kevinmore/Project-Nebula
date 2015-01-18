@@ -51,7 +51,8 @@ bool Texture::load()
 	m_funcs->glGenTextures(1, &m_textureId);
 	m_funcs->glBindTexture(m_type, m_textureId);
 
-	if( !m_fileName.isEmpty() )
+	// use image magick
+	if(!m_fileName.isEmpty())
 	{
 		try
 		{
@@ -77,6 +78,7 @@ bool Texture::load()
 			m_blob.data()
 			);
 	}
+	// use qt image
 	else
 	{
 		glTexImage2D(m_type,
@@ -118,4 +120,14 @@ void Texture::bind(GLenum textureUnit)
 void Texture::release()
 {
 	m_funcs->glBindTexture(m_type, 0);
+}
+
+QPixmap Texture::generateQPixmap()
+{
+	QImage im(static_cast<const uchar *>(m_blob.data()), m_image.columns(), m_image.rows(), QImage::Format_ARGB32);
+
+	QPixmap pix;
+	pix.convertFromImage(im);
+
+	return pix;
 }

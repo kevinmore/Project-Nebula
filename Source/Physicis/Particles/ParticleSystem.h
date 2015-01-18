@@ -8,15 +8,7 @@
 #include <Primitives/Texture.h>
 #include <Scene/ShadingTechniques/ParticleTechnique.h>
 
-/*****************************************************
-
-Class:		CParticle
-
-Purpose:	Encapsulates particle and its properties.
-
-*****************************************************/
-
-class CParticle
+class Particle
 {
 public:
 	vec3 vPosition;
@@ -26,14 +18,6 @@ public:
 	float fSize;
 	int iType;
 };
-
-/**********************************************************************
-
-Class:		CParticleSystemTransformFeedback
-
-Purpose:	Particle system class that uses transform feedback feature.
-
-***********************************************************************/
 
 class Scene;
 class ParticleSystem : public Component, protected QOpenGLFunctions_4_3_Core
@@ -100,6 +84,9 @@ public:
 	QColor getParticleColor() const;
 	void setParticleColor(const QColor& col);
 
+	TexturePtr getTexture() const { return m_Texture; }
+	void loadTexture(const QString& fileName);
+
 private:
 	bool bInitialized;
 
@@ -118,6 +105,7 @@ private:
 
 	float fElapsedTime;
 	float m_fEmitRate;
+	float fNextEmitTime;
 
 	vec3 vGenPosition;
 	vec3 m_minVelocity, m_maxVelocity, vGenVelocityRange;

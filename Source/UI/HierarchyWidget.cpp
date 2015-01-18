@@ -32,10 +32,12 @@ HierarchyWidget::HierarchyWidget(Scene* scene, QWidget *parent)
 	ui->tabWidget->removeTab(2);
 	ui->tabWidget->setCurrentIndex(0);
 	ui->graphicsView_ColorPicker->setScene(new QGraphicsScene(this));
+	ui->graphicsView_TexturePicker->setScene(new QGraphicsScene(this));
 	ui->graphicsView_ColorPicker->installEventFilter(this);
+	ui->graphicsView_TexturePicker->installEventFilter(this);
 	connect(ui->checkBox_RandomColor, SIGNAL(toggled(bool)), this, SLOT(setColorPickerEnabled(bool)));
 
-	setMaximumWidth(345);
+	setMaximumWidth(360);
 	updateObjectTree();
 }
 
@@ -300,6 +302,13 @@ void HierarchyWidget::readParticleSystemConfig( ParticleSystemPtr ps )
 	ui->doubleSpinBox_MaxVelocityZ->setValue(ps->getMaxVel().z());
 	ui->graphicsView_ColorPicker->setBackgroundBrush(QBrush(ps->getParticleColor(), Qt::DiagCrossPattern));
 	ui->checkBox_RandomColor->setChecked(ps->isColorRandom());
+
+	// displays the particle texture
+	ui->graphicsView_TexturePicker->scene()->clear();
+	QPixmap tex = ps->getTexture()->generateQPixmap();
+	QGraphicsPixmapItem* item = new QGraphicsPixmapItem(tex);
+	ui->graphicsView_TexturePicker->scene()->addItem(item);
+	ui->graphicsView_TexturePicker->fitInView(item);
 }
 
 void HierarchyWidget::setColorPickerEnabled( bool status )
@@ -310,7 +319,7 @@ void HierarchyWidget::setColorPickerEnabled( bool status )
 
 bool HierarchyWidget::eventFilter( QObject *obj, QEvent *ev )
 {
-	// pop up a color dialog when the user clicks the picker
+	// pop up a color dialog when the user clicks the color picker
 	if (obj == ui->graphicsView_ColorPicker 
 		&& ui->graphicsView_ColorPicker->isEnabled()
 		&& ev->type() == QEvent::MouseButtonPress)
@@ -322,6 +331,27 @@ bool HierarchyWidget::eventFilter( QObject *obj, QEvent *ev )
 			// apply the color to the particle system and color picker both
 			ps->setParticleColor(col);
 			ui->graphicsView_ColorPicker->setBackgroundBrush(QBrush(col, Qt::DiagCrossPattern));
+		}
+		return true;
+	}
+	// pop up a file dialog when the user clicks the texture picker
+	else if (obj == ui->graphicsView_TexturePicker
+		&& ev->type() == QEvent::MouseButtonPress)
+	{
+		QString fileName = QFileDialog::getOpenFileName(0, tr("Select a texture"),
+			"../Resource/Textures",
+			tr("Texture File(*.*)"));
+		if (!fileName.isEmpty())
+		{
+			// apply the texture to the particle system and color picker both
+			ParticleSystemPtr ps = m_currentObject->getComponent("ParticleSystem").dynamicCast<ParticleSystem>();
+			ps->loadTexture(fileName);
+
+			ui->graphicsView_TexturePicker->scene()->clear();
+			QPixmap tex = ps->getTexture()->generateQPixmap();
+			QGraphicsPixmapItem* item = new QGraphicsPixmapItem(tex);
+			ui->graphicsView_TexturePicker->scene()->addItem(item);
+			ui->graphicsView_TexturePicker->fitInView(item);
 		}
 		return true;
 	}

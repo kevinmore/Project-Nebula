@@ -24,7 +24,7 @@ void ParticleSystem::initParticleSystem()
 	prepareTransformFeedback();
 
 	// load texture
-	m_Texture = m_scene->textureManager()->addTexture("particle", "../Resource/Textures/particle.bmp");
+	m_Texture = m_scene->textureManager()->addTexture(m_actor->objectName() + "_texture", "../Resource/Textures/flares/nova.png");
 }
 
 
@@ -59,7 +59,7 @@ void ParticleSystem::prepareTransformFeedback()
 	glGenVertexArrays(2, m_VAO);
 	glGenBuffers(2, m_particleBuffer);
 
-	CParticle firstParticle;
+	Particle firstParticle;
 	firstParticle.iType = PARTICLE_TYPE_GENERATOR;
 	m_aliveParticles = 1;
 
@@ -67,8 +67,8 @@ void ParticleSystem::prepareTransformFeedback()
 	{
 		glBindVertexArray(m_VAO[i]);
 		glBindBuffer(GL_ARRAY_BUFFER, m_particleBuffer[i]);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(CParticle)*MAX_PARTICLES_ON_SCENE, NULL, GL_DYNAMIC_DRAW);
-		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(CParticle), &firstParticle);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(Particle)*MAX_PARTICLES_ON_SCENE, NULL, GL_DYNAMIC_DRAW);
+		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(Particle), &firstParticle);
 
 		for (int j = 0; j < NUM_PARTICLE_ATTRIBUTES; ++j)
 		{
@@ -76,12 +76,12 @@ void ParticleSystem::prepareTransformFeedback()
 		}
 
 
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(CParticle), (const GLvoid*)0); // Position
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(CParticle), (const GLvoid*)12); // Velocity
-		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(CParticle), (const GLvoid*)24); // Color
-		glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, sizeof(CParticle), (const GLvoid*)36); // Lifetime
-		glVertexAttribPointer(4, 1, GL_FLOAT, GL_FALSE, sizeof(CParticle), (const GLvoid*)40); // Size
-		glVertexAttribPointer(5, 1, GL_INT,	  GL_FALSE, sizeof(CParticle), (const GLvoid*)44); // Type
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Particle), (const GLvoid*)0); // Position
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Particle), (const GLvoid*)12); // Velocity
+		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Particle), (const GLvoid*)24); // Color
+		glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, sizeof(Particle), (const GLvoid*)36); // Lifetime
+		glVertexAttribPointer(4, 1, GL_FLOAT, GL_FALSE, sizeof(Particle), (const GLvoid*)40); // Size
+		glVertexAttribPointer(5, 1, GL_INT,	  GL_FALSE, sizeof(Particle), (const GLvoid*)44); // Type
 	}
 
 	particleUpdater->setVAO(m_VAO[0]);
@@ -227,4 +227,13 @@ void ParticleSystem::setParticleColor( const QColor& col )
 	vGenColor.setX(col.red()/255.0f); 
 	vGenColor.setY(col.green()/255.0f); 
 	vGenColor.setZ(col.blue()/255.0f);
+}
+
+void ParticleSystem::loadTexture( const QString& fileName )
+{
+	// clear the previous loaded texture
+	m_scene->textureManager()->deleteTexture(m_actor->objectName() + "_texture");
+
+	// load a new one
+	m_Texture = m_scene->textureManager()->addTexture(m_actor->objectName() + "_texture", fileName);
 }

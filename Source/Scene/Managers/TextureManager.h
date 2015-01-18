@@ -12,6 +12,7 @@ public:
 	TexturePtr addTexture(const QString& name, const QString& fileName, 
 						  Texture::TextureType type = Texture::Texture2D, 
 						  Texture::TextureUsage usage = Texture::ColorMap);
+	void deleteTexture(const QString& name);
 	void clear();
 
 private:
