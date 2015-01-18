@@ -21,6 +21,7 @@
     <ClCompile Include="Animation\StateMachine\AnimatorController.cpp" />
     <ClCompile Include="Animation\StateMachine\AnimatorPanel.cpp" />
     <ClCompile Include="Animation\StateMachine\NPCController.cpp" />
+    <ClCompile Include="Physicis\Particles\moc_ParticleSystem.cc" />
     <ClCompile Include="Scene\ShadingTechniques\ParticleTechnique.cpp" />
     <ClCompile Include="Physicis\Particles\ParticleSystem.cpp" />
     <ClCompile Include="Primitives\Component.cpp" />
@@ -70,7 +71,7 @@
     <QtMOC Include="UI\MainWindow.h" />
     <QtMOC Include="Utility\LogCenter.h" />
     <ClInclude Include="Scene\ShadingTechniques\ParticleTechnique.h" />
-    <ClInclude Include="Physicis\Particles\ParticleSystem.h" />
+    <QtMOC Include="Physicis\Particles\ParticleSystem.h" />
     <ClInclude Include="Primitives\Component.h" />
     <ClInclude Include="UI\ui_HierarchyWidget.h" />
     <ClInclude Include="Utility\Serialization.h" />

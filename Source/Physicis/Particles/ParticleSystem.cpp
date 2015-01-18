@@ -99,26 +99,26 @@ void ParticleSystem::updateParticles( float fTimePassed )
 						 * QQuaternion::fromAxisAndAngle(Math::Vector3D::UNIT_Z, rot.z());
 
 	particleUpdater->getShaderProgram()->setUniformValue("fTimePassed", fTimePassed);
-	particleUpdater->getShaderProgram()->setUniformValue("fParticleMass", fParticleMass);
+	particleUpdater->getShaderProgram()->setUniformValue("fParticleMass", m_fParticleMass);
 	particleUpdater->getShaderProgram()->setUniformValue("vGenPosition", vGenPosition);
-	particleUpdater->getShaderProgram()->setUniformValue("vGenVelocityMin", rotation.rotatedVector(vGenVelocityMin));
+	particleUpdater->getShaderProgram()->setUniformValue("vGenVelocityMin", rotation.rotatedVector(m_minVelocity));
 	particleUpdater->getShaderProgram()->setUniformValue("vGenVelocityRange", rotation.rotatedVector(vGenVelocityRange));
 	particleUpdater->getShaderProgram()->setUniformValue("vGenColor", vGenColor);
-	particleUpdater->getShaderProgram()->setUniformValue("vForce", vForce);
+	particleUpdater->getShaderProgram()->setUniformValue("vForce", m_force);
 
-	particleUpdater->getShaderProgram()->setUniformValue("fGenLifeMin", fGenLifeMin);
+	particleUpdater->getShaderProgram()->setUniformValue("fGenLifeMin", m_fMinLife);
 	particleUpdater->getShaderProgram()->setUniformValue("fGenLifeRange", fGenLifeRange);
 
-	particleUpdater->getShaderProgram()->setUniformValue("fGenLifeMin", fGenLifeMin);
+	particleUpdater->getShaderProgram()->setUniformValue("fGenLifeMin", m_fMinLife);
 	particleUpdater->getShaderProgram()->setUniformValue("fGenLifeRange", fGenLifeRange);
 
-	particleUpdater->getShaderProgram()->setUniformValue("fGenSize", fGenSize);
+	particleUpdater->getShaderProgram()->setUniformValue("fGenSize", m_fGenSize);
 	particleUpdater->getShaderProgram()->setUniformValue("iNumToGenerate", 0);
 
-	if (fElapsedTime > fNextGenerationTime)
+	if (fElapsedTime > m_fEmitRate)
 	{
-		particleUpdater->getShaderProgram()->setUniformValue("iNumToGenerate", iNumToGenerate);
-		fElapsedTime -= fNextGenerationTime;
+		particleUpdater->getShaderProgram()->setUniformValue("iNumToGenerate", m_EmitAmount);
+		fElapsedTime -= m_fEmitRate;
 
 		vec3 vRandomSeed =  Math::Random::randUnitVec3();
 		particleUpdater->getShaderProgram()->setUniformValue("vRandomSeed", vRandomSeed);
@@ -184,23 +184,25 @@ void ParticleSystem::render(const float currentTime)
 }
 
 
-void ParticleSystem::setEmitterProperties( float particleMass, vec3 a_vGenVelocityMin, vec3 a_vGenVelocityMax, vec3 a_vGenGravityVector, vec3 a_vGenColor, float a_fGenLifeMin, float a_fGenLifeMax, float a_fGenSize, float fEmitRate, int a_iNumToGenerate )
+void ParticleSystem::setEmitterProperties( float particleMass, vec3 a_vGenVelocityMin, vec3 a_vGenVelocityMax, vec3 a_vGenGravityVector, vec3 a_vGenColor, float a_fGenLifeMin, float a_fGenLifeMax, float a_fGenSize, float emitRate, int a_iNumToGenerate )
 {
-	fParticleMass = particleMass;
+	m_fParticleMass = particleMass;
 	
-	vGenVelocityMin = a_vGenVelocityMin;
-	vGenVelocityRange = a_vGenVelocityMax - a_vGenVelocityMin;
+	m_minVelocity = a_vGenVelocityMin;
+	m_maxVelocity = a_vGenVelocityMax;
+	vGenVelocityRange = m_maxVelocity - m_minVelocity;
 
-	vForce = a_vGenGravityVector;
+	m_force = a_vGenGravityVector;
 	vGenColor = a_vGenColor;
-	fGenSize = a_fGenSize;
+	m_fGenSize = a_fGenSize;
 
-	fGenLifeMin = a_fGenLifeMin;
-	fGenLifeRange = a_fGenLifeMax - a_fGenLifeMin;
+	m_fMinLife = a_fGenLifeMin;
+	m_fMaxLife = a_fGenLifeMax;
+	fGenLifeRange = m_fMaxLife - m_fMinLife;
 
-	fNextGenerationTime = fEmitRate;
+	m_fEmitRate = emitRate;
 
-	iNumToGenerate = a_iNumToGenerate;
+	m_EmitAmount = a_iNumToGenerate;
 }
 
 int ParticleSystem::getAliveParticles()

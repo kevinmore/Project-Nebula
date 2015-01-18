@@ -48,6 +48,7 @@
     <ClCompile Include="Primitives\Component.cpp" />
     <ClCompile Include="Physicis\Particles\ParticleSystem.cpp" />
     <ClCompile Include="Scene\ShadingTechniques\ParticleTechnique.cpp" />
+    <ClCompile Include="Physicis\Particles\moc_ParticleSystem.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Primitives\Texture.h" />
@@ -79,7 +80,6 @@
     <ClInclude Include="UI\ui_HierarchyWidget.h" />
     <ClInclude Include="Scene\Managers\ObjectManager.h" />
     <ClInclude Include="Primitives\Component.h" />
-    <ClInclude Include="Physicis\Particles\ParticleSystem.h" />
     <ClInclude Include="Scene\ShadingTechniques\ParticleTechnique.h" />
   </ItemGroup>
   <ItemGroup>
@@ -93,6 +93,7 @@
     <QtMOC Include="UI\HierarchyWidget.h" />
     <QtMOC Include="UI\Canvas.h" />
     <QtMOC Include="Utility\LogCenter.h" />
+    <QtMOC Include="Physicis\Particles\ParticleSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="UI\HierarchyWidget.ui" />

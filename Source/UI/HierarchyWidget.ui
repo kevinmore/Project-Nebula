@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>220</width>
+    <width>293</width>
     <height>826</height>
    </rect>
   </property>
@@ -45,6 +45,9 @@
    </item>
    <item>
     <widget class="QTabWidget" name="tabWidget">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
      <property name="sizePolicy">
       <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
        <horstretch>0</horstretch>
@@ -57,8 +60,23 @@
        <height>0</height>
       </size>
      </property>
+     <property name="tabShape">
+      <enum>QTabWidget::Rounded</enum>
+     </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
+     </property>
+     <property name="elideMode">
+      <enum>Qt::ElideNone</enum>
+     </property>
+     <property name="documentMode">
+      <bool>false</bool>
+     </property>
+     <property name="tabsClosable">
+      <bool>false</bool>
+     </property>
+     <property name="movable">
+      <bool>true</bool>
      </property>
      <widget class="QWidget" name="TransformTab">
       <attribute name="title">
@@ -429,16 +447,6 @@
         </widget>
        </item>
       </layout>
-      <zorder>label</zorder>
-      <zorder>label_2</zorder>
-      <zorder>label_3</zorder>
-      <zorder>doubleSpinBox_PositionX</zorder>
-      <zorder>label_4</zorder>
-      <zorder>layoutWidget</zorder>
-      <zorder>layoutWidget_2</zorder>
-      <zorder>doubleSpinBox_PositionY</zorder>
-      <zorder>layoutWidget_3</zorder>
-      <zorder>layoutWidget_4</zorder>
       <zorder>verticalSpacer</zorder>
       <zorder>pushButton_Reset</zorder>
      </widget>
@@ -446,11 +454,674 @@
       <attribute name="title">
        <string>Rendering</string>
       </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_6">
+       <item>
+        <widget class="QScrollArea" name="scrollArea">
+         <property name="widgetResizable">
+          <bool>true</bool>
+         </property>
+         <widget class="QWidget" name="scrollAreaWidgetContents">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>249</width>
+            <height>351</height>
+           </rect>
+          </property>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="ParticleTab">
+      <attribute name="title">
+       <string>Particle System</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_7">
+       <item>
+        <widget class="QScrollArea" name="scrollArea_2">
+         <property name="widgetResizable">
+          <bool>true</bool>
+         </property>
+         <widget class="QWidget" name="scrollAreaWidgetContents_2">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>-21</y>
+            <width>245</width>
+            <height>361</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_13">
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_12">
+             <item>
+              <layout class="QVBoxLayout" name="verticalLayout_8">
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_5">
+                 <item>
+                  <widget class="QLabel" name="label_13">
+                   <property name="text">
+                    <string>Mass</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QDoubleSpinBox" name="doubleSpinBox_Mass">
+                   <property name="maximum">
+                    <double>999999.989999999990687</double>
+                   </property>
+                   <property name="value">
+                    <double>0.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_29">
+                 <item>
+                  <widget class="QLabel" name="label_32">
+                   <property name="text">
+                    <string>Gravity Factor</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QDoubleSpinBox" name="doubleSpinBox_GravityFactor">
+                   <property name="minimum">
+                    <double>-999999.989999999990687</double>
+                   </property>
+                   <property name="maximum">
+                    <double>999999.989999999990687</double>
+                   </property>
+                   <property name="value">
+                    <double>1.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_9">
+                 <item>
+                  <widget class="QLabel" name="label_14">
+                   <property name="text">
+                    <string>Size</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QDoubleSpinBox" name="doubleSpinBox_Size">
+                   <property name="maximum">
+                    <double>999999.989999999990687</double>
+                   </property>
+                   <property name="value">
+                    <double>0.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_13">
+                 <item>
+                  <widget class="QLabel" name="label_15">
+                   <property name="text">
+                    <string>Emit Rate</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QDoubleSpinBox" name="doubleSpinBox_EmitRate">
+                   <property name="maximum">
+                    <double>999999.989999999990687</double>
+                   </property>
+                   <property name="singleStep">
+                    <double>0.010000000000000</double>
+                   </property>
+                   <property name="value">
+                    <double>0.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_16">
+                 <item>
+                  <widget class="QLabel" name="label_17">
+                   <property name="text">
+                    <string>Emit Amount</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_15">
+                   <item>
+                    <widget class="QSlider" name="horizontalSlider_EmitAmount">
+                     <property name="maximum">
+                      <number>40</number>
+                     </property>
+                     <property name="value">
+                      <number>0</number>
+                     </property>
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="invertedAppearance">
+                      <bool>false</bool>
+                     </property>
+                     <property name="invertedControls">
+                      <bool>false</bool>
+                     </property>
+                     <property name="tickPosition">
+                      <enum>QSlider::NoTicks</enum>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QSpinBox" name="spinBox_EmitAmount">
+                     <property name="maximum">
+                      <number>40</number>
+                     </property>
+                     <property name="value">
+                      <number>0</number>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_17">
+                 <item>
+                  <widget class="QLabel" name="label_18">
+                   <property name="text">
+                    <string>Min Life</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QDoubleSpinBox" name="doubleSpinBox_MinLife">
+                   <property name="maximum">
+                    <double>999999.989999999990687</double>
+                   </property>
+                   <property name="singleStep">
+                    <double>1.000000000000000</double>
+                   </property>
+                   <property name="value">
+                    <double>0.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_18">
+                 <item>
+                  <widget class="QLabel" name="label_19">
+                   <property name="text">
+                    <string>Max Life</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QDoubleSpinBox" name="doubleSpinBox_MaxLife">
+                   <property name="maximum">
+                    <double>999999.989999999990687</double>
+                   </property>
+                   <property name="singleStep">
+                    <double>1.000000000000000</double>
+                   </property>
+                   <property name="value">
+                    <double>0.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <spacer name="verticalSpacer_2">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_19">
+               <item>
+                <layout class="QVBoxLayout" name="verticalLayout_9">
+                 <item>
+                  <widget class="QLabel" name="label_20">
+                   <property name="text">
+                    <string>Force</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_20">
+                   <item>
+                    <widget class="QLabel" name="label_21">
+                     <property name="text">
+                      <string>X</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QDoubleSpinBox" name="doubleSpinBox_ForceX">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>0</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="minimum">
+                      <double>-99999.990000000005239</double>
+                     </property>
+                     <property name="maximum">
+                      <double>99999.990000000005239</double>
+                     </property>
+                     <property name="singleStep">
+                      <double>10.000000000000000</double>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_21">
+                   <item>
+                    <widget class="QLabel" name="label_22">
+                     <property name="text">
+                      <string>Y</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QDoubleSpinBox" name="doubleSpinBox_ForceY">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimum">
+                      <double>-99999.990000000005239</double>
+                     </property>
+                     <property name="maximum">
+                      <double>99999.990000000005239</double>
+                     </property>
+                     <property name="singleStep">
+                      <double>10.000000000000000</double>
+                     </property>
+                     <property name="value">
+                      <double>0.000000000000000</double>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_22">
+                   <item>
+                    <widget class="QLabel" name="label_23">
+                     <property name="text">
+                      <string>Z</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QDoubleSpinBox" name="doubleSpinBox_ForceZ">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimum">
+                      <double>-99999.990000000005239</double>
+                     </property>
+                     <property name="maximum">
+                      <double>99999.990000000005239</double>
+                     </property>
+                     <property name="singleStep">
+                      <double>10.000000000000000</double>
+                     </property>
+                     <property name="value">
+                      <double>0.000000000000000</double>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QVBoxLayout" name="verticalLayout_10">
+                 <item>
+                  <widget class="QLabel" name="label_24">
+                   <property name="text">
+                    <string>Min Velocity</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_23">
+                   <item>
+                    <widget class="QLabel" name="label_25">
+                     <property name="text">
+                      <string>X</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QDoubleSpinBox" name="doubleSpinBox_MinVelocityX">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimum">
+                      <double>-99999.990000000005239</double>
+                     </property>
+                     <property name="maximum">
+                      <double>99999.990000000005239</double>
+                     </property>
+                     <property name="singleStep">
+                      <double>1.000000000000000</double>
+                     </property>
+                     <property name="value">
+                      <double>0.000000000000000</double>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_24">
+                   <item>
+                    <widget class="QLabel" name="label_26">
+                     <property name="text">
+                      <string>Y</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QDoubleSpinBox" name="doubleSpinBox_MinVelocityY">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimum">
+                      <double>-99999.990000000005239</double>
+                     </property>
+                     <property name="maximum">
+                      <double>99999.990000000005239</double>
+                     </property>
+                     <property name="singleStep">
+                      <double>1.000000000000000</double>
+                     </property>
+                     <property name="value">
+                      <double>0.000000000000000</double>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_25">
+                   <item>
+                    <widget class="QLabel" name="label_27">
+                     <property name="text">
+                      <string>Z</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QDoubleSpinBox" name="doubleSpinBox_MinVelocityZ">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimum">
+                      <double>-99999.990000000005239</double>
+                     </property>
+                     <property name="maximum">
+                      <double>99999.990000000005239</double>
+                     </property>
+                     <property name="singleStep">
+                      <double>1.000000000000000</double>
+                     </property>
+                     <property name="value">
+                      <double>0.000000000000000</double>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QVBoxLayout" name="verticalLayout_11">
+                 <item>
+                  <widget class="QLabel" name="label_28">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>Max Velocity</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_26">
+                   <item>
+                    <widget class="QLabel" name="label_29">
+                     <property name="text">
+                      <string>X</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QDoubleSpinBox" name="doubleSpinBox_MaxVelocityX">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimum">
+                      <double>-99999.990000000005239</double>
+                     </property>
+                     <property name="maximum">
+                      <double>99999.990000000005239</double>
+                     </property>
+                     <property name="singleStep">
+                      <double>1.000000000000000</double>
+                     </property>
+                     <property name="value">
+                      <double>0.000000000000000</double>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_27">
+                   <item>
+                    <widget class="QLabel" name="label_30">
+                     <property name="text">
+                      <string>Y</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QDoubleSpinBox" name="doubleSpinBox_MaxVelocityY">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimum">
+                      <double>-99999.990000000005239</double>
+                     </property>
+                     <property name="maximum">
+                      <double>99999.990000000005239</double>
+                     </property>
+                     <property name="singleStep">
+                      <double>1.000000000000000</double>
+                     </property>
+                     <property name="value">
+                      <double>0.000000000000000</double>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_28">
+                   <item>
+                    <widget class="QLabel" name="label_31">
+                     <property name="text">
+                      <string>Z</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QDoubleSpinBox" name="doubleSpinBox_MaxVelocityZ">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimum">
+                      <double>-99999.990000000005239</double>
+                     </property>
+                     <property name="maximum">
+                      <double>99999.990000000005239</double>
+                     </property>
+                     <property name="singleStep">
+                      <double>1.000000000000000</double>
+                     </property>
+                     <property name="value">
+                      <double>0.000000000000000</double>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </widget>
    </item>
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>horizontalSlider_EmitAmount</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>spinBox_EmitAmount</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>176</x>
+     <y>570</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>224</x>
+     <y>570</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBox_EmitAmount</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>horizontalSlider_EmitAmount</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>218</x>
+     <y>572</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>204</x>
+     <y>573</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

@@ -62,9 +62,10 @@ void main()
 
   if(iTypePass[0] != 0)
   {
-    vPositionOut += vVelocityOut * fTimePassed; // update the position
-	vec3 acc = vForce / fParticleMass; // calculate the accelaration
+    vec3 netForce = vForce + fParticleMass * vec3(0, -9.8, 0);
+	vec3 acc = netForce * (1/fParticleMass);  // calculate the accelaration
 	vVelocityOut += acc * fTimePassed; // update the velocity
+    vPositionOut += vVelocityOut * fTimePassed; // update the position
   }
 
   vColorOut = vColorPass[0];

@@ -13,12 +13,12 @@ HierarchyWidget::HierarchyWidget(Scene* scene, QWidget *parent)
 	connect(m_scene, SIGNAL(updateHierarchy()), this, SLOT(updateObjectTree()));
 
 	connect(ui->treeWidget, SIGNAL(currentItemChanged(QTreeWidgetItem*, QTreeWidgetItem*)), 
-		    this, SLOT(updateTransformation(QTreeWidgetItem*, QTreeWidgetItem*)));
+		    this, SLOT(readGameObject(QTreeWidgetItem*, QTreeWidgetItem*)));
 
 	connect(ui->treeWidget, SIGNAL(itemChanged(QTreeWidgetItem*, int)), 
 		    this, SLOT(renameGameObject(QTreeWidgetItem*, int)));
 	
-	// reset button
+	// transform reset button
 	connect(ui->pushButton_Reset, SIGNAL(clicked()), this, SLOT(resetSelectedObject()));
 	
 	// popup menu
@@ -27,8 +27,12 @@ HierarchyWidget::HierarchyWidget(Scene* scene, QWidget *parent)
 	connect(ui->treeWidget, SIGNAL(customContextMenuRequested(const QPoint)), this, SLOT(showMouseRightButton(const QPoint)));
 	connect(m_deleteAction, SIGNAL(triggered()), this, SLOT(deleteGameObject()));
 
-	updateObjectTree();
+	// tab widget
+	particleSystemTab = ui->tabWidget->widget(2);
+	ui->tabWidget->removeTab(2);
 
+	setMaximumWidth(345);
+	updateObjectTree();
 }
 
 HierarchyWidget::~HierarchyWidget()
@@ -97,7 +101,7 @@ void HierarchyWidget::resetSelectedObject()
 	resetHierarchy(m_currentObject);
 }
 
-void HierarchyWidget::updateTransformation(QTreeWidgetItem* current, QTreeWidgetItem* previous)
+void HierarchyWidget::readGameObject(QTreeWidgetItem* current, QTreeWidgetItem* previous)
 {
 	if (!current) return;
 
@@ -130,6 +134,56 @@ void HierarchyWidget::updateTransformation(QTreeWidgetItem* current, QTreeWidget
 
 	// set connections
 	connectCurrentObject();
+
+	// if the game object has a particle system attached to
+	// show the particle system tab
+	ui->tabWidget->removeTab(ui->tabWidget->indexOf(particleSystemTab));
+	foreach(ComponentPtr comp, m_currentObject->getComponents())
+	{
+		if (comp->className() == "ParticleSystem")
+		{
+			ParticleSystemPtr ps = comp.dynamicCast<ParticleSystem>();
+			ui->tabWidget->addTab(particleSystemTab, "Particle System");
+			// map the particle system configurations into the spin boxes
+			ui->doubleSpinBox_Mass->setValue(ps->getParticleMass());
+			ui->doubleSpinBox_Size->setValue(ps->getParticleSize());
+			ui->doubleSpinBox_EmitRate->setValue(ps->getEmitRate());
+			ui->horizontalSlider_EmitAmount->setValue(ps->getEmitAmount());
+			ui->spinBox_EmitAmount->setValue(ps->getEmitAmount());
+			ui->doubleSpinBox_MinLife->setValue(ps->getMinLife());
+			ui->doubleSpinBox_MaxLife->setValue(ps->getMaxLife());
+			ui->doubleSpinBox_ForceX->setValue(ps->getForce().x());
+			ui->doubleSpinBox_ForceY->setValue(ps->getForce().y());
+			ui->doubleSpinBox_ForceZ->setValue(ps->getForce().z());
+			ui->doubleSpinBox_MinVelocityX->setValue(ps->getMinVel().x());
+			ui->doubleSpinBox_MinVelocityY->setValue(ps->getMinVel().y());
+			ui->doubleSpinBox_MinVelocityZ->setValue(ps->getMinVel().z());
+			ui->doubleSpinBox_MaxVelocityX->setValue(ps->getMaxVel().x());
+			ui->doubleSpinBox_MaxVelocityY->setValue(ps->getMaxVel().y());
+			ui->doubleSpinBox_MaxVelocityZ->setValue(ps->getMaxVel().z());
+
+			// connect
+			connect(ui->doubleSpinBox_Mass,			 SIGNAL(valueChanged(double)), ps.data(), SLOT(setParticleMass(double)));
+			connect(ui->doubleSpinBox_Size,			 SIGNAL(valueChanged(double)), ps.data(), SLOT(setParticleSize(double)));
+			connect(ui->doubleSpinBox_EmitRate,		 SIGNAL(valueChanged(double)), ps.data(), SLOT(setEmitRate(double)));
+			connect(ui->spinBox_EmitAmount,			 SIGNAL(valueChanged(int)),	   ps.data(), SLOT(setEmitAmount(int)));
+			connect(ui->horizontalSlider_EmitAmount,	 SIGNAL(valueChanged(int)),	   ps.data(), SLOT(setEmitAmount(int)));
+			connect(ui->doubleSpinBox_MinLife,		 SIGNAL(valueChanged(double)), ps.data(), SLOT(setMinLife(double)));
+			connect(ui->doubleSpinBox_MaxLife,		 SIGNAL(valueChanged(double)), ps.data(), SLOT(setMaxLife(double)));
+			connect(ui->doubleSpinBox_ForceX,		 SIGNAL(valueChanged(double)), ps.data(), SLOT(setForceX(double)));
+			connect(ui->doubleSpinBox_ForceY,		 SIGNAL(valueChanged(double)), ps.data(), SLOT(setForceY(double)));
+			connect(ui->doubleSpinBox_ForceZ,		 SIGNAL(valueChanged(double)), ps.data(), SLOT(setForceZ(double)));
+			connect(ui->doubleSpinBox_MinVelocityX,	 SIGNAL(valueChanged(double)), ps.data(), SLOT(setMinVelX(double)));
+			connect(ui->doubleSpinBox_MinVelocityY,	 SIGNAL(valueChanged(double)), ps.data(), SLOT(setMinVelY(double)));
+			connect(ui->doubleSpinBox_MinVelocityZ,	 SIGNAL(valueChanged(double)), ps.data(), SLOT(setMinVelZ(double)));
+			connect(ui->doubleSpinBox_MaxVelocityX,	 SIGNAL(valueChanged(double)), ps.data(), SLOT(setMaxVelX(double)));
+			connect(ui->doubleSpinBox_MaxVelocityY,	 SIGNAL(valueChanged(double)), ps.data(), SLOT(setMaxVelY(double)));
+			connect(ui->doubleSpinBox_MaxVelocityZ,	 SIGNAL(valueChanged(double)), ps.data(), SLOT(setMaxVelZ(double)));
+			connect(ui->spinBox_EmitAmount,			 SIGNAL(valueChanged(int)),	   ui->horizontalSlider_EmitAmount, SLOT(setValue(int)));
+			connect(ui->horizontalSlider_EmitAmount,	 SIGNAL(valueChanged(int)),	   ui->spinBox_EmitAmount, SLOT(setValue(int)));
+			break;
+		}
+	}
 }
 
 void HierarchyWidget::clearTransformationArea()
@@ -163,7 +217,7 @@ void HierarchyWidget::connectCurrentObject()
 
 void HierarchyWidget::disconnectPreviousObject()
 {
-	// transformation panel related
+	// transformation tab related
 	disconnect(ui->doubleSpinBox_PositionX, SIGNAL(valueChanged(double)), 0, 0);
 	disconnect(ui->doubleSpinBox_PositionY, SIGNAL(valueChanged(double)), 0, 0);
 	disconnect(ui->doubleSpinBox_PositionZ, SIGNAL(valueChanged(double)), 0, 0);
@@ -173,6 +227,24 @@ void HierarchyWidget::disconnectPreviousObject()
 	disconnect(ui->doubleSpinBox_ScaleX,		SIGNAL(valueChanged(double)), 0, 0);
 	disconnect(ui->doubleSpinBox_ScaleY,		SIGNAL(valueChanged(double)), 0, 0);
 	disconnect(ui->doubleSpinBox_ScaleZ,		SIGNAL(valueChanged(double)), 0, 0);
+
+	// particle system tab related
+	disconnect(ui->doubleSpinBox_Mass,			SIGNAL(valueChanged(double)), 0, 0);
+	disconnect(ui->doubleSpinBox_Size,			SIGNAL(valueChanged(double)), 0, 0);
+	disconnect(ui->doubleSpinBox_EmitRate,		SIGNAL(valueChanged(double)), 0, 0);
+	disconnect(ui->spinBox_EmitAmount,			SIGNAL(valueChanged(int)),	  0, 0);
+	disconnect(ui->horizontalSlider_EmitAmount,	SIGNAL(valueChanged(int)),	  0, 0);
+	disconnect(ui->doubleSpinBox_MinLife	,		SIGNAL(valueChanged(double)), 0, 0);
+	disconnect(ui->doubleSpinBox_MaxLife	,		SIGNAL(valueChanged(double)), 0, 0);
+	disconnect(ui->doubleSpinBox_ForceX,			SIGNAL(valueChanged(double)), 0, 0);
+	disconnect(ui->doubleSpinBox_ForceY,			SIGNAL(valueChanged(double)), 0, 0);
+	disconnect(ui->doubleSpinBox_ForceZ,			SIGNAL(valueChanged(double)), 0, 0);
+	disconnect(ui->doubleSpinBox_MinVelocityX,	SIGNAL(valueChanged(double)), 0, 0);
+	disconnect(ui->doubleSpinBox_MinVelocityY,	SIGNAL(valueChanged(double)), 0, 0);
+	disconnect(ui->doubleSpinBox_MinVelocityZ,	SIGNAL(valueChanged(double)), 0, 0);
+	disconnect(ui->doubleSpinBox_MaxVelocityX,	SIGNAL(valueChanged(double)), 0, 0);
+	disconnect(ui->doubleSpinBox_MaxVelocityY,	SIGNAL(valueChanged(double)), 0, 0);
+	disconnect(ui->doubleSpinBox_MaxVelocityZ,	SIGNAL(valueChanged(double)), 0, 0);
 }
 
 void HierarchyWidget::renameGameObject( QTreeWidgetItem * item, int column )

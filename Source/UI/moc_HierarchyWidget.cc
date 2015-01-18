@@ -20,7 +20,7 @@
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_HierarchyWidget_t {
     QByteArrayData data[16];
-    char stringdata[228];
+    char stringdata[222];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -33,26 +33,25 @@ QT_MOC_LITERAL(0, 0, 15),
 QT_MOC_LITERAL(1, 16, 20),
 QT_MOC_LITERAL(2, 37, 0),
 QT_MOC_LITERAL(3, 38, 24),
-QT_MOC_LITERAL(4, 63, 20),
-QT_MOC_LITERAL(5, 84, 16),
-QT_MOC_LITERAL(6, 101, 7),
-QT_MOC_LITERAL(7, 109, 8),
-QT_MOC_LITERAL(8, 118, 19),
-QT_MOC_LITERAL(9, 138, 16),
-QT_MOC_LITERAL(10, 155, 4),
-QT_MOC_LITERAL(11, 160, 6),
-QT_MOC_LITERAL(12, 167, 16),
-QT_MOC_LITERAL(13, 184, 20),
-QT_MOC_LITERAL(14, 205, 5),
-QT_MOC_LITERAL(15, 211, 16)
+QT_MOC_LITERAL(4, 63, 14),
+QT_MOC_LITERAL(5, 78, 16),
+QT_MOC_LITERAL(6, 95, 7),
+QT_MOC_LITERAL(7, 103, 8),
+QT_MOC_LITERAL(8, 112, 19),
+QT_MOC_LITERAL(9, 132, 16),
+QT_MOC_LITERAL(10, 149, 4),
+QT_MOC_LITERAL(11, 154, 6),
+QT_MOC_LITERAL(12, 161, 16),
+QT_MOC_LITERAL(13, 178, 20),
+QT_MOC_LITERAL(14, 199, 5),
+QT_MOC_LITERAL(15, 205, 16)
     },
     "HierarchyWidget\0connectCurrentObject\0"
-    "\0disconnectPreviousObject\0"
-    "updateTransformation\0QTreeWidgetItem*\0"
-    "current\0previous\0resetSelectedObject\0"
-    "renameGameObject\0item\0column\0"
-    "deleteGameObject\0showMouseRightButton\0"
-    "point\0updateObjectTree"
+    "\0disconnectPreviousObject\0readGameObject\0"
+    "QTreeWidgetItem*\0current\0previous\0"
+    "resetSelectedObject\0renameGameObject\0"
+    "item\0column\0deleteGameObject\0"
+    "showMouseRightButton\0point\0updateObjectTree"
 };
 #undef QT_MOC_LITERAL
 
@@ -99,7 +98,7 @@ void HierarchyWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         switch (_id) {
         case 0: _t->connectCurrentObject(); break;
         case 1: _t->disconnectPreviousObject(); break;
-        case 2: _t->updateTransformation((*reinterpret_cast< QTreeWidgetItem*(*)>(_a[1])),(*reinterpret_cast< QTreeWidgetItem*(*)>(_a[2]))); break;
+        case 2: _t->readGameObject((*reinterpret_cast< QTreeWidgetItem*(*)>(_a[1])),(*reinterpret_cast< QTreeWidgetItem*(*)>(_a[2]))); break;
         case 3: _t->resetSelectedObject(); break;
         case 4: _t->renameGameObject((*reinterpret_cast< QTreeWidgetItem*(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         case 5: _t->deleteGameObject(); break;

@@ -62,6 +62,7 @@ public:
 	virtual ~AbstractModel() = 0;
 
 	virtual void render(const float currentTime) = 0;
+	virtual QString className() { return "AbstractModel"; }
 
 	QString fileName() const { return m_fileName; }
 

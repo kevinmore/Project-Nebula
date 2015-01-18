@@ -18,6 +18,7 @@ public:
 	virtual ~StaticModel();
 
 	virtual void render( const float currentTime );
+	virtual QString className() { return "StaticModel"; }
 	ShadingTechnique* getShadingTech() { return m_RenderingEffect; }
 
 protected:

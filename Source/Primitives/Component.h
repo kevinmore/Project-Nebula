@@ -4,13 +4,14 @@
 /************************************************************************/
 #include <QSharedPointer>
 class GameObject;
-class Component
+class Component : public QObject
 {
 public:
 	Component(bool renderable = false, int renderOrder = -1);
 	virtual ~Component() = 0;
 
 	virtual void render(const float currentTime) = 0;
+	virtual QString className() = 0;
 
 	GameObject* gameObject() const;
 	void linkGameObject(GameObject* go);
