@@ -53,6 +53,7 @@ QDataStream& operator >> (QDataStream& in, ParticleSystemPtr object)
 	object->setMaxLife(maxLife);
 	object->setForce(force);
 	object->toggleCollision(collisionEnabled);
+	object->setRestitution(restitution);
 	object->setMinVel(minVel);
 	object->setMaxVel(maxVel);
 	object->toggleRandomColor(colorRandom);

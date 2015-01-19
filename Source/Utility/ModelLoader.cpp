@@ -41,7 +41,7 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName )
 	clear();
 
 	m_scene = m_importer.ReadFile(fileName.toStdString(), aiProcessPreset_TargetRealtime_Quality | aiProcess_FlipUVs);
-
+	
 	if(!m_scene)
 	{
 		qDebug() << m_importer.GetErrorString();
