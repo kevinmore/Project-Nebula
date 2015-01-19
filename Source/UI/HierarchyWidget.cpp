@@ -36,6 +36,7 @@ HierarchyWidget::HierarchyWidget(Scene* scene, QWidget *parent)
 	ui->graphicsView_ColorPicker->installEventFilter(this);
 	ui->graphicsView_TexturePicker->installEventFilter(this);
 	connect(ui->checkBox_RandomColor, SIGNAL(toggled(bool)), this, SLOT(setColorPickerEnabled(bool)));
+	connect(ui->checkBox_EnableCollision, SIGNAL(toggled(bool)), ui->doubleSpinBox_Restitution, SLOT(setEnabled(bool)));
 
 	setMaximumWidth(360);
 	updateObjectTree();

@@ -436,7 +436,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 326, 407));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 98, 28));
         scrollArea->setWidget(scrollAreaWidgetContents);
 
         verticalLayout_6->addWidget(scrollArea);
@@ -616,7 +616,7 @@ public:
 
         doubleSpinBox_Restitution = new QDoubleSpinBox(scrollAreaWidgetContents_2);
         doubleSpinBox_Restitution->setObjectName(QStringLiteral("doubleSpinBox_Restitution"));
-        doubleSpinBox_Restitution->setEnabled(false);
+        doubleSpinBox_Restitution->setEnabled(true);
         doubleSpinBox_Restitution->setMaximum(1);
         doubleSpinBox_Restitution->setSingleStep(0.1);
         doubleSpinBox_Restitution->setValue(0);

@@ -171,7 +171,9 @@ QDataStream& operator >> (QDataStream& in, ObjectManagerPtr object)
 		GameObjectPtr go = object->getScene()->createEmptyGameObject();
 		QString autoName = go->objectName();
 		in >> go;
-		// rename this game object
+
+		// since the object is already defined in the scene file
+		// thus, we need to rename this game object
 		// delete the current one
 		go = object->m_gameObjectMap.take(autoName);
 		// add the new record

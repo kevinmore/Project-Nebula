@@ -465,8 +465,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>326</width>
-            <height>407</height>
+            <width>98</width>
+            <height>28</height>
            </rect>
           </property>
          </widget>
@@ -750,7 +750,7 @@
              <item row="8" column="2">
               <widget class="QDoubleSpinBox" name="doubleSpinBox_Restitution">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="maximum">
                 <double>1.000000000000000</double>
