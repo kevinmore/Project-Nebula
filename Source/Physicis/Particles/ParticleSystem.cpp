@@ -7,6 +7,7 @@ ParticleSystem::ParticleSystem(Scene* scene)
 	  m_curReadBufferIndex(0),
 	  m_aliveParticles(0),
 	  fElapsedTime(0.0f),
+	  fNextEmitTime(0.0f),
 	  m_scene(scene),
 	  bInitialized(false)
 {
@@ -24,7 +25,10 @@ void ParticleSystem::initParticleSystem()
 	prepareTransformFeedback();
 
 	// load texture
-	m_Texture = m_scene->textureManager()->addTexture(m_actor->objectName() + "_texture", "../Resource/Textures/flares/nova.png");
+	loadTexture("../Resource/Textures/flares/nova.png");
+
+	// reset the properties to default
+	resetEmitter();
 }
 
 
@@ -67,7 +71,7 @@ void ParticleSystem::prepareTransformFeedback()
 	{
 		glBindVertexArray(m_VAO[i]);
 		glBindBuffer(GL_ARRAY_BUFFER, m_particleBuffer[i]);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(Particle)*MAX_PARTICLES_ON_SCENE, NULL, GL_DYNAMIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(Particle) * MAX_PARTICLES_PER_SYSTEM, NULL, GL_DYNAMIC_DRAW);
 		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(Particle), &firstParticle);
 
 		for (int j = 0; j < NUM_PARTICLE_ATTRIBUTES; ++j)
@@ -120,13 +124,13 @@ void ParticleSystem::updateParticles( float fTimePassed )
 	particleUpdater->getShaderProgram()->setUniformValue("fGenSize", m_fGenSize);
 	particleUpdater->getShaderProgram()->setUniformValue("iNumToGenerate", 0);
 
-	if (fElapsedTime > m_fEmitRate)
+	if (fElapsedTime > fNextEmitTime)
 	{
 		particleUpdater->getShaderProgram()->setUniformValue("iNumToGenerate", m_EmitAmount);
-		fElapsedTime -= m_fEmitRate;
 
 		vec3 vRandomSeed =  Math::Random::randUnitVec3();
 		particleUpdater->getShaderProgram()->setUniformValue("vRandomSeed", vRandomSeed);
+		fNextEmitTime = fElapsedTime + m_fEmitRate;
 	}
 
 	glEnable(GL_RASTERIZER_DISCARD);
@@ -159,6 +163,7 @@ void ParticleSystem::render(const float currentTime)
 	float dt = currentTime - fElapsedTime;
 	fElapsedTime = currentTime;
 
+
 	updateParticles(dt);
 
 	glEnable(GL_BLEND);
@@ -189,28 +194,28 @@ void ParticleSystem::render(const float currentTime)
 }
 
 
-void ParticleSystem::setEmitterProperties( float particleMass, vec3 a_vGenVelocityMin, vec3 a_vGenVelocityMax, vec3 a_vGenGravityVector, vec3 a_vGenColor, float a_fGenLifeMin, float a_fGenLifeMax, float a_fGenSize, float emitRate, int a_iNumToGenerate )
-{
-	m_fParticleMass = particleMass;
-	m_fGravityFactor = 1.0f;
-
-	m_minVelocity = a_vGenVelocityMin;
-	m_maxVelocity = a_vGenVelocityMax;
-	vGenVelocityRange = m_maxVelocity - m_minVelocity;
-
-	m_force = a_vGenGravityVector;
-	bRandomColor = false;
-	vGenColor = a_vGenColor;
-	m_fGenSize = a_fGenSize;
-
-	m_fMinLife = a_fGenLifeMin;
-	m_fMaxLife = a_fGenLifeMax;
-	fGenLifeRange = m_fMaxLife - m_fMinLife;
-
-	m_fEmitRate = emitRate;
-
-	m_EmitAmount = a_iNumToGenerate;
-}
+// void ParticleSystem::setEmitterProperties( float particleMass, vec3 a_vGenVelocityMin, vec3 a_vGenVelocityMax, vec3 a_vGenGravityVector, vec3 a_vGenColor, float a_fGenLifeMin, float a_fGenLifeMax, float a_fGenSize, float emitRate, int a_iNumToGenerate )
+// {
+// 	m_fParticleMass = particleMass;
+// 	m_fGravityFactor = 1.0f;
+// 
+// 	m_minVelocity = a_vGenVelocityMin;
+// 	m_maxVelocity = a_vGenVelocityMax;
+// 	vGenVelocityRange = m_maxVelocity - m_minVelocity;
+// 
+// 	m_force = a_vGenGravityVector;
+// 	bRandomColor = false;
+// 	vGenColor = a_vGenColor;
+// 	m_fGenSize = a_fGenSize;
+// 
+// 	m_fMinLife = a_fGenLifeMin;
+// 	m_fMaxLife = a_fGenLifeMax;
+// 	fGenLifeRange = m_fMaxLife - m_fMinLife;
+// 
+// 	m_fEmitRate = emitRate;
+// 
+// 	m_EmitAmount = a_iNumToGenerate;
+// }
 
 int ParticleSystem::getAliveParticles()
 {
@@ -236,4 +241,35 @@ void ParticleSystem::loadTexture( const QString& fileName )
 
 	// load a new one
 	m_Texture = m_scene->textureManager()->addTexture(m_actor->objectName() + "_texture", fileName);
+}
+
+QString ParticleSystem::getTextureFileName()
+{
+	// extract the relative path
+	QDir dir;
+	return dir.relativeFilePath(m_Texture->fileName());
+}
+
+void ParticleSystem::resetEmitter()
+{
+	m_fParticleMass = 1.0f;
+	m_fGravityFactor = 1.0f;
+	
+	m_minVelocity = vec3(-20, 20, -20);
+	m_maxVelocity = vec3(20, 30, 20);
+	vGenVelocityRange = m_maxVelocity - m_minVelocity;
+	
+	m_force = Math::Vector3D::ZERO;
+
+	bRandomColor = false;
+	vGenColor = vec3(0, 0.5, 1);
+	m_fGenSize = 0.75f;
+	
+	m_fMinLife = 3.0f;
+	m_fMaxLife = 5.0f;
+	fGenLifeRange = m_fMaxLife - m_fMinLife;
+	
+	m_fEmitRate = 0.02f;
+	
+	m_EmitAmount = 30;
 }

@@ -1,12 +1,13 @@
 #include "LoaderThread.h"
 #include <QFileDialog>
 #include <Scene/Scene.h>
-LoaderThread::LoaderThread(Scene* scene, const QString fileName, GameObject* reference, GameObject* objectParent)
+LoaderThread::LoaderThread(Scene* scene, const QString fileName, GameObject* reference, GameObject* objectParent, bool generateGameObject)
 	: QThread(scene),
 	  m_scene(scene),
 	  m_fileName(fileName),
 	  m_reference(reference),
-	  m_objectParent(objectParent)
+	  m_objectParent(objectParent),
+	  m_shouldGenerateGameObject(generateGameObject)
 {
 	connect(this, SIGNAL(jobDone()), m_scene, SLOT(modelLoaded()));
 	run();
@@ -15,7 +16,7 @@ LoaderThread::LoaderThread(Scene* scene, const QString fileName, GameObject* ref
 LoaderThread::~LoaderThread()
 {
 	// delete the reference game object pointer
-	SAFE_DELETE(m_reference);
+	//SAFE_DELETE(m_reference);
 }
 
 void LoaderThread::run()
@@ -34,7 +35,10 @@ void LoaderThread::run()
 		QDir dir;
 		QString relativePath = dir.relativeFilePath(m_fileName);
 
-		ModelPtr model = m_scene->modelManager()->loadModel(customName, relativePath, m_objectParent);
+		ModelPtr model = m_scene->objectManager()->loadModel(customName, relativePath, m_objectParent, m_shouldGenerateGameObject);
+		// if not generating a game object for the model
+		// let it attach to its reference object
+		if (!m_shouldGenerateGameObject) m_reference->attachComponent(model);
 
 		// apply transformation to this model
 		if (m_reference)

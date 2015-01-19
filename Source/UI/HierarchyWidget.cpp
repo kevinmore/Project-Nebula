@@ -101,7 +101,7 @@ void HierarchyWidget::resetSelectedObject()
 	else if (current == ui->treeWidget->topLevelItem(0))
 		m_currentObject = m_scene->sceneNode();
 	else
-		m_currentObject = m_scene->modelManager()->getGameObject(current->text(0)).data();
+		m_currentObject = m_scene->objectManager()->getGameObject(current->text(0)).data();
 
 	clearTransformationArea();
 	resetHierarchy(m_currentObject);
@@ -122,7 +122,7 @@ void HierarchyWidget::readGameObject(QTreeWidgetItem* current, QTreeWidgetItem* 
 	}
 
 	// get the selected game object
-	m_currentObject = m_scene->modelManager()->getGameObject(current->text(0)).data();
+	m_currentObject = m_scene->objectManager()->getGameObject(current->text(0)).data();
 	if(!m_currentObject) return;
 
 	// map the transformation into the spin boxes
@@ -229,11 +229,11 @@ void HierarchyWidget::renameGameObject( QTreeWidgetItem * item, int column )
 	if(item == ui->treeWidget->topLevelItem(0)) return;
 
 	// delete the current one
-	GameObjectPtr go = m_scene->modelManager()->m_gameObjectMap.take(m_currentObject->objectName());
+	GameObjectPtr go = m_scene->objectManager()->m_gameObjectMap.take(m_currentObject->objectName());
 
 	// add the new record
 	go->setObjectName(item->text(column));
-	m_scene->modelManager()->m_gameObjectMap[go->objectName()] = go;
+	m_scene->objectManager()->m_gameObjectMap[go->objectName()] = go;
 }
 
 void HierarchyWidget::showMouseRightButton( const QPoint& point )
@@ -249,7 +249,7 @@ void HierarchyWidget::showMouseRightButton( const QPoint& point )
 void HierarchyWidget::deleteGameObject()
 {
 	// take the object from the map, and delete it
-	GameObjectPtr go = m_scene->modelManager()->m_gameObjectMap.take(m_currentObject->objectName());
+	GameObjectPtr go = m_scene->objectManager()->m_gameObjectMap.take(m_currentObject->objectName());
 	go.clear();
 
 	updateObjectTree();

@@ -1,8 +1,10 @@
 #include "GameObject.h"
 #include <Scene/AbstractModel.h>
+#include <Scene/Scene.h>
 
-GameObject::GameObject(QObject* parent)
+GameObject::GameObject(Scene* scene, QObject* parent)
 	: QObject(parent),
+	  m_scene(scene),
 	  m_position(Vector3D::ZERO),
 	  m_rotation(Vector3D::ZERO),
 	  m_scale(Vector3D::UNIT_SCALE),
@@ -366,4 +368,14 @@ ComponentPtr GameObject::getComponent( const QString& name )
 		}
 	}
 	return ComponentPtr();
+}
+
+void GameObject::setScene( Scene* scene )
+{
+	m_scene = scene;
+}
+
+Scene* GameObject::getScene() const
+{
+	return m_scene;
 }

@@ -36,7 +36,7 @@ public:
 	virtual QString className() { return "ParticleSystem"; }
 	virtual void render(const float currentTime);
 
-	void setEmitterProperties(float particleMass, vec3 a_vGenVelocityMin, vec3 a_vGenVelocityMax, vec3 a_vGenGravityVector, vec3 a_vGenColor, float a_fGenLifeMin, float a_fGenLifeMax, float a_fGenSize, float fEvery, int a_iNumToGenerate);
+	void resetEmitter();
 
 	void ClearAllParticles();
 	bool ReleaseParticleSystem();
@@ -77,13 +77,19 @@ public:
 	float getMaxLife() const { return m_fMaxLife; }
 
 	vec3 getForce()  const { return m_force; }
+	void setForce(const vec3& f)  { m_force = f; }
+
 	vec3 getMinVel() const { return m_minVelocity; }
+	void setMinVel(const vec3& v)  { m_minVelocity = v; vGenVelocityRange = m_maxVelocity - m_minVelocity; }
+
 	vec3 getMaxVel() const { return m_maxVelocity; }
+	void setMaxVel(const vec3& v)  { m_maxVelocity = v; vGenVelocityRange = m_maxVelocity - m_minVelocity; }
 
 	bool isColorRandom() const { return bRandomColor; }
 	QColor getParticleColor() const;
 	void setParticleColor(const QColor& col);
 
+	QString getTextureFileName();
 	TexturePtr getTexture() const { return m_Texture; }
 	void loadTexture(const QString& fileName);
 

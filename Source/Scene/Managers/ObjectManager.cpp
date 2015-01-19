@@ -27,7 +27,7 @@ ModelPtr ObjectManager::getModel( const QString& name )
 	else return ModelPtr();
 }
 
-ModelPtr ObjectManager::loadModel( const QString& customName, const QString& fileName, GameObject* parent )
+ModelPtr ObjectManager::loadModel( const QString& customName, const QString& fileName, GameObject* parent, bool generateGameObject )
 {
 	ModelLoaderPtr m_modelLoader(new ModelLoader);
 	QVector<ModelDataPtr> modelDataArray = m_modelLoader->loadModel(fileName);
@@ -69,13 +69,16 @@ ModelPtr ObjectManager::loadModel( const QString& customName, const QString& fil
 		pModel.reset(rm);
 	}
 
-	// attach this model to a new game object
-	GameObjectPtr go(new GameObject(parent));
-	go->setObjectName(name);
-	go->attachComponent(pModel);
+	if (generateGameObject)
+	{
+		// attach this model to a new game object
+		GameObjectPtr go(new GameObject(m_scene, parent));
+		go->setObjectName(name);
+		go->attachComponent(pModel);
 
-	// add the data into the maps
-	registerGameObject(name, go);
+		// add the data into the maps
+		registerGameObject(name, go);
+	}
 
 	m_modelLoaders.push_back(m_modelLoader);
 	return pModel;
@@ -118,15 +121,6 @@ void ObjectManager::clear()
 	m_gameObjectMap.clear();
 }
 
-void ObjectManager::gatherModelsInfo()
-{
-	m_modelsInfo.clear();
-	foreach(GameObjectPtr go, m_gameObjectMap.values())
-	{
-		m_modelsInfo.push_back(qMakePair(go->getModel()->fileName(), go.data()));
-	}
-}
-
 GameObjectPtr ObjectManager::createGameObject( const QString& customName, GameObject* parent /*= 0*/ )
 {
 	// check if this object has the same name with another
@@ -140,7 +134,7 @@ GameObjectPtr ObjectManager::createGameObject( const QString& customName, GameOb
 	if (duplication) 
 		name += "_" + QString::number(duplication);
 
-	GameObjectPtr go(new GameObject(parent));
+	GameObjectPtr go(new GameObject(m_scene, parent));
 	go->setObjectName(name);
 
 	registerGameObject(name, go);
@@ -152,4 +146,9 @@ void ObjectManager::deleteObject( const QString& name )
 {
 	if(getGameObject(name)) 
 		m_gameObjectMap.take(name);
+}
+
+Scene* ObjectManager::getScene() const
+{
+	return m_scene;
 }

@@ -15,25 +15,26 @@ public:
 	ObjectManager(Scene* scene);
 	~ObjectManager();
 
+	Scene* getScene() const;
 	void registerGameObject(const QString& name, GameObjectPtr go);
 	GameObjectPtr getGameObject(const QString& name);
 	ModelPtr getModel(const QString& name);
 
 	GameObjectPtr createGameObject(const QString& customName, GameObject* parent = 0);
-	ModelPtr loadModel(const QString& customName, const QString& fileName, GameObject* parent = 0);
+
+	ModelPtr loadModel(const QString& customName, const QString& fileName, 
+						GameObject* parent = 0, bool generateGameObject = true);
+
 	void renderAll(const float currentTime);
 
 	void deleteObject(const QString& name);
 
 	void clear();
-	void gatherModelsInfo();
 
 	QMap<QString, GameObjectPtr> m_gameObjectMap;
-
 	QVector<ModelLoaderPtr> m_modelLoaders;
-	QVector<QPair<QString, GameObject*>> m_modelsInfo;
-
 private:
 	Scene* m_scene;
 };
 
+typedef QSharedPointer<ObjectManager> ObjectManagerPtr;

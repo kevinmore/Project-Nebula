@@ -5,37 +5,108 @@
 /************************************************************************/
 /*                           IO Streams                                 */
 /************************************************************************/
-
 /*
-* Game Object
+* Model (Only need out stream)
 */
-// Order: Position -> Rotation -> Scaling
-QDataStream& operator << (QDataStream& out, GameObject& object)
+// Order: File Name
+QDataStream& operator << (QDataStream& out, ModelPtr object)
 {
-	out << object.position() << object.rotation() << object.scale();
+	out << object->fileName();
 	return out;
 }
 
-QDataStream& operator >> (QDataStream& in, GameObject& object)
+/*
+* Particle System
+*/
+// Order: Mass -> Gravity Factor -> Size -> Rate -> Amount -> MinLife -> MaxLife
+//     -> Force -> MinVel -> MaxVel -> ColorRandom -> Color -> Texture File Name
+QDataStream& operator << (QDataStream& out, ParticleSystemPtr object)
 {
-	vec3 pos, rot, scale;
-	in >> pos >> rot >> scale;
+	qDebug() << "Emit Amount =" << object->getEmitAmount();
+	out << object->getParticleMass() << object->getGravityFactor() << object->getParticleSize()
+		<< object->getEmitRate() << object->getEmitAmount() << object->getMinLife()
+		<< object->getMaxLife() << object->getForce() << object->getMinVel()
+		<< object->getMaxVel() << object->isColorRandom() << object->getParticleColor()
+		<< object->getTextureFileName();
 
-	object.setPosition(pos);
-	object.setRotation(rot);
-	object.setScale(scale);
+	return out;
+}
+
+QDataStream& operator >> (QDataStream& in, ParticleSystemPtr object)
+{
+	float mass, gravitFactor, size, rate, minLife, maxLife;
+	int amount;
+	vec3 force, minVel, maxVel;
+	bool colorRandom;
+	QColor col;
+	QString texFileName;
+
+	in >> mass >> gravitFactor >> size >> rate >> amount >> minLife
+	   >> maxLife >> force >> minVel >> maxVel >> colorRandom >> col >> texFileName;
+
+	object->setParticleMass(mass);
+	object->setGravityFactor(gravitFactor);
+	object->setParticleSize(size);
+	object->setEmitRate(rate);
+	object->setEmitAmount(amount);
+	object->setMinLife(minLife);
+	object->setMaxLife(maxLife);
+	object->setForce(force);
+	object->setMinVel(minVel);
+	object->setMaxVel(maxVel);
+	object->toggleRandomColor(colorRandom);
+	object->setParticleColor(col);
+	object->loadTexture(texFileName);
 
 	return in;
 }
 
-QDataStream& operator << (QDataStream& out, GameObject* object)
+/*
+* Components (Model, Particle System) Only need Out stream
+*/
+
+QDataStream& operator << (QDataStream& out, ComponentPtr object)
 {
-	out << object->position() << object->rotation() << object->scale();
+	if (object->className() == "StaticModel" || object->className() == "RiggedModel")
+	{
+		ModelPtr model = object.dynamicCast<AbstractModel>();
+		out << model;
+	}
+	else if (object->className() == "ParticleSystem")
+	{
+		ParticleSystemPtr ps = object.dynamicCast<ParticleSystem>();
+		out << ps;
+	}
+
 	return out;
 }
 
-QDataStream& operator >> (QDataStream& in, GameObject* object)
+/*
+* Game Object
+*/
+// Order: Object Name -> Transformation (Position -> Rotation -> Scaling) -> Components Count 
+//     -> Component Type -> Each Component
+QDataStream& operator << (QDataStream& out, GameObjectPtr object)
 {
+	out << object->objectName() << object->position() << object->rotation() << object->scale();
+
+	QVector<ComponentPtr> components = object->getComponents();
+	out << components.size();
+
+	foreach(ComponentPtr comp, components)
+	{
+		out << comp->className() << comp;
+	}
+
+	return out;
+}
+
+QDataStream& operator >> (QDataStream& in, GameObjectPtr object)
+{
+	QString name;
+	in >> name;
+	object->setObjectName(name);
+
 	vec3 pos, rot, scale;
 	in >> pos >> rot >> scale;
 
@@ -43,45 +114,63 @@ QDataStream& operator >> (QDataStream& in, GameObject* object)
 	object->setRotation(rot);
 	object->setScale(scale);
 
+	// process the components
+	int numComponents;
+	in >> numComponents;
+
+	for (int i = 0; i < numComponents; ++i)
+	{
+		QString className;
+		in >> className;
+		if (className == "StaticModel" || className == "RiggedModel")
+		{
+			// load a model and attach it to the this game object
+			QString fileName;
+			in >> fileName;
+ 			LoaderThread loader(object->getScene(), fileName, object.data(), object->getScene()->sceneNode(), false);
+		}
+		else if (className == "ParticleSystem")
+		{
+			// create a particle system and attach it to the this game object
+			ParticleSystemPtr ps(new ParticleSystem(object->getScene()));
+			object->attachComponent(ps);
+			ps->initParticleSystem();
+
+			in >> ps;
+		}
+	}
+
 	return in;
 }
 
 /*
-* Model Manager
+* Object Manager
 */
-// Order: Vector Size -> Each Pair(filename, gameobject)
-QDataStream& operator << (QDataStream& out, QSharedPointer<ObjectManager> object)
+// Order: Game Objects Count -> Each Game Object
+QDataStream& operator << (QDataStream& out, ObjectManagerPtr object)
 {
-	int size = object->m_modelsInfo.size();
-	out << size;
+	out << object->m_gameObjectMap.count();
 
-	for (int i = 0; i < size; ++i)
+	foreach(GameObjectPtr go, object->m_gameObjectMap)
 	{
-		out << object->m_modelsInfo[i].first << object->m_modelsInfo[i].second;
+		out << go;
 	}
-	
+
 	return out;
 }
 
-QDataStream& operator >> (QDataStream& in, QSharedPointer<ObjectManager> object)
+QDataStream& operator >> (QDataStream& in, ObjectManagerPtr object)
 {
-	QVector<QPair<QString, GameObject*>> modelsInfoVector;
+	int numGameObjects;
+	in >> numGameObjects;
 
-	int size;
-	in >> size;
-
-	QString fileName;
-
-	object->m_modelsInfo.clear();
-
-	for (int i = 0; i < size; ++i)
+	// create each game object
+	for (int i = 0; i < numGameObjects; ++i)
 	{
-		GameObject* go = new GameObject;
-		in >> fileName >> go;
-
-		object->m_modelsInfo.push_back(qMakePair(fileName, go));
+		GameObjectPtr go = object->getScene()->createEmptyGameObject();
+		in >> go;
 	}
-	
+
 	return in;
 }
 
@@ -115,14 +204,14 @@ QDataStream& operator >> (QDataStream& in, Camera* object)
 // Order: Model Manager -> Camera
 QDataStream& operator << (QDataStream& out, Scene* object)
 {
-	out << object->modelManager() << object->getCamera();
+	out << object->objectManager() << object->getCamera();
 
 	return out;
 }
 
 QDataStream& operator >> (QDataStream& in, Scene* object)
 {
-	in >> object->modelManager() >> object->getCamera();
+	in >> object->objectManager() >> object->getCamera();
 
 	return in;
 }

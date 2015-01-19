@@ -7,7 +7,8 @@ class LoaderThread : public QThread
 	Q_OBJECT
 
 public:
-	LoaderThread(Scene* scene, const QString fileName, GameObject* reference = 0, GameObject* objectParent = 0);
+	LoaderThread(Scene* scene, const QString fileName, GameObject* reference = 0, 
+				GameObject* objectParent = 0, bool generateGameObject = true);
 	~LoaderThread();
 	void run();
 
@@ -16,6 +17,7 @@ private:
 	QString m_fileName;
 	GameObject* m_reference;
 	GameObject* m_objectParent;
+	bool m_shouldGenerateGameObject;
 
 signals:
 	void jobDone();

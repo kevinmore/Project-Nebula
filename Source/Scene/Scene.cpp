@@ -4,14 +4,12 @@
 
 Scene::Scene(QObject* parent)
 	: AbstractScene(parent),
-	  m_sceneRootNode(new GameObject),
 	  m_camera(new Camera(NULL,this)),
 	  m_light("light01"),
 	  m_lightMode(PerFragmentPhong),
 	  m_lightModeSubroutines(LightModeCount),
 	  m_time(0.0f)
 {
-	m_sceneRootNode->setObjectName("Scene Root");
 	// Initializing the lights
 	for(int i = 1; i < LightModeCount; ++i)
 	{
@@ -59,6 +57,8 @@ void Scene::initialize()
 
 	m_stateMachine = new QStateMachine();
 
+	m_sceneRootNode = new GameObject(this);
+	m_sceneRootNode->setObjectName("Scene Root");
 
 	resetToDefaultScene();
 }
@@ -231,7 +231,7 @@ QSharedPointer<MaterialManager> Scene::materialManager()
 	return m_materialManager;
 }
 
-QSharedPointer<ObjectManager> Scene::modelManager()
+QSharedPointer<ObjectManager> Scene::objectManager()
 {
 	return m_objectManager;
 }
@@ -252,7 +252,7 @@ void Scene::resetToDefaultScene()
 	m_camera->resetCamera();
 
 	// load the floor
-	GameObject* floorRef = new GameObject;
+	GameObject* floorRef = new GameObject(this);
 	floorRef->setRotation(-90.0f, 0.0f, 0.0f);
 	LoaderThread loader(this, "../Resource/Models/DemoRoom/floor.DAE", floorRef, m_sceneRootNode);
 }
@@ -293,21 +293,13 @@ void Scene::loadScene( QString& fileName )
 		return;
 	}
 
+	// clear the scene and process it
+	clearScene();
+
 	QDataStream in(&file);
 	in.setVersion(QDataStream::Qt_5_3);
 
 	in >> this;
-
-	// clear the scene and load the models
-	clearScene();
-
-	for (int i = 0; i < m_objectManager->m_modelsInfo.size(); ++i)
-	{
-		QString modelFileName = m_objectManager->m_modelsInfo[i].first;
-		GameObject* go = m_objectManager->m_modelsInfo[i].second;
-
-		LoaderThread loader(this, modelFileName, go, m_sceneRootNode);
-	}
 
 	file.close();
 
@@ -326,8 +318,6 @@ void Scene::saveScene( QString& fileName )
 	QDataStream out(&file);
 	out.setVersion(QDataStream::Qt_5_3);
 
-	m_objectManager->gatherModelsInfo();
-
 	out << this;
 
 	file.flush();
@@ -341,11 +331,13 @@ void Scene::modelLoaded()
 	emit updateHierarchy();
 }
 
-void Scene::createEmptyGameObject()
+GameObjectPtr Scene::createEmptyGameObject(const QString& objectName)
 {
-	m_objectManager->createGameObject("Game Object", m_sceneRootNode);
+	GameObjectPtr go = m_objectManager->createGameObject(objectName, m_sceneRootNode);
 
 	emit updateHierarchy();
+
+	return go;
 }
 
 void Scene::createParticleSystem()
@@ -357,16 +349,4 @@ void Scene::createParticleSystem()
 	ParticleSystemPtr ps(new ParticleSystem(this));
 	ref->attachComponent(ps);
 	ps->initParticleSystem();
-	ps->setEmitterProperties(
-		1.0f,
-		vec3(-20, 20, -20), // Minimal velocity
-		vec3(20, 30, 20), // Maximal velocity
-		vec3(0, 0, 0), // Extra force applied to particles
-		vec3(0.0f, 0.5f, 1.0f), // Color (light blue)
-		3.0f, // Minimum lifetime in seconds
-		5.0f, // Maximum lifetime in seconds
-		0.75f, // Rendered size
-		0.02f, // Spawn every 0.05 seconds
-		30); // And spawn 30 particles
-
 }

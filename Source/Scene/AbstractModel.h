@@ -58,13 +58,14 @@ typedef QSharedPointer<ModelData> ModelDataPtr;
 class AbstractModel : public Component
 {
 public:
-	AbstractModel(const QString& fileName);
+	AbstractModel(const QString& fileName = "");
 	virtual ~AbstractModel() = 0;
 
 	virtual void render(const float currentTime) = 0;
 	virtual QString className() { return "AbstractModel"; }
 
 	QString fileName() const { return m_fileName; }
+	void setFileName(QString& file) { m_fileName = file; }
 
 protected:
 	QString m_fileName;

@@ -3,7 +3,7 @@
 
 AnimatorController::AnimatorController( QSharedPointer<ObjectManager> manager )
 	: m_modelManager(manager),
-	  m_actor(new GameObject)
+	  m_actor(new GameObject(manager->getScene()))
 {
 	m_timer.start();
 }

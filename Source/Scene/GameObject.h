@@ -7,6 +7,8 @@ using namespace Math;
 
 class Component;
 class AbstractModel;
+class Scene;
+
 typedef QSharedPointer<Component> ComponentPtr;
 typedef QSharedPointer<AbstractModel> ModelPtr;
 
@@ -17,7 +19,7 @@ class GameObject : public QObject
 	Q_PROPERTY(vec3 localSpeed READ localSpeed WRITE setSpeed)
 
 public:
-	GameObject(QObject* parent = 0);
+	GameObject(Scene* scene, QObject* parent = 0);
 	~GameObject();
 
 	bool isMoving() const;
@@ -84,6 +86,9 @@ public:
 	void setMovingBehaviour(MovingBehaviour type);
 	MovingBehaviour movingBehaviour() const;
 
+	void setScene(Scene* scene);
+	Scene* getScene() const;
+
 signals:
 	void synchronized();
 
@@ -128,5 +133,7 @@ private:
 	ModelPtr m_model;
 	QVector<ComponentPtr> m_components;
 	int m_renderOrder;
+
+	Scene* m_scene;
 };
 

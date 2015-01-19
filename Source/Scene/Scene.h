@@ -46,7 +46,7 @@ public:
 	QSharedPointer<MeshManager>     meshManager();
 	QSharedPointer<TextureManager>  textureManager();
 	QSharedPointer<MaterialManager> materialManager();
-	QSharedPointer<ObjectManager>    modelManager();
+	QSharedPointer<ObjectManager>    objectManager();
 
 	QStateMachine* getStateMachine() const { return m_stateMachine; }
 	GameObject* sceneNode() const { return m_sceneRootNode; }
@@ -67,7 +67,7 @@ public slots:
 	void showOpenSceneDialog();
 	void showSaveSceneDialog();
 	void modelLoaded();
-	void createEmptyGameObject();
+	GameObjectPtr createEmptyGameObject(const QString& objectName = "Game Object");
 	void createParticleSystem();
 
 signals:
