@@ -253,6 +253,7 @@ void Scene::resetToDefaultScene()
 
 	// load the floor
 	GameObject* floorRef = new GameObject(this);
+	floorRef->setPosition(0, -2, 0);
 	floorRef->setRotation(-90.0f, 0.0f, 0.0f);
 	LoaderThread loader(this, "../Resource/Models/DemoRoom/floor.DAE", floorRef, m_sceneRootNode);
 }
@@ -331,9 +332,9 @@ void Scene::modelLoaded()
 	emit updateHierarchy();
 }
 
-GameObjectPtr Scene::createEmptyGameObject(const QString& objectName)
+GameObjectPtr Scene::createEmptyGameObject()
 {
-	GameObjectPtr go = m_objectManager->createGameObject(objectName, m_sceneRootNode);
+	GameObjectPtr go = m_objectManager->createGameObject("Game Object", m_sceneRootNode);
 
 	emit updateHierarchy();
 

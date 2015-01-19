@@ -56,6 +56,7 @@ public slots:
 	void setForceX(double f) { m_force.setX((float)f); }
 	void setForceY(double f) { m_force.setY((float)f); }
 	void setForceZ(double f) { m_force.setZ((float)f); }
+	void setRestitution(double k) { fRestitution = (float)k; }
 
 	void setMinVelX(double v) { m_minVelocity.setX((float)v); vGenVelocityRange = m_maxVelocity - m_minVelocity;}
 	void setMinVelY(double v) { m_minVelocity.setY((float)v); vGenVelocityRange = m_maxVelocity - m_minVelocity;}
@@ -66,6 +67,7 @@ public slots:
 	void setMaxVelZ(double v) { m_maxVelocity.setZ((float)v); vGenVelocityRange = m_maxVelocity - m_minVelocity;}
 
 	void toggleRandomColor(bool status) { bRandomColor = status; }
+	void toggleCollision(bool status) { bCollisionEnabled = status; }
 
 public:
 	float getParticleMass() const { return m_fParticleMass; }
@@ -78,6 +80,8 @@ public:
 
 	vec3 getForce()  const { return m_force; }
 	void setForce(const vec3& f)  { m_force = f; }
+	bool isCollisionEnabled() const { return bCollisionEnabled; }
+	float getRestitution() const { return fRestitution; }
 
 	vec3 getMinVel() const { return m_minVelocity; }
 	void setMinVel(const vec3& v)  { m_minVelocity = v; vGenVelocityRange = m_maxVelocity - m_minVelocity; }
@@ -116,6 +120,10 @@ private:
 	vec3 vGenPosition;
 	vec3 m_minVelocity, m_maxVelocity, vGenVelocityRange;
 	vec3 m_force;
+	vec3 vPlaneNormal;
+	bool bCollisionEnabled;
+	float fRestitution;
+
 	vec3 vGenColor;
 	bool bRandomColor;
 

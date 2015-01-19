@@ -106,6 +106,10 @@ public:
     QHBoxLayout *horizontalLayout_5;
     QCheckBox *checkBox_RandomColor;
     QGraphicsView *graphicsView_ColorPicker;
+    QLabel *label_16;
+    QCheckBox *checkBox_EnableCollision;
+    QLabel *label_33;
+    QDoubleSpinBox *doubleSpinBox_Restitution;
     QHBoxLayout *horizontalLayout_9;
     QLabel *label_36;
     QGraphicsView *graphicsView_TexturePicker;
@@ -149,7 +153,7 @@ public:
         if (HierarchyViewer->objectName().isEmpty())
             HierarchyViewer->setObjectName(QStringLiteral("HierarchyViewer"));
         HierarchyViewer->setEnabled(true);
-        HierarchyViewer->resize(332, 863);
+        HierarchyViewer->resize(370, 834);
         QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Preferred);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -432,7 +436,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 288, 402));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 326, 407));
         scrollArea->setWidget(scrollAreaWidgetContents);
 
         verticalLayout_6->addWidget(scrollArea);
@@ -447,7 +451,7 @@ public:
         scrollArea_2->setWidgetResizable(true);
         scrollAreaWidgetContents_2 = new QWidget();
         scrollAreaWidgetContents_2->setObjectName(QStringLiteral("scrollAreaWidgetContents_2"));
-        scrollAreaWidgetContents_2->setGeometry(QRect(0, -108, 323, 632));
+        scrollAreaWidgetContents_2->setGeometry(QRect(0, 0, 323, 688));
         verticalLayout_8 = new QVBoxLayout(scrollAreaWidgetContents_2);
         verticalLayout_8->setObjectName(QStringLiteral("verticalLayout_8"));
         gridLayout = new QGridLayout();
@@ -458,7 +462,7 @@ public:
         doubleSpinBox_EmitRate->setSingleStep(0.01);
         doubleSpinBox_EmitRate->setValue(0);
 
-        gridLayout->addWidget(doubleSpinBox_EmitRate, 3, 1, 1, 1);
+        gridLayout->addWidget(doubleSpinBox_EmitRate, 3, 2, 1, 1);
 
         label_13 = new QLabel(scrollAreaWidgetContents_2);
         label_13->setObjectName(QStringLiteral("label_13"));
@@ -475,9 +479,10 @@ public:
         doubleSpinBox_Mass = new QDoubleSpinBox(scrollAreaWidgetContents_2);
         doubleSpinBox_Mass->setObjectName(QStringLiteral("doubleSpinBox_Mass"));
         doubleSpinBox_Mass->setMaximum(1e+06);
+        doubleSpinBox_Mass->setSingleStep(0.5);
         doubleSpinBox_Mass->setValue(0);
 
-        gridLayout->addWidget(doubleSpinBox_Mass, 0, 1, 1, 1);
+        gridLayout->addWidget(doubleSpinBox_Mass, 0, 2, 1, 1);
 
         label_18 = new QLabel(scrollAreaWidgetContents_2);
         label_18->setObjectName(QStringLiteral("label_18"));
@@ -494,17 +499,19 @@ public:
         doubleSpinBox_Size = new QDoubleSpinBox(scrollAreaWidgetContents_2);
         doubleSpinBox_Size->setObjectName(QStringLiteral("doubleSpinBox_Size"));
         doubleSpinBox_Size->setMaximum(1e+06);
+        doubleSpinBox_Size->setSingleStep(0.5);
         doubleSpinBox_Size->setValue(0);
 
-        gridLayout->addWidget(doubleSpinBox_Size, 2, 1, 1, 1);
+        gridLayout->addWidget(doubleSpinBox_Size, 2, 2, 1, 1);
 
         doubleSpinBox_GravityFactor = new QDoubleSpinBox(scrollAreaWidgetContents_2);
         doubleSpinBox_GravityFactor->setObjectName(QStringLiteral("doubleSpinBox_GravityFactor"));
         doubleSpinBox_GravityFactor->setMinimum(-1e+06);
         doubleSpinBox_GravityFactor->setMaximum(1e+06);
-        doubleSpinBox_GravityFactor->setValue(1);
+        doubleSpinBox_GravityFactor->setSingleStep(0.2);
+        doubleSpinBox_GravityFactor->setValue(0);
 
-        gridLayout->addWidget(doubleSpinBox_GravityFactor, 1, 1, 1, 1);
+        gridLayout->addWidget(doubleSpinBox_GravityFactor, 1, 2, 1, 1);
 
         label_17 = new QLabel(scrollAreaWidgetContents_2);
         label_17->setObjectName(QStringLiteral("label_17"));
@@ -539,23 +546,23 @@ public:
         horizontalLayout_15->addWidget(spinBox_EmitAmount);
 
 
-        gridLayout->addLayout(horizontalLayout_15, 4, 1, 1, 1);
+        gridLayout->addLayout(horizontalLayout_15, 4, 2, 1, 1);
 
         doubleSpinBox_MinLife = new QDoubleSpinBox(scrollAreaWidgetContents_2);
         doubleSpinBox_MinLife->setObjectName(QStringLiteral("doubleSpinBox_MinLife"));
         doubleSpinBox_MinLife->setMaximum(1e+06);
-        doubleSpinBox_MinLife->setSingleStep(1);
+        doubleSpinBox_MinLife->setSingleStep(5);
         doubleSpinBox_MinLife->setValue(0);
 
-        gridLayout->addWidget(doubleSpinBox_MinLife, 5, 1, 1, 1);
+        gridLayout->addWidget(doubleSpinBox_MinLife, 5, 2, 1, 1);
 
         doubleSpinBox_MaxLife = new QDoubleSpinBox(scrollAreaWidgetContents_2);
         doubleSpinBox_MaxLife->setObjectName(QStringLiteral("doubleSpinBox_MaxLife"));
         doubleSpinBox_MaxLife->setMaximum(1e+06);
-        doubleSpinBox_MaxLife->setSingleStep(1);
+        doubleSpinBox_MaxLife->setSingleStep(5);
         doubleSpinBox_MaxLife->setValue(0);
 
-        gridLayout->addWidget(doubleSpinBox_MaxLife, 6, 1, 1, 1);
+        gridLayout->addWidget(doubleSpinBox_MaxLife, 6, 2, 1, 1);
 
         label_19 = new QLabel(scrollAreaWidgetContents_2);
         label_19->setObjectName(QStringLiteral("label_19"));
@@ -569,7 +576,7 @@ public:
         label_34->setSizePolicy(sizePolicy2);
         label_34->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
 
-        gridLayout->addWidget(label_34, 7, 0, 1, 1);
+        gridLayout->addWidget(label_34, 9, 0, 1, 1);
 
         horizontalLayout_5 = new QHBoxLayout();
         horizontalLayout_5->setObjectName(QStringLiteral("horizontalLayout_5"));
@@ -590,7 +597,31 @@ public:
         horizontalLayout_5->addWidget(graphicsView_ColorPicker);
 
 
-        gridLayout->addLayout(horizontalLayout_5, 7, 1, 1, 1);
+        gridLayout->addLayout(horizontalLayout_5, 9, 2, 1, 1);
+
+        label_16 = new QLabel(scrollAreaWidgetContents_2);
+        label_16->setObjectName(QStringLiteral("label_16"));
+
+        gridLayout->addWidget(label_16, 7, 0, 1, 1);
+
+        checkBox_EnableCollision = new QCheckBox(scrollAreaWidgetContents_2);
+        checkBox_EnableCollision->setObjectName(QStringLiteral("checkBox_EnableCollision"));
+
+        gridLayout->addWidget(checkBox_EnableCollision, 7, 2, 1, 1);
+
+        label_33 = new QLabel(scrollAreaWidgetContents_2);
+        label_33->setObjectName(QStringLiteral("label_33"));
+
+        gridLayout->addWidget(label_33, 8, 0, 1, 1);
+
+        doubleSpinBox_Restitution = new QDoubleSpinBox(scrollAreaWidgetContents_2);
+        doubleSpinBox_Restitution->setObjectName(QStringLiteral("doubleSpinBox_Restitution"));
+        doubleSpinBox_Restitution->setEnabled(false);
+        doubleSpinBox_Restitution->setMaximum(1);
+        doubleSpinBox_Restitution->setSingleStep(0.1);
+        doubleSpinBox_Restitution->setValue(0);
+
+        gridLayout->addWidget(doubleSpinBox_Restitution, 8, 2, 1, 1);
 
 
         verticalLayout_8->addLayout(gridLayout);
@@ -858,6 +889,7 @@ public:
         retranslateUi(HierarchyViewer);
         QObject::connect(horizontalSlider_EmitAmount, SIGNAL(valueChanged(int)), spinBox_EmitAmount, SLOT(setValue(int)));
         QObject::connect(spinBox_EmitAmount, SIGNAL(valueChanged(int)), horizontalSlider_EmitAmount, SLOT(setValue(int)));
+        QObject::connect(checkBox_EnableCollision, SIGNAL(toggled(bool)), doubleSpinBox_Restitution, SLOT(setEnabled(bool)));
 
         tabWidget->setCurrentIndex(2);
 
@@ -894,6 +926,9 @@ public:
         label_19->setText(QApplication::translate("HierarchyViewer", "Max Life", 0));
         label_34->setText(QApplication::translate("HierarchyViewer", "Color", 0));
         checkBox_RandomColor->setText(QApplication::translate("HierarchyViewer", "Random", 0));
+        label_16->setText(QApplication::translate("HierarchyViewer", "Collision", 0));
+        checkBox_EnableCollision->setText(QApplication::translate("HierarchyViewer", "Enable", 0));
+        label_33->setText(QApplication::translate("HierarchyViewer", "Restitution", 0));
         label_36->setText(QApplication::translate("HierarchyViewer", "Texture", 0));
         label_20->setText(QApplication::translate("HierarchyViewer", "Force", 0));
         label_21->setText(QApplication::translate("HierarchyViewer", "X", 0));

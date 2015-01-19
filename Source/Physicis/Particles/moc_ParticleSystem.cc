@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_ParticleSystem_t {
-    QByteArrayData data[27];
-    char stringdata[248];
+    QByteArrayData data[30];
+    char stringdata[281];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -47,23 +47,27 @@ QT_MOC_LITERAL(14, 114, 10),
 QT_MOC_LITERAL(15, 125, 9),
 QT_MOC_LITERAL(16, 135, 9),
 QT_MOC_LITERAL(17, 145, 9),
-QT_MOC_LITERAL(18, 155, 10),
-QT_MOC_LITERAL(19, 166, 1),
-QT_MOC_LITERAL(20, 168, 10),
-QT_MOC_LITERAL(21, 179, 10),
-QT_MOC_LITERAL(22, 190, 10),
-QT_MOC_LITERAL(23, 201, 10),
-QT_MOC_LITERAL(24, 212, 10),
-QT_MOC_LITERAL(25, 223, 17),
-QT_MOC_LITERAL(26, 241, 6)
+QT_MOC_LITERAL(18, 155, 14),
+QT_MOC_LITERAL(19, 170, 1),
+QT_MOC_LITERAL(20, 172, 10),
+QT_MOC_LITERAL(21, 183, 1),
+QT_MOC_LITERAL(22, 185, 10),
+QT_MOC_LITERAL(23, 196, 10),
+QT_MOC_LITERAL(24, 207, 10),
+QT_MOC_LITERAL(25, 218, 10),
+QT_MOC_LITERAL(26, 229, 10),
+QT_MOC_LITERAL(27, 240, 17),
+QT_MOC_LITERAL(28, 258, 6),
+QT_MOC_LITERAL(29, 265, 15)
     },
     "ParticleSystem\0setParticleMass\0\0m\0"
     "setGravityFactor\0f\0setParticleSize\0s\0"
     "setEmitRate\0r\0setEmitAmount\0a\0setMinLife\0"
     "l\0setMaxLife\0setForceX\0setForceY\0"
-    "setForceZ\0setMinVelX\0v\0setMinVelY\0"
-    "setMinVelZ\0setMaxVelX\0setMaxVelY\0"
-    "setMaxVelZ\0toggleRandomColor\0status"
+    "setForceZ\0setRestitution\0k\0setMinVelX\0"
+    "v\0setMinVelY\0setMinVelZ\0setMaxVelX\0"
+    "setMaxVelY\0setMaxVelZ\0toggleRandomColor\0"
+    "status\0toggleCollision"
 };
 #undef QT_MOC_LITERAL
 
@@ -73,7 +77,7 @@ static const uint qt_meta_data_ParticleSystem[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      17,   14, // methods
+      19,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -81,23 +85,25 @@ static const uint qt_meta_data_ParticleSystem[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    1,   99,    2, 0x0a /* Public */,
-       4,    1,  102,    2, 0x0a /* Public */,
-       6,    1,  105,    2, 0x0a /* Public */,
-       8,    1,  108,    2, 0x0a /* Public */,
-      10,    1,  111,    2, 0x0a /* Public */,
-      12,    1,  114,    2, 0x0a /* Public */,
-      14,    1,  117,    2, 0x0a /* Public */,
-      15,    1,  120,    2, 0x0a /* Public */,
-      16,    1,  123,    2, 0x0a /* Public */,
-      17,    1,  126,    2, 0x0a /* Public */,
-      18,    1,  129,    2, 0x0a /* Public */,
-      20,    1,  132,    2, 0x0a /* Public */,
-      21,    1,  135,    2, 0x0a /* Public */,
-      22,    1,  138,    2, 0x0a /* Public */,
-      23,    1,  141,    2, 0x0a /* Public */,
-      24,    1,  144,    2, 0x0a /* Public */,
-      25,    1,  147,    2, 0x0a /* Public */,
+       1,    1,  109,    2, 0x0a /* Public */,
+       4,    1,  112,    2, 0x0a /* Public */,
+       6,    1,  115,    2, 0x0a /* Public */,
+       8,    1,  118,    2, 0x0a /* Public */,
+      10,    1,  121,    2, 0x0a /* Public */,
+      12,    1,  124,    2, 0x0a /* Public */,
+      14,    1,  127,    2, 0x0a /* Public */,
+      15,    1,  130,    2, 0x0a /* Public */,
+      16,    1,  133,    2, 0x0a /* Public */,
+      17,    1,  136,    2, 0x0a /* Public */,
+      18,    1,  139,    2, 0x0a /* Public */,
+      20,    1,  142,    2, 0x0a /* Public */,
+      22,    1,  145,    2, 0x0a /* Public */,
+      23,    1,  148,    2, 0x0a /* Public */,
+      24,    1,  151,    2, 0x0a /* Public */,
+      25,    1,  154,    2, 0x0a /* Public */,
+      26,    1,  157,    2, 0x0a /* Public */,
+      27,    1,  160,    2, 0x0a /* Public */,
+      29,    1,  163,    2, 0x0a /* Public */,
 
  // slots: parameters
     QMetaType::Void, QMetaType::Double,    3,
@@ -111,12 +117,14 @@ static const uint qt_meta_data_ParticleSystem[] = {
     QMetaType::Void, QMetaType::Double,    5,
     QMetaType::Void, QMetaType::Double,    5,
     QMetaType::Void, QMetaType::Double,   19,
-    QMetaType::Void, QMetaType::Double,   19,
-    QMetaType::Void, QMetaType::Double,   19,
-    QMetaType::Void, QMetaType::Double,   19,
-    QMetaType::Void, QMetaType::Double,   19,
-    QMetaType::Void, QMetaType::Double,   19,
-    QMetaType::Void, QMetaType::Bool,   26,
+    QMetaType::Void, QMetaType::Double,   21,
+    QMetaType::Void, QMetaType::Double,   21,
+    QMetaType::Void, QMetaType::Double,   21,
+    QMetaType::Void, QMetaType::Double,   21,
+    QMetaType::Void, QMetaType::Double,   21,
+    QMetaType::Void, QMetaType::Double,   21,
+    QMetaType::Void, QMetaType::Bool,   28,
+    QMetaType::Void, QMetaType::Bool,   28,
 
        0        // eod
 };
@@ -136,13 +144,15 @@ void ParticleSystem::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
         case 7: _t->setForceX((*reinterpret_cast< double(*)>(_a[1]))); break;
         case 8: _t->setForceY((*reinterpret_cast< double(*)>(_a[1]))); break;
         case 9: _t->setForceZ((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 10: _t->setMinVelX((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 11: _t->setMinVelY((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 12: _t->setMinVelZ((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 13: _t->setMaxVelX((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 14: _t->setMaxVelY((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 15: _t->setMaxVelZ((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 16: _t->toggleRandomColor((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 10: _t->setRestitution((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 11: _t->setMinVelX((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 12: _t->setMinVelY((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 13: _t->setMinVelZ((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 14: _t->setMaxVelX((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 15: _t->setMaxVelY((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 16: _t->setMaxVelZ((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 17: _t->toggleRandomColor((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 18: _t->toggleCollision((*reinterpret_cast< bool(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -175,13 +185,13 @@ int ParticleSystem::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 17)
+        if (_id < 19)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 17;
+        _id -= 19;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 17)
+        if (_id < 19)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 17;
+        _id -= 19;
     }
     return _id;
 }

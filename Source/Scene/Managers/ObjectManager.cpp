@@ -123,6 +123,7 @@ void ObjectManager::clear()
 
 GameObjectPtr ObjectManager::createGameObject( const QString& customName, GameObject* parent /*= 0*/ )
 {
+
 	// check if this object has the same name with another
 	QString name = customName;
 	int duplication = 0;
@@ -138,7 +139,8 @@ GameObjectPtr ObjectManager::createGameObject( const QString& customName, GameOb
 	go->setObjectName(name);
 
 	registerGameObject(name, go);
-
+	
+	
 	return go;
 }
 

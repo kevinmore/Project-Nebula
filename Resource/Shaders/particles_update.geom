@@ -26,6 +26,9 @@ uniform float fParticleMass; // Mass of the particle
 uniform float fGravityFactor; // Factor which determines how much gravity would influence the particle
 uniform vec3 vGenPosition; // Position where new particles are spawned
 uniform vec3 vForce; // Gravity vector for particles - updates velocity of particles 
+uniform int iCollisionEnabled; // 1 means enable collision detection, 0 means disable
+uniform float fRestitution; // Determines how much veclocity is preserved when collided
+uniform vec3 vPlaneNormal; // The normal vector of the plane for collision detection
 uniform vec3 vGenVelocityMin; // Velocity of new particle - from min to (min+range)
 uniform vec3 vGenVelocityRange;
 
@@ -61,12 +64,24 @@ void main()
   vPositionOut = vPositionPass[0];
   vVelocityOut = vVelocityPass[0];
 
+  // a normal particle
   if(iTypePass[0] != 0)
   {
     vec3 netForce = vForce + fParticleMass * fGravityFactor * vec3(0, -9.8, 0);
 	vec3 acc = netForce * (1/fParticleMass);  // calculate the accelaration
 	vVelocityOut += acc * fTimePassed; // update the velocity
     vPositionOut += vVelocityOut * fTimePassed; // update the position
+
+	// collision handling (assume it's the x-z plane)
+	if(iCollisionEnabled == 1)
+	{
+		// velocity projection on the normal direction
+		float fVelocityNormalProjection = dot(vec3(0, 1, 0), vVelocityOut);
+		if( dot(vPositionOut - vec3(0, 0, 0), vec3(0, 1, 0)) < 0.0 && fVelocityNormalProjection < 0.0)
+		{
+			vVelocityOut.y -= (1 + fRestitution) * fVelocityNormalProjection;
+		}
+	}
   }
 
   vColorOut = vColorPass[0];

@@ -19,30 +19,30 @@ QDataStream& operator << (QDataStream& out, ModelPtr object)
 * Particle System
 */
 // Order: Mass -> Gravity Factor -> Size -> Rate -> Amount -> MinLife -> MaxLife
-//     -> Force -> MinVel -> MaxVel -> ColorRandom -> Color -> Texture File Name
+//     -> Force -> CollisionEnabled -> Restitution -> MinVel -> MaxVel -> ColorRandom -> Color -> Texture File Name
 QDataStream& operator << (QDataStream& out, ParticleSystemPtr object)
 {
-	qDebug() << "Emit Amount =" << object->getEmitAmount();
 	out << object->getParticleMass() << object->getGravityFactor() << object->getParticleSize()
 		<< object->getEmitRate() << object->getEmitAmount() << object->getMinLife()
-		<< object->getMaxLife() << object->getForce() << object->getMinVel()
-		<< object->getMaxVel() << object->isColorRandom() << object->getParticleColor()
-		<< object->getTextureFileName();
+		<< object->getMaxLife() << object->getForce() << object->isCollisionEnabled() << object->getRestitution()
+		<<  object->getMinVel() << object->getMaxVel() << object->isColorRandom() 
+		<< object->getParticleColor() << object->getTextureFileName();
 
 	return out;
 }
 
 QDataStream& operator >> (QDataStream& in, ParticleSystemPtr object)
 {
-	float mass, gravitFactor, size, rate, minLife, maxLife;
+	float mass, gravitFactor, size, rate, minLife, maxLife, restitution;
 	int amount;
 	vec3 force, minVel, maxVel;
-	bool colorRandom;
+	bool colorRandom, collisionEnabled;
 	QColor col;
 	QString texFileName;
 
 	in >> mass >> gravitFactor >> size >> rate >> amount >> minLife
-	   >> maxLife >> force >> minVel >> maxVel >> colorRandom >> col >> texFileName;
+	   >> maxLife >> force >> collisionEnabled >> restitution 
+	   >> minVel >> maxVel >> colorRandom >> col >> texFileName;
 
 	object->setParticleMass(mass);
 	object->setGravityFactor(gravitFactor);
@@ -52,6 +52,7 @@ QDataStream& operator >> (QDataStream& in, ParticleSystemPtr object)
 	object->setMinLife(minLife);
 	object->setMaxLife(maxLife);
 	object->setForce(force);
+	object->toggleCollision(collisionEnabled);
 	object->setMinVel(minVel);
 	object->setMaxVel(maxVel);
 	object->toggleRandomColor(colorRandom);
@@ -168,7 +169,13 @@ QDataStream& operator >> (QDataStream& in, ObjectManagerPtr object)
 	for (int i = 0; i < numGameObjects; ++i)
 	{
 		GameObjectPtr go = object->getScene()->createEmptyGameObject();
+		QString autoName = go->objectName();
 		in >> go;
+		// rename this game object
+		// delete the current one
+		go = object->m_gameObjectMap.take(autoName);
+		// add the new record
+		object->m_gameObjectMap[go->objectName()] = go;
 	}
 
 	return in;

@@ -221,6 +221,8 @@ void HierarchyWidget::disconnectPreviousObject()
 	disconnect(ui->doubleSpinBox_MaxVelocityY,	SIGNAL(valueChanged(double)), 0, 0);
 	disconnect(ui->doubleSpinBox_MaxVelocityZ,	SIGNAL(valueChanged(double)), 0, 0);
 	disconnect(ui->checkBox_RandomColor,			SIGNAL(toggled(bool)),		  0, 0);
+	disconnect(ui->checkBox_EnableCollision, SIGNAL(toggled(bool)), 0, 0);
+	disconnect(ui->doubleSpinBox_Restitution,	SIGNAL(valueChanged(double)), 0, 0);
 }
 
 void HierarchyWidget::renameGameObject( QTreeWidgetItem * item, int column )
@@ -278,6 +280,8 @@ void HierarchyWidget::connectParticleSystemTab(ParticleSystemPtr ps)
 	connect(ui->spinBox_EmitAmount,			 SIGNAL(valueChanged(int)),	   ui->horizontalSlider_EmitAmount, SLOT(setValue(int)));
 	connect(ui->horizontalSlider_EmitAmount,	 SIGNAL(valueChanged(int)),	   ui->spinBox_EmitAmount, SLOT(setValue(int)));
 	connect(ui->checkBox_RandomColor, SIGNAL(toggled(bool)), ps.data(), SLOT(toggleRandomColor(bool)));
+	connect(ui->checkBox_EnableCollision, SIGNAL(toggled(bool)), ps.data(), SLOT(toggleCollision(bool)));
+	connect(ui->doubleSpinBox_Restitution,	 SIGNAL(valueChanged(double)), ps.data(), SLOT(setRestitution(double)));
 }
 
 void HierarchyWidget::readParticleSystemConfig( ParticleSystemPtr ps )
@@ -302,6 +306,8 @@ void HierarchyWidget::readParticleSystemConfig( ParticleSystemPtr ps )
 	ui->doubleSpinBox_MaxVelocityZ->setValue(ps->getMaxVel().z());
 	ui->graphicsView_ColorPicker->setBackgroundBrush(QBrush(ps->getParticleColor(), Qt::DiagCrossPattern));
 	ui->checkBox_RandomColor->setChecked(ps->isColorRandom());
+	ui->checkBox_EnableCollision->setChecked(ps->isCollisionEnabled());
+	ui->doubleSpinBox_Restitution->setValue(ps->getRestitution());
 
 	// displays the particle texture
 	ui->graphicsView_TexturePicker->scene()->clear();

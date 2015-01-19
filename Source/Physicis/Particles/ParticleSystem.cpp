@@ -110,6 +110,14 @@ void ParticleSystem::updateParticles( float fTimePassed )
 	particleUpdater->getShaderProgram()->setUniformValue("vGenVelocityRange", rotation.rotatedVector(vGenVelocityRange));
 	particleUpdater->getShaderProgram()->setUniformValue("vForce", m_force);
 
+	if (bCollisionEnabled)
+	{
+		particleUpdater->getShaderProgram()->setUniformValue("iCollisionEnabled", 1);
+		particleUpdater->getShaderProgram()->setUniformValue("fRestitution", fRestitution);
+	}
+	else
+		particleUpdater->getShaderProgram()->setUniformValue("iCollisionEnabled", 0);
+
 	if (bRandomColor)
 		particleUpdater->getShaderProgram()->setUniformValue("vGenColor", Math::Random::randUnitVec3());
 	else
@@ -260,13 +268,15 @@ void ParticleSystem::resetEmitter()
 	vGenVelocityRange = m_maxVelocity - m_minVelocity;
 	
 	m_force = Math::Vector3D::ZERO;
+	bCollisionEnabled = false;
+	fRestitution = 1.0f;
 
 	bRandomColor = false;
 	vGenColor = vec3(0, 0.5, 1);
 	m_fGenSize = 0.75f;
 	
-	m_fMinLife = 3.0f;
-	m_fMaxLife = 5.0f;
+	m_fMinLife = 8.0f;
+	m_fMaxLife = 10.0f;
 	fGenLifeRange = m_fMaxLife - m_fMinLife;
 	
 	m_fEmitRate = 0.02f;

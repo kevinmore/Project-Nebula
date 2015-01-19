@@ -67,7 +67,7 @@ public slots:
 	void showOpenSceneDialog();
 	void showSaveSceneDialog();
 	void modelLoaded();
-	GameObjectPtr createEmptyGameObject(const QString& objectName = "Game Object");
+	GameObjectPtr createEmptyGameObject();
 	void createParticleSystem();
 
 signals:
