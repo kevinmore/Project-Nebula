@@ -13,7 +13,7 @@
 
 class Scene;
 
-class RiggedModel : public AbstractModel
+class RiggedModel : public AbstractModel, protected QOpenGLFunctions_4_3_Core
 {
 public:
 	RiggedModel(const QString& name, Scene* scene, ShadingTechnique* tech, Skeleton* skeleton);
@@ -62,7 +62,6 @@ private:
 
 	GLuint m_vao;
 
-	QOpenGLFunctions_4_3_Core* m_funcs;
 	Scene* m_scene;
 	ShadingTechnique* m_RenderingEffect;
 	bool m_hasAnimation;

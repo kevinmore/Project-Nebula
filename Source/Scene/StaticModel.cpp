@@ -47,12 +47,7 @@ void StaticModel::initRenderingEffect()
 
 void StaticModel::initialize(QVector<ModelDataPtr> modelDataVector)
 {
-	QOpenGLContext* context = QOpenGLContext::currentContext();
-
-	Q_ASSERT(context);
-
-	m_funcs = context->versionFunctions<QOpenGLFunctions_4_3_Core>();
-	m_funcs->initializeOpenGLFunctions();
+	Q_ASSERT(initializeOpenGLFunctions());
 
 	initRenderingEffect();
 
@@ -199,9 +194,9 @@ void StaticModel::drawElements(unsigned int index, int mode)
 {
 	// Mode has not been implemented yet
 	Q_UNUSED(mode);
-	m_funcs->glBindVertexArray(m_vao);
+	glBindVertexArray(m_vao);
 
-	m_funcs->glDrawElementsBaseVertex(
+	glDrawElementsBaseVertex(
 		GL_TRIANGLES,
 		m_meshes[index]->getNumIndices(),
 		GL_UNSIGNED_INT,
@@ -210,5 +205,5 @@ void StaticModel::drawElements(unsigned int index, int mode)
 		);
 
 	// Make sure the VAO is not changed from the outside    
-	m_funcs->glBindVertexArray(0);
+	glBindVertexArray(0);
 }

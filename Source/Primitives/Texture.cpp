@@ -9,8 +9,7 @@ Texture::Texture(const QString& fileName, TextureType type, TextureUsage usage)
 	  m_fileName(fileName),
 	  m_type(type),
 	  m_usage(usage),
-	  m_textureId(0),
-	  m_funcs(nullptr)
+	  m_textureId(0)
 {
 	init();
 	load();
@@ -22,8 +21,7 @@ Texture::Texture(const QImage& image, TextureType type, TextureUsage usage)
 	m_fileName(""),
 	m_type(type),
 	m_usage(usage),
-	m_textureId(0),
-	m_funcs(nullptr)
+	m_textureId(0)
 {
 	init();
 	load();
@@ -33,23 +31,18 @@ Texture::Texture(const QImage& image, TextureType type, TextureUsage usage)
 Texture::~Texture()
 {
 	if(QOpenGLContext::currentContext())
- 		m_funcs->glDeleteTextures(1, &m_textureId);
+ 		glDeleteTextures(1, &m_textureId);
 }
 
 void Texture::init()
 {
-	QOpenGLContext* context = QOpenGLContext::currentContext();
-
-	Q_ASSERT(context);
-
-	m_funcs = context->versionFunctions<QOpenGLFunctions_4_3_Core>();
-	m_funcs->initializeOpenGLFunctions();
+	Q_ASSERT(initializeOpenGLFunctions());
 }
 
 bool Texture::load()
 {
-	m_funcs->glGenTextures(1, &m_textureId);
-	m_funcs->glBindTexture(m_type, m_textureId);
+	glGenTextures(1, &m_textureId);
+	glBindTexture(m_type, m_textureId);
 
 	// use image magick
 	if(!m_fileName.isEmpty())
@@ -93,9 +86,9 @@ bool Texture::load()
 			);
 	}
 
-	m_funcs->glTexParameterf(m_type, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	m_funcs->glTexParameterf(m_type, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	m_funcs->glBindTexture(m_type, 0);
+	glTexParameterf(m_type, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameterf(m_type, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glBindTexture(m_type, 0);
 
 	//qDebug() << "Loaded texture:" << m_fileName;
 
@@ -106,20 +99,20 @@ void Texture::destroy()
 {
 	if(m_textureId)
 	{
-		m_funcs->glDeleteTextures(1, &m_textureId);
+		glDeleteTextures(1, &m_textureId);
 		m_textureId = 0;
 	}
 }
 
 void Texture::bind(GLenum textureUnit)
 {
-	m_funcs->glActiveTexture(textureUnit);
-	m_funcs->glBindTexture(m_type, m_textureId);
+	glActiveTexture(textureUnit);
+	glBindTexture(m_type, m_textureId);
 }
 
 void Texture::release()
 {
-	m_funcs->glBindTexture(m_type, 0);
+	glBindTexture(m_type, 0);
 }
 
 QPixmap Texture::generateQPixmap()

@@ -27,22 +27,14 @@ Scene::~Scene()
 
 void Scene::initialize()
 {
-	m_funcs = QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions_4_3_Core>();
+	Q_ASSERT(initializeOpenGLFunctions());
 
-	if( ! m_funcs )
-	{
-		qFatal("Requires OpenGL >= 4.3");
-		exit(1);
-	}
+	glClearDepth( 1.0 );
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LEQUAL);
+	glClearColor(0.39f, 0.39f, 0.39f, 0.0f);
 
-	m_funcs->initializeOpenGLFunctions();
-
-	m_funcs->glClearDepth( 1.0 );
-	m_funcs->glEnable(GL_DEPTH_TEST);
-	m_funcs->glDepthFunc(GL_LEQUAL);
-	m_funcs->glClearColor(0.39f, 0.39f, 0.39f, 0.0f);
-
-	m_funcs->glEnable(GL_CULL_FACE);
+	glEnable(GL_CULL_FACE);
 
 //     m_light.setType(Light::SpotLight);
 //     m_light.setUniqueColor(1.0, 1.0, 1.0);
@@ -71,7 +63,7 @@ void Scene::update(float currentTime)
 
 	m_camera->update(dt);
 
-	m_funcs->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// render all
 	m_objectManager->renderAll(currentTime);
@@ -130,7 +122,7 @@ void Scene::update(float currentTime)
 void Scene::render(double currentTime)
 {
 	// Set the fragment shader light mode subroutine
-//     m_funcs->glUniformSubroutinesuiv(GL_FRAGMENT_SHADER, 1, &m_lightModeSubroutines[m_lightMode]);
+//     glUniformSubroutinesuiv(GL_FRAGMENT_SHADER, 1, &m_lightModeSubroutines[m_lightMode]);
 // 
 // 	if(currentTime > 0)
 // 	{

@@ -17,7 +17,7 @@
 
 typedef QSharedPointer<QOpenGLShaderProgram> ShadersProgramPtr;
 
-class Scene : public AbstractScene
+class Scene : public AbstractScene, protected QOpenGLFunctions_4_3_Core
 {
 	Q_OBJECT
 
@@ -97,7 +97,6 @@ private:
 	LightMode       m_lightMode;
 	QVector<GLuint> m_lightModeSubroutines;
 
-	QOpenGLFunctions_4_3_Core* m_funcs;
 	QVector<vec3> m_path;
 
 	QStateMachine* m_stateMachine;

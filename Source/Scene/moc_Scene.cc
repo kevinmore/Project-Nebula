@@ -180,6 +180,8 @@ void *Scene::qt_metacast(const char *_clname)
     if (!_clname) return 0;
     if (!strcmp(_clname, qt_meta_stringdata_Scene.stringdata))
         return static_cast<void*>(const_cast< Scene*>(this));
+    if (!strcmp(_clname, "QOpenGLFunctions_4_3_Core"))
+        return static_cast< QOpenGLFunctions_4_3_Core*>(const_cast< Scene*>(this));
     return AbstractScene::qt_metacast(_clname);
 }
 

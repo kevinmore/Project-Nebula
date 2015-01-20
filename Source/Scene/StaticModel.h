@@ -10,7 +10,7 @@
 
 class Scene;
 
-class StaticModel : public AbstractModel
+class StaticModel : public AbstractModel, protected QOpenGLFunctions_4_3_Core
 {
 public:
 	StaticModel(const QString& name, Scene* scene, ShadingTechnique* tech);
@@ -45,7 +45,6 @@ private:
 
 	GLuint m_vao;
 
-	QOpenGLFunctions_4_3_Core* m_funcs;
 	Scene* m_scene;
 	ShadingTechnique* m_RenderingEffect;
 };

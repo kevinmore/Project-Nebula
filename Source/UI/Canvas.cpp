@@ -78,6 +78,7 @@ void Canvas::initializeGL()
  */
 void Canvas::paintGL()
 {
+	// only renders the exposed canvas
     if(isExposed())
     {
         m_context->makeCurrent(this);

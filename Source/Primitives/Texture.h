@@ -9,7 +9,7 @@
 #define SHADOW_TEXTURE_UNIT GL_TEXTURE1
 #define NORMAL_TEXTURE_UNIT GL_TEXTURE2
 
-class Texture
+class Texture : protected QOpenGLFunctions_4_3_Core
 {
 
 public:
@@ -58,8 +58,6 @@ private:
 	TextureType m_type;
 	TextureUsage m_usage;
 	GLuint      m_textureId;
-
-	QOpenGLFunctions_4_3_Core *m_funcs;
 };
 
 typedef QSharedPointer<Texture> TexturePtr;
