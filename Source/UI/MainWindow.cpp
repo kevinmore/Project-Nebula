@@ -65,14 +65,16 @@ void MainWindow::initializeMenuBar()
 	// ############ File Menu ############
 	QMenu *fileMenu = menuBar()->addMenu("&File");
 
-	QAction *loadModelAction = new QAction("&Load Model", this);
-	fileMenu->addAction(loadModelAction);
-
 	QAction *openSceneAction = new QAction("&Open Scene", this);
 	fileMenu->addAction(openSceneAction);
 
 	QAction *saveAction = new QAction("&Save Scene", this);
 	fileMenu->addAction(saveAction);
+
+	fileMenu->addSeparator();
+
+	QAction *loadModelAction = new QAction("&Load Model", this);
+	fileMenu->addAction(loadModelAction);
 
 	fileMenu->addSeparator();
 
@@ -118,6 +120,12 @@ void MainWindow::initializeMenuBar()
 	toggleStateMachineViewer->setText("Show State Machine");
 	windowMenu->addAction(toggleStateMachineViewer);
 
+	// ############ Preference Menu ############
+	QMenu *prefMenu = menuBar()->addMenu("&Preference");
+
+	QAction *bGAction = new QAction("Back Ground Color", this);
+	prefMenu->addAction(bGAction);
+
 	// ############ System Menu ############
 	QMenu *sytemMenu = menuBar()->addMenu("&System");
 	
@@ -152,6 +160,7 @@ void MainWindow::initializeMenuBar()
 	connect(systemLogAction,  SIGNAL(triggered()),     this,    SLOT(showSystemLog()));
 	connect(writeLogAction,   SIGNAL(triggered(bool)), LogCenter::instance(), SLOT(toggleWriteToFile(bool)));
 	connect(gpuInfoAction,    SIGNAL(triggered()),     m_canvas.data(), SLOT(showGPUInfo()));
+	connect(bGAction,    SIGNAL(triggered()),     this, SLOT(showBackGroundColorPicker()));
 }
 
 void MainWindow::initializeRightDockableArea()
@@ -545,4 +554,10 @@ void MainWindow::showMessage( QtMsgType type, const QMessageLogContext &context,
 void MainWindow::showSystemLog()
 {
 	QDesktopServices::openUrl(QUrl::fromLocalFile("./Log.log"));
+}
+
+void MainWindow::showBackGroundColorPicker()
+{
+	QColor col = QColorDialog::getColor();
+	if(col.isValid()) m_scene->setBackGroundColor(col);
 }

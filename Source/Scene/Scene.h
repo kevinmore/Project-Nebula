@@ -50,6 +50,7 @@ public:
 
 	QStateMachine* getStateMachine() const { return m_stateMachine; }
 	GameObject* sceneNode() const { return m_sceneRootNode; }
+	void setBackGroundColor(const QColor& col);
 
 public slots:
 	void toggleFill(bool state);

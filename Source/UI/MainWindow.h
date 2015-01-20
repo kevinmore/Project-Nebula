@@ -34,6 +34,7 @@ private slots:
 	void updateTop(double top);
 	void showMessage(QtMsgType type, const QMessageLogContext &context, const QString &msg);
 	void showSystemLog();
+	void showBackGroundColorPicker();
 
 private:
 	QScopedPointer<Canvas> m_canvas;

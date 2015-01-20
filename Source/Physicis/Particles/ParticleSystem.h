@@ -7,7 +7,6 @@
 #include <Primitives/Component.h>
 #include <Primitives/Texture.h>
 #include <Scene/ShadingTechniques/ParticleTechnique.h>
-
 class Particle
 {
 public:
@@ -20,6 +19,8 @@ public:
 };
 
 class Scene;
+class GameObject;
+typedef QSharedPointer<GameObject> GameObjectPtr;
 class ParticleSystem : public Component, protected QOpenGLFunctions_4_3_Core
 {
 	Q_OBJECT
@@ -37,6 +38,7 @@ public:
 	virtual void render(const float currentTime);
 
 	void resetEmitter();
+	void assingCollisionObject(GameObjectPtr collider);
 
 	void ClearAllParticles();
 	bool ReleaseParticleSystem();
@@ -120,6 +122,9 @@ private:
 	vec3 vGenPosition;
 	vec3 m_minVelocity, m_maxVelocity, vGenVelocityRange;
 	vec3 m_force;
+
+	GameObjectPtr m_collider;
+	vec3 vPlanePoint;
 	vec3 vPlaneNormal;
 	bool bCollisionEnabled;
 	float fRestitution;

@@ -113,6 +113,18 @@ void ParticleSystem::updateParticles( float fTimePassed )
 	if (bCollisionEnabled)
 	{
 		particleUpdater->getShaderProgram()->setUniformValue("iCollisionEnabled", 1);
+		if(m_collider)
+		{
+			vec3 rot = m_collider->rotation();
+			QQuaternion rotation = QQuaternion::fromAxisAndAngle(Math::Vector3D::UNIT_X, rot.x())
+				* QQuaternion::fromAxisAndAngle(Math::Vector3D::UNIT_Y, rot.y())
+				* QQuaternion::fromAxisAndAngle(Math::Vector3D::UNIT_Z, rot.z());
+
+			vPlaneNormal = rotation.rotatedVector(Math::Vector3D::UNIT_Z);
+			vPlanePoint = m_collider->position();
+		}
+		particleUpdater->getShaderProgram()->setUniformValue("vPlaneNormal", vPlaneNormal);
+		particleUpdater->getShaderProgram()->setUniformValue("vPlanePoint", vPlanePoint);
 		particleUpdater->getShaderProgram()->setUniformValue("fRestitution", fRestitution);
 	}
 	else
@@ -232,14 +244,19 @@ int ParticleSystem::getAliveParticles()
 
 QColor ParticleSystem::getParticleColor() const
 {
-	return QColor(vGenColor.x() * 255, vGenColor.y() * 255, vGenColor.z() * 255);
+	QColor col;
+	col.setRedF(vGenColor.x());
+	col.setGreenF(vGenColor.y());
+	col.setBlueF(vGenColor.z());
+
+	return col;
 }
 
 void ParticleSystem::setParticleColor( const QColor& col )
 {
-	vGenColor.setX(col.red()/255.0f); 
-	vGenColor.setY(col.green()/255.0f); 
-	vGenColor.setZ(col.blue()/255.0f);
+	vGenColor.setX(col.redF()); 
+	vGenColor.setY(col.greenF()); 
+	vGenColor.setZ(col.blueF());
 }
 
 void ParticleSystem::loadTexture( const QString& fileName )
@@ -269,6 +286,8 @@ void ParticleSystem::resetEmitter()
 	
 	m_force = Math::Vector3D::ZERO;
 	bCollisionEnabled = false;
+	vPlanePoint = Math::Vector3D::ZERO;
+	vPlaneNormal = Math::Vector3D::UNIT_Y;
 	fRestitution = 1.0f;
 
 	bRandomColor = false;
@@ -282,4 +301,9 @@ void ParticleSystem::resetEmitter()
 	m_fEmitRate = 0.02f;
 	
 	m_EmitAmount = 30;
+}
+
+void ParticleSystem::assingCollisionObject( GameObjectPtr collider )
+{
+	m_collider = collider;
 }

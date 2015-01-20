@@ -29,6 +29,7 @@ uniform vec3 vForce; // Gravity vector for particles - updates velocity of parti
 uniform int iCollisionEnabled; // 1 means enable collision detection, 0 means disable
 uniform float fRestitution; // Determines how much veclocity is preserved when collided
 uniform vec3 vPlaneNormal; // The normal vector of the plane for collision detection
+uniform vec3 vPlanePoint; // An arbitury point on the plane
 uniform vec3 vGenVelocityMin; // Velocity of new particle - from min to (min+range)
 uniform vec3 vGenVelocityRange;
 
@@ -68,7 +69,7 @@ void main()
   if(iTypePass[0] != 0)
   {
     vec3 netForce = vForce + fParticleMass * fGravityFactor * vec3(0, -9.8, 0);
-	vec3 acc = netForce * (1/fParticleMass);  // calculate the accelaration
+	vec3 acc = netForce * (1/(fParticleMass + 0.00001f));  // calculate the accelaration(in case the mass is 0)
 	vVelocityOut += acc * fTimePassed; // update the velocity
     vPositionOut += vVelocityOut * fTimePassed; // update the position
 
@@ -76,10 +77,11 @@ void main()
 	if(iCollisionEnabled == 1)
 	{
 		// velocity projection on the normal direction
-		float fVelocityNormalProjection = dot(vec3(0, 1, 0), vVelocityOut);
-		if( dot(vPositionOut - vec3(0, 0, 0), vec3(0, 1, 0)) < 0.0 && fVelocityNormalProjection < 0.0)
+		float fVelocityNormalProjection = dot(vPlaneNormal, vVelocityOut);
+		if( dot(vPositionOut - vPlanePoint, vPlaneNormal) < 0.0 && fVelocityNormalProjection < 0.0)
 		{
-			vVelocityOut.y -= (1 + fRestitution) * fVelocityNormalProjection;
+			//mv1^2 = k*mv0^2
+			vVelocityOut = sqrt(fRestitution) * (vVelocityOut - 2 * fVelocityNormalProjection * vPlaneNormal);
 		}
 	}
   }

@@ -32,7 +32,6 @@ void Scene::initialize()
 	glClearDepth( 1.0 );
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
-	glClearColor(0.39f, 0.39f, 0.39f, 0.0f);
 
 	glEnable(GL_CULL_FACE);
 
@@ -240,6 +239,7 @@ void Scene::clearScene()
 
 void Scene::resetToDefaultScene()
 {
+	glClearColor(0.39f, 0.39f, 0.39f, 0.0f);
 	clearScene();
 	m_camera->resetCamera();
 
@@ -342,4 +342,10 @@ void Scene::createParticleSystem()
 	ParticleSystemPtr ps(new ParticleSystem(this));
 	ref->attachComponent(ps);
 	ps->initParticleSystem();
+	ps->assingCollisionObject(m_objectManager->getGameObject("floor"));
+}
+
+void Scene::setBackGroundColor( const QColor& col )
+{
+	glClearColor(col.redF(), col.greenF(), col.blueF(), 0.0f);
 }
