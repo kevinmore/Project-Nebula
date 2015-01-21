@@ -37,7 +37,7 @@ ModelLoader::~ModelLoader()
 	}
 }
 
-QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName, bool autoShader )
+QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName, Technique* existingTech )
 {
 	clear();
 
@@ -118,7 +118,8 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName, bool auto
 	}
 
 	// install the shader
-	if(autoShader) installShader();
+	if(!existingTech) installShader();
+	else m_shaderProgramID = existingTech->getShaderProgram()->programId();
 	
 	// prepare the vertex buffers (position, texcoord, normal, tangents...)
 	prepareVertexBuffers();

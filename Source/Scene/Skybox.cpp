@@ -39,7 +39,7 @@ bool Skybox::init(const QString& PosXFilename,
 									  NegZFilename);
 
 	ModelLoader loader;
-	QVector<ModelDataPtr> modelDataVector = loader.loadModel("../Resource/Models/Common/sphere.obj", false);
+	QVector<ModelDataPtr> modelDataVector = loader.loadModel("../Resource/Models/Common/sphere.obj", m_skyboxTechnique);
 	m_vao = loader.getVAO();
 
 	// traverse modelData vector
