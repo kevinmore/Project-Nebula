@@ -18,6 +18,7 @@ public:
 	~CubemapTexture();
 
 	void bind(GLenum textureUnit);
+	QVector<QPixmap> getQPixmaps() const { return m_qpixmaps; }
 
 private:
 	void init();
@@ -28,6 +29,7 @@ private:
 	Magick::Blob  m_blob;
 
 	QVector<QString> m_fileNames;
+	QVector<QPixmap> m_qpixmaps;
 	GLuint m_textureId;
 };
 

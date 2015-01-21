@@ -1,5 +1,6 @@
 #include "CubeMapTexture.h"
 #include <QDebug>
+#include <QPixmap>
 
 static const GLenum types[6] = 
 {  GL_TEXTURE_CUBE_MAP_POSITIVE_X,
@@ -48,6 +49,11 @@ bool CubemapTexture::load()
 			m_image.read(m_fileNames[i].toStdString());
 			m_image.magick("RGBA");
 			m_image.write(&m_blob);
+
+			QImage im(static_cast<const uchar *>(m_blob.data()), m_image.columns(), m_image.rows(), QImage::Format_ARGB32);
+			QPixmap pix;
+			pix.convertFromImage(im);
+			m_qpixmaps.push_back(pix);
 		}
 		catch (Magick::Error& e) 
 		{

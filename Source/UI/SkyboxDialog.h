@@ -1,6 +1,7 @@
 #pragma once
 #include <QDialog>
 #include <Scene/Skybox.h>
+#include <QGraphicsView>
 
 namespace Ui {
 	class Dialog;
@@ -18,7 +19,10 @@ public slots:
 	void setSkyboxTextures();
 
 private:
+	void unfoldSkybox();
+
 	Ui::Dialog *ui;
 	Skybox* m_skybox;
+	QVector<QGraphicsView*> m_views;
 };
 
