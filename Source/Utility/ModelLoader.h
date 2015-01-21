@@ -26,7 +26,7 @@ public:
 	/*
 	 *	This is the core functionality
 	 */
-	QVector<ModelDataPtr> loadModel(const QString& filename, Technique* existingTech = 0);
+	QVector<ModelDataPtr> loadModel(const QString& filename, GLuint shaderProgramID = 0);
 
 
 	/*
@@ -53,7 +53,7 @@ private:
 	void loadBones(uint MeshIndex, const aiMesh* paiMesh);
 	void prepareVertexContainers(unsigned int index, const aiMesh* mesh);
 	void generateSkeleton(aiNode* pAiRootNode, Bone* pRootSkeleton, mat4& parentTransform);
-	void installShader();
+	GLuint installShader();
 
 	/*
 	 *	Clean up
@@ -90,6 +90,7 @@ private:
 		POS_VB,
 		NORMAL_VB,
 		TANGENT_VB,
+		COLOR_VB,
 		TEXCOORD_VB,
 		BONE_VB,
 		NUM_VBs            

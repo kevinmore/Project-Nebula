@@ -25,11 +25,6 @@
     <ClCompile Include="Scene\moc_Scene.cc" />
     <ClCompile Include="Scene\GameObject.cpp" />
     <ClCompile Include="Scene\moc_GameObject.cc" />
-    <ClCompile Include="Animation\StateMachine\AnimatorController.cpp" />
-    <ClCompile Include="Animation\StateMachine\AnimatorPanel.cpp" />
-    <ClCompile Include="Animation\StateMachine\moc_AnimatorController.cc" />
-    <ClCompile Include="Animation\StateMachine\moc_NPCController.cc" />
-    <ClCompile Include="Animation\StateMachine\NPCController.cpp" />
     <ClCompile Include="Scene\ShadingTechniques\ShadowMapFBO.cpp" />
     <ClCompile Include="Scene\Camera.cpp" />
     <ClCompile Include="Scene\moc_Camera.cc" />
@@ -75,7 +70,6 @@
     <ClInclude Include="Animation\IK\FABRIKSolver.h" />
     <ClInclude Include="Animation\IK\CCDIKSolver.h" />
     <ClInclude Include="Animation\Rig\Pose.h" />
-    <ClInclude Include="Animation\StateMachine\AnimatorPanel.h" />
     <ClInclude Include="Scene\ShadingTechniques\ShadowMapFBO.h" />
     <ClInclude Include="Utility\EngineCommon.h" />
     <ClInclude Include="Scene\ShadingTechniques\Technique.h" />
@@ -91,8 +85,6 @@
   <ItemGroup>
     <QtMOC Include="Scene\Scene.h" />
     <QtMOC Include="Scene\GameObject.h" />
-    <QtMOC Include="Animation\StateMachine\NPCController.h" />
-    <QtMOC Include="Animation\StateMachine\AnimatorController.h" />
     <QtMOC Include="Scene\Camera.h" />
     <QtMOC Include="Utility\LoaderThread.h" />
     <QtMOC Include="UI\MainWindow.h" />

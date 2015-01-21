@@ -39,7 +39,7 @@ bool Skybox::init(const QString& PosXFilename,
 									  NegZFilename);
 
 	ModelLoader loader;
-	QVector<ModelDataPtr> modelDataVector = loader.loadModel("../Resource/Models/Common/sphere.obj", m_skyboxTechnique);
+	QVector<ModelDataPtr> modelDataVector = loader.loadModel("../Resource/Models/Common/sphere.obj", m_skyboxTechnique->getShaderProgram()->programId());
 	m_vao = loader.getVAO();
 
 	// traverse modelData vector
@@ -63,7 +63,7 @@ void Skybox::render( const float currentTime )
 {
 	m_skyboxTechnique->enable();
 	QMatrix4x4 modelMatrix;
-	modelMatrix.scale(20, 20, 20);
+	//modelMatrix.translate(m_scene->getCamera()->position());
 	QMatrix4x4 modelViewMatrix = m_scene->getCamera()->viewMatrix() * modelMatrix;
 
 	GLint OldCullFaceMode;

@@ -37,7 +37,7 @@ ModelLoader::~ModelLoader()
 	}
 }
 
-QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName, Technique* existingTech )
+QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName, GLuint shaderProgramID )
 {
 	clear();
 
@@ -118,9 +118,8 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName, Technique
 	}
 
 	// install the shader
-	if(!existingTech) installShader();
-	else m_shaderProgramID = existingTech->getShaderProgram()->programId();
-	
+	m_shaderProgramID = shaderProgramID ? shaderProgramID : installShader();
+
 	// prepare the vertex buffers (position, texcoord, normal, tangents...)
 	prepareVertexBuffers();
 
@@ -202,7 +201,7 @@ void ModelLoader::prepareVertexContainers(unsigned int index, const aiMesh* mesh
 	}
 }
 
-void ModelLoader::installShader()
+GLuint ModelLoader::installShader()
 {
 	QString shaderName, shaderPrefix, shaderFeatures;
 	ShadingTechnique::ShaderType shaderType;
@@ -231,7 +230,8 @@ void ModelLoader::installShader()
 	{
 		qWarning() << shaderName << "may not be initialized successfully.";
 	}
-	m_shaderProgramID = m_effect->getShaderProgram()->programId();
+
+	return m_effect->getShaderProgram()->programId();
 }
 
 void ModelLoader::prepareVertexBuffers()
@@ -255,27 +255,35 @@ void ModelLoader::prepareVertexBuffers()
 	glGenBuffers(m_Buffers.size(), m_Buffers.data());
 
 	// Generate and populate the buffers with vertex attributes and the indices
+	GLuint POSITION_LOCATION = glGetAttribLocation(m_shaderProgramID, "Position");
 	glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[POS_VB]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(m_positions[0]) * m_positions.size(), m_positions.data(), usage);
-	GLuint POSITION_LOCATION = glGetAttribLocation(m_shaderProgramID, "Position");
 	glEnableVertexAttribArray(POSITION_LOCATION);
 	glVertexAttribPointer(POSITION_LOCATION, 3, GL_FLOAT, GL_FALSE, 0, 0);    
 
+
+	GLuint COLOR_LOCATION = glGetAttribLocation(m_shaderProgramID, "Color");
+	glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[COLOR_VB]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(m_colors[0]) * m_colors.size(), m_colors.data(), usage);
+	glEnableVertexAttribArray(COLOR_LOCATION);
+	glVertexAttribPointer(COLOR_LOCATION, 4, GL_FLOAT, GL_FALSE, 0, 0);
+
+
+	GLuint TEX_COORD_LOCATION = glGetAttribLocation(m_shaderProgramID, "TexCoord");
 	glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[TEXCOORD_VB]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(m_texCoords[0]) * m_texCoords.size(), m_texCoords.data(), usage);
-	GLuint TEX_COORD_LOCATION = glGetAttribLocation(m_shaderProgramID, "TexCoord");
 	glEnableVertexAttribArray(TEX_COORD_LOCATION);
 	glVertexAttribPointer(TEX_COORD_LOCATION, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
+	GLuint NORMAL_LOCATION = glGetAttribLocation(m_shaderProgramID, "Normal");
 	glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[NORMAL_VB]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(m_normals[0]) * m_normals.size(), m_normals.data(), usage);
-	GLuint NORMAL_LOCATION = glGetAttribLocation(m_shaderProgramID, "Normal");
 	glEnableVertexAttribArray(NORMAL_LOCATION);
 	glVertexAttribPointer(NORMAL_LOCATION, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
+	GLuint TANGENT_LOCATION = glGetAttribLocation(m_shaderProgramID, "Tangent");
 	glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[TANGENT_VB]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(m_tangents[0]) * m_tangents.size(), m_tangents.data(), usage);
-	GLuint TANGENT_LOCATION = glGetAttribLocation(m_shaderProgramID, "Tangent");
 	glEnableVertexAttribArray(TANGENT_LOCATION);
 	glVertexAttribPointer(TANGENT_LOCATION, 3, GL_FLOAT, GL_FALSE, 0, 0);
 

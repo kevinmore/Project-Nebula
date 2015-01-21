@@ -40,8 +40,8 @@ bool SkyboxTechnique::compileShader()
 	m_WVPLocation = getUniformLocation("gWVP");
 	m_textureLocation = getUniformLocation("gCubemapTexture");
 
-	if (m_WVPLocation == INVALID_UNIFORM_LOCATION ||
-		m_textureLocation == INVALID_UNIFORM_LOCATION) {
+	if (m_WVPLocation == INVALID_LOCATION ||
+		m_textureLocation == INVALID_LOCATION) {
 			return false;
 	}
 

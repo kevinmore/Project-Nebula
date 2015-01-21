@@ -4,7 +4,7 @@
 #include <QOpenGLFunctions_4_3_Core>
 #include <QOpenGLShaderProgram>
 
-#define INVALID_UNIFORM_LOCATION 0xffffffff
+#define INVALID_LOCATION 0xffffffff
 
 typedef QSharedPointer<QOpenGLShaderProgram> QOpenGLShaderProgramPtr;
 //typedef QSharedPointer<QOpenGLVertexArrayObject> QOpenGLVertexArrayObjectPtr;

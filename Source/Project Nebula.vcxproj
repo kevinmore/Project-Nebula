@@ -12,15 +12,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animation\FK\FKController.cpp" />
-    <ClCompile Include="Animation\StateMachine\moc_AnimatorController.cc" />
-    <ClCompile Include="Animation\StateMachine\moc_NPCController.cc" />
     <ClCompile Include="Animation\Rig\Skeleton.cpp" />
     <ClCompile Include="Animation\IK\FABRIKSolver.cpp" />
     <ClCompile Include="Animation\IK\CCDIKSolver.cpp" />
     <ClCompile Include="Animation\Rig\Pose.cpp" />
-    <ClCompile Include="Animation\StateMachine\AnimatorController.cpp" />
-    <ClCompile Include="Animation\StateMachine\AnimatorPanel.cpp" />
-    <ClCompile Include="Animation\StateMachine\NPCController.cpp" />
     <ClCompile Include="Primitives\CubeMapTexture.cpp" />
     <ClCompile Include="Physicis\Particles\moc_ParticleSystem.cc" />
     <ClCompile Include="Scene\ShadingTechniques\ParticleTechnique.cpp" />
@@ -81,9 +76,6 @@
     <ClInclude Include="Scene\Skybox.h" />
     <ClInclude Include="UI\ui_HierarchyWidget.h" />
     <ClInclude Include="Utility\Serialization.h" />
-    <QtMOC Include="Animation\StateMachine\AnimatorController.h" />
-    <ClInclude Include="Animation\StateMachine\AnimatorPanel.h" />
-    <QtMOC Include="Animation\StateMachine\NPCController.h" />
     <QtMOC Include="Utility\LoaderThread.h" />
     <ClInclude Include="Scene\Managers\ObjectManager.h" />
     <ClInclude Include="Scene\RiggedModel.h" />

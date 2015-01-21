@@ -53,38 +53,38 @@ bool ShadingTechnique::compileShader()
 
 	if (m_shaderFileName.contains("bump"))
 	{
-		if (m_dirLightLocation.AmbientIntensity == INVALID_UNIFORM_LOCATION ||
-			m_WVPLocation == INVALID_UNIFORM_LOCATION ||
-			m_WorldMatrixLocation == INVALID_UNIFORM_LOCATION ||
-			m_colorTextureLocation == INVALID_UNIFORM_LOCATION ||
-			m_shadowMapLocation == INVALID_UNIFORM_LOCATION ||
-			m_normalMapLocation == INVALID_UNIFORM_LOCATION ||
-			m_eyeWorldPosLocation == INVALID_UNIFORM_LOCATION ||
-			m_dirLightLocation.Color == INVALID_UNIFORM_LOCATION ||
-			m_dirLightLocation.DiffuseIntensity == INVALID_UNIFORM_LOCATION ||
-			m_dirLightLocation.Direction == INVALID_UNIFORM_LOCATION ||
-			m_matSpecularIntensityLocation == INVALID_UNIFORM_LOCATION ||
-			m_matSpecularPowerLocation == INVALID_UNIFORM_LOCATION ||
-			m_numPointLightsLocation == INVALID_UNIFORM_LOCATION ||
-			m_numSpotLightsLocation == INVALID_UNIFORM_LOCATION) {
+		if (m_dirLightLocation.AmbientIntensity == INVALID_LOCATION ||
+			m_WVPLocation == INVALID_LOCATION ||
+			m_WorldMatrixLocation == INVALID_LOCATION ||
+			m_colorTextureLocation == INVALID_LOCATION ||
+			m_shadowMapLocation == INVALID_LOCATION ||
+			m_normalMapLocation == INVALID_LOCATION ||
+			m_eyeWorldPosLocation == INVALID_LOCATION ||
+			m_dirLightLocation.Color == INVALID_LOCATION ||
+			m_dirLightLocation.DiffuseIntensity == INVALID_LOCATION ||
+			m_dirLightLocation.Direction == INVALID_LOCATION ||
+			m_matSpecularIntensityLocation == INVALID_LOCATION ||
+			m_matSpecularPowerLocation == INVALID_LOCATION ||
+			m_numPointLightsLocation == INVALID_LOCATION ||
+			m_numSpotLightsLocation == INVALID_LOCATION) {
 				return false;
 		}
 	}
 	else
 	{
-		if (m_dirLightLocation.AmbientIntensity == INVALID_UNIFORM_LOCATION ||
-			m_WVPLocation == INVALID_UNIFORM_LOCATION ||
-			m_WorldMatrixLocation == INVALID_UNIFORM_LOCATION ||
-			m_colorTextureLocation == INVALID_UNIFORM_LOCATION ||
-			m_shadowMapLocation == INVALID_UNIFORM_LOCATION ||
-			m_eyeWorldPosLocation == INVALID_UNIFORM_LOCATION ||
-			m_dirLightLocation.Color == INVALID_UNIFORM_LOCATION ||
-			m_dirLightLocation.DiffuseIntensity == INVALID_UNIFORM_LOCATION ||
-			m_dirLightLocation.Direction == INVALID_UNIFORM_LOCATION ||
-			m_matSpecularIntensityLocation == INVALID_UNIFORM_LOCATION ||
-			m_matSpecularPowerLocation == INVALID_UNIFORM_LOCATION ||
-			m_numPointLightsLocation == INVALID_UNIFORM_LOCATION ||
-			m_numSpotLightsLocation == INVALID_UNIFORM_LOCATION) {
+		if (m_dirLightLocation.AmbientIntensity == INVALID_LOCATION ||
+			m_WVPLocation == INVALID_LOCATION ||
+			m_WorldMatrixLocation == INVALID_LOCATION ||
+			m_colorTextureLocation == INVALID_LOCATION ||
+			m_shadowMapLocation == INVALID_LOCATION ||
+			m_eyeWorldPosLocation == INVALID_LOCATION ||
+			m_dirLightLocation.Color == INVALID_LOCATION ||
+			m_dirLightLocation.DiffuseIntensity == INVALID_LOCATION ||
+			m_dirLightLocation.Direction == INVALID_LOCATION ||
+			m_matSpecularIntensityLocation == INVALID_LOCATION ||
+			m_matSpecularPowerLocation == INVALID_LOCATION ||
+			m_numPointLightsLocation == INVALID_LOCATION ||
+			m_numSpotLightsLocation == INVALID_LOCATION) {
 				return false;
 		}
 	}
@@ -113,13 +113,13 @@ bool ShadingTechnique::compileShader()
 		SNPRINTF(Name, sizeof(Name), "gPointLights[%d].Atten.Exp", i);
 		m_pointLightsLocation[i].Atten.Exp = getUniformLocation(Name);
 
-		if (m_pointLightsLocation[i].Color == INVALID_UNIFORM_LOCATION ||
-			m_pointLightsLocation[i].AmbientIntensity == INVALID_UNIFORM_LOCATION ||
-			m_pointLightsLocation[i].Position == INVALID_UNIFORM_LOCATION ||
-			m_pointLightsLocation[i].DiffuseIntensity == INVALID_UNIFORM_LOCATION ||
-			m_pointLightsLocation[i].Atten.Constant == INVALID_UNIFORM_LOCATION ||
-			m_pointLightsLocation[i].Atten.Linear == INVALID_UNIFORM_LOCATION ||
-			m_pointLightsLocation[i].Atten.Exp == INVALID_UNIFORM_LOCATION) {
+		if (m_pointLightsLocation[i].Color == INVALID_LOCATION ||
+			m_pointLightsLocation[i].AmbientIntensity == INVALID_LOCATION ||
+			m_pointLightsLocation[i].Position == INVALID_LOCATION ||
+			m_pointLightsLocation[i].DiffuseIntensity == INVALID_LOCATION ||
+			m_pointLightsLocation[i].Atten.Constant == INVALID_LOCATION ||
+			m_pointLightsLocation[i].Atten.Linear == INVALID_LOCATION ||
+			m_pointLightsLocation[i].Atten.Exp == INVALID_LOCATION) {
 				return false;
 		}
 	}
@@ -154,15 +154,15 @@ bool ShadingTechnique::compileShader()
 		SNPRINTF(Name, sizeof(Name), "gSpotLights[%d].Base.Atten.Exp", i);
 		m_spotLightsLocation[i].Atten.Exp = getUniformLocation(Name);
 
-		if (m_spotLightsLocation[i].Color == INVALID_UNIFORM_LOCATION ||
-			m_spotLightsLocation[i].AmbientIntensity == INVALID_UNIFORM_LOCATION ||
-			m_spotLightsLocation[i].Position == INVALID_UNIFORM_LOCATION ||
-			m_spotLightsLocation[i].Direction == INVALID_UNIFORM_LOCATION ||
-			m_spotLightsLocation[i].Cutoff == INVALID_UNIFORM_LOCATION ||
-			m_spotLightsLocation[i].DiffuseIntensity == INVALID_UNIFORM_LOCATION ||
-			m_spotLightsLocation[i].Atten.Constant == INVALID_UNIFORM_LOCATION ||
-			m_spotLightsLocation[i].Atten.Linear == INVALID_UNIFORM_LOCATION ||
-			m_spotLightsLocation[i].Atten.Exp == INVALID_UNIFORM_LOCATION) {
+		if (m_spotLightsLocation[i].Color == INVALID_LOCATION ||
+			m_spotLightsLocation[i].AmbientIntensity == INVALID_LOCATION ||
+			m_spotLightsLocation[i].Position == INVALID_LOCATION ||
+			m_spotLightsLocation[i].Direction == INVALID_LOCATION ||
+			m_spotLightsLocation[i].Cutoff == INVALID_LOCATION ||
+			m_spotLightsLocation[i].DiffuseIntensity == INVALID_LOCATION ||
+			m_spotLightsLocation[i].Atten.Constant == INVALID_LOCATION ||
+			m_spotLightsLocation[i].Atten.Linear == INVALID_LOCATION ||
+			m_spotLightsLocation[i].Atten.Exp == INVALID_LOCATION) {
 				return false;
 		}
 	}
