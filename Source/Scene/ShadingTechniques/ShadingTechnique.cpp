@@ -1,5 +1,4 @@
 #include <limits.h>
-#include <string>
 #include <assert.h>
 #include "ShadingTechnique.h"
 #include <QtMath>

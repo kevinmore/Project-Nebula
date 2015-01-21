@@ -23,7 +23,7 @@ Camera::Camera(GameObject* followingTarget, QObject *parent)
 	m_viewCenterFixed(true),
 	m_panAngle(0.0f),
 	m_tiltAngle(0.0f),
-	m_metersToUnits(0.1f),
+	m_metersPerUnits(0.1f),
 	m_isFollowing(true),
 	m_followingTarget(followingTarget)
 {
@@ -475,7 +475,7 @@ void Camera::update( const float dt )
 			tiltAboutViewCenter(m_tiltAngle);
 			m_tiltAngle = 0.0f;
 		}
-		translate(m_viewDirection * dt * m_metersToUnits, option);
+		translate(m_viewDirection * dt * m_metersPerUnits, option);
 		if(m_followingTarget) translateWorld(m_followingTarget->globalSpeed() * dt, option);
 	}
 	else
@@ -491,7 +491,7 @@ void Camera::update( const float dt )
 			tilt(m_tiltAngle);
 			m_tiltAngle = 0.0f;
 		}
-		translate(m_viewDirection * dt * m_metersToUnits, option);
+		translate(m_viewDirection * dt * m_metersPerUnits, option);
 	}
 
 }
@@ -506,4 +506,13 @@ void Camera::switchToThirdPersonCamera( bool status )
 {
 	if (status) followTarget(m_followingTarget);
 	else releaseTarget();
+}
+
+void Camera::smoothTransform( const QVector3D& targetPos, float duration /*= 0.5*/ )
+{
+	vec3 to = targetPos - m_position;
+	float dis = to.length();
+	vec3 dir = to.normalized();
+
+	vec3 speed = to/duration;
 }

@@ -14,6 +14,7 @@
 #include <Animation/StateMachine/AnimatorController.h>
 #include <Animation/StateMachine/NPCController.h>
 #include <Physicis/Particles/ParticleSystem.h>
+#include <Scene/Skybox.h>
 
 typedef QSharedPointer<QOpenGLShaderProgram> ShadersProgramPtr;
 
@@ -104,5 +105,6 @@ private:
 	AnimatorController* m_playerController;
 	QVector<NPCController*> m_NPCs;
 	ParticleSystem* m_particleSystem;
+	Skybox* m_skybox;
 };
 

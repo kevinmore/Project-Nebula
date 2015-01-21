@@ -1,7 +1,6 @@
 #include <Primitives/Texture.h>
 #include <QDebug>
 #include <QGLWidget>
-#include <QOpenGLContext>
 
 Texture::Texture(const QString& fileName, TextureType type, TextureUsage usage)
 	: m_qimage(),
@@ -30,7 +29,7 @@ Texture::Texture(const QImage& image, TextureType type, TextureUsage usage)
 
 Texture::~Texture()
 {
-	if(QOpenGLContext::currentContext())
+	if(QOpenGLContext::currentContext() && m_textureId != 0)
  		glDeleteTextures(1, &m_textureId);
 }
 

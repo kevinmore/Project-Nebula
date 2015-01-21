@@ -51,6 +51,15 @@ void Scene::initialize()
 	m_sceneRootNode = new GameObject(this);
 	m_sceneRootNode->setObjectName("Scene Root");
 
+	m_skybox = new Skybox(this);
+	m_skybox->init(
+		"../Resource/Textures/skybox/sp3right.jpg",
+		"../Resource/Textures/skybox/sp3left.jpg",
+		"../Resource/Textures/skybox/sp3top.jpg",
+		"../Resource/Textures/skybox/sp3bot.jpg",
+		"../Resource/Textures/skybox/sp3front.jpg",
+		"../Resource/Textures/skybox/sp3back.jpg");
+
 	resetToDefaultScene();
 }
 
@@ -64,6 +73,7 @@ void Scene::update(float currentTime)
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	m_skybox->render(currentTime);
 	// render all
 	m_objectManager->renderAll(currentTime);
 

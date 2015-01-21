@@ -85,6 +85,9 @@ public:
 	// Translate relative to world axes
 	void translateWorld(const QVector3D& vWorld, CameraTranslationOption option = TranslateViewCenter);
 
+	// Translate smoothly with a given duration
+	void smoothTransform(const QVector3D& targetPos, float duration = 0.5);
+
 	void tilt(const float& angle);
 	void roll(const float& angle);
 
@@ -158,6 +161,6 @@ private:
 	float m_panAngle;
 	float m_tiltAngle;
 
-	const float m_metersToUnits;
+	const float m_metersPerUnits;
 };
 

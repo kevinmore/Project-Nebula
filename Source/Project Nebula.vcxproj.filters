@@ -49,6 +49,9 @@
     <ClCompile Include="Physicis\Particles\ParticleSystem.cpp" />
     <ClCompile Include="Scene\ShadingTechniques\ParticleTechnique.cpp" />
     <ClCompile Include="Physicis\Particles\moc_ParticleSystem.cc" />
+    <ClCompile Include="Primitives\CubeMapTexture.cpp" />
+    <ClCompile Include="Scene\ShadingTechniques\SkyboxTechnique.cpp" />
+    <ClCompile Include="Scene\Skybox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Primitives\Texture.h" />
@@ -81,6 +84,9 @@
     <ClInclude Include="Scene\Managers\ObjectManager.h" />
     <ClInclude Include="Primitives\Component.h" />
     <ClInclude Include="Scene\ShadingTechniques\ParticleTechnique.h" />
+    <ClInclude Include="Primitives\CubeMapTexture.h" />
+    <ClInclude Include="Scene\ShadingTechniques\SkyboxTechnique.h" />
+    <ClInclude Include="Scene\Skybox.h" />
   </ItemGroup>
   <ItemGroup>
     <QtMOC Include="Scene\Scene.h" />

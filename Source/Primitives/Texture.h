@@ -36,7 +36,6 @@ public:
 
 	void bind(GLenum textureUnit);
 	void release();
-	void destroy();
 
 	TextureType type() const { return m_type; }
 	TextureUsage usage() const { return m_usage; }
@@ -48,6 +47,7 @@ public:
 private:
 	void init();
 	bool load();
+	void destroy();
 
 	QImage m_qimage;
 
@@ -57,7 +57,7 @@ private:
 	QString m_fileName;
 	TextureType m_type;
 	TextureUsage m_usage;
-	GLuint      m_textureId;
+	GLuint m_textureId;
 };
 
 typedef QSharedPointer<Texture> TexturePtr;

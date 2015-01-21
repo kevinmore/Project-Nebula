@@ -5,6 +5,7 @@
 
 ModelLoader::ModelLoader()
 {
+	m_effect = nullptr;
 	initializeOpenGLFunctions();
 }
 
@@ -36,7 +37,7 @@ ModelLoader::~ModelLoader()
 	}
 }
 
-QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName )
+QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName, bool autoShader )
 {
 	clear();
 
@@ -117,7 +118,7 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName )
 	}
 
 	// install the shader
-	installShader();
+	if(autoShader) installShader();
 	
 	// prepare the vertex buffers (position, texcoord, normal, tangents...)
 	prepareVertexBuffers();
@@ -296,7 +297,7 @@ void ModelLoader::prepareVertexBuffers()
 
 	// Make sure the VAO is not changed from the outside
 	glBindVertexArray(0);
-	m_effect->setVAO(m_VAO);
+	if(m_effect) m_effect->setVAO(m_VAO);
 }
 
 void ModelLoader::loadBones( uint MeshIndex, const aiMesh* paiMesh )

@@ -1,6 +1,5 @@
 #include "RiggedModel.h"
 #include <Scene/Scene.h>
-#include <QOpenGLContext>
 #include <Animation/Rig/Pose.h>
 
 RiggedModel::RiggedModel(const QString& name, Scene* scene, ShadingTechnique* tech, Skeleton* skeleton)
@@ -213,7 +212,7 @@ void RiggedModel::render( const float currentTime )
 	QMatrix4x4 modelMatrix = m_actor->modelMatrix();
 	modelMatrix.rotate(90, Math::Vector3D::UNIT_X); // this is for dae files
 	QMatrix4x4 modelViewMatrix = m_scene->getCamera()->viewMatrix() * modelMatrix;
-	QMatrix3x3 normalMatrix = modelViewMatrix.normalMatrix();
+	//QMatrix3x3 normalMatrix = modelViewMatrix.normalMatrix();
 
 	m_RenderingEffect->setEyeWorldPos(m_scene->getCamera()->position());
 	m_RenderingEffect->setWVP(m_scene->getCamera()->projectionMatrix() * modelViewMatrix);

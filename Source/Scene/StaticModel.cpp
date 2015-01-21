@@ -1,6 +1,5 @@
 #include "StaticModel.h"
 #include <Scene/Scene.h>
-#include <QOpenGLContext>
 
 StaticModel::StaticModel(const QString& name, Scene* scene, ShadingTechnique* tech)
   : AbstractModel(name),
@@ -125,7 +124,7 @@ void StaticModel::render( float time )
 	QMatrix4x4 modelMatrix = m_actor->modelMatrix();
 	
 	QMatrix4x4 modelViewMatrix = m_scene->getCamera()->viewMatrix() * modelMatrix;
-	QMatrix3x3 normalMatrix = modelViewMatrix.normalMatrix();
+	//QMatrix3x3 normalMatrix = modelViewMatrix.normalMatrix();
 	m_RenderingEffect->setEyeWorldPos(m_scene->getCamera()->position());
 	m_RenderingEffect->setWVP(m_scene->getCamera()->projectionMatrix() * modelViewMatrix);
 	m_RenderingEffect->setWorldMatrix(modelMatrix); 

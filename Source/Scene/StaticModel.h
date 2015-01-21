@@ -1,6 +1,5 @@
 #pragma once
 #include <QOpenGLFunctions_4_3_Core>
-#include <QOpenGLShaderProgram>
 #include <Scene/AbstractModel.h>
 #include <Scene/Managers/MeshManager.h>
 #include <Scene/Managers/MaterialManager.h>

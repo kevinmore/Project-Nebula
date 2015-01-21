@@ -26,7 +26,7 @@ public:
 	/*
 	 *	This is the core functionality
 	 */
-	QVector<ModelDataPtr> loadModel(const QString& filename);
+	QVector<ModelDataPtr> loadModel(const QString& filename, bool autoShader = true);
 
 
 	/*

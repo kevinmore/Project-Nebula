@@ -21,10 +21,13 @@
     <ClCompile Include="Animation\StateMachine\AnimatorController.cpp" />
     <ClCompile Include="Animation\StateMachine\AnimatorPanel.cpp" />
     <ClCompile Include="Animation\StateMachine\NPCController.cpp" />
+    <ClCompile Include="Primitives\CubeMapTexture.cpp" />
     <ClCompile Include="Physicis\Particles\moc_ParticleSystem.cc" />
     <ClCompile Include="Scene\ShadingTechniques\ParticleTechnique.cpp" />
     <ClCompile Include="Physicis\Particles\ParticleSystem.cpp" />
     <ClCompile Include="Primitives\Component.cpp" />
+    <ClCompile Include="Scene\ShadingTechniques\SkyboxTechnique.cpp" />
+    <ClCompile Include="Scene\Skybox.cpp" />
     <ClCompile Include="Utility\LogCenter.cpp" />
     <ClCompile Include="UI\Canvas.cpp" />
     <ClCompile Include="UI\HierarchyWidget.cpp" />
@@ -70,9 +73,12 @@
     <QtMOC Include="UI\HierarchyWidget.h" />
     <QtMOC Include="UI\MainWindow.h" />
     <QtMOC Include="Utility\LogCenter.h" />
+    <ClInclude Include="Primitives\CubeMapTexture.h" />
     <ClInclude Include="Scene\ShadingTechniques\ParticleTechnique.h" />
     <QtMOC Include="Physicis\Particles\ParticleSystem.h" />
     <ClInclude Include="Primitives\Component.h" />
+    <ClInclude Include="Scene\ShadingTechniques\SkyboxTechnique.h" />
+    <ClInclude Include="Scene\Skybox.h" />
     <ClInclude Include="UI\ui_HierarchyWidget.h" />
     <ClInclude Include="Utility\Serialization.h" />
     <QtMOC Include="Animation\StateMachine\AnimatorController.h" />
