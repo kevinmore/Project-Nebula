@@ -47,6 +47,8 @@
     <ClCompile Include="Primitives\CubeMapTexture.cpp" />
     <ClCompile Include="Scene\ShadingTechniques\SkyboxTechnique.cpp" />
     <ClCompile Include="Scene\Skybox.cpp" />
+    <ClCompile Include="UI\SkyboxDialog.cpp" />
+    <ClCompile Include="UI\moc_SkyboxDialog.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Primitives\Texture.h" />
@@ -81,6 +83,7 @@
     <ClInclude Include="Primitives\CubeMapTexture.h" />
     <ClInclude Include="Scene\ShadingTechniques\SkyboxTechnique.h" />
     <ClInclude Include="Scene\Skybox.h" />
+    <ClInclude Include="UI\ui_SkyboxWidget.h" />
   </ItemGroup>
   <ItemGroup>
     <QtMOC Include="Scene\Scene.h" />
@@ -92,8 +95,10 @@
     <QtMOC Include="UI\Canvas.h" />
     <QtMOC Include="Utility\LogCenter.h" />
     <QtMOC Include="Physicis\Particles\ParticleSystem.h" />
+    <QtMOC Include="UI\SkyboxDialog.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="UI\HierarchyWidget.ui" />
+    <None Include="UI\SkyboxWidget.ui" />
   </ItemGroup>
 </Project>

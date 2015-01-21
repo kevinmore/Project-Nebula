@@ -23,6 +23,8 @@
     <ClCompile Include="Primitives\Component.cpp" />
     <ClCompile Include="Scene\ShadingTechniques\SkyboxTechnique.cpp" />
     <ClCompile Include="Scene\Skybox.cpp" />
+    <ClCompile Include="UI\moc_SkyboxDialog.cc" />
+    <ClCompile Include="UI\SkyboxDialog.cpp" />
     <ClCompile Include="Utility\LogCenter.cpp" />
     <ClCompile Include="UI\Canvas.cpp" />
     <ClCompile Include="UI\HierarchyWidget.cpp" />
@@ -74,7 +76,9 @@
     <ClInclude Include="Primitives\Component.h" />
     <ClInclude Include="Scene\ShadingTechniques\SkyboxTechnique.h" />
     <ClInclude Include="Scene\Skybox.h" />
+    <QtMOC Include="UI\SkyboxDialog.h" />
     <ClInclude Include="UI\ui_HierarchyWidget.h" />
+    <ClInclude Include="UI\ui_SkyboxWidget.h" />
     <ClInclude Include="Utility\Serialization.h" />
     <QtMOC Include="Utility\LoaderThread.h" />
     <ClInclude Include="Scene\Managers\ObjectManager.h" />
@@ -103,6 +107,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="UI\HierarchyWidget.ui" />
+    <None Include="UI\SkyboxWidget.ui" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{89A9A61D-5047-460C-91C1-C99FC990ABD7}</ProjectGuid>

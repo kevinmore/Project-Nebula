@@ -51,14 +51,16 @@ void Scene::initialize()
 	m_sceneRootNode = new GameObject(this);
 	m_sceneRootNode->setObjectName("Scene Root");
 
+
 	m_skybox = new Skybox(this);
 	m_skybox->init(
-		"../Resource/Textures/skybox/sp3right.jpg",
-		"../Resource/Textures/skybox/sp3left.jpg",
-		"../Resource/Textures/skybox/sp3top.jpg",
-		"../Resource/Textures/skybox/sp3bot.jpg",
-		"../Resource/Textures/skybox/sp3front.jpg",
-		"../Resource/Textures/skybox/sp3back.jpg");
+		"../Resource/Textures/skybox/interstellar_ft.tga",
+		"../Resource/Textures/skybox/interstellar_bk.tga",
+		"../Resource/Textures/skybox/interstellar_up.tga",
+		"../Resource/Textures/skybox/interstellar_dn.tga",
+		"../Resource/Textures/skybox/interstellar_rt.tga",
+		"../Resource/Textures/skybox/interstellar_lf.tga");
+	m_bShowSkybox = false;
 
 	resetToDefaultScene();
 }
@@ -73,10 +75,11 @@ void Scene::update(float currentTime)
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	m_skybox->render(currentTime);
 	// render all
 	m_objectManager->renderAll(currentTime);
 
+	if (m_bShowSkybox) 
+		m_skybox->render(currentTime);
 // 	m_shaderProgram->bind();
 // 	m_shaderProgram->setUniformValue("normalMatrix", normalMatrix);
 // 	m_shaderProgram->setUniformValue("modelMatrix", m_object.modelMatrix());
@@ -141,77 +144,6 @@ void Scene::render(double currentTime)
 	emit renderCycleDone();
 }
 
-void Scene::resize(int width, int height)
-{
-	glViewport(0, 0, width, height);
-
-	if(m_camera->projectionType() == Camera::Perspective)
-	{
-		float aspect = static_cast<float>(width) / static_cast<float>(height);
-
-		m_camera->setPerspectiveProjection(m_camera->fieldOfView(),
-										   aspect,
-										   m_camera->nearPlane(),
-										   m_camera->farPlane());
-	}
-	else if(m_camera->projectionType() == Camera::Orthogonal)
-	{
-		m_camera->setOrthographicProjection(m_camera->left(),
-											m_camera->right(),
-											m_camera->bottom(),
-											m_camera->top(),
-											m_camera->nearPlane(),
-											m_camera->farPlane());
-	}
-}
-
-void Scene::toggleFill(bool state)
-{
-	if(state)
-	{
-		glEnable(GL_CULL_FACE);
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	}
-}
-
-void Scene::toggleWireframe(bool state)
-{
-	if(state)
-	{
-		glDisable(GL_CULL_FACE);
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	}
-}
-
-void Scene::togglePoints(bool state)
-{
-	if(state)
-	{
-		glDisable(GL_CULL_FACE);
-		glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
-	}
-}
-
-void Scene::togglePhong(bool state)
-{
-	if(state) m_lightMode = PerFragmentPhong;
-}
-
-void Scene::toggleBlinnPhong(bool state)
-{
-	if(state) m_lightMode = PerFragmentBlinnPhong;
-}
-
-void Scene::toggleRimLighting(bool state)
-{
-	if(state) m_lightMode = RimLighting;
-}
-
-void Scene::toggleAA(bool state)
-{
-	(state) ? glEnable(GL_MULTISAMPLE) : glDisable(GL_MULTISAMPLE);
-}
-
 Camera* Scene::getCamera()
 {
 	return m_camera;
@@ -257,7 +189,7 @@ void Scene::resetToDefaultScene()
 	GameObject* floorRef = new GameObject(this);
 	floorRef->setPosition(0, -2, 0);
 	floorRef->setRotation(-90.0f, 0.0f, 0.0f);
-	LoaderThread loader(this, "../Resource/Models/DemoRoom/floor.DAE", floorRef, m_sceneRootNode);
+	LoaderThread loader(this, "../Resource/Models/Common/DemoRoom/floor.dae", floorRef, m_sceneRootNode);
 }
 
 void Scene::showLoadModelDialog()
@@ -358,4 +290,80 @@ void Scene::createParticleSystem()
 void Scene::setBackGroundColor( const QColor& col )
 {
 	glClearColor(col.redF(), col.greenF(), col.blueF(), 0.0f);
+}
+
+void Scene::toggleSkybox( bool state )
+{
+	m_bShowSkybox = state;
+}
+
+void Scene::toggleAA(bool state)
+{
+	(state) ? glEnable(GL_MULTISAMPLE) : glDisable(GL_MULTISAMPLE);
+}
+
+void Scene::toggleRimLighting(bool state)
+{
+	if(state) m_lightMode = RimLighting;
+}
+
+void Scene::toggleBlinnPhong(bool state)
+{
+	if(state) m_lightMode = PerFragmentBlinnPhong;
+}
+
+void Scene::togglePhong(bool state)
+{
+	if(state) m_lightMode = PerFragmentPhong;
+}
+
+void Scene::togglePoints(bool state)
+{
+	if(state)
+	{
+		glDisable(GL_CULL_FACE);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
+	}
+}
+
+void Scene::toggleWireframe(bool state)
+{
+	if(state)
+	{
+		glDisable(GL_CULL_FACE);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	}
+}
+
+void Scene::toggleFill(bool state)
+{
+	if(state)
+	{
+		glEnable(GL_CULL_FACE);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	}
+}
+
+void Scene::resize(int width, int height)
+{
+	glViewport(0, 0, width, height);
+
+	if(m_camera->projectionType() == Camera::Perspective)
+	{
+		float aspect = static_cast<float>(width) / static_cast<float>(height);
+
+		m_camera->setPerspectiveProjection(m_camera->fieldOfView(),
+										   aspect,
+										   m_camera->nearPlane(),
+										   m_camera->farPlane());
+	}
+	else if(m_camera->projectionType() == Camera::Orthogonal)
+	{
+		m_camera->setOrthographicProjection(m_camera->left(),
+											m_camera->right(),
+											m_camera->bottom(),
+											m_camera->top(),
+											m_camera->nearPlane(),
+											m_camera->farPlane());
+	}
 }

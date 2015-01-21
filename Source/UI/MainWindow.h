@@ -35,6 +35,7 @@ private slots:
 	void showMessage(QtMsgType type, const QMessageLogContext &context, const QString &msg);
 	void showSystemLog();
 	void showBackGroundColorPicker();
+	void showSkyboxDialog();
 
 private:
 	QScopedPointer<Canvas> m_canvas;

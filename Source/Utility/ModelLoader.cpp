@@ -30,11 +30,11 @@ void ModelLoader::clear()
 ModelLoader::~ModelLoader()
 {
 	clear();
-	if (m_VAO != 0) 
-	{
-		glDeleteVertexArrays(1, &m_VAO);
-		m_VAO = 0;
-	}
+// 	if (m_VAO != 0) 
+// 	{
+// 		glDeleteVertexArrays(1, &m_VAO);
+// 		m_VAO = 0;
+// 	}
 }
 
 QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName, GLuint shaderProgramID )

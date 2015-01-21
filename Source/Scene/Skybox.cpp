@@ -2,7 +2,8 @@
 #include <Scene/Scene.h>
 
 Skybox::Skybox( Scene* scene )
-	: m_scene(scene),
+	: AbstractModel("SkyBox"),
+	  m_scene(scene),
 	  m_skyboxTechnique(0),
 	  m_cubemapTex(0)
 {
@@ -12,7 +13,6 @@ Skybox::Skybox( Scene* scene )
 Skybox::~Skybox()
 {
 	SAFE_DELETE(m_skyboxTechnique);
-	SAFE_DELETE(m_cubemapTex);
 }
 
 
@@ -24,6 +24,7 @@ bool Skybox::init(const QString& PosXFilename,
 				  const QString& NegZFilename)
 {
 	Q_ASSERT(initializeOpenGLFunctions());
+
 	m_skyboxTechnique = new SkyboxTechnique();
 	if (!m_skyboxTechnique->init()) 
 	{
@@ -31,12 +32,12 @@ bool Skybox::init(const QString& PosXFilename,
 		return false;
 	}
 
-	m_cubemapTex = new CubemapTexture(PosXFilename,
-									  NegXFilename,
-									  PosYFilename,
-									  NegYFilename,
-									  PosZFilename,
-									  NegZFilename);
+	m_cubemapTex = CubemapTexturePtr( new CubemapTexture(PosXFilename,
+														 NegXFilename,
+														 PosYFilename,
+														 NegYFilename,
+														 PosZFilename,
+														 NegZFilename));
 
 	ModelLoader loader;
 	QVector<ModelDataPtr> modelDataVector = loader.loadModel("../Resource/Models/Common/sphere.obj", m_skyboxTechnique->getShaderProgram()->programId());
@@ -62,8 +63,9 @@ bool Skybox::init(const QString& PosXFilename,
 void Skybox::render( const float currentTime )
 {
 	m_skyboxTechnique->enable();
+
 	QMatrix4x4 modelMatrix;
-	//modelMatrix.translate(m_scene->getCamera()->position());
+	modelMatrix.translate(m_scene->getCamera()->position());
 	QMatrix4x4 modelViewMatrix = m_scene->getCamera()->viewMatrix() * modelMatrix;
 
 	GLint OldCullFaceMode;
@@ -84,6 +86,8 @@ void Skybox::render( const float currentTime )
 
 	glCullFace(OldCullFaceMode);        
 	glDepthFunc(OldDepthFuncMode);
+
+	m_skyboxTechnique->disable();
 }
 
 void Skybox::drawElements(uint index)

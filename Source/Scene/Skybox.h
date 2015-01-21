@@ -1,5 +1,6 @@
 #pragma once
 #include <QOpenGLFunctions_4_3_Core>
+#include <Scene/AbstractModel.h>
 #include <Scene/ShadingTechniques/SkyboxTechnique.h>
 #include <Scene/Managers/MeshManager.h>
 #include <Scene/Camera.h>
@@ -22,13 +23,15 @@ public:
 
 	virtual void render( const float currentTime );
 
+	CubemapTexturePtr getCubemapTexture() const { return m_cubemapTex; }
+
 private:    
 	void drawElements(uint index);
 
 	GLuint m_vao;
 	SkyboxTechnique* m_skyboxTechnique;
 	Scene* m_scene;
-	CubemapTexture* m_cubemapTex;
+	CubemapTexturePtr m_cubemapTex;
 	QVector<MeshPtr> m_meshes;
 };
 

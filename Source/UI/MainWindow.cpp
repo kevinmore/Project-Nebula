@@ -1,5 +1,6 @@
 #include "MainWindow.h"
 #include "HierarchyWidget.h"
+#include "SkyboxDialog.h"
 #include <Utility/LogCenter.h>
 
 StateMachineViewer* MainWindow::showStateMachine(QStateMachine* machine)
@@ -122,9 +123,18 @@ void MainWindow::initializeMenuBar()
 
 	// ############ Preference Menu ############
 	QMenu *prefMenu = menuBar()->addMenu("&Preference");
+	QMenu *bgMenu = prefMenu->addMenu("Background");
 
-	QAction *bGAction = new QAction("Back Ground Color", this);
-	prefMenu->addAction(bGAction);
+	QAction *bgColorAction = new QAction("Back Ground Color", this);
+	bgMenu->addAction(bgColorAction);
+
+	QAction *toggleSkyboxAction = new QAction("Enable Sky Box", this);
+	toggleSkyboxAction->setCheckable(true);
+	toggleSkyboxAction->setChecked(false);
+	bgMenu->addAction(toggleSkyboxAction);
+
+	QAction *skyboxSettingsAction = new QAction("Sky Box Settings", this);
+	bgMenu->addAction(skyboxSettingsAction);
 
 	// ############ System Menu ############
 	QMenu *sytemMenu = menuBar()->addMenu("&System");
@@ -160,7 +170,9 @@ void MainWindow::initializeMenuBar()
 	connect(systemLogAction,  SIGNAL(triggered()),     this,    SLOT(showSystemLog()));
 	connect(writeLogAction,   SIGNAL(triggered(bool)), LogCenter::instance(), SLOT(toggleWriteToFile(bool)));
 	connect(gpuInfoAction,    SIGNAL(triggered()),     m_canvas.data(), SLOT(showGPUInfo()));
-	connect(bGAction,    SIGNAL(triggered()),     this, SLOT(showBackGroundColorPicker()));
+	connect(bgColorAction,    SIGNAL(triggered()),     this, SLOT(showBackGroundColorPicker()));
+	connect(skyboxSettingsAction,    SIGNAL(triggered()),     this, SLOT(showSkyboxDialog()));
+	connect(toggleSkyboxAction, SIGNAL(triggered(bool)), m_scene, SLOT(toggleSkybox(bool)));
 }
 
 void MainWindow::initializeRightDockableArea()
@@ -560,4 +572,10 @@ void MainWindow::showBackGroundColorPicker()
 {
 	QColor col = QColorDialog::getColor();
 	if(col.isValid()) m_scene->setBackGroundColor(col);
+}
+
+void MainWindow::showSkyboxDialog()
+{
+	SkyboxDialog* dilog = new SkyboxDialog(m_scene->getSkybox(), this);
+	dilog->show();
 }
