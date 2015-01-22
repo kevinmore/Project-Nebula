@@ -68,11 +68,14 @@ void Scene::update(float currentTime)
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	// render skybox first
+	if (m_bShowSkybox) 
+		m_skybox->render(currentTime);
+
 	// render all
 	m_objectManager->renderAll(currentTime);
 
-	if (m_bShowSkybox) 
-		m_skybox->render(currentTime);
+	
 // 	m_shaderProgram->bind();
 // 	m_shaderProgram->setUniformValue("normalMatrix", normalMatrix);
 // 	m_shaderProgram->setUniformValue("modelMatrix", m_object.modelMatrix());
