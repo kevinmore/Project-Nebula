@@ -1,7 +1,7 @@
 #include "LoaderThread.h"
 #include <QFileDialog>
 #include <Scene/Scene.h>
-LoaderThread::LoaderThread(Scene* scene, const QString fileName, GameObject* reference, GameObject* objectParent, bool generateGameObject)
+LoaderThread::LoaderThread(Scene* scene, const QString fileName, GameObjectPtr reference, GameObject* objectParent, bool generateGameObject)
 	: QThread(scene),
 	  m_scene(scene),
 	  m_fileName(fileName),
@@ -15,8 +15,6 @@ LoaderThread::LoaderThread(Scene* scene, const QString fileName, GameObject* ref
 
 LoaderThread::~LoaderThread()
 {
-	// delete the reference game object pointer
-	//SAFE_DELETE(m_reference);
 }
 
 void LoaderThread::run()

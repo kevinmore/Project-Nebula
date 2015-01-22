@@ -2,7 +2,7 @@
 #include "ui_SkyboxWidget.h"
 #include <QGraphicsPixmapItem>
 
-SkyboxDialog::SkyboxDialog( Skybox* skybox, QWidget *parent /*= 0*/ )
+SkyboxDialog::SkyboxDialog( SkyboxPtr skybox, QWidget *parent /*= 0*/ )
 	: QDialog(parent),
 	  m_skybox(skybox),
 	  ui(new Ui::Dialog)

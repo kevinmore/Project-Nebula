@@ -13,6 +13,7 @@ public:
 						  Texture::TextureType type = Texture::Texture2D, 
 						  Texture::TextureUsage usage = Texture::ColorMap);
 	void deleteTexture(const QString& name);
+	void deleteTexture(TexturePtr texture);
 	void clear();
 
 private:

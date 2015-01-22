@@ -12,13 +12,13 @@ class Scene;
 class StaticModel : public AbstractModel, protected QOpenGLFunctions_4_3_Core
 {
 public:
-	StaticModel(const QString& name, Scene* scene, ShadingTechnique* tech);
-	StaticModel(const QString& name, Scene* scene, ShadingTechnique* tech, QVector<ModelDataPtr> modelDataVector);
+	StaticModel(const QString& name, Scene* scene, ShadingTechniquePtr tech);
+	StaticModel(const QString& name, Scene* scene, ShadingTechniquePtr tech, QVector<ModelDataPtr> modelDataVector);
 	virtual ~StaticModel();
 
 	virtual void render( const float currentTime );
 	virtual QString className() { return "StaticModel"; }
-	ShadingTechnique* getShadingTech() { return m_RenderingEffect; }
+	ShadingTechniquePtr getShadingTech() { return m_RenderingEffect; }
 
 protected:
 	QVector<MeshPtr> m_meshes;
@@ -45,6 +45,6 @@ private:
 	GLuint m_vao;
 
 	Scene* m_scene;
-	ShadingTechnique* m_RenderingEffect;
+	ShadingTechniquePtr m_RenderingEffect;
 };
 

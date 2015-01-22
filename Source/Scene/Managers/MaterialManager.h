@@ -21,6 +21,8 @@ public:
 							int blendMode,
 							bool alphaBlending,
 							bool hasTexture);
+	
+	void deleteMaterial(MaterialPtr material);
 
 	void clear();
 

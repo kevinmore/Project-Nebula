@@ -13,6 +13,8 @@ public:
 	MeshPtr getMesh(const QString& name);
 	MeshPtr addMesh(const QString& name, unsigned int numIndices, unsigned int baseVertex, unsigned int baseIndex);
 
+	void deleteMesh(MeshPtr mesh);
+
 	void clear();
 
 private:

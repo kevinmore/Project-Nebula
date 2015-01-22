@@ -8,7 +8,8 @@ Scene::Scene(QObject* parent)
 	  m_light("light01"),
 	  m_lightMode(PerFragmentPhong),
 	  m_lightModeSubroutines(LightModeCount),
-	  m_time(0.0f)
+	  m_time(0.0f),
+	  m_bShowSkybox(false)
 {
 	// Initializing the lights
 	for(int i = 1; i < LightModeCount; ++i)
@@ -52,15 +53,7 @@ void Scene::initialize()
 	m_sceneRootNode->setObjectName("Scene Root");
 
 
-	m_skybox = new Skybox(this);
-	m_skybox->init(
-		"../Resource/Textures/skybox/interstellar_ft.tga",
-		"../Resource/Textures/skybox/interstellar_bk.tga",
-		"../Resource/Textures/skybox/interstellar_up.tga",
-		"../Resource/Textures/skybox/interstellar_dn.tga",
-		"../Resource/Textures/skybox/interstellar_rt.tga",
-		"../Resource/Textures/skybox/interstellar_lf.tga");
-	m_bShowSkybox = false;
+	
 
 	resetToDefaultScene();
 }
@@ -186,7 +179,7 @@ void Scene::resetToDefaultScene()
 	m_camera->resetCamera();
 
 	// load the floor
-	GameObject* floorRef = new GameObject(this);
+	GameObjectPtr floorRef(new GameObject(this));
 	floorRef->setPosition(0, -2, 0);
 	floorRef->setRotation(-90.0f, 0.0f, 0.0f);
 	LoaderThread loader(this, "../Resource/Models/Common/DemoRoom/floor.dae", floorRef, m_sceneRootNode);
@@ -198,7 +191,7 @@ void Scene::showLoadModelDialog()
 		"../Resource/Models",
 		tr("3D Model File (*.dae *.obj *.3ds)"));
 
-	LoaderThread loader(this, fileName, 0, m_sceneRootNode);
+	LoaderThread loader(this, fileName, GameObjectPtr(), m_sceneRootNode);
 }
 
 void Scene::showOpenSceneDialog()
@@ -295,6 +288,22 @@ void Scene::setBackGroundColor( const QColor& col )
 void Scene::toggleSkybox( bool state )
 {
 	m_bShowSkybox = state;
+	
+	if (state)
+	{
+		m_skybox = SkyboxPtr(new Skybox(this));
+		m_skybox->init(
+			"../Resource/Textures/skybox/interstellar_ft.tga",
+			"../Resource/Textures/skybox/interstellar_bk.tga",
+			"../Resource/Textures/skybox/interstellar_up.tga",
+			"../Resource/Textures/skybox/interstellar_dn.tga",
+			"../Resource/Textures/skybox/interstellar_rt.tga",
+			"../Resource/Textures/skybox/interstellar_lf.tga");
+	}
+	else
+	{
+		m_skybox.clear();
+	}
 }
 
 void Scene::toggleAA(bool state)

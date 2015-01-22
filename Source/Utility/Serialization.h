@@ -129,7 +129,7 @@ QDataStream& operator >> (QDataStream& in, GameObjectPtr object)
 			// load a model and attach it to the this game object
 			QString fileName;
 			in >> fileName;
- 			LoaderThread loader(object->getScene(), fileName, object.data(), object->getScene()->sceneNode(), false);
+ 			LoaderThread loader(object->getScene(), fileName, object, object->getScene()->sceneNode(), false);
 		}
 		else if (className == "ParticleSystem")
 		{

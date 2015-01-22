@@ -18,4 +18,4 @@ private:
 	GLuint m_WVPLocation;
 	GLuint m_textureLocation;
 };
-
+typedef QSharedPointer<SkyboxTechnique> SkyboxTechniquePtr;

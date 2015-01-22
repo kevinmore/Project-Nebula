@@ -20,6 +20,11 @@ void TextureManager::deleteTexture( const QString& name )
 	}
 }
 
+void TextureManager::deleteTexture( TexturePtr texture )
+{
+	m_textures.take(m_textures.key(texture));
+}
+
 TexturePtr TextureManager::addTexture( const QString& name, const QString& fileName, Texture::TextureType type, Texture::TextureUsage usage )
 {
 	// if texture is already in the map

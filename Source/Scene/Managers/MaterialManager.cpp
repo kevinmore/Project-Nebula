@@ -42,3 +42,8 @@ void MaterialManager::clear()
 {
 	m_materials.clear();
 }
+
+void MaterialManager::deleteMaterial( MaterialPtr material )
+{
+	m_materials.take(m_materials.key(material));
+}

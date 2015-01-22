@@ -15,8 +15,8 @@ class Scene;
 class RiggedModel : public AbstractModel, protected QOpenGLFunctions_4_3_Core
 {
 public:
-	RiggedModel(const QString& name, Scene* scene, ShadingTechnique* tech, Skeleton* skeleton);
-	RiggedModel(const QString& name, Scene* scene, ShadingTechnique* tech, Skeleton* skeleton, QVector<ModelDataPtr> modelDataVector);
+	RiggedModel(const QString& name, Scene* scene, ShadingTechniquePtr tech, Skeleton* skeleton);
+	RiggedModel(const QString& name, Scene* scene, ShadingTechniquePtr tech, Skeleton* skeleton, QVector<ModelDataPtr> modelDataVector);
 	virtual ~RiggedModel();
 
 	virtual QString className() { return "RiggedModel"; }
@@ -62,7 +62,7 @@ private:
 	GLuint m_vao;
 
 	Scene* m_scene;
-	ShadingTechnique* m_RenderingEffect;
+	ShadingTechniquePtr m_RenderingEffect;
 	bool m_hasAnimation;
 	Skeleton* m_skeleton;
 	FKController* m_FKController;

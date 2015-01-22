@@ -137,3 +137,4 @@ private:
 	Scene* m_scene;
 };
 
+typedef QSharedPointer<GameObject> GameObjectPtr;

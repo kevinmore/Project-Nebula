@@ -1,7 +1,7 @@
 #include "StaticModel.h"
 #include <Scene/Scene.h>
 
-StaticModel::StaticModel(const QString& name, Scene* scene, ShadingTechnique* tech)
+StaticModel::StaticModel(const QString& name, Scene* scene, ShadingTechniquePtr tech)
   : AbstractModel(name),
 	m_scene(scene),
     m_RenderingEffect(tech),
@@ -10,7 +10,7 @@ StaticModel::StaticModel(const QString& name, Scene* scene, ShadingTechnique* te
 	initialize();
 }
 
-StaticModel::StaticModel(const QString& name, Scene* scene, ShadingTechnique* tech, QVector<ModelDataPtr> modelData)
+StaticModel::StaticModel(const QString& name, Scene* scene, ShadingTechniquePtr tech, QVector<ModelDataPtr> modelData)
   : AbstractModel(name),
     m_scene(scene),
     m_RenderingEffect(tech),
@@ -22,7 +22,32 @@ StaticModel::StaticModel(const QString& name, Scene* scene, ShadingTechnique* te
 
 StaticModel::~StaticModel() 
 {
-	SAFE_DELETE(m_RenderingEffect);
+	// clean up the textures (this always takes a lot of memory)
+	foreach(QVector<TexturePtr> texVec, m_textures)
+	{
+		foreach(TexturePtr tex, texVec)
+		{
+			// erase it from the texture manager
+			m_textureManager->deleteTexture(tex);
+
+			// clear it
+			tex.clear();
+		}
+	}
+
+	// clean up the meshes
+	foreach(MeshPtr mesh, m_meshes)
+	{
+		m_meshManager->deleteMesh(mesh);
+		mesh.clear();
+	}
+
+	// clean up the materials
+	foreach(MaterialPtr mat, m_materials)
+	{
+		m_materialManager->deleteMaterial(mat);
+		mat.clear();
+	}
 }
 
 void StaticModel::initRenderingEffect()
@@ -123,10 +148,9 @@ void StaticModel::render( float time )
 
 	QMatrix4x4 modelMatrix = m_actor->modelMatrix();
 	
-	QMatrix4x4 modelViewMatrix = m_scene->getCamera()->viewMatrix() * modelMatrix;
 	//QMatrix3x3 normalMatrix = modelViewMatrix.normalMatrix();
 	m_RenderingEffect->setEyeWorldPos(m_scene->getCamera()->position());
-	m_RenderingEffect->setWVP(m_scene->getCamera()->projectionMatrix() * modelViewMatrix);
+	m_RenderingEffect->setWVP(m_scene->getCamera()->viewProjectionMatrix() * modelMatrix);
 	m_RenderingEffect->setWorldMatrix(modelMatrix); 
 
 

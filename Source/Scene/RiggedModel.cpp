@@ -2,7 +2,7 @@
 #include <Scene/Scene.h>
 #include <Animation/Rig/Pose.h>
 
-RiggedModel::RiggedModel(const QString& name, Scene* scene, ShadingTechnique* tech, Skeleton* skeleton)
+RiggedModel::RiggedModel(const QString& name, Scene* scene, ShadingTechniquePtr tech, Skeleton* skeleton)
   : AbstractModel(name),
     m_scene(scene),
     m_RenderingEffect(tech),
@@ -16,7 +16,7 @@ RiggedModel::RiggedModel(const QString& name, Scene* scene, ShadingTechnique* te
 	initialize();
 }
 
-RiggedModel::RiggedModel(const QString& name, Scene* scene, ShadingTechnique* tech, Skeleton* skeleton, QVector<ModelDataPtr> modelData)
+RiggedModel::RiggedModel(const QString& name, Scene* scene, ShadingTechniquePtr tech, Skeleton* skeleton, QVector<ModelDataPtr> modelData)
   : AbstractModel(name),
     m_scene(scene),
     m_RenderingEffect(tech),
@@ -33,10 +33,36 @@ RiggedModel::RiggedModel(const QString& name, Scene* scene, ShadingTechnique* te
 
 RiggedModel::~RiggedModel() 
 {
-	SAFE_DELETE(m_RenderingEffect);
  	SAFE_DELETE(m_skeleton);
  	SAFE_DELETE(m_IKSolver);
 	SAFE_DELETE(m_FKController);
+
+	// clean up the textures (this always takes a lot of memory)
+	foreach(QVector<TexturePtr> texVec, m_textures)
+	{
+		foreach(TexturePtr tex, texVec)
+		{
+			// erase it from the texture manager
+			m_textureManager->deleteTexture(tex);
+
+			// clear it
+			tex.clear();
+		}
+	}
+
+	// clean up the meshes
+	foreach(MeshPtr mesh, m_meshes)
+	{
+		m_meshManager->deleteMesh(mesh);
+		mesh.clear();
+	}
+
+	// clean up the materials
+	foreach(MaterialPtr mat, m_materials)
+	{
+		m_materialManager->deleteMaterial(mat);
+		mat.clear();
+	}
 }
 
 void RiggedModel::initRenderingEffect()
@@ -211,11 +237,10 @@ void RiggedModel::render( const float currentTime )
 
 	QMatrix4x4 modelMatrix = m_actor->modelMatrix();
 	modelMatrix.rotate(90, Math::Vector3D::UNIT_X); // this is for dae files
-	QMatrix4x4 modelViewMatrix = m_scene->getCamera()->viewMatrix() * modelMatrix;
 	//QMatrix3x3 normalMatrix = modelViewMatrix.normalMatrix();
 
 	m_RenderingEffect->setEyeWorldPos(m_scene->getCamera()->position());
-	m_RenderingEffect->setWVP(m_scene->getCamera()->projectionMatrix() * modelViewMatrix);
+	m_RenderingEffect->setWVP(m_scene->getCamera()->viewProjectionMatrix() * modelMatrix);
 	m_RenderingEffect->setWorldMatrix(modelMatrix); 
 
 

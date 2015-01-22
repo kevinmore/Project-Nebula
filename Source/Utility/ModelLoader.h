@@ -40,7 +40,7 @@ public:
 	QVector<Bone> getBoneInfo() const {	return m_BoneInfo; }
 	aiNode* getRootNode() const	{ return m_scene->mRootNode; }
 	Skeleton* getSkeletom() const { return m_skeleton; }
-	ShadingTechnique* getRenderingEffect() { return m_effect; }
+	ShadingTechniquePtr getRenderingEffect() { return m_effect; }
 	MODEL_TYPE getModelType() { return m_modelType; }
 
 private:
@@ -113,7 +113,7 @@ private:
 	QVector<Bone> m_BoneInfo;
 	mat4 m_GlobalInverseTransform;
 	MODEL_TYPE m_modelType;
-	ShadingTechnique* m_effect;
+	ShadingTechniquePtr m_effect;
 };
 
 

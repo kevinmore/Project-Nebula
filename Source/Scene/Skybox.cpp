@@ -4,7 +4,7 @@
 Skybox::Skybox( Scene* scene )
 	: AbstractModel("SkyBox"),
 	  m_scene(scene),
-	  m_skyboxTechnique(0),
+	  m_skyboxTechnique(SkyboxTechniquePtr()),
 	  m_cubemapTex(0)
 {
 }
@@ -12,7 +12,12 @@ Skybox::Skybox( Scene* scene )
 
 Skybox::~Skybox()
 {
-	SAFE_DELETE(m_skyboxTechnique);
+	// clean up the meshes
+	foreach(MeshPtr mesh, m_meshes)
+	{
+		m_scene->meshManager()->deleteMesh(mesh);
+		mesh.clear();
+	}
 }
 
 
@@ -25,7 +30,7 @@ bool Skybox::init(const QString& PosXFilename,
 {
 	Q_ASSERT(initializeOpenGLFunctions());
 
-	m_skyboxTechnique = new SkyboxTechnique();
+	m_skyboxTechnique = SkyboxTechniquePtr(new SkyboxTechnique());
 	if (!m_skyboxTechnique->init()) 
 	{
 		qWarning() << "Error initializing the skybox technique";

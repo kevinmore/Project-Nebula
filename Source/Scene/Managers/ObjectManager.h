@@ -4,7 +4,6 @@
 #include <Utility/ModelLoader.h>
 
 #include <Utility/EngineCommon.h>
-typedef QSharedPointer<GameObject> GameObjectPtr;
 typedef QSharedPointer<ModelLoader> ModelLoaderPtr;
 
 class Scene;

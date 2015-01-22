@@ -29,9 +29,10 @@ private:
 	void drawElements(uint index);
 
 	GLuint m_vao;
-	SkyboxTechnique* m_skyboxTechnique;
+	SkyboxTechniquePtr m_skyboxTechnique;
 	Scene* m_scene;
 	CubemapTexturePtr m_cubemapTex;
 	QVector<MeshPtr> m_meshes;
 };
 
+typedef QSharedPointer<Skybox> SkyboxPtr;

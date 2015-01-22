@@ -52,7 +52,8 @@ public:
 	QStateMachine* getStateMachine() const { return m_stateMachine; }
 	GameObject* sceneNode() const { return m_sceneRootNode; }
 	void setBackGroundColor(const QColor& col);
-	Skybox* getSkybox() const  { return m_skybox; }
+	SkyboxPtr getSkybox() const  { return m_skybox; }
+
 public slots:
 	void toggleFill(bool state);
 	void toggleWireframe(bool state);
@@ -107,7 +108,7 @@ private:
 	AnimatorController* m_playerController;
 	QVector<NPCController*> m_NPCs;
 	ParticleSystem* m_particleSystem;
-	Skybox* m_skybox;
+	SkyboxPtr m_skybox;
 	bool m_bShowSkybox;
 };
 

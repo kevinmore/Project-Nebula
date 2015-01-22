@@ -26,3 +26,8 @@ void MeshManager::clear()
 {
 	m_meshes.clear();
 }
+
+void MeshManager::deleteMesh( MeshPtr mesh )
+{
+	m_meshes.take(m_meshes.key(mesh));
+}

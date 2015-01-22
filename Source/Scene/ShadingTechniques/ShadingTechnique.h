@@ -88,4 +88,4 @@ private:
     GLuint m_boneLocation[MAX_BONES];
 };
 
-
+typedef QSharedPointer<ShadingTechnique> ShadingTechniquePtr;

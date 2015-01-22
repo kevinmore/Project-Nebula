@@ -5,7 +5,7 @@
 
 ModelLoader::ModelLoader()
 {
-	m_effect = nullptr;
+	m_effect = ShadingTechniquePtr();
 	initializeOpenGLFunctions();
 }
 
@@ -224,7 +224,7 @@ GLuint ModelLoader::installShader()
 
 	// combine the shader name
 	shaderName = shaderPrefix + shaderFeatures;
-	m_effect = new ShadingTechnique(shaderName, shaderType);
+	m_effect = ShadingTechniquePtr(new ShadingTechnique(shaderName, shaderType));
 
 	if (!m_effect->init()) 
 	{
