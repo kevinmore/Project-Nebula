@@ -56,7 +56,7 @@ ModelPtr ObjectManager::loadModel( const QString& customName, const QString& fil
 	else if (m_modelLoader->getModelType() == ModelLoader::RIGGED_MODEL)
 	{
 		// create a FKController for the model
-		FKController* controller = new FKController(m_modelLoader.data(), m_modelLoader->getSkeletom());
+		FKController* controller = new FKController(m_modelLoader, m_modelLoader->getSkeletom());
 
 		// create an IKSolver for the model
 		CCDIKSolver* solver = new CCDIKSolver(128);

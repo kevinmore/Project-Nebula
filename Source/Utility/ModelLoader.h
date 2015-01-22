@@ -116,4 +116,4 @@ private:
 	ShadingTechniquePtr m_effect;
 };
 
-
+typedef QSharedPointer<ModelLoader> ModelLoaderPtr;

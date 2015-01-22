@@ -1,7 +1,7 @@
 #include "FKController.h"
 #include <Utility/Math.h>
 
-FKController::FKController(ModelLoader* loader, Skeleton* skeleton)
+FKController::FKController(ModelLoaderPtr loader, Skeleton* skeleton)
 {
 	m_GlobalInverseTransform = loader->getGlobalInverseTransform();
 	m_BoneMapping = loader->getBoneMap();
