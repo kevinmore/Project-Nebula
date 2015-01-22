@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2015 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2013 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
   You may not use this file except in compliance with the License.
@@ -905,7 +905,6 @@ extern "C" {
 #define RegisterIPLImage  PrependMagickMethod(RegisterIPLImage)
 #define RegisterJP2Image  PrependMagickMethod(RegisterJP2Image)
 #define RegisterJPEGImage  PrependMagickMethod(RegisterJPEGImage)
-#define RegisterJSONImage  PrependMagickMethod(RegisterJSONImage)
 #define RegisterLABELImage  PrependMagickMethod(RegisterLABELImage)
 #define RegisterMCPImage  PrependMagickMethod(RegisterMACImage)
 #define RegisterMAGICKImage  PrependMagickMethod(RegisterMAGICKImage)
@@ -947,7 +946,6 @@ extern "C" {
 #define RegisterRLAImage  PrependMagickMethod(RegisterRLAImage)
 #define RegisterRLEImage  PrependMagickMethod(RegisterRLEImage)
 #define RegisterSCRImage  PrependMagickMethod(RegisterSCRImage)
-#define RegisterSREENSHOTImage  PrependMagickMethod(RegisterSCREENSHOTImage)
 #define RegisterSCTImage  PrependMagickMethod(RegisterSCTImage)
 #define RegisterSFWImage  PrependMagickMethod(RegisterSFWImage)
 #define RegisterSGIImage  PrependMagickMethod(RegisterSGIImage)
@@ -968,7 +966,6 @@ extern "C" {
 #define RegisterVICARImage  PrependMagickMethod(RegisterVICARImage)
 #define RegisterVIDImage  PrependMagickMethod(RegisterVIDImage)
 #define RegisterVIFFImage  PrependMagickMethod(RegisterVIFFImage)
-#define RegisterVIPSImage  PrependMagickMethod(RegisterVIPSImage)
 #define RegisterWBMPImage  PrependMagickMethod(RegisterWBMPImage)
 #define RegisterWMFImage  PrependMagickMethod(RegisterWMFImage)
 #define RegisterWPGImage  PrependMagickMethod(RegisterWPGImage)
@@ -1035,8 +1032,6 @@ extern "C" {
 #define RGBTransformImage  PrependMagickMethod(RGBTransformImage)
 #define RollImage  PrependMagickMethod(RollImage)
 #define RotateImage  PrependMagickMethod(RotateImage)
-#define RotationalBlurImageChannel  PrependMagickMethod(RotationalBlurImageChannel)
-#define RotationalBlurImage  PrependMagickMethod(RotationalBlurImage)
 #define SampleImage  PrependMagickMethod(SampleImage)
 #define ScaleImage  PrependMagickMethod(ScaleImage)
 #define ScaleResampleFilter  PrependMagickMethod(ScaleResampleFilter)
@@ -1240,7 +1235,6 @@ extern "C" {
 #define UnregisterIPLImage  PrependMagickMethod(UnregisterIPLImage)
 #define UnregisterJP2Image  PrependMagickMethod(UnregisterJP2Image)
 #define UnregisterJPEGImage  PrependMagickMethod(UnregisterJPEGImage)
-#define UnregisterJSONImage  PrependMagickMethod(UnregisterJSONImage)
 #define UnregisterLABELImage  PrependMagickMethod(UnregisterLABELImage)
 #define UnregisterMACImage  PrependMagickMethod(UnregisterMACImage)
 #define UnregisterMAGICKImage  PrependMagickMethod(UnregisterMAGICKImage)
@@ -1282,7 +1276,6 @@ extern "C" {
 #define UnregisterRLAImage  PrependMagickMethod(UnregisterRLAImage)
 #define UnregisterRLEImage  PrependMagickMethod(UnregisterRLEImage)
 #define UnregisterSCRImage  PrependMagickMethod(UnregisterSCRImage)
-#define UnregisterSCREENSHOTImage  PrependMagickMethod(UnregisterSCREENSHOTImage)
 #define UnregisterSCTImage  PrependMagickMethod(UnregisterSCTImage)
 #define UnregisterSFWImage  PrependMagickMethod(UnregisterSFWImage)
 #define UnregisterSGIImage  PrependMagickMethod(UnregisterSGIImage)
@@ -1303,7 +1296,6 @@ extern "C" {
 #define UnregisterVICARImage  PrependMagickMethod(UnregisterVICARImage)
 #define UnregisterVIDImage  PrependMagickMethod(UnregisterVIDImage)
 #define UnregisterVIFFImage  PrependMagickMethod(UnregisterVIFFImage)
-#define UnregisterVIPSImage  PrependMagickMethod(UnregisterVIPSImage)
 #define UnregisterWBMPImage  PrependMagickMethod(UnregisterWBMPImage)
 #define UnregisterWMFImage  PrependMagickMethod(UnregisterWMFImage)
 #define UnregisterWPGImage  PrependMagickMethod(UnregisterWPGImage)

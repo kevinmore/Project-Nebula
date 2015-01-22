@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2015 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2013 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
   You may not use this file except in compliance with the License.
@@ -18,21 +18,13 @@
 #ifndef _MAGICKCORE_DELEGATE_PRIVATE_H
 #define _MAGICKCORE_DELEGATE_PRIVATE_H
 
+#if defined(__cplusplus) || defined(c_plusplus)
+extern "C" {
+#endif
+
 #if defined(MAGICKCORE_GS_DELEGATE)
 #include "ghostscript/iapi.h"
 #include "ghostscript/ierrors.h"
-#else
-typedef struct gsapi_revision_s
-{
-  const char *product;
-  const char *copyright;
-  long revision;
-  long revisiondate;
-} gsapi_revision_t;
-#endif
-
-#if defined(__cplusplus) || defined(c_plusplus)
-extern "C" {
 #endif
 
 #ifndef gs_main_instance_DEFINED
@@ -51,9 +43,6 @@ typedef struct gs_main_instance_s
 
 typedef struct _GhostInfo
 {
-  void
-    (MagickDLLCall *delete_instance)(gs_main_instance *);
-
   int
     (MagickDLLCall *exit)(gs_main_instance *);
 
@@ -66,13 +55,8 @@ typedef struct _GhostInfo
   int
     (MagickDLLCall *run_string)(gs_main_instance *,const char *,int,int *);
 
-  int
-    (MagickDLLCall *set_stdio)(gs_main_instance *,int(MagickDLLCall *)(void *,
-      char *,int),int(MagickDLLCall *)(void *,const char *,int),
-      int(MagickDLLCall *)(void *,const char *,int));
-
-  int
-    (MagickDLLCall *revision)(gsapi_revision_t *, int);
+  void
+    (MagickDLLCall *delete_instance)(gs_main_instance *);
 } GhostInfo;
 
 #if defined(__cplusplus) || defined(c_plusplus)

@@ -1,7 +1,6 @@
 // This may look like C code, but it is really -*- C++ -*-
 //
 // Copyright Bob Friesenhahn, 1999, 2000, 2001, 2002
-// Copyright Dirk Lemstra 2014
 //
 // Geometry Definition
 //
@@ -11,141 +10,124 @@
 #if !defined (Magick_Geometry_header)
 #define Magick_Geometry_header
 
-#include "Magick++/Include.h"
+#include "Include.h"
 #include <string>
 
 namespace Magick
 {
+
   class MagickPPExport Geometry;
 
   // Compare two Geometry objects regardless of LHS/RHS
-  MagickPPExport int operator ==
-    (const Magick::Geometry& left_,const Magick::Geometry& right_);
-  MagickPPExport int operator !=
-    (const Magick::Geometry& left_,const Magick::Geometry& right_);
-  MagickPPExport int operator >
-    (const Magick::Geometry& left_,const Magick::Geometry& right_);
-  MagickPPExport int operator <
-    (const Magick::Geometry& left_,const Magick::Geometry& right_);
-  MagickPPExport int operator >=
-    (const Magick::Geometry& left_,const Magick::Geometry& right_);
-  MagickPPExport int operator <=
-    (const Magick::Geometry& left_,const Magick::Geometry& right_);
+  int MagickPPExport operator == ( const Magick::Geometry& left_, const Magick::Geometry& right_ );
+  int MagickPPExport operator != ( const Magick::Geometry& left_, const Magick::Geometry& right_ );
+  int MagickPPExport operator >  ( const Magick::Geometry& left_, const Magick::Geometry& right_ );
+  int MagickPPExport operator <  ( const Magick::Geometry& left_, const Magick::Geometry& right_ );
+  int MagickPPExport operator >= ( const Magick::Geometry& left_, const Magick::Geometry& right_ );
+  int MagickPPExport operator <= ( const Magick::Geometry& left_, const Magick::Geometry& right_ );
 
   class MagickPPExport Geometry
   {
   public:
-
-    // Default constructor
-    Geometry();
-
-    // Construct Geometry from specified string
-    Geometry(const char *geometry_);
-
-    // Copy constructor
-    Geometry(const Geometry &geometry_);
-
-    // Construct Geometry from specified string
-    Geometry(const std::string &geometry_);
-
-    // Construct Geometry from specified dimensions
-    Geometry(size_t width_,size_t height_,::ssize_t xOff_=0,
-      ::ssize_t yOff_=0,bool xNegative_=false,bool yNegative_=false);
-
-    // Destructor
-    ~Geometry(void);
-
-    // Set via geometry string
-    const Geometry& operator=(const char *geometry_);
-
-    // Assignment operator
-    Geometry& operator=(const Geometry& Geometry_);
-
-    // Set via geometry string
-    const Geometry& operator=(const std::string &geometry_ );
-
-    // Return geometry string
-    operator std::string() const;
+    
+    Geometry ( size_t width_,
+	       size_t height_,
+	       ::ssize_t xOff_ = 0,
+	       ::ssize_t yOff_ = 0,
+	       bool xNegative_ = false,
+	       bool yNegative_ = false );
+    Geometry ( const std::string &geometry_ );
+    Geometry ( const char * geometry_ );
+    Geometry ( const Geometry &geometry_ );
+    Geometry ( );
+    ~Geometry ( void );
+    
+    // Width
+    void          width ( size_t width_ );
+    size_t  width ( void ) const;
+    
+    // Height
+    void          height ( size_t height_ );
+    size_t  height ( void ) const;
+    
+    // X offset from origin
+    void          xOff ( ::ssize_t xOff_ );
+    ::ssize_t     xOff ( void ) const;
+    
+    // Y offset from origin
+    void          yOff ( ::ssize_t yOff_ );
+    ::ssize_t     yOff ( void ) const;
+    
+    // Sign of X offset negative? (X origin at right)
+    void          xNegative ( bool xNegative_ );
+    bool          xNegative ( void ) const;
+    
+    // Sign of Y offset negative? (Y origin at bottom)
+    void          yNegative ( bool yNegative_ );
+    bool          yNegative ( void ) const;
+    
+    // Width and height are expressed as percentages
+    void          percent ( bool percent_ );
+    bool          percent ( void ) const;
 
     // Resize without preserving aspect ratio (!)
-    void aspect(bool aspect_);
-    bool aspect(void) const;
-
-    // Resize the image based on the smallest fitting dimension (^)
-    void fillArea(bool fillArea_);
-    bool fillArea(void) const;
-
+    void          aspect ( bool aspect_ );
+    bool          aspect ( void ) const;
+    
     // Resize if image is greater than size (>)
-    void greater(bool greater_);
-    bool greater(void) const;
-
-    // Height
-    void height(size_t height_);
-    size_t height(void) const;
-
-    // Does object contain valid geometry?
-    void isValid(bool isValid_);
-    bool isValid(void) const;
-
+    void          greater ( bool greater_ );
+    bool          greater ( void ) const;
+    
     // Resize if image is less than size (<)
-    void less(bool less_);
-    bool less(void) const;
-
+    void          less ( bool less_ );
+    bool          less ( void ) const;
+    
+    // Resize the image based on the smallest fitting dimension (^)
+    void          fillArea ( bool fillArea_ );
+    bool          fillArea ( void ) const;
+    
     // Resize using a pixel area count limit (@)
-    void limitPixels(bool limitPixels_);
-    bool limitPixels(void) const;
+    void          limitPixels ( bool limitPixels_ );
+    bool          limitPixels ( void ) const;
+    
+    // Does object contain valid geometry?
+    void          isValid ( bool isValid_ );
+    bool          isValid ( void ) const;
+    
+    // Set via geometry string
+    const Geometry& operator = ( const std::string &geometry_ );
+    const Geometry& operator = ( const char * geometry_ );
 
-    // Width and height are expressed as percentages
-    void percent(bool percent_);
-    bool percent(void) const;
-
-    // Width
-    void width(size_t width_);
-    size_t width(void) const;
-
-    // Sign of X offset negative? (X origin at right)
-    void xNegative(bool xNegative_);
-    bool xNegative(void) const;
-
-    // X offset from origin
-    void xOff(::ssize_t xOff_);
-    ::ssize_t xOff(void) const;
-
-    // Sign of Y offset negative? (Y origin at bottom)
-    void yNegative(bool yNegative_);
-    bool yNegative(void) const;
-
-    // Y offset from origin
-    void yOff(::ssize_t yOff_);
-    ::ssize_t yOff(void) const;
+    // Assignment operator
+    Geometry& operator= ( const Geometry& Geometry_ );
+    
+    // Return geometry string
+    operator std::string() const;
     
     //
     // Public methods below this point are for Magick++ use only.
     //
 
     // Construct from RectangleInfo
-    Geometry(const MagickCore::RectangleInfo &rectangle_);
-
-    // Set via RectangleInfo
-    const Geometry& operator=(const MagickCore::RectangleInfo &rectangle_);
+    Geometry ( const MagickCore::RectangleInfo &rectangle_ );
 
     // Return an ImageMagick RectangleInfo struct
     operator MagickCore::RectangleInfo() const;
-
+    
   private:
-    size_t _width;
-    size_t _height;
+    size_t    _width;
+    size_t    _height;
     ::ssize_t _xOff;
     ::ssize_t _yOff;
-    bool _xNegative;
-    bool _yNegative;
-    bool _isValid;
-    bool _percent;     // Interpret width & height as percentages (%)
-    bool _aspect;      // Force exact size (!)
-    bool _greater;     // Resize only if larger than geometry (>)
-    bool _less;        // Resize only if smaller than geometry (<)
-    bool _fillArea;    // Resize the image based on the smallest fitting dimension (^)
-    bool _limitPixels; // Resize using a pixel area count limit (@)
+    bool      _xNegative;
+    bool      _yNegative;
+    bool      _isValid;
+    bool      _percent;     // Interpret width & height as percentages (%)
+    bool      _aspect;      // Force exact size (!)
+    bool      _greater;     // Resize only if larger than geometry (>)
+    bool      _less;        // Resize only if smaller than geometry (<)
+    bool      _fillArea;    // Resize the image based on the smallest fitting dimension (^)
+    bool      _limitPixels; // Resize using a pixel area count limit (@)
   };
 } // namespace Magick
 
@@ -153,135 +135,136 @@ namespace Magick
 // Inlines
 //
 
-inline void Magick::Geometry::aspect(bool aspect_)
+// Does object contain valid geometry?
+inline void Magick::Geometry::isValid ( bool isValid_ )
 {
-  _aspect=aspect_;
+  _isValid = isValid_;
 }
 
-inline bool Magick::Geometry::aspect(void) const
+inline bool Magick::Geometry::isValid ( void ) const
 {
-  return(_aspect);
+  return _isValid;
 }
 
-inline void Magick::Geometry::fillArea(bool fillArea_)
+// Width
+inline void Magick::Geometry::width ( size_t width_ )
 {
-  _fillArea=fillArea_;
+  _width = width_;
+  isValid( true );
+}
+inline size_t Magick::Geometry::width ( void ) const
+{
+  return _width;
 }
 
-inline bool Magick::Geometry::fillArea(void) const
+// Height
+inline void Magick::Geometry::height ( size_t height_ )
 {
-  return(_fillArea);
+  _height = height_;
+}
+inline size_t Magick::Geometry::height ( void ) const
+{
+  return _height;
 }
 
-inline void Magick::Geometry::greater(bool greater_)
+// X offset from origin
+inline void Magick::Geometry::xOff ( ::ssize_t xOff_ )
 {
-  _greater=greater_;
+  _xOff = xOff_;
+}
+inline ::ssize_t Magick::Geometry::xOff ( void ) const
+{
+  return _xOff;
 }
 
-inline bool Magick::Geometry::greater(void) const
+// Y offset from origin
+inline void Magick::Geometry::yOff ( ::ssize_t yOff_ )
 {
-  return(_greater);
+  _yOff = yOff_;
+}
+inline ::ssize_t Magick::Geometry::yOff ( void ) const
+{
+  return _yOff;
 }
 
-inline void Magick::Geometry::height(size_t height_)
+// Sign of X offset negative? (X origin at right)
+inline void Magick::Geometry::xNegative ( bool xNegative_ )
 {
-  _height=height_;
+  _xNegative = xNegative_;
+}
+inline bool Magick::Geometry::xNegative ( void ) const
+{
+  return _xNegative;
 }
 
-inline size_t Magick::Geometry::height(void) const
+// Sign of Y offset negative? (Y origin at bottom)
+inline void Magick::Geometry::yNegative ( bool yNegative_ )
 {
-  return(_height);
+  _yNegative = yNegative_;
+}
+inline bool Magick::Geometry::yNegative ( void ) const
+{
+  return _yNegative;
 }
 
-inline void Magick::Geometry::isValid(bool isValid_)
-{
-  _isValid=isValid_;
-}
-
-inline bool Magick::Geometry::isValid(void) const
-{
-  return(_isValid);
-}
-
-inline void Magick::Geometry::less(bool less_)
-{
-  _less=less_;
-}
-
-inline bool Magick::Geometry::less(void) const
-{
-  return(_less);
-}
-
-inline void Magick::Geometry::limitPixels(bool limitPixels_)
-{
-  _limitPixels=limitPixels_;
-}
-
-inline bool Magick::Geometry::limitPixels(void) const
-{
-  return(_limitPixels);
-}
-
-inline void Magick::Geometry::width(size_t width_)
-{
-  _width=width_;
-  isValid(true);
-}
-
-inline void Magick::Geometry::percent(bool percent_)
+// Interpret width & height as percentages (%)
+inline void Magick::Geometry::percent ( bool percent_ )
 {
   _percent = percent_;
 }
-
-inline bool Magick::Geometry::percent(void) const
+inline bool Magick::Geometry::percent ( void ) const
 {
-  return(_percent);
+  return _percent;
 }
 
-inline size_t Magick::Geometry::width(void) const
+// Resize without preserving aspect ratio (!)
+inline void Magick::Geometry::aspect ( bool aspect_ )
 {
-  return(_width);
+  _aspect = aspect_;
+}
+inline bool Magick::Geometry::aspect ( void ) const
+{
+  return _aspect;
 }
 
-inline void Magick::Geometry::xNegative(bool xNegative_)
+// Resize if image is greater than size (>)
+inline void Magick::Geometry::greater ( bool greater_ )
 {
-  _xNegative=xNegative_;
+  _greater = greater_;
+}
+inline bool Magick::Geometry::greater ( void ) const
+{
+  return _greater;
 }
 
-inline bool Magick::Geometry::xNegative(void) const
+// Resize if image is less than size (<)
+inline void Magick::Geometry::less ( bool less_ )
 {
-  return(_xNegative);
+  _less = less_;
+}
+inline bool Magick::Geometry::less ( void ) const
+{
+  return _less;
 }
 
-inline void Magick::Geometry::xOff(::ssize_t xOff_)
+// Resize the image based on the smallest fitting dimension (^)
+inline void Magick::Geometry::fillArea ( bool fillArea_ )
 {
-  _xOff=xOff_;
+  _fillArea = fillArea_;
+}
+inline bool Magick::Geometry::fillArea ( void ) const
+{
+  return _fillArea;
 }
 
-inline ::ssize_t Magick::Geometry::xOff(void) const
+// Resize using a pixel area count limit (@)
+inline void Magick::Geometry::limitPixels ( bool limitPixels_ )
 {
-  return(_xOff);
+  _limitPixels = limitPixels_;
 }
-
-inline void Magick::Geometry::yNegative(bool yNegative_)
+inline bool Magick::Geometry::limitPixels ( void ) const
 {
-  _yNegative=yNegative_;
-}
-
-inline bool Magick::Geometry::yNegative(void) const
-{
-  return(_yNegative);
-}
-
-inline void Magick::Geometry::yOff(::ssize_t yOff_)
-{
-  _yOff=yOff_;
-}
-
-inline ::ssize_t Magick::Geometry::yOff(void) const
-{
-  return(_yOff);
+  return _limitPixels;
 }
 
 #endif // Magick_Geometry_header

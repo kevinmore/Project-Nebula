@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2015 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2013 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
 
   You may not use this file except in compliance with the License.
@@ -18,13 +18,13 @@
 #ifndef _MAGICKCORE_PIXEL_ACCESSOR_H
 #define _MAGICKCORE_PIXEL_ACCESSOR_H
 
-#include <math.h>
-#include "magick/gem.h"
-#include "magick/pixel.h"
-
 #if defined(__cplusplus) || defined(c_plusplus)
 extern "C" {
 #endif
+
+#include <math.h>
+#include "gem.h"
+#include "pixel.h"
 
 #define ClampPixelRed(pixel) ClampToQuantum((pixel)->red)
 #define ClampPixelGreen(pixel) ClampToQuantum((pixel)->green)
@@ -41,8 +41,7 @@ extern "C" {
 #define GetPixelCyan(pixel) ((pixel)->red)
 #define GetPixelGray(pixel) ((pixel)->red)
 #define GetPixelGreen(pixel) ((pixel)->green)
-#define GetPixelIndex(indexes) \
-  ((indexes == (const IndexPacket *) NULL) ? 0 : (*(indexes)))
+#define GetPixelIndex(indexes) (*(indexes))
 #define GetPixelL(pixel) ((pixel)->red)
 #define GetPixelMagenta(pixel) ((pixel)->green)
 #define GetPixelNext(pixel)  ((pixel)+1)
@@ -75,11 +74,7 @@ extern "C" {
 #define SetPixelGray(pixel,value) \
   ((pixel)->red=(pixel)->green=(pixel)->blue=(Quantum) (value))
 #define SetPixelGreen(pixel,value) ((pixel)->green=(Quantum) (value))
-#define SetPixelIndex(indexes,value) \
-{ \
-  if (indexes != (IndexPacket *) NULL) \
-    (*(indexes)=(IndexPacket) (value)); \
-}
+#define SetPixelIndex(indexes,value) (*(indexes)=(IndexPacket) (value))
 #define SetPixelL(pixel,value) ((pixel)->red=(Quantum) (value))
 #define SetPixelMagenta(pixel,value) ((pixel)->green=(Quantum) (value))
 #define SetPixelOpacity(pixel,value) \
@@ -111,19 +106,6 @@ extern "C" {
 static inline MagickRealType AbsolutePixelValue(const MagickRealType x)
 {
   return(x < 0.0f ? -x : x);
-}
-
-static inline Quantum ClampPixel(const MagickRealType value)
-{ 
-  if (value < 0.0f)
-    return(0); 
-  if (value >= (MagickRealType) QuantumRange)
-    return((Quantum) QuantumRange);
-#if !defined(MAGICKCORE_HDRI_SUPPORT)
-  return((Quantum) (value+0.5f));
-#else
-  return((Quantum) value);
-#endif
 }
 
 static inline MagickRealType GetPixelLuma(const Image *restrict image,
@@ -191,19 +173,8 @@ static inline Quantum PixelPacketIntensity(const PixelPacket *pixel)
 
   if ((pixel->red  == pixel->green) && (pixel->green == pixel->blue))
     return(pixel->red);
-  intensity=(MagickRealType) (0.212656*pixel->red+0.715158*pixel->green+
-    0.072186*pixel->blue);
+  intensity=0.212656*pixel->red+0.715158*pixel->green+0.072186*pixel->blue;
   return(ClampToQuantum(intensity));
-}
-
-static inline void SetPixelViaMagickPixel(const Image *restrict image,
-  const MagickPixelPacket *restrict magick_pixel,PixelPacket *restrict pixel)
-{ 
-  pixel->red=ClampToQuantum(magick_pixel->red);
-  pixel->green=ClampToQuantum(magick_pixel->green);
-  pixel->blue=ClampToQuantum(magick_pixel->blue);
-  if (image->matte != MagickFalse)
-    pixel->opacity=ClampToQuantum(magick_pixel->opacity);
 }
 
 #if defined(__cplusplus) || defined(c_plusplus)

@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2015 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2013 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
 
   You may not use this file except in compliance with the License.
@@ -121,10 +121,7 @@ extern "C" {
 # include <pthread.h>
 #elif defined(MAGICKCORE_WINDOWS_SUPPORT)
 #  define MAGICKCORE_HAVE_WINTHREADS  1
-#include <winsock2.h>
-#include <ws2tcpip.h>
 #include <windows.h>
-#pragma comment (lib, "ws2_32.lib")
 #endif
 #if defined(MAGICKCORE_HAVE_SYS_SYSLIMITS_H)
 # include <sys/syslimits.h>

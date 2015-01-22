@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2015 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2013 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
   You may not use this file except in compliance with the License.
@@ -22,30 +22,13 @@
 extern "C" {
 #endif
 
+#define DegreesToRadians(x)  (MagickPI*(x)/180.0)
 #define MagickPI  3.14159265358979323846264338327950288419716939937510
 #define MagickWandId  "MagickWand"
 #define QuantumTick(i,span) ((MagickBooleanType) ((((i) & ((i)-1)) == 0) || \
    (((i) & 0xfff) == 0) || \
    ((MagickOffsetType) (i) == ((MagickOffsetType) (span)-1))))
-#define ThrowWandException(severity,tag,context) \
-{ \
-  (void) ThrowMagickException(wand->exception,GetMagickModule(),severity, \
-    tag,"`%s'",context); \
-  return(MagickFalse); \
-}
-#define ThrowWandFatalException(severity,tag,context) \
-{ \
-  ExceptionInfo \
-    *exception; \
- \
-  exception=AcquireExceptionInfo(); \
-  (void) ThrowMagickException(exception,GetMagickModule(),severity,tag, \
-    "`%s'",context); \
-  CatchException(exception); \
-  (void) DestroyExceptionInfo(exception); \
-  MagickWandTerminus(); \
-  _exit((int) (severity-FatalErrorException)+1); \
-}
+#define RadiansToDegrees(x) (180.0*(x)/MagickPI)
 
 struct _MagickWand
 {

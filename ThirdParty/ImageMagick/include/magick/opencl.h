@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2015 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2013 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
   You may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@
 extern "C" {
 #endif
 
-/* OpenCL program modules */
+// OpenCL program modules
 typedef enum {
   MAGICK_OPENCL_ACCELERATE = 0
   ,MAGICK_OPENCL_NUM_PROGRAMS   /* !!! This has to be the last entry !!! */
@@ -47,13 +47,9 @@ extern MagickExport
 
 /* Parameter type accepted by SetMagickOpenCLEnvParm and GetMagickOpenCLEnvParm */
 typedef enum {
-    MAGICK_OPENCL_ENV_PARAM_DEVICE                 /* cl_device_id (from OpenCL) */
-  , MAGICK_OPENCL_ENV_PARAM_OPENCL_DISABLED        /* MagickBooleanType */
-  , MAGICK_OPENCL_ENV_PARAM_OPENCL_INITIALIZED     /* MagickBooleanType */
-  , MAGICK_OPENCL_ENV_PARAM_PROGRAM_CACHE_DISABLED /* MagickBooleanType */
-                                                   /* if true, disable the kernel binary cache */
-  , MAGICK_OPENCL_ENV_PARAM_REGENERATE_PROFILE     /* MagickBooleanType */
-                                                   /* if true, rerun microbenchmark in auto device selection */
+    MAGICK_OPENCL_ENV_PARAM_DEVICE                  /* cl_device_id (from OpenCL) */
+  , MAGICK_OPENCL_ENV_PARAM_OPENCL_DISABLED         /* MagickBooleanType */
+  , MAGICK_OPENCL_ENV_PARAM_OPENCL_INITIALIZED      /* MagickBooleanType */
 } MagickOpenCLEnvParam;
 
 extern MagickExport
@@ -66,15 +62,6 @@ extern MagickExport
 extern MagickExport
   MagickBooleanType InitOpenCLEnv(MagickCLEnv, ExceptionInfo*);
 
-typedef enum {
-  MAGICK_OPENCL_OFF = 0
-, MAGICK_OPENCL_DEVICE_SELECT_AUTO = 1
-, MAGICK_OPENCL_DEVICE_SELECT_USER = 2
-, MAGICK_OPENCL_DEVICE_SELECT_AUTO_CLEAR_CACHE = 3
-} ImageMagickOpenCLMode ;
-
-extern MagickExport
-MagickBooleanType InitImageMagickOpenCL(ImageMagickOpenCLMode, void*, void*, ExceptionInfo*);
 
 #if defined(__cplusplus) || defined(c_plusplus)
 }

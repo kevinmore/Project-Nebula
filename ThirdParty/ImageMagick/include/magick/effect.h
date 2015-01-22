@@ -1,12 +1,12 @@
 /*
-  Copyright 1999-2015 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2013 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
-  
+
   You may not use this file except in compliance with the License.
   obtain a copy of the License at
-  
+
     http://www.imagemagick.org/script/license.php
-  
+
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,11 +18,11 @@
 #ifndef _MAGICKCORE_EFFECT_H
 #define _MAGICKCORE_EFFECT_H
 
-#include "magick/morphology.h"
-
 #if defined(__cplusplus) || defined(c_plusplus)
 extern "C" {
 #endif
+
+#include "morphology.h"
 
 typedef enum
 {
@@ -81,16 +81,13 @@ extern MagickExport Image
   *GaussianBlurImage(const Image *,const double,const double,ExceptionInfo *),
   *GaussianBlurImageChannel(const Image *,const ChannelType,const double,
     const double,ExceptionInfo *),
-  *KuwaharaImage(const Image *,const double,const double,ExceptionInfo *),
-  *KuwaharaImageChannel(const Image *,const ChannelType,const double,
-    const double,ExceptionInfo *),
   *MotionBlurImage(const Image *,const double,const double,const double,
     ExceptionInfo *),
   *MotionBlurImageChannel(const Image *,const ChannelType,const double,
     const double,const double,ExceptionInfo *),
   *PreviewImage(const Image *,const PreviewType,ExceptionInfo *),
-  *RotationalBlurImage(const Image *,const double,ExceptionInfo *),
-  *RotationalBlurImageChannel(const Image *,const ChannelType,const double,
+  *RadialBlurImage(const Image *,const double,ExceptionInfo *),
+  *RadialBlurImageChannel(const Image *,const ChannelType,const double,
     ExceptionInfo *),
   *SelectiveBlurImage(const Image *,const double,const double,const double,
     ExceptionInfo *),

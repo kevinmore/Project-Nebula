@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2015 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2013 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
   You may not use this file except in compliance with the License.
@@ -26,14 +26,14 @@ extern "C" {
   Define declarations.
 */
 #define MagickPackageName "ImageMagick"
-#define MagickCopyright  "Copyright (C) 1999-2015 ImageMagick Studio LLC"
-#define MagickSVNRevision  "17601:17620M"
-#define MagickLibVersion  0x690
-#define MagickLibVersionText  "6.9.0"
-#define MagickLibVersionNumber  2,0,0
-#define MagickLibAddendum  "-4"
-#define MagickLibInterface  2
-#define MagickLibMinInterface  2
+#define MagickCopyright  "Copyright (C) 1999-2013 ImageMagick Studio LLC"
+#define MagickSVNRevision  "13682:13683M"
+#define MagickLibVersion  0x687
+#define MagickLibVersionText  "6.8.7"
+#define MagickLibVersionNumber  1,0,0
+#define MagickLibAddendum  "-6"
+#define MagickLibInterface  1
+#define MagickLibMinInterface  1
 #if defined(_WINDOWS)
 #  if defined(_WIN64)
 #    define MagickPlatform "x64"
@@ -43,16 +43,16 @@ extern "C" {
 #else
 #define MagickPlatform  "x86_64"
 #endif
-#define MagickppLibVersionText  "6.9.0"
-#define MagickppLibVersionNumber  5:0:0
-#define MagickppLibAddendum  "-4"
-#define MagickppLibInterface  5
-#define MagickppLibMinInterface  5
-#define MagickReleaseDate  "2015-01-10"
-#define MagickChangeDate   "20140111"
+#define MagickppLibVersionText  "6.8.7"
+#define MagickppLibVersionNumber  3:0:0
+#define MagickppLibAddendum  "-6"
+#define MagickppLibInterface  3
+#define MagickppLibMinInterface  3
+#define MagickReleaseDate  "2013-11-07"
+#define MagickChangeDate   "20131108"
 #define MagickFeatures "DPC OpenMP"
-#define MagickDelegates "bzlib djvu mpeg fftw fpx fontconfig freetype jbig jng jpeg lcms lzma openexr pango png ps tiff webp x xml zlib"
-#define MagickHomeURL  "file:///usr/local/share/doc/ImageMagick-6/index.html"
+#define MagickDelegates "bzlib djvu mpeg fftw fpx fontconfig freetype jng jp2 jpeg lcms lzma openexr pango png ps tiff webp x xml zlib"
+#define MagickHomeURL  "file:///usr/share/doc/ImageMagick-6/index.html"
 #define MagickAuthoritativeURL  "http://www.imagemagick.org"
 #if (MAGICKCORE_QUANTUM_DEPTH == 8)
 #define MagickQuantumDepth  "Q8"

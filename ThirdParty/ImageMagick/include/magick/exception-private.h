@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2015 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2013 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
   You may not use this file except in compliance with the License.
@@ -18,13 +18,13 @@
 #ifndef _MAGICKCORE_EXCEPTION_PRIVATE_H
 #define _MAGICKCORE_EXCEPTION_PRIVATE_H
 
-#include "magick/log.h"
-#include "magick/magick.h"
-#include "magick/string_.h"
-
 #if defined(__cplusplus) || defined(c_plusplus)
 extern "C" {
 #endif
+
+#include "magick/log.h"
+#include "magick/magick.h"
+#include "magick/string_.h"
 
 #define ThrowBinaryException(severity,tag,context) \
 { \
@@ -39,15 +39,15 @@ extern "C" {
     *message; \
  \
   ExceptionInfo \
-    *exception; \
+    exception; \
  \
-  exception=AcquireExceptionInfo(); \
+  GetExceptionInfo(&exception); \
   message=GetExceptionMessage(errno); \
-  (void) ThrowMagickException(exception,GetMagickModule(),severity, \
+  (void) ThrowMagickException(&exception,GetMagickModule(),severity, \
     tag == (const char *) NULL ? "unknown" : tag,"`%s'",message); \
   message=DestroyString(message); \
-  CatchException(exception); \
-  (void) DestroyExceptionInfo(exception); \
+  CatchException(&exception); \
+  (void) DestroyExceptionInfo(&exception); \
   MagickCoreTerminus(); \
   _exit((int) (severity-FatalErrorException)+1); \
 }
@@ -88,12 +88,6 @@ extern "C" {
   (void) CloseBlob(image); \
   return(MagickFalse); \
 }
-
-extern MagickPrivate MagickBooleanType
-  ClearExceptionInfo(ExceptionInfo *,MagickBooleanType);
-
-extern MagickPrivate void
-  InitializeExceptionInfo(ExceptionInfo *);
 
 #if defined(__cplusplus) || defined(c_plusplus)
 }

@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2015 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2013 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
   You may not use this file except in compliance with the License.
@@ -162,7 +162,6 @@ extern MagickExport MagickBooleanType
   DefineImageOption(ImageInfo *,const char *),
   DeleteImageOption(ImageInfo *,const char *),
   IsCommandOption(const char *),
-  IsOptionMember(const char *,const char *),
   ListCommandOptions(FILE *,const CommandOption,ExceptionInfo *),
   SetImageOption(ImageInfo *,const char *,const char *);
 

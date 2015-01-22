@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2015 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2013 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
   You may not use this file except in compliance with the License.
@@ -46,14 +46,6 @@ typedef struct _ChannelFeatures
 
 extern MagickExport ChannelFeatures
   *GetImageChannelFeatures(const Image *,const size_t,ExceptionInfo *);
-
-extern MagickExport Image
-  *CannyEdgeImage(const Image *,const double,const double,const double,
-    const double,ExceptionInfo *),
-  *HoughLineImage(const Image *,const size_t,const size_t,const size_t,
-    ExceptionInfo *),
-  *MeanShiftImage(const Image *,const size_t,const size_t,const double,
-    ExceptionInfo *);
 
 #if defined(__cplusplus) || defined(c_plusplus)
 }

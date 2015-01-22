@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2015 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2013 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
   You may not use this file except in compliance with the License.
@@ -40,7 +40,7 @@ extern "C" {
 #   pragma warning( disable: 4273 )  /* Disable the dll linkage warnings */
 #  endif
 #  if !defined(_MAGICKLIB_)
-#   if defined(__clang__) || defined(__GNUC__)
+#   if defined(__GNUC__)
 #    define MagickExport __attribute__ ((dllimport))
 #   else
 #    define MagickExport __declspec(dllimport)
@@ -49,7 +49,7 @@ extern "C" {
 #    pragma message( "MagickCore lib DLL import interface" )
 #   endif
 #  else
-#   if defined(__clang__) || defined(__GNUC__)
+#   if defined(__GNUC__)
 #    define MagickExport __attribute__ ((dllexport))
 #   else
 #    define MagickExport __declspec(dllexport)
@@ -66,7 +66,7 @@ extern "C" {
 # endif
 
 # if defined(_DLL) && !defined(_LIB)
-#   if defined(__clang__) || defined(__GNUC__)
+#   if defined(__GNUC__)
 #    define ModuleExport __attribute__ ((dllexport))
 #   else
 #    define ModuleExport __declspec(dllexport)
@@ -81,6 +81,7 @@ extern "C" {
 #  endif
 
 # endif
+# define MagickGlobal __declspec(thread)
 # if defined(_VISUALC_)
 #  pragma warning(disable : 4018)
 #  pragma warning(disable : 4068)
@@ -91,7 +92,7 @@ extern "C" {
 #  pragma warning(disable : 4996)
 # endif
 #else
-# if defined(__clang__) || (__GNUC__ >= 4)
+# if __GNUC__ >= 4
 #  define MagickExport __attribute__ ((visibility ("default")))
 #  define MagickPrivate  __attribute__ ((visibility ("hidden")))
 # else
@@ -99,6 +100,7 @@ extern "C" {
 #   define MagickPrivate
 # endif
 # define ModuleExport  MagickExport
+# define MagickGlobal
 #endif
 
 #define MagickSignature  0xabacadabUL
@@ -123,18 +125,14 @@ extern "C" {
 #  define magick_unreferenced(x)  /* nothing */
 #endif
 
-#if !defined(__clang__) && (((__GNUC__) > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 3)))
+#if (((__GNUC__) > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 3)))
 #  define magick_alloc_size(x)  __attribute__((__alloc_size__(x)))
 #  define magick_alloc_sizes(x,y)  __attribute__((__alloc_size__(x,y)))
-#else
-#  define magick_alloc_size(x)  /* nothing */
-#  define magick_alloc_sizes(x,y)  /* nothing */
-#endif
-
-#if defined(__clang__) || (((__GNUC__) > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 3)))
 #  define magick_cold_spot  __attribute__((__cold__))
 #  define magick_hot_spot  __attribute__((__hot__))
 #else
+#  define magick_alloc_size(x)  /* nothing */
+#  define magick_alloc_sizes(x,y)  /* nothing */
 #  define magick_cold_spot
 #  define magick_hot_spot
 #endif

@@ -191,12 +191,11 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\ThirdParty\Qt\include;$(ProjectDir)..\ThirdParty\Qt\include\QtCore;$(ProjectDir)..\ThirdParty\Qt\include\QtGui;$(ProjectDir)..\ThirdParty\Qt\include\QtWidgets;$(ProjectDir)..\ThirdParty\Qt\include\QtOpenGL;$(ProjectDir)..\ThirdParty\assimp\include;$(ProjectDir)..\ThirdParty\ImageMagick\include;$(ProjectDir)..\ThirdParty\statemachineviewer\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\ThirdParty\Qt\lib;$(ProjectDir)..\ThirdParty\ImageMagick\lib\Debug;$(ProjectDir)..\ThirdParty\assimp\lib;$(ProjectDir)..\ThirdParty\statemachineviewer\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\ThirdParty\Qt\lib;$(ProjectDir)..\ThirdParty\ImageMagick\lib;$(ProjectDir)..\ThirdParty\assimp\lib;$(ProjectDir)..\ThirdParty\statemachineviewer\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>Qt5Cored.lib;Qt5Guid.lib;Qt5OpenGLd.lib;Qt5Widgetsd.lib;opengl32.lib;%(AdditionalDependencies);assimp.lib;CORE_DB_Magick++_.lib;libcgraphviz.lib;statemachineviewer.lib</AdditionalDependencies>
     </Link>
     <BuildLog>
@@ -239,7 +238,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\ThirdParty\Qt\lib;$(ProjectDir)..\ThirdParty\ImageMagick\lib\Release;$(ProjectDir)..\ThirdParty\assimp\lib;$(ProjectDir)..\ThirdParty\statemachineviewer\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\ThirdParty\Qt\lib;$(ProjectDir)..\ThirdParty\ImageMagick\lib;$(ProjectDir)..\ThirdParty\assimp\lib;$(ProjectDir)..\ThirdParty\statemachineviewer\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>Qt5Core.lib;Qt5Gui.lib;Qt5OpenGL.lib;Qt5Widgets.lib;opengl32.lib;%(AdditionalDependencies);assimp.lib;CORE_RL_Magick++_.lib;libcgraphviz.lib;statemachineviewer.lib</AdditionalDependencies>
     </Link>
     <BuildLog>

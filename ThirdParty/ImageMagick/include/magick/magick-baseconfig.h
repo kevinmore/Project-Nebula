@@ -41,38 +41,34 @@
 // the built ImageMagick to any directory on any directory on any machine,
 // then do not use this setting.
 //
-// #undef MAGICKCORE_INSTALLED_SUPPORT
+#define MAGICKCORE_INSTALLED_SUPPORT
 
 // When building ImageMagick using DLLs, include a DllMain()
 // function which automatically invokes MagickCoreGenesis(NULL), and
-// MagickCoreTerminus() so that the user doesn't need to. This is disabled
+// MagickCoreTerminus() so that the user doesn't need to. This is enabled
 // by default.
 //
-// #define ProvideDllMain
+#define ProvideDllMain
+
+// Define if MIT X11 is available (or stubbed).  It is not actually
+// necessary to use X11 or the X11 stubs library. The VisualMagick configure
+// program assumes that X11 stubs is being used if X11 is not supported.
+// To achieve a slimmer ImageMagick, undefine MAGICKCORE_X11_DELEGATE and
+// remove the 'xlib' project from the ImageMagick workspace.
+//
+#undef MAGICKCORE_X11_DELEGATE
 
 // Define to enable high dynamic range imagery (HDRI)
 //
 #define MAGICKCORE_HDRI_ENABLE 0
 
-// Define to enable OpenCL
-//
-#undef MAGICKCORE__OPENCL
-#undef MAGICKCORE_HAVE_CL_CL_H
-
 // Exclude deprecated methods in MagickCore API 
 //
-#define MAGICKCORE_EXCLUDE_DEPRECATED
+//#undef MAGICKCORE_EXCLUDE_DEPRECATED
 
 // Permit enciphering and deciphering image pixels.
 //
 #define MAGICKCORE_CIPHER_SUPPORT
-
-// Define if MIT X11 is available (or stubbed). It is not actually
-// necessary to use X11 or the X11 stubs library. To achieve a slimmer
-// ImageMagick, undefine MAGICKCORE_X11_DELEGATE and remove the 'xlib'
-// project from the ImageMagick workspace.
-//
-#undef MAGICKCORE_X11_DELEGATE
 
 /////////////
 //
@@ -102,24 +98,14 @@
 #define MAGICKCORE_LCMS_DELEGATE
 #define MAGICKCORE_HAVE_LCMS2_H
 
-// Define to use the OpenJPEG library
-#define MAGICKCORE_LIBOPENJP2_DELEGATE
-
 // Define to use the Liquid Rescale library
 #define MAGICKCORE_LQR_DELEGATE
-
-// Define to use the OpenEXR library
-#define MAGICKCORE_OPENEXR_DELEGATE
 
 // Define to use the Pango/Cairo library
 #define MAGICKCORE_PANGOCAIRO_DELEGATE
 
 // Define to use the PNG library
 #define MAGICKCORE_PNG_DELEGATE
-
-// Define to use the RSVG library
-#define MAGICKCORE_RSVG_DELEGATE
-#define MAGICKCORE_CAIRO_DELEGATE
 
 // Define to use the TIFF library
 #define MAGICKCORE_TIFF_DELEGATE
@@ -129,6 +115,9 @@
 
 // Define to use the Windows GDI32 library (for clipboard and emf modules)
 #define MAGICKCORE_WINGDI32_DELEGATE
+
+// Define to use the WMF library
+// #undef MAGICKCORE_WMF_DELEGATE
 
 // Define to use the GNOME XML library
 #define MAGICKCORE_XML_DELEGATE
@@ -271,7 +260,7 @@ typedef long ssize_t;
 /* Define to 1 if you have the `_wstat' function. */
 #define MAGICKCORE_HAVE__WSTAT 1
 
-#if defined(_VISUALC_) && (_MSC_VER >= 1310)
+#if defined(_VISUALC_) && (_MSC_VER >= 1400)
 #define MAGICKCORE_HAVE__ALIGNED_MALLOC 1
 #endif
 #define MAGICKCORE_HAVE_VSNPRINTF 1
@@ -313,11 +302,6 @@ typedef long ssize_t;
 
 /* Define to 1 if you have the `TIFFIsBigEndian' function. */
 #define MAGICKCORE_HAVE_TIFFISBIGENDIAN  1
-
-/*
-  Png features.
-*/
-#define IMPNG_SETJMP_IS_THREAD_SAFE 1
 
 /*
   Disable specific warnings.

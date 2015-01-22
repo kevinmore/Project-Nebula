@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2015 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2013 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
   You may not use this file except in compliance with the License.
@@ -349,6 +349,21 @@ extern int vsnprintf(char *,size_t,const char *,va_list);
 #if !defined(PATH_MAX)
 #define PATH_MAX  4096
 #endif
+
+/*
+  Exception defines.
+*/
+#define ThrowWandFatalException(severity,tag,context) \
+{ \
+  ExceptionInfo \
+    *exception; \
+ \
+  exception=AcquireExceptionInfo(); \
+  (void) ThrowMagickException(exception,GetMagickModule(),severity,tag, \
+    "`%s'",context); \
+  CatchException(exception); \
+  exception=DestroyExceptionInfo(exception); \
+}
 
 /*
   Magick defines.

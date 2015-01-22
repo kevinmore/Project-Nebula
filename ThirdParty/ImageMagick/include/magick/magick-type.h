@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2015 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2013 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
 
   You may not use this file except in compliance with the License.
@@ -18,11 +18,11 @@
 #ifndef _MAGICKCORE_MAGICK_TYPE_H
 #define _MAGICKCORE_MAGICK_TYPE_H
 
-#include "magick/magick-config.h"
-
 #if defined(__cplusplus) || defined(c_plusplus)
 extern "C" {
 #endif
+
+#include "magick-config.h"
 
 #if !defined(MAGICKCORE_QUANTUM_DEPTH)
 #define MAGICKCORE_QUANTUM_DEPTH  16
@@ -113,7 +113,7 @@ typedef long double MagickRealType;
 
 typedef double SignedQuantum;
 #if defined(MAGICKCORE_HDRI_SUPPORT)
-typedef double Quantum;
+typedef float Quantum;
 #define QuantumRange  4294967295.0
 #define QuantumFormat  "%g"
 #else
@@ -127,8 +127,8 @@ typedef unsigned int Quantum;
 #define MaxMap  65535UL
 
 typedef long double MagickRealType;
-typedef long double SignedQuantum;
-typedef long double Quantum;
+typedef double SignedQuantum;
+typedef double Quantum;
 #define QuantumRange  18446744073709551615.0
 #define QuantumFormat  "%g"
 #else
@@ -136,9 +136,8 @@ typedef long double Quantum;
 # error "MAGICKCORE_QUANTUM_DEPTH must be one of 8, 16, 32, or 64"
 #endif
 #endif
-#define MagickEpsilon  (1.0e-15)
-#define MagickMaximumValue  1.79769313486231570E+308
-#define MagickMinimumValue   2.22507385850720140E-308
+#define MagickEpsilon  ((MagickRealType) 1.0e-15)
+#define MagickHuge  3.4e+38F
 #define QuantumScale  ((double) 1.0/(double) QuantumRange)
 
 /*

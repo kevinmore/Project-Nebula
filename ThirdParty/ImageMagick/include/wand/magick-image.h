@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2015 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2013 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
 
   You may not use this file except in compliance with the License.
@@ -94,7 +94,6 @@ extern WandExport MagickBooleanType
   MagickAutoGammaImageChannel(MagickWand *,const ChannelType),
   MagickAutoLevelImage(MagickWand *),
   MagickAutoLevelImageChannel(MagickWand *,const ChannelType),
-  MagickAutoOrientImage(MagickWand *),
   MagickBlackThresholdImage(MagickWand *,const PixelWand *),
   MagickBlueShiftImage(MagickWand *,const double),
   MagickBlurImage(MagickWand *,const double,const double),
@@ -254,6 +253,8 @@ extern WandExport MagickBooleanType
     const size_t,const MagickBooleanType,const MagickBooleanType),
   MagickQuantizeImages(MagickWand *,const size_t,const ColorspaceType,
     const size_t,const MagickBooleanType,const MagickBooleanType),
+  MagickRadialBlurImage(MagickWand *,const double),
+  MagickRadialBlurImageChannel(MagickWand *,const ChannelType,const double),
   MagickRaiseImage(MagickWand *,const size_t,const size_t,const ssize_t,
     const ssize_t,const MagickBooleanType),
   MagickRandomThresholdImage(MagickWand *,const double,const double),
@@ -272,9 +273,6 @@ extern WandExport MagickBooleanType
     const double),
   MagickRollImage(MagickWand *,const ssize_t,const ssize_t),
   MagickRotateImage(MagickWand *,const PixelWand *,const double),
-  MagickRotationalBlurImage(MagickWand *,const double),
-  MagickRotationalBlurImageChannel(MagickWand *,const ChannelType,
-    const double),
   MagickSampleImage(MagickWand *,const size_t,const size_t),
   MagickScaleImage(MagickWand *,const size_t,const size_t),
   MagickSegmentImage(MagickWand *,const ColorspaceType,const MagickBooleanType,

@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2015 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2013 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
 
   You may not use this file except in compliance with the License.
@@ -18,13 +18,13 @@
 #ifndef _MAGICKCORE_THREAD_PRIVATE_H
 #define _MAGICKCORE_THREAD_PRIVATE_H
 
-#include "magick/cache.h"
-#include "magick/resource_.h"
-#include "magick/thread_.h"
-
 #if defined(__cplusplus) || defined(c_plusplus)
 extern "C" {
 #endif
+
+#include "magick/cache.h"
+#include "magick/resource_.h"
+#include "magick/thread_.h"
 
 /*
   Single threaded unless workload justifies the threading overhead.
@@ -37,7 +37,7 @@ extern "C" {
       GetMagickResourceLimit(ThreadResource) : \
       GetMagickResourceLimit(ThreadResource) < 2 ? 1 : 2)
 
-#if defined(__clang__) || (__GNUC__ > 3) || ((__GNUC__ == 3) && (__GNUC_MINOR__ > 10))
+#if (__GNUC__ > 3) || ((__GNUC__ == 3) && (__GNUC_MINOR__ > 10))
 #define MagickCachePrefetch(address,mode,locality) \
   __builtin_prefetch(address,mode,locality)
 #else

@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2015 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2013 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
 
   You may not use this file except in compliance with the License.
@@ -18,24 +18,14 @@
 #ifndef _MAGICKCORE_COLORSPACE_PRIVATE_H
 #define _MAGICKCORE_COLORSPACE_PRIVATE_H
 
-#include "magick/image.h"
-#include "magick/image-private.h"
-#include "magick/pixel.h"
-#include "magick/pixel-accessor.h"
-
 #if defined(__cplusplus) || defined(c_plusplus)
 extern "C" {
 #endif
 
-static inline void ConvertCMYKToRGB(MagickPixelPacket *pixel)
-{
-  pixel->red=((QuantumRange-(QuantumScale*pixel->red*(QuantumRange-
-    pixel->index)+pixel->index)));
-  pixel->green=((QuantumRange-(QuantumScale*pixel->green*(QuantumRange-
-    pixel->index)+pixel->index)));
-  pixel->blue=((QuantumRange-(QuantumScale*pixel->blue*(QuantumRange-
-    pixel->index)+pixel->index)));
-}
+#include "magick/image.h"
+#include "magick/image-private.h"
+#include "magick/pixel.h"
+#include "magick/pixel-accessor.h"
 
 static inline void ConvertRGBToCMYK(MagickPixelPacket *pixel)
 {
@@ -56,13 +46,12 @@ static inline void ConvertRGBToCMYK(MagickPixelPacket *pixel)
     }
   else
     {
-      red=QuantumScale*DecodePixelGamma(pixel->red);
-      green=QuantumScale*DecodePixelGamma(pixel->green);
-      blue=QuantumScale*DecodePixelGamma(pixel->blue);
+      red=DecodePixelGamma(pixel->red);
+      green=DecodePixelGamma(pixel->green);
+      blue=DecodePixelGamma(pixel->blue);
     }
-  if ((fabs((double) red) < MagickEpsilon) &&
-      (fabs((double) green) < MagickEpsilon) &&
-      (fabs((double) blue) < MagickEpsilon))
+  if ((fabs(red) < MagickEpsilon) && (fabs(green) < MagickEpsilon) &&
+      (fabs(blue) < MagickEpsilon))
     {
       pixel->index=(MagickRealType) QuantumRange;
       return;

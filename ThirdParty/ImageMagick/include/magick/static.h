@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2015 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2013 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
   You may not use this file except in compliance with the License.
@@ -89,7 +89,6 @@ extern ModuleExport size_t
   RegisterJPGImage(void),
   RegisterJPEGImage(void),
   RegisterJP2Image(void),
-  RegisterJSONImage(void),
   RegisterLABELImage(void),
   RegisterMACImage(void),
   RegisterMAGICKImage(void),
@@ -147,12 +146,10 @@ extern ModuleExport size_t
   RegisterRLAImage(void),
   RegisterRLEImage(void),
   RegisterSCRImage(void),
-  RegisterSCREENSHOTImage(void),
   RegisterSCTImage(void),
   RegisterSFWImage(void),
   RegisterSGIImage(void),
   RegisterSHTMLImage(void),
-  RegisterSIXELImage(void),
   RegisterSTEGANOImage(void),
   RegisterSUNImage(void),
   RegisterSVGImage(void),
@@ -172,7 +169,6 @@ extern ModuleExport size_t
   RegisterVICARImage(void),
   RegisterVIDImage(void),
   RegisterVIFFImage(void),
-  RegisterVIPSImage(void),
   RegisterVSTImage(void),
   RegisterWBMPImage(void),
   RegisterWEBPImage(void),
@@ -253,7 +249,6 @@ extern ModuleExport void
   UnregisterJPGImage(void),
   UnregisterJPEGImage(void),
   UnregisterJP2Image(void),
-  UnregisterJSONImage(void),
   UnregisterLABELImage(void),
   UnregisterLOCALEImage(void),
   UnregisterMACImage(void),
@@ -312,12 +307,10 @@ extern ModuleExport void
   UnregisterRLAImage(void),
   UnregisterRLEImage(void),
   UnregisterSCRImage(void),
-  UnregisterSCREENSHOTImage(void),
   UnregisterSCTImage(void),
   UnregisterSFWImage(void),
   UnregisterSGIImage(void),
   UnregisterSHTMLImage(void),
-  UnregisterSIXELImage(void),
   UnregisterSTEGANOImage(void),
   UnregisterSUNImage(void),
   UnregisterSVGImage(void),
@@ -337,7 +330,6 @@ extern ModuleExport void
   UnregisterVICARImage(void),
   UnregisterVIDImage(void),
   UnregisterVIFFImage(void),
-  UnregisterVIPSImage(void),
   UnregisterVSTImage(void),
   UnregisterWBMPImage(void),
   UnregisterWEBPImage(void),

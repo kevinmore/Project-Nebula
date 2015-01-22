@@ -1,12 +1,12 @@
 /*
-  Copyright 1999-2015 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2013 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
-  
+
   You may not use this file except in compliance with the License.
   obtain a copy of the License at
-  
+
     http://www.imagemagick.org/script/license.php
-  
+
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -24,10 +24,10 @@ extern "C" {
 
 #if !defined(MAGICKCORE_EXCLUDE_DEPRECATED)
 
-#include "wand/drawing-wand.h"
-#include "wand/magick-wand.h"
-#include "wand/pixel-iterator.h"
-#include "wand/pixel-wand.h"
+#include "drawing-wand.h"
+#include "magick-wand.h"
+#include "pixel-iterator.h"
+#include "pixel-wand.h"
 
 typedef struct _DrawingWand
   *DrawContext;
@@ -106,10 +106,6 @@ extern WandExport MagickBooleanType
     magick_attribute((deprecated)),
   MagickPaintTransparentImage(MagickWand *,const PixelWand *,const double,
     const double) magick_attribute((deprecated)),
-  MagickRadialBlurImage(MagickWand *,const double)
-     magick_attribute((deprecated)),
-  MagickRadialBlurImageChannel(MagickWand *,const ChannelType,const double)
-    magick_attribute((deprecated)),
   MagickRecolorImage(MagickWand *,const size_t,const double *)
     magick_attribute((deprecated)),
   MagickSetImageAttribute(MagickWand *,const char *,const char *)

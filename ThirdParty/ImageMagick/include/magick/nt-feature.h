@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2015 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2013 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
   You may not use this file except in compliance with the License.
@@ -18,23 +18,21 @@
 #ifndef _MAGICKCORE_NT_FEATURE_H
 #define _MAGICKCORE_NT_FEATURE_H
 
-#include "magick/exception.h"
-#include "magick/geometry.h"
-#include "magick/splay-tree.h"
-
 #if defined(__cplusplus) || defined(c_plusplus)
 extern "C" {
 #endif
 
+#include "magick/splay-tree.h"
+
 extern MagickExport void
   *CropImageToHBITMAP(Image *,const RectangleInfo *,ExceptionInfo *),
-  *ImageToHBITMAP(Image *,ExceptionInfo *);
+  *ImageToHBITMAP(Image *);
 
 #if !defined(XS_VERSION)
 
 extern MagickExport MagickBooleanType
-  NTAcquireTypeCache(SplayTreeInfo *,ExceptionInfo *),
-  NTIsMagickConflict(const char *);
+  NTIsMagickConflict(const char *),
+  NTLoadTypeLists(SplayTreeInfo *,ExceptionInfo *);
 
 #endif
 

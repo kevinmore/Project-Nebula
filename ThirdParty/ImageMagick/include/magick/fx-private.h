@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2015 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2013 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
   You may not use this file except in compliance with the License.
@@ -30,9 +30,9 @@ extern MagickExport FxInfo
   *DestroyFxInfo(FxInfo *);
 
 extern MagickExport MagickBooleanType
-  FxEvaluateExpression(FxInfo *,double *,ExceptionInfo *),
+  FxEvaluateExpression(FxInfo *,MagickRealType *,ExceptionInfo *),
   FxEvaluateChannelExpression(FxInfo *,const ChannelType,const ssize_t,
-   const ssize_t,double *,ExceptionInfo *);
+   const ssize_t,MagickRealType *,ExceptionInfo *);
 
 #if defined(__cplusplus) || defined(c_plusplus)
 }

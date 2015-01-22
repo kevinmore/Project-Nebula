@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2015 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2013 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
   You may not use this file except in compliance with the License.
@@ -18,13 +18,12 @@
 #ifndef _MAGICKCORE_BLOB_PRIVATE_H
 #define _MAGICKCORE_BLOB_PRIVATE_H
 
-#include "magick/image.h"
-#include "magick/stream.h"
-#include "magick/nt-base-private.h"
-
 #if defined(__cplusplus) || defined(c_plusplus)
 extern "C" {
 #endif
+
+#include "magick/image.h"
+#include "magick/stream.h"
 
 #define MagickMinBlobExtent  32767L
 #if defined(MAGICKCORE_HAVE_FSEEKO)
@@ -126,9 +125,6 @@ extern MagickExport void
   GetBlobInfo(BlobInfo *),
   MSBOrderLong(unsigned char *,const size_t),
   MSBOrderShort(unsigned char *,const size_t);
-
-extern MagickPrivate void
-  DisassociateBlob(Image *);
 
 #if defined(__cplusplus) || defined(c_plusplus)
 }
