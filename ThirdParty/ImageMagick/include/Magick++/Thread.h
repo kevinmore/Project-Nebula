@@ -10,7 +10,7 @@
 #if !defined (Magick_Thread_header)
 #define Magick_Thread_header
 
-#include "Include.h"
+#include "Magick++/Include.h"
 
 #if defined(_VISUALC_)
 #include <windows.h>

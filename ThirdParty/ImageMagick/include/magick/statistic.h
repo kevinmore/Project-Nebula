@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2013 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2015 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
   You may not use this file except in compliance with the License.
@@ -22,6 +22,11 @@
 extern "C" {
 #endif
 
+#include "magick/draw.h"
+
+#define MaximumNumberOfImageMoments  8
+#define MaximumNumberOfPerceptualHashes  7
+
 typedef struct _ChannelStatistics
 {
   size_t
@@ -38,8 +43,33 @@ typedef struct _ChannelStatistics
     variance,
     standard_deviation,
     kurtosis,
-    skewness;
+    skewness,
+    entropy;
 } ChannelStatistics;
+
+#undef I
+
+typedef struct _ChannelMoments
+{
+  double
+    I[32];
+
+  PointInfo
+    centroid,
+    ellipse_axis;
+
+  double
+    ellipse_angle,
+    ellipse_eccentricity,
+    ellipse_intensity;
+} ChannelMoments;
+
+typedef struct _ChannelPerceptualHash
+{
+  double
+    P[32],
+    Q[32];
+} ChannelPerceptualHash;
 
 typedef enum
 {
@@ -74,7 +104,8 @@ typedef enum
   AbsEvaluateOperator,
   ExponentialEvaluateOperator,
   MedianEvaluateOperator,
-  SumEvaluateOperator
+  SumEvaluateOperator,
+  RootMeanSquareEvaluateOperator
 } MagickEvaluateOperator;
 
 typedef enum
@@ -96,11 +127,18 @@ typedef enum
   MinimumStatistic,
   ModeStatistic,
   NonpeakStatistic,
-  StandardDeviationStatistic
+  StandardDeviationStatistic,
+  RootMeanSquareStatistic
 } StatisticType;
 
 extern MagickExport ChannelStatistics
   *GetImageChannelStatistics(const Image *,ExceptionInfo *);
+
+extern MagickExport ChannelMoments
+  *GetImageChannelMoments(const Image *,ExceptionInfo *);
+
+extern MagickExport ChannelPerceptualHash
+  *GetImageChannelPerceptualHash(const Image *,ExceptionInfo *);
 
 extern MagickExport Image
   *EvaluateImages(const Image *,const MagickEvaluateOperator,ExceptionInfo *),
@@ -121,6 +159,8 @@ extern MagickExport MagickBooleanType
     ExceptionInfo *),
   FunctionImageChannel(Image *,const ChannelType,const MagickFunction,
     const size_t,const double *,ExceptionInfo *),
+  GetImageChannelEntropy(const Image *,const ChannelType,double *,
+    ExceptionInfo *),
   GetImageChannelExtrema(const Image *,const ChannelType,size_t *,size_t *,
     ExceptionInfo *),
   GetImageChannelMean(const Image *,const ChannelType,double *,double *,
@@ -129,10 +169,11 @@ extern MagickExport MagickBooleanType
     ExceptionInfo *),
   GetImageChannelRange(const Image *,const ChannelType,double *,double *,
     ExceptionInfo *),
+  GetImageEntropy(const Image *,double *,ExceptionInfo *),
   GetImageExtrema(const Image *,size_t *,size_t *,ExceptionInfo *),
-  GetImageRange(const Image *,double *,double *,ExceptionInfo *),
   GetImageMean(const Image *,double *,double *,ExceptionInfo *),
-  GetImageKurtosis(const Image *,double *,double *,ExceptionInfo *);
+  GetImageKurtosis(const Image *,double *,double *,ExceptionInfo *),
+  GetImageRange(const Image *,double *,double *,ExceptionInfo *);
 
 #if defined(__cplusplus) || defined(c_plusplus)
 }

@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2013 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2015 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
   You may not use this file except in compliance with the License.
@@ -95,10 +95,11 @@ typedef enum
   DivideSrcCompositeOp,
   MinusSrcCompositeOp,
   DarkenIntensityCompositeOp,
-  LightenIntensityCompositeOp
+  LightenIntensityCompositeOp,
+  HardMixCompositeOp
 } CompositeOperator;
 
-/* Depreciated (renamed) Method Names for backward compatibility
+/* Deprecated (renamed) Method Names for backward compatibility
  * However the CompositeOp value has not changed, just renamed.
  */
 #define AddCompositeOp       ModulusAddCompositeOp

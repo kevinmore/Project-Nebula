@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2013 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2015 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
   You may not use this file except in compliance with the License.
@@ -22,7 +22,10 @@
 extern "C" {
 #endif
 
-#if defined(MAGICKCORE_THREAD_SUPPORT)
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+static omp_lock_t
+  semaphore_mutex;
+#elif defined(MAGICKCORE_THREAD_SUPPORT)
 static pthread_mutex_t
   semaphore_mutex = PTHREAD_MUTEX_INITIALIZER;
 #elif defined(MAGICKCORE_HAVE_WINTHREADS)
@@ -33,9 +36,32 @@ static ssize_t
   semaphore_mutex = 0;
 #endif
 
+static MagickBooleanType
+  active_mutex = MagickFalse;
+
+static inline void DestroyMagickMutex(void)
+{
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+  if (active_mutex != MagickFalse)
+    omp_destroy_lock(&semaphore_mutex);
+#endif
+  active_mutex=MagickFalse;
+}
+
+static inline void InitializeMagickMutex(void)
+{
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+  if (active_mutex == MagickFalse)
+    omp_init_lock(&semaphore_mutex);
+#endif
+  active_mutex=MagickTrue;
+}
+
 static inline void LockMagickMutex(void)
 {
-#if defined(MAGICKCORE_THREAD_SUPPORT)
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+  omp_set_lock(&semaphore_mutex);
+#elif defined(MAGICKCORE_THREAD_SUPPORT)
   {
     int
       status;
@@ -55,7 +81,9 @@ static inline void LockMagickMutex(void)
 
 static inline void UnlockMagickMutex(void)
 {
-#if defined(MAGICKCORE_THREAD_SUPPORT)
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+  omp_unset_lock(&semaphore_mutex);
+#elif defined(MAGICKCORE_THREAD_SUPPORT)
   {
     int
       status;

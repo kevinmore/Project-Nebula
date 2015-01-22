@@ -71,7 +71,6 @@ void Skybox::render( const float currentTime )
 
 	QMatrix4x4 modelMatrix;
 	modelMatrix.translate(m_scene->getCamera()->position());
-	QMatrix4x4 modelViewMatrix = m_scene->getCamera()->viewMatrix() * modelMatrix;
 
 	GLint OldCullFaceMode;
 	glGetIntegerv(GL_CULL_FACE_MODE, &OldCullFaceMode);
@@ -81,7 +80,7 @@ void Skybox::render( const float currentTime )
 	glCullFace(GL_FRONT);
 	glDepthFunc(GL_LEQUAL);
 
-	m_skyboxTechnique->setWVP(m_scene->getCamera()->projectionMatrix() * modelViewMatrix);
+	m_skyboxTechnique->setWVP(m_scene->getCamera()->viewProjectionMatrix() * modelMatrix);
 	m_cubemapTex->bind(GL_TEXTURE0);
 
 	for(int i = 0; i < m_meshes.size(); ++i)

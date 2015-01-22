@@ -1,12 +1,12 @@
 /*
-  Copyright 1999-2013 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2015 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
-
+  
   You may not use this file except in compliance with the License.
   obtain a copy of the License at
-
+  
     http://www.imagemagick.org/script/license.php
-
+  
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,11 +18,11 @@
 #ifndef _MAGICKCORE_IMAGE_H
 #define _MAGICKCORE_IMAGE_H
 
+#include "magick/color.h"
+
 #if defined(__cplusplus) || defined(c_plusplus)
 extern "C" {
 #endif
-
-#include "color.h"
 
 #define OpaqueOpacity  ((Quantum) 0UL)
 #define TransparentOpacity  (QuantumRange)
@@ -41,7 +41,9 @@ typedef enum
   ShapeAlphaChannel,
   TransparentAlphaChannel,
   FlattenAlphaChannel,
-  RemoveAlphaChannel
+  RemoveAlphaChannel,
+  AssociateAlphaChannel,
+  DisassociateAlphaChannel
 } AlphaChannelType;
 
 typedef enum
@@ -127,25 +129,25 @@ typedef struct _ChromaticityInfo
     white_point;
 } ChromaticityInfo;
 
-#include "blob.h"
-#include "colorspace.h"
-#include "cache-view.h"
-#include "color.h"
-#include "composite.h"
-#include "compress.h"
-#include "effect.h"
-#include "geometry.h"
-#include "layer.h"
-#include "locale_.h"
-#include "monitor.h"
-#include "pixel.h"
-#include "profile.h"
-#include "quantum.h"
-#include "resample.h"
-#include "resize.h"
-#include "semaphore.h"
-#include "stream.h"
-#include "timer.h"
+#include "magick/blob.h"
+#include "magick/colorspace.h"
+#include "magick/cache-view.h"
+#include "magick/color.h"
+#include "magick/composite.h"
+#include "magick/compress.h"
+#include "magick/effect.h"
+#include "magick/geometry.h"
+#include "magick/layer.h"
+#include "magick/locale_.h"
+#include "magick/monitor.h"
+#include "magick/pixel.h"
+#include "magick/profile.h"
+#include "magick/quantum.h"
+#include "magick/resample.h"
+#include "magick/resize.h"
+#include "magick/semaphore.h"
+#include "magick/stream.h"
+#include "magick/timer.h"
 
 struct _Image
 {
@@ -348,6 +350,9 @@ struct _Image
 
   PixelIntensityMethod
     intensity;      /* method to generate an intensity value from a pixel */
+
+  size_t
+    duration;       /* Total animation duration sum(delay*iterations) */
 };
 
 struct _ImageInfo
