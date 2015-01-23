@@ -11,10 +11,13 @@
 #include <Scene/Managers/MaterialManager.h>
 #include <Scene/Managers/MeshManager.h>
 #include <Scene/Managers/ObjectManager.h>
+#include <Scene/Skybox.h>
+
 #include <Animation/StateMachine/AnimatorController.h>
 #include <Animation/StateMachine/NPCController.h>
+
 #include <Physicis/Particles/ParticleSystem.h>
-#include <Scene/Skybox.h>
+#include <Physicis/World/PhysicsWorld.h>
 
 typedef QSharedPointer<QOpenGLShaderProgram> ShadersProgramPtr;
 
@@ -83,6 +86,8 @@ private:
 	void loadScene(QString& fileName);
 	void saveScene(QString& fileName);
 
+	void initPhysicsModule();
+
 	GameObject* m_sceneRootNode;
 
 	Camera* m_camera;
@@ -110,5 +115,10 @@ private:
 	ParticleSystem* m_particleSystem;
 	SkyboxPtr m_skybox;
 	bool m_bShowSkybox;
+
+	//
+	// Physics
+	//
+	PhysicsWorld* m_physicsWorld;
 };
 

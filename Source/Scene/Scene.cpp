@@ -9,7 +9,8 @@ Scene::Scene(QObject* parent)
 	  m_lightMode(PerFragmentPhong),
 	  m_lightModeSubroutines(LightModeCount),
 	  m_time(0.0f),
-	  m_bShowSkybox(false)
+	  m_bShowSkybox(false),
+	  m_physicsWorld(0)
 {
 	// Initializing the lights
 	for(int i = 1; i < LightModeCount; ++i)
@@ -30,11 +31,13 @@ void Scene::initialize()
 {
 	Q_ASSERT(initializeOpenGLFunctions());
 
+	initPhysicsModule();
+
 	glClearDepth( 1.0 );
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
 
-//	glEnable(GL_CULL_FACE);
+	glEnable(GL_CULL_FACE);
 
 //     m_light.setType(Light::SpotLight);
 //     m_light.setUniqueColor(1.0, 1.0, 1.0);
@@ -59,6 +62,13 @@ void Scene::initialize()
 }
 
 
+void Scene::initPhysicsModule()
+{
+	PhysicsWorldConfig config;
+
+	m_physicsWorld = new PhysicsWorld(config);
+}
+
 void Scene::update(float currentTime)
 {
 	float dt = currentTime - m_time;
@@ -68,19 +78,15 @@ void Scene::update(float currentTime)
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	// update the physics world
+	m_physicsWorld->update(currentTime);
+
 	// render skybox first
 	if (m_bShowSkybox) 
 		m_skybox->render(currentTime);
 
 	// render all
 	m_objectManager->renderAll(currentTime);
-
-	
-// 	m_shaderProgram->bind();
-// 	m_shaderProgram->setUniformValue("normalMatrix", normalMatrix);
-// 	m_shaderProgram->setUniformValue("modelMatrix", m_object.modelMatrix());
-// 	m_shaderProgram->setUniformValue("viewMatrix", m_camera->viewMatrix());
-// 	m_shaderProgram->setUniformValue("projectionMatrix", m_camera->projectionMatrix());
 
 
 // 	m_light.setPosition(m_camera->position());

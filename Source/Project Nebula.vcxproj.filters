@@ -50,6 +50,11 @@
     <ClCompile Include="UI\SkyboxDialog.cpp" />
     <ClCompile Include="UI\moc_SkyboxDialog.cc" />
     <ClCompile Include="Scene\Managers\moc_ObjectManager.cc" />
+    <ClCompile Include="Physicis\World\PhysicsWorldConfig.cpp" />
+    <ClCompile Include="Physicis\World\PhysicsWorld.cpp" />
+    <ClCompile Include="Physicis\Geometry\SphereShape.inl" />
+    <ClCompile Include="Physicis\Geometry\BoxShape.inl" />
+    <ClCompile Include="Physicis\Entity\RigidBodyConfig.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Primitives\Texture.h" />
@@ -84,6 +89,12 @@
     <ClInclude Include="Scene\ShadingTechniques\SkyboxTechnique.h" />
     <ClInclude Include="Scene\Skybox.h" />
     <ClInclude Include="UI\ui_SkyboxWidget.h" />
+    <ClInclude Include="Physicis\World\PhysicsWorldConfig.h" />
+    <ClInclude Include="Physicis\World\PhysicsWorld.h" />
+    <ClInclude Include="Physicis\Geometry\BoxShape.h" />
+    <ClInclude Include="Physicis\Geometry\AbstractShape.h" />
+    <ClInclude Include="Physicis\Geometry\SphereShape.h" />
+    <ClInclude Include="Physicis\Entity\RigidBodyConfig.h" />
   </ItemGroup>
   <ItemGroup>
     <QtMOC Include="Scene\Scene.h" />
