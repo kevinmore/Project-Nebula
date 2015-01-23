@@ -67,11 +67,7 @@ public:
 		return m_modelMatrix;
 	}
 
-	inline int renderOrder() const { return m_renderLayer; }
 	/////////////////////////////inline section///////////////////////////////////
-
-	void attachModel(ModelPtr pModel);
-	ModelPtr getModel();
 
 	void attachComponent(ComponentPtr pComponent);
 	QVector<ComponentPtr> getComponents();
@@ -131,9 +127,7 @@ private:
 	float m_time;
 	QElapsedTimer m_lifeTimer;
 	bool m_isMoving;
-	ModelPtr m_model;
 	QVector<ComponentPtr> m_components;
-	int m_renderLayer;
 
 	Scene* m_scene;
 };

@@ -12,9 +12,7 @@ GameObject::GameObject(Scene* scene, QObject* parent)
 	  m_modelMatrixDirty(true),
 	  m_time(0.0f),
 	  m_prevPosition(m_position),
-	  m_isMoving(false),
-	  m_model(NULL),
-	  m_renderLayer(-1)
+	  m_isMoving(false)
 {
 	connect(this, SIGNAL(synchronized()), this, SLOT(calculateSpeed()));
 	m_lifeTimer.start();
@@ -305,52 +303,11 @@ QVector3D GameObject::predictedPosition()  const
 	return m_prevPosition + m_speed * dt;
 }
 
-void GameObject::attachModel( ModelPtr pModel )
-{
-	m_model = pModel;
-	attachComponent(pModel);
-}
-
-ModelPtr GameObject::getModel()
-{
-	return m_model;
-}
-
 void GameObject::attachComponent( ComponentPtr pComponent )
 {
-	// make sure that the component with a smaller render order is in the front
-	int target = pComponent->renderLayer();
-	if (m_components.isEmpty()) 
-		m_components.push_back(pComponent);
-	else
-	{
-		if (target <= m_components.front()->renderLayer())
-		{
-			m_components.prepend(pComponent);
-		}
-		else if (target >= m_components.last()->renderLayer())
-		{
-			m_components.push_back(pComponent);
-		}
-		else
-		{
-			for (int i = 1; i < m_components.size(); ++i)
-			{
-				int prev = m_components[i - 1]->renderLayer();
-				int next = m_components[i]->renderLayer();
-				if (target >= prev && target <= next)
-				{
-					m_components.insert(i, pComponent);
-					break;
-				}
-				else
-					m_components.push_back(pComponent);
-			}
-		}
-		
-	}
+
+	m_components.push_back(pComponent);
 	pComponent->linkGameObject(this);
-	m_renderLayer = qMax(m_renderLayer, target);
 
 	emit componentAttached(pComponent);
 }

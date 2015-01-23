@@ -32,12 +32,6 @@ GameObjectPtr ObjectManager::getGameObject( const QString& name )
 	else return GameObjectPtr();
 }
 
-ModelPtr ObjectManager::getModel( const QString& name )
-{
-	if(m_gameObjectMap.find(name) != m_gameObjectMap.end()) return m_gameObjectMap[name]->getModel();
-	else return ModelPtr();
-}
-
 ModelPtr ObjectManager::loadModel( const QString& customName, const QString& fileName, GameObject* parent, bool generateGameObject )
 {
 	ModelLoaderPtr m_modelLoader(new ModelLoader);
@@ -97,33 +91,12 @@ ModelPtr ObjectManager::loadModel( const QString& customName, const QString& fil
 
 void ObjectManager::renderAll(const float currentTime)
 {
-// 	foreach(GameObjectPtr go, m_gameObjectMap.values())
-// 	{
-// 		foreach(ComponentPtr comp, go->getComponents())
-// 		{
-// 			if (go->renderOrder() == 0 && !comp.isNull())
-// 				comp->render(currentTime);
-// 		}
-// 	}
-// 
-// 	// render particles last
-// 	// hack!!!
-// 	int totalParticles = 0;
-// 	foreach(GameObjectPtr go, m_gameObjectMap.values())
-// 	{
-// 		foreach(ComponentPtr comp, go->getComponents())
-// 		{
-// 			if (go->renderOrder() == 1 && !comp.isNull())
-// 			{
-// 				comp->render(currentTime);
-// 				totalParticles += comp.dynamicCast<ParticleSystem>()->getAliveParticles();
-// 			}
-// 		}
-// 	}
 
+	//int totalParticles = 0;
 	foreach(ComponentPtr comp, m_renderQueue)
 	{
 		comp->render(currentTime);
+		//totalParticles += comp.dynamicCast<ParticleSystem>()->getAliveParticles();
 	}
 
 	// print out the particles count
@@ -177,17 +150,33 @@ void ObjectManager::registerComponent( ComponentPtr comp )
 	// make sure the components in a smaller render layer gets in to the front
 	if (comp->renderLayer() < 0) return;
 	
-	if(m_renderQueue.isEmpty())
+	int target = comp->renderLayer();
+	if (m_renderQueue.isEmpty()) 
 		m_renderQueue.push_back(comp);
 	else
 	{
-		if (comp->renderLayer() < m_renderQueue.front()->renderLayer())
+		if (target <= m_renderQueue.front()->renderLayer())
 		{
-			m_renderQueue.push_front(comp);
+			m_renderQueue.prepend(comp);
+		}
+		else if (target >= m_renderQueue.last()->renderLayer())
+		{
+			m_renderQueue.push_back(comp);
 		}
 		else
 		{
-			m_renderQueue.push_back(comp);
+			for (int i = 1; i < m_renderQueue.size(); ++i)
+			{
+				int prev = m_renderQueue[i - 1]->renderLayer();
+				int next = m_renderQueue[i]->renderLayer();
+				if (target >= prev && target <= next)
+				{
+					m_renderQueue.insert(i, comp);
+					break;
+				}
+				else
+					m_renderQueue.push_back(comp);
+			}
 		}
 	}
 }

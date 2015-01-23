@@ -19,7 +19,6 @@ public:
 	void registerGameObject(const QString& name, GameObjectPtr go);
 
 	GameObjectPtr getGameObject(const QString& name);
-	ModelPtr getModel(const QString& name);
 
 	GameObjectPtr createGameObject(const QString& customName, GameObject* parent = 0);
 
