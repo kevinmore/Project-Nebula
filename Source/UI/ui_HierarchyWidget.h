@@ -14,12 +14,14 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QCheckBox>
+#include <QtWidgets/QComboBox>
 #include <QtWidgets/QDoubleSpinBox>
 #include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QScrollArea>
 #include <QtWidgets/QSlider>
@@ -76,10 +78,30 @@ public:
     QDoubleSpinBox *doubleSpinBox_ScaleZ;
     QSpacerItem *verticalSpacer;
     QPushButton *pushButton_Reset;
+    QWidget *tab;
+    QVBoxLayout *verticalLayout_13;
+    QScrollArea *scrollArea_3;
+    QWidget *scrollAreaWidgetContents_3;
+    QVBoxLayout *verticalLayout_14;
+    QGridLayout *gridLayout_2;
+    QLineEdit *lineEdit_To;
+    QLabel *label_38;
+    QLabel *label_40;
+    QLineEdit *lineEdit_Speed;
+    QLabel *label_39;
+    QLineEdit *lineEdit_From;
+    QComboBox *comboBox_BehaviourType;
+    QLabel *label_37;
+    QLabel *label_41;
+    QLineEdit *lineEdit_Duration;
     QWidget *RenderTab;
     QVBoxLayout *verticalLayout_6;
     QScrollArea *scrollArea;
     QWidget *scrollAreaWidgetContents;
+    QVBoxLayout *verticalLayout_12;
+    QHBoxLayout *horizontalLayout_13;
+    QLabel *label_35;
+    QGraphicsView *graphicsView_VertexColorPicker;
     QWidget *ParticleTab;
     QVBoxLayout *verticalLayout_7;
     QScrollArea *scrollArea_2;
@@ -428,6 +450,78 @@ public:
 
         tabWidget->addTab(TransformTab, QString());
         pushButton_Reset->raise();
+        tab = new QWidget();
+        tab->setObjectName(QStringLiteral("tab"));
+        verticalLayout_13 = new QVBoxLayout(tab);
+        verticalLayout_13->setObjectName(QStringLiteral("verticalLayout_13"));
+        scrollArea_3 = new QScrollArea(tab);
+        scrollArea_3->setObjectName(QStringLiteral("scrollArea_3"));
+        scrollArea_3->setWidgetResizable(true);
+        scrollAreaWidgetContents_3 = new QWidget();
+        scrollAreaWidgetContents_3->setObjectName(QStringLiteral("scrollAreaWidgetContents_3"));
+        scrollAreaWidgetContents_3->setGeometry(QRect(0, 0, 326, 335));
+        verticalLayout_14 = new QVBoxLayout(scrollAreaWidgetContents_3);
+        verticalLayout_14->setObjectName(QStringLiteral("verticalLayout_14"));
+        gridLayout_2 = new QGridLayout();
+        gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
+        lineEdit_To = new QLineEdit(scrollAreaWidgetContents_3);
+        lineEdit_To->setObjectName(QStringLiteral("lineEdit_To"));
+
+        gridLayout_2->addWidget(lineEdit_To, 3, 1, 1, 1);
+
+        label_38 = new QLabel(scrollAreaWidgetContents_3);
+        label_38->setObjectName(QStringLiteral("label_38"));
+
+        gridLayout_2->addWidget(label_38, 2, 0, 1, 1);
+
+        label_40 = new QLabel(scrollAreaWidgetContents_3);
+        label_40->setObjectName(QStringLiteral("label_40"));
+
+        gridLayout_2->addWidget(label_40, 4, 0, 1, 1);
+
+        lineEdit_Speed = new QLineEdit(scrollAreaWidgetContents_3);
+        lineEdit_Speed->setObjectName(QStringLiteral("lineEdit_Speed"));
+
+        gridLayout_2->addWidget(lineEdit_Speed, 4, 1, 1, 1);
+
+        label_39 = new QLabel(scrollAreaWidgetContents_3);
+        label_39->setObjectName(QStringLiteral("label_39"));
+
+        gridLayout_2->addWidget(label_39, 3, 0, 1, 1);
+
+        lineEdit_From = new QLineEdit(scrollAreaWidgetContents_3);
+        lineEdit_From->setObjectName(QStringLiteral("lineEdit_From"));
+
+        gridLayout_2->addWidget(lineEdit_From, 2, 1, 1, 1);
+
+        comboBox_BehaviourType = new QComboBox(scrollAreaWidgetContents_3);
+        comboBox_BehaviourType->setObjectName(QStringLiteral("comboBox_BehaviourType"));
+
+        gridLayout_2->addWidget(comboBox_BehaviourType, 0, 1, 1, 1);
+
+        label_37 = new QLabel(scrollAreaWidgetContents_3);
+        label_37->setObjectName(QStringLiteral("label_37"));
+
+        gridLayout_2->addWidget(label_37, 0, 0, 1, 1);
+
+        label_41 = new QLabel(scrollAreaWidgetContents_3);
+        label_41->setObjectName(QStringLiteral("label_41"));
+
+        gridLayout_2->addWidget(label_41, 1, 0, 1, 1);
+
+        lineEdit_Duration = new QLineEdit(scrollAreaWidgetContents_3);
+        lineEdit_Duration->setObjectName(QStringLiteral("lineEdit_Duration"));
+
+        gridLayout_2->addWidget(lineEdit_Duration, 1, 1, 1, 1);
+
+
+        verticalLayout_14->addLayout(gridLayout_2);
+
+        scrollArea_3->setWidget(scrollAreaWidgetContents_3);
+
+        verticalLayout_13->addWidget(scrollArea_3);
+
+        tabWidget->addTab(tab, QString());
         RenderTab = new QWidget();
         RenderTab->setObjectName(QStringLiteral("RenderTab"));
         verticalLayout_6 = new QVBoxLayout(RenderTab);
@@ -437,7 +531,33 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 98, 28));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 326, 335));
+        verticalLayout_12 = new QVBoxLayout(scrollAreaWidgetContents);
+        verticalLayout_12->setObjectName(QStringLiteral("verticalLayout_12"));
+        horizontalLayout_13 = new QHBoxLayout();
+        horizontalLayout_13->setObjectName(QStringLiteral("horizontalLayout_13"));
+        label_35 = new QLabel(scrollAreaWidgetContents);
+        label_35->setObjectName(QStringLiteral("label_35"));
+        sizePolicy2.setHeightForWidth(label_35->sizePolicy().hasHeightForWidth());
+        label_35->setSizePolicy(sizePolicy2);
+        label_35->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
+
+        horizontalLayout_13->addWidget(label_35);
+
+        graphicsView_VertexColorPicker = new QGraphicsView(scrollAreaWidgetContents);
+        graphicsView_VertexColorPicker->setObjectName(QStringLiteral("graphicsView_VertexColorPicker"));
+        QSizePolicy sizePolicy3(QSizePolicy::Minimum, QSizePolicy::Minimum);
+        sizePolicy3.setHorizontalStretch(0);
+        sizePolicy3.setVerticalStretch(0);
+        sizePolicy3.setHeightForWidth(graphicsView_VertexColorPicker->sizePolicy().hasHeightForWidth());
+        graphicsView_VertexColorPicker->setSizePolicy(sizePolicy3);
+        graphicsView_VertexColorPicker->setMinimumSize(QSize(20, 20));
+
+        horizontalLayout_13->addWidget(graphicsView_VertexColorPicker);
+
+
+        verticalLayout_12->addLayout(horizontalLayout_13);
+
         scrollArea->setWidget(scrollAreaWidgetContents);
 
         verticalLayout_6->addWidget(scrollArea);
@@ -452,7 +572,7 @@ public:
         scrollArea_2->setWidgetResizable(true);
         scrollAreaWidgetContents_2 = new QWidget();
         scrollAreaWidgetContents_2->setObjectName(QStringLiteral("scrollAreaWidgetContents_2"));
-        scrollAreaWidgetContents_2->setGeometry(QRect(0, 0, 323, 688));
+        scrollAreaWidgetContents_2->setGeometry(QRect(0, -50, 318, 648));
         verticalLayout_8 = new QVBoxLayout(scrollAreaWidgetContents_2);
         verticalLayout_8->setObjectName(QStringLiteral("verticalLayout_8"));
         gridLayout = new QGridLayout();
@@ -588,9 +708,6 @@ public:
 
         graphicsView_ColorPicker = new QGraphicsView(scrollAreaWidgetContents_2);
         graphicsView_ColorPicker->setObjectName(QStringLiteral("graphicsView_ColorPicker"));
-        QSizePolicy sizePolicy3(QSizePolicy::Minimum, QSizePolicy::Minimum);
-        sizePolicy3.setHorizontalStretch(0);
-        sizePolicy3.setVerticalStretch(0);
         sizePolicy3.setHeightForWidth(graphicsView_ColorPicker->sizePolicy().hasHeightForWidth());
         graphicsView_ColorPicker->setSizePolicy(sizePolicy3);
         graphicsView_ColorPicker->setMinimumSize(QSize(20, 20));
@@ -891,6 +1008,9 @@ public:
         QObject::connect(horizontalSlider_EmitAmount, SIGNAL(valueChanged(int)), spinBox_EmitAmount, SLOT(setValue(int)));
         QObject::connect(spinBox_EmitAmount, SIGNAL(valueChanged(int)), horizontalSlider_EmitAmount, SLOT(setValue(int)));
         QObject::connect(checkBox_EnableCollision, SIGNAL(toggled(bool)), doubleSpinBox_Restitution, SLOT(setEnabled(bool)));
+        QObject::connect(comboBox_BehaviourType, SIGNAL(currentIndexChanged(int)), lineEdit_From, SLOT(clear()));
+        QObject::connect(comboBox_BehaviourType, SIGNAL(currentIndexChanged(int)), lineEdit_To, SLOT(clear()));
+        QObject::connect(comboBox_BehaviourType, SIGNAL(currentIndexChanged(int)), lineEdit_Speed, SLOT(clear()));
 
         tabWidget->setCurrentIndex(0);
 
@@ -917,6 +1037,20 @@ public:
         label_12->setText(QApplication::translate("HierarchyViewer", "Z", 0));
         pushButton_Reset->setText(QApplication::translate("HierarchyViewer", "Reset", 0));
         tabWidget->setTabText(tabWidget->indexOf(TransformTab), QApplication::translate("HierarchyViewer", "Transformation", 0));
+        label_38->setText(QApplication::translate("HierarchyViewer", "From", 0));
+        label_40->setText(QApplication::translate("HierarchyViewer", "Speed", 0));
+        label_39->setText(QApplication::translate("HierarchyViewer", "To", 0));
+        comboBox_BehaviourType->clear();
+        comboBox_BehaviourType->insertItems(0, QStringList()
+         << QApplication::translate("HierarchyViewer", "Position", 0)
+         << QApplication::translate("HierarchyViewer", "Rotation", 0)
+         << QApplication::translate("HierarchyViewer", "Scale", 0)
+         << QApplication::translate("HierarchyViewer", "Vertex Color", 0)
+        );
+        label_37->setText(QApplication::translate("HierarchyViewer", "Variable", 0));
+        label_41->setText(QApplication::translate("HierarchyViewer", "Duration", 0));
+        tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("HierarchyViewer", "Puppet", 0));
+        label_35->setText(QApplication::translate("HierarchyViewer", "Vertex Color", 0));
         tabWidget->setTabText(tabWidget->indexOf(RenderTab), QApplication::translate("HierarchyViewer", "Rendering", 0));
         label_13->setText(QApplication::translate("HierarchyViewer", "Mass", 0));
         label_32->setText(QApplication::translate("HierarchyViewer", "Gravity Factor", 0));

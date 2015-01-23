@@ -28,13 +28,16 @@ HierarchyWidget::HierarchyWidget(Scene* scene, QWidget *parent)
 	connect(m_deleteAction, SIGNAL(triggered()), this, SLOT(deleteGameObject()));
 
 	// tab widget
-	particleSystemTab = ui->tabWidget->widget(2);
-	ui->tabWidget->removeTab(2);
+	particleSystemTab = ui->tabWidget->widget(3);
+	ui->tabWidget->removeTab(3);
 	ui->tabWidget->setCurrentIndex(0);
 	ui->graphicsView_ColorPicker->setScene(new QGraphicsScene(this));
 	ui->graphicsView_TexturePicker->setScene(new QGraphicsScene(this));
+	ui->graphicsView_VertexColorPicker->setScene(new QGraphicsScene(this));
 	ui->graphicsView_ColorPicker->installEventFilter(this);
 	ui->graphicsView_TexturePicker->installEventFilter(this);
+	ui->graphicsView_VertexColorPicker->installEventFilter(this);
+
 	connect(ui->checkBox_RandomColor, SIGNAL(toggled(bool)), this, SLOT(setColorPickerEnabled(bool)));
 	connect(ui->checkBox_EnableCollision, SIGNAL(toggled(bool)), ui->doubleSpinBox_Restitution, SLOT(setEnabled(bool)));
 
@@ -327,40 +330,55 @@ void HierarchyWidget::setColorPickerEnabled( bool status )
 bool HierarchyWidget::eventFilter( QObject *obj, QEvent *ev )
 {
 	// pop up a color dialog when the user clicks the color picker
-	if (obj == ui->graphicsView_ColorPicker 
-		&& ui->graphicsView_ColorPicker->isEnabled()
-		&& ev->type() == QEvent::MouseButtonPress)
+	if (ev->type() == QEvent::MouseButtonPress)
 	{
-		ParticleSystemPtr ps = m_currentObject->getComponent("ParticleSystem").dynamicCast<ParticleSystem>();
-		QColor col = QColorDialog::getColor(ps->getParticleColor(), this);
-		if(col.isValid()) 
+		if (obj == ui->graphicsView_ColorPicker 
+			&& ui->graphicsView_ColorPicker->isEnabled())
 		{
-			// apply the color to the particle system and color picker both
-			ps->setParticleColor(col);
-			ui->graphicsView_ColorPicker->setBackgroundBrush(QBrush(col, Qt::DiagCrossPattern));
-		}
-		return true;
-	}
-	// pop up a file dialog when the user clicks the texture picker
-	else if (obj == ui->graphicsView_TexturePicker
-		&& ev->type() == QEvent::MouseButtonPress)
-	{
-		QString fileName = QFileDialog::getOpenFileName(0, tr("Select a texture"),
-			"../Resource/Textures",
-			tr("Texture File(*.*)"));
-		if (!fileName.isEmpty())
-		{
-			// apply the texture to the particle system and color picker both
 			ParticleSystemPtr ps = m_currentObject->getComponent("ParticleSystem").dynamicCast<ParticleSystem>();
-			ps->loadTexture(fileName);
-
-			ui->graphicsView_TexturePicker->scene()->clear();
-			QPixmap tex = ps->getTexture()->generateQPixmap();
-			QGraphicsPixmapItem* item = new QGraphicsPixmapItem(tex);
-			ui->graphicsView_TexturePicker->scene()->addItem(item);
-			ui->graphicsView_TexturePicker->fitInView(item);
+			QColor col = QColorDialog::getColor(ps->getParticleColor(), this);
+			if(col.isValid()) 
+			{
+				// apply the color to the particle system and color picker both
+				ps->setParticleColor(col);
+				ui->graphicsView_ColorPicker->setBackgroundBrush(QBrush(col, Qt::DiagCrossPattern));
+			}
+			return true;
 		}
-		return true;
+		// pop up a file dialog when the user clicks the texture picker
+		else if (obj == ui->graphicsView_TexturePicker)
+		{
+			QString fileName = QFileDialog::getOpenFileName(0, tr("Select a texture"),
+				"../Resource/Textures",
+				tr("Texture File(*.*)"));
+			if (!fileName.isEmpty())
+			{
+				// apply the texture to the particle system and color picker both
+				ParticleSystemPtr ps = m_currentObject->getComponent("ParticleSystem").dynamicCast<ParticleSystem>();
+				ps->loadTexture(fileName);
+
+				ui->graphicsView_TexturePicker->scene()->clear();
+				QPixmap tex = ps->getTexture()->generateQPixmap();
+				QGraphicsPixmapItem* item = new QGraphicsPixmapItem(tex);
+				ui->graphicsView_TexturePicker->scene()->addItem(item);
+				ui->graphicsView_TexturePicker->fitInView(item);
+			}
+			return true;
+		}
+		else if (obj == ui->graphicsView_VertexColorPicker)
+		{
+			QColor col = QColorDialog::getColor(Qt::white, this);
+			if(col.isValid()) 
+			{
+				// apply the color to the particle system and color picker both
+				ui->graphicsView_VertexColorPicker->setBackgroundBrush(QBrush(col, Qt::CrossPattern));
+			}
+			return true;
+		}
+		else
+		{
+			return QWidget::eventFilter(obj, ev);
+		}
 	}
 	else
 	{

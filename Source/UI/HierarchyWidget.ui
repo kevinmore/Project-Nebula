@@ -453,6 +453,107 @@
       <zorder>verticalSpacer</zorder>
       <zorder>pushButton_Reset</zorder>
      </widget>
+     <widget class="QWidget" name="tab">
+      <attribute name="title">
+       <string>Puppet</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_13">
+       <item>
+        <widget class="QScrollArea" name="scrollArea_3">
+         <property name="widgetResizable">
+          <bool>true</bool>
+         </property>
+         <widget class="QWidget" name="scrollAreaWidgetContents_3">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>326</width>
+            <height>335</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_14">
+           <item>
+            <layout class="QGridLayout" name="gridLayout_2">
+             <item row="3" column="1">
+              <widget class="QLineEdit" name="lineEdit_To"/>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_38">
+               <property name="text">
+                <string>From</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0">
+              <widget class="QLabel" name="label_40">
+               <property name="text">
+                <string>Speed</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="1">
+              <widget class="QLineEdit" name="lineEdit_Speed"/>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_39">
+               <property name="text">
+                <string>To</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QLineEdit" name="lineEdit_From"/>
+             </item>
+             <item row="0" column="1">
+              <widget class="QComboBox" name="comboBox_BehaviourType">
+               <item>
+                <property name="text">
+                 <string>Position</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Rotation</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Scale</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Vertex Color</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_37">
+               <property name="text">
+                <string>Variable</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_41">
+               <property name="text">
+                <string>Duration</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QLineEdit" name="lineEdit_Duration"/>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
      <widget class="QWidget" name="RenderTab">
       <attribute name="title">
        <string>Rendering</string>
@@ -468,10 +569,48 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>98</width>
-            <height>28</height>
+            <width>326</width>
+            <height>335</height>
            </rect>
           </property>
+          <layout class="QVBoxLayout" name="verticalLayout_12">
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_13">
+             <item>
+              <widget class="QLabel" name="label_35">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>Vertex Color</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QGraphicsView" name="graphicsView_VertexColorPicker">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>20</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
          </widget>
         </widget>
        </item>
@@ -491,9 +630,9 @@
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>0</y>
-            <width>323</width>
-            <height>688</height>
+            <y>-50</y>
+            <width>318</width>
+            <height>648</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -1185,8 +1324,8 @@
      <y>551</y>
     </hint>
     <hint type="destinationlabel">
-     <x>332</x>
-     <y>553</y>
+     <x>327</x>
+     <y>560</y>
     </hint>
    </hints>
   </connection>
@@ -1197,8 +1336,8 @@
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>332</x>
-     <y>553</y>
+     <x>327</x>
+     <y>560</y>
     </hint>
     <hint type="destinationlabel">
      <x>280</x>
@@ -1219,6 +1358,54 @@
     <hint type="destinationlabel">
      <x>155</x>
      <y>651</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBox_BehaviourType</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>lineEdit_From</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>168</x>
+     <y>540</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>154</x>
+     <y>605</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBox_BehaviourType</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>lineEdit_To</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>189</x>
+     <y>540</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>166</x>
+     <y>669</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBox_BehaviourType</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>lineEdit_Speed</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>117</x>
+     <y>545</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>110</x>
+     <y>746</y>
     </hint>
    </hints>
   </connection>
