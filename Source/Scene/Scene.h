@@ -78,6 +78,9 @@ public slots:
 
 	void toggleSkybox(bool state);
 
+	void pause();
+	void play();
+
 signals:
 	void renderCycleDone();
 	void updateHierarchy();
@@ -87,6 +90,9 @@ private:
 	void saveScene(QString& fileName);
 
 	void initPhysicsModule();
+
+	bool m_bPaused;
+	
 
 	GameObject* m_sceneRootNode;
 
@@ -102,7 +108,9 @@ private:
 	ShadersProgramPtr m_shaderProgram;
 	Light			  m_light;
 	
-	float m_time;
+	float m_absoluteTime; // absolute time from the start of the program
+	float m_relativeTime; // relative time excluding paused duration 
+	float m_delayedTime; // the time delayed between pauses
 
 	LightMode       m_lightMode;
 	QVector<GLuint> m_lightModeSubroutines;

@@ -12,9 +12,18 @@ struct MassProperties
 		  m_centerOfMass(vec3(0, 0, 0)) 
 	{  m_inertiaTensor.setToIdentity(); }
 
-	void scaleToDensity(float density);
+	void scaleToDensity(float density)
+	{
+		scaleToMass(m_volume * density);
+	}
+	void scaleToMass(float newMass)
+	{
+		if(newMass < 0) return;
+		float k = newMass / m_mass;
 
-	void scaleToMass(float newMass);
+		m_mass = newMass;
+		m_inertiaTensor *= k;
+	}
 
 	/// The volume of an object.
 	float m_volume;
@@ -33,8 +42,15 @@ struct MassProperties
 class RigidBodyConfig
 {
 public:
-	RigidBodyConfig(void);
-	~RigidBodyConfig(void);
+	RigidBodyConfig();
+	~RigidBodyConfig();
+
+	/// Sets the mass properties
+	void setMassProperties(const MassProperties& mp);
+
+	/// Sets position and rotation
+	void setPosition(const vec3& pos);
+	void setRotation(const quart& rot);
 
 	//
 	// Members
@@ -86,5 +102,21 @@ public:
 	/// The initial friction of the body.
 	/// This defaults to 0.5.
 	float m_friction;
+
+	/// The initial restitution of the body.
+	/// This defaults to 0.4.
+	float m_restitution;
+
+	/// The maximum linear velocity of the body (in m/s).
+	/// This defaults to 200.
+	float m_maxLinearVelocity;
+
+	/// The maximum angular velocity of the body (in rad/s).
+	/// This defaults to 200.
+	float m_maxAngularVelocity;
+
+	/// The initial time factor of the body.
+	/// This defaults to 1.
+	float m_timeFactor;
 };
 

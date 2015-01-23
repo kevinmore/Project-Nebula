@@ -8,8 +8,12 @@ Scene::Scene(QObject* parent)
 	  m_light("light01"),
 	  m_lightMode(PerFragmentPhong),
 	  m_lightModeSubroutines(LightModeCount),
-	  m_time(0.0f),
+	  m_absoluteTime(0.0f),
+	  m_relativeTime(0.0f),
+	  m_lastPausedTime(0.0f),
+	  m_delayedTime(0.0f),
 	  m_bShowSkybox(false),
+	  m_bPaused(false),
 	  m_physicsWorld(0)
 {
 	// Initializing the lights
@@ -71,22 +75,33 @@ void Scene::initPhysicsModule()
 
 void Scene::update(float currentTime)
 {
-	float dt = currentTime - m_time;
-	m_time = currentTime;
+	// record the absolute time
+	m_absoluteTime = currentTime;
 
-	m_camera->update(dt);
+	// do nothing when the scene is paused
+	if (m_bPaused)
+	{
+		return;
+	}
+
+	// update the time
+	float dt = m_absoluteTime - m_delayedTime - m_relativeTime;
+	m_relativeTime = m_absoluteTime - m_delayedTime;
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	// update the camera
+	m_camera->update(dt);
+
 	// update the physics world
-	m_physicsWorld->update(currentTime);
+	m_physicsWorld->update(m_relativeTime);
 
 	// render skybox first
 	if (m_bShowSkybox) 
-		m_skybox->render(currentTime);
+		m_skybox->render(m_relativeTime);
 
 	// render all
-	m_objectManager->renderAll(currentTime);
+	m_objectManager->renderAll(m_relativeTime);
 
 
 // 	m_light.setPosition(m_camera->position());
@@ -205,20 +220,32 @@ void Scene::showLoadModelDialog()
 
 void Scene::showOpenSceneDialog()
 {
+	// pause the scene when the dialog shows up
+	// to avoid frame drops
+	pause();
+
 	QString fileName = QFileDialog::getOpenFileName(0, tr("Open Scene"),
 		"../Resource/Scenes",
 		tr("Scene File (*.nebula)"));
 
 	loadScene(fileName);
+
+	play();
 }
 
 void Scene::showSaveSceneDialog()
 {
+	// pause the scene when the dialog shows up
+	// to avoid frame drops
+	pause();
+
 	QString fileName = QFileDialog::getSaveFileName(0, tr("Save Scene"),
 		"../Resource/Scenes",
 		tr("Scene File (*.nebula)"));
 
 	saveScene(fileName);
+
+	play();
 }
 
 void Scene::loadScene( QString& fileName )
@@ -385,4 +412,17 @@ void Scene::resize(int width, int height)
 											m_camera->nearPlane(),
 											m_camera->farPlane());
 	}
+}
+
+void Scene::pause()
+{
+	// pause the scene
+	m_bPaused = true;
+}
+
+void Scene::play()
+{
+	// un-pause the scene and set the delayed time
+	m_bPaused = false;
+	m_delayedTime += m_absoluteTime - m_relativeTime;
 }

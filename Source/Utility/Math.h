@@ -349,4 +349,9 @@ namespace Math
 	{
 		const QVector4D ZERO = QVector4D(0.0f, 0.0f, 0.0f, 0.0f);
 	}
+
+	namespace Quaternion
+	{
+		const QQuaternion ZERO = QQuaternion(1, 0, 0, 0);
+	}
 }
