@@ -1,14 +1,15 @@
 #pragma once
+#include <QObject>
 #include <Utility/EngineCommon.h>
 #include <Primitives/Mesh.h>
 
 typedef QSharedPointer<Mesh> MeshPtr;
 
-class MeshManager
+class MeshManager : QObject
 {
 public:
-	MeshManager(void);
-	~MeshManager(void);
+	MeshManager(QObject* parent = 0);
+	~MeshManager();
 
 	MeshPtr getMesh(const QString& name);
 	MeshPtr addMesh(const QString& name, unsigned int numIndices, unsigned int baseVertex, unsigned int baseIndex);

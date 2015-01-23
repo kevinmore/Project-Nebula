@@ -44,9 +44,9 @@ public:
 
 	Camera* getCamera();
 	
-	QSharedPointer<MeshManager>     meshManager();
-	QSharedPointer<TextureManager>  textureManager();
-	QSharedPointer<MaterialManager> materialManager();
+	MeshManager*     meshManager();
+	TextureManager*  textureManager();
+	MaterialManager* materialManager();
 	ObjectManager*  objectManager();
 
 	QStateMachine* getStateMachine() const { return m_stateMachine; }
@@ -90,9 +90,9 @@ private:
 	ModelPtr m_model;
 
 	ObjectManager*  m_objectManager;
-	QSharedPointer<MeshManager>     m_meshManager;
-	QSharedPointer<TextureManager>  m_textureManager;
-	QSharedPointer<MaterialManager> m_materialManager;
+	MeshManager*     m_meshManager;
+	TextureManager* m_textureManager;
+	MaterialManager* m_materialManager;
 
 	ShadersProgramPtr m_shaderProgram;
 	Light			  m_light;

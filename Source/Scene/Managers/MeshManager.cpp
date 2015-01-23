@@ -1,6 +1,8 @@
 #include "MeshManager.h"
 
-MeshManager::MeshManager() {}
+MeshManager::MeshManager(QObject* parent) 
+	: QObject(parent)
+{}
 MeshManager::~MeshManager() {}
 
 MeshPtr MeshManager::getMesh( const QString& name )

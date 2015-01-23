@@ -1,11 +1,12 @@
 #pragma once
+#include <QObject>
 #include <Utility/EngineCommon.h>
 #include <Primitives/Material.h>
 
-class MaterialManager
+class MaterialManager : QObject
 {
 public:
-	MaterialManager(GLuint programHandle);
+	MaterialManager(GLuint programHandle, QObject* parent = 0);
 	~MaterialManager();
 
 	MaterialPtr getMaterial(const QString& name);

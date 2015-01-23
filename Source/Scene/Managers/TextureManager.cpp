@@ -1,7 +1,9 @@
 #include "TextureManager.h"
 #include <QDebug>
 
-TextureManager::TextureManager() {}
+TextureManager::TextureManager(QObject* parent) 
+	: QObject(parent)
+{}
 TextureManager::~TextureManager() {}
 
 TexturePtr TextureManager::getTexture( const QString& name )

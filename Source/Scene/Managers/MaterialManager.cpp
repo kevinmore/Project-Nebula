@@ -1,9 +1,10 @@
 #include "MaterialManager.h"
 
 
-MaterialManager::MaterialManager(GLuint programHandle)
+MaterialManager::MaterialManager(GLuint programHandle, QObject* parent)
+	: QObject(parent),
+	  m_programHandle(programHandle)
 {
-	m_programHandle = programHandle;
 }
 
 

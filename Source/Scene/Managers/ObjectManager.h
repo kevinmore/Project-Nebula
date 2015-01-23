@@ -1,10 +1,9 @@
 #pragma once
+#include <QObject>
 #include <Scene/RiggedModel.h>
 #include <Scene/StaticModel.h>
 #include <Utility/ModelLoader.h>
-
 #include <Utility/EngineCommon.h>
-#include <QObject>
 
 class Scene;
 

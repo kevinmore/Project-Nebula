@@ -42,9 +42,9 @@ void Scene::initialize()
 //     m_light.setIntensity(3.0f);
 
 	m_objectManager = new ObjectManager(this, this);
-	m_materialManager = QSharedPointer<MaterialManager>(new MaterialManager(1));// hack, fix it later!
-	m_textureManager = QSharedPointer<TextureManager>(new TextureManager());
-	m_meshManager = QSharedPointer<MeshManager>(new MeshManager());
+	m_materialManager = new MaterialManager(1, this);// hack, fix it later!
+	m_textureManager = new TextureManager(this);
+	m_meshManager = new MeshManager(this);
 
 
 	m_stateMachine = new QStateMachine();
@@ -145,17 +145,17 @@ Camera* Scene::getCamera()
 	return m_camera;
 }
 
-QSharedPointer<MeshManager> Scene::meshManager()
+MeshManager* Scene::meshManager()
 {
 	return m_meshManager;
 }
 
-QSharedPointer<TextureManager> Scene::textureManager()
+TextureManager* Scene::textureManager()
 {
 	return m_textureManager;
 }
 
-QSharedPointer<MaterialManager> Scene::materialManager()
+MaterialManager* Scene::materialManager()
 {
 	return m_materialManager;
 }

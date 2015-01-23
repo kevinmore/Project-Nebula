@@ -1,12 +1,13 @@
 #pragma once
+#include <QObject>
 #include <Utility/EngineCommon.h>
 #include <Primitives/Texture.h>
 
-class TextureManager
+class TextureManager : QObject
 {
 public:
-	TextureManager(void);
-	~TextureManager(void);
+	TextureManager(QObject* parent = 0);
+	~TextureManager();
 
 	TexturePtr getTexture(const QString& name);
 	TexturePtr addTexture(const QString& name, const QString& fileName, 

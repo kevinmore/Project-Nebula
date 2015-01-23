@@ -25,9 +25,9 @@ protected:
 	QVector<QVector<TexturePtr>>  m_textures;
 	QVector<MaterialPtr> m_materials;
 
-	QSharedPointer<MeshManager>     m_meshManager;
-	QSharedPointer<TextureManager>  m_textureManager;
-	QSharedPointer<MaterialManager> m_materialManager;
+	MeshManager*     m_meshManager;
+	TextureManager*  m_textureManager;
+	MaterialManager* m_materialManager;
 
 private:
 	enum DrawingMode
