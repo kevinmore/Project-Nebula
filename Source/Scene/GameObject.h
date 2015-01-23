@@ -67,7 +67,7 @@ public:
 		return m_modelMatrix;
 	}
 
-	inline int renderOrder() const { return m_renderOrder; }
+	inline int renderOrder() const { return m_renderLayer; }
 	/////////////////////////////inline section///////////////////////////////////
 
 	void attachModel(ModelPtr pModel);
@@ -91,6 +91,7 @@ public:
 
 signals:
 	void synchronized();
+	void componentAttached(ComponentPtr comp);
 
 public slots:
 	void translateX(double x);
@@ -132,7 +133,7 @@ private:
 	bool m_isMoving;
 	ModelPtr m_model;
 	QVector<ComponentPtr> m_components;
-	int m_renderOrder;
+	int m_renderLayer;
 
 	Scene* m_scene;
 };

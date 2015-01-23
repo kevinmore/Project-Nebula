@@ -18,6 +18,7 @@
     <ClCompile Include="Animation\Rig\Pose.cpp" />
     <ClCompile Include="Primitives\CubeMapTexture.cpp" />
     <ClCompile Include="Physicis\Particles\moc_ParticleSystem.cc" />
+    <ClCompile Include="Scene\Managers\moc_ObjectManager.cc" />
     <ClCompile Include="Scene\ShadingTechniques\ParticleTechnique.cpp" />
     <ClCompile Include="Physicis\Particles\ParticleSystem.cpp" />
     <ClCompile Include="Primitives\Component.cpp" />
@@ -81,7 +82,7 @@
     <ClInclude Include="UI\ui_SkyboxWidget.h" />
     <ClInclude Include="Utility\Serialization.h" />
     <QtMOC Include="Utility\LoaderThread.h" />
-    <ClInclude Include="Scene\Managers\ObjectManager.h" />
+    <QtMOC Include="Scene\Managers\ObjectManager.h" />
     <ClInclude Include="Scene\RiggedModel.h" />
     <QtMOC Include="Scene\Scene.h" />
     <ClInclude Include="Scene\ShadingTechniques\ShadingTechnique.h" />

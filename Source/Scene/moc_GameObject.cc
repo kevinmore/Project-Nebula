@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_GameObject_t {
-    QByteArrayData data[26];
-    char stringdata[247];
+    QByteArrayData data[29];
+    char stringdata[283];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -32,32 +32,36 @@ static const qt_meta_stringdata_GameObject_t qt_meta_stringdata_GameObject = {
 QT_MOC_LITERAL(0, 0, 10),
 QT_MOC_LITERAL(1, 11, 12),
 QT_MOC_LITERAL(2, 24, 0),
-QT_MOC_LITERAL(3, 25, 10),
-QT_MOC_LITERAL(4, 36, 1),
-QT_MOC_LITERAL(5, 38, 10),
-QT_MOC_LITERAL(6, 49, 1),
-QT_MOC_LITERAL(7, 51, 10),
-QT_MOC_LITERAL(8, 62, 1),
-QT_MOC_LITERAL(9, 64, 7),
-QT_MOC_LITERAL(10, 72, 7),
-QT_MOC_LITERAL(11, 80, 7),
-QT_MOC_LITERAL(12, 88, 6),
-QT_MOC_LITERAL(13, 95, 6),
-QT_MOC_LITERAL(14, 102, 6),
-QT_MOC_LITERAL(15, 109, 16),
-QT_MOC_LITERAL(16, 126, 11),
-QT_MOC_LITERAL(17, 138, 13),
-QT_MOC_LITERAL(18, 152, 25),
-QT_MOC_LITERAL(19, 178, 13),
-QT_MOC_LITERAL(20, 192, 10),
-QT_MOC_LITERAL(21, 203, 14),
-QT_MOC_LITERAL(22, 218, 5),
-QT_MOC_LITERAL(23, 224, 6),
-QT_MOC_LITERAL(24, 231, 10),
-QT_MOC_LITERAL(25, 242, 4)
+QT_MOC_LITERAL(3, 25, 17),
+QT_MOC_LITERAL(4, 43, 12),
+QT_MOC_LITERAL(5, 56, 4),
+QT_MOC_LITERAL(6, 61, 10),
+QT_MOC_LITERAL(7, 72, 1),
+QT_MOC_LITERAL(8, 74, 10),
+QT_MOC_LITERAL(9, 85, 1),
+QT_MOC_LITERAL(10, 87, 10),
+QT_MOC_LITERAL(11, 98, 1),
+QT_MOC_LITERAL(12, 100, 7),
+QT_MOC_LITERAL(13, 108, 7),
+QT_MOC_LITERAL(14, 116, 7),
+QT_MOC_LITERAL(15, 124, 6),
+QT_MOC_LITERAL(16, 131, 6),
+QT_MOC_LITERAL(17, 138, 6),
+QT_MOC_LITERAL(18, 145, 16),
+QT_MOC_LITERAL(19, 162, 11),
+QT_MOC_LITERAL(20, 174, 13),
+QT_MOC_LITERAL(21, 188, 25),
+QT_MOC_LITERAL(22, 214, 13),
+QT_MOC_LITERAL(23, 228, 10),
+QT_MOC_LITERAL(24, 239, 14),
+QT_MOC_LITERAL(25, 254, 5),
+QT_MOC_LITERAL(26, 260, 6),
+QT_MOC_LITERAL(27, 267, 10),
+QT_MOC_LITERAL(28, 278, 4)
     },
-    "GameObject\0synchronized\0\0translateX\0"
-    "x\0translateY\0y\0translateZ\0z\0rotateX\0"
+    "GameObject\0synchronized\0\0componentAttached\0"
+    "ComponentPtr\0comp\0translateX\0x\0"
+    "translateY\0y\0translateZ\0z\0rotateX\0"
     "rotateY\0rotateZ\0scaleX\0scaleY\0scaleZ\0"
     "translateInWorld\0paramString\0rotateInWorld\0"
     "rotateInWorldAxisAndAngle\0setLocalSpeed\0"
@@ -72,58 +76,60 @@ static const uint qt_meta_data_GameObject[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      17,   14, // methods
-       2,  142, // properties
+      18,   14, // methods
+       2,  150, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       1,       // signalCount
+       2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   99,    2, 0x06 /* Public */,
+       1,    0,  104,    2, 0x06 /* Public */,
+       3,    1,  105,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       3,    1,  100,    2, 0x0a /* Public */,
-       5,    1,  103,    2, 0x0a /* Public */,
-       7,    1,  106,    2, 0x0a /* Public */,
-       9,    1,  109,    2, 0x0a /* Public */,
-      10,    1,  112,    2, 0x0a /* Public */,
-      11,    1,  115,    2, 0x0a /* Public */,
-      12,    1,  118,    2, 0x0a /* Public */,
-      13,    1,  121,    2, 0x0a /* Public */,
-      14,    1,  124,    2, 0x0a /* Public */,
-      15,    1,  127,    2, 0x0a /* Public */,
-      17,    1,  130,    2, 0x0a /* Public */,
-      18,    1,  133,    2, 0x0a /* Public */,
-      19,    1,  136,    2, 0x0a /* Public */,
-      20,    0,  139,    2, 0x0a /* Public */,
-      21,    0,  140,    2, 0x0a /* Public */,
-      22,    0,  141,    2, 0x0a /* Public */,
+       6,    1,  108,    2, 0x0a /* Public */,
+       8,    1,  111,    2, 0x0a /* Public */,
+      10,    1,  114,    2, 0x0a /* Public */,
+      12,    1,  117,    2, 0x0a /* Public */,
+      13,    1,  120,    2, 0x0a /* Public */,
+      14,    1,  123,    2, 0x0a /* Public */,
+      15,    1,  126,    2, 0x0a /* Public */,
+      16,    1,  129,    2, 0x0a /* Public */,
+      17,    1,  132,    2, 0x0a /* Public */,
+      18,    1,  135,    2, 0x0a /* Public */,
+      20,    1,  138,    2, 0x0a /* Public */,
+      21,    1,  141,    2, 0x0a /* Public */,
+      22,    1,  144,    2, 0x0a /* Public */,
+      23,    0,  147,    2, 0x0a /* Public */,
+      24,    0,  148,    2, 0x0a /* Public */,
+      25,    0,  149,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 4,    5,
 
  // slots: parameters
-    QMetaType::Void, QMetaType::Double,    4,
-    QMetaType::Void, QMetaType::Double,    6,
-    QMetaType::Void, QMetaType::Double,    8,
-    QMetaType::Void, QMetaType::Double,    4,
-    QMetaType::Void, QMetaType::Double,    6,
-    QMetaType::Void, QMetaType::Double,    8,
-    QMetaType::Void, QMetaType::Double,    4,
-    QMetaType::Void, QMetaType::Double,    6,
-    QMetaType::Void, QMetaType::Double,    8,
-    QMetaType::Void, QMetaType::QString,   16,
-    QMetaType::Void, QMetaType::QString,   16,
-    QMetaType::Void, QMetaType::QString,   16,
-    QMetaType::Void, QMetaType::QString,   16,
+    QMetaType::Void, QMetaType::Double,    7,
+    QMetaType::Void, QMetaType::Double,    9,
+    QMetaType::Void, QMetaType::Double,   11,
+    QMetaType::Void, QMetaType::Double,    7,
+    QMetaType::Void, QMetaType::Double,    9,
+    QMetaType::Void, QMetaType::Double,   11,
+    QMetaType::Void, QMetaType::Double,    7,
+    QMetaType::Void, QMetaType::Double,    9,
+    QMetaType::Void, QMetaType::Double,   11,
+    QMetaType::Void, QMetaType::QString,   19,
+    QMetaType::Void, QMetaType::QString,   19,
+    QMetaType::Void, QMetaType::QString,   19,
+    QMetaType::Void, QMetaType::QString,   19,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
 
  // properties: name, type, flags
-      23, QMetaType::Bool, 0x00095103,
-      24, 0x80000000 | 25, 0x0009500b,
+      26, QMetaType::Bool, 0x00095103,
+      27, 0x80000000 | 28, 0x0009500b,
 
        0        // eod
 };
@@ -134,22 +140,23 @@ void GameObject::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         GameObject *_t = static_cast<GameObject *>(_o);
         switch (_id) {
         case 0: _t->synchronized(); break;
-        case 1: _t->translateX((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 2: _t->translateY((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 3: _t->translateZ((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 4: _t->rotateX((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 5: _t->rotateY((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 6: _t->rotateZ((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 7: _t->scaleX((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 8: _t->scaleY((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 9: _t->scaleZ((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 10: _t->translateInWorld((*reinterpret_cast< const QString(*)>(_a[1]))); break;
-        case 11: _t->rotateInWorld((*reinterpret_cast< const QString(*)>(_a[1]))); break;
-        case 12: _t->rotateInWorldAxisAndAngle((*reinterpret_cast< const QString(*)>(_a[1]))); break;
-        case 13: _t->setLocalSpeed((*reinterpret_cast< const QString(*)>(_a[1]))); break;
-        case 14: _t->resetSpeed(); break;
-        case 15: _t->calculateSpeed(); break;
-        case 16: _t->reset(); break;
+        case 1: _t->componentAttached((*reinterpret_cast< ComponentPtr(*)>(_a[1]))); break;
+        case 2: _t->translateX((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 3: _t->translateY((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 4: _t->translateZ((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 5: _t->rotateX((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 6: _t->rotateY((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 7: _t->rotateZ((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 8: _t->scaleX((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 9: _t->scaleY((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 10: _t->scaleZ((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 11: _t->translateInWorld((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 12: _t->rotateInWorld((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 13: _t->rotateInWorldAxisAndAngle((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 14: _t->setLocalSpeed((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 15: _t->resetSpeed(); break;
+        case 16: _t->calculateSpeed(); break;
+        case 17: _t->reset(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -159,6 +166,12 @@ void GameObject::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
             typedef void (GameObject::*_t)();
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&GameObject::synchronized)) {
                 *result = 0;
+            }
+        }
+        {
+            typedef void (GameObject::*_t)(ComponentPtr );
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&GameObject::componentAttached)) {
+                *result = 1;
             }
         }
     }
@@ -189,13 +202,13 @@ int GameObject::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 17)
+        if (_id < 18)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 17;
+        _id -= 18;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 17)
+        if (_id < 18)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 17;
+        _id -= 18;
     }
 #ifndef QT_NO_PROPERTIES
       else if (_c == QMetaObject::ReadProperty) {
@@ -239,5 +252,12 @@ int GameObject::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 void GameObject::synchronized()
 {
     QMetaObject::activate(this, &staticMetaObject, 0, 0);
+}
+
+// SIGNAL 1
+void GameObject::componentAttached(ComponentPtr _t1)
+{
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 1, _a);
 }
 QT_END_MOC_NAMESPACE

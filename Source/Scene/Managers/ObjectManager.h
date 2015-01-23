@@ -4,18 +4,20 @@
 #include <Utility/ModelLoader.h>
 
 #include <Utility/EngineCommon.h>
+#include <QObject>
 
 class Scene;
 
-class ObjectManager
+class ObjectManager : QObject
 {
+	Q_OBJECT
+
 public:
-	ObjectManager(Scene* scene);
+	ObjectManager(Scene* scene, QObject* parent = 0);
 	~ObjectManager();
 
 	Scene* getScene() const;
 	void registerGameObject(const QString& name, GameObjectPtr go);
-	void registerComponent(ComponentPtr comp);
 
 	GameObjectPtr getGameObject(const QString& name);
 	ModelPtr getModel(const QString& name);
@@ -33,6 +35,10 @@ public:
 
 	QMap<QString, GameObjectPtr> m_gameObjectMap;
 	QVector<ModelLoaderPtr> m_modelLoaders;
+
+public slots:
+	void registerComponent(ComponentPtr comp);
+
 
 private:
 	Scene* m_scene;

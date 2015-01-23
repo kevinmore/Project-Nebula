@@ -149,7 +149,7 @@ QDataStream& operator >> (QDataStream& in, GameObjectPtr object)
 * Object Manager
 */
 // Order: Game Objects Count -> Each Game Object
-QDataStream& operator << (QDataStream& out, ObjectManagerPtr object)
+QDataStream& operator << (QDataStream& out, ObjectManager* object)
 {
 	out << object->m_gameObjectMap.count();
 
@@ -161,7 +161,7 @@ QDataStream& operator << (QDataStream& out, ObjectManagerPtr object)
 	return out;
 }
 
-QDataStream& operator >> (QDataStream& in, ObjectManagerPtr object)
+QDataStream& operator >> (QDataStream& in, ObjectManager* object)
 {
 	int numGameObjects;
 	in >> numGameObjects;

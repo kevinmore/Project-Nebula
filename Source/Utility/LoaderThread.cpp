@@ -19,8 +19,8 @@ LoaderThread::~LoaderThread()
 
 void LoaderThread::run()
 {
-	QMutex mutex;
-	mutex.lock();
+	//QMutex mutex;
+	//mutex.lock();
 
 	if (!m_fileName.isEmpty())
 	{
@@ -34,6 +34,11 @@ void LoaderThread::run()
 		QString relativePath = dir.relativeFilePath(m_fileName);
 
 		ModelPtr model = m_scene->objectManager()->loadModel(customName, relativePath, m_objectParent, m_shouldGenerateGameObject);
+		if(!model)
+		{
+			quit();
+			return;
+		}
 		// if not generating a game object for the model
 		// let it attach to its reference object
 		if (!m_shouldGenerateGameObject) m_reference->attachComponent(model);
@@ -47,10 +52,9 @@ void LoaderThread::run()
 		}
 	}
 
-	mutex.unlock();
+	//mutex.unlock();
 
 	// emit the signal and destroy the thread
 	emit jobDone();
-	msleep(1000);
 	quit();
 }

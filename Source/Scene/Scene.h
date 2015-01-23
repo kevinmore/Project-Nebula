@@ -47,7 +47,7 @@ public:
 	QSharedPointer<MeshManager>     meshManager();
 	QSharedPointer<TextureManager>  textureManager();
 	QSharedPointer<MaterialManager> materialManager();
-	QSharedPointer<ObjectManager>    objectManager();
+	ObjectManager*  objectManager();
 
 	QStateMachine* getStateMachine() const { return m_stateMachine; }
 	GameObject* sceneNode() const { return m_sceneRootNode; }
@@ -89,7 +89,7 @@ private:
 
 	ModelPtr m_model;
 
-	QSharedPointer<ObjectManager>    m_objectManager;
+	ObjectManager*  m_objectManager;
 	QSharedPointer<MeshManager>     m_meshManager;
 	QSharedPointer<TextureManager>  m_textureManager;
 	QSharedPointer<MaterialManager> m_materialManager;

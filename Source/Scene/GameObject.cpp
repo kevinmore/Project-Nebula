@@ -14,7 +14,7 @@ GameObject::GameObject(Scene* scene, QObject* parent)
 	  m_prevPosition(m_position),
 	  m_isMoving(false),
 	  m_model(NULL),
-	  m_renderOrder(-1)
+	  m_renderLayer(-1)
 {
 	connect(this, SIGNAL(synchronized()), this, SLOT(calculateSpeed()));
 	m_lifeTimer.start();
@@ -350,7 +350,9 @@ void GameObject::attachComponent( ComponentPtr pComponent )
 		
 	}
 	pComponent->linkGameObject(this);
-	m_renderOrder = qMax(m_renderOrder, target);
+	m_renderLayer = qMax(m_renderLayer, target);
+
+	emit componentAttached(pComponent);
 }
 
 QVector<ComponentPtr> GameObject::getComponents()

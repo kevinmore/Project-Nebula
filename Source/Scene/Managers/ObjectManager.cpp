@@ -3,8 +3,9 @@
 #include <Animation/FK/FKController.h>
 #include <Animation/IK/FABRIKSolver.h>
 
-ObjectManager::ObjectManager(Scene* scene)
-	: m_scene(scene)
+ObjectManager::ObjectManager(Scene* scene, QObject* parent)
+	: QObject(parent),
+	  m_scene(scene)
 {}
 
 
@@ -20,6 +21,9 @@ void ObjectManager::registerGameObject( const QString& name, GameObjectPtr go )
 	{
 		registerComponent(comp);
 	}
+
+	// listen for further updates
+	connect(go.data(), SIGNAL(componentAttached(ComponentPtr)), this, SLOT(registerComponent(ComponentPtr)));
 }
 
 GameObjectPtr ObjectManager::getGameObject( const QString& name )
@@ -153,7 +157,6 @@ GameObjectPtr ObjectManager::createGameObject( const QString& customName, GameOb
 	go->setObjectName(name);
 
 	registerGameObject(name, go);
-	
 	
 	return go;
 }
