@@ -34,7 +34,7 @@ void Scene::initialize()
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
 
-	glEnable(GL_CULL_FACE);
+//	glEnable(GL_CULL_FACE);
 
 //     m_light.setType(Light::SpotLight);
 //     m_light.setUniqueColor(1.0, 1.0, 1.0);
@@ -183,9 +183,9 @@ void Scene::resetToDefaultScene()
 
 	// load the floor
 	GameObjectPtr floorRef(new GameObject(this));
+	floorRef->setScale(50.0f, 6.0f, 50.0f);
 	floorRef->setPosition(0, -2, 0);
-	floorRef->setRotation(-90.0f, 0.0f, 0.0f);
-	LoaderThread loader(this, "../Resource/Models/Common/DemoRoom/floor.dae", floorRef, m_sceneRootNode);
+	LoaderThread loader(this, "../Resource/Models/Common/DemoRoom/hexagonFloor.obj", floorRef, m_sceneRootNode);
 }
 
 void Scene::showLoadModelDialog()
@@ -280,7 +280,8 @@ void Scene::createParticleSystem()
 	ParticleSystemPtr ps(new ParticleSystem(this));
 	ref->attachComponent(ps);
 	ps->initParticleSystem();
-	ps->assingCollisionObject(m_objectManager->getGameObject("floor"));
+	ps->assingCollisionObject(m_objectManager->getGameObject("hexagonFloor"));
+	m_objectManager->registerComponent(ps);
 }
 
 void Scene::setBackGroundColor( const QColor& col )

@@ -7,7 +7,7 @@ class GameObject;
 class Component : public QObject
 {
 public:
-	Component(bool renderable = false, int renderOrder = -1);
+	Component(int renderLayer = -1);
 	virtual ~Component() = 0;
 
 	virtual void render(const float currentTime) = 0;
@@ -16,11 +16,10 @@ public:
 	GameObject* gameObject() const;
 	void linkGameObject(GameObject* go);
 
-	bool isRenderable() const; 
-	int renderOrder() const;
+	int renderLayer() const;
 
 protected:
 	GameObject* m_actor;
-	bool m_renderable; // decides if this component will be rendered
-	int m_renderOrder; // a component with a less renderOrder(e.g. 0) get rendered first
+	int m_renderLayer; // a component with a less renderOrder(e.g. 0) get rendered first
+					   // render layer < 0 means not renderable
 };

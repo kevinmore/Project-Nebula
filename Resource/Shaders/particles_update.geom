@@ -78,7 +78,8 @@ void main()
 	{
 		// velocity projection on the normal direction
 		float fVelocityNormalProjection = dot(vPlaneNormal, vVelocityOut);
-		if( dot(vPositionOut - vPlanePoint, vPlaneNormal) < 0.0 && fVelocityNormalProjection < 0.0)
+		float fPositionNormalProjection = dot(vPositionOut - vPlanePoint, vPlaneNormal);
+		if( fPositionNormalProjection < 0.01 && fVelocityNormalProjection < 0.01)
 		{
 			//mv1^2 = k*mv0^2
 			vVelocityOut = sqrt(fRestitution) * (vVelocityOut - 2 * fVelocityNormalProjection * vPlaneNormal);

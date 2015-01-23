@@ -16,7 +16,7 @@ public:
 	void deleteTexture(TexturePtr texture);
 	void clear();
 
-private:
+//private:
 	QMap<QString, TexturePtr> m_textures;
 };
 

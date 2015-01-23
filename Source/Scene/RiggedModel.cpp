@@ -72,7 +72,7 @@ void RiggedModel::initRenderingEffect()
 	directionalLight.Color = vec3(1.0f, 1.0f, 1.0f);
 	directionalLight.AmbientIntensity = 0.55f;
 	directionalLight.DiffuseIntensity = 0.9f;
-	directionalLight.Direction = vec3(-1.0f, 0.0, -1.0);
+	directionalLight.Direction = vec3(-1.0f, -1.0, -1.0);
 
 	m_RenderingEffect->enable();
 	m_RenderingEffect->setColorTextureUnit(0);

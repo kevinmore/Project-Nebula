@@ -51,5 +51,6 @@ void LoaderThread::run()
 
 	// emit the signal and destroy the thread
 	emit jobDone();
+	msleep(1000);
 	quit();
 }

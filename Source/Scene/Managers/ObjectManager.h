@@ -15,6 +15,8 @@ public:
 
 	Scene* getScene() const;
 	void registerGameObject(const QString& name, GameObjectPtr go);
+	void registerComponent(ComponentPtr comp);
+
 	GameObjectPtr getGameObject(const QString& name);
 	ModelPtr getModel(const QString& name);
 
@@ -31,8 +33,10 @@ public:
 
 	QMap<QString, GameObjectPtr> m_gameObjectMap;
 	QVector<ModelLoaderPtr> m_modelLoaders;
+
 private:
 	Scene* m_scene;
+	QVector<ComponentPtr> m_renderQueue;
 };
 
 typedef QSharedPointer<ObjectManager> ObjectManagerPtr;

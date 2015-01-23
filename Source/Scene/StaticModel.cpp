@@ -57,7 +57,7 @@ void StaticModel::initRenderingEffect()
 	directionalLight.Color = vec3(1.0f, 1.0f, 1.0f);
 	directionalLight.AmbientIntensity = 0.55f;
 	directionalLight.DiffuseIntensity = 0.9f;
-	directionalLight.Direction = vec3(-1.0f, 0.0, 1.0);
+	directionalLight.Direction = vec3(-1.0f, -1.0, 1.0);
 
 	m_RenderingEffect->enable();
 	m_RenderingEffect->setColorTextureUnit(0);
@@ -152,7 +152,6 @@ void StaticModel::render( float time )
 	m_RenderingEffect->setEyeWorldPos(m_scene->getCamera()->position());
 	m_RenderingEffect->setWVP(m_scene->getCamera()->viewProjectionMatrix() * modelMatrix);
 	m_RenderingEffect->setWorldMatrix(modelMatrix); 
-
 
 	for(int i = 0; i < m_meshes.size(); ++i)
 	{

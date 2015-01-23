@@ -319,16 +319,16 @@ ModelPtr GameObject::getModel()
 void GameObject::attachComponent( ComponentPtr pComponent )
 {
 	// make sure that the component with a smaller render order is in the front
-	int target = pComponent->renderOrder();
+	int target = pComponent->renderLayer();
 	if (m_components.isEmpty()) 
 		m_components.push_back(pComponent);
 	else
 	{
-		if (target <= m_components.front()->renderOrder())
+		if (target <= m_components.front()->renderLayer())
 		{
 			m_components.prepend(pComponent);
 		}
-		else if (target >= m_components.last()->renderOrder())
+		else if (target >= m_components.last()->renderLayer())
 		{
 			m_components.push_back(pComponent);
 		}
@@ -336,8 +336,8 @@ void GameObject::attachComponent( ComponentPtr pComponent )
 		{
 			for (int i = 1; i < m_components.size(); ++i)
 			{
-				int prev = m_components[i - 1]->renderOrder();
-				int next = m_components[i]->renderOrder();
+				int prev = m_components[i - 1]->renderLayer();
+				int next = m_components[i]->renderLayer();
 				if (target >= prev && target <= next)
 				{
 					m_components.insert(i, pComponent);

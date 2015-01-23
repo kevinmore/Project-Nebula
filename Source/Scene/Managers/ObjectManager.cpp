@@ -12,7 +12,14 @@ ObjectManager::~ObjectManager() {}
 
 void ObjectManager::registerGameObject( const QString& name, GameObjectPtr go )
 {
+	// add the game object into the map
 	m_gameObjectMap[name] = go;
+
+	// extract the renderable components
+	foreach(ComponentPtr comp, go->getComponents())
+	{
+		registerComponent(comp);
+	}
 }
 
 GameObjectPtr ObjectManager::getGameObject( const QString& name )
@@ -86,31 +93,37 @@ ModelPtr ObjectManager::loadModel( const QString& customName, const QString& fil
 
 void ObjectManager::renderAll(const float currentTime)
 {
-	foreach(GameObjectPtr go, m_gameObjectMap.values())
+// 	foreach(GameObjectPtr go, m_gameObjectMap.values())
+// 	{
+// 		foreach(ComponentPtr comp, go->getComponents())
+// 		{
+// 			if (go->renderOrder() == 0 && !comp.isNull())
+// 				comp->render(currentTime);
+// 		}
+// 	}
+// 
+// 	// render particles last
+// 	// hack!!!
+// 	int totalParticles = 0;
+// 	foreach(GameObjectPtr go, m_gameObjectMap.values())
+// 	{
+// 		foreach(ComponentPtr comp, go->getComponents())
+// 		{
+// 			if (go->renderOrder() == 1 && !comp.isNull())
+// 			{
+// 				comp->render(currentTime);
+// 				totalParticles += comp.dynamicCast<ParticleSystem>()->getAliveParticles();
+// 			}
+// 		}
+// 	}
+
+	foreach(ComponentPtr comp, m_renderQueue)
 	{
-		foreach(ComponentPtr comp, go->getComponents())
-		{
-			if (go->renderOrder() == 0 && !comp.isNull() && comp->isRenderable())
-				comp->render(currentTime);
-		}
+		comp->render(currentTime);
 	}
 
-	// render particles last
-	// hack!!!
-	int totalParticles = 0;
-	foreach(GameObjectPtr go, m_gameObjectMap.values())
-	{
-		foreach(ComponentPtr comp, go->getComponents())
-		{
-			if (go->renderOrder() == 1 && !comp.isNull() && comp->isRenderable())
-			{
-				comp->render(currentTime);
-				totalParticles += comp.dynamicCast<ParticleSystem>()->getAliveParticles();
-			}
-		}
-	}
 	// print out the particles count
-	if(totalParticles) qDebug() << "Alive Particles:" << totalParticles;
+	//if(totalParticles) qDebug() << "Alive Particles:" << totalParticles;
 }
 
 void ObjectManager::clear()
@@ -119,6 +132,7 @@ void ObjectManager::clear()
 	// since we are using QSharedPointer here, there's no need to destroy each object individually
 	m_modelLoaders.clear();
 	m_gameObjectMap.clear();
+	m_renderQueue.clear();
 }
 
 GameObjectPtr ObjectManager::createGameObject( const QString& customName, GameObject* parent /*= 0*/ )
@@ -153,4 +167,24 @@ void ObjectManager::deleteObject( const QString& name )
 Scene* ObjectManager::getScene() const
 {
 	return m_scene;
+}
+
+void ObjectManager::registerComponent( ComponentPtr comp )
+{
+	// make sure the components in a smaller render layer gets in to the front
+	if (comp->renderLayer() < 0) return;
+	
+	if(m_renderQueue.isEmpty())
+		m_renderQueue.push_back(comp);
+	else
+	{
+		if (comp->renderLayer() < m_renderQueue.front()->renderLayer())
+		{
+			m_renderQueue.push_front(comp);
+		}
+		else
+		{
+			m_renderQueue.push_back(comp);
+		}
+	}
 }

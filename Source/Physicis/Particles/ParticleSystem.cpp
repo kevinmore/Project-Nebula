@@ -3,7 +3,7 @@
 #include <Utility/Math.h>
 
 ParticleSystem::ParticleSystem(Scene* scene)
-	: Component(true, 1),// get rendered last
+	: Component(1),// get rendered last
 	  m_curReadBufferIndex(0),
 	  m_aliveParticles(0),
 	  fElapsedTime(0.0f),
@@ -120,7 +120,7 @@ void ParticleSystem::updateParticles( float fTimePassed )
 				* QQuaternion::fromAxisAndAngle(Math::Vector3D::UNIT_Y, rot.y())
 				* QQuaternion::fromAxisAndAngle(Math::Vector3D::UNIT_Z, rot.z());
 
-			vPlaneNormal = rotation.rotatedVector(Math::Vector3D::UNIT_Z);
+			vPlaneNormal = rotation.rotatedVector(Math::Vector3D::UNIT_Y);
 			vPlanePoint = m_collider->position();
 		}
 		particleUpdater->getShaderProgram()->setUniformValue("vPlaneNormal", vPlaneNormal);
@@ -189,7 +189,7 @@ void ParticleSystem::render(const float currentTime)
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 	glDepthMask(0);
-
+	
 	glDisable(GL_RASTERIZER_DISCARD);
 	particleRenderer->enable();
 	m_Texture->bind(COLOR_TEXTURE_UNIT);

@@ -1,10 +1,9 @@
 #include "Component.h"
 #include <Scene/GameObject.h>
 
-Component::Component(bool renderable, int renderOrder)
+Component::Component(int renderLayer)
 	: m_actor(0),
-	  m_renderable(renderable),
-	  m_renderOrder(renderOrder)
+	  m_renderLayer(renderLayer)
 {}
 
 Component::~Component()
@@ -20,12 +19,7 @@ void Component::linkGameObject( GameObject* go )
 	m_actor = go;
 }
 
-bool Component::isRenderable() const
+int Component::renderLayer() const
 {
-	return m_renderable;
-}
-
-int Component::renderOrder() const
-{
-	return m_renderOrder;
+	return m_renderLayer;
 }
