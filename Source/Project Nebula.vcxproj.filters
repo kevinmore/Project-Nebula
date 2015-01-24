@@ -54,7 +54,8 @@
     <ClCompile Include="Physicis\World\PhysicsWorld.cpp" />
     <ClCompile Include="Physicis\Geometry\SphereShape.inl" />
     <ClCompile Include="Physicis\Geometry\BoxShape.inl" />
-    <ClCompile Include="Physicis\Entity\RigidBodyConfig.cpp" />
+    <ClCompile Include="Physicis\World\PhysicsWorldObject.cpp" />
+    <ClCompile Include="Physicis\Entity\RigidBody.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Primitives\Texture.h" />
@@ -94,7 +95,8 @@
     <ClInclude Include="Physicis\Geometry\BoxShape.h" />
     <ClInclude Include="Physicis\Geometry\AbstractShape.h" />
     <ClInclude Include="Physicis\Geometry\SphereShape.h" />
-    <ClInclude Include="Physicis\Entity\RigidBodyConfig.h" />
+    <ClInclude Include="Physicis\World\PhysicsWorldObject.h" />
+    <ClInclude Include="Physicis\Entity\RigidBody.h" />
   </ItemGroup>
   <ItemGroup>
     <QtMOC Include="Scene\Scene.h" />
@@ -112,5 +114,7 @@
   <ItemGroup>
     <None Include="UI\HierarchyWidget.ui" />
     <None Include="UI\SkyboxWidget.ui" />
+    <None Include="Physicis\World\PhysicsWorldObject.inl" />
+    <None Include="Physicis\Entity\RigidBody.inl" />
   </ItemGroup>
 </Project>

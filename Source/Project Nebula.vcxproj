@@ -19,9 +19,10 @@
     <ClCompile Include="Physicis\Geometry\BoxShape.inl" />
     <ClCompile Include="Physicis\World\PhysicsWorldConfig.cpp" />
     <ClCompile Include="Physicis\World\PhysicsWorld.cpp" />
+    <ClCompile Include="Physicis\World\PhysicsWorldObject.cpp" />
     <ClCompile Include="Primitives\CubeMapTexture.cpp" />
     <ClCompile Include="Physicis\Particles\moc_ParticleSystem.cc" />
-    <ClCompile Include="Physicis\Entity\RigidBodyConfig.cpp" />
+    <ClCompile Include="Physicis\Entity\RigidBody.cpp" />
     <ClCompile Include="Scene\Managers\moc_ObjectManager.cc" />
     <ClCompile Include="Scene\ShadingTechniques\ParticleTechnique.cpp" />
     <ClCompile Include="Physicis\Particles\ParticleSystem.cpp" />
@@ -79,8 +80,9 @@
     <ClInclude Include="Physicis\Geometry\BoxShape.h" />
     <ClInclude Include="Physicis\World\PhysicsWorldConfig.h" />
     <ClInclude Include="Physicis\World\PhysicsWorld.h" />
+    <ClInclude Include="Physicis\World\PhysicsWorldObject.h" />
     <ClInclude Include="Primitives\CubeMapTexture.h" />
-    <ClInclude Include="Physicis\Entity\RigidBodyConfig.h" />
+    <ClInclude Include="Physicis\Entity\RigidBody.h" />
     <ClInclude Include="Scene\ShadingTechniques\ParticleTechnique.h" />
     <QtMOC Include="Physicis\Particles\ParticleSystem.h" />
     <ClInclude Include="Primitives\Component.h" />
@@ -118,6 +120,8 @@
     <ClInclude Include="Utility\OpenGLUniformBuffer.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Physicis\Entity\RigidBody.inl" />
+    <None Include="Physicis\World\PhysicsWorldObject.inl" />
     <None Include="UI\HierarchyWidget.ui" />
     <None Include="UI\SkyboxWidget.ui" />
   </ItemGroup>

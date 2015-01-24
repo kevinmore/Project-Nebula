@@ -10,7 +10,6 @@ Scene::Scene(QObject* parent)
 	  m_lightModeSubroutines(LightModeCount),
 	  m_absoluteTime(0.0f),
 	  m_relativeTime(0.0f),
-	  m_lastPausedTime(0.0f),
 	  m_delayedTime(0.0f),
 	  m_bShowSkybox(false),
 	  m_bPaused(false),
@@ -75,14 +74,18 @@ void Scene::initPhysicsModule()
 
 void Scene::update(float currentTime)
 {
+	// update the camera
+	m_camera->update(currentTime - m_relativeTime);
+
 	// record the absolute time
 	m_absoluteTime = currentTime;
 
 	// do nothing when the scene is paused
-	if (m_bPaused)
-	{
-		return;
-	}
+	// not fully implemented
+// 	if (m_bPaused)
+// 	{
+// 		return;
+// 	}
 
 	// update the time
 	float dt = m_absoluteTime - m_delayedTime - m_relativeTime;
@@ -90,8 +93,7 @@ void Scene::update(float currentTime)
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	// update the camera
-	m_camera->update(dt);
+	
 
 	// update the physics world
 	m_physicsWorld->update(m_relativeTime);
@@ -206,7 +208,7 @@ void Scene::resetToDefaultScene()
 	GameObjectPtr floorRef(new GameObject(this));
 	floorRef->setScale(50.0f, 6.0f, 50.0f);
 	floorRef->setPosition(0, -2, 0);
-	LoaderThread loader(this, "../Resource/Models/Common/DemoRoom/hexagonFloor.obj", floorRef, m_sceneRootNode);
+	LoaderThread loader(this, "../Resource/Models/Common/DemoRoom/woodenFloor.obj", floorRef, m_sceneRootNode);
 }
 
 void Scene::showLoadModelDialog()
