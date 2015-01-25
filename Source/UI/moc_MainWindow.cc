@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[29];
-    char stringdata[318];
+    QByteArrayData data[32];
+    char stringdata[350];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -57,7 +57,10 @@ QT_MOC_LITERAL(24, 249, 7),
 QT_MOC_LITERAL(25, 257, 3),
 QT_MOC_LITERAL(26, 261, 13),
 QT_MOC_LITERAL(27, 275, 25),
-QT_MOC_LITERAL(28, 301, 16)
+QT_MOC_LITERAL(28, 301, 16),
+QT_MOC_LITERAL(29, 318, 15),
+QT_MOC_LITERAL(30, 334, 8),
+QT_MOC_LITERAL(31, 343, 6)
     },
     "MainWindow\0setFullScreen\0\0state\0"
     "setViewProperties\0setFramerate\0"
@@ -68,7 +71,8 @@ QT_MOC_LITERAL(28, 301, 16)
     "showMessage\0QtMsgType\0type\0"
     "QMessageLogContext\0context\0msg\0"
     "showSystemLog\0showBackGroundColorPicker\0"
-    "showSkyboxDialog"
+    "showSkyboxDialog\0actionTriggered\0"
+    "QAction*\0action"
 };
 #undef QT_MOC_LITERAL
 
@@ -78,7 +82,7 @@ static const uint qt_meta_data_MainWindow[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      14,   14, // methods
+      15,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -86,20 +90,21 @@ static const uint qt_meta_data_MainWindow[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    1,   84,    2, 0x08 /* Private */,
-       4,    1,   87,    2, 0x08 /* Private */,
-       5,    0,   90,    2, 0x08 /* Private */,
-       6,    1,   91,    2, 0x08 /* Private */,
-       8,    1,   94,    2, 0x08 /* Private */,
-      10,    1,   97,    2, 0x08 /* Private */,
-      12,    1,  100,    2, 0x08 /* Private */,
-      14,    1,  103,    2, 0x08 /* Private */,
-      16,    1,  106,    2, 0x08 /* Private */,
-      18,    1,  109,    2, 0x08 /* Private */,
-      20,    3,  112,    2, 0x08 /* Private */,
-      26,    0,  119,    2, 0x08 /* Private */,
-      27,    0,  120,    2, 0x08 /* Private */,
-      28,    0,  121,    2, 0x08 /* Private */,
+       1,    1,   89,    2, 0x08 /* Private */,
+       4,    1,   92,    2, 0x08 /* Private */,
+       5,    0,   95,    2, 0x08 /* Private */,
+       6,    1,   96,    2, 0x08 /* Private */,
+       8,    1,   99,    2, 0x08 /* Private */,
+      10,    1,  102,    2, 0x08 /* Private */,
+      12,    1,  105,    2, 0x08 /* Private */,
+      14,    1,  108,    2, 0x08 /* Private */,
+      16,    1,  111,    2, 0x08 /* Private */,
+      18,    1,  114,    2, 0x08 /* Private */,
+      20,    3,  117,    2, 0x08 /* Private */,
+      26,    0,  124,    2, 0x08 /* Private */,
+      27,    0,  125,    2, 0x08 /* Private */,
+      28,    0,  126,    2, 0x08 /* Private */,
+      29,    1,  127,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void, QMetaType::Bool,    3,
@@ -116,6 +121,7 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 30,   31,
 
        0        // eod
 };
@@ -139,6 +145,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 11: _t->showSystemLog(); break;
         case 12: _t->showBackGroundColorPicker(); break;
         case 13: _t->showSkyboxDialog(); break;
+        case 14: _t->actionTriggered((*reinterpret_cast< QAction*(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -169,13 +176,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 14)
+        if (_id < 15)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 14;
+        _id -= 15;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 14)
+        if (_id < 15)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 14;
+        _id -= 15;
     }
     return _id;
 }

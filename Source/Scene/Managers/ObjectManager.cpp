@@ -5,7 +5,8 @@
 
 ObjectManager::ObjectManager(Scene* scene, QObject* parent)
 	: QObject(parent),
-	  m_scene(scene)
+	  m_scene(scene),
+	  m_loadingFlag("Fast")
 {}
 
 
@@ -35,7 +36,7 @@ GameObjectPtr ObjectManager::getGameObject( const QString& name )
 ModelPtr ObjectManager::loadModel( const QString& customName, const QString& fileName, GameObject* parent, bool generateGameObject )
 {
 	ModelLoaderPtr m_modelLoader(new ModelLoader);
-	QVector<ModelDataPtr> modelDataArray = m_modelLoader->loadModel(fileName);
+	QVector<ModelDataPtr> modelDataArray = m_modelLoader->loadModel(fileName, 0, m_loadingFlag);
 	if(modelDataArray.size() == 0) return ModelPtr();
 
 	// if the model has mesh data, load it
@@ -102,7 +103,7 @@ void ObjectManager::renderAll(const float currentTime)
 			{
 				GameObject* child = dynamic_cast<GameObject*>(obj);
 				ParticleSystemPtr ps = child->getComponent("ParticleSystem").dynamicCast<ParticleSystem>();
-				rb->applyPointImpulse(ps->getLinearImpuse() * 0.8f, child->position());
+				rb->applyPointImpulse(ps->getLinearImpuse() * 0.8f, child->position() / 100.0f);
 			}
 			go->setPosition(rb->getPosition());
 			go->setRotation(rb->getRotationInAxisAndAngles());
@@ -155,8 +156,16 @@ GameObjectPtr ObjectManager::createGameObject( const QString& customName, GameOb
 
 void ObjectManager::deleteObject( const QString& name )
 {
-	if(getGameObject(name)) 
-		m_gameObjectMap.take(name);
+	GameObjectPtr go = m_gameObjectMap.take(name);
+	foreach(ComponentPtr comp, m_renderQueue)
+	{
+		if (comp->gameObject() == go.data())
+		{
+			int idx = m_renderQueue.indexOf(comp);
+			m_renderQueue.removeAt(idx);
+		}
+	}
+	go.clear();
 }
 
 Scene* ObjectManager::getScene() const
@@ -198,4 +207,9 @@ void ObjectManager::registerComponent( ComponentPtr comp )
 			}
 		}
 	}
+}
+
+void ObjectManager::setLoadingFlag( const QString& flag )
+{
+	m_loadingFlag = flag;
 }

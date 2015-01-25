@@ -36,6 +36,7 @@ private slots:
 	void showSystemLog();
 	void showBackGroundColorPicker();
 	void showSkyboxDialog();
+	void actionTriggered(QAction* action);
 
 private:
 	QScopedPointer<Canvas> m_canvas;

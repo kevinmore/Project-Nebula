@@ -7,7 +7,7 @@ BoxRigidBody::BoxRigidBody( const vec3& position, const quart& rotation )
 	: RigidBody(position, rotation)
 {
 	m_MotionType = RigidBody::MOTION_BOX_INERTIA;
-	vec3 halfSize(50, 50, 50);
+	vec3 halfSize(0.5, 0.5, 0.5);
 	m_shape = new BoxShape(m_centerOfMass, halfSize);
 
 	Math::Matrix3::setBlockInertiaTensor(m_inertiaTensor, halfSize, m_mass);

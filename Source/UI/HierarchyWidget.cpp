@@ -255,9 +255,7 @@ void HierarchyWidget::showMouseRightButton( const QPoint& point )
 void HierarchyWidget::deleteGameObject()
 {
 	// take the object from the map, and delete it
-	GameObjectPtr go = m_scene->objectManager()->m_gameObjectMap.take(m_currentObject->objectName());
-	go.clear();
-
+	m_scene->objectManager()->deleteObject(m_currentObject->objectName());
 	updateObjectTree();
 }
 

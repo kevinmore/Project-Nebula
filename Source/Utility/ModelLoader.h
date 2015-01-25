@@ -26,7 +26,7 @@ public:
 	/*
 	 *	This is the core functionality
 	 */
-	QVector<ModelDataPtr> loadModel(const QString& filename, GLuint shaderProgramID = 0);
+	QVector<ModelDataPtr> loadModel(const QString& filename, GLuint shaderProgramID = 0, const QString& loadingFlags = "Fast");
 
 
 	/*

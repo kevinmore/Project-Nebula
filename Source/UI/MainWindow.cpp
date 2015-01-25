@@ -145,6 +145,29 @@ void MainWindow::initializeMenuBar()
 	msaaAction->setChecked(true);
 	optionMenu->addAction(msaaAction);
 
+	QMenu *modelProcessMenu = optionMenu->addMenu("&Model Processing Quality");
+	QActionGroup* modelProcessOptions = new QActionGroup(this);
+	modelProcessOptions->setExclusive(true);
+	QAction* simpleProcess = new QAction("Simple", this);
+	simpleProcess->setCheckable(true);
+	QAction* fastProcess = new QAction("Fast", this);
+	fastProcess->setCheckable(true);
+	fastProcess->setChecked(true);
+	QAction* qualityProcess = new QAction("Quality", this);
+	qualityProcess->setCheckable(true);
+	QAction* maxQualityProcess = new QAction("Max Quality", this);
+	maxQualityProcess->setCheckable(true);
+	modelProcessMenu->addAction(simpleProcess);
+	modelProcessMenu->addAction(fastProcess);
+	modelProcessMenu->addAction(qualityProcess);
+	modelProcessMenu->addAction(maxQualityProcess);
+	modelProcessOptions->addAction(simpleProcess);
+	modelProcessOptions->addAction(fastProcess);
+	modelProcessOptions->addAction(qualityProcess);
+	modelProcessOptions->addAction(maxQualityProcess);
+
+	connect(modelProcessOptions, SIGNAL(triggered(QAction*)), this, SLOT(actionTriggered(QAction*)));
+
 	QAction *writeLogAction = new QAction("&Write Log Into File", this);
 	writeLogAction->setCheckable(true);
 	writeLogAction->setChecked(false);
@@ -578,4 +601,9 @@ void MainWindow::showSkyboxDialog()
 {
 	SkyboxDialog* dilog = new SkyboxDialog(m_scene->getSkybox(), this);
 	dilog->show();
+}
+
+void MainWindow::actionTriggered( QAction* action )
+{
+	m_scene->objectManager()->setLoadingFlag(action->text());
 }

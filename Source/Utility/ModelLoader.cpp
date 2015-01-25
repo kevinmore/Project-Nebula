@@ -37,11 +37,28 @@ ModelLoader::~ModelLoader()
 // 	}
 }
 
-QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName, GLuint shaderProgramID )
+QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName, GLuint shaderProgramID, const QString& loadingFlags )
 {
 	clear();
+	uint flags;
 
-	m_scene = m_importer.ReadFile(fileName.toStdString(), aiProcessPreset_TargetRealtime_Quality | aiProcess_FlipUVs);
+	if (loadingFlags == "Simple")
+	{
+		flags = aiProcess_GenNormals | aiProcess_Triangulate | aiProcess_GenUVCoords | aiProcess_FlipUVs;
+	}
+	else if (loadingFlags == "Fast")
+	{
+		flags = aiProcessPreset_TargetRealtime_Fast | aiProcess_FlipUVs;
+	}
+	else if (loadingFlags == "Quality")
+	{
+		flags = aiProcessPreset_TargetRealtime_Quality | aiProcess_FlipUVs;
+	}
+	else if (loadingFlags == "Max Quality")
+	{
+		flags = aiProcessPreset_TargetRealtime_MaxQuality | aiProcess_FlipUVs;
+	}
+	m_scene = m_importer.ReadFile(fileName.toStdString(), flags);
 	
 	if(!m_scene)
 	{

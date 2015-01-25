@@ -22,6 +22,8 @@ public:
 
 	GameObjectPtr createGameObject(const QString& customName, GameObject* parent = 0);
 
+	void setLoadingFlag(const QString& flag);
+
 	ModelPtr loadModel(const QString& customName, const QString& fileName, 
 						GameObject* parent = 0, bool generateGameObject = true);
 
@@ -41,6 +43,7 @@ public slots:
 private:
 	Scene* m_scene;
 	QVector<ComponentPtr> m_renderQueue;
+	QString m_loadingFlag;
 };
 
 typedef QSharedPointer<ObjectManager> ObjectManagerPtr;

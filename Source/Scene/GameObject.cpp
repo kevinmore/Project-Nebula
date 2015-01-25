@@ -20,6 +20,7 @@ GameObject::GameObject(Scene* scene, GameObject* parent)
 
 GameObject::~GameObject()
 {
+	m_components.clear();
 }
 
 void GameObject::setPosition(const QVector3D& positionVector)
