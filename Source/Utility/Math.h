@@ -45,9 +45,9 @@ namespace Math
         static void setBlockInertiaTensor(mat3& matIn, const vec3& halfSizes, float mass)
         {
             vec3 squares(halfSizes.x() * halfSizes.x(), halfSizes.y() * halfSizes.y(), halfSizes.z() * halfSizes.z());
-            setInertiaTensorCoeffs(matIn, 0.3f*mass*(squares.y() + squares.z()),
-                0.3f*mass*(squares.x() + squares.z()),
-                0.3f*mass*(squares.x() + squares.y()));
+            setInertiaTensorCoeffs(matIn, mass*(squares.y() + squares.z()) / 12.0f,
+								          mass*(squares.x() + squares.z()) / 12.0f,
+								          mass*(squares.x() + squares.y()) / 12.0f);
         }
 
 		 /**
@@ -72,14 +72,16 @@ namespace Math
             if (t16 == (float)0.0f) return;
             float t17 = 1/t16;
 
-            m.m[0][0] = (m.m[1][1]*m.m[2][2]-m.m[1][2]*m.m[2][1])*t17;
-            m.m[0][1] = -(m.m[0][1]*m.m[2][2]-m.m[0][2]*m.m[2][1])*t17;
-            m.m[0][2] = (m.m[0][1]*m.m[1][2]-m.m[0][2]*m.m[1][1])*t17;
-            m.m[1][0] = -(m.m[1][0]*m.m[2][2]-m.m[1][2]*m.m[2][0])*t17;
-            m.m[1][1] = (m.m[0][0]*m.m[2][2]-t14)*t17;
+			mat3 temp = m;
+
+            m.m[0][0] = (temp.m[1][1]*temp.m[2][2]-temp.m[1][2]*temp.m[2][1])*t17;
+            m.m[0][1] = -(temp.m[0][1]*temp.m[2][2]-temp.m[0][2]*temp.m[2][1])*t17;
+            m.m[0][2] = (temp.m[0][1]*temp.m[1][2]-temp.m[0][2]*temp.m[1][1])*t17;
+            m.m[1][0] = -(temp.m[1][0]*temp.m[2][2]-temp.m[1][2]*temp.m[2][0])*t17;
+            m.m[1][1] = (temp.m[0][0]*temp.m[2][2]-t14)*t17;
             m.m[1][2] = -(t6-t10)*t17;
-            m.m[2][0] = (m.m[1][0]*m.m[2][1]-m.m[1][1]*m.m[2][0])*t17;
-            m.m[2][1] = -(m.m[0][0]*m.m[2][1]-t12)*t17;
+            m.m[2][0] = (temp.m[1][0]*temp.m[2][1]-temp.m[1][1]*temp.m[2][0])*t17;
+            m.m[2][1] = -(temp.m[0][0]*temp.m[2][1]-t12)*t17;
             m.m[2][2] = (t4-t8)*t17;
         }
 

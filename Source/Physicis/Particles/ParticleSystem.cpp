@@ -176,10 +176,10 @@ void ParticleSystem::updateParticles( float fTimePassed )
 	glBindTransformFeedback(GL_TRANSFORM_FEEDBACK, 0);
 	
 	// calculate the linear impulse this particle system generated
-	float totalMass = m_fParticleMass * m_EmitAmount * fTimePassed;
+	float totalMass = m_fParticleMass * m_EmitAmount;
 	//vec3 avgVel = Math::Random::random(m_minVelocity, m_maxVelocity);
-	vec3 avgVel = (m_minVelocity + m_maxVelocity) * 0.5f;
-	m_vLinearImpulse = totalMass * avgVel;
+	vec3 avgVel = -(rotation.rotatedVector(m_minVelocity) + rotation.rotatedVector(m_maxVelocity)) * 0.5f;
+	m_vLinearImpulse = totalMass * avgVel * 0.01f;
 }
 
 void ParticleSystem::render(const float currentTime)

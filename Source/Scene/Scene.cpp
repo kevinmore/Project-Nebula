@@ -59,19 +59,20 @@ void Scene::initialize()
 	m_sceneRootNode->setObjectName("Scene Root");
 
 	resetToDefaultScene();
-
+	// show sky box for demo purpose
+	toggleSkybox(true);
 	// setup a basic physics world
 	GameObjectPtr go = createEmptyGameObject("Rigid Cube");
-	LoaderThread loader(this, "../Resource/Models/Common/MetalCube.dae", go, m_sceneRootNode, false);
+	LoaderThread loader(this, "../Resource/Models/Common/MetalCube.3ds", go, m_sceneRootNode, false);
 	BoxRigidBodyPtr cube(new BoxRigidBody());
-	cube->setMass(1000.0f);
 	cube->setPosition(vec3(0, 100, 0));
+	//cube->setGravityFactor(0.0f);
 	go->attachComponent(cube);
 	m_physicsWorld->addEntity(cube.data());
 
 	// particle system
 	GameObjectPtr particle = createParticleSystem("Rigid Cube");
-	particle->setPosition(50, -50, 100);
+	particle->setPosition(45, -50, 45);
 	particle->setRotation(180, 0, 0);
 	ComponentPtr comp = particle->getComponent("ParticleSystem");
 	ParticleSystemPtr ps = comp.dynamicCast<ParticleSystem>();
@@ -82,7 +83,7 @@ void Scene::initialize()
 	ps->setRestitution(0.2);
 
 	particle = createParticleSystem("Rigid Cube");
-	particle->setPosition(50, -50, 0);
+	particle->setPosition(45, -50, -45);
 	particle->setRotation(180, 0, 0);
 	comp = particle->getComponent("ParticleSystem");
 	ps = comp.dynamicCast<ParticleSystem>();
@@ -93,7 +94,7 @@ void Scene::initialize()
 	ps->setRestitution(0.2);
 
 	particle = createParticleSystem("Rigid Cube");
-	particle->setPosition(-50, -50, 0);
+	particle->setPosition(-45, -50, 45);
 	particle->setRotation(180, 0, 0);
 	comp = particle->getComponent("ParticleSystem");
 	ps = comp.dynamicCast<ParticleSystem>();
@@ -104,7 +105,7 @@ void Scene::initialize()
 	ps->setRestitution(0.2);
 
 	particle = createParticleSystem("Rigid Cube");
-	particle->setPosition(-50, -50, 100);
+	particle->setPosition(-45, -50, -45);
 	particle->setRotation(180, 0, 0);
 	comp = particle->getComponent("ParticleSystem");
 	ps = comp.dynamicCast<ParticleSystem>();
@@ -257,8 +258,8 @@ void Scene::resetToDefaultScene()
 
 	// load the floor
 	GameObjectPtr floorRef(new GameObject(this));
-	floorRef->setScale(50.0f, 10.0f, 50.0f);
-	LoaderThread loader(this, "../Resource/Models/Common/DemoRoom/woodenFloor.obj", floorRef, m_sceneRootNode);
+	floorRef->setScale(100.0f, 1.0f, 100.0f);
+	LoaderThread loader(this, "../Resource/Models/Common/DemoRoom/MetalFloor.obj", floorRef, m_sceneRootNode);
 }
 
 void Scene::showLoadModelDialog()

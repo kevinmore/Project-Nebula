@@ -102,8 +102,7 @@ void ObjectManager::renderAll(const float currentTime)
 			{
 				GameObject* child = dynamic_cast<GameObject*>(obj);
 				ParticleSystemPtr ps = child->getComponent("ParticleSystem").dynamicCast<ParticleSystem>();
-				qDebug() << child->position();
-				rb->applyPointImpulse(ps->getLinearImpuse() * 0.01f, child->position());
+				rb->applyPointImpulse(ps->getLinearImpuse() * 0.8f, child->position());
 			}
 			go->setPosition(rb->getPosition());
 			go->setRotation(rb->getRotationInAxisAndAngles());

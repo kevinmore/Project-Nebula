@@ -122,9 +122,7 @@ void BoxRigidBody::update( const float dt )
 	m_deltaPosition = m_linearVelocity * dt;
 	m_position += m_deltaPosition;
 	// update the angular properties
-	
 	m_deltaAngle += m_angularVelocity * dt;
-	//qDebug() << "Position:" << m_position << "Linear Velocity:" << m_linearVelocity;
 }
 
 
