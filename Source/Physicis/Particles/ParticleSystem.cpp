@@ -5,7 +5,7 @@
 ParticleSystem::ParticleSystem(Scene* scene)
 	: Component(1),// get rendered last
 	  m_curReadBufferIndex(0),
-	  m_aliveParticles(0),
+	  m_aliveParticlesCount(0),
 	  fElapsedTime(0.0f),
 	  fNextEmitTime(0.0f),
 	  m_scene(scene),
@@ -65,7 +65,7 @@ void ParticleSystem::prepareTransformFeedback()
 
 	Particle firstParticle;
 	firstParticle.iType = PARTICLE_TYPE_GENERATOR;
-	m_aliveParticles = 1;
+	m_aliveParticlesCount = 1;
 
 	for (int i = 0; i < 2; ++i)
 	{
@@ -96,11 +96,10 @@ void ParticleSystem::prepareTransformFeedback()
 void ParticleSystem::updateParticles( float fTimePassed )
 {
 	particleUpdater->enable();
-	vGenPosition = m_actor->position();
-	vec3 rot = m_actor->rotation();
-	QQuaternion rotation = QQuaternion::fromAxisAndAngle(Math::Vector3D::UNIT_X, rot.x())
-						 * QQuaternion::fromAxisAndAngle(Math::Vector3D::UNIT_Y, rot.y())
-						 * QQuaternion::fromAxisAndAngle(Math::Vector3D::UNIT_Z, rot.z());
+
+	QQuaternion rotation;
+	vec3 scale;
+	Math::decomposeMat4(m_actor->modelMatrix(), scale, rotation, vGenPosition);
 
 	particleUpdater->getShaderProgram()->setUniformValue("fTimePassed", fTimePassed);
 	particleUpdater->getShaderProgram()->setUniformValue("fParticleMass", m_fParticleMass);
@@ -165,16 +164,22 @@ void ParticleSystem::updateParticles( float fTimePassed )
 	glBeginQuery(GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN, uiQuery);
 	glBeginTransformFeedback(GL_POINTS);
 
-	glDrawArrays(GL_POINTS, 0, m_aliveParticles);
+	glDrawArrays(GL_POINTS, 0, m_aliveParticlesCount);
 
 	glEndTransformFeedback();
 
 	glEndQuery(GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN);
-	glGetQueryObjectiv(uiQuery, GL_QUERY_RESULT, &m_aliveParticles);
+	glGetQueryObjectiv(uiQuery, GL_QUERY_RESULT, &m_aliveParticlesCount);
 
 	m_curReadBufferIndex = 1-m_curReadBufferIndex;
 
 	glBindTransformFeedback(GL_TRANSFORM_FEEDBACK, 0);
+	
+	// calculate the linear impulse this particle system generated
+	float totalMass = m_fParticleMass * m_EmitAmount * fTimePassed;
+	//vec3 avgVel = Math::Random::random(m_minVelocity, m_maxVelocity);
+	vec3 avgVel = (m_minVelocity + m_maxVelocity) * 0.5f;
+	m_vLinearImpulse = totalMass * avgVel;
 }
 
 void ParticleSystem::render(const float currentTime)
@@ -208,7 +213,7 @@ void ParticleSystem::render(const float currentTime)
 	glBindVertexArray(m_VAO[m_curReadBufferIndex]);
 	glDisableVertexAttribArray(1); // Disable velocity, because we don't need it for rendering
 
-	glDrawArrays(GL_POINTS, 0, m_aliveParticles);
+	glDrawArrays(GL_POINTS, 0, m_aliveParticlesCount);
 	glDepthMask(1);	
 	glDisable(GL_BLEND);
 }
@@ -237,10 +242,6 @@ void ParticleSystem::render(const float currentTime)
 // 	m_EmitAmount = a_iNumToGenerate;
 // }
 
-int ParticleSystem::getAliveParticles()
-{
-	return m_aliveParticles;
-}
 
 QColor ParticleSystem::getParticleColor() const
 {
@@ -277,7 +278,7 @@ QString ParticleSystem::getTextureFileName()
 
 void ParticleSystem::resetEmitter()
 {
-	m_fParticleMass = 1.0f;
+	m_fParticleMass = 0.01f;
 	m_fGravityFactor = 1.0f;
 	
 	m_minVelocity = vec3(-20, 20, -20);

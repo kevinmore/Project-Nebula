@@ -97,15 +97,16 @@ void ObjectManager::renderAll(const float currentTime)
 		RigidBodyPtr rb = go->getComponent("RigidBody").dynamicCast<RigidBody>();
 		if (rb)
 		{
-			
-			rb->applyAngularImpulse(vec3(0,0.01,0));
-			vec3 angle = rb->getRotationInAxisAndAngles();
+			QObjectList children = go->children();
+			foreach(QObject* obj, children)
+			{
+				GameObject* child = dynamic_cast<GameObject*>(obj);
+				ParticleSystemPtr ps = child->getComponent("ParticleSystem").dynamicCast<ParticleSystem>();
+				qDebug() << child->position();
+				rb->applyPointImpulse(ps->getLinearImpuse() * 0.01f, child->position());
+			}
 			go->setPosition(rb->getPosition());
-			go->setRotation(angle);
-			//go->translateInWorld(rb->getDeltaPosition());
-			//go->rotateInWorld(rb->getDeltaRotation());
-			//quart q = quart::fromAxisAndAngle(vec3(0, 1, 0), 2);
-			//go->rotateInWorld(q);
+			go->setRotation(rb->getRotationInAxisAndAngles());
 		}
 	}
 
@@ -123,7 +124,9 @@ void ObjectManager::renderAll(const float currentTime)
 void ObjectManager::clear()
 {
 	// clean up
-	// since we are using QSharedPointer here, there's no need to destroy each object individually
+	// since we are using QSharedPointer as the data stored in the containers here
+	// there's no need to destroy each object individually,
+	// they get destroyed automatically
 	m_modelLoaders.clear();
 	m_gameObjectMap.clear();
 	m_renderQueue.clear();

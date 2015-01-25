@@ -62,15 +62,57 @@ void Scene::initialize()
 
 	// setup a basic physics world
 	GameObjectPtr go = createEmptyGameObject("Rigid Cube");
-	go->setScale(100);
-	LoaderThread loader2(this, "../Resource/Models/Common/MetalCube.obj", go, m_sceneRootNode, false);
-
+	LoaderThread loader(this, "../Resource/Models/Common/MetalCube.dae", go, m_sceneRootNode, false);
 	BoxRigidBodyPtr cube(new BoxRigidBody());
-	//cube->applyConstantForce(vec3(0, 35, 0));
-	cube->setGravityFactor(0.0f);
+	cube->setMass(1000.0f);
+	cube->setPosition(vec3(0, 100, 0));
 	go->attachComponent(cube);
-
 	m_physicsWorld->addEntity(cube.data());
+
+	// particle system
+	GameObjectPtr particle = createParticleSystem("Rigid Cube");
+	particle->setPosition(50, -50, 100);
+	particle->setRotation(180, 0, 0);
+	ComponentPtr comp = particle->getComponent("ParticleSystem");
+	ParticleSystemPtr ps = comp.dynamicCast<ParticleSystem>();
+	ps->toggleRandomColor(true);
+	ps->setMaxLife(4);
+	ps->setMinLife(2);
+	ps->toggleCollision(true);
+	ps->setRestitution(0.2);
+
+	particle = createParticleSystem("Rigid Cube");
+	particle->setPosition(50, -50, 0);
+	particle->setRotation(180, 0, 0);
+	comp = particle->getComponent("ParticleSystem");
+	ps = comp.dynamicCast<ParticleSystem>();
+	ps->toggleRandomColor(true);
+	ps->setMaxLife(4);
+	ps->setMinLife(2);
+	ps->toggleCollision(true);
+	ps->setRestitution(0.2);
+
+	particle = createParticleSystem("Rigid Cube");
+	particle->setPosition(-50, -50, 0);
+	particle->setRotation(180, 0, 0);
+	comp = particle->getComponent("ParticleSystem");
+	ps = comp.dynamicCast<ParticleSystem>();
+	ps->toggleRandomColor(true);
+	ps->setMaxLife(4);
+	ps->setMinLife(2);
+	ps->toggleCollision(true);
+	ps->setRestitution(0.2);
+
+	particle = createParticleSystem("Rigid Cube");
+	particle->setPosition(-50, -50, 100);
+	particle->setRotation(180, 0, 0);
+	comp = particle->getComponent("ParticleSystem");
+	ps = comp.dynamicCast<ParticleSystem>();
+	ps->toggleRandomColor(true);
+	ps->setMaxLife(4);
+	ps->setMinLife(2);
+	ps->toggleCollision(true);
+	ps->setRestitution(0.2);
 }
 
 
@@ -314,9 +356,10 @@ GameObjectPtr Scene::createEmptyGameObject(const QString& name)
 	return go;
 }
 
-void Scene::createParticleSystem()
+GameObjectPtr Scene::createParticleSystem(const QString& parentName)
 {
-	GameObjectPtr ref = m_objectManager->createGameObject("Particle System", m_sceneRootNode);
+	GameObjectPtr parent = m_objectManager->getGameObject(parentName);
+	GameObjectPtr ref = m_objectManager->createGameObject("Particle System", parent.data());
 	emit updateHierarchy();
 
 	// particle system
@@ -324,7 +367,8 @@ void Scene::createParticleSystem()
 	ref->attachComponent(ps);
 	ps->initParticleSystem();
 	ps->assingCollisionObject(m_objectManager->getGameObject("hexagonFloor"));
-	m_objectManager->registerComponent(ps);
+
+	return ref;
 }
 
 void Scene::setBackGroundColor( const QColor& col )

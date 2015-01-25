@@ -74,7 +74,7 @@ public slots:
 	void showSaveSceneDialog();
 	void modelLoaded();
 	GameObjectPtr createEmptyGameObject(const QString& name = "Game Object");
-	void createParticleSystem();
+	GameObjectPtr createParticleSystem(const QString& parentName = "Scene Root");
 
 	void toggleSkybox(bool state);
 

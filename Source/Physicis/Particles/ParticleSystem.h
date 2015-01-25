@@ -43,7 +43,8 @@ public:
 	void ClearAllParticles();
 	bool ReleaseParticleSystem();
 
-	int getAliveParticles();
+	inline int getAliveParticlesCount() { return m_aliveParticlesCount; }
+	inline vec3 getLinearImpuse() { return m_vLinearImpulse; }
 
 public slots:
 	void setParticleMass(double m) { m_fParticleMass = (float)m; }
@@ -111,7 +112,7 @@ private:
 	uint uiTexture;
 
 	int m_curReadBufferIndex;
-	int m_aliveParticles;
+	int m_aliveParticlesCount;
 
 	vec3 vQuad1, vQuad2;
 
@@ -142,6 +143,8 @@ private:
 	ParticleTechniquePtr particleRenderer, particleUpdater;
 	Scene* m_scene;
 	TexturePtr m_Texture;
+
+	vec3 m_vLinearImpulse;
 };
 
 typedef QSharedPointer<ParticleSystem> ParticleSystemPtr;

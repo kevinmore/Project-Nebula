@@ -169,6 +169,11 @@ namespace Math
 			return ( random() * ( fMax - fMin ) ) + fMin;
 		}
 
+		static vec3 random( const vec3& vMin, const vec3& vMax )
+		{
+			return vec3(random(vMin.x(), vMax.x()), random(vMin.y(), vMax.y()), random(vMin.z(), vMax.z()));
+		}
+
 		inline vec3 randUnitVec3()
 		{
 			float x = ( random() * 2.0f ) - 1.0f;

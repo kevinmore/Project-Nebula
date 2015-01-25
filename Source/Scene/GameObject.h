@@ -19,7 +19,7 @@ class GameObject : public QObject
 	Q_PROPERTY(vec3 localSpeed READ localSpeed WRITE setSpeed)
 
 public:
-	GameObject(Scene* scene, QObject* parent = 0);
+	GameObject(Scene* scene, GameObject* parent = 0);
 	~GameObject();
 
 	bool isMoving() const;
@@ -55,7 +55,7 @@ public:
 		m_modelMatrixDirty = false;
 	}
 
-	inline const mat4& modelMatrix()
+	inline mat4 modelMatrix()
 	{
 		if(m_modelMatrixDirty)
 		{
@@ -69,8 +69,10 @@ public:
 
 			m_modelMatrixDirty = false;
 		}
-
-		return m_modelMatrix;
+		GameObject* parent = dynamic_cast<GameObject*>(this->parent());
+		if (parent)
+			return parent->modelMatrix() * m_modelMatrix;
+		else return m_modelMatrix;
 	}
 
 	/////////////////////////////inline section///////////////////////////////////

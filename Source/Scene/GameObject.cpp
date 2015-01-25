@@ -2,7 +2,7 @@
 #include <Scene/AbstractModel.h>
 #include <Scene/Scene.h>
 
-GameObject::GameObject(Scene* scene, QObject* parent)
+GameObject::GameObject(Scene* scene, GameObject* parent)
 	: QObject(parent),
 	  m_scene(scene),
 	  m_position(Vector3D::ZERO),
