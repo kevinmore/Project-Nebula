@@ -12,7 +12,7 @@ BoxShape::BoxShape( const vec3& center, const vec3& halfExtents )
 {
 }
 
-const vec3 BoxShape::getHalfExtents() const
+vec3 BoxShape::getHalfExtents() const
 {
 	return m_halfExtents;
 }

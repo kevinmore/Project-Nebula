@@ -12,6 +12,12 @@ public:
 	// Updates the properties of the rigid body
 	virtual void update(const float dt);
 
+	/// Sets the mass of the rigid body.
+	void setMass(float m);
+
+	/// Sets the inverse mass of the rigid body.
+	void setMassInv(float mInv);
+
 	/// Gets the inertia tensor of the rigid body in local space.
 	virtual mat3 getInertiaLocal() const;
 

@@ -8,7 +8,7 @@ public:
 	BoxShape();
 	BoxShape(const vec3& center, const vec3& halfExtents);
 
-	inline const vec3 getHalfExtents() const;
+	vec3 getHalfExtents() const;
 	void setHalfExtents(const vec3& halfExtents);
 
 protected:

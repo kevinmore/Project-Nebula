@@ -97,7 +97,11 @@ void ObjectManager::renderAll(const float currentTime)
 		RigidBodyPtr rb = go->getComponent("RigidBody").dynamicCast<RigidBody>();
 		if (rb)
 		{
+			
+			rb->applyAngularImpulse(vec3(0,0.01,0));
+			vec3 angle = rb->getRotationInAxisAndAngles();
 			go->setPosition(rb->getPosition());
+			go->setRotation(angle);
 			//go->translateInWorld(rb->getDeltaPosition());
 			//go->rotateInWorld(rb->getDeltaRotation());
 			//quart q = quart::fromAxisAndAngle(vec3(0, 1, 0), 2);

@@ -66,8 +66,8 @@ void Scene::initialize()
 	LoaderThread loader2(this, "../Resource/Models/Common/MetalCube.obj", go, m_sceneRootNode, false);
 
 	BoxRigidBodyPtr cube(new BoxRigidBody());
-	cube->applyConstantForce(vec3(0, 15, 0));
-	cube->setGravityFactor(1.0f);
+	//cube->applyConstantForce(vec3(0, 35, 0));
+	cube->setGravityFactor(0.0f);
 	go->attachComponent(cube);
 
 	m_physicsWorld->addEntity(cube.data());

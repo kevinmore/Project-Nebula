@@ -81,7 +81,7 @@ public:
 	/// Gets the 1.0/mass of the rigid body.
 	inline float getMassInv() const { return m_massInv; }
 
-	/// Sets the mass of the rigid body. N.B. This does NOT automatically update other dependent mass properties i.e., the inertia tensor.
+	/// Sets the mass of the rigid body.
 	void setMass(float m);
 
 	/// Sets the inverse mass of the rigid body.
@@ -94,10 +94,10 @@ public:
 	virtual void setInertiaLocal(const mat3& inertia) = 0;
 
 	/// Gets the inertia tensor (around the center of mass) in world space.
-	//virtual mat3 getInertiaWorld() const = 0;
+	virtual mat3 getInertiaWorld() const = 0;
 	
 	/// Gets the inverse inertia tensor in world space.
-	//virtual mat3 getInertiaInvWorld() const = 0;
+	virtual mat3 getInertiaInvWorld() const = 0;
 	
 	/// Gets the inverse inertia tensor in local space.
 	virtual mat3 getInertiaInvLocal() const = 0;
@@ -137,6 +137,7 @@ public:
 
 	/// Returns the rotation changed from local to world space for this rigid body.
 	inline const quart& getDeltaRotation() const { return m_deltaRotation;	}
+	inline const vec3& getRotationInAxisAndAngles() const { return m_deltaAngle;}
 
 	/// Sets the rotation from local to world Space for this rigid body.
 	/// This activates the body and its simulation island if it is inactive.
