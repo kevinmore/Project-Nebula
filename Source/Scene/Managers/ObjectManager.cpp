@@ -91,6 +91,19 @@ ModelPtr ObjectManager::loadModel( const QString& customName, const QString& fil
 
 void ObjectManager::renderAll(const float currentTime)
 {
+	// sync physics engine feedback
+	foreach(GameObjectPtr go, m_gameObjectMap.values())
+	{
+		RigidBodyPtr rb = go->getComponent("RigidBody").dynamicCast<RigidBody>();
+		if (rb)
+		{
+			go->setPosition(rb->getPosition());
+			//go->translateInWorld(rb->getDeltaPosition());
+			//go->rotateInWorld(rb->getDeltaRotation());
+			//quart q = quart::fromAxisAndAngle(vec3(0, 1, 0), 2);
+			//go->rotateInWorld(q);
+		}
+	}
 
 	//int totalParticles = 0;
 	foreach(ComponentPtr comp, m_renderQueue)

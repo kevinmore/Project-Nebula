@@ -73,7 +73,7 @@ public slots:
 	void showOpenSceneDialog();
 	void showSaveSceneDialog();
 	void modelLoaded();
-	GameObjectPtr createEmptyGameObject();
+	GameObjectPtr createEmptyGameObject(const QString& name = "Game Object");
 	void createParticleSystem();
 
 	void toggleSkybox(bool state);

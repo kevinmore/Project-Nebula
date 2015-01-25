@@ -2,6 +2,7 @@
 #include <Physicis/World/PhysicsWorldObject.h>
 #include <Physicis/Geometry/BoxShape.h>
 #include <Physicis/Geometry/SphereShape.h>
+#include <Utility/Math.h>
 
 struct MassProperties
 {
@@ -44,56 +45,22 @@ public:
 
 	enum MotionType
 	{
-		/// 
-		MOTION_INVALID,
-
-		/// A fully-simulated, movable rigid body. At construction time the engine checks
-		/// the input inertia and selects MOTION_SPHERE_INERTIA or MOTION_BOX_INERTIA as
-		/// appropriate.
-		MOTION_DYNAMIC,
-
-		/// Simulation is performed using a sphere inertia tensor. (A multiple of the
-		/// Identity matrix). The highest value of the diagonal of the rigid body's
-		/// inertia tensor is used as the spherical inertia.
 		MOTION_SPHERE_INERTIA,
-
-		/// Simulation is performed using a box inertia tensor. The non-diagonal elements
-		/// of the inertia tensor are set to zero. This is slower than the
-		/// MOTION_SPHERE_INERTIA motions, however it can produce more accurate results,
-		/// especially for long thin objects.
 		MOTION_BOX_INERTIA,
-
-		/// Simulation is not performed as a normal rigid body. During a simulation step,
-		/// the velocity of the rigid body is used to calculate the new position of the
-		/// rigid body, however the velocity is NOT updated. The user can keyframe a rigid
-		/// body by setting the velocity of the rigid body to produce the desired keyframe
-		/// positions. The hkpKeyFrameUtility class can be used to simply apply keyframes
-		/// in this way. The velocity of a keyframed rigid body is NOT changed by the
-		/// application of impulses or forces. The keyframed rigid body has an infinite
-		/// mass when viewed by the rest of the system.
 		MOTION_KEYFRAMED,
-
-		/// This motion type is used for the static elements of a game scene, e.g., the
-		/// landscape. Fixed rigid bodies are treated in a special way by the system. They
-		/// have the same effect as a rigid body with a motion of type MOTION_KEYFRAMED
-		/// and velocity 0, however they are much faster to use, incurring no simulation
-		/// overhead, except in collision with moving bodies.
 		MOTION_FIXED,
-
-		/// A box inertia motion which is optimized for thin boxes and has less stability problems
-		MOTION_THIN_BOX_INERTIA,
-
-		/// A specialized motion used for character controllers
-		MOTION_CHARACTER,
-
-		/// 
 		MOTION_MAX_ID
 	};
 
 	// Construct a default rigid body
-	RigidBody(QObject* parent = 0);
-	virtual ~RigidBody() {}
+	RigidBody(const vec3& position = Math::Vector3D::ZERO, 
+		      const quart& rotation = Math::Quaternion::ZERO, 
+			  QObject* parent = 0);
 
+	virtual QString className() { return "RigidBody"; }
+
+	virtual ~RigidBody() {}
+	virtual void update(const float dt);
 	//
 	// Shape
 	//
@@ -109,10 +76,10 @@ public:
 	void setMassProperties(const MassProperties& mp);
 
 	/// Gets the mass of the rigid body.
-	inline float getMass() const;
+	inline float getMass() const { return m_mass; }
 
 	/// Gets the 1.0/mass of the rigid body.
-	inline float getMassInv() const;
+	inline float getMassInv() const { return m_massInv; }
 
 	/// Sets the mass of the rigid body. N.B. This does NOT automatically update other dependent mass properties i.e., the inertia tensor.
 	void setMass(float m);
@@ -121,16 +88,23 @@ public:
 	void setMassInv(float mInv);
 
 	/// Gets the inertia tensor (around the center of mass) in local space.
-	inline mat3 getInertiaLocal() const;
+	virtual mat3 getInertiaLocal() const = 0;
+
+	/// Sets the inertia tensor of the rigid body in local space. Advanced use only.
+	virtual void setInertiaLocal(const mat3& inertia) = 0;
 
 	/// Gets the inertia tensor (around the center of mass) in world space.
-	inline mat3 getInertiaWorld() const;
-
-	/// Gets the inverse inertia tensor in local space.
-	inline mat3 getInertiaInvLocal() const;
-
+	//virtual mat3 getInertiaWorld() const = 0;
+	
 	/// Gets the inverse inertia tensor in world space.
-	inline mat3 getInertiaInvWorld() const;
+	//virtual mat3 getInertiaInvWorld() const = 0;
+	
+	/// Gets the inverse inertia tensor in local space.
+	virtual mat3 getInertiaInvLocal() const = 0;
+
+	/// Sets the inertia tensor of the rigid body by supplying its inverse. Advanced use only.
+	virtual void setInertiaInvLocal(const mat3& inertiaInv) = 0;
+
 
 	//
 	// CENTER OF MASS.
@@ -140,23 +114,29 @@ public:
 	void setCenterOfMassLocal(const vec3& centerOfMass);
 
 	/// Gets the center of mass of the rigid body in the rigid body's local space.
-	inline const vec3& getCenterOfMassLocal() const;
+	inline const vec3& getCenterOfMassLocal() const { return m_centerOfMass; }
 
 	/// Gets the center of mass of the rigid body in world space.
-	inline const vec3& getCenterOfMassInWorld() const;
+	inline const vec3 getCenterOfMassInWorld() const {	return m_position + m_centerOfMass; }
 
 	//
 	// POSITION ACCESS.
 	//
 
 	/// Returns the position (the local space origin) for this rigid body, in world space.
-	inline const vec3& getPosition() const;
+	inline const vec3& getPosition() const { return m_position; }
+
+	// Returns the position changed (the local space origin) for this rigid body, in world space.
+	inline const vec3& getDeltaPosition() const { return m_deltaPosition; }
 
 	/// Sets the position (the local space origin) of this rigid body, in world space.
 	void setPosition(const vec3& position);
 
 	/// Returns the rotation from local to world space for this rigid body.
-	inline const quart& getRotation() const;
+	inline const quart& getRotation() const { return m_rotation; }
+
+	/// Returns the rotation changed from local to world space for this rigid body.
+	inline const quart& getDeltaRotation() const { return m_deltaRotation;	}
 
 	/// Sets the rotation from local to world Space for this rigid body.
 	/// This activates the body and its simulation island if it is inactive.
@@ -170,21 +150,22 @@ public:
 	//
 
 	/// Returns the linear velocity of the center of mass of the rigid body, in world space.
-	inline const vec3& getLinearVelocity() const;
+	inline const vec3& getLinearVelocity() const { return m_linearVelocity;	}
+
 
 	/// Sets the linear velocity at the center of mass, in world space.
 	/// This activates the body and its simulation island if it is inactive.
-	inline void	setLinearVelocity(const vec3& newVel);
+	inline void	setLinearVelocity(const vec3& newVel) { m_linearVelocity = newVel; }
 
 	/// Returns the angular velocity around the center of mass, in world space.
-	inline const vec3& getAngularVelocity() const;
+	inline const vec3& getAngularVelocity() const {	return m_angularVelocity; }
 
 	/// Sets the angular velocity around the center of mass, in world space.
 	/// This activates the body and its simulation island if it is inactive.
-	inline void	setAngularVelocity(const vec3& newVel);
+	inline void	setAngularVelocity(const vec3& newVel) { m_angularVelocity = newVel; }
 
 	/// Gets the velocity of point p on the rigid body in world space.
-	inline vec3& getPointVelocity(const vec3& p) const;
+	inline vec3 getPointVelocity(const vec3& p) const {	return m_linearVelocity + vec3::crossProduct(m_angularVelocity, p - m_centerOfMass); }
 
 	//
 	// IMPULSE APPLICATION.
@@ -192,7 +173,7 @@ public:
 
 	/// Applies an impulse (in world space) to the center of mass.
 	/// This activates the body and its simulation island if it is inactive.
-	inline void applyLinearImpulse(const vec3& imp);
+	inline void applyLinearImpulse(const vec3& imp) { m_linearVelocity += m_massInv * imp; }
 
 	/// Applies an impulse (in world space) at the point p in world space.
 	/// This activates the body and its simulation island if it is inactive.
@@ -206,6 +187,17 @@ public:
 	//
 	// FORCE AND TORQUE APPLICATION
 	//
+
+	/// Applies a constant force (in world space) to the rigid body. The force is applied to the
+	/// center of mass.
+	void applyConstantForce(const vec3& force) { m_forceAccum = force; }
+
+	/// increase a delta force (in world space) to the rigid body. The force is applied to the
+	/// center of mass.
+	void increaseForce(const vec3& deltaForce) { m_forceAccum += deltaForce; }
+
+	// Reset the force on the rigid body.
+	void resetForce() { m_forceAccum.setX(0.0f); m_forceAccum.setY(0.0f); m_forceAccum.setZ(0.0f); }
 
 	/// Applies a force (in world space) to the rigid body. The force is applied to the
 	/// center of mass.
@@ -223,36 +215,37 @@ public:
 	//
 
 	/// Naive momentum damping.
-	inline float getLinearDamping();
+	inline float getLinearDamping() { return m_linearDamping; }
 
 	/// Naive momentum damping.
-	inline void setLinearDamping( float d );
+	inline void setLinearDamping( float d ) { m_linearDamping = d; }
 
 	/// Naive momentum damping.
-	inline float getAngularDamping();
+	inline float getAngularDamping() { return m_angularDamping;	}
 
 	/// Naive momentum damping.
-	inline void setAngularDamping( float d );
+	inline void setAngularDamping( float d ) { m_angularDamping = d; }
 
 	/// Time factor.
-	inline float getTimeFactor();
+	inline float getTimeFactor() { return m_timeFactor;	}
 
 	/// Time factor.
-	inline void setTimeFactor( float f );
+	inline void setTimeFactor( float f ) { m_timeFactor = f; }
+
 
 	//
 	// Friction and Restitution
 	//
 
 	/// Returns the friction coefficient (dynamic and static) from the material.
-	inline float getFriction() const;
+	inline float getFriction() const { return m_friction; }
 
 	/// Sets the friction coefficient of the material. Note: Setting this will not update existing contact information.
 	void setFriction( float newFriction );
 
 	/// Returns the default restitution from the material.
 	//  restitution = bounciness (1 should give object all its energy back, 0 means it just sits there, etc.).
-	inline float getRestitution() const;
+	inline float getRestitution() const { return m_restitution; }
 
 	/// Sets the restitution coefficient of the material. Note: Setting this will not update existing contact information.
 	void setRestitution( float newRestitution );
@@ -262,28 +255,50 @@ public:
 	//
 
 	/// Get the current gravity factor.
-	inline float getGravityFactor();
+	inline float getGravityFactor() { return m_gravityFactor; }
 
 	/// Set the gravity factor.
-	inline void setGravityFactor( float gravityFactor );
+	inline void setGravityFactor(float gravityFactor) { m_gravityFactor = gravityFactor; }
 
 public:
-	MotionType	m_MontionType;
 
 	//
 	// Members
 	//
 
+	/// The motion type of the rigid body.
+	MotionType	m_MotionType;
+
 	/// The collision detection representation for this entity.
 	const AbstractShape* m_shape;
+
+	/// The mass of the body.
+	/// This defaults to 1.
+	float m_mass;
+
+	/// The inverse mass of the body.
+	/// This defaults to 1.
+	float m_massInv;
 
 	/// The initial position of the body.
 	/// This defaults to 0,0,0.
 	vec3 m_position;
 
+	/// The position changed of the body after each update.
+	/// This defaults to 0,0,0.
+	vec3 m_deltaPosition;
+
 	/// The initial rotation of the body.
 	/// This defaults to the Identity quaternion.
 	quart m_rotation;
+
+	/// The rotation changed of the body after each update.
+	/// This defaults to the Identity quaternion.
+	quart m_deltaRotation;
+
+	// The transform matrix of the body(scaling not included)
+	// This defaults to the identity matrix
+	mat4 m_transformMatrix;
 
 	/// The initial linear velocity of the body.
 	/// This defaults to 0,0,0.
@@ -293,22 +308,19 @@ public:
 	/// This defaults to 0,0,0.
 	vec3 m_angularVelocity;
 
-	/// The inertia tensor of the rigid body. Use the hkpInertiaTensorComputer class to
-	/// set the inertia to suitable values.
+	/// The inertia tensor of the rigid body. 
 	/// This defaults to the identity matrix.
 	mat3 m_inertiaTensor;
+
+	/// The inverse of inertia tensor of the rigid body.
+	mat3 m_inertiaTensorInv;
+
+	/// The inverse of inertia tensor of the rigid body in world space.
+	mat3 m_inertiaTensorInvWorld;
 
 	/// The center of mass in the local space of the rigid body.
 	/// This defaults to 0,0,0.
 	vec3 m_centerOfMass;
-
-	/// The mass of the body.
-	/// This defaults to 1.
-	float m_mass;
-
-	/// The inverse mass of the body.
-	/// This defaults to 1.
-	float m_massInv;
 
 	/// The initial linear damping of the body.
 	/// This defaults to 0.
@@ -346,5 +358,12 @@ public:
 
 	/// A sphere around the center of mass which completely encapsulates the object
 	float m_objectRadius;
+
+	/// The net force (gravity not included) applied on the center of the mass
+	vec3 m_forceAccum;
+
+	vec3 m_torqueAccum;
 };
+
+typedef QSharedPointer<RigidBody> RigidBodyPtr;
 

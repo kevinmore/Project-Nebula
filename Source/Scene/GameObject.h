@@ -25,31 +25,37 @@ public:
 	bool isMoving() const;
 	void setMoving(bool status);
 
-	void setPosition(const QVector3D& positionVector);
+	void setPosition(const vec3& positionVector);
 	void setPosition(double x, double y, double z);
-	void translateInWorld(const QVector3D& delta);
+	void translateInWorld(const vec3& delta);
 
-	void setRotation(const QVector3D& rotationVector);
+	void setRotation(const vec3& rotationVector);
 	void setRotation(double x, double y, double z);
 	void rotateInWorld(const QQuaternion& delta);
 
-	void setScale(const QVector3D& scale);
+	void setScale(const vec3& scale);
 	void setScale(double x, double y, double z);
 	void setScale(double scaleFactor);
 
-	void setSpeed(const QVector3D& speed);
+	void setSpeed(const vec3& speed);
 	void setSpeed(double x, double y, double z);
 
-	QVector3D globalSpeed() const;
-	QVector3D predictedPosition() const;
+	vec3 globalSpeed() const;
+	vec3 predictedPosition() const;
 
 	/////////////////////////////inline section///////////////////////////////////
-	inline QVector3D position() const { return m_position; }
-	inline QVector3D rotation() const { return m_rotation; }
-	inline QVector3D scale() const { return m_scale; }
-	inline QVector3D localSpeed() const { return m_speed; }
+	inline vec3 position() const { return m_position; }
+	inline vec3 rotation() const { return m_rotation; }
+	inline vec3 scale() const { return m_scale; }
+	inline vec3 localSpeed() const { return m_speed; }
 
-	inline const QMatrix4x4& modelMatrix()
+	inline void setTransformMatrix(const mat4& transform)
+	{
+		m_modelMatrix = transform;
+		m_modelMatrixDirty = false;
+	}
+
+	inline const mat4& modelMatrix()
 	{
 		if(m_modelMatrixDirty)
 		{
@@ -113,12 +119,12 @@ public slots:
 	void reset();
 
 private:
-	QVector3D m_position, m_prevPosition;
-	QVector3D m_rotation;
-	QVector3D m_scale;
-	QVector3D m_speed;
+	vec3 m_position, m_prevPosition;
+	vec3 m_rotation;
+	vec3 m_scale;
+	vec3 m_speed;
 
-	QMatrix4x4 m_modelMatrix;
+	mat4 m_modelMatrix;
 
 	bool m_modelMatrixDirty;
 

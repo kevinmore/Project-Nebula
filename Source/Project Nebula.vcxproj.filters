@@ -52,10 +52,11 @@
     <ClCompile Include="Scene\Managers\moc_ObjectManager.cc" />
     <ClCompile Include="Physicis\World\PhysicsWorldConfig.cpp" />
     <ClCompile Include="Physicis\World\PhysicsWorld.cpp" />
-    <ClCompile Include="Physicis\Geometry\SphereShape.inl" />
-    <ClCompile Include="Physicis\Geometry\BoxShape.inl" />
     <ClCompile Include="Physicis\World\PhysicsWorldObject.cpp" />
     <ClCompile Include="Physicis\Entity\RigidBody.cpp" />
+    <ClCompile Include="Physicis\Entity\BoxRigidBody.cpp" />
+    <ClCompile Include="Physicis\Geometry\BoxShape.cpp" />
+    <ClCompile Include="Physicis\Geometry\SphereShape.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Primitives\Texture.h" />
@@ -96,25 +97,23 @@
     <ClInclude Include="Physicis\Geometry\AbstractShape.h" />
     <ClInclude Include="Physicis\Geometry\SphereShape.h" />
     <ClInclude Include="Physicis\World\PhysicsWorldObject.h" />
+    <ClInclude Include="Physicis\Entity\BoxRigidBody.h" />
+    <ClInclude Include="UI\Canvas.h" />
+    <ClInclude Include="UI\HierarchyWidget.h" />
+    <ClInclude Include="Utility\LoaderThread.h" />
+    <ClInclude Include="UI\SkyboxDialog.h" />
+    <ClInclude Include="UI\MainWindow.h" />
+    <ClInclude Include="Scene\Camera.h" />
+    <ClInclude Include="Scene\Scene.h" />
+    <ClInclude Include="Scene\GameObject.h" />
+    <ClInclude Include="Scene\Managers\ObjectManager.h" />
+    <ClInclude Include="Utility\LogCenter.h" />
+    <ClInclude Include="Physicis\Particles\ParticleSystem.h" />
     <ClInclude Include="Physicis\Entity\RigidBody.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtMOC Include="Scene\Scene.h" />
-    <QtMOC Include="Scene\GameObject.h" />
-    <QtMOC Include="Scene\Camera.h" />
-    <QtMOC Include="Utility\LoaderThread.h" />
-    <QtMOC Include="UI\MainWindow.h" />
-    <QtMOC Include="UI\HierarchyWidget.h" />
-    <QtMOC Include="UI\Canvas.h" />
-    <QtMOC Include="Utility\LogCenter.h" />
-    <QtMOC Include="Physicis\Particles\ParticleSystem.h" />
-    <QtMOC Include="UI\SkyboxDialog.h" />
-    <QtMOC Include="Scene\Managers\ObjectManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="UI\HierarchyWidget.ui" />
     <None Include="UI\SkyboxWidget.ui" />
     <None Include="Physicis\World\PhysicsWorldObject.inl" />
-    <None Include="Physicis\Entity\RigidBody.inl" />
   </ItemGroup>
 </Project>

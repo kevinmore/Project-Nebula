@@ -1,19 +1,96 @@
 #include "RigidBody.h"
-#include <Utility/Math.h>
+#include <Physicis/World/PhysicsWorld.h>
+#include <Physicis/World/PhysicsWorldObject.inl>
 
-RigidBody::RigidBody(QObject* parent)
+
+/**
+ * Internal function to do an intertia tensor transform by a quaternion.
+ * Note that the implementation of this function was created by an
+ * automated code-generator and optimizer.
+ */
+static inline void _transformInertiaTensor(mat3 &iitWorld,
+                                           const quart &q,
+                                           const mat3 &iitBody,
+                                           const mat4 &rotmat)
+{
+    float t4 = rotmat(0, 0)*iitBody.m[0][0]+
+        rotmat(0, 1)*iitBody.m[1][0]+
+        rotmat(0, 2)*iitBody.m[2][0];
+    float t9 = rotmat(0, 0)*iitBody.m[0][1]+
+        rotmat(0, 1)*iitBody.m[1][1]+
+        rotmat(0, 2)*iitBody.m[2][1];
+    float t14 = rotmat(0, 0)*iitBody.m[0][2]+
+        rotmat(0, 1)*iitBody.m[1][2]+
+        rotmat(0, 2)*iitBody.m[2][2];
+    float t28 = rotmat(1, 0)*iitBody.m[0][0]+
+        rotmat(1, 1)*iitBody.m[1][0]+
+        rotmat(1, 2)*iitBody.m[2][0];
+    float t33 = rotmat(1, 0)*iitBody.m[0][1]+
+        rotmat(1, 1)*iitBody.m[1][1]+
+        rotmat(1, 2)*iitBody.m[2][1];
+    float t38 = rotmat(1, 0)*iitBody.m[0][2]+
+        rotmat(1, 1)*iitBody.m[1][2]+
+        rotmat(1, 2)*iitBody.m[2][2];
+    float t52 = rotmat(2, 0)*iitBody.m[0][0]+
+        rotmat(2, 1)*iitBody.m[1][0]+
+        rotmat(2, 2)*iitBody.m[2][0];
+    float t57 = rotmat(2, 0)*iitBody.m[0][1]+
+        rotmat(2, 1)*iitBody.m[1][1]+
+        rotmat(2, 2)*iitBody.m[2][1];
+    float t62 = rotmat(2, 0)*iitBody.m[0][2]+
+        rotmat(2, 1)*iitBody.m[1][2]+
+        rotmat(2, 2)*iitBody.m[2][2];
+
+    iitWorld.m[0][0] = t4*rotmat(0, 0)+
+        t9*rotmat(0, 1)+
+        t14*rotmat(0, 2);
+    iitWorld.m[0][1] = t4*rotmat(1, 0)+
+        t9*rotmat(1, 1)+
+        t14*rotmat(1, 2);
+    iitWorld.m[0][2] = t4*rotmat(2, 0)+
+        t9*rotmat(2, 1)+
+        t14*rotmat(2, 2);
+    iitWorld.m[1][0] = t28*rotmat(0, 0)+
+        t33*rotmat(0, 1)+
+        t38*rotmat(0, 2);
+    iitWorld.m[1][1] = t28*rotmat(1, 0)+
+        t33*rotmat(1, 1)+
+        t38*rotmat(1, 2);
+    iitWorld.m[1][2] = t28*rotmat(2, 0)+
+        t33*rotmat(2, 1)+
+        t38*rotmat(2, 2);
+    iitWorld.m[2][0] = t52*rotmat(0, 0)+
+        t57*rotmat(0, 1)+
+        t62*rotmat(0, 2);
+    iitWorld.m[2][1] = t52*rotmat(1, 0)+
+        t57*rotmat(1, 1)+
+        t62*rotmat(1, 2);
+    iitWorld.m[2][2] = t52*rotmat(2, 0)+
+        t57*rotmat(2, 1)+
+        t62*rotmat(2, 2);
+}
+
+
+
+
+
+RigidBody::RigidBody(const vec3& position, const quart& rotation, QObject* parent)
 	: PhysicsWorldObject(parent)
 {
 	m_shape = NULL;
 
-	m_position = Math::Vector3D::ZERO;
-	m_rotation = Math::Quaternion::ZERO;
+	m_position = position;
+	m_rotation = rotation;
+	m_transformMatrix.translate(position);
+	m_transformMatrix.rotate(m_rotation);
+
 	m_linearVelocity = Math::Vector3D::ZERO;
 	m_angularVelocity = Math::Vector3D::ZERO;
 
 	m_centerOfMass = Math::Vector3D::ZERO;
 	m_mass = 1.0f;
 	m_massInv = 1.0f;
+	m_forceAccum = Math::Vector3D::ZERO;
 
 	m_linearDamping = 0.0f;
 	m_angularDamping = 0.05f;
@@ -26,6 +103,10 @@ RigidBody::RigidBody(QObject* parent)
 
 	m_deltaAngle = Math::Vector3D::ZERO;
 	m_objectRadius = 1.0f;
+	
+	m_inertiaTensor.setToIdentity();
+	m_inertiaTensorInv.setToIdentity();
+	Math::Matrix3::setInverse(m_inertiaTensorInv);
 }
 
 void RigidBody::setShape( const AbstractShape* shape )
@@ -48,11 +129,15 @@ void RigidBody::setMassProperties( const MassProperties& mp )
 void RigidBody::setPosition( const vec3& pos )
 {
 	m_position = pos;
+	m_transformMatrix.setToIdentity();
+	m_transformMatrix.translate(pos);
 }
 
 void RigidBody::setRotation( const quart& rot )
 {
 	m_rotation = rot;
+	m_transformMatrix.setToIdentity();
+	m_transformMatrix.rotate(rot);
 }
 
 
@@ -64,11 +149,6 @@ void RigidBody::setMass( float m )
 	else
 		massInv = 1.0f / m;
 	setMassInv(massInv);
-}
-
-float RigidBody::getMass() const
-{
-	return 1.0f / m_massInv;
 }
 
 void RigidBody::setMassInv( float mInv )
@@ -96,4 +176,14 @@ void RigidBody::setRestitution( float newRestitution )
 void RigidBody::setFriction( float newFriction )
 {
 	m_friction = newFriction;
+}
+
+void RigidBody::update( const float dt )
+{
+	// only update the linear properties as an abstract rigid body
+
+	// summarize the force
+	applyForce(dt, m_forceAccum + m_mass * m_gravityFactor * getWorld()->getConfig().m_gravity);
+	m_deltaPosition = m_linearVelocity * dt;
+	m_position += m_deltaPosition;
 }

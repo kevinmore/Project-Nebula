@@ -58,10 +58,19 @@ void Scene::initialize()
 	m_sceneRootNode = new GameObject(this);
 	m_sceneRootNode->setObjectName("Scene Root");
 
-
-	
-
 	resetToDefaultScene();
+
+	// setup a basic physics world
+	GameObjectPtr go = createEmptyGameObject("Rigid Cube");
+	go->setScale(100);
+	LoaderThread loader2(this, "../Resource/Models/Common/MetalCube.obj", go, m_sceneRootNode, false);
+
+	BoxRigidBodyPtr cube(new BoxRigidBody());
+	cube->applyConstantForce(vec3(0, 15, 0));
+	cube->setGravityFactor(1.0f);
+	go->attachComponent(cube);
+
+	m_physicsWorld->addEntity(cube.data());
 }
 
 
@@ -206,8 +215,7 @@ void Scene::resetToDefaultScene()
 
 	// load the floor
 	GameObjectPtr floorRef(new GameObject(this));
-	floorRef->setScale(50.0f, 6.0f, 50.0f);
-	floorRef->setPosition(0, -2, 0);
+	floorRef->setScale(50.0f, 10.0f, 50.0f);
 	LoaderThread loader(this, "../Resource/Models/Common/DemoRoom/woodenFloor.obj", floorRef, m_sceneRootNode);
 }
 
@@ -297,9 +305,9 @@ void Scene::modelLoaded()
 	emit updateHierarchy();
 }
 
-GameObjectPtr Scene::createEmptyGameObject()
+GameObjectPtr Scene::createEmptyGameObject(const QString& name)
 {
-	GameObjectPtr go = m_objectManager->createGameObject("Game Object", m_sceneRootNode);
+	GameObjectPtr go = m_objectManager->createGameObject(name, m_sceneRootNode);
 
 	emit updateHierarchy();
 
@@ -332,12 +340,12 @@ void Scene::toggleSkybox( bool state )
 	{
 		m_skybox = SkyboxPtr(new Skybox(this));
 		m_skybox->init(
-			"../Resource/Textures/skybox/interstellar_ft.tga",
-			"../Resource/Textures/skybox/interstellar_bk.tga",
-			"../Resource/Textures/skybox/interstellar_up.tga",
-			"../Resource/Textures/skybox/interstellar_dn.tga",
-			"../Resource/Textures/skybox/interstellar_rt.tga",
-			"../Resource/Textures/skybox/interstellar_lf.tga");
+			"../Resource/Textures/skybox/grimmnight_ft.tga",
+			"../Resource/Textures/skybox/grimmnight_bk.tga",
+			"../Resource/Textures/skybox/grimmnight_up.tga",
+			"../Resource/Textures/skybox/grimmnight_dn.tga",
+			"../Resource/Textures/skybox/grimmnight_rt.tga",
+			"../Resource/Textures/skybox/grimmnight_lf.tga");
 	}
 	else
 	{

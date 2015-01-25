@@ -1,10 +1,12 @@
 #include "PhysicsWorld.h"
-
+#include "PhysicsWorldObject.inl"
+#include <Physicis/Entity/BoxRigidBody.h>
+#include <Physicis/Geometry/BoxShape.h>
 
 PhysicsWorld::PhysicsWorld(const PhysicsWorldConfig& config)
 	: m_config(config),
 	  m_time(0.0f),
-	  m_locked(true)
+	  m_locked(false)
 {
 }
 
@@ -27,6 +29,12 @@ void PhysicsWorld::update(const float currentTime)
 	{
 		return;
 	}
+
+	// update the physics objects
+	foreach(PhysicsWorldObject* obj, m_objectList)
+	{
+		obj->update(dt);
+	}
 }
 
 bool PhysicsWorld::isLocked()
@@ -42,4 +50,19 @@ void PhysicsWorld::lock()
 void PhysicsWorld::unlock()
 {
 	m_locked = false;
+}
+
+void PhysicsWorld::addEntity( PhysicsWorldObject* entity )
+{
+	lock();
+	m_objectList << entity;
+	entity->setWorld(this);
+	unlock();
+}
+
+void PhysicsWorld::removeEntity( PhysicsWorldObject* entity )
+{
+	lock();
+	m_objectList.removeOne(entity);
+	unlock();
 }

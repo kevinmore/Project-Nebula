@@ -5,9 +5,8 @@ class BoxShape : public AbstractShape
 {
 public:
 	/// Creates a box with the given half extents ( An (X by Y by Z) box has the half-extents (X/2, Y/2, Z/2) ).
-	inline BoxShape();
-	inline BoxShape(const vec3& center, const vec3& halfExtents);
-	~BoxShape();
+	BoxShape();
+	BoxShape(const vec3& center, const vec3& halfExtents);
 
 	inline const vec3 getHalfExtents() const;
 	void setHalfExtents(const vec3& halfExtents);

@@ -11,6 +11,99 @@ namespace Math
 		return d != d;
 	}
 
+	namespace Matrix3
+	{
+		/**
+         * Sets the value of the matrix from inertia tensor values.
+         */
+        static void setInertiaTensorCoeffs(mat3& matIn, float ix, float iy, float iz,
+            float ixy=0, float ixz=0, float iyz=0)
+        {
+			matIn.m[0][0] = ix;
+			matIn.m[1][1] = iy;
+			matIn.m[2][2] = iz;
+
+			matIn.m[0][1] = matIn.m[1][0] = -ixy;
+			matIn.m[0][2] = matIn.m[2][0] = -ixz;
+			matIn.m[0][3] = matIn.m[3][0] = -iyz;
+        }
+
+		/**
+         * Sets the matrix to be a diagonal matrix with the given
+         * values along the leading diagonal.
+         */
+        static void setDiagonal(mat3& matIn, float a, float b, float c)
+        {
+            setInertiaTensorCoeffs(matIn, a, b, c);
+        }
+
+		/**
+         * Sets the value of the matrix as an inertia tensor of
+         * a rectangular block aligned with the body's coordinate
+         * system with the given axis half-sizes and mass.
+         */
+        static void setBlockInertiaTensor(mat3& matIn, const vec3& halfSizes, float mass)
+        {
+            vec3 squares(halfSizes.x() * halfSizes.x(), halfSizes.y() * halfSizes.y(), halfSizes.z() * halfSizes.z());
+            setInertiaTensorCoeffs(matIn, 0.3f*mass*(squares.y() + squares.z()),
+                0.3f*mass*(squares.x() + squares.z()),
+                0.3f*mass*(squares.x() + squares.y()));
+        }
+
+		 /**
+         * Sets the matrix to be the inverse of the given matrix.
+         *
+         * @param m The matrix to invert and use to set this.
+         */
+        static void setInverse(mat3 &m)
+        {
+            float t4 = m.m[0][0]*m.m[1][1];
+            float t6 = m.m[0][0]*m.m[1][2];
+            float t8 = m.m[0][1]*m.m[1][0];
+            float t10 = m.m[0][2]*m.m[1][0];
+            float t12 = m.m[0][1]*m.m[2][0];
+            float t14 = m.m[0][2]*m.m[2][0];
+
+            // Calculate the determinant
+            float t16 = (t4*m.m[2][2] - t6*m.m[2][1] - t8*m.m[2][2]+
+                        t10*m.m[2][1] + t12*m.m[1][2] - t14*m.m[1][1]);
+
+            // Make sure the determinant is non-zero.
+            if (t16 == (float)0.0f) return;
+            float t17 = 1/t16;
+
+            m.m[0][0] = (m.m[1][1]*m.m[2][2]-m.m[1][2]*m.m[2][1])*t17;
+            m.m[0][1] = -(m.m[0][1]*m.m[2][2]-m.m[0][2]*m.m[2][1])*t17;
+            m.m[0][2] = (m.m[0][1]*m.m[1][2]-m.m[0][2]*m.m[1][1])*t17;
+            m.m[1][0] = -(m.m[1][0]*m.m[2][2]-m.m[1][2]*m.m[2][0])*t17;
+            m.m[1][1] = (m.m[0][0]*m.m[2][2]-t14)*t17;
+            m.m[1][2] = -(t6-t10)*t17;
+            m.m[2][0] = (m.m[1][0]*m.m[2][1]-m.m[1][1]*m.m[2][0])*t17;
+            m.m[2][1] = -(m.m[0][0]*m.m[2][1]-t12)*t17;
+            m.m[2][2] = (t4-t8)*t17;
+        }
+
+		/**
+         * Sets this matrix to be the rotation matrix corresponding to
+         * the given quaternion.
+         */
+        static void setOrientation(mat3& m, const quart &q)
+        {
+			vec4 v = q.toVector4D();
+
+			m.m[0][0] = 1 - (2*v.y()*v.y() + 2*v.z()*v.z());
+			m.m[0][1] = 2*v.x()*v.y() + 2*v.z()*v.w();
+			m.m[0][2] = 2*v.x()*v.z() - 2*v.y()*v.w();
+			m.m[1][0] = 2*v.x()*v.y() - 2*v.z()*v.w();
+			m.m[1][1] = 1 - (2*v.x()*v.x()  + 2*v.z()*v.z());
+			m.m[1][2] = 2*v.y()*v.z() + 2*v.x()*v.w();
+			m.m[2][0] = 2*v.x()*v.z() + 2*v.y()*v.w();
+			m.m[2][1] = 2*v.y()*v.z() - 2*v.x()*v.w();
+			m.m[2][2] = 1 - (2*v.x()*v.x()  + 2*v.y()*v.y());
+        }
+	}
+	
+
 	static void decomposeMat4(mat4& matIn, vec3& scalingOut, QQuaternion& rotationOut, vec3& positionOut)
 	{
 		// extract translation
