@@ -44,7 +44,7 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName, GLuint sh
 
 	if (loadingFlags == "Simple")
 	{
-		flags = aiProcess_GenNormals | aiProcess_Triangulate | aiProcess_GenUVCoords | aiProcess_FlipUVs;
+		flags = aiProcess_Triangulate | aiProcess_FlipUVs;
 	}
 	else if (loadingFlags == "Fast")
 	{
