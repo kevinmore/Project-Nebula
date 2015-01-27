@@ -129,7 +129,7 @@ void StaticModel::render( float time )
 	
 	//QMatrix3x3 normalMatrix = modelViewMatrix.normalMatrix();
 	m_RenderingEffect->setEyeWorldPos(m_scene->getCamera()->position());
-	m_RenderingEffect->setWVP(m_scene->getCamera()->viewProjectionMatrix() * modelMatrix);
+	m_RenderingEffect->setMVPMatrix(m_scene->getCamera()->viewProjectionMatrix() * modelMatrix);
 	m_RenderingEffect->setWorldMatrix(modelMatrix); 
 
 	for(int i = 0; i < m_meshes.size(); ++i)

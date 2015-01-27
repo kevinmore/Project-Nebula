@@ -8,6 +8,8 @@ layout (location = 3) in vec3 Tangent;
 uniform mat4 gWVP;                                                                  
 uniform mat4 gLightWVP;                                                             
 uniform mat4 gWorld;                                                                
+uniform vec4 vColor;
+uniform int customizedColor; // 0 means use color vbo, 1 means use uniform color
                                                                                     
 out vec4 LightSpacePos0;                                                             
 out vec4 Color0;                                                                 
@@ -20,7 +22,12 @@ void main()
 
     gl_Position  = gWVP * PosL;
 	LightSpacePos0 = gLightWVP * PosL;
-    Color0    = Color;
+
+	if(customizedColor == 0)
+		Color0 = Color;
+	else if(customizedColor == 1)
+		Color0 = vColor;
+
     vec4 NormalL = vec4(Normal, 0.0);
     Normal0      = (gWorld * NormalL).xyz;
     WorldPos0    = (gWorld * PosL).xyz;                

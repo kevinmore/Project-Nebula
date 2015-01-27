@@ -76,14 +76,15 @@ public:
 
     virtual bool init();
 
+	QString shaderFileName() const { return m_shaderFileName; }
 	void setShaderFilePath(const QString& path);
 	void applyShader(const QString &shaderName);
     void enable();
 	void disable();
 
 
-	QOpenGLShaderProgramPtr getShaderProgram() { return m_shaderProgram; }
-	GLuint getVAO() { return m_VAO; };
+	QOpenGLShaderProgramPtr getShaderProgram() const { return m_shaderProgram; }
+	GLuint getVAO() const { return m_VAO; };
 	void setVAO(GLuint vaoID);
 
 protected:

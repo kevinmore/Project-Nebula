@@ -37,14 +37,14 @@ HierarchyWidget::HierarchyWidget(Scene* scene, QWidget *parent)
 	ui->graphicsView_ColorPicker->installEventFilter(this);
 	ui->graphicsView_TexturePicker->installEventFilter(this);
 	ui->graphicsView_VertexColorPicker->installEventFilter(this);
+	ui->graphicsView_VertexColorPicker->setBackgroundBrush(QBrush(Qt::white, Qt::CrossPattern));
 
 	connect(ui->checkBox_RandomColor, SIGNAL(toggled(bool)), this, SLOT(setColorPickerEnabled(bool)));
 	connect(ui->checkBox_EnableCollision, SIGNAL(toggled(bool)), ui->doubleSpinBox_Restitution, SLOT(setEnabled(bool)));
 
 	// material tab
 	searchShaders();
-	connect(ui->comboBox_SahderFiles, SIGNAL(currentTextChanged(const QString&)), this, SLOT(shaderComboboxChanged(const QString&)));
-	connect(this, SIGNAL(shaderSelected(GameObject*, const QString&)), m_scene, SLOT(applyShaderOnTarget(GameObject*, const QString&)));
+	connect(ui->comboBox_SahderFiles, SIGNAL(currentTextChanged(const QString&)), this, SLOT(changeShader(const QString&)));
 	setMaximumWidth(360);
 	updateObjectTree();
 }
@@ -126,6 +126,8 @@ void HierarchyWidget::readGameObject(QTreeWidgetItem* current, QTreeWidgetItem* 
 	if(current == ui->treeWidget->topLevelItem(0)) 
 	{
 		clearTransformationArea();
+		m_currentObject = NULL;
+		m_currentShadingTech.clear();
 		return;
 	}
 
@@ -133,7 +135,7 @@ void HierarchyWidget::readGameObject(QTreeWidgetItem* current, QTreeWidgetItem* 
 	m_currentObject = m_scene->objectManager()->getGameObject(current->text(0)).data();
 	if(!m_currentObject) return;
 
-	// map the transformation into the spin boxes
+	// map the transformation into the transform tab
 	ui->doubleSpinBox_PositionX->setValue(m_currentObject->position().x());
 	ui->doubleSpinBox_PositionY->setValue(m_currentObject->position().y());
 	ui->doubleSpinBox_PositionZ->setValue(m_currentObject->position().z());
@@ -145,6 +147,15 @@ void HierarchyWidget::readGameObject(QTreeWidgetItem* current, QTreeWidgetItem* 
 	ui->doubleSpinBox_ScaleX->setValue(m_currentObject->scale().x());
 	ui->doubleSpinBox_ScaleY->setValue(m_currentObject->scale().y());
 	ui->doubleSpinBox_ScaleZ->setValue(m_currentObject->scale().z());
+
+	// map the shading properties into the material tab
+	ComponentPtr comp = m_currentObject->getComponent("Model");
+	ModelPtr model = comp.dynamicCast<AbstractModel>();
+	if (model)
+	{
+		m_currentShadingTech = model->renderingEffect();
+		ui->comboBox_SahderFiles->setCurrentText(m_currentShadingTech->shaderFileName());
+	}
 
 	// set connections
 	connectCurrentObject();
@@ -374,6 +385,8 @@ bool HierarchyWidget::eventFilter( QObject *obj, QEvent *ev )
 			{
 				// apply the color to the particle system and color picker both
 				ui->graphicsView_VertexColorPicker->setBackgroundBrush(QBrush(col, Qt::CrossPattern));
+				// set the vertex color through the shading effect
+				m_currentShadingTech->setVertexColor(col);
 			}
 			return true;
 		}
@@ -403,7 +416,9 @@ void HierarchyWidget::searchShaders()
 	}
 }
 
-void HierarchyWidget::shaderComboboxChanged( const QString& shaderFile )
+
+void HierarchyWidget::changeShader( const QString& shaderFile )
 {
-	emit shaderSelected(m_currentObject, shaderFile);
+	if (!m_currentShadingTech) return;
+	m_currentShadingTech->applyShader(shaderFile);
 }

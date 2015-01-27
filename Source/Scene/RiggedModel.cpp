@@ -218,7 +218,7 @@ void RiggedModel::render( const float currentTime )
 	//QMatrix3x3 normalMatrix = modelViewMatrix.normalMatrix();
 
 	m_RenderingEffect->setEyeWorldPos(m_scene->getCamera()->position());
-	m_RenderingEffect->setWVP(m_scene->getCamera()->viewProjectionMatrix() * modelMatrix);
+	m_RenderingEffect->setMVPMatrix(m_scene->getCamera()->viewProjectionMatrix() * modelMatrix);
 	m_RenderingEffect->setWorldMatrix(modelMatrix); 
 
 

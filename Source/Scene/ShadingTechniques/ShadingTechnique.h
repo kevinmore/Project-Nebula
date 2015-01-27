@@ -20,8 +20,7 @@ public:
 	~ShadingTechnique() {}
     virtual bool init();
 
-    void setWVP(const mat4& WVP);
-	void setLightWVP(const mat4& LightWVP);
+    void setMVPMatrix(const mat4& WVP);
     void setWorldMatrix(const mat4& WVP);
     void setColorTextureUnit(uint TextureUnit);
 	void setShadowMapTextureUnit(uint TextureUnit);
@@ -33,6 +32,7 @@ public:
     void setMatSpecularIntensity(float Intensity);
     void setMatSpecularPower(float Power);
     void setBoneTransform(uint Index, const mat4& Transform);
+	void setVertexColor(const QColor& col);
 
 private:
     
@@ -40,17 +40,8 @@ private:
 
 	ShaderType m_shaderType;
 
-    GLuint m_WVPLocation;
-	GLuint m_LightWVPLocation;
-    GLuint m_WorldMatrixLocation;
-    GLuint m_colorTextureLocation;
-	GLuint m_shadowMapLocation;
-	GLuint m_normalMapLocation;
-    GLuint m_eyeWorldPosLocation;
-    GLuint m_matSpecularIntensityLocation;
-    GLuint m_matSpecularPowerLocation;
-    GLuint m_numPointLightsLocation;
-    GLuint m_numSpotLightsLocation;
+	GLuint m_numPointLightsLocation;
+	GLuint m_numSpotLightsLocation;
 
     struct {
         GLuint Color;

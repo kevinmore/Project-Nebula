@@ -517,17 +517,3 @@ void Scene::play()
 	m_bPaused = false;
 	m_delayedTime += m_absoluteTime - m_relativeTime;
 }
-
-
-void Scene::applyShaderOnTarget( GameObject* target, const QString& fileName )
-{
-	GameObjectPtr go = m_objectManager->getGameObject(target->objectName());
-	ComponentPtr comp = go->getComponent("Model");
-	ModelPtr model = comp.dynamicCast<AbstractModel>();
-	if (model)
-	{
-		ShadingTechniquePtr effect = model->renderingEffect();
-		qDebug() << "apply this shader:" << fileName;
-		effect->applyShader(fileName);
-	}
-}

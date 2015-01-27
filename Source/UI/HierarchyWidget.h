@@ -18,6 +18,8 @@ private:
 	Ui::HierarchyViewer *ui;
 	Scene* m_scene;
 	GameObject* m_currentObject;
+	ShadingTechniquePtr m_currentShadingTech;
+
 	QAction* m_deleteAction;
 	QWidget* particleSystemTab;
 
@@ -37,13 +39,11 @@ private slots:
 	void deleteGameObject();
 	void showMouseRightButton(const QPoint& point);
 	void setColorPickerEnabled(bool status);
-	void shaderComboboxChanged(const QString& shaderFile);
+	void changeShader(const QString& shaderFile);
 
 public slots:
 	void updateObjectTree();
 
-public: signals:
-	void shaderSelected(GameObject* target, const QString& shaderFile);
 
 protected:
 	bool eventFilter(QObject *obj, QEvent *ev); // install a filter event for the color picker

@@ -44,7 +44,7 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName, GLuint sh
 
 	if (loadingFlags == "Simple")
 	{
-		flags = aiProcess_Triangulate | aiProcess_FlipUVs;
+		flags = aiProcess_Triangulate | aiProcess_GenNormals | aiProcess_FlipUVs;
 	}
 	else if (loadingFlags == "Fast")
 	{
@@ -75,8 +75,7 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName, GLuint sh
 
 	m_modelType = m_scene->HasAnimations() ? RIGGED_MODEL : STATIC_MODEL;
 
-	unsigned int numVertices = 0;
-	unsigned int numIndices  = 0;
+	uint numVertices = 0, numIndices = 0, numFaces = 0;
 
 	for(uint i = 0; i < m_scene->mNumMeshes; ++i)
 	{
@@ -114,7 +113,8 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName, GLuint sh
 
 		numVertices += m_scene->mMeshes[i]->mNumVertices;
 		numIndices  += m_scene->mMeshes[i]->mNumFaces * 3;
-		
+		numFaces    += m_scene->mMeshes[i]->mNumFaces;
+
 		modelDataVector[i] = ModelDataPtr(md);
 	}
 
@@ -144,7 +144,7 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName, GLuint sh
 	QString summary = "Loaded " + fileName + ". Model has " 
 		            + QString::number(m_scene->mNumMeshes) + " meshes, " 
 					+ QString::number(numVertices) + " vertices, " 
-					+ QString::number(numIndices) + " indices.";
+					+ QString::number(numFaces) + " faces.";
 
 	if(m_NumBones)
 		summary += " Contains " + QString::number(m_NumBones) + " bones.";

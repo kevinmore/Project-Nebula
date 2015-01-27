@@ -31,26 +31,8 @@ bool ShadingTechnique::compileShader()
 	m_shaderProgram->addShaderFromSourceFile(QOpenGLShader::Fragment, m_shaderFilePath + m_shaderFileName + ".frag");
 	m_shaderProgram->link();
 
-	// if using normal map
-	if (m_shaderFileName.contains("bump"))
-	{
-		m_normalMapLocation = getUniformLocation("gNormalMap");
-	}
-
-	m_WVPLocation = getUniformLocation("gWVP");
-	m_WorldMatrixLocation = getUniformLocation("gWorld");
-	m_colorTextureLocation = getUniformLocation("gColorMap");
-	m_shadowMapLocation = getUniformLocation("gShadowMap");
-	m_eyeWorldPosLocation = getUniformLocation("gEyeWorldPos");
-	m_dirLightLocation.Color = getUniformLocation("gDirectionalLight.Base.Color");
-	m_dirLightLocation.AmbientIntensity = getUniformLocation("gDirectionalLight.Base.AmbientIntensity");
-	m_dirLightLocation.Direction = getUniformLocation("gDirectionalLight.Direction");
-	m_dirLightLocation.DiffuseIntensity = getUniformLocation("gDirectionalLight.Base.DiffuseIntensity");
-	m_matSpecularIntensityLocation = getUniformLocation("gMatSpecularIntensity");
-	m_matSpecularPowerLocation = getUniformLocation("gSpecularPower");
 	m_numPointLightsLocation = getUniformLocation("gNumPointLights");
 	m_numSpotLightsLocation = getUniformLocation("gNumSpotLights");
-
 		
 	for (unsigned int i = 0 ; i < ARRAY_SIZE_IN_ELEMENTS(m_pointLightsLocation) ; i++) {
 		char Name[128];
@@ -158,66 +140,57 @@ bool ShadingTechnique::compileShader()
 	return true;
 }
 
-void ShadingTechnique::setWVP(const mat4& WVP)
+void ShadingTechnique::setDirectionalLight(const DirectionalLight& Light)
 {
-    glUniformMatrix4fv(m_WVPLocation, 1, GL_FALSE, WVP.data());    
+   	m_shaderProgram->setUniformValue("gDirectionalLight.Base.Color", Light.Color);
+ 	m_shaderProgram->setUniformValue("gDirectionalLight.Direction", Light.Direction.normalized());
+ 	m_shaderProgram->setUniformValue("gDirectionalLight.Base.AmbientIntensity", Light.AmbientIntensity);
+ 	m_shaderProgram->setUniformValue("gDirectionalLight.Base.DiffuseIntensity", Light.DiffuseIntensity);
 }
 
-void ShadingTechnique::setLightWVP(const mat4& LightWVP)
-{
-	glUniformMatrix4fv(m_LightWVPLocation, 1, GL_FALSE, LightWVP.data());
-}
 
+void ShadingTechnique::setMVPMatrix(const mat4& WVP)
+{
+	m_shaderProgram->setUniformValue("gWVP", WVP);
+}
 
 void ShadingTechnique::setWorldMatrix(const mat4& World)
 {
-    glUniformMatrix4fv(m_WorldMatrixLocation, 1, GL_FALSE, World.data());
+	m_shaderProgram->setUniformValue("gWorld", World);
 }
 
 
 void ShadingTechnique::setColorTextureUnit(unsigned int TextureUnit)
 {
-    glUniform1i(m_colorTextureLocation, TextureUnit);
+	m_shaderProgram->setUniformValue("gColorMap", TextureUnit);
 }
 
 void ShadingTechnique::setShadowMapTextureUnit(unsigned int TextureUnit)
 {
-	glUniform1i(m_shadowMapLocation, TextureUnit);
+	m_shaderProgram->setUniformValue("gShadowMap", TextureUnit);
 }
 
 void ShadingTechnique::setNormalMapTextureUnit(unsigned int TextureUnit)
 {
-	glUniform1i(m_normalMapLocation, TextureUnit);
+	m_shaderProgram->setUniformValue("gNormalMap", TextureUnit);
 }
-
-void ShadingTechnique::setDirectionalLight(const DirectionalLight& Light)
-{
-    glUniform3f(m_dirLightLocation.Color, Light.Color.x(), Light.Color.y(), Light.Color.z());
-    glUniform1f(m_dirLightLocation.AmbientIntensity, Light.AmbientIntensity);
-    vec3 Direction = Light.Direction;
-    Direction.normalize();
-    glUniform3f(m_dirLightLocation.Direction, Direction.x(), Direction.y(), Direction.z());
-    glUniform1f(m_dirLightLocation.DiffuseIntensity, Light.DiffuseIntensity);
-}
-
 
 void ShadingTechnique::setEyeWorldPos(const vec3& EyeWorldPos)
 {
-    glUniform3f(m_eyeWorldPosLocation, EyeWorldPos.x(), EyeWorldPos.y(), EyeWorldPos.z());
+	m_shaderProgram->setUniformValue("gEyeWorldPos", EyeWorldPos);
 }
 
 
 void ShadingTechnique::setMatSpecularIntensity(float Intensity)
 {
-    glUniform1f(m_matSpecularIntensityLocation, Intensity);
+	m_shaderProgram->setUniformValue("gMatSpecularIntensity", Intensity);
 }
 
 
 void ShadingTechnique::setMatSpecularPower(float Power)
 {
-    glUniform1f(m_matSpecularPowerLocation, Power);
+	m_shaderProgram->setUniformValue("gSpecularPower", Power);
 }
-
 
 void ShadingTechnique::setPointLights(unsigned int NumLights, const PointLight* pLights)
 {
@@ -257,6 +230,13 @@ void ShadingTechnique::setSpotLights(unsigned int NumLights, const SpotLight* pL
 void ShadingTechnique::setBoneTransform(uint Index, const mat4& Transform)
 {
     assert(Index < MAX_BONES);
-
     glUniformMatrix4fv(m_boneLocation[Index], 1, GL_FALSE, (const GLfloat*)Transform.data());       
+}
+
+void ShadingTechnique::setVertexColor( const QColor& col )
+{
+	// enable customized color first
+	enable();
+	m_shaderProgram->setUniformValue("customizedColor", 1);
+	m_shaderProgram->setUniformValue("vColor", col);
 }

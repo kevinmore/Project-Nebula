@@ -152,8 +152,8 @@ void MainWindow::initializeMenuBar()
 	simpleProcess->setCheckable(true);
 	QAction* fastProcess = new QAction("Fast", this);
 	fastProcess->setCheckable(true);
-	fastProcess->setChecked(true);
 	QAction* qualityProcess = new QAction("Quality", this);
+	qualityProcess->setChecked(true);
 	qualityProcess->setCheckable(true);
 	QAction* maxQualityProcess = new QAction("Max Quality", this);
 	maxQualityProcess->setCheckable(true);

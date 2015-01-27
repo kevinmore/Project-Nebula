@@ -81,7 +81,6 @@ public slots:
 	void pause();
 	void play();
 
-	void applyShaderOnTarget(GameObject* target, const QString& fileName);
 
 signals:
 	void renderCycleDone();
