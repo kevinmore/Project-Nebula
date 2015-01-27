@@ -31,10 +31,11 @@ void BoxRigidBody::setMass( float m )
 
 void BoxRigidBody::setMassInv( float mInv )
 {
-	m_mass = mInv;
+	m_massInv = mInv;
 
 	BoxShape* box = (BoxShape*)m_shape;
 	Math::Matrix3::setBlockInertiaTensor(m_inertiaTensor, box->getHalfExtents(), m_mass);
+	qDebug() << box->getHalfExtents();
 	m_inertiaTensorInv = m_inertiaTensor;
 	Math::Matrix3::setInverse(m_inertiaTensorInv);
 }
@@ -116,13 +117,20 @@ void BoxRigidBody::applyTorque( const float deltaTime, const vec3& torque )
 
 void BoxRigidBody::update( const float dt )
 {
-	// update the linear properties in the parent
-	//RigidBody::update(dt);
-	m_linearVelocity += m_gravityFactor * getWorld()->getConfig().m_gravity * dt;
-	m_deltaPosition = m_linearVelocity * dt;
-	m_position += m_deltaPosition;
+	m_transformMatrix.setToIdentity();
+
 	// update the angular properties
 	m_deltaAngle += m_angularVelocity * dt;
+	quart oldRotation = m_rotation;
+	m_rotation = quart::fromAxisAndAngle(Math::Vector3D::UNIT_X, m_deltaAngle.x())
+			   * quart::fromAxisAndAngle(Math::Vector3D::UNIT_Y, m_deltaAngle.y())
+		       * quart::fromAxisAndAngle(Math::Vector3D::UNIT_Z, m_deltaAngle.z());
+	m_transformMatrix.rotate(m_rotation);
+
+	// update the linear properties in the parent
+	RigidBody::update(dt);
+
+	qDebug() << m_transformMatrix;
 }
 
 

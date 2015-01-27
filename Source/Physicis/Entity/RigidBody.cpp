@@ -181,8 +181,8 @@ void RigidBody::setFriction( float newFriction )
 void RigidBody::update( const float dt )
 {
 	// only update the linear properties as an abstract rigid body
-
 	m_linearVelocity += m_gravityFactor * getWorld()->getConfig().m_gravity * dt;
 	m_deltaPosition = m_linearVelocity * dt;
 	m_position += m_deltaPosition;
+	m_transformMatrix.translate(m_position);
 }

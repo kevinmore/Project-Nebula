@@ -139,6 +139,8 @@ public:
 	inline const quart& getDeltaRotation() const { return m_deltaRotation;	}
 	inline const vec3& getRotationInAxisAndAngles() const { return m_deltaAngle;}
 
+	inline const mat4& getTransformMatrix() const { return m_transformMatrix; }
+
 	/// Sets the rotation from local to world Space for this rigid body.
 	/// This activates the body and its simulation island if it is inactive.
 	void setRotation(const quart& rotation);

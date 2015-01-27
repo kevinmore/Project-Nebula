@@ -66,54 +66,91 @@ void Scene::initialize()
 	LoaderThread loader(this, "../Resource/Models/Common/MetalCube.3ds", go, m_sceneRootNode, false);
 	BoxRigidBodyPtr cube(new BoxRigidBody());
 	cube->setPosition(vec3(0, 100, 0));
-	//cube->setGravityFactor(0.0f);
+	cube->setLinearVelocity(vec3(50,0,0));
+	cube->setGravityFactor(0.0f);
 	go->attachComponent(cube);
 	m_physicsWorld->addEntity(cube.data());
 
 	// particle system
-	GameObjectPtr particle = createParticleSystem("Rigid Cube");
-	particle->setPosition(45, -50, 45);
-	particle->setRotation(180, 0, 0);
-	ComponentPtr comp = particle->getComponent("ParticleSystem");
-	ParticleSystemPtr ps = comp.dynamicCast<ParticleSystem>();
-	ps->toggleRandomColor(true);
-	ps->setMaxLife(4);
-	ps->setMinLife(2);
-	ps->toggleCollision(true);
-	ps->setRestitution(0.2);
+// 	GameObjectPtr particle = createParticleSystem("Rigid Cube");
+// 	particle->setPosition(45, -50, 45);
+// 	particle->setRotation(180, 0, 0);
+// 	ComponentPtr comp = particle->getComponent("ParticleSystem");
+// 	ParticleSystemPtr ps = comp.dynamicCast<ParticleSystem>();
+// 	ps->toggleRandomColor(true);
+// 	ps->setMaxLife(4);
+// 	ps->setMinLife(2);
+// 	ps->toggleCollision(true);
+// 	ps->setRestitution(0.2);
+// 	ps->setMaxVelX(0);
+// 	ps->setMaxVelZ(0);
+// 	ps->setMinVelX(0);
+// 	ps->setMinVelZ(0);
 
-	particle = createParticleSystem("Rigid Cube");
-	particle->setPosition(45, -50, -45);
-	particle->setRotation(180, 0, 0);
-	comp = particle->getComponent("ParticleSystem");
-	ps = comp.dynamicCast<ParticleSystem>();
-	ps->toggleRandomColor(true);
-	ps->setMaxLife(4);
-	ps->setMinLife(2);
-	ps->toggleCollision(true);
-	ps->setRestitution(0.2);
+// 	particle = createParticleSystem("Rigid Cube");
+// 	particle->setPosition(45, -50, -45);
+// 	particle->setRotation(180, 0, 0);
+// 	comp = particle->getComponent("ParticleSystem");
+// 	ps = comp.dynamicCast<ParticleSystem>();
+// 	ps->toggleRandomColor(true);
+// 	ps->setMaxLife(4);
+// 	ps->setMinLife(2);
+// 	ps->toggleCollision(true);
+// 	ps->setRestitution(0.2);
+// 
+// 	particle = createParticleSystem("Rigid Cube");
+// 	particle->setPosition(-45, -50, 45);
+// 	particle->setRotation(180, 0, 0);
+// 	comp = particle->getComponent("ParticleSystem");
+// 	ps = comp.dynamicCast<ParticleSystem>();
+// 	ps->toggleRandomColor(true);
+// 	ps->setMaxLife(4);
+// 	ps->setMinLife(2);
+// 	ps->toggleCollision(true);
+// 	ps->setRestitution(0.2);
+// 
+// 	particle = createParticleSystem("Rigid Cube");
+// 	particle->setPosition(-45, -50, -45);
+// 	particle->setRotation(180, 0, 0);
+// 	comp = particle->getComponent("ParticleSystem");
+// 	ps = comp.dynamicCast<ParticleSystem>();
+// 	ps->toggleRandomColor(true);
+// 	ps->setMaxLife(4);
+// 	ps->setMinLife(2);
+// 	ps->toggleCollision(true);
+// 	ps->setRestitution(0.2);
 
-	particle = createParticleSystem("Rigid Cube");
-	particle->setPosition(-45, -50, 45);
-	particle->setRotation(180, 0, 0);
-	comp = particle->getComponent("ParticleSystem");
-	ps = comp.dynamicCast<ParticleSystem>();
-	ps->toggleRandomColor(true);
-	ps->setMaxLife(4);
-	ps->setMinLife(2);
-	ps->toggleCollision(true);
-	ps->setRestitution(0.2);
 
-	particle = createParticleSystem("Rigid Cube");
-	particle->setPosition(-45, -50, -45);
-	particle->setRotation(180, 0, 0);
-	comp = particle->getComponent("ParticleSystem");
-	ps = comp.dynamicCast<ParticleSystem>();
-	ps->toggleRandomColor(true);
-	ps->setMaxLife(4);
-	ps->setMinLife(2);
-	ps->toggleCollision(true);
-	ps->setRestitution(0.2);
+// 	GameObjectPtr go2 = createEmptyGameObject("Rigid Cube 0 Gravity");
+// 	LoaderThread loader2(this, "../Resource/Models/Common/MetalCube.3ds", go2, m_sceneRootNode, false);
+// 	BoxRigidBodyPtr cube2(new BoxRigidBody());
+// 	cube2->setPosition(vec3(-100, 100, 0));
+// 	cube2->setGravityFactor(0.0f);
+// 	go2->attachComponent(cube2);
+// 	m_physicsWorld->addEntity(cube2.data());
+// 
+// 	// particle system
+// 	particle = createParticleSystem("Rigid Cube 0 Gravity");
+// 	particle->setPosition(50, 0, 50);
+// 	particle->setRotation(0, 0, 90);
+// 	comp = particle->getComponent("ParticleSystem");
+// 	ps = comp.dynamicCast<ParticleSystem>();
+// 	ps->toggleRandomColor(true);
+// 	ps->setMaxLife(4);
+// 	ps->setMinLife(2);
+// 	ps->toggleCollision(true);
+// 	ps->setRestitution(0.2);
+// 
+// 	particle = createParticleSystem("Rigid Cube 0 Gravity");
+// 	particle->setPosition(-50, 0, -50);
+// 	particle->setRotation(0, 0, -90);
+// 	comp = particle->getComponent("ParticleSystem");
+// 	ps = comp.dynamicCast<ParticleSystem>();
+// 	ps->toggleRandomColor(true);
+// 	ps->setMaxLife(4);
+// 	ps->setMinLife(2);
+// 	ps->toggleCollision(true);
+// 	ps->setRestitution(0.2);
 }
 
 

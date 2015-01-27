@@ -235,7 +235,7 @@ void RiggedModel::render( const float currentTime )
 	
 	m_RenderingEffect->enable();
 
-	QMatrix4x4 modelMatrix = m_actor->modelMatrix();
+	QMatrix4x4 modelMatrix = m_actor->getTranformMatrix();
 	modelMatrix.rotate(90, Math::Vector3D::UNIT_X); // this is for dae files
 	//QMatrix3x3 normalMatrix = modelViewMatrix.normalMatrix();
 

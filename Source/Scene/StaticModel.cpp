@@ -146,7 +146,7 @@ void StaticModel::render( float time )
 {
 	m_RenderingEffect->enable();
 
-	QMatrix4x4 modelMatrix = m_actor->modelMatrix();
+	QMatrix4x4 modelMatrix = m_actor->getTranformMatrix();
 	
 	//QMatrix3x3 normalMatrix = modelViewMatrix.normalMatrix();
 	m_RenderingEffect->setEyeWorldPos(m_scene->getCamera()->position());

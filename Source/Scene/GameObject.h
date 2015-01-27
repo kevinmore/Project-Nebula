@@ -55,7 +55,7 @@ public:
 		m_modelMatrixDirty = false;
 	}
 
-	inline mat4 modelMatrix()
+	inline mat4 getTranformMatrix()
 	{
 		if(m_modelMatrixDirty)
 		{
@@ -71,7 +71,7 @@ public:
 		}
 		GameObject* parent = dynamic_cast<GameObject*>(this->parent());
 		if (parent)
-			return parent->modelMatrix() * m_modelMatrix;
+			return parent->getTranformMatrix() * m_modelMatrix;
 		else return m_modelMatrix;
 	}
 

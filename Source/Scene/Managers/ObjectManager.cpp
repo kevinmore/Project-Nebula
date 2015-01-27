@@ -98,15 +98,17 @@ void ObjectManager::renderAll(const float currentTime)
 		RigidBodyPtr rb = go->getComponent("RigidBody").dynamicCast<RigidBody>();
 		if (rb)
 		{
-			QObjectList children = go->children();
-			foreach(QObject* obj, children)
-			{
-				GameObject* child = dynamic_cast<GameObject*>(obj);
-				ParticleSystemPtr ps = child->getComponent("ParticleSystem").dynamicCast<ParticleSystem>();
-				rb->applyPointImpulse(ps->getLinearImpuse() * 0.8f, child->position() / 100.0f);
-			}
-			go->setPosition(rb->getPosition());
-			go->setRotation(rb->getRotationInAxisAndAngles());
+// 			QObjectList children = go->children();
+// 			foreach(QObject* obj, children)
+// 			{
+// 				GameObject* child = dynamic_cast<GameObject*>(obj);
+// 				ParticleSystemPtr ps = child->getComponent("ParticleSystem").dynamicCast<ParticleSystem>();
+// 				rb->applyPointImpulse(ps->getLinearImpuse() * 0.8f, child->position() / 100.0f);
+// 			}
+			rb->applyAngularImpulse(vec3(0,0.1,0));
+// 			go->setPosition(rb->getPosition());
+// 			go->setRotation(rb->getRotationInAxisAndAngles());
+			go->setTransformMatrix(rb->getTransformMatrix());
 		}
 	}
 
