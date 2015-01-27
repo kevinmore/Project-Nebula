@@ -59,7 +59,7 @@ typedef QSharedPointer<ModelData> ModelDataPtr;
 class AbstractModel : public Component
 {
 public:
-	AbstractModel(ShadingTechniquePtr tech, const QString& fileName = "");
+	AbstractModel(ShadingTechniquePtr tech = ShadingTechniquePtr(), const QString& fileName = "");
 	virtual ~AbstractModel() = 0;
 
 	virtual void render(const float currentTime) = 0;
@@ -67,6 +67,8 @@ public:
 
 	QString fileName() const { return m_fileName; }
 	void setFileName(QString& file) { m_fileName = file; }
+
+	ShadingTechniquePtr renderingEffect() const { return m_RenderingEffect; }
 
 protected:
 	QString m_fileName;

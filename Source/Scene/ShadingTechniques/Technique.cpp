@@ -61,6 +61,7 @@ void Technique::setShaderFilePath( const QString& path )
 
 void Technique::applyShader( const QString &shaderName )
 {
+	m_shaderProgram->removeAllShaders();
 	m_shaderFileName = shaderName;
 	compileShader();
 }

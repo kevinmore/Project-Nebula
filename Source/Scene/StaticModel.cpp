@@ -48,30 +48,11 @@ StaticModel::~StaticModel()
 	}
 }
 
-void StaticModel::initRenderingEffect()
-{ 	
-
-	DirectionalLight directionalLight;
-	directionalLight.Color = vec3(1.0f, 1.0f, 1.0f);
-	directionalLight.AmbientIntensity = 0.55f;
-	directionalLight.DiffuseIntensity = 0.9f;
-	directionalLight.Direction = vec3(-1.0f, -1.0, 1.0);
-
-	m_RenderingEffect->enable();
-	m_RenderingEffect->setColorTextureUnit(0);
-	m_RenderingEffect->setNormalMapTextureUnit(2);
-	m_RenderingEffect->setDirectionalLight(directionalLight);
-	m_RenderingEffect->setMatSpecularIntensity(0.0f);
-	m_RenderingEffect->setMatSpecularPower(0);
-	m_RenderingEffect->disable();
-}
-
 
 void StaticModel::initialize(QVector<ModelDataPtr> modelDataVector)
 {
 	Q_ASSERT(initializeOpenGLFunctions());
 
-	initRenderingEffect();
 
 	m_meshManager     = m_scene->meshManager();
 	m_textureManager  = m_scene->textureManager();

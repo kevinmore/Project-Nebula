@@ -6,7 +6,7 @@
 ObjectManager::ObjectManager(Scene* scene, QObject* parent)
 	: QObject(parent),
 	  m_scene(scene),
-	  m_loadingFlag("Fast")
+	  m_loadingFlag("Quality")
 {}
 
 

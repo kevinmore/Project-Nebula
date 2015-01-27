@@ -36,7 +36,6 @@ private:
 		BaseVertex
 	};
 
-	void initRenderingEffect();
 	void initialize(QVector<ModelDataPtr> modelDataVector = QVector<ModelDataPtr>());
 	void drawElements(unsigned int index, int mode);
 	void destroy();

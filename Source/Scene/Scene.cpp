@@ -523,8 +523,11 @@ void Scene::applyShaderOnTarget( GameObject* target, const QString& fileName )
 {
 	GameObjectPtr go = m_objectManager->getGameObject(target->objectName());
 	ComponentPtr comp = go->getComponent("Model");
-	if (comp.dynamicCast<AbstractModel>())
+	ModelPtr model = comp.dynamicCast<AbstractModel>();
+	if (model)
 	{
-		qDebug() << "this is a model";
+		ShadingTechniquePtr effect = model->renderingEffect();
+		qDebug() << "apply this shader:" << fileName;
+		effect->applyShader(fileName);
 	}
 }

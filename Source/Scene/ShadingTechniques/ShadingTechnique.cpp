@@ -51,44 +51,7 @@ bool ShadingTechnique::compileShader()
 	m_numPointLightsLocation = getUniformLocation("gNumPointLights");
 	m_numSpotLightsLocation = getUniformLocation("gNumSpotLights");
 
-	if (m_shaderFileName.contains("bump"))
-	{
-		if (m_dirLightLocation.AmbientIntensity == INVALID_LOCATION ||
-			m_WVPLocation == INVALID_LOCATION ||
-			m_WorldMatrixLocation == INVALID_LOCATION ||
-			m_colorTextureLocation == INVALID_LOCATION ||
-			m_shadowMapLocation == INVALID_LOCATION ||
-			m_normalMapLocation == INVALID_LOCATION ||
-			m_eyeWorldPosLocation == INVALID_LOCATION ||
-			m_dirLightLocation.Color == INVALID_LOCATION ||
-			m_dirLightLocation.DiffuseIntensity == INVALID_LOCATION ||
-			m_dirLightLocation.Direction == INVALID_LOCATION ||
-			m_matSpecularIntensityLocation == INVALID_LOCATION ||
-			m_matSpecularPowerLocation == INVALID_LOCATION ||
-			m_numPointLightsLocation == INVALID_LOCATION ||
-			m_numSpotLightsLocation == INVALID_LOCATION) {
-				return false;
-		}
-	}
-	else
-	{
-		if (m_dirLightLocation.AmbientIntensity == INVALID_LOCATION ||
-			m_WVPLocation == INVALID_LOCATION ||
-			m_WorldMatrixLocation == INVALID_LOCATION ||
-			m_colorTextureLocation == INVALID_LOCATION ||
-			m_shadowMapLocation == INVALID_LOCATION ||
-			m_eyeWorldPosLocation == INVALID_LOCATION ||
-			m_dirLightLocation.Color == INVALID_LOCATION ||
-			m_dirLightLocation.DiffuseIntensity == INVALID_LOCATION ||
-			m_dirLightLocation.Direction == INVALID_LOCATION ||
-			m_matSpecularIntensityLocation == INVALID_LOCATION ||
-			m_matSpecularPowerLocation == INVALID_LOCATION ||
-			m_numPointLightsLocation == INVALID_LOCATION ||
-			m_numSpotLightsLocation == INVALID_LOCATION) {
-				return false;
-		}
-	}
-	
+		
 	for (unsigned int i = 0 ; i < ARRAY_SIZE_IN_ELEMENTS(m_pointLightsLocation) ; i++) {
 		char Name[128];
 		memset(Name, 0, sizeof(Name));
@@ -176,6 +139,21 @@ bool ShadingTechnique::compileShader()
 			m_boneLocation[i] = getUniformLocation(Name);
 		}
 	}
+
+
+
+	DirectionalLight directionalLight;
+	directionalLight.Color = vec3(1.0f, 1.0f, 1.0f);
+	directionalLight.AmbientIntensity = 0.55f;
+	directionalLight.DiffuseIntensity = 0.9f;
+	directionalLight.Direction = vec3(-1.0f, -1.0, -1.0);
+
+	enable();
+	setColorTextureUnit(0);
+	setNormalMapTextureUnit(2);
+	setDirectionalLight(directionalLight);
+	setMatSpecularIntensity(0.0f);
+	setMatSpecularPower(0);
 
 	return true;
 }

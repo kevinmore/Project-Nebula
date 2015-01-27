@@ -2,8 +2,7 @@
 #include <Scene/Scene.h>
 
 Skybox::Skybox( Scene* scene )
-	: AbstractModel("SkyBox"),
-	  m_scene(scene),
+	: m_scene(scene),
 	  m_skyboxTechnique(SkyboxTechniquePtr()),
 	  m_cubemapTex(0)
 {
