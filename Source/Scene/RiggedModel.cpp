@@ -3,9 +3,8 @@
 #include <Animation/Rig/Pose.h>
 
 RiggedModel::RiggedModel(const QString& name, Scene* scene, ShadingTechniquePtr tech, Skeleton* skeleton)
-  : AbstractModel(name),
+   : AbstractModel(tech, name),
     m_scene(scene),
-    m_RenderingEffect(tech),
 	m_vao(tech->getVAO()),
 	m_skeleton(skeleton),
 	m_FKController(0),
@@ -17,9 +16,8 @@ RiggedModel::RiggedModel(const QString& name, Scene* scene, ShadingTechniquePtr 
 }
 
 RiggedModel::RiggedModel(const QString& name, Scene* scene, ShadingTechniquePtr tech, Skeleton* skeleton, QVector<ModelDataPtr> modelData)
-  : AbstractModel(name),
+  : AbstractModel(tech, name),
     m_scene(scene),
-    m_RenderingEffect(tech),
 	m_vao(tech->getVAO()),
 	m_skeleton(skeleton),
 	m_FKController(0),

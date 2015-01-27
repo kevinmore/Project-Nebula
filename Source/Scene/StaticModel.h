@@ -5,7 +5,6 @@
 #include <Scene/Managers/MaterialManager.h>
 #include <Scene/Managers/TextureManager.h>
 #include <Utility/ModelLoader.h>
-#include <Scene/ShadingTechniques/ShadingTechnique.h>
 
 class Scene;
 
@@ -17,7 +16,7 @@ public:
 	virtual ~StaticModel();
 
 	virtual void render( const float currentTime );
-	virtual QString className() { return "StaticModel"; }
+	//virtual QString className() { return "StaticModel"; }
 	ShadingTechniquePtr getShadingTech() { return m_RenderingEffect; }
 
 protected:
@@ -45,6 +44,5 @@ private:
 	GLuint m_vao;
 
 	Scene* m_scene;
-	ShadingTechniquePtr m_RenderingEffect;
 };
 

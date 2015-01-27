@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_Scene_t {
-    QByteArrayData data[24];
-    char stringdata[325];
+    QByteArrayData data[30];
+    char stringdata[389];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -49,10 +49,16 @@ QT_MOC_LITERAL(16, 212, 19),
 QT_MOC_LITERAL(17, 232, 11),
 QT_MOC_LITERAL(18, 244, 21),
 QT_MOC_LITERAL(19, 266, 13),
-QT_MOC_LITERAL(20, 280, 20),
-QT_MOC_LITERAL(21, 301, 12),
-QT_MOC_LITERAL(22, 314, 5),
-QT_MOC_LITERAL(23, 320, 4)
+QT_MOC_LITERAL(20, 280, 4),
+QT_MOC_LITERAL(21, 285, 20),
+QT_MOC_LITERAL(22, 306, 10),
+QT_MOC_LITERAL(23, 317, 12),
+QT_MOC_LITERAL(24, 330, 5),
+QT_MOC_LITERAL(25, 336, 4),
+QT_MOC_LITERAL(26, 341, 19),
+QT_MOC_LITERAL(27, 361, 11),
+QT_MOC_LITERAL(28, 373, 6),
+QT_MOC_LITERAL(29, 380, 8)
     },
     "Scene\0renderCycleDone\0\0updateHierarchy\0"
     "toggleFill\0state\0toggleWireframe\0"
@@ -62,8 +68,9 @@ QT_MOC_LITERAL(23, 320, 4)
     "clearScene\0showOpenSceneDialog\0"
     "showSaveSceneDialog\0modelLoaded\0"
     "createEmptyGameObject\0GameObjectPtr\0"
-    "createParticleSystem\0toggleSkybox\0"
-    "pause\0play"
+    "name\0createParticleSystem\0parentName\0"
+    "toggleSkybox\0pause\0play\0applyShaderOnTarget\0"
+    "GameObject*\0target\0fileName"
 };
 #undef QT_MOC_LITERAL
 
@@ -73,7 +80,7 @@ static const uint qt_meta_data_Scene[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      20,   14, // methods
+      23,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -81,28 +88,31 @@ static const uint qt_meta_data_Scene[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,  114,    2, 0x06 /* Public */,
-       3,    0,  115,    2, 0x06 /* Public */,
+       1,    0,  129,    2, 0x06 /* Public */,
+       3,    0,  130,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       4,    1,  116,    2, 0x0a /* Public */,
-       6,    1,  119,    2, 0x0a /* Public */,
-       7,    1,  122,    2, 0x0a /* Public */,
-       8,    1,  125,    2, 0x0a /* Public */,
-       9,    1,  128,    2, 0x0a /* Public */,
-      10,    1,  131,    2, 0x0a /* Public */,
-      11,    1,  134,    2, 0x0a /* Public */,
-      12,    0,  137,    2, 0x0a /* Public */,
-      13,    0,  138,    2, 0x0a /* Public */,
-      14,    0,  139,    2, 0x0a /* Public */,
-      15,    0,  140,    2, 0x0a /* Public */,
-      16,    0,  141,    2, 0x0a /* Public */,
-      17,    0,  142,    2, 0x0a /* Public */,
-      18,    0,  143,    2, 0x0a /* Public */,
-      20,    0,  144,    2, 0x0a /* Public */,
-      21,    1,  145,    2, 0x0a /* Public */,
-      22,    0,  148,    2, 0x0a /* Public */,
-      23,    0,  149,    2, 0x0a /* Public */,
+       4,    1,  131,    2, 0x0a /* Public */,
+       6,    1,  134,    2, 0x0a /* Public */,
+       7,    1,  137,    2, 0x0a /* Public */,
+       8,    1,  140,    2, 0x0a /* Public */,
+       9,    1,  143,    2, 0x0a /* Public */,
+      10,    1,  146,    2, 0x0a /* Public */,
+      11,    1,  149,    2, 0x0a /* Public */,
+      12,    0,  152,    2, 0x0a /* Public */,
+      13,    0,  153,    2, 0x0a /* Public */,
+      14,    0,  154,    2, 0x0a /* Public */,
+      15,    0,  155,    2, 0x0a /* Public */,
+      16,    0,  156,    2, 0x0a /* Public */,
+      17,    0,  157,    2, 0x0a /* Public */,
+      18,    1,  158,    2, 0x0a /* Public */,
+      18,    0,  161,    2, 0x2a /* Public | MethodCloned */,
+      21,    1,  162,    2, 0x0a /* Public */,
+      21,    0,  165,    2, 0x2a /* Public | MethodCloned */,
+      23,    1,  166,    2, 0x0a /* Public */,
+      24,    0,  169,    2, 0x0a /* Public */,
+      25,    0,  170,    2, 0x0a /* Public */,
+      26,    2,  171,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -122,11 +132,14 @@ static const uint qt_meta_data_Scene[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+    0x80000000 | 19, QMetaType::QString,   20,
     0x80000000 | 19,
-    QMetaType::Void,
+    0x80000000 | 19, QMetaType::QString,   22,
+    0x80000000 | 19,
     QMetaType::Void, QMetaType::Bool,    5,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 27, QMetaType::QString,   28,   29,
 
        0        // eod
 };
@@ -151,12 +164,18 @@ void Scene::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void 
         case 12: _t->showOpenSceneDialog(); break;
         case 13: _t->showSaveSceneDialog(); break;
         case 14: _t->modelLoaded(); break;
-        case 15: { GameObjectPtr _r = _t->createEmptyGameObject();
+        case 15: { GameObjectPtr _r = _t->createEmptyGameObject((*reinterpret_cast< const QString(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< GameObjectPtr*>(_a[0]) = _r; }  break;
-        case 16: _t->createParticleSystem(); break;
-        case 17: _t->toggleSkybox((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 18: _t->pause(); break;
-        case 19: _t->play(); break;
+        case 16: { GameObjectPtr _r = _t->createEmptyGameObject();
+            if (_a[0]) *reinterpret_cast< GameObjectPtr*>(_a[0]) = _r; }  break;
+        case 17: { GameObjectPtr _r = _t->createParticleSystem((*reinterpret_cast< const QString(*)>(_a[1])));
+            if (_a[0]) *reinterpret_cast< GameObjectPtr*>(_a[0]) = _r; }  break;
+        case 18: { GameObjectPtr _r = _t->createParticleSystem();
+            if (_a[0]) *reinterpret_cast< GameObjectPtr*>(_a[0]) = _r; }  break;
+        case 19: _t->toggleSkybox((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 20: _t->pause(); break;
+        case 21: _t->play(); break;
+        case 22: _t->applyShaderOnTarget((*reinterpret_cast< GameObject*(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -204,13 +223,13 @@ int Scene::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 20)
+        if (_id < 23)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 20;
+        _id -= 23;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 20)
+        if (_id < 23)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 20;
+        _id -= 23;
     }
     return _id;
 }

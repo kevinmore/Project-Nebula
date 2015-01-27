@@ -41,6 +41,10 @@ HierarchyWidget::HierarchyWidget(Scene* scene, QWidget *parent)
 	connect(ui->checkBox_RandomColor, SIGNAL(toggled(bool)), this, SLOT(setColorPickerEnabled(bool)));
 	connect(ui->checkBox_EnableCollision, SIGNAL(toggled(bool)), ui->doubleSpinBox_Restitution, SLOT(setEnabled(bool)));
 
+	// material tab
+	searchShaders();
+	connect(ui->comboBox_SahderFiles, SIGNAL(currentTextChanged(const QString&)), this, SLOT(shaderComboboxChanged(const QString&)));
+	connect(this, SIGNAL(shaderSelected(GameObject*, const QString&)), m_scene, SLOT(applyShaderOnTarget(GameObject*, const QString&)));
 	setMaximumWidth(360);
 	updateObjectTree();
 }
@@ -382,4 +386,24 @@ bool HierarchyWidget::eventFilter( QObject *obj, QEvent *ev )
 	{
 		return QWidget::eventFilter(obj, ev);
 	}
+}
+
+void HierarchyWidget::searchShaders()
+{
+	QStringList nameFilter("*.vert");
+	QDir dir("../Resource/Shaders/");
+	QStringList shaderFiles = dir.entryList(nameFilter);
+
+	// extract the file name and add it to the combo box
+	foreach(QString fileName, shaderFiles)
+	{
+		int dot = fileName.lastIndexOf(".");
+		fileName = fileName.left(dot);
+		ui->comboBox_SahderFiles->addItem(fileName);
+	}
+}
+
+void HierarchyWidget::shaderComboboxChanged( const QString& shaderFile )
+{
+	emit shaderSelected(m_currentObject, shaderFile);
 }

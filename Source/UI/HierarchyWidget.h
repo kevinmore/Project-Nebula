@@ -26,6 +26,7 @@ private:
 	void clearTransformationArea();
 	void connectParticleSystemTab(ParticleSystemPtr ps);
 	void readParticleSystemConfig(ParticleSystemPtr ps);
+	void searchShaders();
 
 private slots:
 	void connectCurrentObject();
@@ -36,9 +37,13 @@ private slots:
 	void deleteGameObject();
 	void showMouseRightButton(const QPoint& point);
 	void setColorPickerEnabled(bool status);
+	void shaderComboboxChanged(const QString& shaderFile);
 
 public slots:
 	void updateObjectTree();
+
+public: signals:
+	void shaderSelected(GameObject* target, const QString& shaderFile);
 
 protected:
 	bool eventFilter(QObject *obj, QEvent *ev); // install a filter event for the color picker

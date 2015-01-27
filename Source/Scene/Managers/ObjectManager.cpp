@@ -93,11 +93,11 @@ ModelPtr ObjectManager::loadModel( const QString& customName, const QString& fil
 void ObjectManager::renderAll(const float currentTime)
 {
 	// sync physics engine feedback
-	foreach(GameObjectPtr go, m_gameObjectMap.values())
-	{
-		RigidBodyPtr rb = go->getComponent("RigidBody").dynamicCast<RigidBody>();
-		if (rb)
-		{
+// 	foreach(GameObjectPtr go, m_gameObjectMap.values())
+// 	{
+// 		RigidBodyPtr rb = go->getComponent("RigidBody").dynamicCast<RigidBody>();
+// 		if (rb)
+// 		{
 // 			QObjectList children = go->children();
 // 			foreach(QObject* obj, children)
 // 			{
@@ -105,12 +105,10 @@ void ObjectManager::renderAll(const float currentTime)
 // 				ParticleSystemPtr ps = child->getComponent("ParticleSystem").dynamicCast<ParticleSystem>();
 // 				rb->applyPointImpulse(ps->getLinearImpuse() * 0.8f, child->position() / 100.0f);
 // 			}
-			rb->applyAngularImpulse(vec3(0,0.1,0));
-// 			go->setPosition(rb->getPosition());
-// 			go->setRotation(rb->getRotationInAxisAndAngles());
-			go->setTransformMatrix(rb->getTransformMatrix());
-		}
-	}
+// 			rb->applyAngularImpulse(vec3(0,0.1,0));
+// 			go->setTransformMatrix(rb->getTransformMatrix());
+// 		}
+// 	}
 
 	//int totalParticles = 0;
 	foreach(ComponentPtr comp, m_renderQueue)

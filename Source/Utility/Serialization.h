@@ -69,7 +69,7 @@ QDataStream& operator >> (QDataStream& in, ParticleSystemPtr object)
 
 QDataStream& operator << (QDataStream& out, ComponentPtr object)
 {
-	if (object->className() == "StaticModel" || object->className() == "RiggedModel")
+	if (object->className() == "Model")
 	{
 		ModelPtr model = object.dynamicCast<AbstractModel>();
 		out << model;
@@ -124,7 +124,7 @@ QDataStream& operator >> (QDataStream& in, GameObjectPtr object)
 	{
 		QString className;
 		in >> className;
-		if (className == "StaticModel" || className == "RiggedModel")
+		if (className == "Model")
 		{
 			// load a model and attach it to the this game object
 			QString fileName;

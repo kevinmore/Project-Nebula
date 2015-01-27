@@ -129,8 +129,6 @@ void BoxRigidBody::update( const float dt )
 
 	// update the linear properties in the parent
 	RigidBody::update(dt);
-
-	qDebug() << m_transformMatrix;
 }
 
 

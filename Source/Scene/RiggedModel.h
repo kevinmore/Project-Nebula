@@ -5,7 +5,6 @@
 #include <Scene/Managers/MaterialManager.h>
 #include <Scene/Managers/TextureManager.h>
 #include <Utility/ModelLoader.h>
-#include <Scene/ShadingTechniques/ShadingTechnique.h>
 #include <Animation/FK/FKController.h>
 #include <Animation/IK/CCDIKSolver.h>
 #include <Animation/IK/FABRIKSolver.h>
@@ -19,7 +18,7 @@ public:
 	RiggedModel(const QString& name, Scene* scene, ShadingTechniquePtr tech, Skeleton* skeleton, QVector<ModelDataPtr> modelDataVector);
 	virtual ~RiggedModel();
 
-	virtual QString className() { return "RiggedModel"; }
+	//virtual QString className() { return "RiggedModel"; }
 	virtual void render( const float currentTime );
 
 	void setFKController(FKController* fkCtrl);
@@ -62,7 +61,6 @@ private:
 	GLuint m_vao;
 
 	Scene* m_scene;
-	ShadingTechniquePtr m_RenderingEffect;
 	bool m_hasAnimation;
 	Skeleton* m_skeleton;
 	FKController* m_FKController;

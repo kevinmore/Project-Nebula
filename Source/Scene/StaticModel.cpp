@@ -2,18 +2,16 @@
 #include <Scene/Scene.h>
 
 StaticModel::StaticModel(const QString& name, Scene* scene, ShadingTechniquePtr tech)
-  : AbstractModel(name),
+  : AbstractModel(tech, name),
 	m_scene(scene),
-    m_RenderingEffect(tech),
 	m_vao(tech->getVAO())
 {
 	initialize();
 }
 
 StaticModel::StaticModel(const QString& name, Scene* scene, ShadingTechniquePtr tech, QVector<ModelDataPtr> modelData)
-  : AbstractModel(name),
+  : AbstractModel(tech, name),
     m_scene(scene),
-    m_RenderingEffect(tech),
 	m_vao(tech->getVAO())
 {
 	initialize(modelData);

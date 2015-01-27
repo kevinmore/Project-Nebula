@@ -60,16 +60,16 @@ void Scene::initialize()
 
 	resetToDefaultScene();
 	// show sky box for demo purpose
-	toggleSkybox(true);
+	//toggleSkybox(true);
 	// setup a basic physics world
-	GameObjectPtr go = createEmptyGameObject("Rigid Cube");
-	LoaderThread loader(this, "../Resource/Models/Common/MetalCube.3ds", go, m_sceneRootNode, false);
-	BoxRigidBodyPtr cube(new BoxRigidBody());
-	cube->setPosition(vec3(0, 100, 0));
-	cube->setLinearVelocity(vec3(50,0,0));
-	cube->setGravityFactor(0.0f);
-	go->attachComponent(cube);
-	m_physicsWorld->addEntity(cube.data());
+// 	GameObjectPtr go = createEmptyGameObject("Rigid Cube");
+// 	LoaderThread loader(this, "../Resource/Models/Common/MetalCube.3ds", go, m_sceneRootNode, false);
+// 	BoxRigidBodyPtr cube(new BoxRigidBody());
+// 	cube->setPosition(vec3(0, 100, 0));
+// 	cube->setLinearVelocity(vec3(50,0,0));
+// 	cube->setGravityFactor(0.0f);
+// 	go->attachComponent(cube);
+// 	m_physicsWorld->addEntity(cube.data());
 
 	// particle system
 // 	GameObjectPtr particle = createParticleSystem("Rigid Cube");
@@ -181,7 +181,6 @@ void Scene::update(float currentTime)
 	m_relativeTime = m_absoluteTime - m_delayedTime;
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 	
 
 	// update the physics world
@@ -517,4 +516,15 @@ void Scene::play()
 	// un-pause the scene and set the delayed time
 	m_bPaused = false;
 	m_delayedTime += m_absoluteTime - m_relativeTime;
+}
+
+
+void Scene::applyShaderOnTarget( GameObject* target, const QString& fileName )
+{
+	GameObjectPtr go = m_objectManager->getGameObject(target->objectName());
+	ComponentPtr comp = go->getComponent("Model");
+	if (comp.dynamicCast<AbstractModel>())
+	{
+		qDebug() << "this is a model";
+	}
 }

@@ -7,6 +7,7 @@
 
 #include <Scene/GameObject.h>
 #include <Primitives/Component.h>
+#include <Scene/ShadingTechniques/ShadingTechnique.h>
 
 struct MeshData
 {
@@ -58,15 +59,16 @@ typedef QSharedPointer<ModelData> ModelDataPtr;
 class AbstractModel : public Component
 {
 public:
-	AbstractModel(const QString& fileName = "");
+	AbstractModel(ShadingTechniquePtr tech, const QString& fileName = "");
 	virtual ~AbstractModel() = 0;
 
 	virtual void render(const float currentTime) = 0;
-	virtual QString className() { return "AbstractModel"; }
+	virtual QString className() { return "Model"; }
 
 	QString fileName() const { return m_fileName; }
 	void setFileName(QString& file) { m_fileName = file; }
 
 protected:
 	QString m_fileName;
+	ShadingTechniquePtr m_RenderingEffect;
 };

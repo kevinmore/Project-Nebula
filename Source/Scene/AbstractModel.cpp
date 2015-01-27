@@ -1,6 +1,7 @@
 #include "AbstractModel.h"
-AbstractModel::AbstractModel(const QString& fileName) 
+AbstractModel::AbstractModel(ShadingTechniquePtr tech, const QString& fileName) 
 	: Component(0),
-	  m_fileName(fileName)
+	  m_fileName(fileName),
+	  m_RenderingEffect(tech)
 {}
 AbstractModel::~AbstractModel() {}

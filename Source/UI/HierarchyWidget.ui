@@ -64,7 +64,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <property name="elideMode">
       <enum>Qt::ElideNone</enum>
@@ -453,7 +453,7 @@
       <zorder>verticalSpacer</zorder>
       <zorder>pushButton_Reset</zorder>
      </widget>
-     <widget class="QWidget" name="tab">
+     <widget class="QWidget" name="PupetTab">
       <attribute name="title">
        <string>Puppet</string>
       </attribute>
@@ -469,7 +469,7 @@
             <x>0</x>
             <y>0</y>
             <width>326</width>
-            <height>335</height>
+            <height>407</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_14">
@@ -554,9 +554,9 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="RenderTab">
+     <widget class="QWidget" name="MaterialTab">
       <attribute name="title">
-       <string>Rendering</string>
+       <string>Material</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_6">
        <item>
@@ -570,13 +570,32 @@
             <x>0</x>
             <y>0</y>
             <width>326</width>
-            <height>335</height>
+            <height>407</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_12">
            <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_13">
-             <item>
+            <layout class="QGridLayout" name="gridLayout_3">
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_42">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>Shader</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QComboBox" name="comboBox_SahderFiles"/>
+             </item>
+             <item row="1" column="0">
               <widget class="QLabel" name="label_35">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -592,7 +611,7 @@
                </property>
               </widget>
              </item>
-             <item>
+             <item row="1" column="1">
               <widget class="QGraphicsView" name="graphicsView_VertexColorPicker">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
@@ -630,9 +649,9 @@
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>-50</y>
-            <width>318</width>
-            <height>648</height>
+            <y>0</y>
+            <width>323</width>
+            <height>688</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_8">
