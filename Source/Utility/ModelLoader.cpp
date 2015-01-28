@@ -421,30 +421,22 @@ MaterialData ModelLoader::loadMaterial(unsigned int index, const aiMaterial* mat
 
 	if(material->Get(AI_MATKEY_COLOR_AMBIENT, ambientColor) == AI_SUCCESS)
 	{
-		data.ambientColor.setX(ambientColor.r);
-		data.ambientColor.setY(ambientColor.g);
-		data.ambientColor.setZ(ambientColor.b);
+		data.ambientColor.setRgbF(ambientColor.r, ambientColor.g, ambientColor.b);
 	}
 
 	if(material->Get(AI_MATKEY_COLOR_DIFFUSE, diffuseColor) == AI_SUCCESS)
 	{
-		data.diffuseColor.setX(diffuseColor.r);
-		data.diffuseColor.setY(diffuseColor.g);
-		data.diffuseColor.setZ(diffuseColor.b);
+		data.diffuseColor.setRgbF(diffuseColor.r, diffuseColor.g, diffuseColor.b);
 	}
 
 	if(material->Get(AI_MATKEY_COLOR_SPECULAR, specularColor) == AI_SUCCESS)
 	{
-		data.specularColor.setX(specularColor.r);
-		data.specularColor.setY(specularColor.g);
-		data.specularColor.setZ(specularColor.b);
+		data.diffuseColor.setRgbF(specularColor.r, specularColor.g, specularColor.b);
 	}
 
 	if(material->Get(AI_MATKEY_COLOR_EMISSIVE, emissiveColor) == AI_SUCCESS)
 	{
-		data.emissiveColor.setX(emissiveColor.r);
-		data.emissiveColor.setY(emissiveColor.g);
-		data.emissiveColor.setZ(emissiveColor.b);
+		data.emissiveColor.setRgbF(emissiveColor.r, emissiveColor.g, emissiveColor.b);
 	}
 
 	if(material->Get(AI_MATKEY_TWOSIDED, twoSided) == AI_SUCCESS)
@@ -454,10 +446,10 @@ MaterialData ModelLoader::loadMaterial(unsigned int index, const aiMaterial* mat
 
 	if(material->Get(AI_MATKEY_OPACITY, opacity) == AI_SUCCESS)
 	{
-		data.ambientColor.setW(opacity);
-		data.diffuseColor.setW(opacity);
-		data.specularColor.setW(opacity);
-		data.emissiveColor.setW(opacity);
+		data.ambientColor.setAlphaF(opacity);
+		data.diffuseColor.setAlphaF(opacity);
+		data.specularColor.setAlphaF(opacity);
+		data.emissiveColor.setAlphaF(opacity);
 
 		if(opacity < 1.0f)
 		{

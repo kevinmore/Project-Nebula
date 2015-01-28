@@ -1,9 +1,8 @@
 #include "MaterialManager.h"
 
 
-MaterialManager::MaterialManager(GLuint programHandle, QObject* parent)
-	: QObject(parent),
-	  m_programHandle(programHandle)
+MaterialManager::MaterialManager(QObject* parent)
+	: QObject(parent)
 {
 }
 
@@ -17,10 +16,10 @@ MaterialPtr MaterialManager::getMaterial( const QString& name )
 }
 
 MaterialPtr MaterialManager::addMaterial(const QString& name, 
-										const QVector4D& ambientColor,
-										const QVector4D& diffuseColor,
-										const QVector4D& specularColor,
-										const QVector4D& emissiveColor,
+										const QColor& ambientColor,
+										const QColor& diffuseColor,
+										const QColor& specularColor,
+										const QColor& emissiveColor,
 										float shininess,
 										float shininessStrength,
 										int twoSided,
@@ -34,7 +33,7 @@ MaterialPtr MaterialManager::addMaterial(const QString& name,
 		return m_materials[name];
 	} 
 	
-	m_materials[name] = MaterialPtr(new Material(name, ambientColor, diffuseColor, specularColor, emissiveColor, shininess, shininessStrength, twoSided, blendMode, alphaBlending, hasTexture, m_programHandle));
+	m_materials[name] = MaterialPtr(new Material(name, ambientColor, diffuseColor, specularColor, emissiveColor, shininess, shininessStrength, twoSided, blendMode, alphaBlending, hasTexture));
 
 	return m_materials[name];
 }

@@ -1,4 +1,4 @@
-#version 430
+#version 430 core
 
 /*
 PER-FRAGMENT LIGHTING (PHONG SHADING IMPLEMENTATION)
@@ -8,10 +8,16 @@ in VS_OUT
 {
     vec4 P;
     vec3 N;
+    vec3 V;
+
+    vec2 texCoord;
     vec4 color;
 } fs_in;
 
 out vec4 FragColor;
+
+// Texture sampler
+uniform sampler2D texColor;
 
 // Material properties
 uniform MaterialInfo

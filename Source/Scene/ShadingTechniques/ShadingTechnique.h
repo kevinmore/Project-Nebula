@@ -2,6 +2,7 @@
 
 #include "Technique.h"
 #include <Scene/Light.h>
+#include <Primitives/Material.h>
 
 class Scene;
 class ShadingTechnique : public Technique 
@@ -35,7 +36,7 @@ public:
     void setMatSpecularPower(float Power);
     void setBoneTransform(uint Index, const mat4& Transform);
 	void setVertexColor(const QColor& col);
-	
+	void setMaterial(const Material& mat);
 
 private:
     

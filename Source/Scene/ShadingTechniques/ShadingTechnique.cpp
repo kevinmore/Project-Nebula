@@ -140,13 +140,15 @@ bool ShadingTechnique::compileShader()
 // 	setMatSpecularPower(5);
 
 	PointLight pl;
-	pl.Position = vec3(100,100,100);
+	pl.Position = vec3(100,200,100);
 	pl.Color = vec3(1.0f, 1.0f, 1.0f);
 	pl.AmbientIntensity = 0.55f;
 	pl.DiffuseIntensity = 0.9f;
 
 	enable();
 	setPointLights(1, &pl);
+	Material mat("11");
+	setMaterial(mat);
 
 	initLights();
 
@@ -249,14 +251,22 @@ void ShadingTechnique::setBoneTransform(uint Index, const mat4& Transform)
 void ShadingTechnique::setVertexColor( const QColor& col )
 {
 	// enable customized color first
-	enable();
 	m_shaderProgram->setUniformValue("customizedColor", 1);
 	m_shaderProgram->setUniformValue("vColor", col);
 }
 
 void ShadingTechnique::initLights()
 {
-	enable();
 	LightPtr light = m_scene->getLight();
 	qDebug() << light->position();
+}
+
+void ShadingTechnique::setMaterial( const Material& mat )
+{
+	m_shaderProgram->setUniformValue("material.Ka", mat.m_ambientColor);
+	m_shaderProgram->setUniformValue("material.Kd", mat.m_diffuseColor);
+	m_shaderProgram->setUniformValue("material.Ks", mat.m_specularColor);
+	m_shaderProgram->setUniformValue("material.Ke", mat.m_emissiveColor);
+	m_shaderProgram->setUniformValue("material.shininessStrength", mat.m_shininessStrength);
+	m_shaderProgram->setUniformValue("material.shininess", mat.m_shininess);
 }

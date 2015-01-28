@@ -43,7 +43,7 @@ void Scene::initialize()
 //     m_light.setIntensity(3.0f);
 
 	m_objectManager = new ObjectManager(this, this);
-	m_materialManager = new MaterialManager(1, this);// hack, fix it later!
+	m_materialManager = new MaterialManager(this);
 	m_textureManager = new TextureManager(this);
 	m_meshManager = new MeshManager(this);
 

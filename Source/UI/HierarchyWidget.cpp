@@ -386,6 +386,7 @@ bool HierarchyWidget::eventFilter( QObject *obj, QEvent *ev )
 				// apply the color to the particle system and color picker both
 				ui->graphicsView_VertexColorPicker->setBackgroundBrush(QBrush(col, Qt::CrossPattern));
 				// set the vertex color through the shading effect
+				m_currentShadingTech->enable();
 				m_currentShadingTech->setVertexColor(col);
 			}
 			return true;

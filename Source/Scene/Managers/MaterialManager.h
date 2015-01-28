@@ -6,16 +6,16 @@
 class MaterialManager : QObject
 {
 public:
-	MaterialManager(GLuint programHandle, QObject* parent = 0);
+	MaterialManager(QObject* parent = 0);
 	~MaterialManager();
 
 	MaterialPtr getMaterial(const QString& name);
 
 	MaterialPtr addMaterial(const QString& name, 
-							const QVector4D& ambientColor,
-							const QVector4D& diffuseColor,
-							const QVector4D& specularColor,
-							const QVector4D& emissiveColor,
+							const QColor& ambientColor,
+							const QColor& diffuseColor,
+							const QColor& specularColor,
+							const QColor& emissiveColor,
 							float shininess,
 							float shininessStrength,
 							int twoSided,
@@ -29,6 +29,5 @@ public:
 
 private:
 	QMap<QString, MaterialPtr> m_materials;
-	GLuint m_programHandle;
 };
 

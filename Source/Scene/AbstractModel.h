@@ -1,7 +1,7 @@
 #pragma once
 #include <QString>
 #include <QSharedPointer>
-#include <QVector4D>
+#include <QColor>
 #include <QOpenGLVertexArrayObject>
 #include <QOpenGLShaderProgram>
 
@@ -29,10 +29,10 @@ struct MaterialData
 {
 	QString name;
 
-	QVector4D ambientColor;
-	QVector4D diffuseColor;
-	QVector4D specularColor;
-	QVector4D emissiveColor;
+	QColor ambientColor;
+	QColor diffuseColor;
+	QColor specularColor;
+	QColor emissiveColor;
 
 	float shininess;
 	float shininessStrength;

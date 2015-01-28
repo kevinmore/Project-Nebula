@@ -1,23 +1,22 @@
 #pragma once
+#include <QOpenGLFunctions_4_3_Core>
 #include <Utility/EngineCommon.h>
-#include <Utility/OpenGLUniformBuffer.h>
-#include <QSharedPointer>
 
-class Material
+class Material : protected QOpenGLFunctions_4_3_Core
 {
 public:
+	Material(const QString& name);
 	Material(const QString& name,
-			 const vec4& ambientColor,
-			 const vec4& diffuseColor,
-			 const vec4& specularColor,
-			 const vec4& emissiveColor,
+			 const QColor& ambientColor,
+			 const QColor& diffuseColor,
+			 const QColor& specularColor,
+			 const QColor& emissiveColor,
 		     float shininess,
 		     float shininessStrength,
 		     int twoSided,
 		     int blendMode,
 		     bool alphaBlending,
-		     bool hasTexture,
-			 GLuint programHandle);
+		     bool hasTexture);
 
 	virtual ~Material();
 
@@ -28,16 +27,14 @@ public:
 
 	void bind();
 
-private:
 	void init();
-	void fillBuffer(QVector<GLubyte>& buffer, GLint* offsets);
 
 	QString m_name;
 
-	vec4 m_ambientColor;
-	vec4 m_diffuseColor;
-	vec4 m_specularColor;
-	vec4 m_emissiveColor;
+	QColor m_ambientColor;
+	QColor m_diffuseColor;
+	QColor m_specularColor;
+	QColor m_emissiveColor;
 
 	float m_shininess;
 	float m_shininessStrength;
@@ -53,7 +50,6 @@ private:
 		Additive = 0x1
 	};
 
-	OpenGLUniformBuffer m_uniformsBuffer;
 };
 
 typedef QSharedPointer<Material> MaterialPtr;
