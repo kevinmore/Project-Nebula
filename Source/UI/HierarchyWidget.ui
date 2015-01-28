@@ -64,7 +64,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>3</number>
      </property>
      <property name="elideMode">
       <enum>Qt::ElideNone</enum>
@@ -569,8 +569,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>326</width>
-            <height>407</height>
+            <width>309</width>
+            <height>1031</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_16">
@@ -893,15 +893,21 @@
                 <item row="2" column="1">
                  <widget class="QGraphicsView" name="graphicsView_SpecularMapPicker">
                   <property name="sizePolicy">
-                   <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                     <horstretch>0</horstretch>
                     <verstretch>0</verstretch>
                    </sizepolicy>
                   </property>
                   <property name="minimumSize">
                    <size>
-                    <width>20</width>
-                    <height>20</height>
+                    <width>180</width>
+                    <height>180</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>180</width>
+                    <height>180</height>
                    </size>
                   </property>
                  </widget>
@@ -941,15 +947,21 @@
                 <item row="3" column="1">
                  <widget class="QGraphicsView" name="graphicsView_EmissiveMapPicker">
                   <property name="sizePolicy">
-                   <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                     <horstretch>0</horstretch>
                     <verstretch>0</verstretch>
                    </sizepolicy>
                   </property>
                   <property name="minimumSize">
                    <size>
-                    <width>20</width>
-                    <height>20</height>
+                    <width>180</width>
+                    <height>180</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>180</width>
+                    <height>180</height>
                    </size>
                   </property>
                  </widget>
@@ -957,15 +969,21 @@
                 <item row="1" column="1">
                  <widget class="QGraphicsView" name="graphicsView_NormalMapPicker">
                   <property name="sizePolicy">
-                   <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                     <horstretch>0</horstretch>
                     <verstretch>0</verstretch>
                    </sizepolicy>
                   </property>
                   <property name="minimumSize">
                    <size>
-                    <width>20</width>
-                    <height>20</height>
+                    <width>180</width>
+                    <height>180</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>180</width>
+                    <height>180</height>
                    </size>
                   </property>
                  </widget>
@@ -973,15 +991,21 @@
                 <item row="0" column="1">
                  <widget class="QGraphicsView" name="graphicsView_DiffuseMapPicker">
                   <property name="sizePolicy">
-                   <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                     <horstretch>0</horstretch>
                     <verstretch>0</verstretch>
                    </sizepolicy>
                   </property>
                   <property name="minimumSize">
                    <size>
-                    <width>20</width>
-                    <height>20</height>
+                    <width>180</width>
+                    <height>180</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>180</width>
+                    <height>180</height>
                    </size>
                   </property>
                  </widget>
@@ -1339,7 +1363,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QGraphicsView" name="graphicsView_TexturePicker">
+              <widget class="QGraphicsView" name="graphicsView_ParticleTexturePicker">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
                  <horstretch>0</horstretch>

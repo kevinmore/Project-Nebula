@@ -38,7 +38,6 @@ public:
 
 protected:
 	QVector<MeshPtr> m_meshes;
-	QVector<QVector<TexturePtr>>  m_textures;
 
 	MeshManager*     m_meshManager;
 	TextureManager*  m_textureManager;

@@ -529,33 +529,24 @@ TextureData ModelLoader::loadTexture(const QString& fileName, const aiMaterial* 
 //    if(material->GetTextureCount(aiTextureType_REFLECTION)   > 0) qDebug() << "aiTextureType_REFLECTION";
 //    if(material->GetTextureCount(aiTextureType_UNKNOWN)      > 0) qDebug() << "aiTextureType_UNKNOWN";
 
-	if(material->GetTextureCount(aiTextureType_DIFFUSE) > 0)
+	if(material->GetTexture(aiTextureType_DIFFUSE, 0, &path) == AI_SUCCESS)
 	{
-		if(material->GetTexture(aiTextureType_DIFFUSE, 0, &path) == AI_SUCCESS)
-		{
-			QString texturePath = dir + "/" + path.data;
-			data.colorMap = texturePath;
-			data.hasTexture = true;
-			m_modelFeatures.hasColorMap = true;
-		}
+		QString texturePath = dir + "/" + path.data;
+		data.colorMap = texturePath;
+		data.hasTexture = true;
+		m_modelFeatures.hasColorMap = true;
 	}
-	if(material->GetTextureCount(aiTextureType_NORMALS) > 0)
+	if(material->GetTexture(aiTextureType_NORMALS, 0, &path) == AI_SUCCESS)
 	{
-		if(material->GetTexture(aiTextureType_NORMALS, 0, &path) == AI_SUCCESS)
-		{
-			QString texturePath = dir + "/" + path.data;
-			data.normalMap = texturePath;
-			m_modelFeatures.hasNormalMap = true;
-		}
+		QString texturePath = dir + "/" + path.data;
+		data.normalMap = texturePath;
+		m_modelFeatures.hasNormalMap = true;
 	}
-	if(material->GetTextureCount(aiTextureType_OPACITY) > 0)
+	if(material->GetTexture(aiTextureType_OPACITY, 0, &path) == AI_SUCCESS)
 	{
-		if(material->GetTexture(aiTextureType_OPACITY, 0, &path) == AI_SUCCESS)
-		{
-			QString texturePath = dir + "/" + path.data;
-			data.colorMap = texturePath;
-			data.hasTexture = true;
-		}
+		QString texturePath = dir + "/" + path.data;
+		data.colorMap = texturePath;
+		data.hasTexture = true;
 	}
 
 	return data;

@@ -7,6 +7,7 @@
 
 #include <Scene/GameObject.h>
 #include <Primitives/Component.h>
+#include <Primitives/Texture.h>
 #include <Primitives/Material.h>
 #include <Scene/ShadingTechniques/ShadingTechnique.h>
 
@@ -70,10 +71,11 @@ public:
 	void setFileName(QString& file) { m_fileName = file; }
 
 	ShadingTechniquePtr renderingEffect() const { return m_RenderingEffect; }
-	MaterialPtr getMaterial() { return m_materials[0]; }
-
+	MaterialPtr getMaterial() const { return m_materials[0]; }
+	QVector<QVector<TexturePtr>> getTextures() const { return m_textures; }
 protected:
 	QString m_fileName;
 	ShadingTechniquePtr m_RenderingEffect;
 	QVector<MaterialPtr> m_materials;
+	QVector<QVector<TexturePtr>>  m_textures;
 };

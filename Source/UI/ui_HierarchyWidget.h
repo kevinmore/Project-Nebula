@@ -165,7 +165,7 @@ public:
     QDoubleSpinBox *doubleSpinBox_Restitution;
     QHBoxLayout *horizontalLayout_9;
     QLabel *label_36;
-    QGraphicsView *graphicsView_TexturePicker;
+    QGraphicsView *graphicsView_ParticleTexturePicker;
     QHBoxLayout *horizontalLayout_19;
     QVBoxLayout *verticalLayout_9;
     QLabel *label_20;
@@ -562,7 +562,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 326, 407));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 309, 1031));
         verticalLayout_16 = new QVBoxLayout(scrollAreaWidgetContents);
         verticalLayout_16->setObjectName(QStringLiteral("verticalLayout_16"));
         horizontalLayout_16 = new QHBoxLayout();
@@ -748,9 +748,10 @@ public:
         gridLayout_4->setObjectName(QStringLiteral("gridLayout_4"));
         graphicsView_SpecularMapPicker = new QGraphicsView(groupBox_2);
         graphicsView_SpecularMapPicker->setObjectName(QStringLiteral("graphicsView_SpecularMapPicker"));
-        sizePolicy6.setHeightForWidth(graphicsView_SpecularMapPicker->sizePolicy().hasHeightForWidth());
-        graphicsView_SpecularMapPicker->setSizePolicy(sizePolicy6);
-        graphicsView_SpecularMapPicker->setMinimumSize(QSize(20, 20));
+        sizePolicy5.setHeightForWidth(graphicsView_SpecularMapPicker->sizePolicy().hasHeightForWidth());
+        graphicsView_SpecularMapPicker->setSizePolicy(sizePolicy5);
+        graphicsView_SpecularMapPicker->setMinimumSize(QSize(180, 180));
+        graphicsView_SpecularMapPicker->setMaximumSize(QSize(180, 180));
 
         gridLayout_4->addWidget(graphicsView_SpecularMapPicker, 2, 1, 1, 1);
 
@@ -772,25 +773,28 @@ public:
 
         graphicsView_EmissiveMapPicker = new QGraphicsView(groupBox_2);
         graphicsView_EmissiveMapPicker->setObjectName(QStringLiteral("graphicsView_EmissiveMapPicker"));
-        sizePolicy6.setHeightForWidth(graphicsView_EmissiveMapPicker->sizePolicy().hasHeightForWidth());
-        graphicsView_EmissiveMapPicker->setSizePolicy(sizePolicy6);
-        graphicsView_EmissiveMapPicker->setMinimumSize(QSize(20, 20));
+        sizePolicy5.setHeightForWidth(graphicsView_EmissiveMapPicker->sizePolicy().hasHeightForWidth());
+        graphicsView_EmissiveMapPicker->setSizePolicy(sizePolicy5);
+        graphicsView_EmissiveMapPicker->setMinimumSize(QSize(180, 180));
+        graphicsView_EmissiveMapPicker->setMaximumSize(QSize(180, 180));
 
         gridLayout_4->addWidget(graphicsView_EmissiveMapPicker, 3, 1, 1, 1);
 
         graphicsView_NormalMapPicker = new QGraphicsView(groupBox_2);
         graphicsView_NormalMapPicker->setObjectName(QStringLiteral("graphicsView_NormalMapPicker"));
-        sizePolicy6.setHeightForWidth(graphicsView_NormalMapPicker->sizePolicy().hasHeightForWidth());
-        graphicsView_NormalMapPicker->setSizePolicy(sizePolicy6);
-        graphicsView_NormalMapPicker->setMinimumSize(QSize(20, 20));
+        sizePolicy5.setHeightForWidth(graphicsView_NormalMapPicker->sizePolicy().hasHeightForWidth());
+        graphicsView_NormalMapPicker->setSizePolicy(sizePolicy5);
+        graphicsView_NormalMapPicker->setMinimumSize(QSize(180, 180));
+        graphicsView_NormalMapPicker->setMaximumSize(QSize(180, 180));
 
         gridLayout_4->addWidget(graphicsView_NormalMapPicker, 1, 1, 1, 1);
 
         graphicsView_DiffuseMapPicker = new QGraphicsView(groupBox_2);
         graphicsView_DiffuseMapPicker->setObjectName(QStringLiteral("graphicsView_DiffuseMapPicker"));
-        sizePolicy6.setHeightForWidth(graphicsView_DiffuseMapPicker->sizePolicy().hasHeightForWidth());
-        graphicsView_DiffuseMapPicker->setSizePolicy(sizePolicy6);
-        graphicsView_DiffuseMapPicker->setMinimumSize(QSize(20, 20));
+        sizePolicy5.setHeightForWidth(graphicsView_DiffuseMapPicker->sizePolicy().hasHeightForWidth());
+        graphicsView_DiffuseMapPicker->setSizePolicy(sizePolicy5);
+        graphicsView_DiffuseMapPicker->setMinimumSize(QSize(180, 180));
+        graphicsView_DiffuseMapPicker->setMaximumSize(QSize(180, 180));
 
         gridLayout_4->addWidget(graphicsView_DiffuseMapPicker, 0, 1, 1, 1);
 
@@ -1012,13 +1016,13 @@ public:
 
         horizontalLayout_9->addWidget(label_36);
 
-        graphicsView_TexturePicker = new QGraphicsView(scrollAreaWidgetContents_2);
-        graphicsView_TexturePicker->setObjectName(QStringLiteral("graphicsView_TexturePicker"));
-        sizePolicy6.setHeightForWidth(graphicsView_TexturePicker->sizePolicy().hasHeightForWidth());
-        graphicsView_TexturePicker->setSizePolicy(sizePolicy6);
-        graphicsView_TexturePicker->setMinimumSize(QSize(256, 256));
+        graphicsView_ParticleTexturePicker = new QGraphicsView(scrollAreaWidgetContents_2);
+        graphicsView_ParticleTexturePicker->setObjectName(QStringLiteral("graphicsView_ParticleTexturePicker"));
+        sizePolicy6.setHeightForWidth(graphicsView_ParticleTexturePicker->sizePolicy().hasHeightForWidth());
+        graphicsView_ParticleTexturePicker->setSizePolicy(sizePolicy6);
+        graphicsView_ParticleTexturePicker->setMinimumSize(QSize(256, 256));
 
-        horizontalLayout_9->addWidget(graphicsView_TexturePicker);
+        horizontalLayout_9->addWidget(graphicsView_ParticleTexturePicker);
 
 
         verticalLayout_8->addLayout(horizontalLayout_9);
@@ -1270,7 +1274,7 @@ public:
         QObject::connect(comboBox_BehaviourType, SIGNAL(currentIndexChanged(int)), lineEdit_To, SLOT(clear()));
         QObject::connect(comboBox_BehaviourType, SIGNAL(currentIndexChanged(int)), lineEdit_Speed, SLOT(clear()));
 
-        tabWidget->setCurrentIndex(2);
+        tabWidget->setCurrentIndex(3);
 
 
         QMetaObject::connectSlotsByName(HierarchyViewer);

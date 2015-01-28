@@ -94,7 +94,6 @@ void StaticModel::initialize(QVector<ModelDataPtr> modelDataVector)
 			}
 			
 		}
-		else m_textures[i].push_back(TexturePtr(nullptr));
 
 		// deal with the material
 // 		MaterialPtr material = m_materialManager->getMaterial(data->materialData.name);

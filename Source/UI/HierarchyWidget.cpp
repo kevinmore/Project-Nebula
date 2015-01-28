@@ -32,7 +32,7 @@ HierarchyWidget::HierarchyWidget(Scene* scene, QWidget *parent)
 	ui->tabWidget->removeTab(3);
 	ui->tabWidget->setCurrentIndex(0);
 	ui->graphicsView_ColorPicker->setScene(new QGraphicsScene(this));
-	ui->graphicsView_TexturePicker->setScene(new QGraphicsScene(this));
+	ui->graphicsView_ParticleTexturePicker->setScene(new QGraphicsScene(this));
 
 	ui->graphicsView_AmbientColorPicker->setScene(new QGraphicsScene(this));
 	ui->graphicsView_DiffuseColorPicker->setScene(new QGraphicsScene(this));
@@ -42,14 +42,19 @@ HierarchyWidget::HierarchyWidget(Scene* scene, QWidget *parent)
 	ui->graphicsView_DiffuseColorPicker->setBackgroundBrush(QBrush(Qt::white, Qt::DiagCrossPattern));
 	ui->graphicsView_SpecularColorPicker->setBackgroundBrush(QBrush(Qt::white, Qt::DiagCrossPattern));
 	ui->graphicsView_EmissiveColorPicker->setBackgroundBrush(QBrush(Qt::black, Qt::DiagCrossPattern));
+	ui->graphicsView_DiffuseMapPicker->setScene(new QGraphicsScene(this));
+	ui->graphicsView_NormalMapPicker->setScene(new QGraphicsScene(this));
+	ui->graphicsView_SpecularMapPicker->setScene(new QGraphicsScene(this));
+	ui->graphicsView_EmissiveMapPicker->setScene(new QGraphicsScene(this));
 
 	ui->graphicsView_AmbientColorPicker->installEventFilter(this);
 	ui->graphicsView_DiffuseColorPicker->installEventFilter(this);
 	ui->graphicsView_SpecularColorPicker->installEventFilter(this);
 	ui->graphicsView_EmissiveColorPicker->installEventFilter(this);
+	ui->graphicsView_NormalMapPicker->installEventFilter(this);
 
 	ui->graphicsView_ColorPicker->installEventFilter(this);
-	ui->graphicsView_TexturePicker->installEventFilter(this);
+	ui->graphicsView_ParticleTexturePicker->installEventFilter(this);
 
 	connect(ui->doubleSpinBox_Shininess, SIGNAL(valueChanged(double)), this, SLOT(onShininessDoubleBoxChange(double)));
 	connect(ui->doubleSpinBox_ShininessStrength, SIGNAL(valueChanged(double)), this, SLOT(onShininessStrengthDoubleBoxChange(double)));
@@ -337,11 +342,11 @@ void HierarchyWidget::readParticleSystemConfig( ParticleSystemPtr ps )
 	ui->doubleSpinBox_Restitution->setValue(ps->getRestitution());
 
 	// displays the particle texture
-	ui->graphicsView_TexturePicker->scene()->clear();
+	ui->graphicsView_ParticleTexturePicker->scene()->clear();
 	QPixmap tex = ps->getTexture()->generateQPixmap();
 	QGraphicsPixmapItem* item = new QGraphicsPixmapItem(tex);
-	ui->graphicsView_TexturePicker->scene()->addItem(item);
-	ui->graphicsView_TexturePicker->fitInView(item);
+	ui->graphicsView_ParticleTexturePicker->scene()->addItem(item);
+	ui->graphicsView_ParticleTexturePicker->fitInView(item);
 }
 
 void HierarchyWidget::setColorPickerEnabled( bool status )
@@ -369,7 +374,7 @@ bool HierarchyWidget::eventFilter( QObject *obj, QEvent *ev )
 			return true;
 		}
 		// pop up a file dialog when the user clicks the texture picker
-		else if (obj == ui->graphicsView_TexturePicker)
+		else if (obj == ui->graphicsView_ParticleTexturePicker)
 		{
 			QString fileName = QFileDialog::getOpenFileName(0, tr("Select a texture"),
 				"../Resource/Textures",
@@ -380,11 +385,11 @@ bool HierarchyWidget::eventFilter( QObject *obj, QEvent *ev )
 				ParticleSystemPtr ps = m_currentObject->getComponent("ParticleSystem").dynamicCast<ParticleSystem>();
 				ps->loadTexture(fileName);
 
-				ui->graphicsView_TexturePicker->scene()->clear();
+				ui->graphicsView_ParticleTexturePicker->scene()->clear();
 				QPixmap tex = ps->getTexture()->generateQPixmap();
 				QGraphicsPixmapItem* item = new QGraphicsPixmapItem(tex);
-				ui->graphicsView_TexturePicker->scene()->addItem(item);
-				ui->graphicsView_TexturePicker->fitInView(item);
+				ui->graphicsView_ParticleTexturePicker->scene()->addItem(item);
+				ui->graphicsView_ParticleTexturePicker->fitInView(item);
 			}
 			return true;
 		}
@@ -508,6 +513,12 @@ void HierarchyWidget::changeShader( const QString& shaderFile )
 {
 	if (!m_currentShadingTech || m_currentShadingTech->shaderFileName() == shaderFile) return;
 	m_currentShadingTech->applyShader(shaderFile);
+
+	// re assign the material properties
+	ComponentPtr comp = m_currentObject->getComponent("Model");
+	ModelPtr model = comp.dynamicCast<AbstractModel>();
+	MaterialPtr mat = model->getMaterial();
+	m_currentShadingTech->setMaterial(mat);
 }
 
 
@@ -569,6 +580,8 @@ void HierarchyWidget::onShininessStrengthDoubleBoxChange( double value )
 
 void HierarchyWidget::readShadingProperties()
 {
+	ui->graphicsView_DiffuseMapPicker->scene()->clear();
+	ui->graphicsView_NormalMapPicker->scene()->clear();
 	ComponentPtr comp = m_currentObject->getComponent("Model");
 	ModelPtr model = comp.dynamicCast<AbstractModel>();
 	if (!model) return;
@@ -585,4 +598,25 @@ void HierarchyWidget::readShadingProperties()
 
 	ui->doubleSpinBox_Shininess->setValue(mat->m_shininess);
 	ui->doubleSpinBox_ShininessStrength->setValue(mat->m_shininessStrength);
+
+	// map the textures
+	QVector<QVector<TexturePtr>> textures = model->getTextures();
+	foreach(QVector<TexturePtr> texArray, textures)
+	{
+		foreach(TexturePtr tex, texArray)
+		{
+			QPixmap pix = tex->generateQPixmap();
+			QGraphicsPixmapItem* item = new QGraphicsPixmapItem(pix);
+			if (tex->usage() == Texture::ColorMap)
+			{
+				ui->graphicsView_DiffuseMapPicker->scene()->addItem(item);
+				ui->graphicsView_DiffuseMapPicker->fitInView(item);
+			}
+			else if (tex->usage() == Texture::NormalMap)
+			{
+				ui->graphicsView_NormalMapPicker->scene()->addItem(item);
+				ui->graphicsView_NormalMapPicker->fitInView(item);
+			}
+		}
+	}
 }
