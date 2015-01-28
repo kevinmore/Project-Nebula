@@ -22,9 +22,11 @@ public:
     ShadingTechnique(Scene* scene, const QString &shaderName, ShaderType shaderType = STATIC);
 	~ShadingTechnique() {}
     virtual bool init();
+	virtual void enable();
 
-    void setMVPMatrix(const mat4& WVP);
-    void setModelMatrix(const mat4& WVP);
+    void setMVPMatrix(const mat4& mvp);
+    void setModelMatrix(const mat4& model);
+	void setViewMatrix(const mat4& view);
     void setColorTextureUnit(uint TextureUnit);
 	void setShadowMapTextureUnit(uint TextureUnit);
 	void setNormalMapTextureUnit(uint TextureUnit);
@@ -54,6 +56,8 @@ private:
 
 	GLuint m_numPointLightsLocation;
 	GLuint m_numSpotLightsLocation;
+
+	bool usingCubeMap;
 
     struct {
         GLuint Color;

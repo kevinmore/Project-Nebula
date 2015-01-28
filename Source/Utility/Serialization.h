@@ -8,10 +8,10 @@
 /*
 * Model (Only need out stream)
 */
-// Order: File Name
+// Order: File Name -> Shader File Name
 QDataStream& operator << (QDataStream& out, ModelPtr object)
 {
-	out << object->fileName();
+	out << object->fileName() << object->renderingEffect()->shaderFileName();
 	return out;
 }
 
@@ -127,8 +127,8 @@ QDataStream& operator >> (QDataStream& in, GameObjectPtr object)
 		if (className == "Model")
 		{
 			// load a model and attach it to the this game object
-			QString fileName;
-			in >> fileName;
+			QString fileName, shaderName;
+			in >> fileName >> shaderName;
  			LoaderThread loader(object->getScene(), fileName, object, object->getScene()->sceneNode(), false);
 		}
 		else if (className == "ParticleSystem")

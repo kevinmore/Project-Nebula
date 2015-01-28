@@ -79,8 +79,7 @@ public:
 	QString shaderFileName() const { return m_shaderFileName; }
 	void setShaderFilePath(const QString& path);
 	void applyShader(const QString &shaderName);
-    void enable();
-	void disable();
+    virtual void enable();
 
 
 	QOpenGLShaderProgramPtr getShaderProgram() const { return m_shaderProgram; }

@@ -9,7 +9,7 @@ public:
 	~SkyboxTechnique();
 	virtual bool init();
 
-	void setWVP(const mat4& WVP);
+	void setMVPMatrix(const mat4& MVP);
 	void setTextureUnit(uint TextureUnit);
 
 private:

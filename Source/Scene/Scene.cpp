@@ -403,12 +403,12 @@ void Scene::toggleSkybox( bool state )
 	{
 		m_skybox = SkyboxPtr(new Skybox(this));
 		m_skybox->init(
-			"../Resource/Textures/skybox/grimmnight_ft.tga",
-			"../Resource/Textures/skybox/grimmnight_bk.tga",
-			"../Resource/Textures/skybox/grimmnight_up.tga",
-			"../Resource/Textures/skybox/grimmnight_dn.tga",
-			"../Resource/Textures/skybox/grimmnight_rt.tga",
-			"../Resource/Textures/skybox/grimmnight_lf.tga");
+			"../Resource/Textures/skybox/interstellar_ft.tga",
+			"../Resource/Textures/skybox/interstellar_bk.tga",
+			"../Resource/Textures/skybox/interstellar_up.tga",
+			"../Resource/Textures/skybox/interstellar_dn.tga",
+			"../Resource/Textures/skybox/interstellar_rt.tga",
+			"../Resource/Textures/skybox/interstellar_lf.tga");
 	}
 	else
 	{

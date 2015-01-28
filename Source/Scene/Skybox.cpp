@@ -79,7 +79,7 @@ void Skybox::render( const float currentTime )
 	glCullFace(GL_FRONT);
 	glDepthFunc(GL_LEQUAL);
 
-	m_skyboxTechnique->setWVP(m_scene->getCamera()->viewProjectionMatrix() * modelMatrix);
+	m_skyboxTechnique->setMVPMatrix(m_scene->getCamera()->viewProjectionMatrix() * modelMatrix);
 	m_cubemapTex->bind(GL_TEXTURE0);
 
 	for(int i = 0; i < m_meshes.size(); ++i)
@@ -90,7 +90,6 @@ void Skybox::render( const float currentTime )
 	glCullFace(OldCullFaceMode);        
 	glDepthFunc(OldDepthFuncMode);
 
-	m_skyboxTechnique->disable();
 }
 
 void Skybox::drawElements(uint index)

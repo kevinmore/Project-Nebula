@@ -158,6 +158,8 @@ void StaticModel::render( float time )
 	m_RenderingEffect->setEyeWorldPos(m_scene->getCamera()->position());
 	m_RenderingEffect->setMVPMatrix(m_scene->getCamera()->viewProjectionMatrix() * modelMatrix);
 	m_RenderingEffect->setModelMatrix(modelMatrix); 
+	m_RenderingEffect->setViewMatrix(m_scene->getCamera()->viewMatrix());
+
 	for(int i = 0; i < m_meshes.size(); ++i)
 	{
 		/*if( m_materials[i] != nullptr && ! m_materials[i]->isTranslucent())*/
@@ -214,7 +216,6 @@ void StaticModel::render( float time )
 	}
 	
 
-	m_RenderingEffect->disable();	
 }
 
 void StaticModel::drawElements(unsigned int index, int mode)

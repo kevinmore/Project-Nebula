@@ -28,12 +28,6 @@ void Technique::enable()
     m_shaderProgram->bind();
 }
 
-
-void Technique::disable()
-{
-	m_shaderProgram->release();
-}
-
 GLint Technique::getUniformLocation(const char* pUniformName)
 {
     GLuint location = m_shaderProgram->uniformLocation(pUniformName);

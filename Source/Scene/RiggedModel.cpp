@@ -246,7 +246,7 @@ void RiggedModel::render( const float currentTime )
 	m_RenderingEffect->setEyeWorldPos(m_scene->getCamera()->position());
 	m_RenderingEffect->setMVPMatrix(m_scene->getCamera()->viewProjectionMatrix() * modelMatrix);
 	m_RenderingEffect->setModelMatrix(modelMatrix); 
-
+	m_RenderingEffect->setViewMatrix(m_scene->getCamera()->viewMatrix());
 
 	// do the skeleton animation here
 	// check if the model has animation first
@@ -337,7 +337,6 @@ void RiggedModel::render( const float currentTime )
 		}
 	}
 
-	m_RenderingEffect->disable();
 }
 
 void RiggedModel::drawElements(unsigned int index, int mode)

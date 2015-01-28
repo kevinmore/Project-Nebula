@@ -12,10 +12,22 @@ using namespace std;
 ShadingTechnique::ShadingTechnique(Scene* scene, const QString &shaderName, ShaderType shaderType)
 	: Technique(shaderName),
 	  m_scene(scene),
-	  m_shaderType(shaderType)
+	  m_shaderType(shaderType),
+	  usingCubeMap(false)
 {
 }
 
+void ShadingTechnique::enable()
+{
+	m_shaderProgram->bind();
+	if (usingCubeMap)
+	{
+		SkyboxPtr skybox = m_scene->getSkybox();
+		if(!skybox) return;
+		CubemapTexturePtr cubeMap = skybox->getCubemapTexture();
+		cubeMap->bind(GL_TEXTURE0);
+	}
+}
 
 bool ShadingTechnique::init()
 {
@@ -32,6 +44,11 @@ bool ShadingTechnique::compileShader()
 	m_shaderProgram->addShaderFromSourceFile(QOpenGLShader::Vertex, m_shaderFilePath + m_shaderFileName + ".vert");
 	m_shaderProgram->addShaderFromSourceFile(QOpenGLShader::Fragment, m_shaderFilePath + m_shaderFileName + ".frag");
 	m_shaderProgram->link();
+
+	if (m_shaderFileName.contains("reflection"))
+		usingCubeMap = true;
+	else
+		usingCubeMap = false;
 
 	m_numPointLightsLocation = getUniformLocation("gNumPointLights");
 	m_numSpotLightsLocation = getUniformLocation("gNumSpotLights");
@@ -139,14 +156,19 @@ bool ShadingTechnique::compileShader()
 // 	setMatSpecularIntensity(1.0f);
 // 	setMatSpecularPower(5);
 
-	PointLight pl;
-	pl.Position = vec3(100,200,100);
-	pl.Color = vec3(1.0f, 1.0f, 1.0f);
-	pl.AmbientIntensity = 0.55f;
-	pl.DiffuseIntensity = 0.9f;
+	PointLight pl[2];
+	pl[0].Position = vec3(100,200,100);
+	pl[0].Color = vec3(1.0f, 1.0f, 1.0f);
+	pl[0].AmbientIntensity = 0.55f;
+	pl[0].DiffuseIntensity = 0.9f;
+
+	pl[1].Position = vec3(100,200,650);
+	pl[1].Color = vec3(1.0f, 1.0f, 1.0f);
+	pl[1].AmbientIntensity = 0.55f;
+	pl[1].DiffuseIntensity = 0.9f;
 
 	enable();
-	setPointLights(1, &pl);
+	setPointLights(2, pl);
 
 	initLights();
 
@@ -162,16 +184,21 @@ void ShadingTechnique::setDirectionalLight(const DirectionalLight& Light)
 }
 
 
-void ShadingTechnique::setMVPMatrix(const mat4& WVP)
+void ShadingTechnique::setMVPMatrix(const mat4& mvp)
 {
-	m_shaderProgram->setUniformValue("gWVP", WVP);
+	m_shaderProgram->setUniformValue("gWVP", mvp);
 }
 
-void ShadingTechnique::setModelMatrix(const mat4& World)
+void ShadingTechnique::setModelMatrix(const mat4& model)
 {
-	m_shaderProgram->setUniformValue("gWorld", World);
+	m_shaderProgram->setUniformValue("gWorld", model);
 }
 
+
+void ShadingTechnique::setViewMatrix( const mat4& view )
+{
+	m_shaderProgram->setUniformValue("viewMatrix", view);
+}
 
 void ShadingTechnique::setColorTextureUnit(unsigned int TextureUnit)
 {
@@ -289,3 +316,5 @@ void ShadingTechnique::setMatSpecularPower(float power)
 {
 	m_shaderProgram->setUniformValue("material.shininess", power);
 }
+
+

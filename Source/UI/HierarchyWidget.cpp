@@ -482,6 +482,23 @@ bool HierarchyWidget::eventFilter( QObject *obj, QEvent *ev )
 			}
 			return true;
 		}
+		else if (obj == ui->graphicsView_NormalMapPicker)
+		{
+			if (!m_currentShadingTech) return true;
+			ComponentPtr comp = m_currentObject->getComponent("Model");
+			ModelPtr model = comp.dynamicCast<AbstractModel>();
+			QFileInfo modelFile(model->fileName());
+			QString fileName = QFileDialog::getOpenFileName(0, tr("Select a normal map texture"),
+				modelFile.absoluteFilePath(),
+				tr("Texture File(*.*)"));
+			if (!fileName.isEmpty())
+			{
+				// apply the texture to the particle system and color picker both
+				qDebug() << "normal mapping insertion hasn't been implemented yet!";
+			}
+
+			return true;
+		}
 		else
 		{
 			return QWidget::eventFilter(obj, ev);
