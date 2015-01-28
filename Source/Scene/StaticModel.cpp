@@ -97,33 +97,47 @@ void StaticModel::initialize(QVector<ModelDataPtr> modelDataVector)
 		else m_textures[i].push_back(TexturePtr(nullptr));
 
 		// deal with the material
-		MaterialPtr material = m_materialManager->getMaterial(data->materialData.name);
-		qDebug() << data->materialData.name 
-			<< endl << "ambientColor" << data->materialData.ambientColor
-			<< endl << "diffuseColor" << data->materialData.diffuseColor
-			<< endl << "specularColor" << data->materialData.specularColor
-			<< endl << "emissiveColor" << data->materialData.emissiveColor
-			<< endl << "shininess" << data->materialData.shininess
-			<< endl << "shininessStrength" << data->materialData.shininessStrength
-			<< endl << "twoSided" << data->materialData.twoSided
-			<< endl << "blendMode" << data->materialData.blendMode
-			<< endl << "alphaBlending" << data->materialData.alphaBlending
-			<< endl << "hasTexture" << data->textureData.hasTexture;
+// 		MaterialPtr material = m_materialManager->getMaterial(data->materialData.name);
+// 		qDebug() << data->materialData.name 
+// 			<< endl << "ambientColor" << data->materialData.ambientColor
+// 			<< endl << "diffuseColor" << data->materialData.diffuseColor
+// 			<< endl << "specularColor" << data->materialData.specularColor
+// 			<< endl << "emissiveColor" << data->materialData.emissiveColor
+// 			<< endl << "shininess" << data->materialData.shininess
+// 			<< endl << "shininessStrength" << data->materialData.shininessStrength
+// 			<< endl << "twoSided" << data->materialData.twoSided
+// 			<< endl << "blendMode" << data->materialData.blendMode
+// 			<< endl << "alphaBlending" << data->materialData.alphaBlending
+// 			<< endl << "hasTexture" << data->textureData.hasTexture;
+// 
+// 		if(!material)
+// 		{
+// 			material = m_materialManager->addMaterial(data->materialData.name,
+// 													data->materialData.ambientColor,
+// 													data->materialData.diffuseColor,
+// 													data->materialData.specularColor,
+// 													data->materialData.emissiveColor,
+// 													data->materialData.shininess,
+// 													data->materialData.shininessStrength,
+// 													data->materialData.twoSided,
+// 													data->materialData.blendMode,
+// 													data->materialData.alphaBlending,
+// 													data->textureData.hasTexture);
+// 		}
+		
 
-		if(!material)
-		{
-			material = m_materialManager->addMaterial(data->materialData.name,
-													data->materialData.ambientColor,
-													data->materialData.diffuseColor,
-													data->materialData.specularColor,
-													data->materialData.emissiveColor,
-													data->materialData.shininess,
-													data->materialData.shininessStrength,
-													data->materialData.twoSided,
-													data->materialData.blendMode,
-													data->materialData.alphaBlending,
-													data->textureData.hasTexture);
-		}
+		MaterialPtr material(new Material(
+			data->materialData.name,
+			data->materialData.ambientColor,
+			data->materialData.diffuseColor,
+			data->materialData.specularColor,
+			data->materialData.emissiveColor,
+			data->materialData.shininess,
+			data->materialData.shininessStrength,
+			data->materialData.twoSided,
+			data->materialData.blendMode,
+			data->materialData.alphaBlending,
+			data->textureData.hasTexture));
 
 		m_materials.push_back(material);
 

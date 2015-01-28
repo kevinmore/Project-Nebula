@@ -37,7 +37,6 @@ public:
 
 	void setMaterial(const Material& mat);
 	void setMaterial(const MaterialPtr mat);
-	void setVertexColor(const QColor& col);
 	void setMatAmbientColor(const QColor& col);
 	void setMatDiffuseColor(const QColor& col);
 	void setMatSpecularColor(const QColor& col);

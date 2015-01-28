@@ -34,18 +34,15 @@ HierarchyWidget::HierarchyWidget(Scene* scene, QWidget *parent)
 	ui->graphicsView_ColorPicker->setScene(new QGraphicsScene(this));
 	ui->graphicsView_TexturePicker->setScene(new QGraphicsScene(this));
 
-	ui->graphicsView_VertexColorPicker->setScene(new QGraphicsScene(this));
 	ui->graphicsView_AmbientColorPicker->setScene(new QGraphicsScene(this));
 	ui->graphicsView_DiffuseColorPicker->setScene(new QGraphicsScene(this));
 	ui->graphicsView_SpecularColorPicker->setScene(new QGraphicsScene(this));
 	ui->graphicsView_EmissiveColorPicker->setScene(new QGraphicsScene(this));
-	ui->graphicsView_VertexColorPicker->setBackgroundBrush(QBrush(Qt::white, Qt::DiagCrossPattern));
 	ui->graphicsView_AmbientColorPicker->setBackgroundBrush(QBrush(Qt::black, Qt::DiagCrossPattern));
 	ui->graphicsView_DiffuseColorPicker->setBackgroundBrush(QBrush(Qt::white, Qt::DiagCrossPattern));
 	ui->graphicsView_SpecularColorPicker->setBackgroundBrush(QBrush(Qt::white, Qt::DiagCrossPattern));
 	ui->graphicsView_EmissiveColorPicker->setBackgroundBrush(QBrush(Qt::black, Qt::DiagCrossPattern));
 
-	ui->graphicsView_VertexColorPicker->installEventFilter(this);
 	ui->graphicsView_AmbientColorPicker->installEventFilter(this);
 	ui->graphicsView_DiffuseColorPicker->installEventFilter(this);
 	ui->graphicsView_SpecularColorPicker->installEventFilter(this);
@@ -177,7 +174,6 @@ void HierarchyWidget::readGameObject(QTreeWidgetItem* current, QTreeWidgetItem* 
 	// if the game object has a particle system attached to
 	// show the particle system tab
 	ui->tabWidget->removeTab(ui->tabWidget->indexOf(particleSystemTab));
-	ui->tabWidget->setCurrentIndex(0);
 	foreach(ComponentPtr comp, m_currentObject->getComponents())
 	{
 		if (comp->className() == "ParticleSystem")
@@ -393,27 +389,23 @@ bool HierarchyWidget::eventFilter( QObject *obj, QEvent *ev )
 			return true;
 		}
 		/// Material section
-		else if (obj == ui->graphicsView_VertexColorPicker)
-		{
-			QColor col = QColorDialog::getColor(Qt::white, this);
-			if(col.isValid() && m_currentShadingTech) 
-			{
-				// apply the color to the particle system and color picker both
-				ui->graphicsView_VertexColorPicker->setBackgroundBrush(QBrush(col, Qt::CrossPattern));
-				// set the vertex color through the shading effect
-				m_currentShadingTech->enable();
-				m_currentShadingTech->setVertexColor(col);
-			}
-			return true;
-		}
 		else if (obj == ui->graphicsView_AmbientColorPicker)
 		{
-			QColor col = QColorDialog::getColor(Qt::white, this);
-			if(col.isValid() && m_currentShadingTech) 
+			if (!m_currentShadingTech) return true;
+			ComponentPtr comp = m_currentObject->getComponent("Model");
+			ModelPtr model = comp.dynamicCast<AbstractModel>();
+			MaterialPtr mat = model->getMaterial();
+
+			QColor col = QColorDialog::getColor(mat->m_ambientColor, this);
+			if(col.isValid()) 
 			{
 				// apply the color to the particle system and color picker both
-				ui->graphicsView_AmbientColorPicker->setBackgroundBrush(QBrush(col, Qt::CrossPattern));
-				// set the vertex color through the shading effect
+				ui->graphicsView_AmbientColorPicker->setBackgroundBrush(QBrush(col, Qt::DiagCrossPattern));
+				
+				// change the material of the model
+				mat->m_ambientColor = col;
+
+				// set the diffuse color through the shading effect
 				m_currentShadingTech->enable();
 				m_currentShadingTech->setMatAmbientColor(col);
 			}
@@ -421,12 +413,21 @@ bool HierarchyWidget::eventFilter( QObject *obj, QEvent *ev )
 		}
 		else if (obj == ui->graphicsView_DiffuseColorPicker)
 		{
-			QColor col = QColorDialog::getColor(Qt::white, this);
-			if(col.isValid() && m_currentShadingTech) 
+			if (!m_currentShadingTech) return true;
+			ComponentPtr comp = m_currentObject->getComponent("Model");
+			ModelPtr model = comp.dynamicCast<AbstractModel>();
+			MaterialPtr mat = model->getMaterial();
+
+			QColor col = QColorDialog::getColor(mat->m_diffuseColor, this);
+			if(col.isValid()) 
 			{
 				// apply the color to the particle system and color picker both
-				ui->graphicsView_DiffuseColorPicker->setBackgroundBrush(QBrush(col, Qt::CrossPattern));
-				// set the vertex color through the shading effect
+				ui->graphicsView_DiffuseColorPicker->setBackgroundBrush(QBrush(col, Qt::DiagCrossPattern));
+				
+				// change the material of the model
+				mat->m_diffuseColor = col;
+
+				// set the diffuse color through the shading effect
 				m_currentShadingTech->enable();
 				m_currentShadingTech->setMatDiffuseColor(col);
 			}
@@ -434,12 +435,21 @@ bool HierarchyWidget::eventFilter( QObject *obj, QEvent *ev )
 		}
 		else if (obj == ui->graphicsView_SpecularColorPicker)
 		{
-			QColor col = QColorDialog::getColor(Qt::white, this);
-			if(col.isValid() && m_currentShadingTech) 
+			if (!m_currentShadingTech) return true;
+			ComponentPtr comp = m_currentObject->getComponent("Model");
+			ModelPtr model = comp.dynamicCast<AbstractModel>();
+			MaterialPtr mat = model->getMaterial();
+
+			QColor col = QColorDialog::getColor(mat->m_specularColor, this);
+			if(col.isValid()) 
 			{
 				// apply the color to the particle system and color picker both
-				ui->graphicsView_SpecularColorPicker->setBackgroundBrush(QBrush(col, Qt::CrossPattern));
-				// set the vertex color through the shading effect
+				ui->graphicsView_SpecularColorPicker->setBackgroundBrush(QBrush(col, Qt::DiagCrossPattern));
+				
+				// change the material of the model
+				mat->m_specularColor = col;
+
+				// set the diffuse color through the shading effect
 				m_currentShadingTech->enable();
 				m_currentShadingTech->setMatSpecularColor(col);
 			}
@@ -447,12 +457,21 @@ bool HierarchyWidget::eventFilter( QObject *obj, QEvent *ev )
 		}
 		else if (obj == ui->graphicsView_EmissiveColorPicker)
 		{
-			QColor col = QColorDialog::getColor(Qt::white, this);
-			if(col.isValid() && m_currentShadingTech) 
+			if (!m_currentShadingTech) return true;
+			ComponentPtr comp = m_currentObject->getComponent("Model");
+			ModelPtr model = comp.dynamicCast<AbstractModel>();
+			MaterialPtr mat = model->getMaterial();
+
+			QColor col = QColorDialog::getColor(mat->m_emissiveColor, this);
+			if(col.isValid()) 
 			{
 				// apply the color to the particle system and color picker both
-				ui->graphicsView_EmissiveColorPicker->setBackgroundBrush(QBrush(col, Qt::CrossPattern));
-				// set the vertex color through the shading effect
+				ui->graphicsView_EmissiveColorPicker->setBackgroundBrush(QBrush(col, Qt::DiagCrossPattern));
+				
+				// change the material of the model
+				mat->m_emissiveColor = col;
+
+				// set the diffuse color through the shading effect
 				m_currentShadingTech->enable();
 				m_currentShadingTech->setMatEmissiveColor(col);
 			}
@@ -498,6 +517,12 @@ void HierarchyWidget::onShininessSliderChange( int value )
 	if (!m_currentShadingTech) return;
 	m_currentShadingTech->enable();
 	m_currentShadingTech->setMatSpecularPower(value);
+
+	// change the material of the model
+	ComponentPtr comp = m_currentObject->getComponent("Model");
+	ModelPtr model = comp.dynamicCast<AbstractModel>();
+	MaterialPtr mat = model->getMaterial();
+	mat->m_shininess = value;
 }
 
 void HierarchyWidget::onShininessDoubleBoxChange( double value )
@@ -506,6 +531,12 @@ void HierarchyWidget::onShininessDoubleBoxChange( double value )
 	if (!m_currentShadingTech) return;
 	m_currentShadingTech->enable();
 	m_currentShadingTech->setMatSpecularPower(value);
+
+	// change the material of the model
+	ComponentPtr comp = m_currentObject->getComponent("Model");
+	ModelPtr model = comp.dynamicCast<AbstractModel>();
+	MaterialPtr mat = model->getMaterial();
+	mat->m_shininess = value;
 }
 
 void HierarchyWidget::onShininessStrengthSliderChange( int value )
@@ -514,6 +545,12 @@ void HierarchyWidget::onShininessStrengthSliderChange( int value )
 	if (!m_currentShadingTech) return;
 	m_currentShadingTech->enable();
 	m_currentShadingTech->setMatSpecularIntensity(value/100.0f);
+
+	// change the material of the model
+	ComponentPtr comp = m_currentObject->getComponent("Model");
+	ModelPtr model = comp.dynamicCast<AbstractModel>();
+	MaterialPtr mat = model->getMaterial();
+	mat->m_shininessStrength = value/100.0f;
 }
 
 void HierarchyWidget::onShininessStrengthDoubleBoxChange( double value )
@@ -522,6 +559,12 @@ void HierarchyWidget::onShininessStrengthDoubleBoxChange( double value )
 	if (!m_currentShadingTech) return;
 	m_currentShadingTech->enable();
 	m_currentShadingTech->setMatSpecularIntensity(value);
+
+	// change the material of the model
+	ComponentPtr comp = m_currentObject->getComponent("Model");
+	ModelPtr model = comp.dynamicCast<AbstractModel>();
+	MaterialPtr mat = model->getMaterial();
+	mat->m_shininessStrength = value;
 }
 
 void HierarchyWidget::readShadingProperties()

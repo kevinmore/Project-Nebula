@@ -234,13 +234,6 @@ void ShadingTechnique::setBoneTransform(uint Index, const mat4& Transform)
     glUniformMatrix4fv(m_boneLocation[Index], 1, GL_FALSE, (const GLfloat*)Transform.data());       
 }
 
-void ShadingTechnique::setVertexColor( const QColor& col )
-{
-	// enable customized color first
-	m_shaderProgram->setUniformValue("customizedColor", 1);
-	m_shaderProgram->setUniformValue("vColor", col);
-}
-
 void ShadingTechnique::initLights()
 {
 	LightPtr light = m_scene->getLight();

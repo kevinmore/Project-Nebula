@@ -122,8 +122,6 @@ public:
     QLabel *label_45;
     QGraphicsView *graphicsView_SpecularColorPicker;
     QLabel *label_48;
-    QLabel *label_35;
-    QGraphicsView *graphicsView_VertexColorPicker;
     QGroupBox *groupBox_2;
     QVBoxLayout *verticalLayout_15;
     QGridLayout *gridLayout_4;
@@ -564,7 +562,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 309, 417));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 326, 407));
         verticalLayout_16 = new QVBoxLayout(scrollAreaWidgetContents);
         verticalLayout_16->setObjectName(QStringLiteral("verticalLayout_16"));
         horizontalLayout_16 = new QHBoxLayout();
@@ -627,7 +625,7 @@ public:
         horizontalLayout_13->addWidget(doubleSpinBox_ShininessStrength);
 
 
-        gridLayout_3->addLayout(horizontalLayout_13, 5, 1, 1, 1);
+        gridLayout_3->addLayout(horizontalLayout_13, 4, 1, 1, 1);
 
         horizontalLayout_14 = new QHBoxLayout();
         horizontalLayout_14->setObjectName(QStringLiteral("horizontalLayout_14"));
@@ -651,7 +649,7 @@ public:
         horizontalLayout_14->addWidget(doubleSpinBox_Shininess);
 
 
-        gridLayout_3->addLayout(horizontalLayout_14, 6, 1, 1, 1);
+        gridLayout_3->addLayout(horizontalLayout_14, 5, 1, 1, 1);
 
         label_43 = new QLabel(groupBox);
         label_43->setObjectName(QStringLiteral("label_43"));
@@ -659,7 +657,7 @@ public:
         label_43->setSizePolicy(sizePolicy2);
         label_43->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
 
-        gridLayout_3->addWidget(label_43, 1, 0, 1, 1);
+        gridLayout_3->addWidget(label_43, 0, 0, 1, 1);
 
         label_44 = new QLabel(groupBox);
         label_44->setObjectName(QStringLiteral("label_44"));
@@ -667,7 +665,7 @@ public:
         label_44->setSizePolicy(sizePolicy2);
         label_44->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
 
-        gridLayout_3->addWidget(label_44, 2, 0, 1, 1);
+        gridLayout_3->addWidget(label_44, 1, 0, 1, 1);
 
         graphicsView_AmbientColorPicker = new QGraphicsView(groupBox);
         graphicsView_AmbientColorPicker->setObjectName(QStringLiteral("graphicsView_AmbientColorPicker"));
@@ -678,7 +676,7 @@ public:
         graphicsView_AmbientColorPicker->setSizePolicy(sizePolicy6);
         graphicsView_AmbientColorPicker->setMinimumSize(QSize(20, 20));
 
-        gridLayout_3->addWidget(graphicsView_AmbientColorPicker, 1, 1, 1, 1);
+        gridLayout_3->addWidget(graphicsView_AmbientColorPicker, 0, 1, 1, 1);
 
         graphicsView_DiffuseColorPicker = new QGraphicsView(groupBox);
         graphicsView_DiffuseColorPicker->setObjectName(QStringLiteral("graphicsView_DiffuseColorPicker"));
@@ -686,7 +684,7 @@ public:
         graphicsView_DiffuseColorPicker->setSizePolicy(sizePolicy6);
         graphicsView_DiffuseColorPicker->setMinimumSize(QSize(20, 20));
 
-        gridLayout_3->addWidget(graphicsView_DiffuseColorPicker, 2, 1, 1, 1);
+        gridLayout_3->addWidget(graphicsView_DiffuseColorPicker, 1, 1, 1, 1);
 
         label_47 = new QLabel(groupBox);
         label_47->setObjectName(QStringLiteral("label_47"));
@@ -694,7 +692,7 @@ public:
         label_47->setSizePolicy(sizePolicy2);
         label_47->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
 
-        gridLayout_3->addWidget(label_47, 5, 0, 1, 1);
+        gridLayout_3->addWidget(label_47, 4, 0, 1, 1);
 
         graphicsView_EmissiveColorPicker = new QGraphicsView(groupBox);
         graphicsView_EmissiveColorPicker->setObjectName(QStringLiteral("graphicsView_EmissiveColorPicker"));
@@ -702,7 +700,7 @@ public:
         graphicsView_EmissiveColorPicker->setSizePolicy(sizePolicy6);
         graphicsView_EmissiveColorPicker->setMinimumSize(QSize(20, 20));
 
-        gridLayout_3->addWidget(graphicsView_EmissiveColorPicker, 4, 1, 1, 1);
+        gridLayout_3->addWidget(graphicsView_EmissiveColorPicker, 3, 1, 1, 1);
 
         label_46 = new QLabel(groupBox);
         label_46->setObjectName(QStringLiteral("label_46"));
@@ -710,7 +708,7 @@ public:
         label_46->setSizePolicy(sizePolicy2);
         label_46->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
 
-        gridLayout_3->addWidget(label_46, 4, 0, 1, 1);
+        gridLayout_3->addWidget(label_46, 3, 0, 1, 1);
 
         label_45 = new QLabel(groupBox);
         label_45->setObjectName(QStringLiteral("label_45"));
@@ -718,7 +716,7 @@ public:
         label_45->setSizePolicy(sizePolicy2);
         label_45->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
 
-        gridLayout_3->addWidget(label_45, 3, 0, 1, 1);
+        gridLayout_3->addWidget(label_45, 2, 0, 1, 1);
 
         graphicsView_SpecularColorPicker = new QGraphicsView(groupBox);
         graphicsView_SpecularColorPicker->setObjectName(QStringLiteral("graphicsView_SpecularColorPicker"));
@@ -726,7 +724,7 @@ public:
         graphicsView_SpecularColorPicker->setSizePolicy(sizePolicy6);
         graphicsView_SpecularColorPicker->setMinimumSize(QSize(20, 20));
 
-        gridLayout_3->addWidget(graphicsView_SpecularColorPicker, 3, 1, 1, 1);
+        gridLayout_3->addWidget(graphicsView_SpecularColorPicker, 2, 1, 1, 1);
 
         label_48 = new QLabel(groupBox);
         label_48->setObjectName(QStringLiteral("label_48"));
@@ -734,23 +732,7 @@ public:
         label_48->setSizePolicy(sizePolicy2);
         label_48->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
 
-        gridLayout_3->addWidget(label_48, 6, 0, 1, 1);
-
-        label_35 = new QLabel(groupBox);
-        label_35->setObjectName(QStringLiteral("label_35"));
-        sizePolicy2.setHeightForWidth(label_35->sizePolicy().hasHeightForWidth());
-        label_35->setSizePolicy(sizePolicy2);
-        label_35->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
-
-        gridLayout_3->addWidget(label_35, 0, 0, 1, 1);
-
-        graphicsView_VertexColorPicker = new QGraphicsView(groupBox);
-        graphicsView_VertexColorPicker->setObjectName(QStringLiteral("graphicsView_VertexColorPicker"));
-        sizePolicy6.setHeightForWidth(graphicsView_VertexColorPicker->sizePolicy().hasHeightForWidth());
-        graphicsView_VertexColorPicker->setSizePolicy(sizePolicy6);
-        graphicsView_VertexColorPicker->setMinimumSize(QSize(20, 20));
-
-        gridLayout_3->addWidget(graphicsView_VertexColorPicker, 0, 1, 1, 1);
+        gridLayout_3->addWidget(label_48, 5, 0, 1, 1);
 
 
         verticalLayout_12->addLayout(gridLayout_3);
@@ -1334,7 +1316,6 @@ public:
         label_46->setText(QApplication::translate("HierarchyViewer", "Emissive Color", 0));
         label_45->setText(QApplication::translate("HierarchyViewer", "Specular Color", 0));
         label_48->setText(QApplication::translate("HierarchyViewer", "Specular Power", 0));
-        label_35->setText(QApplication::translate("HierarchyViewer", "Vertex Color", 0));
         groupBox_2->setTitle(QApplication::translate("HierarchyViewer", "Texture", 0));
         label_53->setText(QApplication::translate("HierarchyViewer", "Specular Map", 0));
         label_52->setText(QApplication::translate("HierarchyViewer", "Emissive Map", 0));

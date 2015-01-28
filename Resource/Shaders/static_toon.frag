@@ -4,11 +4,10 @@ const int MAX_POINT_LIGHTS = 2;
 const int MAX_SPOT_LIGHTS = 2;
 
 in vec4 LightSpacePos0; 
-in vec2 TexCoord0;
+in vec4 Color0;
 in vec3 Normal0;                                                       
 in vec3 WorldPos0;                                                           
-in vec3 Tangent0;       
-                                                         
+
 out vec4 FragColor;
 
 // Material properties
@@ -25,9 +24,9 @@ struct MaterialInfo
 
 struct VSOutput
 {
-    vec2 TexCoord;
+    vec4 Color;
     vec3 Normal;                                                                   
-    vec3 WorldPos;                                                                 
+    vec3 WorldPos;
 	vec4 LightSpacePos;                                                                 
 };
 
@@ -61,7 +60,8 @@ struct PointLight
                                                                                             
 struct SpotLight                                                                            
 {                                                                                           
-    PointLight Base;                                                                 
+    PointLight Base;  
+	vec3 Position;                                                               
     vec3 Direction;                                                                         
     float Cutoff;                                                                           
 };                                                                                          
@@ -71,8 +71,7 @@ uniform int gNumSpotLights;
 uniform DirectionalLight gDirectionalLight;                                                 
 uniform PointLight gPointLights[MAX_POINT_LIGHTS];                                          
 uniform SpotLight gSpotLights[MAX_SPOT_LIGHTS];                                             
-uniform sampler2D gColorMap;    
-uniform sampler2D gShadowMap;                                                               
+uniform sampler2D gShadowMap;                                                         
 uniform vec3 gEyeWorldPos;                                                                  
 uniform MaterialInfo material;
 
@@ -82,7 +81,7 @@ float CalcShadowFactor(vec4 LightSpacePos)
     vec2 UVCoords;                                                                          
     UVCoords.x = 0.5 * ProjCoords.x + 0.5;                                                  
     UVCoords.y = 0.5 * ProjCoords.y + 0.5;                                                  
-    float Depth = texture(gShadowMap, UVCoords).x;                                          
+    float Depth = Color0.a;                                          
     if (Depth <= (ProjCoords.z + 0.005))                                                    
         return 0.5;                                                                         
     else                                                                                    
@@ -97,25 +96,33 @@ vec4 CalcLightInternal(BaseLight Light, vec3 LightDirection, VSOutput In, float 
 	                                                                                                                                                                    
     vec4 DiffuseColor  = vec4(0, 0, 0, 0);                                                  
     vec4 SpecularColor = vec4(0, 0, 0, 0);          
-	                                        
-     float DiffuseFactor = dot(In.Normal, -LightDirection);
+	vec4 FinalColor = vec4(0, 0, 0, 0);
+	                    
+    float DiffuseFactor = dot(In.Normal, -LightDirection);
     if (DiffuseFactor > 0.0) 
-	{                                                                
+	{                                                         
         DiffuseColor = material.Kd * vec4(Light.Color, 1.0) * Light.DiffuseIntensity * DiffuseFactor;    
                                                                                             
         vec3 VertexToEye = normalize(gEyeWorldPos - In.WorldPos);                             
-        vec3 LightReflect = normalize(reflect(LightDirection, In.Normal));                     
-        float SpecularFactor = dot(VertexToEye, LightReflect);                              
-        SpecularFactor = pow(SpecularFactor, material.shininess);   
-		                            
-        if (SpecularFactor > 0.0) 
-		{                                                           
-            SpecularColor = material.Ks * vec4(Light.Color, 1.0) *                                       
-                            material.shininessStrength * SpecularFactor;                         
-        }                                                                                   
+		float OutlineFactor = dot(VertexToEye, In.Normal);
+		                             
+        SpecularColor = material.Ks * vec4(Light.Color, 1.0);                         
+   
+		if(DiffuseFactor < 0.4)
+		{
+			FinalColor = AmbientColor;
+		}
+		else if(DiffuseFactor >= 0.4 && DiffuseFactor < 0.8)
+		{
+			FinalColor = DiffuseColor;
+		}
+		else
+		{
+			FinalColor = SpecularColor;
+		}                                                                         
     }                                                                                       
-                                                                                            
-    return (AmbientColor + EmissiveColor + ShadowFactor * (DiffuseColor + SpecularColor)); 
+                                                                                          
+    return (EmissiveColor + ShadowFactor * FinalColor); 
 }                                                                                           
                                                                                             
 vec4 CalcDirectionalLight(VSOutput In)                                                      
@@ -127,11 +134,11 @@ vec4 CalcPointLight(PointLight l, VSOutput In)
 {                                                                                           
     vec3 LightDirection = In.WorldPos - l.Position;                                           
     float Distance = length(LightDirection);                                                
-    LightDirection = normalize(LightDirection);               
-	                              
-	float ShadowFactor = CalcShadowFactor(In.LightSpacePos);
-                                                                                            
-    vec4 Color = CalcLightInternal(l.Base, LightDirection, In, ShadowFactor);                         
+    LightDirection = normalize(LightDirection);                                             
+    
+	float ShadowFactor = 1;//CalcShadowFactor(In.LightSpacePos);
+	                                                                               
+    vec4 Color = CalcLightInternal(l.Base, LightDirection, In, 1);                         
     float Attenuation =  l.Atten.Constant +                                                 
                          l.Atten.Linear * Distance +                                        
                          l.Atten.Exp * Distance * Distance;                                 
@@ -141,7 +148,7 @@ vec4 CalcPointLight(PointLight l, VSOutput In)
                                                                                             
 vec4 CalcSpotLight(SpotLight l, VSOutput In)                                         
 {                                                                                           
-    vec3 LightToPixel = normalize(In.WorldPos - l.Base.Position);                             
+    vec3 LightToPixel = normalize(In.WorldPos - l.Position);                             
     float SpotFactor = dot(LightToPixel, l.Direction);                                      
                                                                                             
     if (SpotFactor > l.Cutoff) {                                                            
@@ -152,16 +159,16 @@ vec4 CalcSpotLight(SpotLight l, VSOutput In)
         return vec4(0,0,0,0);                                                               
     }                                                                                       
 }                                                                                           
-                            
+                             
                                                                 
 void main()
 {                                    
     VSOutput In;
-    In.TexCoord = TexCoord0;
-    In.Normal   = normalize(Normal0);
+    In.Color = Color0;
+	In.Normal   = normalize(Normal0);
     In.WorldPos = WorldPos0;
 	In.LightSpacePos = LightSpacePos0;
-  
+
     vec4 TotalLight = CalcDirectionalLight(In);                                         
                                                                                             
     for (int i = 0 ; i < gNumPointLights ; i++) {                                           
@@ -172,5 +179,5 @@ void main()
         TotalLight += CalcSpotLight(gSpotLights[i], In);                                
     }                                                                                       
                                                                                             
-    FragColor = texture(gColorMap, In.TexCoord.xy) * TotalLight;     
+    FragColor = In.Color * TotalLight;     
 }
