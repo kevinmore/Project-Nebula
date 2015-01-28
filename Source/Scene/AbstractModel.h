@@ -7,6 +7,7 @@
 
 #include <Scene/GameObject.h>
 #include <Primitives/Component.h>
+#include <Primitives/Material.h>
 #include <Scene/ShadingTechniques/ShadingTechnique.h>
 
 struct MeshData
@@ -69,8 +70,10 @@ public:
 	void setFileName(QString& file) { m_fileName = file; }
 
 	ShadingTechniquePtr renderingEffect() const { return m_RenderingEffect; }
+	MaterialPtr getMaterial() { return m_materials[0]; }
 
 protected:
 	QString m_fileName;
 	ShadingTechniquePtr m_RenderingEffect;
+	QVector<MaterialPtr> m_materials;
 };

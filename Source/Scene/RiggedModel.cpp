@@ -113,6 +113,17 @@ void RiggedModel::initialize(QVector<ModelDataPtr> modelDataVector)
 		else m_textures[i].push_back(TexturePtr(nullptr));
 
 		// deal with the material
+		qDebug() << data->materialData.name 
+			<< endl << "ambientColor" << data->materialData.ambientColor
+			<< endl << "diffuseColor" << data->materialData.diffuseColor
+			<< endl << "specularColor" << data->materialData.specularColor
+			<< endl << "emissiveColor" << data->materialData.emissiveColor
+			<< endl << "shininess" << data->materialData.shininess
+			<< endl << "shininessStrength" << data->materialData.shininessStrength
+			<< endl << "twoSided" << data->materialData.twoSided
+			<< endl << "blendMode" << data->materialData.blendMode
+			<< endl << "alphaBlending" << data->materialData.alphaBlending
+			<< endl << "hasTexture" << data->textureData.hasTexture;
 		MaterialPtr material = m_materialManager->getMaterial(data->materialData.name);
 		if(!material)
 		{
@@ -133,6 +144,8 @@ void RiggedModel::initialize(QVector<ModelDataPtr> modelDataVector)
 
 	}
 
+	m_RenderingEffect->enable();
+	m_RenderingEffect->setMaterial(m_materials[0]);
 
 // 	ikSolved = false;
 // 	lastUpdatedTime = 0.0f;
@@ -219,7 +232,7 @@ void RiggedModel::render( const float currentTime )
 
 	m_RenderingEffect->setEyeWorldPos(m_scene->getCamera()->position());
 	m_RenderingEffect->setMVPMatrix(m_scene->getCamera()->viewProjectionMatrix() * modelMatrix);
-	m_RenderingEffect->setWorldMatrix(modelMatrix); 
+	m_RenderingEffect->setModelMatrix(modelMatrix); 
 
 
 	// do the skeleton animation here

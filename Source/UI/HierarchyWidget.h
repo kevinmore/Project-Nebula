@@ -26,9 +26,11 @@ private:
 	void readHierarchy(GameObject* go, QTreeWidgetItem* parentItem); // go through the game objects
 	void resetHierarchy(GameObject* go); // reset every game object from the given one
 	void clearTransformationArea();
+	void readShadingProperties();
 	void connectParticleSystemTab(ParticleSystemPtr ps);
 	void readParticleSystemConfig(ParticleSystemPtr ps);
 	void searchShaders();
+	void connectSliderBarAndDoubleSpinBox(QSlider* slider, QDoubleSpinBox* box);
 
 private slots:
 	void connectCurrentObject();
@@ -40,6 +42,10 @@ private slots:
 	void showMouseRightButton(const QPoint& point);
 	void setColorPickerEnabled(bool status);
 	void changeShader(const QString& shaderFile);
+	void onShininessSliderChange(int value);
+	void onShininessDoubleBoxChange(double value);
+	void onShininessStrengthSliderChange(int value);
+	void onShininessStrengthDoubleBoxChange(double value);
 
 public slots:
 	void updateObjectTree();

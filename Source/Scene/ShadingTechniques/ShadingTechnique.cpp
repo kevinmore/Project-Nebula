@@ -147,8 +147,6 @@ bool ShadingTechnique::compileShader()
 
 	enable();
 	setPointLights(1, &pl);
-	Material mat("11");
-	setMaterial(mat);
 
 	initLights();
 
@@ -169,7 +167,7 @@ void ShadingTechnique::setMVPMatrix(const mat4& WVP)
 	m_shaderProgram->setUniformValue("gWVP", WVP);
 }
 
-void ShadingTechnique::setWorldMatrix(const mat4& World)
+void ShadingTechnique::setModelMatrix(const mat4& World)
 {
 	m_shaderProgram->setUniformValue("gWorld", World);
 }
@@ -193,18 +191,6 @@ void ShadingTechnique::setNormalMapTextureUnit(unsigned int TextureUnit)
 void ShadingTechnique::setEyeWorldPos(const vec3& EyeWorldPos)
 {
 	m_shaderProgram->setUniformValue("gEyeWorldPos", EyeWorldPos);
-}
-
-
-void ShadingTechnique::setMatSpecularIntensity(float Intensity)
-{
-	m_shaderProgram->setUniformValue("gMatSpecularIntensity", Intensity);
-}
-
-
-void ShadingTechnique::setMatSpecularPower(float Power)
-{
-	m_shaderProgram->setUniformValue("gSpecularPower", Power);
 }
 
 void ShadingTechnique::setPointLights(unsigned int NumLights, const PointLight* pLights)
@@ -258,7 +244,6 @@ void ShadingTechnique::setVertexColor( const QColor& col )
 void ShadingTechnique::initLights()
 {
 	LightPtr light = m_scene->getLight();
-	qDebug() << light->position();
 }
 
 void ShadingTechnique::setMaterial( const Material& mat )
@@ -269,4 +254,45 @@ void ShadingTechnique::setMaterial( const Material& mat )
 	m_shaderProgram->setUniformValue("material.Ke", mat.m_emissiveColor);
 	m_shaderProgram->setUniformValue("material.shininessStrength", mat.m_shininessStrength);
 	m_shaderProgram->setUniformValue("material.shininess", mat.m_shininess);
+}
+
+void ShadingTechnique::setMaterial( const MaterialPtr mat )
+{
+	m_shaderProgram->setUniformValue("material.Ka", mat->m_ambientColor);
+	m_shaderProgram->setUniformValue("material.Kd", mat->m_diffuseColor);
+	m_shaderProgram->setUniformValue("material.Ks", mat->m_specularColor);
+	m_shaderProgram->setUniformValue("material.Ke", mat->m_emissiveColor);
+	m_shaderProgram->setUniformValue("material.shininessStrength", mat->m_shininessStrength);
+	m_shaderProgram->setUniformValue("material.shininess", mat->m_shininess);
+}
+
+
+void ShadingTechnique::setMatAmbientColor( const QColor& col )
+{
+	m_shaderProgram->setUniformValue("material.Ka", col);
+}
+
+void ShadingTechnique::setMatDiffuseColor( const QColor& col )
+{
+	m_shaderProgram->setUniformValue("material.Kd", col);
+}
+
+void ShadingTechnique::setMatSpecularColor( const QColor& col )
+{
+	m_shaderProgram->setUniformValue("material.Ks", col);
+}
+
+void ShadingTechnique::setMatEmissiveColor( const QColor& col )
+{
+	m_shaderProgram->setUniformValue("material.Ke", col);
+}
+
+void ShadingTechnique::setMatSpecularIntensity(float intensity)
+{
+	m_shaderProgram->setUniformValue("material.shininessStrength", intensity);
+}
+
+void ShadingTechnique::setMatSpecularPower(float power)
+{
+	m_shaderProgram->setUniformValue("material.shininess", power);
 }

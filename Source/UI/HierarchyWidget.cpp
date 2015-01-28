@@ -33,11 +33,31 @@ HierarchyWidget::HierarchyWidget(Scene* scene, QWidget *parent)
 	ui->tabWidget->setCurrentIndex(0);
 	ui->graphicsView_ColorPicker->setScene(new QGraphicsScene(this));
 	ui->graphicsView_TexturePicker->setScene(new QGraphicsScene(this));
+
 	ui->graphicsView_VertexColorPicker->setScene(new QGraphicsScene(this));
+	ui->graphicsView_AmbientColorPicker->setScene(new QGraphicsScene(this));
+	ui->graphicsView_DiffuseColorPicker->setScene(new QGraphicsScene(this));
+	ui->graphicsView_SpecularColorPicker->setScene(new QGraphicsScene(this));
+	ui->graphicsView_EmissiveColorPicker->setScene(new QGraphicsScene(this));
+	ui->graphicsView_VertexColorPicker->setBackgroundBrush(QBrush(Qt::white, Qt::DiagCrossPattern));
+	ui->graphicsView_AmbientColorPicker->setBackgroundBrush(QBrush(Qt::black, Qt::DiagCrossPattern));
+	ui->graphicsView_DiffuseColorPicker->setBackgroundBrush(QBrush(Qt::white, Qt::DiagCrossPattern));
+	ui->graphicsView_SpecularColorPicker->setBackgroundBrush(QBrush(Qt::white, Qt::DiagCrossPattern));
+	ui->graphicsView_EmissiveColorPicker->setBackgroundBrush(QBrush(Qt::black, Qt::DiagCrossPattern));
+
+	ui->graphicsView_VertexColorPicker->installEventFilter(this);
+	ui->graphicsView_AmbientColorPicker->installEventFilter(this);
+	ui->graphicsView_DiffuseColorPicker->installEventFilter(this);
+	ui->graphicsView_SpecularColorPicker->installEventFilter(this);
+	ui->graphicsView_EmissiveColorPicker->installEventFilter(this);
+
 	ui->graphicsView_ColorPicker->installEventFilter(this);
 	ui->graphicsView_TexturePicker->installEventFilter(this);
-	ui->graphicsView_VertexColorPicker->installEventFilter(this);
-	ui->graphicsView_VertexColorPicker->setBackgroundBrush(QBrush(Qt::white, Qt::CrossPattern));
+
+	connect(ui->doubleSpinBox_Shininess, SIGNAL(valueChanged(double)), this, SLOT(onShininessDoubleBoxChange(double)));
+	connect(ui->doubleSpinBox_ShininessStrength, SIGNAL(valueChanged(double)), this, SLOT(onShininessStrengthDoubleBoxChange(double)));
+	connect(ui->horizontalSlider_Shininess, SIGNAL(valueChanged(int)), this, SLOT(onShininessSliderChange(int)));
+	connect(ui->horizontalSlider_ShininessStrength, SIGNAL(valueChanged(int)), this, SLOT(onShininessStrengthSliderChange(int)));
 
 	connect(ui->checkBox_RandomColor, SIGNAL(toggled(bool)), this, SLOT(setColorPickerEnabled(bool)));
 	connect(ui->checkBox_EnableCollision, SIGNAL(toggled(bool)), ui->doubleSpinBox_Restitution, SLOT(setEnabled(bool)));
@@ -149,14 +169,8 @@ void HierarchyWidget::readGameObject(QTreeWidgetItem* current, QTreeWidgetItem* 
 	ui->doubleSpinBox_ScaleZ->setValue(m_currentObject->scale().z());
 
 	// map the shading properties into the material tab
-	ComponentPtr comp = m_currentObject->getComponent("Model");
-	ModelPtr model = comp.dynamicCast<AbstractModel>();
-	if (model)
-	{
-		m_currentShadingTech = model->renderingEffect();
-		ui->comboBox_SahderFiles->setCurrentText(m_currentShadingTech->shaderFileName());
-	}
-
+	readShadingProperties();
+	
 	// set connections
 	connectCurrentObject();
 
@@ -378,16 +392,69 @@ bool HierarchyWidget::eventFilter( QObject *obj, QEvent *ev )
 			}
 			return true;
 		}
+		/// Material section
 		else if (obj == ui->graphicsView_VertexColorPicker)
 		{
 			QColor col = QColorDialog::getColor(Qt::white, this);
-			if(col.isValid()) 
+			if(col.isValid() && m_currentShadingTech) 
 			{
 				// apply the color to the particle system and color picker both
 				ui->graphicsView_VertexColorPicker->setBackgroundBrush(QBrush(col, Qt::CrossPattern));
 				// set the vertex color through the shading effect
 				m_currentShadingTech->enable();
 				m_currentShadingTech->setVertexColor(col);
+			}
+			return true;
+		}
+		else if (obj == ui->graphicsView_AmbientColorPicker)
+		{
+			QColor col = QColorDialog::getColor(Qt::white, this);
+			if(col.isValid() && m_currentShadingTech) 
+			{
+				// apply the color to the particle system and color picker both
+				ui->graphicsView_AmbientColorPicker->setBackgroundBrush(QBrush(col, Qt::CrossPattern));
+				// set the vertex color through the shading effect
+				m_currentShadingTech->enable();
+				m_currentShadingTech->setMatAmbientColor(col);
+			}
+			return true;
+		}
+		else if (obj == ui->graphicsView_DiffuseColorPicker)
+		{
+			QColor col = QColorDialog::getColor(Qt::white, this);
+			if(col.isValid() && m_currentShadingTech) 
+			{
+				// apply the color to the particle system and color picker both
+				ui->graphicsView_DiffuseColorPicker->setBackgroundBrush(QBrush(col, Qt::CrossPattern));
+				// set the vertex color through the shading effect
+				m_currentShadingTech->enable();
+				m_currentShadingTech->setMatDiffuseColor(col);
+			}
+			return true;
+		}
+		else if (obj == ui->graphicsView_SpecularColorPicker)
+		{
+			QColor col = QColorDialog::getColor(Qt::white, this);
+			if(col.isValid() && m_currentShadingTech) 
+			{
+				// apply the color to the particle system and color picker both
+				ui->graphicsView_SpecularColorPicker->setBackgroundBrush(QBrush(col, Qt::CrossPattern));
+				// set the vertex color through the shading effect
+				m_currentShadingTech->enable();
+				m_currentShadingTech->setMatSpecularColor(col);
+			}
+			return true;
+		}
+		else if (obj == ui->graphicsView_EmissiveColorPicker)
+		{
+			QColor col = QColorDialog::getColor(Qt::white, this);
+			if(col.isValid() && m_currentShadingTech) 
+			{
+				// apply the color to the particle system and color picker both
+				ui->graphicsView_EmissiveColorPicker->setBackgroundBrush(QBrush(col, Qt::CrossPattern));
+				// set the vertex color through the shading effect
+				m_currentShadingTech->enable();
+				m_currentShadingTech->setMatEmissiveColor(col);
 			}
 			return true;
 		}
@@ -420,6 +487,59 @@ void HierarchyWidget::searchShaders()
 
 void HierarchyWidget::changeShader( const QString& shaderFile )
 {
-	if (!m_currentShadingTech) return;
+	if (!m_currentShadingTech || m_currentShadingTech->shaderFileName() == shaderFile) return;
 	m_currentShadingTech->applyShader(shaderFile);
+}
+
+
+void HierarchyWidget::onShininessSliderChange( int value )
+{
+	ui->doubleSpinBox_Shininess->setValue(value);
+	if (!m_currentShadingTech) return;
+	m_currentShadingTech->enable();
+	m_currentShadingTech->setMatSpecularPower(value);
+}
+
+void HierarchyWidget::onShininessDoubleBoxChange( double value )
+{
+	ui->horizontalSlider_Shininess->setValue(value);
+	if (!m_currentShadingTech) return;
+	m_currentShadingTech->enable();
+	m_currentShadingTech->setMatSpecularPower(value);
+}
+
+void HierarchyWidget::onShininessStrengthSliderChange( int value )
+{
+	ui->doubleSpinBox_ShininessStrength->setValue(value/(double)100);
+	if (!m_currentShadingTech) return;
+	m_currentShadingTech->enable();
+	m_currentShadingTech->setMatSpecularIntensity(value/100.0f);
+}
+
+void HierarchyWidget::onShininessStrengthDoubleBoxChange( double value )
+{
+	ui->horizontalSlider_ShininessStrength->setValue(value * 100);
+	if (!m_currentShadingTech) return;
+	m_currentShadingTech->enable();
+	m_currentShadingTech->setMatSpecularIntensity(value);
+}
+
+void HierarchyWidget::readShadingProperties()
+{
+	ComponentPtr comp = m_currentObject->getComponent("Model");
+	ModelPtr model = comp.dynamicCast<AbstractModel>();
+	if (!model) return;
+
+	m_currentShadingTech = model->renderingEffect();
+	ui->comboBox_SahderFiles->setCurrentText(m_currentShadingTech->shaderFileName());
+
+	MaterialPtr mat = model->getMaterial();
+	// map the material information into the tab
+	ui->graphicsView_AmbientColorPicker->setBackgroundBrush(QBrush(mat->m_ambientColor, Qt::DiagCrossPattern));
+	ui->graphicsView_DiffuseColorPicker->setBackgroundBrush(QBrush(mat->m_diffuseColor, Qt::DiagCrossPattern));
+	ui->graphicsView_SpecularColorPicker->setBackgroundBrush(QBrush(mat->m_specularColor, Qt::DiagCrossPattern));
+	ui->graphicsView_EmissiveColorPicker->setBackgroundBrush(QBrush(mat->m_emissiveColor, Qt::DiagCrossPattern));
+
+	ui->doubleSpinBox_Shininess->setValue(mat->m_shininess);
+	ui->doubleSpinBox_ShininessStrength->setValue(mat->m_shininessStrength);
 }

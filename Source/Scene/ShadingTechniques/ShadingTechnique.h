@@ -24,7 +24,7 @@ public:
     virtual bool init();
 
     void setMVPMatrix(const mat4& WVP);
-    void setWorldMatrix(const mat4& WVP);
+    void setModelMatrix(const mat4& WVP);
     void setColorTextureUnit(uint TextureUnit);
 	void setShadowMapTextureUnit(uint TextureUnit);
 	void setNormalMapTextureUnit(uint TextureUnit);
@@ -32,11 +32,18 @@ public:
     void setPointLights(uint NumLights, const PointLight* pLights);
     void setSpotLights(uint NumLights, const SpotLight* pLights);
     void setEyeWorldPos(const vec3& EyeWorldPos);
-    void setMatSpecularIntensity(float Intensity);
-    void setMatSpecularPower(float Power);
+    
     void setBoneTransform(uint Index, const mat4& Transform);
-	void setVertexColor(const QColor& col);
+
 	void setMaterial(const Material& mat);
+	void setMaterial(const MaterialPtr mat);
+	void setVertexColor(const QColor& col);
+	void setMatAmbientColor(const QColor& col);
+	void setMatDiffuseColor(const QColor& col);
+	void setMatSpecularColor(const QColor& col);
+	void setMatEmissiveColor(const QColor& col);
+	void setMatSpecularIntensity(float intensity);
+	void setMatSpecularPower(float power);
 
 private:
     

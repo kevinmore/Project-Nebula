@@ -98,6 +98,18 @@ void StaticModel::initialize(QVector<ModelDataPtr> modelDataVector)
 
 		// deal with the material
 		MaterialPtr material = m_materialManager->getMaterial(data->materialData.name);
+		qDebug() << data->materialData.name 
+			<< endl << "ambientColor" << data->materialData.ambientColor
+			<< endl << "diffuseColor" << data->materialData.diffuseColor
+			<< endl << "specularColor" << data->materialData.specularColor
+			<< endl << "emissiveColor" << data->materialData.emissiveColor
+			<< endl << "shininess" << data->materialData.shininess
+			<< endl << "shininessStrength" << data->materialData.shininessStrength
+			<< endl << "twoSided" << data->materialData.twoSided
+			<< endl << "blendMode" << data->materialData.blendMode
+			<< endl << "alphaBlending" << data->materialData.alphaBlending
+			<< endl << "hasTexture" << data->textureData.hasTexture;
+
 		if(!material)
 		{
 			material = m_materialManager->addMaterial(data->materialData.name,
@@ -117,6 +129,8 @@ void StaticModel::initialize(QVector<ModelDataPtr> modelDataVector)
 
 	}
 
+	m_RenderingEffect->enable();
+	m_RenderingEffect->setMaterial(m_materials[0]);
 }
 
 void StaticModel::destroy() {}
@@ -130,8 +144,7 @@ void StaticModel::render( float time )
 	//QMatrix3x3 normalMatrix = modelViewMatrix.normalMatrix();
 	m_RenderingEffect->setEyeWorldPos(m_scene->getCamera()->position());
 	m_RenderingEffect->setMVPMatrix(m_scene->getCamera()->viewProjectionMatrix() * modelMatrix);
-	m_RenderingEffect->setWorldMatrix(modelMatrix); 
-
+	m_RenderingEffect->setModelMatrix(modelMatrix); 
 	for(int i = 0; i < m_meshes.size(); ++i)
 	{
 		/*if( m_materials[i] != nullptr && ! m_materials[i]->isTranslucent())*/

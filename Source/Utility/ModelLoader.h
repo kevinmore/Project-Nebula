@@ -47,7 +47,7 @@ private:
 	/*
 	 *	Methods to process the model file
 	 */
-	MeshData loadMesh(unsigned int index, unsigned int numVertices, unsigned int numIndices, const aiMesh* mesh, const QString& fileName);
+	MeshData loadMesh(unsigned int index, unsigned int numVertices, unsigned int numIndices, const aiMesh* mesh);
 	MaterialData loadMaterial(unsigned int index, const aiMaterial* material);
 	TextureData  loadTexture(const QString& filename, const aiMaterial* material);
 	void loadBones(uint MeshIndex, const aiMesh* paiMesh);
@@ -104,6 +104,7 @@ private:
 	/*
 	 *	Members Variables
 	 */
+	QString m_fileName;
 	Scene* m_scene;
 	Assimp::Importer m_importer;
 	const aiScene* m_aiScene;

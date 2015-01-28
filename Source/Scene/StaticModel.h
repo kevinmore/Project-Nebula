@@ -22,7 +22,6 @@ public:
 protected:
 	QVector<MeshPtr> m_meshes;
 	QVector<QVector<TexturePtr>>  m_textures;
-	QVector<MaterialPtr> m_materials;
 
 	MeshManager*     m_meshManager;
 	TextureManager*  m_textureManager;

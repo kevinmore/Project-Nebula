@@ -42,6 +42,7 @@ ModelLoader::~ModelLoader()
 QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName, GLuint shaderProgramID, const QString& loadingFlags )
 {
 	clear();
+	m_fileName = fileName;
 	uint flags;
 
 	if (loadingFlags == "Simple")
@@ -105,7 +106,7 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName, GLuint sh
 	{
 		ModelData* md = new ModelData();
 		
-		md->meshData     = loadMesh(i, numVertices, numIndices, m_aiScene->mMeshes[i], fileName);
+		md->meshData     = loadMesh(i, numVertices, numIndices, m_aiScene->mMeshes[i]);
 		md->textureData  = loadTexture(fileName, m_aiScene->mMaterials[m_aiScene->mMeshes[i]->mMaterialIndex]);
 		md->materialData = loadMaterial(i, m_aiScene->mMaterials[m_aiScene->mMeshes[i]->mMaterialIndex]);
 		md->hasAnimation = m_aiScene->HasAnimations();
@@ -157,24 +158,6 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName, GLuint sh
 	
 	clear();
 	return modelDataVector;
-}
-
-MeshData ModelLoader::loadMesh(unsigned int index, unsigned int numVertices, unsigned int numIndices, const aiMesh* mesh, const QString& fileName)
-{
-	MeshData data = MeshData();
-
-	if(mesh->mName.length > 0)
-		data.name = QString(mesh->mName.C_Str());
-	else
-		data.name = fileName + "/mesh_" + QString::number(index);
-
-	data.numIndices = mesh->mNumFaces * 3;
-	data.baseVertex = numVertices;
-	data.baseIndex  = numIndices;
-
-	prepareVertexContainers(index, mesh);
-
-	return data;
 }
 
 void ModelLoader::prepareVertexContainers(unsigned int index, const aiMesh* mesh)
@@ -400,24 +383,52 @@ void ModelLoader::generateSkeleton( aiNode* pAiRootNode, Bone* pRootSkeleton, ma
 	}
 }
 
+MeshData ModelLoader::loadMesh(unsigned int index, unsigned int numVertices, unsigned int numIndices, const aiMesh* mesh)
+{
+	MeshData data = MeshData();
+
+	if(mesh->mName.length > 0)
+		data.name = QString(mesh->mName.C_Str());
+	else
+		data.name = m_fileName + "/mesh_" + QString::number(index);
+
+	data.numIndices = mesh->mNumFaces * 3;
+	data.baseVertex = numVertices;
+	data.baseIndex  = numIndices;
+
+	prepareVertexContainers(index, mesh);
+
+	return data;
+}
+
 MaterialData ModelLoader::loadMaterial(unsigned int index, const aiMaterial* material)
 {
 	Q_ASSERT(material != nullptr);
 
-	MaterialData data = MaterialData();
-	data.name = "material_" + QString::number(index);
+	MaterialData data;
+	data.name = m_fileName + "/material_" + QString::number(index);
 
 	aiColor3D ambientColor(0.1f, 0.1f, 0.1f);
 	aiColor3D diffuseColor(0.8f, 0.8f, 0.8f);
 	aiColor3D specularColor(0.0f, 0.0f, 0.0f);
 	aiColor3D emissiveColor(0.0f, 0.0f, 0.0f);
+	data.ambientColor.setRgbF(ambientColor.r, ambientColor.g, ambientColor.b);
+	data.diffuseColor.setRgbF(diffuseColor.r, diffuseColor.g, diffuseColor.b);
+	data.specularColor.setRgbF(specularColor.r, specularColor.g, specularColor.b);
+	data.emissiveColor.setRgbF(emissiveColor.r, emissiveColor.g, emissiveColor.b);
 
 	int blendMode;
+	data.blendMode = -1;
+
 	int twoSided = 1;
+	data.twoSided = 1;
 
 	float opacity = 1.0f;
-	float shininess = 0.0f;
-	float shininessStrength = 1.0f;
+	
+	float shininess = 10.0f;
+	data.shininess = 10.0f;
+	float shininessStrength = 0.0f;
+	data.shininessStrength = 0.0f;
 
 	if(material->Get(AI_MATKEY_COLOR_AMBIENT, ambientColor) == AI_SUCCESS)
 	{
@@ -431,7 +442,7 @@ MaterialData ModelLoader::loadMaterial(unsigned int index, const aiMaterial* mat
 
 	if(material->Get(AI_MATKEY_COLOR_SPECULAR, specularColor) == AI_SUCCESS)
 	{
-		data.diffuseColor.setRgbF(specularColor.r, specularColor.g, specularColor.b);
+		data.specularColor.setRgbF(specularColor.r, specularColor.g, specularColor.b);
 	}
 
 	if(material->Get(AI_MATKEY_COLOR_EMISSIVE, emissiveColor) == AI_SUCCESS)

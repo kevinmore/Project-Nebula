@@ -18,6 +18,7 @@
 #include <QtWidgets/QDoubleSpinBox>
 #include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QGridLayout>
+#include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
@@ -94,16 +95,46 @@ public:
     QLabel *label_37;
     QLabel *label_41;
     QLineEdit *lineEdit_Duration;
-    QWidget *MaterialTab;
+    QWidget *RenderingTab;
     QVBoxLayout *verticalLayout_6;
     QScrollArea *scrollArea;
     QWidget *scrollAreaWidgetContents;
-    QVBoxLayout *verticalLayout_12;
-    QGridLayout *gridLayout_3;
+    QVBoxLayout *verticalLayout_16;
+    QHBoxLayout *horizontalLayout_16;
     QLabel *label_42;
     QComboBox *comboBox_SahderFiles;
+    QGroupBox *groupBox;
+    QVBoxLayout *verticalLayout_12;
+    QGridLayout *gridLayout_3;
+    QHBoxLayout *horizontalLayout_13;
+    QSlider *horizontalSlider_ShininessStrength;
+    QDoubleSpinBox *doubleSpinBox_ShininessStrength;
+    QHBoxLayout *horizontalLayout_14;
+    QSlider *horizontalSlider_Shininess;
+    QDoubleSpinBox *doubleSpinBox_Shininess;
+    QLabel *label_43;
+    QLabel *label_44;
+    QGraphicsView *graphicsView_AmbientColorPicker;
+    QGraphicsView *graphicsView_DiffuseColorPicker;
+    QLabel *label_47;
+    QGraphicsView *graphicsView_EmissiveColorPicker;
+    QLabel *label_46;
+    QLabel *label_45;
+    QGraphicsView *graphicsView_SpecularColorPicker;
+    QLabel *label_48;
     QLabel *label_35;
     QGraphicsView *graphicsView_VertexColorPicker;
+    QGroupBox *groupBox_2;
+    QVBoxLayout *verticalLayout_15;
+    QGridLayout *gridLayout_4;
+    QGraphicsView *graphicsView_SpecularMapPicker;
+    QLabel *label_53;
+    QLabel *label_52;
+    QGraphicsView *graphicsView_EmissiveMapPicker;
+    QGraphicsView *graphicsView_NormalMapPicker;
+    QGraphicsView *graphicsView_DiffuseMapPicker;
+    QLabel *label_50;
+    QLabel *label_49;
     QWidget *ParticleTab;
     QVBoxLayout *verticalLayout_7;
     QScrollArea *scrollArea_2;
@@ -524,60 +555,290 @@ public:
         verticalLayout_13->addWidget(scrollArea_3);
 
         tabWidget->addTab(PupetTab, QString());
-        MaterialTab = new QWidget();
-        MaterialTab->setObjectName(QStringLiteral("MaterialTab"));
-        verticalLayout_6 = new QVBoxLayout(MaterialTab);
+        RenderingTab = new QWidget();
+        RenderingTab->setObjectName(QStringLiteral("RenderingTab"));
+        verticalLayout_6 = new QVBoxLayout(RenderingTab);
         verticalLayout_6->setObjectName(QStringLiteral("verticalLayout_6"));
-        scrollArea = new QScrollArea(MaterialTab);
+        scrollArea = new QScrollArea(RenderingTab);
         scrollArea->setObjectName(QStringLiteral("scrollArea"));
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 326, 407));
-        verticalLayout_12 = new QVBoxLayout(scrollAreaWidgetContents);
-        verticalLayout_12->setObjectName(QStringLiteral("verticalLayout_12"));
-        gridLayout_3 = new QGridLayout();
-        gridLayout_3->setObjectName(QStringLiteral("gridLayout_3"));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 309, 417));
+        verticalLayout_16 = new QVBoxLayout(scrollAreaWidgetContents);
+        verticalLayout_16->setObjectName(QStringLiteral("verticalLayout_16"));
+        horizontalLayout_16 = new QHBoxLayout();
+        horizontalLayout_16->setObjectName(QStringLiteral("horizontalLayout_16"));
         label_42 = new QLabel(scrollAreaWidgetContents);
         label_42->setObjectName(QStringLiteral("label_42"));
-        sizePolicy2.setHeightForWidth(label_42->sizePolicy().hasHeightForWidth());
-        label_42->setSizePolicy(sizePolicy2);
+        QSizePolicy sizePolicy3(QSizePolicy::Preferred, QSizePolicy::Fixed);
+        sizePolicy3.setHorizontalStretch(0);
+        sizePolicy3.setVerticalStretch(0);
+        sizePolicy3.setHeightForWidth(label_42->sizePolicy().hasHeightForWidth());
+        label_42->setSizePolicy(sizePolicy3);
+        label_42->setMinimumSize(QSize(50, 0));
+        label_42->setMaximumSize(QSize(50, 16777215));
         label_42->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
 
-        gridLayout_3->addWidget(label_42, 0, 0, 1, 1);
+        horizontalLayout_16->addWidget(label_42);
 
         comboBox_SahderFiles = new QComboBox(scrollAreaWidgetContents);
         comboBox_SahderFiles->setObjectName(QStringLiteral("comboBox_SahderFiles"));
+        QSizePolicy sizePolicy4(QSizePolicy::Preferred, QSizePolicy::Expanding);
+        sizePolicy4.setHorizontalStretch(0);
+        sizePolicy4.setVerticalStretch(0);
+        sizePolicy4.setHeightForWidth(comboBox_SahderFiles->sizePolicy().hasHeightForWidth());
+        comboBox_SahderFiles->setSizePolicy(sizePolicy4);
 
-        gridLayout_3->addWidget(comboBox_SahderFiles, 0, 1, 1, 1);
+        horizontalLayout_16->addWidget(comboBox_SahderFiles);
 
-        label_35 = new QLabel(scrollAreaWidgetContents);
+
+        verticalLayout_16->addLayout(horizontalLayout_16);
+
+        groupBox = new QGroupBox(scrollAreaWidgetContents);
+        groupBox->setObjectName(QStringLiteral("groupBox"));
+        verticalLayout_12 = new QVBoxLayout(groupBox);
+        verticalLayout_12->setObjectName(QStringLiteral("verticalLayout_12"));
+        gridLayout_3 = new QGridLayout();
+        gridLayout_3->setObjectName(QStringLiteral("gridLayout_3"));
+        horizontalLayout_13 = new QHBoxLayout();
+        horizontalLayout_13->setObjectName(QStringLiteral("horizontalLayout_13"));
+        horizontalSlider_ShininessStrength = new QSlider(groupBox);
+        horizontalSlider_ShininessStrength->setObjectName(QStringLiteral("horizontalSlider_ShininessStrength"));
+        horizontalSlider_ShininessStrength->setMaximum(100);
+        horizontalSlider_ShininessStrength->setValue(100);
+        horizontalSlider_ShininessStrength->setOrientation(Qt::Horizontal);
+
+        horizontalLayout_13->addWidget(horizontalSlider_ShininessStrength);
+
+        doubleSpinBox_ShininessStrength = new QDoubleSpinBox(groupBox);
+        doubleSpinBox_ShininessStrength->setObjectName(QStringLiteral("doubleSpinBox_ShininessStrength"));
+        QSizePolicy sizePolicy5(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        sizePolicy5.setHorizontalStretch(0);
+        sizePolicy5.setVerticalStretch(0);
+        sizePolicy5.setHeightForWidth(doubleSpinBox_ShininessStrength->sizePolicy().hasHeightForWidth());
+        doubleSpinBox_ShininessStrength->setSizePolicy(sizePolicy5);
+        doubleSpinBox_ShininessStrength->setMinimumSize(QSize(60, 0));
+        doubleSpinBox_ShininessStrength->setMaximumSize(QSize(60, 16777215));
+        doubleSpinBox_ShininessStrength->setMaximum(1);
+        doubleSpinBox_ShininessStrength->setSingleStep(0.1);
+        doubleSpinBox_ShininessStrength->setValue(1);
+
+        horizontalLayout_13->addWidget(doubleSpinBox_ShininessStrength);
+
+
+        gridLayout_3->addLayout(horizontalLayout_13, 5, 1, 1, 1);
+
+        horizontalLayout_14 = new QHBoxLayout();
+        horizontalLayout_14->setObjectName(QStringLiteral("horizontalLayout_14"));
+        horizontalSlider_Shininess = new QSlider(groupBox);
+        horizontalSlider_Shininess->setObjectName(QStringLiteral("horizontalSlider_Shininess"));
+        horizontalSlider_Shininess->setMaximum(100);
+        horizontalSlider_Shininess->setOrientation(Qt::Horizontal);
+
+        horizontalLayout_14->addWidget(horizontalSlider_Shininess);
+
+        doubleSpinBox_Shininess = new QDoubleSpinBox(groupBox);
+        doubleSpinBox_Shininess->setObjectName(QStringLiteral("doubleSpinBox_Shininess"));
+        sizePolicy5.setHeightForWidth(doubleSpinBox_Shininess->sizePolicy().hasHeightForWidth());
+        doubleSpinBox_Shininess->setSizePolicy(sizePolicy5);
+        doubleSpinBox_Shininess->setMinimumSize(QSize(60, 0));
+        doubleSpinBox_Shininess->setMaximumSize(QSize(60, 16777215));
+        doubleSpinBox_Shininess->setDecimals(2);
+        doubleSpinBox_Shininess->setMaximum(100);
+        doubleSpinBox_Shininess->setSingleStep(0.1);
+
+        horizontalLayout_14->addWidget(doubleSpinBox_Shininess);
+
+
+        gridLayout_3->addLayout(horizontalLayout_14, 6, 1, 1, 1);
+
+        label_43 = new QLabel(groupBox);
+        label_43->setObjectName(QStringLiteral("label_43"));
+        sizePolicy2.setHeightForWidth(label_43->sizePolicy().hasHeightForWidth());
+        label_43->setSizePolicy(sizePolicy2);
+        label_43->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
+
+        gridLayout_3->addWidget(label_43, 1, 0, 1, 1);
+
+        label_44 = new QLabel(groupBox);
+        label_44->setObjectName(QStringLiteral("label_44"));
+        sizePolicy2.setHeightForWidth(label_44->sizePolicy().hasHeightForWidth());
+        label_44->setSizePolicy(sizePolicy2);
+        label_44->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
+
+        gridLayout_3->addWidget(label_44, 2, 0, 1, 1);
+
+        graphicsView_AmbientColorPicker = new QGraphicsView(groupBox);
+        graphicsView_AmbientColorPicker->setObjectName(QStringLiteral("graphicsView_AmbientColorPicker"));
+        QSizePolicy sizePolicy6(QSizePolicy::Minimum, QSizePolicy::Minimum);
+        sizePolicy6.setHorizontalStretch(0);
+        sizePolicy6.setVerticalStretch(0);
+        sizePolicy6.setHeightForWidth(graphicsView_AmbientColorPicker->sizePolicy().hasHeightForWidth());
+        graphicsView_AmbientColorPicker->setSizePolicy(sizePolicy6);
+        graphicsView_AmbientColorPicker->setMinimumSize(QSize(20, 20));
+
+        gridLayout_3->addWidget(graphicsView_AmbientColorPicker, 1, 1, 1, 1);
+
+        graphicsView_DiffuseColorPicker = new QGraphicsView(groupBox);
+        graphicsView_DiffuseColorPicker->setObjectName(QStringLiteral("graphicsView_DiffuseColorPicker"));
+        sizePolicy6.setHeightForWidth(graphicsView_DiffuseColorPicker->sizePolicy().hasHeightForWidth());
+        graphicsView_DiffuseColorPicker->setSizePolicy(sizePolicy6);
+        graphicsView_DiffuseColorPicker->setMinimumSize(QSize(20, 20));
+
+        gridLayout_3->addWidget(graphicsView_DiffuseColorPicker, 2, 1, 1, 1);
+
+        label_47 = new QLabel(groupBox);
+        label_47->setObjectName(QStringLiteral("label_47"));
+        sizePolicy2.setHeightForWidth(label_47->sizePolicy().hasHeightForWidth());
+        label_47->setSizePolicy(sizePolicy2);
+        label_47->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
+
+        gridLayout_3->addWidget(label_47, 5, 0, 1, 1);
+
+        graphicsView_EmissiveColorPicker = new QGraphicsView(groupBox);
+        graphicsView_EmissiveColorPicker->setObjectName(QStringLiteral("graphicsView_EmissiveColorPicker"));
+        sizePolicy6.setHeightForWidth(graphicsView_EmissiveColorPicker->sizePolicy().hasHeightForWidth());
+        graphicsView_EmissiveColorPicker->setSizePolicy(sizePolicy6);
+        graphicsView_EmissiveColorPicker->setMinimumSize(QSize(20, 20));
+
+        gridLayout_3->addWidget(graphicsView_EmissiveColorPicker, 4, 1, 1, 1);
+
+        label_46 = new QLabel(groupBox);
+        label_46->setObjectName(QStringLiteral("label_46"));
+        sizePolicy2.setHeightForWidth(label_46->sizePolicy().hasHeightForWidth());
+        label_46->setSizePolicy(sizePolicy2);
+        label_46->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
+
+        gridLayout_3->addWidget(label_46, 4, 0, 1, 1);
+
+        label_45 = new QLabel(groupBox);
+        label_45->setObjectName(QStringLiteral("label_45"));
+        sizePolicy2.setHeightForWidth(label_45->sizePolicy().hasHeightForWidth());
+        label_45->setSizePolicy(sizePolicy2);
+        label_45->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
+
+        gridLayout_3->addWidget(label_45, 3, 0, 1, 1);
+
+        graphicsView_SpecularColorPicker = new QGraphicsView(groupBox);
+        graphicsView_SpecularColorPicker->setObjectName(QStringLiteral("graphicsView_SpecularColorPicker"));
+        sizePolicy6.setHeightForWidth(graphicsView_SpecularColorPicker->sizePolicy().hasHeightForWidth());
+        graphicsView_SpecularColorPicker->setSizePolicy(sizePolicy6);
+        graphicsView_SpecularColorPicker->setMinimumSize(QSize(20, 20));
+
+        gridLayout_3->addWidget(graphicsView_SpecularColorPicker, 3, 1, 1, 1);
+
+        label_48 = new QLabel(groupBox);
+        label_48->setObjectName(QStringLiteral("label_48"));
+        sizePolicy2.setHeightForWidth(label_48->sizePolicy().hasHeightForWidth());
+        label_48->setSizePolicy(sizePolicy2);
+        label_48->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
+
+        gridLayout_3->addWidget(label_48, 6, 0, 1, 1);
+
+        label_35 = new QLabel(groupBox);
         label_35->setObjectName(QStringLiteral("label_35"));
         sizePolicy2.setHeightForWidth(label_35->sizePolicy().hasHeightForWidth());
         label_35->setSizePolicy(sizePolicy2);
         label_35->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
 
-        gridLayout_3->addWidget(label_35, 1, 0, 1, 1);
+        gridLayout_3->addWidget(label_35, 0, 0, 1, 1);
 
-        graphicsView_VertexColorPicker = new QGraphicsView(scrollAreaWidgetContents);
+        graphicsView_VertexColorPicker = new QGraphicsView(groupBox);
         graphicsView_VertexColorPicker->setObjectName(QStringLiteral("graphicsView_VertexColorPicker"));
-        QSizePolicy sizePolicy3(QSizePolicy::Minimum, QSizePolicy::Minimum);
-        sizePolicy3.setHorizontalStretch(0);
-        sizePolicy3.setVerticalStretch(0);
-        sizePolicy3.setHeightForWidth(graphicsView_VertexColorPicker->sizePolicy().hasHeightForWidth());
-        graphicsView_VertexColorPicker->setSizePolicy(sizePolicy3);
+        sizePolicy6.setHeightForWidth(graphicsView_VertexColorPicker->sizePolicy().hasHeightForWidth());
+        graphicsView_VertexColorPicker->setSizePolicy(sizePolicy6);
         graphicsView_VertexColorPicker->setMinimumSize(QSize(20, 20));
 
-        gridLayout_3->addWidget(graphicsView_VertexColorPicker, 1, 1, 1, 1);
+        gridLayout_3->addWidget(graphicsView_VertexColorPicker, 0, 1, 1, 1);
 
 
         verticalLayout_12->addLayout(gridLayout_3);
+
+
+        verticalLayout_16->addWidget(groupBox);
+
+        groupBox_2 = new QGroupBox(scrollAreaWidgetContents);
+        groupBox_2->setObjectName(QStringLiteral("groupBox_2"));
+        verticalLayout_15 = new QVBoxLayout(groupBox_2);
+        verticalLayout_15->setObjectName(QStringLiteral("verticalLayout_15"));
+        gridLayout_4 = new QGridLayout();
+        gridLayout_4->setObjectName(QStringLiteral("gridLayout_4"));
+        graphicsView_SpecularMapPicker = new QGraphicsView(groupBox_2);
+        graphicsView_SpecularMapPicker->setObjectName(QStringLiteral("graphicsView_SpecularMapPicker"));
+        sizePolicy6.setHeightForWidth(graphicsView_SpecularMapPicker->sizePolicy().hasHeightForWidth());
+        graphicsView_SpecularMapPicker->setSizePolicy(sizePolicy6);
+        graphicsView_SpecularMapPicker->setMinimumSize(QSize(20, 20));
+
+        gridLayout_4->addWidget(graphicsView_SpecularMapPicker, 2, 1, 1, 1);
+
+        label_53 = new QLabel(groupBox_2);
+        label_53->setObjectName(QStringLiteral("label_53"));
+        sizePolicy2.setHeightForWidth(label_53->sizePolicy().hasHeightForWidth());
+        label_53->setSizePolicy(sizePolicy2);
+        label_53->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
+
+        gridLayout_4->addWidget(label_53, 2, 0, 1, 1);
+
+        label_52 = new QLabel(groupBox_2);
+        label_52->setObjectName(QStringLiteral("label_52"));
+        sizePolicy2.setHeightForWidth(label_52->sizePolicy().hasHeightForWidth());
+        label_52->setSizePolicy(sizePolicy2);
+        label_52->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
+
+        gridLayout_4->addWidget(label_52, 3, 0, 1, 1);
+
+        graphicsView_EmissiveMapPicker = new QGraphicsView(groupBox_2);
+        graphicsView_EmissiveMapPicker->setObjectName(QStringLiteral("graphicsView_EmissiveMapPicker"));
+        sizePolicy6.setHeightForWidth(graphicsView_EmissiveMapPicker->sizePolicy().hasHeightForWidth());
+        graphicsView_EmissiveMapPicker->setSizePolicy(sizePolicy6);
+        graphicsView_EmissiveMapPicker->setMinimumSize(QSize(20, 20));
+
+        gridLayout_4->addWidget(graphicsView_EmissiveMapPicker, 3, 1, 1, 1);
+
+        graphicsView_NormalMapPicker = new QGraphicsView(groupBox_2);
+        graphicsView_NormalMapPicker->setObjectName(QStringLiteral("graphicsView_NormalMapPicker"));
+        sizePolicy6.setHeightForWidth(graphicsView_NormalMapPicker->sizePolicy().hasHeightForWidth());
+        graphicsView_NormalMapPicker->setSizePolicy(sizePolicy6);
+        graphicsView_NormalMapPicker->setMinimumSize(QSize(20, 20));
+
+        gridLayout_4->addWidget(graphicsView_NormalMapPicker, 1, 1, 1, 1);
+
+        graphicsView_DiffuseMapPicker = new QGraphicsView(groupBox_2);
+        graphicsView_DiffuseMapPicker->setObjectName(QStringLiteral("graphicsView_DiffuseMapPicker"));
+        sizePolicy6.setHeightForWidth(graphicsView_DiffuseMapPicker->sizePolicy().hasHeightForWidth());
+        graphicsView_DiffuseMapPicker->setSizePolicy(sizePolicy6);
+        graphicsView_DiffuseMapPicker->setMinimumSize(QSize(20, 20));
+
+        gridLayout_4->addWidget(graphicsView_DiffuseMapPicker, 0, 1, 1, 1);
+
+        label_50 = new QLabel(groupBox_2);
+        label_50->setObjectName(QStringLiteral("label_50"));
+        sizePolicy2.setHeightForWidth(label_50->sizePolicy().hasHeightForWidth());
+        label_50->setSizePolicy(sizePolicy2);
+        label_50->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
+
+        gridLayout_4->addWidget(label_50, 1, 0, 1, 1);
+
+        label_49 = new QLabel(groupBox_2);
+        label_49->setObjectName(QStringLiteral("label_49"));
+        sizePolicy2.setHeightForWidth(label_49->sizePolicy().hasHeightForWidth());
+        label_49->setSizePolicy(sizePolicy2);
+        label_49->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
+
+        gridLayout_4->addWidget(label_49, 0, 0, 1, 1);
+
+
+        verticalLayout_15->addLayout(gridLayout_4);
+
+
+        verticalLayout_16->addWidget(groupBox_2);
 
         scrollArea->setWidget(scrollAreaWidgetContents);
 
         verticalLayout_6->addWidget(scrollArea);
 
-        tabWidget->addTab(MaterialTab, QString());
+        tabWidget->addTab(RenderingTab, QString());
         ParticleTab = new QWidget();
         ParticleTab->setObjectName(QStringLiteral("ParticleTab"));
         verticalLayout_7 = new QVBoxLayout(ParticleTab);
@@ -723,8 +984,8 @@ public:
 
         graphicsView_ColorPicker = new QGraphicsView(scrollAreaWidgetContents_2);
         graphicsView_ColorPicker->setObjectName(QStringLiteral("graphicsView_ColorPicker"));
-        sizePolicy3.setHeightForWidth(graphicsView_ColorPicker->sizePolicy().hasHeightForWidth());
-        graphicsView_ColorPicker->setSizePolicy(sizePolicy3);
+        sizePolicy6.setHeightForWidth(graphicsView_ColorPicker->sizePolicy().hasHeightForWidth());
+        graphicsView_ColorPicker->setSizePolicy(sizePolicy6);
         graphicsView_ColorPicker->setMinimumSize(QSize(20, 20));
 
         horizontalLayout_5->addWidget(graphicsView_ColorPicker);
@@ -771,8 +1032,8 @@ public:
 
         graphicsView_TexturePicker = new QGraphicsView(scrollAreaWidgetContents_2);
         graphicsView_TexturePicker->setObjectName(QStringLiteral("graphicsView_TexturePicker"));
-        sizePolicy3.setHeightForWidth(graphicsView_TexturePicker->sizePolicy().hasHeightForWidth());
-        graphicsView_TexturePicker->setSizePolicy(sizePolicy3);
+        sizePolicy6.setHeightForWidth(graphicsView_TexturePicker->sizePolicy().hasHeightForWidth());
+        graphicsView_TexturePicker->setSizePolicy(sizePolicy6);
         graphicsView_TexturePicker->setMinimumSize(QSize(256, 256));
 
         horizontalLayout_9->addWidget(graphicsView_TexturePicker);
@@ -1066,8 +1327,20 @@ public:
         label_41->setText(QApplication::translate("HierarchyViewer", "Duration", 0));
         tabWidget->setTabText(tabWidget->indexOf(PupetTab), QApplication::translate("HierarchyViewer", "Puppet", 0));
         label_42->setText(QApplication::translate("HierarchyViewer", "Shader", 0));
+        groupBox->setTitle(QApplication::translate("HierarchyViewer", "Material", 0));
+        label_43->setText(QApplication::translate("HierarchyViewer", "Ambient Color", 0));
+        label_44->setText(QApplication::translate("HierarchyViewer", "Diffuse Color", 0));
+        label_47->setText(QApplication::translate("HierarchyViewer", "Specular Intensity", 0));
+        label_46->setText(QApplication::translate("HierarchyViewer", "Emissive Color", 0));
+        label_45->setText(QApplication::translate("HierarchyViewer", "Specular Color", 0));
+        label_48->setText(QApplication::translate("HierarchyViewer", "Specular Power", 0));
         label_35->setText(QApplication::translate("HierarchyViewer", "Vertex Color", 0));
-        tabWidget->setTabText(tabWidget->indexOf(MaterialTab), QApplication::translate("HierarchyViewer", "Material", 0));
+        groupBox_2->setTitle(QApplication::translate("HierarchyViewer", "Texture", 0));
+        label_53->setText(QApplication::translate("HierarchyViewer", "Specular Map", 0));
+        label_52->setText(QApplication::translate("HierarchyViewer", "Emissive Map", 0));
+        label_50->setText(QApplication::translate("HierarchyViewer", "Normal Map", 0));
+        label_49->setText(QApplication::translate("HierarchyViewer", "Diffuse Map", 0));
+        tabWidget->setTabText(tabWidget->indexOf(RenderingTab), QApplication::translate("HierarchyViewer", "Rendering", 0));
         label_13->setText(QApplication::translate("HierarchyViewer", "Mass", 0));
         label_32->setText(QApplication::translate("HierarchyViewer", "Gravity Factor", 0));
         label_18->setText(QApplication::translate("HierarchyViewer", "Min Life", 0));
