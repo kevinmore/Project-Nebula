@@ -1,11 +1,5 @@
 #pragma once
-#include <QtCore/QSharedPointer>
-#include <QtCore/QString>
-#include <QtGui/QVector3D>
-#include <QtGui/QColor>
-#include <QtGui/QOpenGLShaderProgram>
-
-typedef QSharedPointer<QOpenGLShaderProgram> QOpenGLShaderProgramPtr;
+#include <Utility/EngineCommon.h>
 
 class Light
 {
@@ -44,15 +38,15 @@ public:
 	const QColor& diffuseColor() const;
 	const QColor& specularColor() const;
 
-	void setDirection(const QVector3D& direction);
+	void setDirection(const vec3& direction);
 	void setDirection(float x, float y, float z);
 
-	const QVector3D& direction() const;
+	const vec3& direction() const;
 
-	void setPosition(const QVector3D& position);
+	void setPosition(const vec3& position);
 	void setPosition(float x, float y, float z);
 
-	const QVector3D& position() const;
+	const vec3& position() const;
 
 	void setAttenuation(float constantFactor, float linearFactor, float quadraticFactor);
 
@@ -72,14 +66,14 @@ public:
 	float spotInnerAngle() const;
 	float spotOuterAngle() const;
 
-	void render(const QOpenGLShaderProgramPtr& shader, const QMatrix4x4& viewMatrix);
+	//void render(const QOpenGLShaderProgramPtr& shader, const QMatrix4x4& viewMatrix);
 
 private:
 	QString   m_name;
 	LightType m_type;
 
-	QVector3D m_position;
-	QVector3D m_direction;
+	vec3 m_position;
+	vec3 m_direction;
 
 	QColor m_ambientColor;
 	QColor m_diffuseColor;
@@ -94,3 +88,4 @@ private:
 	float m_intensity;
 };
 
+typedef QSharedPointer<Light> LightPtr;

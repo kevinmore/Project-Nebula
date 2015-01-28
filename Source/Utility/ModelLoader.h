@@ -10,11 +10,11 @@
 #include <QSharedPointer>
 #include <Scene/ShadingTechniques/ShadingTechnique.h>
 
-
+class Scene;
 class ModelLoader : protected QOpenGLFunctions_4_3_Core
 {
 public:
-	ModelLoader();
+	ModelLoader(Scene* scene);
 	virtual ~ModelLoader();
 
 	enum MODEL_TYPE
@@ -36,9 +36,9 @@ public:
 	uint getNumBones() const {	return m_NumBones;	}
 	QMap<QString, uint> getBoneMap() const { return m_BoneMapping; }
 	mat4 getGlobalInverseTransform () const { return m_GlobalInverseTransform; }
-	aiAnimation** getAnimations() const	{ return m_scene->mAnimations; }
+	aiAnimation** getAnimations() const	{ return m_aiScene->mAnimations; }
 	QVector<Bone> getBoneInfo() const {	return m_BoneInfo; }
-	aiNode* getRootNode() const	{ return m_scene->mRootNode; }
+	aiNode* getRootNode() const	{ return m_aiScene->mRootNode; }
 	Skeleton* getSkeletom() const { return m_skeleton; }
 	ShadingTechniquePtr getRenderingEffect() { return m_effect; }
 	MODEL_TYPE getModelType() { return m_modelType; }
@@ -104,8 +104,9 @@ private:
 	/*
 	 *	Members Variables
 	 */
+	Scene* m_scene;
 	Assimp::Importer m_importer;
-	const aiScene* m_scene;
+	const aiScene* m_aiScene;
 	Skeleton* m_skeleton;
 	QMap<QString, uint> m_BoneMapping; // maps a bone name to its index
 	QVector<VertexBoneData> m_Bones;

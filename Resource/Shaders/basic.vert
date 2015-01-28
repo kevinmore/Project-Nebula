@@ -1,45 +1,42 @@
-#version 430 core
-
+#version 430
 /*
 PER-FRAGMENT LIGHTING (PHONG SHADING IMPLEMENTATION)
 */
 
-in vec3 position; // Vertex position
-in vec4 color;    // Vertex color
-in vec2 texCoord; // Texture coordinates
-in vec3 normal;   // Vertex normal
+layout (location = 0) in vec3 Position;  // Vertex position                                           
+layout (location = 1) in vec4 Color;     // Vertex color                                         
+layout (location = 2) in vec3 Normal;    // Vertex normal                            
+layout (location = 3) in vec3 Tangent;   // Vertex tangent
 
 out VS_OUT
 {
     vec4 P; // Position vector transformed into eye (camera) space
     vec3 N; // Normal vector transformed into eye (camera) space
-    vec3 V; // View vector (the negative of the view-space position)
-
-    vec2 texCoord;
     vec4 color;
 } vs_out;
 
-uniform mat3 normalMatrix;
-uniform mat4 modelViewMatrix;
-uniform mat4 projectionMatrix;
+
+uniform mat4 ModelMatrix;
+uniform mat4 MVPMatrix;
+uniform vec4 vColor;         // user definded color
+uniform int customizedColor; // 0 means use color vbo, 1 means use uniform color
 
 void main()
 {
+	 // Calculate the clip-space position of each vertex
+	vec4 PosL = vec4(Position, 1.0);
+    gl_Position = MVPMatrix * PosL;
+
     // Calculate position vector in view-space coordinate
-    vs_out.P = modelViewMatrix * vec4(position, 1.0);
+    vs_out.P = (ModelMatrix * PosL).xyz;
 
     // Calculate normal vector in view-space coordinate
-    // normalMatrix is the transpose of the inverse of the modelView matrix
-    // normalMatrix = transpose(inverse(mat3(modelViewMatrix)));
-    vs_out.N = normalMatrix * normal;
+	vec4 NormalL = vec4(Normal, 0.0);
+    vs_out.N = ModelMatrix * NormalL;
 
-    // Calculate viewing vector from eye position to surface point
-    vs_out.V = -vs_out.P.xyz;
-
-    // Send texture coordinates and vertex color to the fragment shader
-    vs_out.texCoord = texCoord;
-    vs_out.color    = color;
-
-    // Calculate the clip-space position of each vertex
-    gl_Position = projectionMatrix * vs_out.P;
+	// Check if the user has specified vertex color
+	if(customizedColor == 0)
+		vs_out.color = Color;
+	else if(customizedColor == 1)
+		vs_out.color = vColor;
 }

@@ -18,6 +18,18 @@ struct VSOutput
 	vec4 LightSpacePos;                                                                 
 };
 
+// Material properties
+struct MaterialInfo
+{
+    vec4 Ka; // Ambient reflectivity
+    vec4 Kd; // Diffuse reflectivity
+    vec4 Ks; // Specular reflectivity
+    vec4 Ke; // Emissive reflectivity
+
+    float shininess; // Specular shininess exponent
+    float shininessStrength; // Not used in Phong model
+    bool hasTexture;
+};
 
 struct BaseLight
 {
@@ -62,6 +74,7 @@ uniform sampler2D gShadowMap;
 uniform vec3 gEyeWorldPos;                                                                  
 uniform float gMatSpecularIntensity;                                                        
 uniform float gSpecularPower; 
+
 
 float CalcShadowFactor(vec4 LightSpacePos)                                                  
 {                                                                                           

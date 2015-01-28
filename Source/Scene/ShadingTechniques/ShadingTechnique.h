@@ -1,7 +1,9 @@
 #pragma once
 
 #include "Technique.h"
+#include <Scene/Light.h>
 
+class Scene;
 class ShadingTechnique : public Technique 
 {
 public:
@@ -16,7 +18,7 @@ public:
 		RIGGED
 	};
 
-    ShadingTechnique(const QString &shaderName, ShaderType shaderType = STATIC);
+    ShadingTechnique(Scene* scene, const QString &shaderName, ShaderType shaderType = STATIC);
 	~ShadingTechnique() {}
     virtual bool init();
 
@@ -33,11 +35,14 @@ public:
     void setMatSpecularPower(float Power);
     void setBoneTransform(uint Index, const mat4& Transform);
 	void setVertexColor(const QColor& col);
+	
 
 private:
     
 	virtual bool compileShader();
+	void initLights();
 
+	Scene* m_scene;
 	ShaderType m_shaderType;
 
 	GLuint m_numPointLightsLocation;

@@ -11,6 +11,7 @@
 #include <QString>
 #include <QtMath>
 #include <QSharedPointer>
+#include <QColor>
 
 typedef QVector2D vec2;
 typedef QVector3D vec3;

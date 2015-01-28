@@ -246,10 +246,7 @@ void ParticleSystem::render(const float currentTime)
 QColor ParticleSystem::getParticleColor() const
 {
 	QColor col;
-	col.setRedF(vGenColor.x());
-	col.setGreenF(vGenColor.y());
-	col.setBlueF(vGenColor.z());
-
+	col.setRgbF(vGenColor.x(), vGenColor.y(), vGenColor.z());
 	return col;
 }
 

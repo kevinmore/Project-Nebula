@@ -19,11 +19,6 @@ public:
     virtual void update(float t) = 0;
 
     /**
-     * Draw function
-     */
-    virtual void render(double currentTime) = 0;
-
-    /**
      * Resize
      */
     virtual void resize(int width, int height) = 0;

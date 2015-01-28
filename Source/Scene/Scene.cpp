@@ -5,9 +5,7 @@
 Scene::Scene(QObject* parent)
 	: AbstractScene(parent),
 	  m_camera(new Camera(NULL,this)),
-	  m_light("light01"),
 	  m_lightMode(PerFragmentPhong),
-	  m_lightModeSubroutines(LightModeCount),
 	  m_absoluteTime(0.0f),
 	  m_relativeTime(0.0f),
 	  m_delayedTime(0.0f),
@@ -16,10 +14,7 @@ Scene::Scene(QObject* parent)
 	  m_physicsWorld(0)
 {
 	// Initializing the lights
-	for(int i = 1; i < LightModeCount; ++i)
-	{
-		m_lightModeSubroutines[i] = i;
-	}
+	m_light = LightPtr(new Light("Main Light"));
 }
 
 Scene::~Scene()
@@ -238,19 +233,6 @@ void Scene::update(float currentTime)
 	
 }
 
-void Scene::render(double currentTime)
-{
-	// Set the fragment shader light mode subroutine
-//     glUniformSubroutinesuiv(GL_FRAGMENT_SHADER, 1, &m_lightModeSubroutines[m_lightMode]);
-// 
-// 	if(currentTime > 0)
-// 	{
-// 		m_object.rotateY(static_cast<float>(currentTime)/0.02f);
-// 	}
-
-	emit renderCycleDone();
-}
-
 Camera* Scene::getCamera()
 {
 	return m_camera;
@@ -295,7 +277,7 @@ void Scene::resetToDefaultScene()
 	// load the floor
 	GameObjectPtr floorRef(new GameObject(this));
 	floorRef->setScale(100.0f, 1.0f, 100.0f);
-	LoaderThread loader(this, "../Resource/Models/Common/DemoRoom/MetalFloor.obj", floorRef, m_sceneRootNode);
+	LoaderThread loader(this, "../Resource/Models/Common/DemoRoom/WoodenFloor.obj", floorRef, m_sceneRootNode);
 }
 
 void Scene::showLoadModelDialog()

@@ -10,7 +10,6 @@ Technique::Technique( const QString& shaderFileName /*= ""*/ )
 
 Technique::~Technique()
 {
-    m_shaderProgram->release();
 }
 
 

@@ -1,10 +1,12 @@
 #include "ModelLoader.h"
 #include <QDebug>
+#include <Scene/Scene.h>
 #include <Utility/Math.h>
 #include <Animation/IK/FABRIKSolver.h>
 
-ModelLoader::ModelLoader()
+ModelLoader::ModelLoader(Scene* scene)
 {
+	m_scene = scene;
 	m_effect = ShadingTechniquePtr();
 	initializeOpenGLFunctions();
 }
@@ -58,29 +60,29 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName, GLuint sh
 	{
 		flags = aiProcessPreset_TargetRealtime_MaxQuality | aiProcess_FlipUVs;
 	}
-	m_scene = m_importer.ReadFile(fileName.toStdString(), flags);
+	m_aiScene = m_importer.ReadFile(fileName.toStdString(), flags);
 	
-	if(!m_scene)
+	if(!m_aiScene)
 	{
 		qDebug() << m_importer.GetErrorString();
 		QVector<ModelDataPtr> empty;
 		return empty;
 	}
-	else if(m_scene->HasTextures())
+	else if(m_aiScene->HasTextures())
 	{
 		qFatal("Support for meshes with embedded textures is not implemented");
 	}
 	
-   	m_GlobalInverseTransform = Math::convToQMat4(m_scene->mRootNode->mTransformation.Inverse());
+   	m_GlobalInverseTransform = Math::convToQMat4(m_aiScene->mRootNode->mTransformation.Inverse());
 
-	m_modelType = m_scene->HasAnimations() ? RIGGED_MODEL : STATIC_MODEL;
+	m_modelType = m_aiScene->HasAnimations() ? RIGGED_MODEL : STATIC_MODEL;
 
 	uint numVertices = 0, numIndices = 0, numFaces = 0;
 
-	for(uint i = 0; i < m_scene->mNumMeshes; ++i)
+	for(uint i = 0; i < m_aiScene->mNumMeshes; ++i)
 	{
-		numVertices += m_scene->mMeshes[i]->mNumVertices;
-		numIndices  += m_scene->mMeshes[i]->mNumFaces * 3;
+		numVertices += m_aiScene->mMeshes[i]->mNumVertices;
+		numIndices  += m_aiScene->mMeshes[i]->mNumFaces * 3;
 	}
 
 	m_positions.reserve(numVertices);
@@ -97,23 +99,23 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName, GLuint sh
 	m_NumBones = 0;
 
 	QVector<ModelDataPtr> modelDataVector;
-	modelDataVector.resize(m_scene->mNumMeshes);
+	modelDataVector.resize(m_aiScene->mNumMeshes);
 
-	for(uint i = 0; i < m_scene->mNumMeshes; ++i)
+	for(uint i = 0; i < m_aiScene->mNumMeshes; ++i)
 	{
 		ModelData* md = new ModelData();
 		
-		md->meshData     = loadMesh(i, numVertices, numIndices, m_scene->mMeshes[i], fileName);
-		md->textureData  = loadTexture(fileName, m_scene->mMaterials[m_scene->mMeshes[i]->mMaterialIndex]);
-		md->materialData = loadMaterial(i, m_scene->mMaterials[m_scene->mMeshes[i]->mMaterialIndex]);
-		md->hasAnimation = m_scene->HasAnimations();
+		md->meshData     = loadMesh(i, numVertices, numIndices, m_aiScene->mMeshes[i], fileName);
+		md->textureData  = loadTexture(fileName, m_aiScene->mMaterials[m_aiScene->mMeshes[i]->mMaterialIndex]);
+		md->materialData = loadMaterial(i, m_aiScene->mMaterials[m_aiScene->mMeshes[i]->mMaterialIndex]);
+		md->hasAnimation = m_aiScene->HasAnimations();
 
 		// calculate the animation duration in seconds
-		if(m_scene->HasAnimations()) md->animationDuration = (float) m_scene->mAnimations[0]->mDuration;
+		if(m_aiScene->HasAnimations()) md->animationDuration = (float) m_aiScene->mAnimations[0]->mDuration;
 
-		numVertices += m_scene->mMeshes[i]->mNumVertices;
-		numIndices  += m_scene->mMeshes[i]->mNumFaces * 3;
-		numFaces    += m_scene->mMeshes[i]->mNumFaces;
+		numVertices += m_aiScene->mMeshes[i]->mNumVertices;
+		numIndices  += m_aiScene->mMeshes[i]->mNumFaces * 3;
+		numFaces    += m_aiScene->mMeshes[i]->mNumFaces;
 
 		modelDataVector[i] = ModelDataPtr(md);
 	}
@@ -127,7 +129,7 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName, GLuint sh
 		skeleton_root->m_name = "Project Nebula Skeleton ROOT";
 
 		mat4 identity;
-		generateSkeleton(m_scene->mRootNode, skeleton_root, identity);
+		generateSkeleton(m_aiScene->mRootNode, skeleton_root, identity);
 		m_skeleton = new Skeleton(skeleton_root, m_GlobalInverseTransform);
 
 		// print out the skeleton
@@ -142,14 +144,14 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName, GLuint sh
 
 	// print out the summary
 	QString summary = "Loaded " + fileName + ". Model has " 
-		            + QString::number(m_scene->mNumMeshes) + " meshes, " 
+		            + QString::number(m_aiScene->mNumMeshes) + " meshes, " 
 					+ QString::number(numVertices) + " vertices, " 
 					+ QString::number(numFaces) + " faces.";
 
 	if(m_NumBones)
 		summary += " Contains " + QString::number(m_NumBones) + " bones.";
-	if (m_scene->HasAnimations()) 
-		summary += " Contains " + QString::number(m_scene->mAnimations[0]->mDuration) + " seconds animation.";
+	if (m_aiScene->HasAnimations()) 
+		summary += " Contains " + QString::number(m_aiScene->mAnimations[0]->mDuration) + " seconds animation.";
 
 	qDebug() << summary;
 	
@@ -241,7 +243,7 @@ GLuint ModelLoader::installShader()
 
 	// combine the shader name
 	shaderName = shaderPrefix + shaderFeatures;
-	m_effect = ShadingTechniquePtr(new ShadingTechnique(shaderName, shaderType));
+	m_effect = ShadingTechniquePtr(new ShadingTechnique(m_scene, shaderName, shaderType));
 
 	if (!m_effect->init()) 
 	{
@@ -352,7 +354,7 @@ void ModelLoader::loadBones( uint MeshIndex, const aiMesh* paiMesh )
 		uint offset = 0;
 		for (uint k = 0; k < MeshIndex; ++k)
 		{
-			offset += m_scene->mMeshes[k]->mNumVertices;
+			offset += m_aiScene->mMeshes[k]->mNumVertices;
 		}
 
 		for (uint j = 0 ; j < paiMesh->mBones[i]->mNumWeights ; ++j) 

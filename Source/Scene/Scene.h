@@ -31,7 +31,6 @@ public:
 
 	virtual void initialize();
 	virtual void update(float currentTime);
-	virtual void render(double currentTime);
 	virtual void resize(int width, int height);
 
 	enum LightMode
@@ -56,6 +55,7 @@ public:
 	GameObject* sceneNode() const { return m_sceneRootNode; }
 	void setBackGroundColor(const QColor& col);
 	SkyboxPtr getSkybox() const  { return m_skybox; }
+	LightPtr getLight() const { return m_light; }
 
 public slots:
 	void toggleFill(bool state);
@@ -83,7 +83,6 @@ public slots:
 
 
 signals:
-	void renderCycleDone();
 	void updateHierarchy();
 
 private:
@@ -106,16 +105,14 @@ private:
 	TextureManager* m_textureManager;
 	MaterialManager* m_materialManager;
 
-	ShadersProgramPtr m_shaderProgram;
-	Light			  m_light;
+	LightPtr			  m_light;
 	
 	float m_absoluteTime; // absolute time from the start of the program
 	float m_relativeTime; // relative time excluding paused duration 
 	float m_delayedTime; // the time delayed between pauses
 
 	LightMode       m_lightMode;
-	QVector<GLuint> m_lightModeSubroutines;
-
+	
 	QVector<vec3> m_path;
 
 	QStateMachine* m_stateMachine;

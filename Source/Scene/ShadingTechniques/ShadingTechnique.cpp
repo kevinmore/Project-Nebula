@@ -2,14 +2,16 @@
 #include <assert.h>
 #include "ShadingTechnique.h"
 #include <QtMath>
+#include <Scene/Scene.h>
 
 #define SNPRINTF _snprintf_s
 
 
 using namespace std;
 
-ShadingTechnique::ShadingTechnique(const QString &shaderName, ShaderType shaderType)
+ShadingTechnique::ShadingTechnique(Scene* scene, const QString &shaderName, ShaderType shaderType)
 	: Technique(shaderName),
+	  m_scene(scene),
 	  m_shaderType(shaderType)
 {
 }
@@ -124,18 +126,29 @@ bool ShadingTechnique::compileShader()
 
 
 
-	DirectionalLight directionalLight;
-	directionalLight.Color = vec3(1.0f, 1.0f, 1.0f);
-	directionalLight.AmbientIntensity = 0.55f;
-	directionalLight.DiffuseIntensity = 0.9f;
-	directionalLight.Direction = vec3(-1.0f, -1.0, -1.0);
+// 	DirectionalLight directionalLight;
+// 	directionalLight.Color = vec3(1.0f, 1.0f, 1.0f);
+// 	directionalLight.AmbientIntensity = 0.55f;
+// 	directionalLight.DiffuseIntensity = 0.9f;
+// 	directionalLight.Direction = vec3(-1.0f, -1.0, -1.0);
+// 
+// 	enable();
+// 	setColorTextureUnit(0);
+// 	setNormalMapTextureUnit(2);
+// 	setDirectionalLight(directionalLight);
+// 	setMatSpecularIntensity(1.0f);
+// 	setMatSpecularPower(5);
+
+	PointLight pl;
+	pl.Position = vec3(100,100,100);
+	pl.Color = vec3(1.0f, 1.0f, 1.0f);
+	pl.AmbientIntensity = 0.55f;
+	pl.DiffuseIntensity = 0.9f;
 
 	enable();
-	setColorTextureUnit(0);
-	setNormalMapTextureUnit(2);
-	setDirectionalLight(directionalLight);
-	setMatSpecularIntensity(0.0f);
-	setMatSpecularPower(0);
+	setPointLights(1, &pl);
+
+	initLights();
 
 	return true;
 }
@@ -239,4 +252,11 @@ void ShadingTechnique::setVertexColor( const QColor& col )
 	enable();
 	m_shaderProgram->setUniformValue("customizedColor", 1);
 	m_shaderProgram->setUniformValue("vColor", col);
+}
+
+void ShadingTechnique::initLights()
+{
+	enable();
+	LightPtr light = m_scene->getLight();
+	qDebug() << light->position();
 }
