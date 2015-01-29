@@ -197,7 +197,7 @@ void ParticleSystem::render(const float currentTime)
 	
 	glDisable(GL_RASTERIZER_DISCARD);
 	particleRenderer->enable();
-	m_Texture->bind(COLOR_TEXTURE_UNIT);
+	m_Texture->bind(DIFFUSE_TEXTURE_UNIT);
 
 	mat4 matProjection = m_scene->getCamera()->projectionMatrix();
 	mat4 matView = m_scene->getCamera()->viewMatrix();
@@ -208,7 +208,7 @@ void ParticleSystem::render(const float currentTime)
 	particleRenderer->getShaderProgram()->setUniformValue("matrices.mView", matView);
 	particleRenderer->getShaderProgram()->setUniformValue("vQuad1", vQuad1);
 	particleRenderer->getShaderProgram()->setUniformValue("vQuad2", vQuad2);
-	particleRenderer->getShaderProgram()->setUniformValue("gSampler", COLOR_TEXTURE_UNIT);
+	particleRenderer->getShaderProgram()->setUniformValue("gSampler", DIFFUSE_TEXTURE_UNIT);
 
 	glBindVertexArray(m_VAO[m_curReadBufferIndex]);
 	glDisableVertexAttribArray(1); // Disable velocity, because we don't need it for rendering

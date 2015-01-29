@@ -8,7 +8,7 @@ ModelLoader::ModelLoader(Scene* scene)
 {
 	m_scene = scene;
 	m_effect = ShadingTechniquePtr();
-	initializeOpenGLFunctions();
+	Q_ASSERT(initializeOpenGLFunctions());
 }
 
 
@@ -24,54 +24,40 @@ void ModelLoader::clear()
 
 	if (m_Buffers.size()) 
 		glDeleteBuffers(m_Buffers.size(), m_Buffers.data());
-
-	m_modelFeatures.hasColorMap = false;
-	m_modelFeatures.hasNormalMap = false;
 }
 
 ModelLoader::~ModelLoader()
 {
 	clear();
-// 	if (m_VAO != 0) 
-// 	{
-// 		glDeleteVertexArrays(1, &m_VAO);
-// 		m_VAO = 0;
-// 	}
 }
 
 QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName, GLuint shaderProgramID, const QString& loadingFlags )
 {
-	clear();
 	m_fileName = fileName;
 	uint flags;
 
 	if (loadingFlags == "Simple")
-	{
 		flags = aiProcess_Triangulate | aiProcess_GenNormals | aiProcess_FlipUVs;
-	}
 	else if (loadingFlags == "Fast")
-	{
 		flags = aiProcessPreset_TargetRealtime_Fast | aiProcess_FlipUVs;
-	}
 	else if (loadingFlags == "Quality")
-	{
 		flags = aiProcessPreset_TargetRealtime_Quality | aiProcess_FlipUVs;
-	}
 	else if (loadingFlags == "Max Quality")
-	{
 		flags = aiProcessPreset_TargetRealtime_MaxQuality | aiProcess_FlipUVs;
-	}
+
 	m_aiScene = m_importer.ReadFile(fileName.toStdString(), flags);
 	
 	if(!m_aiScene)
 	{
-		qDebug() << m_importer.GetErrorString();
+		qWarning() << m_importer.GetErrorString();
 		QVector<ModelDataPtr> empty;
 		return empty;
 	}
 	else if(m_aiScene->HasTextures())
 	{
-		qFatal("Support for meshes with embedded textures is not implemented");
+		qWarning() << "Support for meshes with embedded textures is not implemented";
+		QVector<ModelDataPtr> empty;
+		return empty;
 	}
 	
    	m_GlobalInverseTransform = Math::convToQMat4(m_aiScene->mRootNode->mTransformation.Inverse());
@@ -84,6 +70,7 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName, GLuint sh
 	{
 		numVertices += m_aiScene->mMeshes[i]->mNumVertices;
 		numIndices  += m_aiScene->mMeshes[i]->mNumFaces * 3;
+		numFaces    += m_aiScene->mMeshes[i]->mNumFaces;
 	}
 
 	m_positions.reserve(numVertices);
@@ -104,19 +91,19 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName, GLuint sh
 
 	for(uint i = 0; i < m_aiScene->mNumMeshes; ++i)
 	{
-		ModelData* md = new ModelData();
+		ModelDataPtr md(new ModelData());
 		
 		md->meshData     = loadMesh(i, numVertices, numIndices, m_aiScene->mMeshes[i]);
-		md->textureData  = loadTexture(fileName, m_aiScene->mMaterials[m_aiScene->mMeshes[i]->mMaterialIndex]);
 		md->materialData = loadMaterial(i, m_aiScene->mMaterials[m_aiScene->mMeshes[i]->mMaterialIndex]);
+		md->textureData  = loadTexture(m_aiScene->mMaterials[m_aiScene->mMeshes[i]->mMaterialIndex]);
 		md->hasAnimation = m_aiScene->HasAnimations();
 
 		// calculate the animation duration in seconds
 		if(m_aiScene->HasAnimations()) md->animationDuration = (float) m_aiScene->mAnimations[0]->mDuration;
+		else md->animationDuration = 0.0f;
 
 		numVertices += m_aiScene->mMeshes[i]->mNumVertices;
 		numIndices  += m_aiScene->mMeshes[i]->mNumFaces * 3;
-		numFaces    += m_aiScene->mMeshes[i]->mNumFaces;
 
 		modelDataVector[i] = ModelDataPtr(md);
 	}
@@ -156,6 +143,7 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName, GLuint sh
 
 	qDebug() << summary;
 	
+	// clean up
 	clear();
 	return modelDataVector;
 }
@@ -174,11 +162,11 @@ void ModelLoader::prepareVertexContainers(unsigned int index, const aiMesh* mesh
 		const aiVector3D * pNormal   = mesh->HasNormals()               ? &(mesh->mNormals[i])          : &zero3D;
 		const aiVector3D * pTangent  = mesh->HasTangentsAndBitangents() ? &(mesh->mTangents[i])         : &zero3D;
 		
-		m_positions.push_back(QVector3D(pPos->x, pPos->y, pPos->z));
-		m_colors.push_back(QVector4D(pColor->r, pColor->g, pColor->b, pColor->a));
-		m_texCoords.push_back(QVector2D(pTexCoord->x, pTexCoord->y));
-		m_normals.push_back(QVector3D(pNormal->x, pNormal->y, pNormal->z));
-		m_tangents.push_back(QVector3D(pTangent->x, pTangent->y, pTangent->z));
+		m_positions << vec3(pPos->x, pPos->y, pPos->z);
+		m_colors    << vec4(pColor->r, pColor->g, pColor->b, pColor->a);
+		m_texCoords << vec2(pTexCoord->x, pTexCoord->y);
+		m_normals   << vec3(pNormal->x, pNormal->y, pNormal->z);
+		m_tangents  << vec3(pTangent->x, pTangent->y, pTangent->z);
 	}
 
 	if(mesh->HasBones() && m_modelType == RIGGED_MODEL) loadBones(index, mesh);
@@ -192,14 +180,13 @@ void ModelLoader::prepareVertexContainers(unsigned int index, const aiMesh* mesh
 		if(face.mNumIndices != 3)
 		{
 			// Unsupported modes : GL_POINTS / GL_LINES / GL_POLYGON
-			qWarning(qPrintable(QObject::tr("Warning : unsupported number of indices per face (%1)").arg(face.mNumIndices)));
+			qWarning(qPrintable(QObject::tr("Unsupported number of indices per face (%1)").arg(face.mNumIndices)));
 			break;
 		}
 
-		m_indices.push_back(face.mIndices[0]);
-		m_indices.push_back(face.mIndices[1]);
-		m_indices.push_back(face.mIndices[2]);
-
+		m_indices << (face.mIndices[0]);
+		m_indices << (face.mIndices[1]);
+		m_indices << (face.mIndices[2]);
 	}
 }
 
@@ -385,12 +372,11 @@ void ModelLoader::generateSkeleton( aiNode* pAiRootNode, Bone* pRootSkeleton, ma
 
 MeshData ModelLoader::loadMesh(unsigned int index, unsigned int numVertices, unsigned int numIndices, const aiMesh* mesh)
 {
-	MeshData data = MeshData();
+	MeshData data;
 
-	if(mesh->mName.length > 0)
-		data.name = QString(mesh->mName.C_Str());
-	else
-		data.name = m_fileName + "/mesh_" + QString::number(index);
+	data.name = mesh->mName.length > 0
+				? m_fileName + "/mesh_" + mesh->mName.C_Str()
+				: m_fileName + "/mesh_" + QString::number(index);
 
 	data.numIndices = mesh->mNumFaces * 3;
 	data.baseVertex = numVertices;
@@ -498,23 +484,14 @@ MaterialData ModelLoader::loadMaterial(unsigned int index, const aiMaterial* mat
 	return data;
 }
 
-TextureData ModelLoader::loadTexture(const QString& fileName, const aiMaterial* material)
+TextureData ModelLoader::loadTexture(const aiMaterial* material)
 {
-	Q_ASSERT(material != nullptr);
+	Q_ASSERT(material);
 
 	// Extract the directory part from the file name
-	int slashIndex = fileName.lastIndexOf("/");
-	QString dir;
-
-
-	if (slashIndex == std::string::npos) dir = ".";
-	else if (slashIndex == 0) dir = "/";
-	else dir = fileName.left(slashIndex);
-
+	QString absPath = QFileInfo(m_fileName).absolutePath();
 	TextureData data = TextureData();
 	aiString path;
-
-	data.hasTexture = false;
 
 //    if(material->GetTextureCount(aiTextureType_DIFFUSE)      > 0) qDebug() << "aiTextureType_DIFFUSE";
 //    if(material->GetTextureCount(aiTextureType_SPECULAR)     > 0) qDebug() << "aiTextureType_SPECULAR";
@@ -531,21 +508,22 @@ TextureData ModelLoader::loadTexture(const QString& fileName, const aiMaterial* 
 
 	if(material->GetTexture(aiTextureType_DIFFUSE, 0, &path) == AI_SUCCESS)
 	{
-		QString texturePath = dir + "/" + path.data;
-		data.colorMap = texturePath;
+		QString texturePath = absPath + "/" + path.data;
+		data.diffuseMap = texturePath;
 		data.hasTexture = true;
 		m_modelFeatures.hasColorMap = true;
 	}
 	if(material->GetTexture(aiTextureType_NORMALS, 0, &path) == AI_SUCCESS)
 	{
-		QString texturePath = dir + "/" + path.data;
+		QString texturePath = absPath + "/" + path.data;
 		data.normalMap = texturePath;
+		data.hasTexture = true;
 		m_modelFeatures.hasNormalMap = true;
 	}
 	if(material->GetTexture(aiTextureType_OPACITY, 0, &path) == AI_SUCCESS)
 	{
-		QString texturePath = dir + "/" + path.data;
-		data.colorMap = texturePath;
+		QString texturePath = absPath + "/" + path.data;
+		data.diffuseMap = texturePath;
 		data.hasTexture = true;
 	}
 

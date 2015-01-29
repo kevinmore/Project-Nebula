@@ -487,9 +487,8 @@ bool HierarchyWidget::eventFilter( QObject *obj, QEvent *ev )
 			if (!m_currentShadingTech) return true;
 			ComponentPtr comp = m_currentObject->getComponent("Model");
 			ModelPtr model = comp.dynamicCast<AbstractModel>();
-			QFileInfo modelFile(model->fileName());
 			QString fileName = QFileDialog::getOpenFileName(0, tr("Select a normal map texture"),
-				modelFile.absoluteFilePath(),
+				QFileInfo(model->fileName()).absolutePath(),
 				tr("Texture File(*.*)"));
 			if (!fileName.isEmpty())
 			{
@@ -624,7 +623,7 @@ void HierarchyWidget::readShadingProperties()
 		{
 			QPixmap pix = tex->generateQPixmap();
 			QGraphicsPixmapItem* item = new QGraphicsPixmapItem(pix);
-			if (tex->usage() == Texture::ColorMap)
+			if (tex->usage() == Texture::DiffuseMap)
 			{
 				ui->graphicsView_DiffuseMapPicker->scene()->addItem(item);
 				ui->graphicsView_DiffuseMapPicker->fitInView(item);

@@ -37,7 +37,6 @@ public:
 	QQuaternion getRootRotation() const { return m_rootRotationTranslation; }
 
 protected:
-	QVector<MeshPtr> m_meshes;
 
 	MeshManager*     m_meshManager;
 	TextureManager*  m_textureManager;
@@ -53,9 +52,7 @@ private:
 
 	void initialize(QVector<ModelDataPtr> modelDataVector = QVector<ModelDataPtr>());
 	void drawElements(unsigned int index, int mode);
-	void destroy();
 
-	GLuint m_vao;
 
 	Scene* m_scene;
 	bool m_hasAnimation;

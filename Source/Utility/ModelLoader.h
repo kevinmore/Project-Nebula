@@ -2,13 +2,60 @@
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
-#include <Scene/AbstractModel.h>
 #include <Utility/EngineCommon.h>
 #include <Animation/Rig/Skeleton.h>
 #include <assert.h>
 #include <QOpenGLFunctions_4_3_Core>
 #include <QSharedPointer>
 #include <Scene/ShadingTechniques/ShadingTechnique.h>
+
+struct MeshData
+{
+	QString name;
+
+	unsigned int numIndices;
+	unsigned int baseVertex;
+	unsigned int baseIndex;
+};
+
+
+struct TextureData
+{
+	bool hasTexture;
+	QString diffuseMap, normalMap;
+};
+
+struct MaterialData
+{
+	QString name;
+
+	QColor ambientColor;
+	QColor diffuseColor;
+	QColor specularColor;
+	QColor emissiveColor;
+
+	float shininess;
+	float shininessStrength;
+
+	int twoSided;
+	int blendMode;
+	bool alphaBlending;
+};
+
+struct ModelData
+{
+	MeshData     meshData;
+	TextureData  textureData;
+	MaterialData materialData;
+	bool hasAnimation;
+	float animationDuration;
+};
+
+typedef QSharedPointer<MeshData> MeshDataPtr;
+typedef QSharedPointer<TextureData> TextureDataPtr;
+typedef QSharedPointer<MaterialData> MaterialDataPtr;
+typedef QSharedPointer<ModelData> ModelDataPtr;
+
 
 class Scene;
 class ModelLoader : protected QOpenGLFunctions_4_3_Core
@@ -26,13 +73,13 @@ public:
 	/*
 	 *	This is the core functionality
 	 */
-	QVector<ModelDataPtr> loadModel(const QString& filename, GLuint shaderProgramID = 0, const QString& loadingFlags = "Fast");
+	QVector<ModelDataPtr> loadModel(const QString& filename, GLuint shaderProgramID = 0, const QString& loadingFlags = "Quality");
 
 
 	/*
 	 *	Public Getters
 	 */
-	GLuint getVAO() { return m_VAO; };
+	GLuint getVAO() const { return m_VAO; };
 	uint getNumBones() const {	return m_NumBones;	}
 	QMap<QString, uint> getBoneMap() const { return m_BoneMapping; }
 	mat4 getGlobalInverseTransform () const { return m_GlobalInverseTransform; }
@@ -40,16 +87,16 @@ public:
 	QVector<Bone> getBoneInfo() const {	return m_BoneInfo; }
 	aiNode* getRootNode() const	{ return m_aiScene->mRootNode; }
 	Skeleton* getSkeletom() const { return m_skeleton; }
-	ShadingTechniquePtr getRenderingEffect() { return m_effect; }
-	MODEL_TYPE getModelType() { return m_modelType; }
+	ShadingTechniquePtr getRenderingEffect() const { return m_effect; }
+	MODEL_TYPE getModelType() const { return m_modelType; }
 
 private:
 	/*
 	 *	Methods to process the model file
 	 */
-	MeshData loadMesh(unsigned int index, unsigned int numVertices, unsigned int numIndices, const aiMesh* mesh);
+	MeshData     loadMesh(unsigned int index, unsigned int numVertices, unsigned int numIndices, const aiMesh* mesh);
 	MaterialData loadMaterial(unsigned int index, const aiMaterial* material);
-	TextureData  loadTexture(const QString& filename, const aiMaterial* material);
+	TextureData  loadTexture(const aiMaterial* material);
 	void loadBones(uint MeshIndex, const aiMesh* paiMesh);
 	void prepareVertexContainers(unsigned int index, const aiMesh* mesh);
 	void generateSkeleton(aiNode* pAiRootNode, Bone* pRootSkeleton, mat4& parentTransform);
@@ -67,6 +114,11 @@ private:
 	{
 		bool hasColorMap;
 		bool hasNormalMap;
+		ModelFeatures()
+		{
+			hasColorMap = false;
+			hasNormalMap = false;
+		}
 	} m_modelFeatures;
 
 	/*

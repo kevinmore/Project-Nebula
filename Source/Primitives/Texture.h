@@ -5,9 +5,9 @@
 #include <QImage>
 #include <QSharedPointer>
 
-#define COLOR_TEXTURE_UNIT GL_TEXTURE0
-#define SHADOW_TEXTURE_UNIT GL_TEXTURE1
-#define NORMAL_TEXTURE_UNIT GL_TEXTURE2
+#define DIFFUSE_TEXTURE_UNIT GL_TEXTURE0
+#define SHADOW_TEXTURE_UNIT  GL_TEXTURE1
+#define NORMAL_TEXTURE_UNIT  GL_TEXTURE2
 
 class Texture : protected QOpenGLFunctions_4_3_Core
 {
@@ -24,14 +24,15 @@ public:
 
 	enum TextureUsage
 	{
-		ColorMap,
+		DiffuseMap,
 		NormalMap,
 		SpecularMap,
+		EmissiveMap,
 		ShadowMap
 	};
 
-	Texture(const QString& fileName, TextureType type = Texture2D, TextureUsage usage = ColorMap);
-	Texture(const QImage& image, TextureType type = Texture2D, TextureUsage usage = ColorMap);
+	Texture(const QString& fileName, TextureType type = Texture2D, TextureUsage usage = DiffuseMap);
+	Texture(const QImage& image, TextureType type = Texture2D, TextureUsage usage = DiffuseMap);
 	virtual ~Texture();
 
 	void bind(GLenum textureUnit);

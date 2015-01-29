@@ -35,6 +35,9 @@ GameObjectPtr ObjectManager::getGameObject( const QString& name )
 
 ModelPtr ObjectManager::loadModel( const QString& customName, const QString& fileName, GameObject* parent, bool generateGameObject )
 {
+	// if the model already exists, make a copy
+	qDebug() <<"loading"<< fileName;
+	// if the model doesn't exist, load it from file
 	ModelLoaderPtr m_modelLoader(new ModelLoader(m_scene));
 	QVector<ModelDataPtr> modelDataArray = m_modelLoader->loadModel(fileName, 0, m_loadingFlag);
 	if(modelDataArray.size() == 0) return ModelPtr();

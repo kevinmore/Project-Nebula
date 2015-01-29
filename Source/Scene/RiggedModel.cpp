@@ -5,7 +5,6 @@
 RiggedModel::RiggedModel(const QString& name, Scene* scene, ShadingTechniquePtr tech, Skeleton* skeleton)
    : AbstractModel(tech, name),
     m_scene(scene),
-	m_vao(tech->getVAO()),
 	m_skeleton(skeleton),
 	m_FKController(0),
 	m_IKSolver(0),
@@ -18,7 +17,6 @@ RiggedModel::RiggedModel(const QString& name, Scene* scene, ShadingTechniquePtr 
 RiggedModel::RiggedModel(const QString& name, Scene* scene, ShadingTechniquePtr tech, Skeleton* skeleton, QVector<ModelDataPtr> modelData)
   : AbstractModel(tech, name),
     m_scene(scene),
-	m_vao(tech->getVAO()),
 	m_skeleton(skeleton),
 	m_FKController(0),
 	m_IKSolver(0),
@@ -93,10 +91,10 @@ void RiggedModel::initialize(QVector<ModelDataPtr> modelDataVector)
 		// deal with the texture
 		if(data->textureData.hasTexture)
 		{
-			TexturePtr  texture_colorMap = m_textureManager->getTexture(data->textureData.colorMap);
+			TexturePtr  texture_colorMap = m_textureManager->getTexture(data->textureData.diffuseMap);
 			if(!texture_colorMap)
 			{
-				texture_colorMap = m_textureManager->addTexture(data->textureData.colorMap, data->textureData.colorMap);
+				texture_colorMap = m_textureManager->addTexture(data->textureData.diffuseMap, data->textureData.diffuseMap);
 			}
 			m_textures[i].push_back(texture_colorMap);
 
@@ -225,7 +223,6 @@ void RiggedModel::initialize(QVector<ModelDataPtr> modelDataVector)
 // 	solvingDuration= 1.0f;
 }
 
-void RiggedModel::destroy() {}
 
 void RiggedModel::render( const float currentTime )
 {
@@ -292,9 +289,9 @@ void RiggedModel::render( const float currentTime )
 				TexturePtr pTexture = m_textures[i][j];
 				if(pTexture)
 				{
-					if (pTexture->usage() == Texture::ColorMap)
+					if (pTexture->usage() == Texture::DiffuseMap)
 					{
-						pTexture->bind(COLOR_TEXTURE_UNIT);
+						pTexture->bind(DIFFUSE_TEXTURE_UNIT);
 					}
 					else if (pTexture->usage() == Texture::NormalMap)
 					{

@@ -7,56 +7,12 @@
 
 #include <Scene/GameObject.h>
 #include <Primitives/Component.h>
+#include <Primitives/Mesh.h>
 #include <Primitives/Texture.h>
 #include <Primitives/Material.h>
 #include <Scene/ShadingTechniques/ShadingTechnique.h>
 
-struct MeshData
-{
-	QString name;
 
-	unsigned int numIndices;
-	unsigned int baseVertex;
-	unsigned int baseIndex;
-};
-
-
-struct TextureData
-{
-	QString colorMap, normalMap;
-	bool hasTexture;
-};
-
-struct MaterialData
-{
-	QString name;
-
-	QColor ambientColor;
-	QColor diffuseColor;
-	QColor specularColor;
-	QColor emissiveColor;
-
-	float shininess;
-	float shininessStrength;
-
-	int twoSided;
-	int blendMode;
-	bool alphaBlending;
-};
-
-struct ModelData
-{
-	MeshData     meshData;
-	TextureData  textureData;
-	MaterialData materialData;
-	bool hasAnimation;
-	float animationDuration;
-};
-
-typedef QSharedPointer<MeshData> MeshDataPtr;
-typedef QSharedPointer<TextureData> TextureDataPtr;
-typedef QSharedPointer<MaterialData> MaterialDataPtr;
-typedef QSharedPointer<ModelData> ModelDataPtr;
 
 class AbstractModel : public Component
 {
@@ -76,6 +32,8 @@ public:
 protected:
 	QString m_fileName;
 	ShadingTechniquePtr m_RenderingEffect;
+	QVector<MeshPtr> m_meshes;
 	QVector<MaterialPtr> m_materials;
 	QVector<QVector<TexturePtr>>  m_textures;
+	GLuint m_vao;
 };
