@@ -33,19 +33,6 @@ RiggedModel::~RiggedModel()
  	SAFE_DELETE(m_IKSolver);
 	SAFE_DELETE(m_FKController);
 
-	// clean up the textures (this always takes a lot of memory)
-	foreach(QVector<TexturePtr> texVec, m_textures)
-	{
-		foreach(TexturePtr tex, texVec)
-		{
-			// erase it from the texture manager
-			m_textureManager->deleteTexture(tex);
-
-			// clear it
-			tex.clear();
-		}
-	}
-
 	// clean up the meshes
 	foreach(MeshPtr mesh, m_meshes)
 	{
@@ -71,13 +58,9 @@ void RiggedModel::initialize(QVector<ModelDataPtr> modelDataVector)
 	m_materialManager = m_scene->materialManager();
 
 	// traverse modelData vector
-	m_textures.resize(modelDataVector.size());
 	for (int i = 0; i < modelDataVector.size(); ++i)
 	{
 		ModelDataPtr data = modelDataVector[i];
-
-		m_hasAnimation = data->hasAnimation;
-		if(m_hasAnimation) m_animationDuration = data->animationDuration;
 
 		// deal with the mesh
 		MeshPtr mesh = m_meshManager->getMesh(data->meshData.name);
@@ -88,56 +71,7 @@ void RiggedModel::initialize(QVector<ModelDataPtr> modelDataVector)
 
 		m_meshes.push_back(mesh);
 
-		// deal with the texture
-		if(data->textureData.hasTexture)
-		{
-			TexturePtr  texture_colorMap = m_textureManager->getTexture(data->textureData.diffuseMap);
-			if(!texture_colorMap)
-			{
-				texture_colorMap = m_textureManager->addTexture(data->textureData.diffuseMap, data->textureData.diffuseMap);
-			}
-			m_textures[i].push_back(texture_colorMap);
-
-			if (!data->textureData.normalMap.isEmpty())
-			{
-				TexturePtr  texture_normalMap = m_textureManager->getTexture(data->textureData.normalMap);
-				if(!texture_normalMap)
-				{
-					texture_normalMap = m_textureManager->addTexture(data->textureData.normalMap, data->textureData.normalMap, Texture::Texture2D, Texture::NormalMap);
-				}
-				m_textures[i].push_back(texture_normalMap);
-			}
-		}
-		else m_textures[i].push_back(TexturePtr(nullptr));
-
 		// deal with the material
-// 		qDebug() << data->materialData.name 
-// 			<< endl << "ambientColor" << data->materialData.ambientColor
-// 			<< endl << "diffuseColor" << data->materialData.diffuseColor
-// 			<< endl << "specularColor" << data->materialData.specularColor
-// 			<< endl << "emissiveColor" << data->materialData.emissiveColor
-// 			<< endl << "shininess" << data->materialData.shininess
-// 			<< endl << "shininessStrength" << data->materialData.shininessStrength
-// 			<< endl << "twoSided" << data->materialData.twoSided
-// 			<< endl << "blendMode" << data->materialData.blendMode
-// 			<< endl << "alphaBlending" << data->materialData.alphaBlending
-// 			<< endl << "hasTexture" << data->textureData.hasTexture;
-// 		MaterialPtr material = m_materialManager->getMaterial(data->materialData.name);
-// 		if(!material)
-// 		{
-// 			material = m_materialManager->addMaterial(data->materialData.name,
-// 													data->materialData.ambientColor,
-// 													data->materialData.diffuseColor,
-// 													data->materialData.specularColor,
-// 													data->materialData.emissiveColor,
-// 													data->materialData.shininess,
-// 													data->materialData.shininessStrength,
-// 													data->materialData.twoSided,
-// 													data->materialData.blendMode,
-// 													data->materialData.alphaBlending,
-// 													data->textureData.hasTexture);
-// 		}
-
 		MaterialPtr material(new Material(
 			data->materialData.name,
 			data->materialData.ambientColor,
@@ -148,15 +82,33 @@ void RiggedModel::initialize(QVector<ModelDataPtr> modelDataVector)
 			data->materialData.shininessStrength,
 			data->materialData.twoSided,
 			data->materialData.blendMode,
-			data->materialData.alphaBlending,
-			data->textureData.hasTexture));
+			data->materialData.alphaBlending));
 
 		m_materials.push_back(material);
 
+		// deal with the texture
+		TextureData td = data->materialData.textureData;
+		if (!td.diffuseMap.isEmpty())
+		{
+			TexturePtr  texture_diffuseMap = m_textureManager->getTexture(td.diffuseMap);
+			if(!texture_diffuseMap)
+			{
+				texture_diffuseMap = m_textureManager->addTexture(td.diffuseMap, td.diffuseMap);
+			}
+			material->addTexture(texture_diffuseMap);
+		}
+		if (!td.normalMap.isEmpty())
+		{
+			TexturePtr  texture_normalMap = m_textureManager->getTexture(td.normalMap);
+			if(!texture_normalMap)
+			{
+				texture_normalMap = m_textureManager->addTexture(td.normalMap, td.normalMap, Texture::Texture2D, Texture::NormalMap);
+			}
+			material->addTexture(texture_normalMap);
+		}
+
 	}
 
-	m_RenderingEffect->enable();
-	m_RenderingEffect->setMaterial(m_materials[0]);
 
 // 	ikSolved = false;
 // 	lastUpdatedTime = 0.0f;
@@ -279,59 +231,37 @@ void RiggedModel::render( const float currentTime )
 	}
 
 
-
+	// draw each mesh
 	for(int i = 0; i < m_meshes.size(); ++i)
 	{
-		/*if( m_materials[i] != nullptr && ! m_materials[i]->isTranslucent())*/
+		// bind the material
+		if (m_materials[i])
 		{
-			for(int j = 0; j < m_textures[i].size(); ++j)
+			foreach(TexturePtr tex, m_materials[i]->m_textures)
 			{
-				TexturePtr pTexture = m_textures[i][j];
-				if(pTexture)
-				{
-					if (pTexture->usage() == Texture::DiffuseMap)
-					{
-						pTexture->bind(DIFFUSE_TEXTURE_UNIT);
-					}
-					else if (pTexture->usage() == Texture::NormalMap)
-					{
-						pTexture->bind(NORMAL_TEXTURE_UNIT);
-					}
-				}
-			}
+				if (tex->usage() == Texture::DiffuseMap)
+					tex->bind(DIFFUSE_TEXTURE_UNIT);
 
-			//m_materials[i]->bind();
+				else if (tex->usage() == Texture::NormalMap)
+					tex->bind(NORMAL_TEXTURE_UNIT);
 
-			drawElements(i, BaseVertex);
-		}
-	}
-
-// 	for(int i = 0; i < m_meshes.size(); ++i)
-// 	{
-// 		if( m_materials[i] != nullptr && m_materials[i]->isTranslucent())
-// 		{
-// 			glDepthMask(GL_FALSE);
-// 			glEnable(GL_BLEND);
+// 				else if (tex->usage() == Texture::OpacityMap || m_materials[i]->isTranslucent())
+// 				{
+// 					glDepthMask(GL_FALSE);
+// 					glEnable(GL_BLEND);
 // 
-// 			m_materials[i]->bind();
+// 					tex->bind(DIFFUSE_TEXTURE_UNIT);
 // 
-// 			drawElements(i, Indexed | BaseVertex);
-// 
-// 			glDisable(GL_BLEND);
-// 			glDepthMask(GL_TRUE);
-// 		}
-// 	}
-
-	for (int i = 0; i < m_textures.size(); ++i)
-	{
-		for(int j = 0; j < m_textures[i].size(); ++j)
-		{
-			TexturePtr pTexture = m_textures[i][j];
-			if(pTexture)
-			{
-				pTexture->release();
+// 					glDisable(GL_BLEND);
+// 					glDepthMask(GL_TRUE);
+// 				}
 			}
 		}
+
+		// enable the material
+		m_RenderingEffect->setMaterial(m_materials[i]);
+
+		drawElements(i, BaseVertex);
 	}
 
 }

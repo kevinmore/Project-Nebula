@@ -95,7 +95,6 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName, GLuint sh
 		
 		md->meshData     = loadMesh(i, numVertices, numIndices, m_aiScene->mMeshes[i]);
 		md->materialData = loadMaterial(i, m_aiScene->mMaterials[m_aiScene->mMeshes[i]->mMaterialIndex]);
-		md->textureData  = loadTexture(m_aiScene->mMaterials[m_aiScene->mMeshes[i]->mMaterialIndex]);
 		md->hasAnimation = m_aiScene->HasAnimations();
 
 		// calculate the animation duration in seconds
@@ -481,6 +480,9 @@ MaterialData ModelLoader::loadMaterial(unsigned int index, const aiMaterial* mat
 		data.shininessStrength = shininessStrength;
 	}
 
+	// process the textures
+	data.textureData = loadTexture(material);
+
 	return data;
 }
 
@@ -492,39 +494,43 @@ TextureData ModelLoader::loadTexture(const aiMaterial* material)
 	QString absPath = QFileInfo(m_fileName).absolutePath();
 	TextureData data = TextureData();
 	aiString path;
+	
+	// process all texture types
+	QVector<aiTextureType> textureTypes;
+	if(material->GetTextureCount(aiTextureType_DIFFUSE)     ) textureTypes << aiTextureType_DIFFUSE;
+	if(material->GetTextureCount(aiTextureType_SPECULAR)    ) textureTypes << aiTextureType_SPECULAR;
+	if(material->GetTextureCount(aiTextureType_AMBIENT)     ) textureTypes << aiTextureType_AMBIENT;
+	if(material->GetTextureCount(aiTextureType_EMISSIVE)    ) textureTypes << aiTextureType_EMISSIVE;
+	if(material->GetTextureCount(aiTextureType_HEIGHT)      ) textureTypes << aiTextureType_HEIGHT;
+	if(material->GetTextureCount(aiTextureType_NORMALS)     ) textureTypes << aiTextureType_NORMALS;
+	if(material->GetTextureCount(aiTextureType_SHININESS)   ) textureTypes << aiTextureType_SHININESS;
+	if(material->GetTextureCount(aiTextureType_OPACITY)     ) textureTypes << aiTextureType_OPACITY;
+	if(material->GetTextureCount(aiTextureType_DISPLACEMENT)) textureTypes << aiTextureType_DISPLACEMENT;
+	if(material->GetTextureCount(aiTextureType_LIGHTMAP)    ) textureTypes << aiTextureType_LIGHTMAP;
+	if(material->GetTextureCount(aiTextureType_REFLECTION)  ) textureTypes << aiTextureType_REFLECTION;
+	//if(material->GetTextureCount(aiTextureType_UNKNOWN)     ) textureFeatures << aiTextureType_UNKNOWN;
 
-//    if(material->GetTextureCount(aiTextureType_DIFFUSE)      > 0) qDebug() << "aiTextureType_DIFFUSE";
-//    if(material->GetTextureCount(aiTextureType_SPECULAR)     > 0) qDebug() << "aiTextureType_SPECULAR";
-//    if(material->GetTextureCount(aiTextureType_AMBIENT)      > 0) qDebug() << "aiTextureType_AMBIENT";
-//    if(material->GetTextureCount(aiTextureType_EMISSIVE)     > 0) qDebug() << "aiTextureType_EMISSIVE";
-//    if(material->GetTextureCount(aiTextureType_HEIGHT)       > 0) qDebug() << "aiTextureType_HEIGHT";
-//    if(material->GetTextureCount(aiTextureType_NORMALS)      > 0) qDebug() << "aiTextureType_NORMALS";
-//    if(material->GetTextureCount(aiTextureType_SHININESS)    > 0) qDebug() << "aiTextureType_SHININESS";
-//    if(material->GetTextureCount(aiTextureType_OPACITY)      > 0) qDebug() << "aiTextureType_OPACITY";
-//    if(material->GetTextureCount(aiTextureType_DISPLACEMENT) > 0) qDebug() << "aiTextureType_DISPLACEMENT";
-//    if(material->GetTextureCount(aiTextureType_LIGHTMAP)     > 0) qDebug() << "aiTextureType_LIGHTMAP";
-//    if(material->GetTextureCount(aiTextureType_REFLECTION)   > 0) qDebug() << "aiTextureType_REFLECTION";
-//    if(material->GetTextureCount(aiTextureType_UNKNOWN)      > 0) qDebug() << "aiTextureType_UNKNOWN";
+	foreach(aiTextureType type, textureTypes)
+	{
+		if(material->GetTexture(type, 0, &path) == AI_SUCCESS)
+		{
+			QString texturePath = absPath + "/" + path.data;
 
-	if(material->GetTexture(aiTextureType_DIFFUSE, 0, &path) == AI_SUCCESS)
-	{
-		QString texturePath = absPath + "/" + path.data;
-		data.diffuseMap = texturePath;
-		data.hasTexture = true;
-		m_modelFeatures.hasColorMap = true;
-	}
-	if(material->GetTexture(aiTextureType_NORMALS, 0, &path) == AI_SUCCESS)
-	{
-		QString texturePath = absPath + "/" + path.data;
-		data.normalMap = texturePath;
-		data.hasTexture = true;
-		m_modelFeatures.hasNormalMap = true;
-	}
-	if(material->GetTexture(aiTextureType_OPACITY, 0, &path) == AI_SUCCESS)
-	{
-		QString texturePath = absPath + "/" + path.data;
-		data.diffuseMap = texturePath;
-		data.hasTexture = true;
+			if (type == aiTextureType_DIFFUSE)
+			{
+				data.diffuseMap = texturePath;
+				m_modelFeatures.hasColorMap = true;
+			}
+			else if (type == aiTextureType_NORMALS)
+			{
+				data.normalMap = texturePath;
+				m_modelFeatures.hasNormalMap = true;
+			}
+			else if (type == aiTextureType_OPACITY)
+			{
+				data.opacityMap = texturePath;
+			}
+		}
 	}
 
 	return data;

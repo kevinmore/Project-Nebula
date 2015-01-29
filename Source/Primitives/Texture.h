@@ -25,9 +25,16 @@ public:
 	enum TextureUsage
 	{
 		DiffuseMap,
-		NormalMap,
 		SpecularMap,
+		AmbientMap,
 		EmissiveMap,
+		HeightMap,
+		NormalMap,
+		ShininessMap,
+		OpacityMap,
+		DisplacementMap,
+		LightMap,
+		ReflectionMap,
 		ShadowMap
 	};
 

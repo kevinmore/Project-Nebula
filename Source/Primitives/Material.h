@@ -1,6 +1,7 @@
 #pragma once
 #include <QOpenGLFunctions_4_3_Core>
 #include <Utility/EngineCommon.h>
+#include "Texture.h"
 
 class Material : protected QOpenGLFunctions_4_3_Core
 {
@@ -15,8 +16,7 @@ public:
 		     float shininessStrength,
 		     int twoSided,
 		     int blendMode,
-		     bool alphaBlending,
-		     bool hasTexture);
+		     bool alphaBlending);
 
 	virtual ~Material();
 
@@ -24,6 +24,8 @@ public:
 	QString name() const { return m_name; }
 
 	bool isTranslucent() const { return m_alphaBlending; }
+
+	void addTexture(TexturePtr tex) { m_textures << tex; }
 
 	void bind();
 
@@ -42,7 +44,6 @@ public:
 	int  m_twoSided;
 	int  m_blendMode;
 	bool m_alphaBlending;
-	bool m_hasTexture;
 
 	enum BlendMode 
 	{
@@ -50,6 +51,8 @@ public:
 		Additive = 0x1
 	};
 
+
+	QVector<TexturePtr> m_textures;
 };
 
 typedef QSharedPointer<Material> MaterialPtr;

@@ -21,8 +21,7 @@ struct MeshData
 
 struct TextureData
 {
-	bool hasTexture;
-	QString diffuseMap, normalMap;
+	QString diffuseMap, normalMap, opacityMap;
 };
 
 struct MaterialData
@@ -40,12 +39,13 @@ struct MaterialData
 	int twoSided;
 	int blendMode;
 	bool alphaBlending;
+
+	TextureData textureData;
 };
 
 struct ModelData
 {
 	MeshData     meshData;
-	TextureData  textureData;
 	MaterialData materialData;
 	bool hasAnimation;
 	float animationDuration;

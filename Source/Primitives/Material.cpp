@@ -10,8 +10,7 @@ Material::Material( const QString& name )
 	m_shininessStrength(1.0f),
 	m_twoSided(1),
 	m_blendMode(Default),
-	m_alphaBlending(false),
-	m_hasTexture(false)
+	m_alphaBlending(false)
 {
 	init();
 }
@@ -26,8 +25,7 @@ Material::Material(const QString& name,
 					float shininessStrength,
 					int twoSided,
 					int blendMode,
-					bool alphaBlending,
-					bool hasTexture)
+					bool alphaBlending)
 	: m_name(name),
 	  m_ambientColor(ambientColor),
 	  m_diffuseColor(diffuseColor),
@@ -37,8 +35,7 @@ Material::Material(const QString& name,
 	  m_shininessStrength(shininessStrength),
 	  m_twoSided(twoSided),
 	  m_blendMode(blendMode),
-	  m_alphaBlending(alphaBlending),
-	  m_hasTexture(hasTexture)
+	  m_alphaBlending(alphaBlending)
 {
 	init();
 }

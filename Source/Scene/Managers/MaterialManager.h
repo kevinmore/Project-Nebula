@@ -20,8 +20,7 @@ public:
 							float shininessStrength,
 							int twoSided,
 							int blendMode,
-							bool alphaBlending,
-							bool hasTexture);
+							bool alphaBlending);
 	
 	void deleteMaterial(MaterialPtr material);
 

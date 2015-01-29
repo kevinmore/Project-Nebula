@@ -616,23 +616,5 @@ void HierarchyWidget::readShadingProperties()
 	ui->doubleSpinBox_ShininessStrength->setValue(mat->m_shininessStrength);
 
 	// map the textures
-	QVector<QVector<TexturePtr>> textures = model->getTextures();
-	foreach(QVector<TexturePtr> texArray, textures)
-	{
-		foreach(TexturePtr tex, texArray)
-		{
-			QPixmap pix = tex->generateQPixmap();
-			QGraphicsPixmapItem* item = new QGraphicsPixmapItem(pix);
-			if (tex->usage() == Texture::DiffuseMap)
-			{
-				ui->graphicsView_DiffuseMapPicker->scene()->addItem(item);
-				ui->graphicsView_DiffuseMapPicker->fitInView(item);
-			}
-			else if (tex->usage() == Texture::NormalMap)
-			{
-				ui->graphicsView_NormalMapPicker->scene()->addItem(item);
-				ui->graphicsView_NormalMapPicker->fitInView(item);
-			}
-		}
-	}
+	
 }

@@ -24,8 +24,7 @@ MaterialPtr MaterialManager::addMaterial(const QString& name,
 										float shininessStrength,
 										int twoSided,
 										int blendMode,
-										bool alphaBlending,
-										bool hasTexture)
+										bool alphaBlending)
 {
 	// if material is already in the map
 	if (m_materials.find(name) != m_materials.end())
@@ -33,7 +32,7 @@ MaterialPtr MaterialManager::addMaterial(const QString& name,
 		return m_materials[name];
 	} 
 	
-	m_materials[name] = MaterialPtr(new Material(name, ambientColor, diffuseColor, specularColor, emissiveColor, shininess, shininessStrength, twoSided, blendMode, alphaBlending, hasTexture));
+	m_materials[name] = MaterialPtr(new Material(name, ambientColor, diffuseColor, specularColor, emissiveColor, shininess, shininessStrength, twoSided, blendMode, alphaBlending));
 
 	return m_materials[name];
 }
