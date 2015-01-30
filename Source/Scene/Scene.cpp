@@ -1,6 +1,7 @@
 #include "Scene.h"
 #include <Utility/LoaderThread.h>
 #include <Utility/Serialization.h>
+#include <Primitives/Puppet.h>
 
 Scene::Scene(QObject* parent)
 	: AbstractScene(parent),
@@ -54,6 +55,7 @@ void Scene::initialize()
 	m_sceneRootNode->setObjectName("Scene Root");
 
 	resetToDefaultScene();
+	
 	// show sky box for demo purpose
 	//toggleSkybox(true);
 	// setup a basic physics world
@@ -278,6 +280,7 @@ void Scene::resetToDefaultScene()
 	GameObjectPtr floorRef(new GameObject(this));
 	floorRef->setScale(100.0f, 1.0f, 100.0f);
 	LoaderThread loader(this, "../Resource/Models/Common/DemoRoom/WoodenFloor.obj", floorRef, m_sceneRootNode);
+
 }
 
 void Scene::showLoadModelDialog()
@@ -371,7 +374,8 @@ GameObjectPtr Scene::createEmptyGameObject(const QString& name)
 	GameObjectPtr go = m_objectManager->createGameObject(name, m_sceneRootNode);
 
 	emit updateHierarchy();
-
+	GameObjectPtr targ = m_objectManager->getGameObject("WoodenFloor");
+	Puppet* pup = new Puppet(targ, Puppet::Rotation, 1.0f, 5.0f);
 	return go;
 }
 

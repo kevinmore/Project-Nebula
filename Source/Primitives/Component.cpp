@@ -1,5 +1,5 @@
 #include "Component.h"
-#include <Scene/GameObject.h>
+#include <Primitives/GameObject.h>
 
 Component::Component(int renderLayer)
 	: m_actor(0),

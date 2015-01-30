@@ -162,18 +162,12 @@ void GameObject::setLocalSpeed( const QString& paramString )
 
 QVector3D GameObject::globalSpeed() const
 {
-	QQuaternion rotX = QQuaternion::fromAxisAndAngle(Math::Vector3D::UNIT_X, m_rotation.x());
-	QQuaternion rotY = QQuaternion::fromAxisAndAngle(Math::Vector3D::UNIT_Y, m_rotation.y());
-	QQuaternion rotZ = QQuaternion::fromAxisAndAngle(Math::Vector3D::UNIT_Z, m_rotation.z());
-	QQuaternion rot = rotX * rotY * rotZ;
+	quart rotX = quart::fromAxisAndAngle(Math::Vector3D::UNIT_X, m_rotation.x());
+	quart rotY = quart::fromAxisAndAngle(Math::Vector3D::UNIT_Y, m_rotation.y());
+	quart rotZ = quart::fromAxisAndAngle(Math::Vector3D::UNIT_Z, m_rotation.z());
+	quart rot = rotX * rotY * rotZ;
 
 	return rot.rotatedVector(m_speed);
-}
-
-void GameObject::rotateInWorld( const QQuaternion& delta )
-{
-	m_modelMatrix.rotate(delta);
-	m_modelMatrixDirty = false;
 }
 
 void GameObject::translateInWorld( const QVector3D& delta )
@@ -206,8 +200,8 @@ void GameObject::rotateInWorld( const QString& paramString )
 	y = params[2].toFloat();
 	z = params[3].toFloat();
 
-	QQuaternion delta = QQuaternion(w, vec3(x, y, z));
-	rotateInWorld(delta);
+	quart delta = quart(w, vec3(x, y, z));
+	rotate(delta);
 	emit synchronized();
 }
 
@@ -377,6 +371,12 @@ void GameObject::rotate( const vec3& delta )
 	m_modelMatrix.rotate(delta.x(), Vector3D::UNIT_X);
 	m_modelMatrix.rotate(delta.y(), Vector3D::UNIT_Y);
 	m_modelMatrix.rotate(delta.z(), Vector3D::UNIT_Z);
+	m_modelMatrixDirty = false;
+}
+
+void GameObject::rotate( const quart& delta )
+{
+	m_modelMatrix.rotate(delta);
 	m_modelMatrixDirty = false;
 }
 

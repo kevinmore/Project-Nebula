@@ -1,7 +1,7 @@
 #pragma once
 #include <Utility/EngineCommon.h>
 #include <Utility/Math.h>
-#include <Scene/GameObject.h>
+#include <Primitives/GameObject.h>
 
 class Camera : public QObject
 {

@@ -24,6 +24,9 @@
     <ClCompile Include="Primitives\CubeMapTexture.cpp" />
     <ClCompile Include="Physicis\Particles\moc_ParticleSystem.cc" />
     <ClCompile Include="Physicis\Entity\RigidBody.cpp" />
+    <ClCompile Include="Primitives\moc_GameObject.cc" />
+    <ClCompile Include="Primitives\moc_Puppet.cc" />
+    <ClCompile Include="Primitives\Puppet.cpp" />
     <ClCompile Include="Scene\Managers\moc_ObjectManager.cc" />
     <ClCompile Include="Scene\ShadingTechniques\ParticleTechnique.cpp" />
     <ClCompile Include="Physicis\Particles\ParticleSystem.cpp" />
@@ -45,7 +48,6 @@
     <ClCompile Include="Scene\AbstractScene.cpp" />
     <ClCompile Include="Scene\Managers\ObjectManager.cpp" />
     <ClCompile Include="Scene\moc_Camera.cc" />
-    <ClCompile Include="Scene\moc_GameObject.cc" />
     <ClCompile Include="Scene\moc_Scene.cc" />
     <ClCompile Include="Scene\RiggedModel.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
@@ -58,7 +60,7 @@
     <ClCompile Include="Utility\ModelLoader.cpp" />
     <ClCompile Include="Scene\Managers\MeshManager.cpp" />
     <ClCompile Include="Scene\Camera.cpp" />
-    <ClCompile Include="Scene\GameObject.cpp" />
+    <ClCompile Include="Primitives\GameObject.cpp" />
     <ClCompile Include="Scene\Light.cpp" />
     <ClCompile Include="Primitives\Mesh.cpp" />
     <ClCompile Include="Primitives\Material.cpp" />
@@ -74,6 +76,7 @@
     <ClInclude Include="Animation\IK\FABRIKSolver.h" />
     <ClInclude Include="Animation\IK\CCDIKSolver.h" />
     <ClInclude Include="Animation\Rig\Pose.h" />
+    <QtMOC Include="Primitives\Puppet.h" />
     <ClInclude Include="UI\Canvas.h" />
     <ClInclude Include="UI\HierarchyWidget.h" />
     <ClInclude Include="UI\MainWindow.h" />
@@ -99,7 +102,7 @@
     <ClInclude Include="Utility\LoaderThread.h" />
     <ClInclude Include="Scene\Managers\ObjectManager.h" />
     <ClInclude Include="Scene\RiggedModel.h" />
-    <QtMOC Include="Scene\Scene.h" />
+    <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\ShadingTechniques\ShadingTechnique.h" />
     <ClInclude Include="Animation\Rig\Skeleton.h" />
     <ClInclude Include="Scene\ShadingTechniques\Technique.h" />
@@ -110,7 +113,7 @@
     <ClInclude Include="Scene\AbstractScene.h" />
     <ClInclude Include="Scene\Managers\MeshManager.h" />
     <ClInclude Include="Scene\Camera.h" />
-    <QtMOC Include="Scene\GameObject.h" />
+    <QtMOC Include="Primitives\GameObject.h" />
     <ClInclude Include="Scene\Light.h" />
     <ClInclude Include="Primitives\Mesh.h" />
     <ClInclude Include="Primitives\Material.h" />

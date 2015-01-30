@@ -5,7 +5,6 @@
 #include <Scene/AbstractScene.h>
 #include <Scene/Light.h>
 #include <Scene/Camera.h>
-#include <Scene/GameObject.h>
 #include <Scene/RiggedModel.h>
 #include <Scene/Managers/TextureManager.h>
 #include <Scene/Managers/MaterialManager.h>

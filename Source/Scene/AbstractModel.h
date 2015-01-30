@@ -5,7 +5,7 @@
 #include <QOpenGLVertexArrayObject>
 #include <QOpenGLShaderProgram>
 
-#include <Scene/GameObject.h>
+#include <Primitives/GameObject.h>
 #include <Primitives/Component.h>
 #include <Primitives/Mesh.h>
 #include <Primitives/Material.h>

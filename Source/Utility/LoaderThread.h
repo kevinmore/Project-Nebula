@@ -1,6 +1,6 @@
 #pragma once
 #include <QThread>
-#include <Scene/GameObject.h>
+#include <Primitives/GameObject.h>
 class Scene;
 class LoaderThread : public QThread
 {

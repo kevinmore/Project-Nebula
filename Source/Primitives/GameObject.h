@@ -31,7 +31,6 @@ public:
 
 	void setRotation(const vec3& rotationVector);
 	void setRotation(double x, double y, double z);
-	void rotateInWorld(const QQuaternion& delta);
 
 	void setScale(const vec3& scale);
 	void setScale(double x, double y, double z);
@@ -121,6 +120,7 @@ public slots:
 	void rotateY(float y);
 	void rotateZ(float z);
 	void rotate(const vec3& delta);
+	void rotate(const quart& delta);
 
 	void scaleX(float x);
 	void scaleY(float y);

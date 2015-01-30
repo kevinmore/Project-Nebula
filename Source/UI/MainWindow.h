@@ -3,7 +3,6 @@
 #include <UI/Canvas.h>
 #include <Scene/Scene.h>
 #include <Scene/Camera.h>
-#include <Scene/GameObject.h>
 #include <statemachineviewer.h>
 
 class MainWindow : public QMainWindow

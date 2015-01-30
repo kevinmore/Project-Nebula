@@ -23,8 +23,6 @@
     <ClCompile Include="Animation\IK\CCDIKSolver.cpp" />
     <ClCompile Include="Animation\Rig\Pose.cpp" />
     <ClCompile Include="Scene\moc_Scene.cc" />
-    <ClCompile Include="Scene\GameObject.cpp" />
-    <ClCompile Include="Scene\moc_GameObject.cc" />
     <ClCompile Include="Scene\ShadingTechniques\ShadowMapFBO.cpp" />
     <ClCompile Include="Scene\Camera.cpp" />
     <ClCompile Include="Scene\moc_Camera.cc" />
@@ -57,6 +55,10 @@
     <ClCompile Include="Physicis\Entity\BoxRigidBody.cpp" />
     <ClCompile Include="Physicis\Geometry\BoxShape.cpp" />
     <ClCompile Include="Physicis\Geometry\SphereShape.cpp" />
+    <ClCompile Include="Primitives\Puppet.cpp" />
+    <ClCompile Include="Primitives\GameObject.cpp" />
+    <ClCompile Include="Primitives\moc_GameObject.cc" />
+    <ClCompile Include="Primitives\moc_Puppet.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Primitives\Texture.h" />
@@ -108,6 +110,7 @@
     <ClInclude Include="Physicis\Entity\RigidBody.h" />
     <ClInclude Include="UI\MainWindow.h" />
     <ClInclude Include="UI\HierarchyWidget.h" />
+    <ClInclude Include="Scene\Scene.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="UI\HierarchyWidget.ui" />
@@ -115,7 +118,7 @@
     <None Include="Physicis\World\PhysicsWorldObject.inl" />
   </ItemGroup>
   <ItemGroup>
-    <QtMOC Include="Scene\Scene.h" />
-    <QtMOC Include="Scene\GameObject.h" />
+    <QtMOC Include="Primitives\GameObject.h" />
+    <QtMOC Include="Primitives\Puppet.h" />
   </ItemGroup>
 </Project>
