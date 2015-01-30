@@ -8,11 +8,6 @@ Technique::Technique( const QString& shaderFileName /*= ""*/ )
 {}
 
 
-Technique::~Technique()
-{
-}
-
-
 bool Technique::init()
 {
 	m_shaderProgram = QOpenGLShaderProgramPtr(new QOpenGLShaderProgram);

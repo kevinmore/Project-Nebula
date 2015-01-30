@@ -20,7 +20,6 @@ public:
 	};
 
     ShadingTechnique(Scene* scene, const QString &shaderName, ShaderType shaderType = STATIC);
-	~ShadingTechnique() {}
     virtual bool init();
 	virtual void enable();
 

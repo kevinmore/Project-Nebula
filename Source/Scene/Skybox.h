@@ -1,6 +1,5 @@
 #pragma once
 #include <QOpenGLFunctions_4_3_Core>
-#include <Scene/AbstractModel.h>
 #include <Scene/ShadingTechniques/SkyboxTechnique.h>
 #include <Scene/Managers/MeshManager.h>
 #include <Scene/Camera.h>
@@ -8,7 +7,7 @@
 #include <Utility/ModelLoader.h>
 class Scene;
 
-class Skybox : public AbstractModel, protected QOpenGLFunctions_4_3_Core
+class Skybox : protected QOpenGLFunctions_4_3_Core
 {
 public:
 	Skybox(Scene* scene);
@@ -21,7 +20,7 @@ public:
 			  const QString& PosZFilename,
 			  const QString& NegZFilename);
 
-	virtual void render( const float currentTime );
+	void render( const float currentTime );
 
 	CubemapTexturePtr getCubemapTexture() const { return m_cubemapTex; }
 

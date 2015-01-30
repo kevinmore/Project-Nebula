@@ -18,7 +18,7 @@ private:
 	Ui::HierarchyViewer *ui;
 	Scene* m_scene;
 	GameObject* m_currentObject;
-	ShadingTechniquePtr m_currentShadingTech;
+	ShadingTechnique* m_currentShadingTech;
 
 	QAction* m_deleteAction;
 	QWidget* particleSystemTab;

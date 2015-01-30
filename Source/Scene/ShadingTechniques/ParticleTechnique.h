@@ -19,7 +19,6 @@ public:
 	};
 
 	ParticleTechnique(const QString &shaderName, ShaderType shaderType);
-	~ParticleTechnique() {}
 	virtual bool init();
 
 private:

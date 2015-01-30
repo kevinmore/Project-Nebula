@@ -5,11 +5,6 @@ SkyboxTechnique::SkyboxTechnique()
 {
 }
 
-
-SkyboxTechnique::~SkyboxTechnique()
-{
-}
-
 bool SkyboxTechnique::init()
 {
 	if (!Technique::init()) 

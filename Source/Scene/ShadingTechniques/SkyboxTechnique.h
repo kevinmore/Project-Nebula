@@ -6,7 +6,6 @@ class SkyboxTechnique : public Technique
 {
 public:
 	SkyboxTechnique();
-	~SkyboxTechnique();
 	virtual bool init();
 
 	void setMVPMatrix(const mat4& MVP);

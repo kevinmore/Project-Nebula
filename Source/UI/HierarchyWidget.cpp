@@ -156,7 +156,7 @@ void HierarchyWidget::readGameObject(QTreeWidgetItem* current, QTreeWidgetItem* 
 	{
 		clearTransformationArea();
 		m_currentObject = NULL;
-		m_currentShadingTech.clear();
+		m_currentShadingTech = NULL;
 		return;
 	}
 
@@ -612,7 +612,8 @@ void HierarchyWidget::readShadingProperties()
 	ModelPtr model = comp.dynamicCast<AbstractModel>();
 	if (!model) return;
 
-	m_currentShadingTech = model->renderingEffect();
+	m_currentShadingTech = model->renderingEffect().data();
+	if (!m_currentShadingTech) return;
 	ui->comboBox_SahderFiles->setCurrentText(m_currentShadingTech->shaderFileName());
 
 	MaterialPtr mat = model->getMaterial();

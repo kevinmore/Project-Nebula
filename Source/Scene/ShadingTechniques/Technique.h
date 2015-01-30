@@ -65,14 +65,12 @@ struct SpotLight : public PointLight
 	}
 };
 
-
 class Technique : protected QOpenGLFunctions_4_3_Core
 {
 public:
 
     Technique(const QString& shaderFileName = "");
 
-    virtual ~Technique();
 
     virtual bool init();
 
