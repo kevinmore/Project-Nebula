@@ -69,40 +69,30 @@ ModelPtr ObjectManager::loadModel( const QString& customName, const QString& fil
 		}
 		else if (pModel.dynamicCast<RiggedModel>())
 		{
-// 			RiggedModel* original = dynamic_cast<RiggedModel*>(pModel.data());
-// 			RiggedModel* copyModel = new RiggedModel(*original);
-// 			pModel.reset(copyModel);
+			RiggedModel* original = dynamic_cast<RiggedModel*>(pModel.data());
+			RiggedModel* copyModel = new RiggedModel(original);
+			pModel.reset(copyModel);
 		}
 	}
 	// if the model doesn't exist, load it from file
 	else
 	{
-		ModelLoaderPtr m_modelLoader(new ModelLoader(m_scene));
-		QVector<ModelDataPtr> modelDataArray = m_modelLoader->loadModel(fileName, 0, m_loadingFlag);
+		ModelLoaderPtr modelLoader(new ModelLoader(m_scene));
+		QVector<ModelDataPtr> modelDataArray = modelLoader->loadModel(fileName, 0, m_loadingFlag);
 		if(modelDataArray.size() == 0) return pModel;
 
 		// create different types of models
-		if (m_modelLoader->getModelType() == ModelLoader::STATIC_MODEL)
+		if (modelLoader->getModelType() == ModelLoader::STATIC_MODEL)
 		{
-			StaticModel* sm = new StaticModel(fileName, m_scene, m_modelLoader->getRenderingEffect(), modelDataArray);
+			StaticModel* sm = new StaticModel(fileName, m_scene, modelLoader->getRenderingEffect(), modelDataArray);
 			pModel.reset(sm);
 		}
-		else if (m_modelLoader->getModelType() == ModelLoader::RIGGED_MODEL)
+		else if (modelLoader->getModelType() == ModelLoader::RIGGED_MODEL)
 		{
-			// create a FKController for the model
-			FKController* controller = new FKController(m_modelLoader, m_modelLoader->getSkeletom());
-
-			// create an IKSolver for the model
-			CCDIKSolver* solver = new CCDIKSolver(128);
-
-			RiggedModel* rm = new RiggedModel(fileName, m_scene, m_modelLoader->getRenderingEffect(), m_modelLoader->getSkeletom(), modelDataArray);
-			rm->setFKController(controller);
-			rm->setIKSolver(solver);
-			rm->setRootTranslation(controller->getRootTranslation());
-			rm->setRootRotation(controller->getRootRotation());
+			RiggedModel* rm = new RiggedModel(fileName, m_scene, modelLoader, modelDataArray);
 			pModel.reset(rm);
 		}
-		m_modelLoaders.push_back(m_modelLoader);
+		m_modelLoaders.push_back(modelLoader);
 	}
 	
 	if (generateGameObject)

@@ -14,14 +14,22 @@ class Scene;
 class RiggedModel : public AbstractModel, protected QOpenGLFunctions_4_3_Core
 {
 public:
-	RiggedModel(const QString& name, Scene* scene, ShadingTechniquePtr tech, Skeleton* skeleton);
-	RiggedModel(const QString& name, Scene* scene, ShadingTechniquePtr tech, Skeleton* skeleton, QVector<ModelDataPtr> modelDataVector);
+	RiggedModel(const QString& name, Scene* scene, ModelLoaderPtr loader);
+	RiggedModel(const QString& name, Scene* scene, ModelLoaderPtr loader, QVector<ModelDataPtr> modelDataVector);
+
+	// copy constructor
+	RiggedModel( const RiggedModel* orignal );
+
 	virtual ~RiggedModel();
 
 	//virtual QString className() { return "RiggedModel"; }
 	virtual void render( const float currentTime );
 
+	ShadingTechniquePtr getShadingTech() const { return m_RenderingEffect; }
+
 	Scene* getScene() const { return m_scene; }
+	QVector<ModelDataPtr> getModelData() const { return m_modelDataVector; }
+	ModelLoaderPtr getLoader() const { return m_modelLoader; }
 
 	void setFKController(FKController* fkCtrl);
 	void setIKSolver(CCDIKSolver* ikSolver);
@@ -57,11 +65,13 @@ private:
 
 
 	Scene* m_scene;
+	QVector<ModelDataPtr> m_modelDataVector;
+	ModelLoaderPtr m_modelLoader;
+
 	bool m_hasAnimation;
 	Skeleton* m_skeleton;
 	FKController* m_FKController;
 	CCDIKSolver* m_IKSolver;
-	FABRIKSolver* m_FABRSolver;
 	bool ikSolved;
 	float updateIKRate, lastUpdatedTime;
 	vec3 m_targetPos;

@@ -15,7 +15,7 @@ public:
 	StaticModel(const QString& name, Scene* scene, ShadingTechniquePtr tech, QVector<ModelDataPtr> modelDataVector);
 	
 	// copy constructor
-	StaticModel::StaticModel( const StaticModel* orignal );
+	StaticModel( const StaticModel* orignal );
 
 	virtual ~StaticModel();
 

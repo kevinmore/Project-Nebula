@@ -2,10 +2,11 @@
 #include <Scene/Scene.h>
 #include <Animation/Rig/Pose.h>
 
-RiggedModel::RiggedModel(const QString& name, Scene* scene, ShadingTechniquePtr tech, Skeleton* skeleton)
-   : AbstractModel(tech, name),
+RiggedModel::RiggedModel(const QString& name, Scene* scene, ModelLoaderPtr loader)
+   : AbstractModel(loader->getRenderingEffect(), name),
+    m_modelLoader(loader),
     m_scene(scene),
-	m_skeleton(skeleton),
+	m_skeleton(loader->getSkeletom()),
 	m_FKController(0),
 	m_IKSolver(0),
 	m_hasAnimation(false),
@@ -14,24 +15,44 @@ RiggedModel::RiggedModel(const QString& name, Scene* scene, ShadingTechniquePtr 
 	initialize();
 }
 
-RiggedModel::RiggedModel(const QString& name, Scene* scene, ShadingTechniquePtr tech, Skeleton* skeleton, QVector<ModelDataPtr> modelData)
-  : AbstractModel(tech, name),
+RiggedModel::RiggedModel(const QString& name, Scene* scene, ModelLoaderPtr loader, QVector<ModelDataPtr> modelData)
+  : AbstractModel(loader->getRenderingEffect(), name),
+    m_modelLoader(loader),
     m_scene(scene),
-	m_skeleton(skeleton),
+	m_skeleton(loader->getSkeletom()),
 	m_FKController(0),
 	m_IKSolver(0),
 	m_hasAnimation(false),
 	m_animationDuration(0.0f)
 {
+	m_modelDataVector = modelData;
 	initialize(modelData);
+}
+
+RiggedModel::RiggedModel( const RiggedModel* orignal )
+{
+	m_fileName = orignal->fileName();
+	m_scene = orignal->getScene();
+	m_modelDataVector = orignal->getModelData();
+	// copy the loader and skeleton
+	m_modelLoader = orignal->getLoader();
+
+	initialize(m_modelDataVector);
+
+	// install shader
+	QString shaderName = orignal->getShadingTech()->shaderFileName();
+	m_RenderingEffect = ShadingTechniquePtr(new ShadingTechnique(m_scene, shaderName, ShadingTechnique::RIGGED));
+	// copy the vao
+	m_vao = orignal->getShadingTech()->getVAO();
+	m_RenderingEffect->setVAO(m_vao);
 }
 
 
 RiggedModel::~RiggedModel() 
 {
- 	SAFE_DELETE(m_skeleton);
- 	SAFE_DELETE(m_IKSolver);
-	SAFE_DELETE(m_FKController);
+//  	SAFE_DELETE(m_skeleton);
+//  	SAFE_DELETE(m_IKSolver);
+// 	SAFE_DELETE(m_FKController);
 
 	// clean up the meshes
 	foreach(MeshPtr mesh, m_meshes)
@@ -57,6 +78,17 @@ void RiggedModel::initialize(QVector<ModelDataPtr> modelDataVector)
 	m_textureManager  = m_scene->textureManager();
 	m_materialManager = m_scene->materialManager();
 
+	// create a FKController for the model
+	FKController* controller = new FKController(m_modelLoader, m_modelLoader->getSkeletom());
+	setFKController(controller);
+	setRootTranslation(controller->getRootTranslation());
+	setRootRotation(controller->getRootRotation());
+
+	// create an IKSolver for the model
+	CCDIKSolver* solver = new CCDIKSolver(128);
+	setIKSolver(solver);
+	
+
 	// traverse modelData vector
 	for (int i = 0; i < modelDataVector.size(); ++i)
 	{
@@ -72,6 +104,7 @@ void RiggedModel::initialize(QVector<ModelDataPtr> modelDataVector)
 		m_meshes.push_back(mesh);
 
 		// deal with the material
+		// do not share the material
 		MaterialPtr material(new Material(
 			data->materialData.name,
 			data->materialData.ambientColor,

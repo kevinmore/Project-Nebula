@@ -28,6 +28,7 @@ StaticModel::StaticModel( const StaticModel* orignal )
 	m_RenderingEffect = ShadingTechniquePtr(new ShadingTechnique(m_scene, shaderName, ShadingTechnique::STATIC));
 	// copy the vao
 	m_vao = orignal->getShadingTech()->getVAO();
+	m_RenderingEffect->setVAO(m_vao);
 }
 
 
@@ -64,10 +65,15 @@ void StaticModel::initialize(QVector<ModelDataPtr> modelDataVector)
 		ModelDataPtr data = modelDataVector[i];
 
 		// deal with the mesh
-		MeshPtr mesh = MeshPtr(new Mesh(data->meshData.name, data->meshData.numIndices, data->meshData.baseVertex, data->meshData.baseIndex));
+		MeshPtr mesh = m_meshManager->getMesh(data->meshData.name);
+		if (!mesh)
+		{
+			mesh = m_meshManager->addMesh(data->meshData.name, data->meshData.numIndices, data->meshData.baseVertex, 	data->meshData.baseIndex);
+		}
 		m_meshes.push_back(mesh);
 
 		// deal with the material
+		// do not share the material
 		MaterialPtr material(new Material(
 			data->materialData.name,
 			data->materialData.ambientColor,

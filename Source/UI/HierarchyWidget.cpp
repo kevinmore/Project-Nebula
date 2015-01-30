@@ -172,7 +172,10 @@ void HierarchyWidget::readGameObject(QTreeWidgetItem* current, QTreeWidgetItem* 
 	ui->doubleSpinBox_RotationX->setValue(m_currentObject->rotation().x());
 	ui->doubleSpinBox_RotationY->setValue(m_currentObject->rotation().y());
 	ui->doubleSpinBox_RotationZ->setValue(m_currentObject->rotation().z());
-
+	ui->dial_RotationX->setValue((int)m_currentObject->rotation().x());
+	ui->dial_RotationY->setValue((int)m_currentObject->rotation().y());
+	ui->dial_RotationZ->setValue((int)m_currentObject->rotation().z());
+	
 	ui->doubleSpinBox_ScaleX->setValue(m_currentObject->scale().x());
 	ui->doubleSpinBox_ScaleY->setValue(m_currentObject->scale().y());
 	ui->doubleSpinBox_ScaleZ->setValue(m_currentObject->scale().z());
@@ -210,6 +213,9 @@ void HierarchyWidget::clearTransformationArea()
 	ui->doubleSpinBox_RotationX->setValue(0);
 	ui->doubleSpinBox_RotationY->setValue(0);
 	ui->doubleSpinBox_RotationZ->setValue(0);
+	ui->dial_RotationX->setValue(0);
+	ui->dial_RotationY->setValue(0);
+	ui->dial_RotationZ->setValue(0);
 
 	ui->doubleSpinBox_ScaleX->setValue(1);
 	ui->doubleSpinBox_ScaleY->setValue(1);
@@ -657,5 +663,5 @@ void HierarchyWidget::onRotationYSpinChange( double val )
 
 void HierarchyWidget::onRotationZSpinChange( double val )
 {
-	ui->dial_RotationY->setValue((int)val);
+	ui->dial_RotationZ->setValue((int)val);
 }

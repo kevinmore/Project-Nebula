@@ -64,7 +64,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>3</number>
+      <number>0</number>
      </property>
      <property name="elideMode">
       <enum>Qt::ElideNone</enum>
@@ -227,7 +227,7 @@
                <double>99999.990000000005239</double>
               </property>
               <property name="singleStep">
-               <double>10.000000000000000</double>
+               <double>0.100000000000000</double>
               </property>
              </widget>
             </item>
@@ -257,7 +257,7 @@
                <double>99999.990000000005239</double>
               </property>
               <property name="singleStep">
-               <double>10.000000000000000</double>
+               <double>0.100000000000000</double>
               </property>
              </widget>
             </item>
@@ -287,7 +287,7 @@
                <double>99999.990000000005239</double>
               </property>
               <property name="singleStep">
-               <double>10.000000000000000</double>
+               <double>0.100000000000000</double>
               </property>
               <property name="value">
                <double>0.000000000000000</double>

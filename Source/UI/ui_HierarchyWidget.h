@@ -330,7 +330,7 @@ public:
         doubleSpinBox_PositionX->setMinimumSize(QSize(0, 0));
         doubleSpinBox_PositionX->setMinimum(-100000);
         doubleSpinBox_PositionX->setMaximum(100000);
-        doubleSpinBox_PositionX->setSingleStep(10);
+        doubleSpinBox_PositionX->setSingleStep(0.1);
 
         horizontalLayout->addWidget(doubleSpinBox_PositionX);
 
@@ -350,7 +350,7 @@ public:
         doubleSpinBox_PositionY->setSizePolicy(sizePolicy1);
         doubleSpinBox_PositionY->setMinimum(-100000);
         doubleSpinBox_PositionY->setMaximum(100000);
-        doubleSpinBox_PositionY->setSingleStep(10);
+        doubleSpinBox_PositionY->setSingleStep(0.1);
 
         horizontalLayout_2->addWidget(doubleSpinBox_PositionY);
 
@@ -370,7 +370,7 @@ public:
         doubleSpinBox_PositionZ->setSizePolicy(sizePolicy1);
         doubleSpinBox_PositionZ->setMinimum(-100000);
         doubleSpinBox_PositionZ->setMaximum(100000);
-        doubleSpinBox_PositionZ->setSingleStep(10);
+        doubleSpinBox_PositionZ->setSingleStep(0.1);
         doubleSpinBox_PositionZ->setValue(0);
 
         horizontalLayout_3->addWidget(doubleSpinBox_PositionZ);
@@ -1286,7 +1286,7 @@ public:
         QObject::connect(spinBox_EmitAmount, SIGNAL(valueChanged(int)), horizontalSlider_EmitAmount, SLOT(setValue(int)));
         QObject::connect(checkBox_EnableCollision, SIGNAL(toggled(bool)), doubleSpinBox_Restitution, SLOT(setEnabled(bool)));
 
-        tabWidget->setCurrentIndex(3);
+        tabWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(HierarchyViewer);
