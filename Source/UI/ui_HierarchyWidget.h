@@ -88,14 +88,27 @@ public:
     QVBoxLayout *verticalLayout_13;
     QScrollArea *scrollArea_3;
     QWidget *scrollAreaWidgetContents_3;
-    QVBoxLayout *verticalLayout_14;
-    QGridLayout *gridLayout_2;
-    QLabel *label_40;
-    QComboBox *comboBox_BehaviourType;
+    QVBoxLayout *verticalLayout_3;
+    QHBoxLayout *horizontalLayout_36;
     QLabel *label_37;
+    QComboBox *comboBox_BehaviourType;
+    QHBoxLayout *horizontalLayout_35;
     QLabel *label_41;
-    QDoubleSpinBox *doubleSpinBox_PuppetSpeed;
     QDoubleSpinBox *doubleSpinBox_PuppetDuration;
+    QGroupBox *groupBox_6;
+    QHBoxLayout *horizontalLayout_34;
+    QHBoxLayout *horizontalLayout_31;
+    QLabel *label_40;
+    QDoubleSpinBox *doubleSpinBox_PuppetSpeedX;
+    QHBoxLayout *horizontalLayout_32;
+    QLabel *label_51;
+    QDoubleSpinBox *doubleSpinBox_PuppetSpeedY;
+    QHBoxLayout *horizontalLayout_33;
+    QLabel *label_54;
+    QDoubleSpinBox *doubleSpinBox_PuppetSpeedZ;
+    QSpacerItem *verticalSpacer_2;
+    QPushButton *pushButton_PuppetGo;
+    QPushButton *pushButton_PuppetStop;
     QWidget *RenderingTab;
     QVBoxLayout *verticalLayout_6;
     QScrollArea *scrollArea;
@@ -512,47 +525,113 @@ public:
         scrollArea_3->setWidgetResizable(true);
         scrollAreaWidgetContents_3 = new QWidget();
         scrollAreaWidgetContents_3->setObjectName(QStringLiteral("scrollAreaWidgetContents_3"));
-        scrollAreaWidgetContents_3->setGeometry(QRect(0, 0, 326, 407));
-        verticalLayout_14 = new QVBoxLayout(scrollAreaWidgetContents_3);
-        verticalLayout_14->setObjectName(QStringLiteral("verticalLayout_14"));
-        gridLayout_2 = new QGridLayout();
-        gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
-        label_40 = new QLabel(scrollAreaWidgetContents_3);
-        label_40->setObjectName(QStringLiteral("label_40"));
+        scrollAreaWidgetContents_3->setGeometry(QRect(0, 0, 336, 390));
+        verticalLayout_3 = new QVBoxLayout(scrollAreaWidgetContents_3);
+        verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
+        horizontalLayout_36 = new QHBoxLayout();
+        horizontalLayout_36->setObjectName(QStringLiteral("horizontalLayout_36"));
+        label_37 = new QLabel(scrollAreaWidgetContents_3);
+        label_37->setObjectName(QStringLiteral("label_37"));
 
-        gridLayout_2->addWidget(label_40, 2, 0, 1, 1);
+        horizontalLayout_36->addWidget(label_37);
 
         comboBox_BehaviourType = new QComboBox(scrollAreaWidgetContents_3);
         comboBox_BehaviourType->setObjectName(QStringLiteral("comboBox_BehaviourType"));
 
-        gridLayout_2->addWidget(comboBox_BehaviourType, 0, 1, 1, 1);
+        horizontalLayout_36->addWidget(comboBox_BehaviourType);
 
-        label_37 = new QLabel(scrollAreaWidgetContents_3);
-        label_37->setObjectName(QStringLiteral("label_37"));
 
-        gridLayout_2->addWidget(label_37, 0, 0, 1, 1);
+        verticalLayout_3->addLayout(horizontalLayout_36);
 
+        horizontalLayout_35 = new QHBoxLayout();
+        horizontalLayout_35->setObjectName(QStringLiteral("horizontalLayout_35"));
         label_41 = new QLabel(scrollAreaWidgetContents_3);
         label_41->setObjectName(QStringLiteral("label_41"));
 
-        gridLayout_2->addWidget(label_41, 1, 0, 1, 1);
-
-        doubleSpinBox_PuppetSpeed = new QDoubleSpinBox(scrollAreaWidgetContents_3);
-        doubleSpinBox_PuppetSpeed->setObjectName(QStringLiteral("doubleSpinBox_PuppetSpeed"));
-        doubleSpinBox_PuppetSpeed->setMinimum(-100000);
-        doubleSpinBox_PuppetSpeed->setMaximum(100000);
-
-        gridLayout_2->addWidget(doubleSpinBox_PuppetSpeed, 2, 1, 1, 1);
+        horizontalLayout_35->addWidget(label_41);
 
         doubleSpinBox_PuppetDuration = new QDoubleSpinBox(scrollAreaWidgetContents_3);
         doubleSpinBox_PuppetDuration->setObjectName(QStringLiteral("doubleSpinBox_PuppetDuration"));
         doubleSpinBox_PuppetDuration->setMinimum(0);
         doubleSpinBox_PuppetDuration->setMaximum(100000);
 
-        gridLayout_2->addWidget(doubleSpinBox_PuppetDuration, 1, 1, 1, 1);
+        horizontalLayout_35->addWidget(doubleSpinBox_PuppetDuration);
 
 
-        verticalLayout_14->addLayout(gridLayout_2);
+        verticalLayout_3->addLayout(horizontalLayout_35);
+
+        groupBox_6 = new QGroupBox(scrollAreaWidgetContents_3);
+        groupBox_6->setObjectName(QStringLiteral("groupBox_6"));
+        horizontalLayout_34 = new QHBoxLayout(groupBox_6);
+        horizontalLayout_34->setObjectName(QStringLiteral("horizontalLayout_34"));
+        horizontalLayout_31 = new QHBoxLayout();
+        horizontalLayout_31->setObjectName(QStringLiteral("horizontalLayout_31"));
+        label_40 = new QLabel(groupBox_6);
+        label_40->setObjectName(QStringLiteral("label_40"));
+
+        horizontalLayout_31->addWidget(label_40);
+
+        doubleSpinBox_PuppetSpeedX = new QDoubleSpinBox(groupBox_6);
+        doubleSpinBox_PuppetSpeedX->setObjectName(QStringLiteral("doubleSpinBox_PuppetSpeedX"));
+        doubleSpinBox_PuppetSpeedX->setMinimum(-100000);
+        doubleSpinBox_PuppetSpeedX->setMaximum(100000);
+
+        horizontalLayout_31->addWidget(doubleSpinBox_PuppetSpeedX);
+
+        horizontalLayout_32 = new QHBoxLayout();
+        horizontalLayout_32->setObjectName(QStringLiteral("horizontalLayout_32"));
+        label_51 = new QLabel(groupBox_6);
+        label_51->setObjectName(QStringLiteral("label_51"));
+
+        horizontalLayout_32->addWidget(label_51);
+
+        doubleSpinBox_PuppetSpeedY = new QDoubleSpinBox(groupBox_6);
+        doubleSpinBox_PuppetSpeedY->setObjectName(QStringLiteral("doubleSpinBox_PuppetSpeedY"));
+        doubleSpinBox_PuppetSpeedY->setMinimum(-100000);
+        doubleSpinBox_PuppetSpeedY->setMaximum(100000);
+
+        horizontalLayout_32->addWidget(doubleSpinBox_PuppetSpeedY);
+
+        horizontalLayout_33 = new QHBoxLayout();
+        horizontalLayout_33->setObjectName(QStringLiteral("horizontalLayout_33"));
+        label_54 = new QLabel(groupBox_6);
+        label_54->setObjectName(QStringLiteral("label_54"));
+
+        horizontalLayout_33->addWidget(label_54);
+
+        doubleSpinBox_PuppetSpeedZ = new QDoubleSpinBox(groupBox_6);
+        doubleSpinBox_PuppetSpeedZ->setObjectName(QStringLiteral("doubleSpinBox_PuppetSpeedZ"));
+        doubleSpinBox_PuppetSpeedZ->setMinimum(-100000);
+        doubleSpinBox_PuppetSpeedZ->setMaximum(100000);
+
+        horizontalLayout_33->addWidget(doubleSpinBox_PuppetSpeedZ);
+
+
+        horizontalLayout_32->addLayout(horizontalLayout_33);
+
+
+        horizontalLayout_31->addLayout(horizontalLayout_32);
+
+
+        horizontalLayout_34->addLayout(horizontalLayout_31);
+
+        doubleSpinBox_PuppetSpeedX->raise();
+
+        verticalLayout_3->addWidget(groupBox_6);
+
+        verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        verticalLayout_3->addItem(verticalSpacer_2);
+
+        pushButton_PuppetGo = new QPushButton(scrollAreaWidgetContents_3);
+        pushButton_PuppetGo->setObjectName(QStringLiteral("pushButton_PuppetGo"));
+
+        verticalLayout_3->addWidget(pushButton_PuppetGo);
+
+        pushButton_PuppetStop = new QPushButton(scrollAreaWidgetContents_3);
+        pushButton_PuppetStop->setObjectName(QStringLiteral("pushButton_PuppetStop"));
+
+        verticalLayout_3->addWidget(pushButton_PuppetStop);
 
         scrollArea_3->setWidget(scrollAreaWidgetContents_3);
 
@@ -1311,15 +1390,23 @@ public:
         label_8->setText(QApplication::translate("HierarchyViewer", "Y", 0));
         pushButton_Reset->setText(QApplication::translate("HierarchyViewer", "Reset", 0));
         tabWidget->setTabText(tabWidget->indexOf(TransformTab), QApplication::translate("HierarchyViewer", "Transform", 0));
-        label_40->setText(QApplication::translate("HierarchyViewer", "Speed", 0));
+        label_37->setText(QApplication::translate("HierarchyViewer", "Variable", 0));
         comboBox_BehaviourType->clear();
         comboBox_BehaviourType->insertItems(0, QStringList()
          << QApplication::translate("HierarchyViewer", "Position", 0)
          << QApplication::translate("HierarchyViewer", "Rotation", 0)
          << QApplication::translate("HierarchyViewer", "Scale", 0)
         );
-        label_37->setText(QApplication::translate("HierarchyViewer", "Variable", 0));
         label_41->setText(QApplication::translate("HierarchyViewer", "Duration", 0));
+#ifndef QT_NO_TOOLTIP
+        doubleSpinBox_PuppetDuration->setToolTip(QApplication::translate("HierarchyViewer", "0 means forever", 0));
+#endif // QT_NO_TOOLTIP
+        groupBox_6->setTitle(QApplication::translate("HierarchyViewer", "Speed", 0));
+        label_40->setText(QApplication::translate("HierarchyViewer", "X", 0));
+        label_51->setText(QApplication::translate("HierarchyViewer", "Y", 0));
+        label_54->setText(QApplication::translate("HierarchyViewer", "Z", 0));
+        pushButton_PuppetGo->setText(QApplication::translate("HierarchyViewer", "Go", 0));
+        pushButton_PuppetStop->setText(QApplication::translate("HierarchyViewer", "Stop", 0));
         tabWidget->setTabText(tabWidget->indexOf(PupetTab), QApplication::translate("HierarchyViewer", "Puppet", 0));
         label_42->setText(QApplication::translate("HierarchyViewer", "Shader", 0));
         groupBox->setTitle(QApplication::translate("HierarchyViewer", "Material", 0));

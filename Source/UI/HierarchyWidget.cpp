@@ -1,5 +1,6 @@
 ﻿#include "HierarchyWidget.h"
 #include "ui_HierarchyWidget.h"
+#include <Primitives/Puppet.h>
 
 HierarchyWidget::HierarchyWidget(Scene* scene, QWidget *parent)
 	: QWidget(parent),
@@ -224,7 +225,7 @@ void HierarchyWidget::clearTransformationArea()
 
 void HierarchyWidget::connectCurrentObject()
 {
-	// transformation panel related
+	// transformation tab related
 	connect(ui->doubleSpinBox_PositionX, SIGNAL(valueChanged(double)), m_currentObject, SLOT(fixedTranslateX(double)));
 	connect(ui->doubleSpinBox_PositionY, SIGNAL(valueChanged(double)), m_currentObject, SLOT(fixedTranslateY(double)));
 	connect(ui->doubleSpinBox_PositionZ, SIGNAL(valueChanged(double)), m_currentObject, SLOT(fixedTranslateZ(double)));
@@ -237,6 +238,10 @@ void HierarchyWidget::connectCurrentObject()
 	connect(ui->doubleSpinBox_RotationX, SIGNAL(valueChanged(double)), this, SLOT(onRotationXSpinChange(double)));
 	connect(ui->doubleSpinBox_RotationY, SIGNAL(valueChanged(double)), this, SLOT(onRotationYSpinChange(double)));
 	connect(ui->doubleSpinBox_RotationZ, SIGNAL(valueChanged(double)), this, SLOT(onRotationZSpinChange(double)));
+
+	// puppet tab related
+	connect(ui->pushButton_PuppetGo, SIGNAL(clicked()), this, SLOT(assignPuppet()));
+	connect(ui->pushButton_PuppetStop, SIGNAL(clicked()), m_currentObject, SLOT(clearPuppets()));
 }
 
 void HierarchyWidget::disconnectPreviousObject()
@@ -251,6 +256,11 @@ void HierarchyWidget::disconnectPreviousObject()
 	disconnect(ui->doubleSpinBox_ScaleX,		SIGNAL(valueChanged(double)), 0, 0);
 	disconnect(ui->doubleSpinBox_ScaleY,		SIGNAL(valueChanged(double)), 0, 0);
 	disconnect(ui->doubleSpinBox_ScaleZ,		SIGNAL(valueChanged(double)), 0, 0);
+
+	// puppet tab related
+	disconnect(ui->pushButton_PuppetGo, SIGNAL(clicked()), 0, 0);
+	disconnect(ui->pushButton_PuppetStop, SIGNAL(clicked()), 0, 0);
+
 
 	// particle system tab related
 	disconnect(ui->doubleSpinBox_Mass,			SIGNAL(valueChanged(double)), 0, 0);
@@ -527,7 +537,7 @@ bool HierarchyWidget::eventFilter( QObject *obj, QEvent *ev )
 
 void HierarchyWidget::searchShaders()
 {
-	QStringList nameFilter("*.vert");
+	QStringList nameFilter("*.frag");
 	QDir dir("../Resource/Shaders/");
 	QStringList shaderFiles = dir.entryList(nameFilter);
 
@@ -664,4 +674,26 @@ void HierarchyWidget::onRotationYSpinChange( double val )
 void HierarchyWidget::onRotationZSpinChange( double val )
 {
 	ui->dial_RotationZ->setValue((int)val);
+}
+
+void HierarchyWidget::assignPuppet()
+{
+	Puppet::Variable type;
+	if (ui->comboBox_BehaviourType->currentText() == "Position")
+		type = Puppet::Position;
+	else if (ui->comboBox_BehaviourType->currentText() == "Rotation")
+		type = Puppet::Rotation;
+	else if (ui->comboBox_BehaviourType->currentText() == "Scale")
+		type = Puppet::Scale;
+
+	vec3 speed(ui->doubleSpinBox_PuppetSpeedX->value(),
+			   ui->doubleSpinBox_PuppetSpeedY->value(),
+			   ui->doubleSpinBox_PuppetSpeedZ->value());
+
+	float duration = ui->doubleSpinBox_PuppetDuration->value();
+
+	// only active a puppet when the speed is not 0
+	if (!speed.isNull())
+		// this instance will be removed automatically
+		Puppet* pup = new Puppet(m_currentObject, type, speed, duration);
 }

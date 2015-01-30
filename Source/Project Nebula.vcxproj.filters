@@ -110,7 +110,6 @@
     <ClInclude Include="Physicis\Entity\RigidBody.h" />
     <ClInclude Include="UI\MainWindow.h" />
     <ClInclude Include="Scene\Scene.h" />
-    <ClInclude Include="UI\HierarchyWidget.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="UI\HierarchyWidget.ui" />
@@ -120,5 +119,6 @@
   <ItemGroup>
     <QtMOC Include="Primitives\GameObject.h" />
     <QtMOC Include="Primitives\Puppet.h" />
+    <QtMOC Include="UI\HierarchyWidget.h" />
   </ItemGroup>
 </Project>

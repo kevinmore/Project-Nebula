@@ -15,16 +15,18 @@ public:
 		Color
 	};
 
-	Puppet(GameObjectPtr go, Variable val, float amount, float duration = 0.0f);
+	Puppet(GameObject* go, Variable val, const vec3& speed, float duration = 0.0f);
 
 private slots:
 	void update();
+	void destroy();
 
 private:
-	GameObjectPtr m_target;
+	GameObject* m_target;
 	Variable m_variable;
-	float m_amount;
+	vec3 m_speed;
 	float m_duration;
 	float m_updateRate;
 };
 
+typedef QSharedPointer<Puppet> PuppetPtr;

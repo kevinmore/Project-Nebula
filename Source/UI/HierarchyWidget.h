@@ -53,6 +53,9 @@ private slots:
 	void onRotationXSpinChange(double val);
 	void onRotationYSpinChange(double val);
 	void onRotationZSpinChange(double val);
+
+	void assignPuppet();
+
 public slots:
 	void updateObjectTree();
 

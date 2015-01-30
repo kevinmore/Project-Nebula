@@ -1,18 +1,21 @@
 #include "Puppet.h"
 #include <QTimer>
 
-Puppet::Puppet( GameObjectPtr go, Variable val, float amount, float duration /*= 0.0f*/ )
+Puppet::Puppet( GameObject* go, Variable val, const vec3& speed, float duration /*= 0.0f*/ )
 	: m_target(go),
 	  m_variable(val),
-	  m_amount(amount),
+	  m_speed(speed),
 	  m_duration(duration),
 	  m_updateRate(0.016f)
 {
 	// if a duration is assigned, destroy the thread when timed out
 	if (duration > 0) 
 	{
-		QTimer::singleShot((int)(duration * 1000), this, SLOT(deleteLater()));
+		QTimer::singleShot((int)(duration * 1000), this, SLOT(destroy()));
 	}
+
+	// add this puppet to the game object
+	go->addPuppet(PuppetPtr(this));
 
 	QTimer* timer = new QTimer(this);
 	connect(timer, SIGNAL(timeout()), this, SLOT(update()));
@@ -25,10 +28,27 @@ void Puppet::update()
 	// only update when the game object exist
 	if (m_target)
 	{
-		m_target->rotateY(5 * 0.016f);
+		// process the required operation
+		switch(m_variable)
+		{
+			case Position:
+				m_target->translate(m_speed * m_updateRate);
+				break;
+			case Rotation:
+				m_target->rotate(m_speed * m_updateRate);
+				break;
+			case Scale:
+				m_target->scale(m_speed * m_updateRate);
+				break;
+		}
 	}
 	else
-		deleteLater();
+		destroy();
+}
+
+void Puppet::destroy()
+{
+	m_target->removePuppet(this);
 }
 
 

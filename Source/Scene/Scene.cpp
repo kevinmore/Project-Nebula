@@ -373,8 +373,6 @@ GameObjectPtr Scene::createEmptyGameObject(const QString& name)
 	GameObjectPtr go = m_objectManager->createGameObject(name, m_sceneRootNode);
 
 	emit updateHierarchy();
-	GameObjectPtr targ = m_objectManager->getGameObject("WoodenFloor");
-	Puppet* pup = new Puppet(targ, Puppet::Rotation, 1.0f, 5.0f);
 	return go;
 }
 

@@ -507,21 +507,21 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>326</width>
-            <height>407</height>
+            <width>336</width>
+            <height>390</height>
            </rect>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout_14">
+          <layout class="QVBoxLayout" name="verticalLayout_3">
            <item>
-            <layout class="QGridLayout" name="gridLayout_2">
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_40">
+            <layout class="QHBoxLayout" name="horizontalLayout_36">
+             <item>
+              <widget class="QLabel" name="label_37">
                <property name="text">
-                <string>Speed</string>
+                <string>Variable</string>
                </property>
               </widget>
              </item>
-             <item row="0" column="1">
+             <item>
               <widget class="QComboBox" name="comboBox_BehaviourType">
                <item>
                 <property name="text">
@@ -540,32 +540,22 @@
                </item>
               </widget>
              </item>
-             <item row="0" column="0">
-              <widget class="QLabel" name="label_37">
-               <property name="text">
-                <string>Variable</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_35">
+             <item>
               <widget class="QLabel" name="label_41">
                <property name="text">
                 <string>Duration</string>
                </property>
               </widget>
              </item>
-             <item row="2" column="1">
-              <widget class="QDoubleSpinBox" name="doubleSpinBox_PuppetSpeed">
-               <property name="minimum">
-                <double>-99999.990000000005239</double>
-               </property>
-               <property name="maximum">
-                <double>99999.990000000005239</double>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
+             <item>
               <widget class="QDoubleSpinBox" name="doubleSpinBox_PuppetDuration">
+               <property name="toolTip">
+                <string>0 means forever</string>
+               </property>
                <property name="minimum">
                 <double>0.000000000000000</double>
                </property>
@@ -575,6 +565,107 @@
               </widget>
              </item>
             </layout>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="groupBox_6">
+             <property name="title">
+              <string>Speed</string>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_34">
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_31">
+                <item>
+                 <widget class="QLabel" name="label_40">
+                  <property name="text">
+                   <string>X</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QDoubleSpinBox" name="doubleSpinBox_PuppetSpeedX">
+                  <property name="minimum">
+                   <double>-99999.990000000005239</double>
+                  </property>
+                  <property name="maximum">
+                   <double>99999.990000000005239</double>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_32">
+                  <item>
+                   <widget class="QLabel" name="label_51">
+                    <property name="text">
+                     <string>Y</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QDoubleSpinBox" name="doubleSpinBox_PuppetSpeedY">
+                    <property name="minimum">
+                     <double>-99999.990000000005239</double>
+                    </property>
+                    <property name="maximum">
+                     <double>99999.990000000005239</double>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <layout class="QHBoxLayout" name="horizontalLayout_33">
+                    <item>
+                     <widget class="QLabel" name="label_54">
+                      <property name="text">
+                       <string>Z</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="doubleSpinBox_PuppetSpeedZ">
+                      <property name="minimum">
+                       <double>-99999.990000000005239</double>
+                      </property>
+                      <property name="maximum">
+                       <double>99999.990000000005239</double>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </item>
+             </layout>
+             <zorder>doubleSpinBox_PuppetSpeedX</zorder>
+             <zorder></zorder>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_2">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_PuppetGo">
+             <property name="text">
+              <string>Go</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_PuppetStop">
+             <property name="text">
+              <string>Stop</string>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>

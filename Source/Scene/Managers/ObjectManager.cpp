@@ -73,6 +73,7 @@ ModelPtr ObjectManager::loadModel( const QString& customName, const QString& fil
 			RiggedModel* copyModel = new RiggedModel(original);
 			pModel.reset(copyModel);
 		}
+		qDebug() << "Made a copy from" << fileName;
 	}
 	// if the model doesn't exist, load it from file
 	else

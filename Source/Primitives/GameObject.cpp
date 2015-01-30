@@ -1,6 +1,7 @@
 #include "GameObject.h"
 #include <Scene/AbstractModel.h>
 #include <Scene/Scene.h>
+#include "Puppet.h"
 
 GameObject::GameObject(Scene* scene, GameObject* parent)
 	: QObject(parent),
@@ -139,6 +140,7 @@ void GameObject::reset()
 	setPosition(Vector3D::ZERO);
 	setRotation(Vector3D::ZERO);
 	setScale(Vector3D::UNIT_SCALE);
+	m_puppets.clear();
 }
 
 void GameObject::setSpeed( const QVector3D& speed )
@@ -406,4 +408,25 @@ void GameObject::scale( const vec3& delta )
 	m_scale += delta;
 	m_modelMatrix.scale(m_scale);
 	m_modelMatrixDirty = false;
+}
+
+void GameObject::clearPuppets()
+{
+	m_puppets.clear();
+}
+
+void GameObject::addPuppet( PuppetPtr p )
+{
+	m_puppets << p;
+}
+
+void GameObject::removePuppet( Puppet* p )
+{
+	foreach(PuppetPtr pP, m_puppets)
+	{
+		if (pP.data() == p)
+		{
+			m_puppets.removeOne(pP);
+		}
+	}
 }

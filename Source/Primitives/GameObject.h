@@ -5,10 +5,12 @@
 #include <QElapsedTimer>
 using namespace Math;
 
+class Puppet;
 class Component;
 class AbstractModel;
 class Scene;
 
+typedef QSharedPointer<Puppet> PuppetPtr;
 typedef QSharedPointer<Component> ComponentPtr;
 typedef QSharedPointer<AbstractModel> ModelPtr;
 
@@ -41,6 +43,9 @@ public:
 
 	vec3 globalSpeed() const;
 	vec3 predictedPosition() const;
+
+	void addPuppet(PuppetPtr p);
+	void removePuppet(Puppet* p);
 
 	/////////////////////////////inline section///////////////////////////////////
 	inline vec3 position() const { return m_position; }
@@ -135,6 +140,8 @@ public slots:
 
 	void calculateSpeed();
 
+	void clearPuppets();
+
 	void reset();
 
 private:
@@ -153,7 +160,7 @@ private:
 	QElapsedTimer m_lifeTimer;
 	bool m_isMoving;
 	QVector<ComponentPtr> m_components;
-
+	QList<PuppetPtr> m_puppets;
 	Scene* m_scene;
 };
 
