@@ -88,13 +88,13 @@ public:
     QLineEdit *lineEdit_To;
     QLabel *label_38;
     QLabel *label_40;
-    QLineEdit *lineEdit_Speed;
     QLabel *label_39;
     QLineEdit *lineEdit_From;
     QComboBox *comboBox_BehaviourType;
     QLabel *label_37;
     QLabel *label_41;
     QLineEdit *lineEdit_Duration;
+    QDoubleSpinBox *doubleSpinBox_PuppetSpeed;
     QWidget *RenderingTab;
     QVBoxLayout *verticalLayout_6;
     QScrollArea *scrollArea;
@@ -510,11 +510,6 @@ public:
 
         gridLayout_2->addWidget(label_40, 4, 0, 1, 1);
 
-        lineEdit_Speed = new QLineEdit(scrollAreaWidgetContents_3);
-        lineEdit_Speed->setObjectName(QStringLiteral("lineEdit_Speed"));
-
-        gridLayout_2->addWidget(lineEdit_Speed, 4, 1, 1, 1);
-
         label_39 = new QLabel(scrollAreaWidgetContents_3);
         label_39->setObjectName(QStringLiteral("label_39"));
 
@@ -544,6 +539,13 @@ public:
         lineEdit_Duration->setObjectName(QStringLiteral("lineEdit_Duration"));
 
         gridLayout_2->addWidget(lineEdit_Duration, 1, 1, 1, 1);
+
+        doubleSpinBox_PuppetSpeed = new QDoubleSpinBox(scrollAreaWidgetContents_3);
+        doubleSpinBox_PuppetSpeed->setObjectName(QStringLiteral("doubleSpinBox_PuppetSpeed"));
+        doubleSpinBox_PuppetSpeed->setMinimum(-100000);
+        doubleSpinBox_PuppetSpeed->setMaximum(100000);
+
+        gridLayout_2->addWidget(doubleSpinBox_PuppetSpeed, 4, 1, 1, 1);
 
 
         verticalLayout_14->addLayout(gridLayout_2);
@@ -1272,9 +1274,8 @@ public:
         QObject::connect(checkBox_EnableCollision, SIGNAL(toggled(bool)), doubleSpinBox_Restitution, SLOT(setEnabled(bool)));
         QObject::connect(comboBox_BehaviourType, SIGNAL(currentIndexChanged(int)), lineEdit_From, SLOT(clear()));
         QObject::connect(comboBox_BehaviourType, SIGNAL(currentIndexChanged(int)), lineEdit_To, SLOT(clear()));
-        QObject::connect(comboBox_BehaviourType, SIGNAL(currentIndexChanged(int)), lineEdit_Speed, SLOT(clear()));
 
-        tabWidget->setCurrentIndex(3);
+        tabWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(HierarchyViewer);
@@ -1307,7 +1308,6 @@ public:
          << QApplication::translate("HierarchyViewer", "Position", 0)
          << QApplication::translate("HierarchyViewer", "Rotation", 0)
          << QApplication::translate("HierarchyViewer", "Scale", 0)
-         << QApplication::translate("HierarchyViewer", "Vertex Color", 0)
         );
         label_37->setText(QApplication::translate("HierarchyViewer", "Variable", 0));
         label_41->setText(QApplication::translate("HierarchyViewer", "Duration", 0));

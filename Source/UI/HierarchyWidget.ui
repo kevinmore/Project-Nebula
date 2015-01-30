@@ -64,7 +64,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>3</number>
+      <number>0</number>
      </property>
      <property name="elideMode">
       <enum>Qt::ElideNone</enum>
@@ -492,9 +492,6 @@
                </property>
               </widget>
              </item>
-             <item row="4" column="1">
-              <widget class="QLineEdit" name="lineEdit_Speed"/>
-             </item>
              <item row="3" column="0">
               <widget class="QLabel" name="label_39">
                <property name="text">
@@ -522,11 +519,6 @@
                  <string>Scale</string>
                 </property>
                </item>
-               <item>
-                <property name="text">
-                 <string>Vertex Color</string>
-                </property>
-               </item>
               </widget>
              </item>
              <item row="0" column="0">
@@ -545,6 +537,16 @@
              </item>
              <item row="1" column="1">
               <widget class="QLineEdit" name="lineEdit_Duration"/>
+             </item>
+             <item row="4" column="1">
+              <widget class="QDoubleSpinBox" name="doubleSpinBox_PuppetSpeed">
+               <property name="minimum">
+                <double>-99999.990000000005239</double>
+               </property>
+               <property name="maximum">
+                <double>99999.990000000005239</double>
+               </property>
+              </widget>
              </item>
             </layout>
            </item>
@@ -1827,22 +1829,6 @@
     <hint type="destinationlabel">
      <x>166</x>
      <y>669</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>comboBox_BehaviourType</sender>
-   <signal>currentIndexChanged(int)</signal>
-   <receiver>lineEdit_Speed</receiver>
-   <slot>clear()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>185</x>
-     <y>477</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>110</x>
-     <y>746</y>
     </hint>
    </hints>
   </connection>
