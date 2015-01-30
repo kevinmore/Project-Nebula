@@ -425,8 +425,6 @@ void GameObject::removePuppet( Puppet* p )
 	foreach(PuppetPtr pP, m_puppets)
 	{
 		if (pP.data() == p)
-		{
 			m_puppets.removeOne(pP);
-		}
 	}
 }

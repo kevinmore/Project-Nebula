@@ -29,7 +29,7 @@ private:
 	void readShadingProperties();
 	void connectParticleSystemTab(ParticleSystemPtr ps);
 	void readParticleSystemConfig(ParticleSystemPtr ps);
-	void searchShaders();
+	void searchSuitableShaders(ModelPtr currentModel);
 	void connectSliderBarAndDoubleSpinBox(QSlider* slider, QDoubleSpinBox* box);
 
 private slots:

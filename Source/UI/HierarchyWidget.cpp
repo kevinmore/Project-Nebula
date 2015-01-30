@@ -68,9 +68,6 @@ HierarchyWidget::HierarchyWidget(Scene* scene, QWidget *parent)
 	connect(ui->checkBox_RandomColor, SIGNAL(toggled(bool)), this, SLOT(setColorPickerEnabled(bool)));
 	connect(ui->checkBox_EnableCollision, SIGNAL(toggled(bool)), ui->doubleSpinBox_Restitution, SLOT(setEnabled(bool)));
 
-	// material tab
-	searchShaders();
-	connect(ui->comboBox_SahderFiles, SIGNAL(currentTextChanged(const QString&)), this, SLOT(changeShader(const QString&)));
 	setMaximumWidth(360);
 	updateObjectTree();
 }
@@ -535,8 +532,12 @@ bool HierarchyWidget::eventFilter( QObject *obj, QEvent *ev )
 	}
 }
 
-void HierarchyWidget::searchShaders()
+void HierarchyWidget::searchSuitableShaders(ModelPtr currentModel)
 {
+	// don't apply shader when searching for shaders
+	disconnect(ui->comboBox_SahderFiles, 0, 0, 0);
+	ui->comboBox_SahderFiles->clear();
+
 	QStringList nameFilter("*.frag");
 	QDir dir("../Resource/Shaders/");
 	QStringList shaderFiles = dir.entryList(nameFilter);
@@ -546,8 +547,19 @@ void HierarchyWidget::searchShaders()
 	{
 		int dot = fileName.lastIndexOf(".");
 		fileName = fileName.left(dot);
-		ui->comboBox_SahderFiles->addItem(fileName);
+		
+		if ((currentModel.dynamicCast<StaticModel>()
+			&& fileName.contains("static")) || 
+			(currentModel.dynamicCast<RiggedModel>()
+			&& fileName.contains("skinning")))
+		{
+			// only add the right types of shaders
+			ui->comboBox_SahderFiles->addItem(fileName);
+		}
 	}
+	
+	// connect it when the loading is finished
+	connect(ui->comboBox_SahderFiles, SIGNAL(currentTextChanged(const QString&)), this, SLOT(changeShader(const QString&)));
 }
 
 
@@ -627,9 +639,11 @@ void HierarchyWidget::readShadingProperties()
 	ComponentPtr comp = m_currentObject->getComponent("Model");
 	ModelPtr model = comp.dynamicCast<AbstractModel>();
 	if (!model) return;
+	searchSuitableShaders(model);
 
 	m_currentShadingTech = model->renderingEffect().data();
 	if (!m_currentShadingTech) return;
+
 	ui->comboBox_SahderFiles->setCurrentText(m_currentShadingTech->shaderFileName());
 
 	MaterialPtr mat = model->getMaterial();
