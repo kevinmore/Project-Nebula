@@ -21,6 +21,8 @@ public:
 	//virtual QString className() { return "RiggedModel"; }
 	virtual void render( const float currentTime );
 
+	Scene* getScene() const { return m_scene; }
+
 	void setFKController(FKController* fkCtrl);
 	void setIKSolver(CCDIKSolver* ikSolver);
 

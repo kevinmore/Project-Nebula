@@ -13,11 +13,18 @@ class StaticModel : public AbstractModel, protected QOpenGLFunctions_4_3_Core
 public:
 	StaticModel(const QString& name, Scene* scene, ShadingTechniquePtr tech);
 	StaticModel(const QString& name, Scene* scene, ShadingTechniquePtr tech, QVector<ModelDataPtr> modelDataVector);
+	
+	// copy constructor
+	StaticModel::StaticModel( const StaticModel* orignal );
+
 	virtual ~StaticModel();
 
 	virtual void render( const float currentTime );
 	//virtual QString className() { return "StaticModel"; }
-	ShadingTechniquePtr getShadingTech() { return m_RenderingEffect; }
+	ShadingTechniquePtr getShadingTech() const { return m_RenderingEffect; }
+
+	Scene* getScene() const { return m_scene; }
+	QVector<ModelDataPtr> getModelData() const { return m_modelDataVector; }
 
 protected:
 
@@ -37,5 +44,6 @@ private:
 	void drawElements(unsigned int index, int mode);
 
 	Scene* m_scene;
+	QVector<ModelDataPtr> m_modelDataVector;
 };
 

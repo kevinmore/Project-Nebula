@@ -15,6 +15,10 @@ ShadingTechnique::ShadingTechnique(Scene* scene, const QString &shaderName, Shad
 	  m_shaderType(shaderType),
 	  usingCubeMap(false)
 {
+	if (!init()) 
+	{
+		qWarning() << shaderName << "may not be initialized successfully.";
+	}
 }
 
 void ShadingTechnique::enable()

@@ -214,11 +214,6 @@ GLuint ModelLoader::installShader()
 	shaderName = shaderPrefix + shaderFeatures;
 	m_effect = ShadingTechniquePtr(new ShadingTechnique(m_scene, shaderName, shaderType));
 
-	if (!m_effect->init()) 
-	{
-		qWarning() << shaderName << "may not be initialized successfully.";
-	}
-
 	return m_effect->getShaderProgram()->programId();
 }
 

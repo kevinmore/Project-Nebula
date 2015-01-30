@@ -12,7 +12,22 @@ StaticModel::StaticModel(const QString& name, Scene* scene, ShadingTechniquePtr 
   : AbstractModel(tech, name),
     m_scene(scene)
 {
+	m_modelDataVector = modelData;
 	initialize(modelData);
+}
+
+StaticModel::StaticModel( const StaticModel* orignal )
+{
+	m_fileName = orignal->fileName();
+	m_scene = orignal->getScene();
+	m_modelDataVector = orignal->getModelData();
+	initialize(m_modelDataVector);
+
+	// install shader
+	QString shaderName = orignal->getShadingTech()->shaderFileName();
+	m_RenderingEffect = ShadingTechniquePtr(new ShadingTechnique(m_scene, shaderName, ShadingTechnique::STATIC));
+	// copy the vao
+	m_vao = orignal->getShadingTech()->getVAO();
 }
 
 
@@ -49,12 +64,7 @@ void StaticModel::initialize(QVector<ModelDataPtr> modelDataVector)
 		ModelDataPtr data = modelDataVector[i];
 
 		// deal with the mesh
-		MeshPtr mesh = m_meshManager->getMesh(data->meshData.name);
-		if (!mesh)
-		{
-			mesh = m_meshManager->addMesh(data->meshData.name, data->meshData.numIndices, data->meshData.baseVertex, 	data->meshData.baseIndex);
-		}
-
+		MeshPtr mesh = MeshPtr(new Mesh(data->meshData.name, data->meshData.numIndices, data->meshData.baseVertex, data->meshData.baseIndex));
 		m_meshes.push_back(mesh);
 
 		// deal with the material

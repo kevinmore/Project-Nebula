@@ -35,17 +35,9 @@ GameObjectPtr ObjectManager::getGameObject( const QString& name )
 
 ModelPtr ObjectManager::loadModel( const QString& customName, const QString& fileName, GameObject* parent, bool generateGameObject )
 {
-	// if the model already exists, make a copy
-	qDebug() <<"loading"<< fileName;
-	// if the model doesn't exist, load it from file
-	ModelLoaderPtr m_modelLoader(new ModelLoader(m_scene));
-	QVector<ModelDataPtr> modelDataArray = m_modelLoader->loadModel(fileName, 0, m_loadingFlag);
-	if(modelDataArray.size() == 0) return ModelPtr();
-
-	// if the model has mesh data, load it
 	ModelPtr pModel;
 
-	// check if this model has been loaded previously
+	// check if the custom name is unique
 	QString name = customName;
 	int duplication = 0;
 	foreach(QString key, m_gameObjectMap.keys())
@@ -56,28 +48,63 @@ ModelPtr ObjectManager::loadModel( const QString& customName, const QString& fil
 	if (duplication) 
 		name += "_" + QString::number(duplication);
 
-	// create different types of models
-	if (m_modelLoader->getModelType() == ModelLoader::STATIC_MODEL)
+	// if the model already exists, make a copy
+	foreach(ComponentPtr comp, m_renderQueue)
 	{
-		StaticModel* sm = new StaticModel(fileName, m_scene, m_modelLoader->getRenderingEffect(), modelDataArray);
-		pModel.reset(sm);
+		ModelPtr model = comp.dynamicCast<AbstractModel>();
+		if (model && fileName == model->fileName())
+		{
+			pModel = model;
+			break;
+		}
 	}
-	else if (m_modelLoader->getModelType() == ModelLoader::RIGGED_MODEL)
+	if (pModel)
 	{
-		// create a FKController for the model
-		FKController* controller = new FKController(m_modelLoader, m_modelLoader->getSkeletom());
-
-		// create an IKSolver for the model
-		CCDIKSolver* solver = new CCDIKSolver(128);
-
-		RiggedModel* rm = new RiggedModel(fileName, m_scene, m_modelLoader->getRenderingEffect(), m_modelLoader->getSkeletom(), modelDataArray);
-		rm->setFKController(controller);
-		rm->setIKSolver(solver);
-		rm->setRootTranslation(controller->getRootTranslation());
-		rm->setRootRotation(controller->getRootRotation());
-		pModel.reset(rm);
+		// check model type
+		if (pModel.dynamicCast<StaticModel>())
+		{
+			StaticModel* original = dynamic_cast<StaticModel*>(pModel.data());
+			StaticModel* copyModel = new StaticModel(original);
+			pModel.reset(copyModel);
+		}
+		else if (pModel.dynamicCast<RiggedModel>())
+		{
+// 			RiggedModel* original = dynamic_cast<RiggedModel*>(pModel.data());
+// 			RiggedModel* copyModel = new RiggedModel(*original);
+// 			pModel.reset(copyModel);
+		}
 	}
+	// if the model doesn't exist, load it from file
+	else
+	{
+		ModelLoaderPtr m_modelLoader(new ModelLoader(m_scene));
+		QVector<ModelDataPtr> modelDataArray = m_modelLoader->loadModel(fileName, 0, m_loadingFlag);
+		if(modelDataArray.size() == 0) return pModel;
 
+		// create different types of models
+		if (m_modelLoader->getModelType() == ModelLoader::STATIC_MODEL)
+		{
+			StaticModel* sm = new StaticModel(fileName, m_scene, m_modelLoader->getRenderingEffect(), modelDataArray);
+			pModel.reset(sm);
+		}
+		else if (m_modelLoader->getModelType() == ModelLoader::RIGGED_MODEL)
+		{
+			// create a FKController for the model
+			FKController* controller = new FKController(m_modelLoader, m_modelLoader->getSkeletom());
+
+			// create an IKSolver for the model
+			CCDIKSolver* solver = new CCDIKSolver(128);
+
+			RiggedModel* rm = new RiggedModel(fileName, m_scene, m_modelLoader->getRenderingEffect(), m_modelLoader->getSkeletom(), modelDataArray);
+			rm->setFKController(controller);
+			rm->setIKSolver(solver);
+			rm->setRootTranslation(controller->getRootTranslation());
+			rm->setRootRotation(controller->getRootRotation());
+			pModel.reset(rm);
+		}
+		m_modelLoaders.push_back(m_modelLoader);
+	}
+	
 	if (generateGameObject)
 	{
 		// attach this model to a new game object
@@ -89,7 +116,6 @@ ModelPtr ObjectManager::loadModel( const QString& customName, const QString& fil
 		registerGameObject(name, go);
 	}
 
-	m_modelLoaders.push_back(m_modelLoader);
 	return pModel;
 }
 
