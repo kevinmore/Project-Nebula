@@ -80,77 +80,59 @@ void GameObject::setScale(double scaleFactor)
 	m_modelMatrixDirty = true;
 }
 
-void GameObject::translateX(double x)
+void GameObject::fixedTranslateX(double x)
 {
 	m_position.setX(x);
 	m_modelMatrixDirty = true;
 }
 
-void GameObject::translateY(double y)
+void GameObject::fixedTranslateY(double y)
 {
 	m_position.setY(y);
 	m_modelMatrixDirty = true;
 }
 
-void GameObject::translateZ(double z)
+void GameObject::fixedTranslateZ(double z)
 {
 	m_position.setZ(z);
 	m_modelMatrixDirty = true;
 }
 
-void GameObject::rotateX(double x)
+void GameObject::fixedRotateX(double x)
 {
 	m_rotation.setX(x);
 	m_modelMatrixDirty = true;
 }
 
-void GameObject::rotateY(double y)
+void GameObject::fixedRotateY(double y)
 {
 	m_rotation.setY(y);
 	m_modelMatrixDirty = true;
 }
 
-void GameObject::rotateZ(double z)
+void GameObject::fixedRotateZ(double z)
 {
 	m_rotation.setZ(z);
 	m_modelMatrixDirty = true;
 }
 
-void GameObject::scaleX(double x)
+void GameObject::fixedScaleX(double x)
 {
 	m_scale.setX(x);
 	m_modelMatrixDirty = true;
 }
 
-void GameObject::scaleY(double y)
+void GameObject::fixedScaleY(double y)
 {
 	m_scale.setY(y);
 	m_modelMatrixDirty = true;
 }
 
-void GameObject::scaleZ(double z)
+void GameObject::fixedScaleZ(double z)
 {
 	m_scale.setZ(z);
 	m_modelMatrixDirty = true;
 }
-
-// const QMatrix4x4& GameObject::modelMatrix()
-// {
-// 	if(m_modelMatrixDirty)
-// 	{
-// 		m_modelMatrix.setToIdentity();
-// 
-// 		m_modelMatrix.translate(m_position);
-// 		m_modelMatrix.rotate(m_rotation.x(), Vector3D::UNIT_X);
-// 		m_modelMatrix.rotate(m_rotation.y(), Vector3D::UNIT_Y);
-// 		m_modelMatrix.rotate(m_rotation.z(), Vector3D::UNIT_Z);
-// 		m_modelMatrix.scale(m_scale);
-// 
-// 		m_modelMatrixDirty = false;
-// 	}
-// 
-// 	return m_modelMatrix;
-// }
 
 void GameObject::reset()
 {
@@ -338,4 +320,90 @@ void GameObject::setScene( Scene* scene )
 Scene* GameObject::getScene() const
 {
 	return m_scene;
+}
+
+void GameObject::translateX( float x )
+{
+	m_position.setX(m_position.x() + x);
+	m_modelMatrix.translate(x, 0.0f, 0.0f);
+	m_modelMatrixDirty = false;
+}
+
+void GameObject::translateY( float y )
+{
+	m_position.setY(m_position.y() + y);
+	m_modelMatrix.translate(0.0f, y, 0.0f);
+	m_modelMatrixDirty = false;
+}
+
+void GameObject::translateZ( float z )
+{
+	m_position.setZ(m_position.z() + z);
+	m_modelMatrix.translate(0.0f, 0.0f, z);
+	m_modelMatrixDirty = false;
+}
+
+void GameObject::translate( const vec3& delta )
+{
+	m_position += delta;
+	m_modelMatrix.translate(delta);
+	m_modelMatrixDirty = false;
+}
+
+void GameObject::rotateX( float x )
+{
+	m_rotation.setX(m_rotation.x() + x);
+	m_modelMatrix.rotate(x, Math::Vector3D::UNIT_X);
+	m_modelMatrixDirty = false;
+}
+
+void GameObject::rotateY( float y )
+{
+	m_rotation.setY(m_rotation.y() + y);
+	m_modelMatrix.rotate(y, Math::Vector3D::UNIT_Y);
+	m_modelMatrixDirty = false;
+}
+
+void GameObject::rotateZ( float z )
+{
+	m_rotation.setZ(m_rotation.z() + z);
+	m_modelMatrix.rotate(z, Math::Vector3D::UNIT_Z);
+	m_modelMatrixDirty = false;
+}
+
+void GameObject::rotate( const vec3& delta )
+{
+	m_rotation += delta;
+	m_modelMatrix.rotate(delta.x(), Vector3D::UNIT_X);
+	m_modelMatrix.rotate(delta.y(), Vector3D::UNIT_Y);
+	m_modelMatrix.rotate(delta.z(), Vector3D::UNIT_Z);
+	m_modelMatrixDirty = false;
+}
+
+void GameObject::scaleX( float x )
+{
+	m_scale.setX(m_scale.x() + x);
+	m_modelMatrix.scale(m_scale);
+	m_modelMatrixDirty = false;
+}
+
+void GameObject::scaleY( float y )
+{
+	m_scale.setY(m_scale.y() + y);
+	m_modelMatrix.scale(m_scale);
+	m_modelMatrixDirty = false;
+}
+
+void GameObject::scaleZ( float z )
+{
+	m_scale.setZ(m_scale.z() + z);
+	m_modelMatrix.scale(m_scale);
+	m_modelMatrixDirty = false;
+}
+
+void GameObject::scale( const vec3& delta )
+{
+	m_scale += delta;
+	m_modelMatrix.scale(m_scale);
+	m_modelMatrixDirty = false;
 }

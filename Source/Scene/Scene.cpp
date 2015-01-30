@@ -378,7 +378,10 @@ GameObjectPtr Scene::createEmptyGameObject(const QString& name)
 GameObjectPtr Scene::createParticleSystem(const QString& parentName)
 {
 	GameObjectPtr parent = m_objectManager->getGameObject(parentName);
-	GameObjectPtr ref = m_objectManager->createGameObject("Particle System", parent.data());
+	// check if the parent exist
+	GameObjectPtr ref = parent 
+						? m_objectManager->createGameObject("Particle System", parent.data())
+						: m_objectManager->createGameObject("Particle System", m_sceneRootNode);
 	emit updateHierarchy();
 
 	// particle system

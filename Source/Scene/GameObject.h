@@ -98,17 +98,34 @@ signals:
 	void componentAttached(ComponentPtr comp);
 
 public slots:
-	void translateX(double x);
-	void translateY(double y);
-	void translateZ(double z);
+	/// the 9 functions below will reset the model matrix
+	void fixedTranslateX(double x);
+	void fixedTranslateY(double y);
+	void fixedTranslateZ(double z);
 
-	void rotateX(double x);
-	void rotateY(double y);
-	void rotateZ(double z);
+	void fixedRotateX(double x);
+	void fixedRotateY(double y);
+	void fixedRotateZ(double z);
 
-	void scaleX(double x);
-	void scaleY(double y);
-	void scaleZ(double z);
+	void fixedScaleX(double x);
+	void fixedScaleY(double y);
+	void fixedScaleZ(double z);
+
+	/// the 12 functions below will NOT reset the model matrix
+	void translateX(float x);
+	void translateY(float y);
+	void translateZ(float z);
+	void translate(const vec3& delta);
+
+	void rotateX(float x);
+	void rotateY(float y);
+	void rotateZ(float z);
+	void rotate(const vec3& delta);
+
+	void scaleX(float x);
+	void scaleY(float y);
+	void scaleZ(float z);
+	void scale(const vec3& delta);
 
 	void translateInWorld(const QString& paramString);
 	void rotateInWorld(const QString& paramString);

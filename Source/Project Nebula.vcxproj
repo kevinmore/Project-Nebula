@@ -75,7 +75,7 @@
     <ClInclude Include="Animation\IK\CCDIKSolver.h" />
     <ClInclude Include="Animation\Rig\Pose.h" />
     <ClInclude Include="UI\Canvas.h" />
-    <QtMOC Include="UI\HierarchyWidget.h" />
+    <ClInclude Include="UI\HierarchyWidget.h" />
     <ClInclude Include="UI\MainWindow.h" />
     <ClInclude Include="Utility\LogCenter.h" />
     <ClInclude Include="Physicis\Entity\BoxRigidBody.h" />
@@ -110,7 +110,7 @@
     <ClInclude Include="Scene\AbstractScene.h" />
     <ClInclude Include="Scene\Managers\MeshManager.h" />
     <ClInclude Include="Scene\Camera.h" />
-    <ClInclude Include="Scene\GameObject.h" />
+    <QtMOC Include="Scene\GameObject.h" />
     <ClInclude Include="Scene\Light.h" />
     <ClInclude Include="Primitives\Mesh.h" />
     <ClInclude Include="Primitives\Material.h" />
