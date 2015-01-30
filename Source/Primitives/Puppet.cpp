@@ -5,7 +5,8 @@ Puppet::Puppet( GameObjectPtr go, Variable val, float amount, float duration /*=
 	: m_target(go),
 	  m_variable(val),
 	  m_amount(amount),
-	  m_duration(duration)
+	  m_duration(duration),
+	  m_updateRate(0.016f)
 {
 	// if a duration is assigned, destroy the thread when timed out
 	if (duration > 0) 
@@ -15,7 +16,7 @@ Puppet::Puppet( GameObjectPtr go, Variable val, float amount, float duration /*=
 
 	QTimer* timer = new QTimer(this);
 	connect(timer, SIGNAL(timeout()), this, SLOT(update()));
-	timer->start(0.016); // f = 1 / 16.10e-3 = 60Hz
+	timer->start(m_updateRate);
 }
 
 

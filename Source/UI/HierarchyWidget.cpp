@@ -20,7 +20,10 @@ HierarchyWidget::HierarchyWidget(Scene* scene, QWidget *parent)
 	
 	// transform reset button
 	connect(ui->pushButton_Reset, SIGNAL(clicked()), this, SLOT(resetSelectedObject()));
-	
+	connect(ui->dial_RotationX, SIGNAL(valueChanged(int)), this, SLOT(onRotationXDialChange(int)));
+	connect(ui->dial_RotationY, SIGNAL(valueChanged(int)), this, SLOT(onRotationYDialChange(int)));
+	connect(ui->dial_RotationZ, SIGNAL(valueChanged(int)), this, SLOT(onRotationZDialChange(int)));
+
 	// popup menu
 	m_deleteAction = new QAction("Delete", this);
 	ui->treeWidget->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -127,7 +130,11 @@ void HierarchyWidget::resetSelectedObject()
 {
 	// get the selected game object
 	QTreeWidgetItem* current = ui->treeWidget->currentItem();
-	if(!current) return;
+	if(!current)
+	{
+		clearTransformationArea();
+		return;
+	}
 	else if (current == ui->treeWidget->topLevelItem(0))
 		m_currentObject = m_scene->sceneNode();
 	else
@@ -221,6 +228,9 @@ void HierarchyWidget::connectCurrentObject()
 	connect(ui->doubleSpinBox_ScaleX,	 SIGNAL(valueChanged(double)), m_currentObject, SLOT(fixedScaleX(double)));
 	connect(ui->doubleSpinBox_ScaleY,	 SIGNAL(valueChanged(double)), m_currentObject, SLOT(fixedScaleY(double)));
 	connect(ui->doubleSpinBox_ScaleZ,	 SIGNAL(valueChanged(double)), m_currentObject, SLOT(fixedScaleZ(double)));
+	connect(ui->doubleSpinBox_RotationX, SIGNAL(valueChanged(double)), this, SLOT(onRotationXSpinChange(double)));
+	connect(ui->doubleSpinBox_RotationY, SIGNAL(valueChanged(double)), this, SLOT(onRotationYSpinChange(double)));
+	connect(ui->doubleSpinBox_RotationZ, SIGNAL(valueChanged(double)), this, SLOT(onRotationZSpinChange(double)));
 }
 
 void HierarchyWidget::disconnectPreviousObject()
@@ -617,4 +627,34 @@ void HierarchyWidget::readShadingProperties()
 
 	// map the textures
 	
+}
+
+void HierarchyWidget::onRotationXDialChange( int val )
+{
+	ui->doubleSpinBox_RotationX->setValue((double)val);
+}
+
+void HierarchyWidget::onRotationYDialChange( int val )
+{
+	ui->doubleSpinBox_RotationY->setValue((double)val);
+}
+
+void HierarchyWidget::onRotationZDialChange( int val )
+{
+	ui->doubleSpinBox_RotationZ->setValue((double)val);
+}
+
+void HierarchyWidget::onRotationXSpinChange( double val )
+{
+	ui->dial_RotationX->setValue((int)val);
+}
+
+void HierarchyWidget::onRotationYSpinChange( double val )
+{
+	ui->dial_RotationY->setValue((int)val);
+}
+
+void HierarchyWidget::onRotationZSpinChange( double val )
+{
+	ui->dial_RotationY->setValue((int)val);
 }

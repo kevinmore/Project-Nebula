@@ -1,0 +1,1 @@
+uic HierarchyWidget.ui -o ui_HierarchyWidget.h

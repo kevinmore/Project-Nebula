@@ -47,6 +47,12 @@ private slots:
 	void onShininessStrengthSliderChange(int value);
 	void onShininessStrengthDoubleBoxChange(double value);
 
+	void onRotationXDialChange(int val);
+	void onRotationYDialChange(int val);
+	void onRotationZDialChange(int val);
+	void onRotationXSpinChange(double val);
+	void onRotationYSpinChange(double val);
+	void onRotationZSpinChange(double val);
 public slots:
 	void updateObjectTree();
 

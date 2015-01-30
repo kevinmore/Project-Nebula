@@ -8,8 +8,8 @@ Camera::Camera(GameObject* followingTarget, QObject *parent)
 	m_viewCenter(Vector3D::ZERO),
 	m_cameraToCenter(Vector3D::NEGATIVE_UNIT_Z),
 	m_projectionType(Perspective),
-	m_nearPlane(0.1f),
-	m_farPlane(10000.0f),
+	m_nearPlane(0.01f),
+	m_farPlane(1000.0f),
 	m_fieldOfView(60.0f),
 	m_aspectRatio(1.0f),
 	m_left(-100.0f),
@@ -23,9 +23,11 @@ Camera::Camera(GameObject* followingTarget, QObject *parent)
 	m_viewCenterFixed(true),
 	m_panAngle(0.0f),
 	m_tiltAngle(0.0f),
-	m_metersPerUnits(0.1f),
+	m_metersPerUnits(1.0f),
 	m_isFollowing(true),
-	m_followingTarget(followingTarget)
+	m_followingTarget(followingTarget),
+	m_speed(5.0f),
+	m_sensitivity(0.2f)
 {
 	updatePerspectiveProjection();
 }
@@ -93,42 +95,42 @@ void Camera::setViewType(ViewType type)
 	m_viewType = type;
 }
 
-QVector3D Camera::position() const
+vec3 Camera::position() const
 {
 	return m_position;
 }
 
-void Camera::setPosition(const QVector3D& position)
+void Camera::setPosition(const vec3& position)
 {
 	m_position = position;
 	m_cameraToCenter = m_viewCenter - position;
 	m_viewMatrixDirty = true;
 }
 
-void Camera::setUpVector(const QVector3D& upVector)
+void Camera::setUpVector(const vec3& upVector)
 {
 	m_upVector = upVector;
 	m_viewMatrixDirty = true;
 }
 
-QVector3D Camera::upVector() const
+vec3 Camera::upVector() const
 {
 	return m_upVector;
 }
 
-void Camera::setViewCenter(const QVector3D& viewCenter)
+void Camera::setViewCenter(const vec3& viewCenter)
 {
 	m_viewCenter = viewCenter;
 	m_cameraToCenter = viewCenter - m_position;
 	m_viewMatrixDirty = true;
 }
 
-QVector3D Camera::viewCenter() const
+vec3 Camera::viewCenter() const
 {
 	return m_viewCenter;
 }
 
-QVector3D Camera::viewVector() const
+vec3 Camera::viewVector() const
 {
 	return m_cameraToCenter;
 }
@@ -261,7 +263,7 @@ float Camera::top() const
 	return m_top;
 }
 
-QMatrix4x4 Camera::viewMatrix() const
+mat4 Camera::viewMatrix() const
 {
 	if(m_viewMatrixDirty)
 	{
@@ -273,12 +275,12 @@ QMatrix4x4 Camera::viewMatrix() const
 	return m_viewMatrix;
 }
 
-QMatrix4x4 Camera::projectionMatrix() const
+mat4 Camera::projectionMatrix() const
 {
 	return m_projectionMatrix;
 }
 
-QMatrix4x4 Camera::viewProjectionMatrix() const
+mat4 Camera::viewProjectionMatrix() const
 {
 	if(m_viewMatrixDirty || m_viewProjectionMatrixDirty)
 	{
@@ -289,15 +291,15 @@ QMatrix4x4 Camera::viewProjectionMatrix() const
 	return m_viewProjectionMatrix;
 }
 
-void Camera::translate(const QVector3D& vLocal, CameraTranslationOption option)
+void Camera::translate(const vec3& vLocal, CameraTranslationOption option)
 {
 	// Calculate the amount to move by in world coordinates
-	QVector3D vWorld;
+	vec3 vWorld;
 
 	if( ! qFuzzyIsNull(vLocal.x()) )
 	{
 		// Calculate the vector for the local x axis
-		QVector3D x = QVector3D::crossProduct(m_cameraToCenter, m_upVector).normalized();
+		vec3 x = vec3::crossProduct(m_cameraToCenter, m_upVector).normalized();
 		vWorld += vLocal.x() * x;
 	}
 
@@ -323,13 +325,13 @@ void Camera::translate(const QVector3D& vLocal, CameraTranslationOption option)
 	// 2) The local x vector is the normal to the plane in which the new up vector
 	//    must lay. So we can take the cross product of this normal and the new
 	//    x vector. The new normal vector forms the last part of the orthonormal basis
-	QVector3D x = QVector3D::crossProduct(m_cameraToCenter, m_upVector).normalized();
-	m_upVector = QVector3D::crossProduct(x, m_cameraToCenter).normalized();
+	vec3 x = vec3::crossProduct(m_cameraToCenter, m_upVector).normalized();
+	m_upVector = vec3::crossProduct(x, m_cameraToCenter).normalized();
 
 	m_viewMatrixDirty = true;
 }
 
-void Camera::translateWorld(const QVector3D& vWorld , CameraTranslationOption option)
+void Camera::translateWorld(const vec3& vWorld , CameraTranslationOption option)
 {
 	// Update the camera position using the calculated world vector
 	m_position += vWorld;
@@ -344,71 +346,71 @@ void Camera::translateWorld(const QVector3D& vWorld , CameraTranslationOption op
 	m_viewMatrixDirty = true;
 }
 
-QQuaternion Camera::tiltRotation(const float& angle) const
+quart Camera::tiltRotation(const float& angle) const
 {
-	QVector3D xBasis = QVector3D::crossProduct(m_upVector, m_cameraToCenter.normalized()).normalized();
+	vec3 xBasis = vec3::crossProduct(m_upVector, m_cameraToCenter.normalized()).normalized();
 
-	return QQuaternion::fromAxisAndAngle(xBasis, -angle);
+	return quart::fromAxisAndAngle(xBasis, -angle);
 }
 
-QQuaternion Camera::panRotation(const float& angle) const
+quart Camera::panRotation(const float& angle) const
 {
-	return QQuaternion::fromAxisAndAngle(m_upVector, angle);
+	return quart::fromAxisAndAngle(m_upVector, angle);
 }
 
-QQuaternion Camera::panRotation(const float& angle, const QVector3D& axis) const
+quart Camera::panRotation(const float& angle, const vec3& axis) const
 {
-	return QQuaternion::fromAxisAndAngle(axis, angle);
+	return quart::fromAxisAndAngle(axis, angle);
 }
 
-QQuaternion Camera::rollRotation(const float& angle) const
+quart Camera::rollRotation(const float& angle) const
 {
-	return QQuaternion::fromAxisAndAngle(m_cameraToCenter, -angle);
+	return quart::fromAxisAndAngle(m_cameraToCenter, -angle);
 }
 
 void Camera::tilt(const float& angle)
 {
-	QQuaternion q = tiltRotation(angle);
+	quart q = tiltRotation(angle);
 	rotate(q);
 }
 
 void Camera::pan(const float& angle)
 {
-	QQuaternion q = panRotation(-angle);
+	quart q = panRotation(-angle);
 	rotate(q);
 }
 
-void Camera::pan(const float& angle, const QVector3D& axis)
+void Camera::pan(const float& angle, const vec3& axis)
 {
-	QQuaternion q = panRotation(-angle, axis);
+	quart q = panRotation(-angle, axis);
 	rotate(q);
 }
 
 void Camera::roll(const float& angle)
 {
-	QQuaternion q = rollRotation(-angle);
+	quart q = rollRotation(-angle);
 	rotate(q);
 }
 
 void Camera::tiltAboutViewCenter(const float& angle)
 {
-	QQuaternion q = tiltRotation(-angle);
+	quart q = tiltRotation(-angle);
 	rotateAboutViewCenter(q);
 }
 
 void Camera::panAboutViewCenter(const float& angle)
 {
-	QQuaternion q = panRotation(angle, Math::Vector3D::UNIT_Y);
+	quart q = panRotation(angle, Math::Vector3D::UNIT_Y);
 	rotateAboutViewCenter(q);
 }
 
 void Camera::rollAboutViewCenter(const float& angle)
 {
-	QQuaternion q = rollRotation(angle);
+	quart q = rollRotation(angle);
 	rotateAboutViewCenter(q);
 }
 
-void Camera::rotate(const QQuaternion& q)
+void Camera::rotate(const quart& q)
 {
 	m_upVector = q.rotatedVector(m_upVector);
 	m_cameraToCenter = q.rotatedVector(m_cameraToCenter);
@@ -417,7 +419,7 @@ void Camera::rotate(const QQuaternion& q)
 	m_viewMatrixDirty = true;
 }
 
-void Camera::rotateAboutViewCenter(const QQuaternion& q)
+void Camera::rotateAboutViewCenter(const quart& q)
 {
 	m_upVector = q.rotatedVector(m_upVector);
 	m_cameraToCenter = q.rotatedVector(m_cameraToCenter);
@@ -428,9 +430,9 @@ void Camera::rotateAboutViewCenter(const QQuaternion& q)
 
 void Camera::resetCamera()
 {
-	m_position = QVector3D(QVector3D(0.0f, 200.0f, 200.0f));
-	m_upVector = QVector3D(Vector3D::UNIT_Y);
-	m_viewCenter = QVector3D(Vector3D::ZERO);
+	m_position = vec3(vec3(0.0f, 2.0f, 2.0f));
+	m_upVector = vec3(Vector3D::UNIT_Y);
+	m_viewCenter = vec3(Vector3D::ZERO);
 	m_cameraToCenter = m_viewCenter - m_position;
 
 	m_viewMatrixDirty = true;
@@ -482,7 +484,7 @@ void Camera::update( const float dt )
 	{
 		if( ! qFuzzyIsNull(m_panAngle) )
 		{
-			pan(m_panAngle, QVector3D(0.0f, 1.0f, 0.0f));
+			pan(m_panAngle, vec3(0.0f, 1.0f, 0.0f));
 			m_panAngle = 0.0f;
 		}
 
@@ -508,11 +510,31 @@ void Camera::switchToThirdPersonCamera( bool status )
 	else releaseTarget();
 }
 
-void Camera::smoothTransform( const QVector3D& targetPos, float duration /*= 0.5*/ )
+void Camera::smoothTransform( const vec3& targetPos, float duration /*= 0.5*/ )
 {
 	vec3 to = targetPos - m_position;
 	float dis = to.length();
 	vec3 dir = to.normalized();
 
 	vec3 speed = to/duration;
+}
+
+float Camera::speed() const
+{
+	return m_speed;
+}
+
+float Camera::sensitivity() const
+{
+	return m_sensitivity;
+}
+
+void Camera::setSpeed( float val )
+{
+	m_speed = val;
+}
+
+void Camera::setSensitivity( float val )
+{
+	m_sensitivity = val;
 }

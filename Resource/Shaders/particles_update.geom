@@ -68,8 +68,8 @@ void main()
   // a normal particle
   if(iTypePass[0] != 0)
   {
-    vec3 netForce = vForce + fParticleMass * fGravityFactor * vec3(0, -9.8, 0);
-	vec3 acc = netForce * (1/(fParticleMass + 0.00001f));  // calculate the accelaration(in case the mass is 0)
+	vec3 acc = fGravityFactor * vec3(0, -9.8, 0);
+	acc += vForce / (fParticleMass + 0.00001); // calculate the accelaration(in case the mass is 0)
 	vVelocityOut += acc * fTimePassed; // update the velocity
     vPositionOut += vVelocityOut * fTimePassed; // update the position
 

@@ -157,12 +157,12 @@ bool ShadingTechnique::compileShader()
 // 	setMatSpecularPower(5);
 
 	PointLight pl[2];
-	pl[0].Position = vec3(100,200,100);
+	pl[0].Position = vec3(2,2,0);
 	pl[0].Color = vec3(1.0f, 1.0f, 1.0f);
 	pl[0].AmbientIntensity = 0.55f;
 	pl[0].DiffuseIntensity = 0.9f;
 
-	pl[1].Position = vec3(100,200,650);
+	pl[1].Position = vec3(-2,2,0);
 	pl[1].Color = vec3(1.0f, 1.0f, 1.0f);
 	pl[1].AmbientIntensity = 0.55f;
 	pl[1].DiffuseIntensity = 0.9f;

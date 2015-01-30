@@ -109,8 +109,8 @@
     <ClInclude Include="Physicis\Particles\ParticleSystem.h" />
     <ClInclude Include="Physicis\Entity\RigidBody.h" />
     <ClInclude Include="UI\MainWindow.h" />
-    <ClInclude Include="UI\HierarchyWidget.h" />
     <ClInclude Include="Scene\Scene.h" />
+    <ClInclude Include="UI\HierarchyWidget.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="UI\HierarchyWidget.ui" />

@@ -275,11 +275,11 @@ QString ParticleSystem::getTextureFileName()
 
 void ParticleSystem::resetEmitter()
 {
-	m_fParticleMass = 0.01f;
-	m_fGravityFactor = 1.0f;
+	m_fParticleMass = 0.015f;
+	m_fGravityFactor = 0.01f;
 	
-	m_minVelocity = vec3(-20, 20, -20);
-	m_maxVelocity = vec3(20, 30, 20);
+	m_minVelocity = vec3(-0.2f, 0.2f, -0.2f);
+	m_maxVelocity = vec3(0.2f, 0.3f, 0.2f);
 	vGenVelocityRange = m_maxVelocity - m_minVelocity;
 	
 	m_force = Math::Vector3D::ZERO;
@@ -290,7 +290,7 @@ void ParticleSystem::resetEmitter()
 
 	bRandomColor = false;
 	vGenColor = vec3(0, 0.5, 1);
-	m_fGenSize = 0.75f;
+	m_fGenSize = 0.02f;
 	
 	m_fMinLife = 8.0f;
 	m_fMaxLife = 10.0f;

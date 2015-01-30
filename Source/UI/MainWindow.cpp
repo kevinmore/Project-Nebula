@@ -291,14 +291,14 @@ void MainWindow::initializeParamsArea()
 	topValue         = new QDoubleSpinBox;
 
 	fovValue->setRange(25.0, 130.0);
-	fovValue->setValue(60.0);
+	fovValue->setValue(m_canvas->getScene()->getCamera()->fieldOfView());
 
 	nearPlaneValue->setMinimum(0.01);
 	nearPlaneValue->setSingleStep(0.01);
-	nearPlaneValue->setValue(0.1);
+	nearPlaneValue->setValue(m_canvas->getScene()->getCamera()->nearPlane());
 
-	farPlaneValue->setRange(1.0, 50000.0);
-	farPlaneValue->setValue(10000.0);
+	farPlaneValue->setRange(0.001, 50000.0);
+	farPlaneValue->setValue(m_canvas->getScene()->getCamera()->farPlane());
 
 	leftLabel->hide();
 	rightLabel->hide();
@@ -312,19 +312,19 @@ void MainWindow::initializeParamsArea()
 
 	leftValue->setRange(-200.0, 0.0);
 	leftValue->setSingleStep(0.5);
-	leftValue->setValue(-100);
+	leftValue->setValue(m_canvas->getScene()->getCamera()->left());
 
 	rightValue->setRange(0.0, 200.0);
 	rightValue->setSingleStep(0.5);
-	rightValue->setValue(100);
+	rightValue->setValue(m_canvas->getScene()->getCamera()->right());
 
 	bottomValue->setRange(-200.0, 0.0);
 	bottomValue->setSingleStep(0.5);
-	bottomValue->setValue(-100);
+	bottomValue->setValue(m_canvas->getScene()->getCamera()->bottom());
 
 	topValue->setRange(0.0, 200.0);
 	topValue->setSingleStep(0.5);
-	topValue->setValue(100);
+	topValue->setValue(m_canvas->getScene()->getCamera()->top());
 
 	QGridLayout* viewLayout = new QGridLayout;
 	viewLayout->addWidget(fovLabel, 0, 0);
@@ -366,17 +366,17 @@ void MainWindow::initializeParamsArea()
 	hLineCamera1->setFrameStyle(QFrame::HLine | QFrame::Sunken);
 	hLineCamera2->setFrameStyle(QFrame::HLine | QFrame::Sunken);
 
-	QLabel* cameraSpeedLabel       = new QLabel("Speed (cm/s) : ");
+	QLabel* cameraSpeedLabel       = new QLabel("Speed (m/s) : ");
 	QLabel* cameraSensitivityLabel = new QLabel("Sensitivity : ");
 
 	QDoubleSpinBox* cameraSpeedValue       = new QDoubleSpinBox;
 	QDoubleSpinBox* cameraSensitivityValue = new QDoubleSpinBox;
 
 	cameraSpeedValue->setRange(1.0, 50000.0);
-	cameraSpeedValue->setValue(10000.0);
+	cameraSpeedValue->setValue(m_scene->getCamera()->speed());
 	cameraSpeedValue->setMaximumSize(60, 20);
 
-	cameraSensitivityValue->setValue(0.2);
+	cameraSensitivityValue->setValue(m_scene->getCamera()->sensitivity());
 	cameraSensitivityValue->setSingleStep(0.05);
 	cameraSensitivityValue->setMaximumSize(60, 20);
 
@@ -467,7 +467,7 @@ void MainWindow::initializeParamsArea()
 	connect(PVBlinnPhong, SIGNAL(toggled(bool)), m_scene, SLOT(toggleBlinnPhong(bool)));
 	connect(RimLighting,  SIGNAL(toggled(bool)), m_scene, SLOT(toggleRimLighting(bool)));
 
-	// Update framerate
+	// Update frame rate
 	connect(m_canvas.data(), SIGNAL(updateFramerate()), this, SLOT(setFramerate()));
 
 }

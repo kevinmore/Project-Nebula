@@ -278,7 +278,6 @@ void Scene::resetToDefaultScene()
 
 	// load the floor
 	GameObjectPtr floorRef(new GameObject(this));
-	floorRef->setScale(100.0f, 1.0f, 100.0f);
 	LoaderThread loader(this, "../Resource/Models/Common/DemoRoom/WoodenFloor.obj", floorRef, m_sceneRootNode);
 
 }

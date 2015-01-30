@@ -29,16 +29,21 @@ public:
 		DontTranslateViewCenter
 	};
 
-	QVector3D position()   const;
-	QVector3D upVector()   const;
-	QVector3D viewCenter() const;
-	QVector3D viewVector() const;
+	vec3 position()   const;
+	vec3 upVector()   const;
+	vec3 viewCenter() const;
+	vec3 viewVector() const;
 
 	ProjectionType projectionType() const;
 	void setProjectionType(ProjectionType type);
 	
 	ViewType viewType() const;
 	void setViewType(ViewType type);
+
+	float speed() const;
+	float sensitivity() const;
+	void setSpeed(float val);
+	void setSensitivity(float val);
 
 	float left()   const;
 	float right()  const;
@@ -64,42 +69,42 @@ public:
 	void updatePerspectiveProjection();
 	void setPerspectiveProjection(float fieldOfView, float aspect, float nearPlane, float farPlane);
 
-	QMatrix4x4 viewMatrix() const;
-	QMatrix4x4 projectionMatrix() const;
-	QMatrix4x4 viewProjectionMatrix() const;
+	mat4 viewMatrix() const;
+	mat4 projectionMatrix() const;
+	mat4 viewProjectionMatrix() const;
 
-	QQuaternion tiltRotation(const float& angle) const;
-	QQuaternion rollRotation(const float& angle) const;
+	quart tiltRotation(const float& angle) const;
+	quart rollRotation(const float& angle) const;
 
-	QQuaternion panRotation(const float& angle) const;
-	QQuaternion panRotation(const float& angle, const QVector3D& axis) const;
+	quart panRotation(const float& angle) const;
+	quart panRotation(const float& angle, const vec3& axis) const;
 
 
-	void setPosition(const QVector3D& position);
-	void setUpVector(const QVector3D& upVector);
-	void setViewCenter(const QVector3D& viewCenter);
+	void setPosition(const vec3& position);
+	void setUpVector(const vec3& upVector);
+	void setViewCenter(const vec3& viewCenter);
 
 	// Translate relative to camera orientation axes
-	void translate(const QVector3D& vLocal, CameraTranslationOption option = TranslateViewCenter);
+	void translate(const vec3& vLocal, CameraTranslationOption option = TranslateViewCenter);
 
 	// Translate relative to world axes
-	void translateWorld(const QVector3D& vWorld, CameraTranslationOption option = TranslateViewCenter);
+	void translateWorld(const vec3& vWorld, CameraTranslationOption option = TranslateViewCenter);
 
 	// Translate smoothly with a given duration
-	void smoothTransform(const QVector3D& targetPos, float duration = 0.5);
+	void smoothTransform(const vec3& targetPos, float duration = 0.5);
 
 	void tilt(const float& angle);
 	void roll(const float& angle);
 
 	void pan(const float& angle);
-	void pan(const float& angle, const QVector3D& axis);
+	void pan(const float& angle, const vec3& axis);
 
 	void rollAboutViewCenter(const float& angle);
 	void tiltAboutViewCenter(const float& angle);
 	void panAboutViewCenter(const float& angle);
 
-	void rotate(const QQuaternion& q);
-	void rotateAboutViewCenter(const QQuaternion& q);
+	void rotate(const quart& q);
+	void rotateAboutViewCenter(const quart& q);
 
 	// make the camera follow a game object
 	void followTarget(GameObject* target);
@@ -127,10 +132,10 @@ public slots:
 	void switchToThirdPersonCamera(bool status);
 
 private:
-	QVector3D m_position;
-	QVector3D m_upVector;
-	QVector3D m_viewCenter;
-	QVector3D m_cameraToCenter;
+	vec3 m_position;
+	vec3 m_upVector;
+	vec3 m_viewCenter;
+	vec3 m_cameraToCenter;
 
 	ProjectionType m_projectionType;
 	ViewType m_viewType;
@@ -145,15 +150,18 @@ private:
 	float m_bottom;
 	float m_top;
 
-	mutable QMatrix4x4 m_viewMatrix;
-	mutable QMatrix4x4 m_projectionMatrix;
-	mutable QMatrix4x4 m_viewProjectionMatrix;
+	float m_speed;
+	float m_sensitivity;
+
+	mutable mat4 m_viewMatrix;
+	mutable mat4 m_projectionMatrix;
+	mutable mat4 m_viewProjectionMatrix;
 
 	mutable bool m_viewMatrixDirty;
 	mutable bool m_viewProjectionMatrixDirty;
 
 	// instantiate variables
-	QVector3D m_viewDirection;
+	vec3 m_viewDirection;
 	bool m_viewCenterFixed;
 	bool m_isFollowing;
 	GameObject* m_followingTarget;

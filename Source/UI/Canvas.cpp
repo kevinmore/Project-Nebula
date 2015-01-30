@@ -11,8 +11,8 @@ Canvas::Canvas(QScreen *screen)
 	  m_scene(new Scene(this)),
 	  m_rightButtonPressed(false),
 	  m_middleButtonPressed(false),
-	  m_cameraSpeed(5000.0f),
-	  m_cameraSensitivity(0.2f)
+	  m_cameraSpeed(getScene()->getCamera()->speed()),
+	  m_cameraSensitivity(getScene()->getCamera()->sensitivity())
 {
 	// It defines the type of the rendering area, in our case it is an OpenGL area
 	setSurfaceType(QSurface::OpenGLSurface);
@@ -119,11 +119,6 @@ void Canvas::keyPressEvent(QKeyEvent* e)
 
 	switch (e->key())
 	{
-// 	case Qt::Key_Escape:
-// 
-// 		QCoreApplication::instance()->quit();
-// 		break;
-
 	case Qt::Key_D:
 		camera->setSideSpeed(static_cast<float>(m_cameraSpeed));
 		break;
@@ -200,7 +195,7 @@ void Canvas::wheelEvent( QWheelEvent *e )
 
 	if (e->orientation() == Qt::Vertical) 
 	{
-		camera->translate(vec3(0, 0, 0.5 * delta), option);
+		camera->translate(vec3(0, 0, m_cameraSpeed * delta * 0.001), option);
 	}
 
 	e->accept();
@@ -277,11 +272,13 @@ void Canvas::mouseMoveEvent(QMouseEvent* e)
 void Canvas::setCameraSpeed(double speed)
 {
 	m_cameraSpeed = speed;
+	getScene()->getCamera()->setSpeed(speed);
 }
 
 void Canvas::setCameraSensitivity(double sensitivity)
 {
 	m_cameraSensitivity = sensitivity;
+	getScene()->getCamera()->setSensitivity(sensitivity);
 }
 
 void Canvas::showGPUInfo()

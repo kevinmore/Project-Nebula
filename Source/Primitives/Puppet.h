@@ -25,5 +25,6 @@ private:
 	Variable m_variable;
 	float m_amount;
 	float m_duration;
+	float m_updateRate;
 };
 
