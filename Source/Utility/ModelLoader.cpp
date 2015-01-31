@@ -45,6 +45,7 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName, GLuint sh
 	else if (loadingFlags == "Max Quality")
 		flags = aiProcessPreset_TargetRealtime_MaxQuality | aiProcess_FlipUVs;
 
+	qDebug() << "Processing model file...";
 	m_aiScene = m_importer.ReadFile(fileName.toStdString(), flags);
 	
 	if(!m_aiScene)

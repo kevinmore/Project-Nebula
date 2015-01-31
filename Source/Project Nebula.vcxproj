@@ -16,6 +16,7 @@
     <ClCompile Include="Animation\IK\FABRIKSolver.cpp" />
     <ClCompile Include="Animation\IK\CCDIKSolver.cpp" />
     <ClCompile Include="Animation\Rig\Pose.cpp" />
+    <ClCompile Include="Utility\AssimpThread.cpp" />
     <ClCompile Include="Physicis\Entity\BoxRigidBody.cpp" />
     <ClCompile Include="Physicis\Geometry\BoxShape.cpp" />
     <ClCompile Include="Physicis\World\PhysicsWorldConfig.cpp" />
@@ -55,6 +56,7 @@
     <ClCompile Include="Scene\ShadingTechniques\Technique.cpp" />
     <ClCompile Include="Scene\StaticModel.cpp" />
     <ClCompile Include="Scene\ShadingTechniques\ShadowMapFBO.cpp" />
+    <ClCompile Include="Utility\moc_AssimpThread.cc" />
     <ClCompile Include="Utility\moc_LoaderThread.cc" />
     <ClCompile Include="Utility\moc_LogCenter.cc" />
     <ClCompile Include="Utility\ModelLoader.cpp" />
@@ -76,9 +78,10 @@
     <ClInclude Include="Animation\IK\FABRIKSolver.h" />
     <ClInclude Include="Animation\IK\CCDIKSolver.h" />
     <ClInclude Include="Animation\Rig\Pose.h" />
-    <QtMOC Include="Primitives\Puppet.h" />
+    <ClInclude Include="Primitives\Puppet.h" />
+    <ClInclude Include="Utility\AssimpThread.h" />
     <ClInclude Include="UI\Canvas.h" />
-    <QtMOC Include="UI\HierarchyWidget.h" />
+    <ClInclude Include="UI\HierarchyWidget.h" />
     <ClInclude Include="UI\MainWindow.h" />
     <ClInclude Include="Utility\LogCenter.h" />
     <ClInclude Include="Physicis\Entity\BoxRigidBody.h" />
@@ -113,7 +116,7 @@
     <ClInclude Include="Scene\AbstractScene.h" />
     <ClInclude Include="Scene\Managers\MeshManager.h" />
     <ClInclude Include="Scene\Camera.h" />
-    <QtMOC Include="Primitives\GameObject.h" />
+    <ClInclude Include="Primitives\GameObject.h" />
     <ClInclude Include="Scene\Light.h" />
     <ClInclude Include="Primitives\Mesh.h" />
     <ClInclude Include="Primitives\Material.h" />
