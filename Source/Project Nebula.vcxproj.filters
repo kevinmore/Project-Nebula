@@ -115,11 +115,13 @@
     <ClInclude Include="UI\HierarchyWidget.h" />
     <ClInclude Include="Utility\ModelLoader.h" />
     <ClInclude Include="Utility\AssimpThread.h" />
-    <ClInclude Include="Primitives\GameObject.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="UI\HierarchyWidget.ui" />
     <None Include="UI\SkyboxWidget.ui" />
     <None Include="Physicis\World\PhysicsWorldObject.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMOC Include="Primitives\GameObject.h" />
   </ItemGroup>
 </Project>

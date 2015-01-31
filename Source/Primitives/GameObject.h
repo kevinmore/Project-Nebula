@@ -144,6 +144,10 @@ public slots:
 
 	void reset();
 
+	void toggleFill(bool state);
+	void toggleWireframe(bool state);
+	void togglePoints(bool state);
+
 private:
 	vec3 m_position, m_prevPosition;
 	vec3 m_rotation;

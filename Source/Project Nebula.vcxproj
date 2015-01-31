@@ -116,7 +116,7 @@
     <ClInclude Include="Scene\AbstractScene.h" />
     <ClInclude Include="Scene\Managers\MeshManager.h" />
     <ClInclude Include="Scene\Camera.h" />
-    <ClInclude Include="Primitives\GameObject.h" />
+    <QtMOC Include="Primitives\GameObject.h" />
     <ClInclude Include="Scene\Light.h" />
     <ClInclude Include="Primitives\Mesh.h" />
     <ClInclude Include="Primitives\Material.h" />

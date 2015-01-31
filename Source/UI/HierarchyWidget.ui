@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>370</width>
-    <height>834</height>
+    <width>369</width>
+    <height>769</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -64,7 +64,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <property name="elideMode">
       <enum>Qt::ElideNone</enum>
@@ -636,7 +636,6 @@
                </layout>
               </item>
              </layout>
-             <zorder>doubleSpinBox_PuppetSpeedX</zorder>
              <zorder></zorder>
             </widget>
            </item>
@@ -688,11 +687,44 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>309</width>
-            <height>1031</height>
+            <width>308</width>
+            <height>1095</height>
            </rect>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout_16">
+          <layout class="QVBoxLayout" name="verticalLayout_4">
+           <item>
+            <widget class="QGroupBox" name="groupBox_7">
+             <property name="title">
+              <string>Rendering Mode</string>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_40">
+              <item>
+               <widget class="QRadioButton" name="radioButton_Fill">
+                <property name="text">
+                 <string>Fill</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QRadioButton" name="radioButton_Line">
+                <property name="text">
+                 <string>Line</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QRadioButton" name="radioButton_Point">
+                <property name="text">
+                 <string>Point</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_16">
              <item>

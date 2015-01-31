@@ -71,8 +71,7 @@ RiggedModel::~RiggedModel()
 
 void RiggedModel::initialize(QVector<ModelDataPtr> modelDataVector)
 {
-	Q_ASSERT(initializeOpenGLFunctions());
-
+	AbstractModel::init();
 
 	m_meshManager     = m_scene->meshManager();
 	m_textureManager  = m_scene->textureManager();
@@ -294,25 +293,9 @@ void RiggedModel::render( const float currentTime )
 		// enable the material
 		m_RenderingEffect->setMaterial(m_materials[i]);
 
-		drawElements(i, BaseVertex);
+		drawElements(i);
 	}
 
-}
-
-void RiggedModel::drawElements(unsigned int index, int mode)
-{
-	// Mode has not been implemented yet
-	Q_UNUSED(mode);
-	glBindVertexArray(m_vao);
-	glDrawElementsBaseVertex(
-		GL_TRIANGLES,
-		m_meshes[index]->getNumIndices(),
-		GL_UNSIGNED_INT,
-		reinterpret_cast<void*>((sizeof(unsigned int)) * m_meshes[index]->getBaseIndex()),
-		m_meshes[index]->getBaseVertex()
-		);
-	// Make sure the VAO is not changed from the outside    
-	glBindVertexArray(0);
 }
 
 void RiggedModel::setReachableTargetPos( vec3& pos )

@@ -428,3 +428,39 @@ void GameObject::removePuppet( Puppet* p )
 			m_puppets.removeOne(pP);
 	}
 }
+
+void GameObject::toggleFill( bool state )
+{
+	foreach(ComponentPtr comp, m_components)
+	{
+		ModelPtr model = comp.dynamicCast<AbstractModel>();
+		if (model)
+		{
+			model->setPolygonMode(AbstractModel::Fill);
+		}
+	}
+}
+
+void GameObject::toggleWireframe( bool state )
+{
+	foreach(ComponentPtr comp, m_components)
+	{
+		ModelPtr model = comp.dynamicCast<AbstractModel>();
+		if (model)
+		{
+			model->setPolygonMode(AbstractModel::Line);
+		}
+	}
+}
+
+void GameObject::togglePoints( bool state )
+{
+	foreach(ComponentPtr comp, m_components)
+	{
+		ModelPtr model = comp.dynamicCast<AbstractModel>();
+		if (model)
+		{
+			model->setPolygonMode(AbstractModel::Point);
+		}
+	}
+}

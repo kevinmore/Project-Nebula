@@ -239,6 +239,11 @@ void HierarchyWidget::connectCurrentObject()
 	// puppet tab related
 	connect(ui->pushButton_PuppetGo, SIGNAL(clicked()), this, SLOT(assignPuppet()));
 	connect(ui->pushButton_PuppetStop, SIGNAL(clicked()), m_currentObject, SLOT(clearPuppets()));
+
+	// rendering tab related
+	connect(ui->radioButton_Fill,  SIGNAL(toggled(bool)), m_currentObject, SLOT(toggleFill(bool)));
+	connect(ui->radioButton_Line,  SIGNAL(toggled(bool)), m_currentObject, SLOT(toggleWireframe(bool)));
+	connect(ui->radioButton_Point, SIGNAL(toggled(bool)), m_currentObject, SLOT(togglePoints(bool)));
 }
 
 void HierarchyWidget::disconnectPreviousObject()
@@ -258,6 +263,10 @@ void HierarchyWidget::disconnectPreviousObject()
 	disconnect(ui->pushButton_PuppetGo, SIGNAL(clicked()), 0, 0);
 	disconnect(ui->pushButton_PuppetStop, SIGNAL(clicked()), 0, 0);
 
+	// rendering tab related
+	disconnect(ui->radioButton_Fill,  SIGNAL(toggled(bool)), 0, 0);
+	disconnect(ui->radioButton_Line,  SIGNAL(toggled(bool)), 0, 0);
+	disconnect(ui->radioButton_Point, SIGNAL(toggled(bool)), 0, 0);
 
 	// particle system tab related
 	disconnect(ui->doubleSpinBox_Mass,			SIGNAL(valueChanged(double)), 0, 0);

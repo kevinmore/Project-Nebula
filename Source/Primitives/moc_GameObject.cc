@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_GameObject_t {
-    QByteArrayData data[44];
-    char stringdata[454];
+    QByteArrayData data[48];
+    char stringdata[500];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -71,8 +71,12 @@ QT_MOC_LITERAL(38, 391, 10),
 QT_MOC_LITERAL(39, 402, 14),
 QT_MOC_LITERAL(40, 417, 12),
 QT_MOC_LITERAL(41, 430, 5),
-QT_MOC_LITERAL(42, 436, 6),
-QT_MOC_LITERAL(43, 443, 10)
+QT_MOC_LITERAL(42, 436, 10),
+QT_MOC_LITERAL(43, 447, 5),
+QT_MOC_LITERAL(44, 453, 15),
+QT_MOC_LITERAL(45, 469, 12),
+QT_MOC_LITERAL(46, 482, 6),
+QT_MOC_LITERAL(47, 489, 10)
     },
     "GameObject\0synchronized\0\0componentAttached\0"
     "ComponentPtr\0comp\0fixedTranslateX\0x\0"
@@ -85,7 +89,9 @@ QT_MOC_LITERAL(43, 443, 10)
     "scaleZ\0scale\0translateInWorld\0paramString\0"
     "rotateInWorld\0rotateInWorldAxisAndAngle\0"
     "setLocalSpeed\0resetSpeed\0calculateSpeed\0"
-    "clearPuppets\0reset\0moving\0localSpeed"
+    "clearPuppets\0reset\0toggleFill\0state\0"
+    "toggleWireframe\0togglePoints\0moving\0"
+    "localSpeed"
 };
 #undef QT_MOC_LITERAL
 
@@ -95,48 +101,51 @@ static const uint qt_meta_data_GameObject[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      32,   14, // methods
-       2,  260, // properties
+      35,   14, // methods
+       2,  284, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,  174,    2, 0x06 /* Public */,
-       3,    1,  175,    2, 0x06 /* Public */,
+       1,    0,  189,    2, 0x06 /* Public */,
+       3,    1,  190,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       6,    1,  178,    2, 0x0a /* Public */,
-       8,    1,  181,    2, 0x0a /* Public */,
-      10,    1,  184,    2, 0x0a /* Public */,
-      12,    1,  187,    2, 0x0a /* Public */,
-      13,    1,  190,    2, 0x0a /* Public */,
-      14,    1,  193,    2, 0x0a /* Public */,
-      15,    1,  196,    2, 0x0a /* Public */,
-      16,    1,  199,    2, 0x0a /* Public */,
-      17,    1,  202,    2, 0x0a /* Public */,
-      18,    1,  205,    2, 0x0a /* Public */,
-      19,    1,  208,    2, 0x0a /* Public */,
-      20,    1,  211,    2, 0x0a /* Public */,
-      21,    1,  214,    2, 0x0a /* Public */,
-      24,    1,  217,    2, 0x0a /* Public */,
-      25,    1,  220,    2, 0x0a /* Public */,
-      26,    1,  223,    2, 0x0a /* Public */,
-      27,    1,  226,    2, 0x0a /* Public */,
-      27,    1,  229,    2, 0x0a /* Public */,
-      29,    1,  232,    2, 0x0a /* Public */,
-      30,    1,  235,    2, 0x0a /* Public */,
-      31,    1,  238,    2, 0x0a /* Public */,
-      32,    1,  241,    2, 0x0a /* Public */,
-      33,    1,  244,    2, 0x0a /* Public */,
-      35,    1,  247,    2, 0x0a /* Public */,
-      36,    1,  250,    2, 0x0a /* Public */,
-      37,    1,  253,    2, 0x0a /* Public */,
-      38,    0,  256,    2, 0x0a /* Public */,
-      39,    0,  257,    2, 0x0a /* Public */,
-      40,    0,  258,    2, 0x0a /* Public */,
-      41,    0,  259,    2, 0x0a /* Public */,
+       6,    1,  193,    2, 0x0a /* Public */,
+       8,    1,  196,    2, 0x0a /* Public */,
+      10,    1,  199,    2, 0x0a /* Public */,
+      12,    1,  202,    2, 0x0a /* Public */,
+      13,    1,  205,    2, 0x0a /* Public */,
+      14,    1,  208,    2, 0x0a /* Public */,
+      15,    1,  211,    2, 0x0a /* Public */,
+      16,    1,  214,    2, 0x0a /* Public */,
+      17,    1,  217,    2, 0x0a /* Public */,
+      18,    1,  220,    2, 0x0a /* Public */,
+      19,    1,  223,    2, 0x0a /* Public */,
+      20,    1,  226,    2, 0x0a /* Public */,
+      21,    1,  229,    2, 0x0a /* Public */,
+      24,    1,  232,    2, 0x0a /* Public */,
+      25,    1,  235,    2, 0x0a /* Public */,
+      26,    1,  238,    2, 0x0a /* Public */,
+      27,    1,  241,    2, 0x0a /* Public */,
+      27,    1,  244,    2, 0x0a /* Public */,
+      29,    1,  247,    2, 0x0a /* Public */,
+      30,    1,  250,    2, 0x0a /* Public */,
+      31,    1,  253,    2, 0x0a /* Public */,
+      32,    1,  256,    2, 0x0a /* Public */,
+      33,    1,  259,    2, 0x0a /* Public */,
+      35,    1,  262,    2, 0x0a /* Public */,
+      36,    1,  265,    2, 0x0a /* Public */,
+      37,    1,  268,    2, 0x0a /* Public */,
+      38,    0,  271,    2, 0x0a /* Public */,
+      39,    0,  272,    2, 0x0a /* Public */,
+      40,    0,  273,    2, 0x0a /* Public */,
+      41,    0,  274,    2, 0x0a /* Public */,
+      42,    1,  275,    2, 0x0a /* Public */,
+      44,    1,  278,    2, 0x0a /* Public */,
+      45,    1,  281,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -173,10 +182,13 @@ static const uint qt_meta_data_GameObject[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void, QMetaType::Bool,   43,
+    QMetaType::Void, QMetaType::Bool,   43,
+    QMetaType::Void, QMetaType::Bool,   43,
 
  // properties: name, type, flags
-      42, QMetaType::Bool, 0x00095103,
-      43, 0x80000000 | 22, 0x0009500b,
+      46, QMetaType::Bool, 0x00095103,
+      47, 0x80000000 | 22, 0x0009500b,
 
        0        // eod
 };
@@ -218,6 +230,9 @@ void GameObject::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 29: _t->calculateSpeed(); break;
         case 30: _t->clearPuppets(); break;
         case 31: _t->reset(); break;
+        case 32: _t->toggleFill((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 33: _t->toggleWireframe((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 34: _t->togglePoints((*reinterpret_cast< bool(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -263,13 +278,13 @@ int GameObject::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 32)
+        if (_id < 35)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 32;
+        _id -= 35;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 32)
+        if (_id < 35)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 32;
+        _id -= 35;
     }
 #ifndef QT_NO_PROPERTIES
       else if (_c == QMetaObject::ReadProperty) {

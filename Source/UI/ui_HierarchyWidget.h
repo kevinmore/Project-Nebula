@@ -24,6 +24,7 @@
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QRadioButton>
 #include <QtWidgets/QScrollArea>
 #include <QtWidgets/QSlider>
 #include <QtWidgets/QSpacerItem>
@@ -113,7 +114,12 @@ public:
     QVBoxLayout *verticalLayout_6;
     QScrollArea *scrollArea;
     QWidget *scrollAreaWidgetContents;
-    QVBoxLayout *verticalLayout_16;
+    QVBoxLayout *verticalLayout_4;
+    QGroupBox *groupBox_7;
+    QHBoxLayout *horizontalLayout_40;
+    QRadioButton *radioButton_Fill;
+    QRadioButton *radioButton_Line;
+    QRadioButton *radioButton_Point;
     QHBoxLayout *horizontalLayout_16;
     QLabel *label_42;
     QComboBox *comboBox_SahderFiles;
@@ -220,7 +226,7 @@ public:
         if (HierarchyViewer->objectName().isEmpty())
             HierarchyViewer->setObjectName(QStringLiteral("HierarchyViewer"));
         HierarchyViewer->setEnabled(true);
-        HierarchyViewer->resize(370, 834);
+        HierarchyViewer->resize(369, 769);
         QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Preferred);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -615,7 +621,6 @@ public:
 
         horizontalLayout_34->addLayout(horizontalLayout_31);
 
-        doubleSpinBox_PuppetSpeedX->raise();
 
         verticalLayout_3->addWidget(groupBox_6);
 
@@ -647,9 +652,32 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 309, 1031));
-        verticalLayout_16 = new QVBoxLayout(scrollAreaWidgetContents);
-        verticalLayout_16->setObjectName(QStringLiteral("verticalLayout_16"));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 308, 1095));
+        verticalLayout_4 = new QVBoxLayout(scrollAreaWidgetContents);
+        verticalLayout_4->setObjectName(QStringLiteral("verticalLayout_4"));
+        groupBox_7 = new QGroupBox(scrollAreaWidgetContents);
+        groupBox_7->setObjectName(QStringLiteral("groupBox_7"));
+        horizontalLayout_40 = new QHBoxLayout(groupBox_7);
+        horizontalLayout_40->setObjectName(QStringLiteral("horizontalLayout_40"));
+        radioButton_Fill = new QRadioButton(groupBox_7);
+        radioButton_Fill->setObjectName(QStringLiteral("radioButton_Fill"));
+        radioButton_Fill->setChecked(true);
+
+        horizontalLayout_40->addWidget(radioButton_Fill);
+
+        radioButton_Line = new QRadioButton(groupBox_7);
+        radioButton_Line->setObjectName(QStringLiteral("radioButton_Line"));
+
+        horizontalLayout_40->addWidget(radioButton_Line);
+
+        radioButton_Point = new QRadioButton(groupBox_7);
+        radioButton_Point->setObjectName(QStringLiteral("radioButton_Point"));
+
+        horizontalLayout_40->addWidget(radioButton_Point);
+
+
+        verticalLayout_4->addWidget(groupBox_7);
+
         horizontalLayout_16 = new QHBoxLayout();
         horizontalLayout_16->setObjectName(QStringLiteral("horizontalLayout_16"));
         label_42 = new QLabel(scrollAreaWidgetContents);
@@ -676,7 +704,7 @@ public:
         horizontalLayout_16->addWidget(comboBox_SahderFiles);
 
 
-        verticalLayout_16->addLayout(horizontalLayout_16);
+        verticalLayout_4->addLayout(horizontalLayout_16);
 
         groupBox = new QGroupBox(scrollAreaWidgetContents);
         groupBox->setObjectName(QStringLiteral("groupBox"));
@@ -826,7 +854,7 @@ public:
         verticalLayout_12->addLayout(gridLayout_3);
 
 
-        verticalLayout_16->addWidget(groupBox);
+        verticalLayout_4->addWidget(groupBox);
 
         groupBox_2 = new QGroupBox(scrollAreaWidgetContents);
         groupBox_2->setObjectName(QStringLiteral("groupBox_2"));
@@ -906,7 +934,7 @@ public:
         verticalLayout_15->addLayout(gridLayout_4);
 
 
-        verticalLayout_16->addWidget(groupBox_2);
+        verticalLayout_4->addWidget(groupBox_2);
 
         scrollArea->setWidget(scrollAreaWidgetContents);
 
@@ -1365,7 +1393,7 @@ public:
         QObject::connect(spinBox_EmitAmount, SIGNAL(valueChanged(int)), horizontalSlider_EmitAmount, SLOT(setValue(int)));
         QObject::connect(checkBox_EnableCollision, SIGNAL(toggled(bool)), doubleSpinBox_Restitution, SLOT(setEnabled(bool)));
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(2);
 
 
         QMetaObject::connectSlotsByName(HierarchyViewer);
@@ -1408,6 +1436,10 @@ public:
         pushButton_PuppetGo->setText(QApplication::translate("HierarchyViewer", "Go", 0));
         pushButton_PuppetStop->setText(QApplication::translate("HierarchyViewer", "Stop", 0));
         tabWidget->setTabText(tabWidget->indexOf(PupetTab), QApplication::translate("HierarchyViewer", "Puppet", 0));
+        groupBox_7->setTitle(QApplication::translate("HierarchyViewer", "Rendering Mode", 0));
+        radioButton_Fill->setText(QApplication::translate("HierarchyViewer", "Fill", 0));
+        radioButton_Line->setText(QApplication::translate("HierarchyViewer", "Line", 0));
+        radioButton_Point->setText(QApplication::translate("HierarchyViewer", "Point", 0));
         label_42->setText(QApplication::translate("HierarchyViewer", "Shader", 0));
         groupBox->setTitle(QApplication::translate("HierarchyViewer", "Material", 0));
         label_43->setText(QApplication::translate("HierarchyViewer", "Ambient Color", 0));

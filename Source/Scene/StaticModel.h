@@ -1,5 +1,4 @@
 #pragma once
-#include <QOpenGLFunctions_4_3_Core>
 #include <Scene/AbstractModel.h>
 #include <Scene/Managers/MeshManager.h>
 #include <Scene/Managers/MaterialManager.h>
@@ -8,7 +7,7 @@
 
 class Scene;
 
-class StaticModel : public AbstractModel, protected QOpenGLFunctions_4_3_Core
+class StaticModel : public AbstractModel
 {
 public:
 	StaticModel(const QString& name, Scene* scene, ShadingTechniquePtr tech);
@@ -33,15 +32,8 @@ protected:
 	MaterialManager* m_materialManager;
 
 private:
-	enum DrawingMode
-	{
-		Indexed,
-		Instanced,
-		BaseVertex
-	};
 
 	void initialize(QVector<ModelDataPtr> modelDataVector = QVector<ModelDataPtr>());
-	void drawElements(unsigned int index, int mode);
 
 	Scene* m_scene;
 	QVector<ModelDataPtr> m_modelDataVector;

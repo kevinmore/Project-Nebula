@@ -1,5 +1,4 @@
 #pragma once
-#include <QtGui/QOpenGLFunctions_4_3_Core>
 #include <Scene/AbstractModel.h>
 #include <Scene/Managers/MeshManager.h>
 #include <Scene/Managers/MaterialManager.h>
@@ -11,7 +10,7 @@
 
 class Scene;
 
-class RiggedModel : public AbstractModel, protected QOpenGLFunctions_4_3_Core
+class RiggedModel : public AbstractModel
 {
 public:
 	RiggedModel(const QString& name, Scene* scene, ModelLoaderPtr loader);
@@ -53,15 +52,8 @@ protected:
 	MaterialManager* m_materialManager;
 
 private:
-	enum DrawingMode
-	{
-		Indexed,
-		Instanced,
-		BaseVertex
-	};
 
 	void initialize(QVector<ModelDataPtr> modelDataVector = QVector<ModelDataPtr>());
-	void drawElements(unsigned int index, int mode);
 
 
 	Scene* m_scene;
