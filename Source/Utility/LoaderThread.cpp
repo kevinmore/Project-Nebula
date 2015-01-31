@@ -11,6 +11,7 @@ LoaderThread::LoaderThread(Scene* scene, const QString fileName, GameObjectPtr r
 	  m_shouldGenerateGameObject(generateGameObject)
 {
 	connect(this, SIGNAL(jobDone()), m_scene, SLOT(modelLoaded()));
+	run();
 }
 
 LoaderThread::~LoaderThread()

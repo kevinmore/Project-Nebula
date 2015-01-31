@@ -278,10 +278,7 @@ void Scene::resetToDefaultScene()
 
 	// load the floor
 	GameObjectPtr floorRef(new GameObject(this));
-	LoaderThread* loader = new LoaderThread(this, "../Resource/Models/Common/DemoRoom/WoodenFloor.obj", floorRef, m_sceneRootNode);
-	loader->start();
-
-
+	LoaderThread loader(this, "../Resource/Models/Common/DemoRoom/WoodenFloor.obj", floorRef, m_sceneRootNode);
 }
 
 void Scene::showLoadModelDialog()
@@ -290,8 +287,7 @@ void Scene::showLoadModelDialog()
 		"../Resource/Models",
 		tr("3D Model File (*.dae *.obj *.3ds)"));
 
-	LoaderThread* loader = new LoaderThread(this, fileName, GameObjectPtr(), m_sceneRootNode);
-	loader->start();
+	LoaderThread loader(this, fileName, GameObjectPtr(), m_sceneRootNode);
 }
 
 void Scene::showOpenSceneDialog()
