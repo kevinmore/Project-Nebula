@@ -1,6 +1,8 @@
 #pragma once
 #include <QThread>
 #include <Primitives/GameObject.h>
+#include <Scene/Managers/ObjectManager.h>
+
 class Scene;
 class LoaderThread : public QThread
 {
@@ -13,7 +15,12 @@ public:
 	void run();
 
 private:
+
+	ModelPtr loadModel(const QString& customName, const QString& fileName, 
+		GameObject* parent = 0, bool generateGameObject = true);
+
 	Scene* m_scene;
+	ObjectManager* m_objectManager;
 	QString m_fileName;
 	GameObjectPtr m_reference;
 	GameObject* m_objectParent;

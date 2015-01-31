@@ -24,9 +24,6 @@ public:
 
 	void setLoadingFlag(const QString& flag);
 
-	ModelPtr loadModel(const QString& customName, const QString& fileName, 
-						GameObject* parent = 0, bool generateGameObject = true);
-
 	void renderAll(const float currentTime);
 
 	void deleteObject(const QString& name);
@@ -35,6 +32,8 @@ public:
 
 	QMap<QString, GameObjectPtr> m_gameObjectMap;
 	QVector<ModelLoaderPtr> m_modelLoaders;
+	QVector<ComponentPtr> m_renderQueue;
+	QString m_loadingFlag;
 
 public slots:
 	void registerComponent(ComponentPtr comp);
@@ -42,8 +41,6 @@ public slots:
 
 private:
 	Scene* m_scene;
-	QVector<ComponentPtr> m_renderQueue;
-	QString m_loadingFlag;
 };
 
 typedef QSharedPointer<ObjectManager> ObjectManagerPtr;

@@ -4,13 +4,13 @@
 LoaderThread::LoaderThread(Scene* scene, const QString fileName, GameObjectPtr reference, GameObject* objectParent, bool generateGameObject)
 	: QThread(scene),
 	  m_scene(scene),
+	  m_objectManager(m_scene->objectManager()),
 	  m_fileName(fileName),
 	  m_reference(reference),
 	  m_objectParent(objectParent),
 	  m_shouldGenerateGameObject(generateGameObject)
 {
 	connect(this, SIGNAL(jobDone()), m_scene, SLOT(modelLoaded()));
-	run();
 }
 
 LoaderThread::~LoaderThread()
@@ -33,7 +33,7 @@ void LoaderThread::run()
 		QDir dir;
 		QString relativePath = dir.relativeFilePath(m_fileName);
 
-		ModelPtr model = m_scene->objectManager()->loadModel(customName, relativePath, m_objectParent, m_shouldGenerateGameObject);
+		ModelPtr model = loadModel(customName, relativePath, m_objectParent, m_shouldGenerateGameObject);
 		if(!model)
 		{
 			quit();
@@ -57,4 +57,81 @@ void LoaderThread::run()
 	// emit the signal and destroy the thread
 	emit jobDone();
 	quit();
+}
+
+ModelPtr LoaderThread::loadModel( const QString& customName, const QString& fileName, GameObject* parent /*= 0*/, bool generateGameObject /*= true*/ )
+{
+	ModelPtr pModel;
+
+	// check if the custom name is unique
+	QString name = customName;
+	int duplication = 0;
+	foreach(QString key, m_objectManager->m_gameObjectMap.keys())
+	{
+		if(key.contains(customName)) 
+			++duplication;
+	}
+	if (duplication) 
+		name += "_" + QString::number(duplication);
+
+	// if the model already exists, make a copy
+	foreach(ComponentPtr comp, m_objectManager->m_renderQueue)
+	{
+		ModelPtr model = comp.dynamicCast<AbstractModel>();
+		if (model && fileName == model->fileName())
+		{
+			pModel = model;
+			break;
+		}
+	}
+	if (pModel)
+	{
+		// check model type
+		if (pModel.dynamicCast<StaticModel>())
+		{
+			StaticModel* original = dynamic_cast<StaticModel*>(pModel.data());
+			StaticModel* copyModel = new StaticModel(original);
+			pModel.reset(copyModel);
+		}
+		else if (pModel.dynamicCast<RiggedModel>())
+		{
+			RiggedModel* original = dynamic_cast<RiggedModel*>(pModel.data());
+			RiggedModel* copyModel = new RiggedModel(original);
+			pModel.reset(copyModel);
+		}
+		qDebug() << "Made a copy from" << fileName;
+	}
+	// if the model doesn't exist, load it from file
+	else
+	{
+		ModelLoaderPtr modelLoader(new ModelLoader(m_scene));
+		QVector<ModelDataPtr> modelDataArray = modelLoader->loadModel(fileName, 0, m_objectManager->m_loadingFlag);
+		if(modelDataArray.size() == 0) return pModel;
+
+		// create different types of models
+		if (modelLoader->getModelType() == ModelLoader::STATIC_MODEL)
+		{
+			StaticModel* sm = new StaticModel(fileName, m_scene, modelLoader->getRenderingEffect(), modelDataArray);
+			pModel.reset(sm);
+		}
+		else if (modelLoader->getModelType() == ModelLoader::RIGGED_MODEL)
+		{
+			RiggedModel* rm = new RiggedModel(fileName, m_scene, modelLoader, modelDataArray);
+			pModel.reset(rm);
+		}
+		m_objectManager->m_modelLoaders.push_back(modelLoader);
+	}
+
+	if (generateGameObject)
+	{
+		// attach this model to a new game object
+		GameObjectPtr go(new GameObject(m_scene, parent));
+		go->setObjectName(name);
+		go->attachComponent(pModel);
+
+		// add the data into the maps
+		m_objectManager->registerGameObject(name, go);
+	}
+
+	return pModel;
 }
