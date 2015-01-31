@@ -77,20 +77,18 @@ static inline void _transformInertiaTensor(mat3 &iitWorld,
 RigidBody::RigidBody(const vec3& position, const quart& rotation, QObject* parent)
 	: PhysicsWorldObject(parent)
 {
-	m_shape = NULL;
-
 	m_position = position;
 	m_rotation = rotation;
 	m_transformMatrix.translate(position);
 	m_transformMatrix.rotate(m_rotation);
 
-	m_linearVelocity = Math::Vector3D::ZERO;
-	m_angularVelocity = Math::Vector3D::ZERO;
+	m_linearVelocity = Math::Vector3::ZERO;
+	m_angularVelocity = Math::Vector3::ZERO;
 
-	m_centerOfMass = Math::Vector3D::ZERO;
+	m_centerOfMass = Math::Vector3::ZERO;
 	m_mass = 1.0f;
 	m_massInv = 1.0f;
-	m_forceAccum = Math::Vector3D::ZERO;
+	m_forceAccum = Math::Vector3::ZERO;
 
 	m_linearDamping = 0.0f;
 	m_angularDamping = 0.05f;
@@ -101,9 +99,9 @@ RigidBody::RigidBody(const vec3& position, const quart& rotation, QObject* paren
 	m_maxAngularVelocity = 200.0f;
 	m_timeFactor = 1.0f;
 
-	m_deltaAngle = Math::Vector3D::ZERO;
+	m_eularAngles = Math::Vector3::ZERO;
 	m_objectRadius = 1.0f;
-	
+	m_rotationMatrix.setToIdentity();
 	m_inertiaTensor.setToIdentity();
 	m_inertiaTensorInv.setToIdentity();
 	Math::Matrix3::setInverse(m_inertiaTensorInv);

@@ -115,11 +115,11 @@ void ParticleSystem::updateParticles( float fTimePassed )
 		if(m_collider)
 		{
 			vec3 rot = m_collider->rotation();
-			QQuaternion rotation = QQuaternion::fromAxisAndAngle(Math::Vector3D::UNIT_X, rot.x())
-				* QQuaternion::fromAxisAndAngle(Math::Vector3D::UNIT_Y, rot.y())
-				* QQuaternion::fromAxisAndAngle(Math::Vector3D::UNIT_Z, rot.z());
+			QQuaternion rotation = QQuaternion::fromAxisAndAngle(Math::Vector3::UNIT_X, rot.x())
+				* QQuaternion::fromAxisAndAngle(Math::Vector3::UNIT_Y, rot.y())
+				* QQuaternion::fromAxisAndAngle(Math::Vector3::UNIT_Z, rot.z());
 
-			vPlaneNormal = rotation.rotatedVector(Math::Vector3D::UNIT_Y);
+			vPlaneNormal = rotation.rotatedVector(Math::Vector3::UNIT_Y);
 			vPlanePoint = m_collider->position();
 		}
 		particleUpdater->getShaderProgram()->setUniformValue("vPlaneNormal", vPlaneNormal);
@@ -282,10 +282,10 @@ void ParticleSystem::resetEmitter()
 	m_maxVelocity = vec3(0.2f, 0.3f, 0.2f);
 	vGenVelocityRange = m_maxVelocity - m_minVelocity;
 	
-	m_force = Math::Vector3D::ZERO;
+	m_force = Math::Vector3::ZERO;
 	bCollisionEnabled = false;
-	vPlanePoint = Math::Vector3D::ZERO;
-	vPlaneNormal = Math::Vector3D::UNIT_Y;
+	vPlanePoint = Math::Vector3::ZERO;
+	vPlaneNormal = Math::Vector3::UNIT_Y;
 	fRestitution = 1.0f;
 
 	bRandomColor = false;

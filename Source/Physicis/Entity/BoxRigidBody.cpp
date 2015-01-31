@@ -34,8 +34,8 @@ void BoxRigidBody::setMassInv( float mInv )
 	m_massInv = mInv;
 
 	BoxShape* box = (BoxShape*)m_shape;
+
 	Math::Matrix3::setBlockInertiaTensor(m_inertiaTensor, box->getHalfExtents(), m_mass);
-	qDebug() << box->getHalfExtents();
 	m_inertiaTensorInv = m_inertiaTensor;
 	Math::Matrix3::setInverse(m_inertiaTensorInv);
 }
@@ -82,10 +82,9 @@ void BoxRigidBody::applyPointImpulse( const vec3& imp, const vec3& p )
 	// PSEUDOCODE IS m_linearVelocity += m_massInv * imp;
 	// PSEUDOCODE IS m_angularVelocity += getWorldInertiaInv() * (p - centerOfMassWorld).cross(imp);
 	m_linearVelocity += m_massInv * imp;
-	vec3 cross = vec3::crossProduct(p - m_centerOfMass, imp);
-	vec3 dv(m_inertiaTensorInv.m[0][0] * cross.x(),
-		    m_inertiaTensorInv.m[1][1] * cross.y(),
-		    m_inertiaTensorInv.m[2][2] * cross.z());
+	vec3 angularMoment = vec3::crossProduct(p - m_centerOfMass, imp);
+
+	vec3 dv = Math::Vector3::setMul(angularMoment, m_inertiaTensorInvWorld);
 
 	m_angularVelocity += dv;
 }
@@ -93,9 +92,7 @@ void BoxRigidBody::applyPointImpulse( const vec3& imp, const vec3& p )
 void BoxRigidBody::applyAngularImpulse( const vec3& imp )
 {
 	// PSEUDOCODE IS m_angularVelocity += m_worldInertiaInv * imp;
-	vec3 dv(m_inertiaTensorInv.m[0][0] * imp.x(),
-			m_inertiaTensorInv.m[1][1] * imp.y(),
-			m_inertiaTensorInv.m[2][2] * imp.z());
+	vec3 dv = Math::Vector3::setMul(imp, m_inertiaTensorInvWorld);
 
 	m_angularVelocity += dv;
 }
@@ -120,12 +117,33 @@ void BoxRigidBody::update( const float dt )
 	m_transformMatrix.setToIdentity();
 
 	// update the angular properties
-	m_deltaAngle += m_angularVelocity * dt;
+	m_eularAngles += m_angularVelocity * dt;
+
 	quart oldRotation = m_rotation;
-	m_rotation = quart::fromAxisAndAngle(Math::Vector3D::UNIT_X, m_deltaAngle.x())
-			   * quart::fromAxisAndAngle(Math::Vector3D::UNIT_Y, m_deltaAngle.y())
-		       * quart::fromAxisAndAngle(Math::Vector3D::UNIT_Z, m_deltaAngle.z());
+	m_rotation = quart::fromAxisAndAngle(Math::Vector3::UNIT_X, m_eularAngles.x())
+			   * quart::fromAxisAndAngle(Math::Vector3::UNIT_Y, m_eularAngles.y())
+		       * quart::fromAxisAndAngle(Math::Vector3::UNIT_Z, m_eularAngles.z());
+
 	m_transformMatrix.rotate(m_rotation);
+	
+	mat3 rotX, rotY, rotZ;
+	rotX.m[1][1] =  qCos(m_eularAngles.x());
+	rotX.m[1][2] = -qSin(m_eularAngles.x());
+	rotX.m[2][1] =  qSin(m_eularAngles.x());
+	rotX.m[2][2] =  qCos(m_eularAngles.x());
+
+	rotY.m[0][0] =  qCos(m_eularAngles.y());
+	rotY.m[0][2] =  qSin(m_eularAngles.y());
+	rotY.m[2][0] = -qSin(m_eularAngles.y());
+	rotY.m[2][2] =  qCos(m_eularAngles.y());
+
+	rotZ.m[0][0] =  qCos(m_eularAngles.z());
+	rotZ.m[0][1] = -qSin(m_eularAngles.z());
+	rotZ.m[1][0] =  qSin(m_eularAngles.z());
+	rotZ.m[1][1] =  qCos(m_eularAngles.z());
+
+	m_rotationMatrix = rotX * rotY * rotZ;
+	m_inertiaTensorInvWorld = m_inertiaTensorInv * m_rotationMatrix;
 
 	// update the linear properties in the parent
 	RigidBody::update(dt);

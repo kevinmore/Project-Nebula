@@ -45,9 +45,9 @@ namespace Math
         static void setBlockInertiaTensor(mat3& matIn, const vec3& halfSizes, float mass)
         {
             vec3 squares(halfSizes.x() * halfSizes.x(), halfSizes.y() * halfSizes.y(), halfSizes.z() * halfSizes.z());
-            setInertiaTensorCoeffs(matIn, mass*(squares.y() + squares.z()) / 12.0f,
-								          mass*(squares.x() + squares.z()) / 12.0f,
-								          mass*(squares.x() + squares.y()) / 12.0f);
+			setInertiaTensorCoeffs(matIn, 0.3333f * mass * (squares.y() + squares.z()),
+										  0.3333f * mass * (squares.x() + squares.z()),
+										  0.3333f * mass * (squares.x() + squares.y()));
         }
 
 		 /**
@@ -106,7 +106,7 @@ namespace Math
 	}
 	
 
-	static void decomposeMat4(mat4& matIn, vec3& scalingOut, QQuaternion& rotationOut, vec3& positionOut)
+	static void decomposeMat4(mat4& matIn, vec3& scalingOut, quart& rotationOut, vec3& positionOut)
 	{
 		// extract translation
 		positionOut.setX(matIn(0, 3));
@@ -204,18 +204,18 @@ namespace Math
 		{
 			// decompose
 			vec3	    scaling_from;
-			QQuaternion rotation_from;
+			quart rotation_from;
 			vec3	    position_from;
 			decomposeMat4(from, scaling_from, rotation_from, position_from);
 
 			vec3	    scaling_to;
-			QQuaternion rotation_to;
+			quart rotation_to;
 			vec3	    position_to;
 			decomposeMat4(to, scaling_to, rotation_to, position_to);
 
 			// lerp for 3 components
 			vec3 scale(lerp(scaling_from, scaling_to, fraction));
-			QQuaternion rotation(QQuaternion::slerp(rotation_from, rotation_to, fraction));
+			quart rotation(quart::slerp(rotation_from, rotation_to, fraction));
 			vec3 position(lerp(position_from, position_to, fraction));
 
 			// compose the result
@@ -363,17 +363,17 @@ namespace Math
 
 
 	// Computes the quaternion that is equivalent to a given Euler Angle
-	static QQuaternion QuaternionFromEuler(EulerAngle& ea)
+	static quart QuaternionFromEuler(EulerAngle& ea)
 	{
 
- 		return QQuaternion::fromAxisAndAngle(vec3(0,0,1), ea.m_fRoll) *
-			   QQuaternion::fromAxisAndAngle(vec3(0,1,0), ea.m_fYaw) *
- 			   QQuaternion::fromAxisAndAngle(vec3(1,0,0), ea.m_fPitch);
+ 		return quart::fromAxisAndAngle(vec3(0,0,1), ea.m_fRoll) *
+			   quart::fromAxisAndAngle(vec3(0,1,0), ea.m_fYaw) *
+ 			   quart::fromAxisAndAngle(vec3(1,0,0), ea.m_fPitch);
 
 	}
 	
 	// return Euler angles
-	static EulerAngle QuaternionToEuler(QQuaternion& q)
+	static EulerAngle QuaternionToEuler(quart& q)
 	{
 		EulerAngle out;
 
@@ -417,41 +417,51 @@ namespace Math
 							m(3, 0), m(3, 1), m(3, 2), m(3, 3));
 	}
 
-	namespace Vector2D
+	namespace Vector2
 	{
-		const QVector2D ZERO = QVector2D(0.0f, 0.0f);
+		const vec2 ZERO = vec2(0.0f, 0.0f);
 
-		const QVector2D UNIT_X = QVector2D(1.0f, 0.0f);
-		const QVector2D UNIT_Y = QVector2D(0.0f, 1.0f);
+		const vec2 UNIT_X = vec2(1.0f, 0.0f);
+		const vec2 UNIT_Y = vec2(0.0f, 1.0f);
 
-		const QVector2D NEGATIVE_UNIT_X = QVector2D(-1.0f,  0.0f);
-		const QVector2D NEGATIVE_UNIT_Y = QVector2D( 0.0f, -1.0f);
+		const vec2 NEGATIVE_UNIT_X = vec2(-1.0f,  0.0f);
+		const vec2 NEGATIVE_UNIT_Y = vec2( 0.0f, -1.0f);
 
-		const QVector2D UNIT_SCALE = QVector2D(1.0f, 1.0f);
+		const vec2 UNIT_SCALE = vec2(1.0f, 1.0f);
 	}
 
-	namespace Vector3D
+	namespace Vector3
 	{
-		const QVector3D ZERO = QVector3D(0.0f, 0.0f, 0.0f);
+		const vec3 ZERO = vec3(0.0f, 0.0f, 0.0f);
 
-		const QVector3D UNIT_X = QVector3D(1.0f, 0.0f, 0.0f);
-		const QVector3D UNIT_Y = QVector3D(0.0f, 1.0f, 0.0f);
-		const QVector3D UNIT_Z = QVector3D(0.0f, 0.0f, 1.0f);
+		const vec3 UNIT_X = vec3(1.0f, 0.0f, 0.0f);
+		const vec3 UNIT_Y = vec3(0.0f, 1.0f, 0.0f);
+		const vec3 UNIT_Z = vec3(0.0f, 0.0f, 1.0f);
 
-		const QVector3D NEGATIVE_UNIT_X = QVector3D(-1.0f,  0.0f,  0.0f);
-		const QVector3D NEGATIVE_UNIT_Y = QVector3D( 0.0f, -1.0f,  0.0f);
-		const QVector3D NEGATIVE_UNIT_Z = QVector3D( 0.0f,  0.0f, -1.0f);
+		const vec3 NEGATIVE_UNIT_X = vec3(-1.0f,  0.0f,  0.0f);
+		const vec3 NEGATIVE_UNIT_Y = vec3( 0.0f, -1.0f,  0.0f);
+		const vec3 NEGATIVE_UNIT_Z = vec3( 0.0f,  0.0f, -1.0f);
 
-		const QVector3D UNIT_SCALE = QVector3D(1.0f, 1.0f, 1.0f);
+		const vec3 UNIT_SCALE = vec3(1.0f, 1.0f, 1.0f);
+
+		// multiply a vector3 with a mat3 
+		static vec3 setMul(const vec3& v, const mat3& m)
+		{
+			vec3 result( m.m[0][0] * v.x() + m.m[0][1] * v.y() + m.m[0][2] * v.z(),
+						 m.m[1][0] * v.x() + m.m[1][1] * v.y() + m.m[1][2] * v.z(),
+						 m.m[2][0] * v.x() + m.m[2][1] * v.y() + m.m[2][2] * v.z());
+
+			return result;
+		}
 	}
 
-	namespace Vector4D
+	namespace Vector4
 	{
-		const QVector4D ZERO = QVector4D(0.0f, 0.0f, 0.0f, 0.0f);
+		const vec4 ZERO = vec4(0.0f, 0.0f, 0.0f, 0.0f);
 	}
 
 	namespace Quaternion
 	{
-		const QQuaternion ZERO = QQuaternion(1, 0, 0, 0);
+		const quart ZERO = quart(1, 0, 0, 0);
 	}
 }

@@ -3,10 +3,10 @@ using namespace Math;
 
 Camera::Camera(GameObject* followingTarget, QObject *parent)
   : QObject(parent),
-	m_position(Vector3D::UNIT_Z),
-	m_upVector(Vector3D::UNIT_Y),
-	m_viewCenter(Vector3D::ZERO),
-	m_cameraToCenter(Vector3D::NEGATIVE_UNIT_Z),
+	m_position(Vector3::UNIT_Z),
+	m_upVector(Vector3::UNIT_Y),
+	m_viewCenter(Vector3::ZERO),
+	m_cameraToCenter(Vector3::NEGATIVE_UNIT_Z),
 	m_projectionType(Perspective),
 	m_nearPlane(0.01f),
 	m_farPlane(1000.0f),
@@ -400,7 +400,7 @@ void Camera::tiltAboutViewCenter(const float& angle)
 
 void Camera::panAboutViewCenter(const float& angle)
 {
-	quart q = panRotation(angle, Math::Vector3D::UNIT_Y);
+	quart q = panRotation(angle, Math::Vector3::UNIT_Y);
 	rotateAboutViewCenter(q);
 }
 
@@ -431,8 +431,8 @@ void Camera::rotateAboutViewCenter(const quart& q)
 void Camera::resetCamera()
 {
 	m_position = vec3(vec3(0.0f, 2.0f, 2.0f));
-	m_upVector = vec3(Vector3D::UNIT_Y);
-	m_viewCenter = vec3(Vector3D::ZERO);
+	m_upVector = vec3(Vector3::UNIT_Y);
+	m_viewCenter = vec3(Vector3::ZERO);
 	m_cameraToCenter = m_viewCenter - m_position;
 
 	m_viewMatrixDirty = true;

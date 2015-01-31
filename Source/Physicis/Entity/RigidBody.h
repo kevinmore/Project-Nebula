@@ -53,13 +53,13 @@ public:
 	};
 
 	// Construct a default rigid body
-	RigidBody(const vec3& position = Math::Vector3D::ZERO, 
+	RigidBody(const vec3& position = Math::Vector3::ZERO, 
 		      const quart& rotation = Math::Quaternion::ZERO, 
 			  QObject* parent = 0);
 
 	virtual QString className() { return "RigidBody"; }
 
-	virtual ~RigidBody() {}
+	virtual ~RigidBody() { SAFE_DELETE(m_shape); }
 	virtual void update(const float dt);
 	//
 	// Shape
@@ -137,7 +137,7 @@ public:
 
 	/// Returns the rotation changed from local to world space for this rigid body.
 	inline const quart& getDeltaRotation() const { return m_deltaRotation;	}
-	inline const vec3& getRotationInAxisAndAngles() const { return m_deltaAngle;}
+	inline const vec3& getEularAngles() const { return m_eularAngles;}
 
 	inline const mat4& getTransformMatrix() const { return m_transformMatrix; }
 
@@ -299,6 +299,10 @@ public:
 	/// This defaults to the Identity quaternion.
 	quart m_deltaRotation;
 
+	// The rotation matrix of the body
+	// This defaults to the identity matrix
+	mat3 m_rotationMatrix;
+
 	// The transform matrix of the body(scaling not included)
 	// This defaults to the identity matrix
 	mat4 m_transformMatrix;
@@ -357,7 +361,7 @@ public:
 	float m_timeFactor;
 
 	/// The angular velocity * dt which was used in the last integration step.
-	vec3 m_deltaAngle; 
+	vec3 m_eularAngles; 
 
 	/// A sphere around the center of mass which completely encapsulates the object
 	float m_objectRadius;

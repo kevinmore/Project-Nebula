@@ -59,21 +59,24 @@ void Scene::initialize()
 	// show sky box for demo purpose
 	//toggleSkybox(true);
 	// setup a basic physics world
-// 	GameObjectPtr go = createEmptyGameObject("Rigid Cube");
-// 	LoaderThread loader(this, "../Resource/Models/Common/MetalCube.3ds", go, m_sceneRootNode, false);
-// 	BoxRigidBodyPtr cube(new BoxRigidBody());
-// 	cube->setPosition(vec3(0, 100, 0));
-// 	cube->setLinearVelocity(vec3(50,0,0));
-// 	cube->setGravityFactor(0.0f);
-// 	go->attachComponent(cube);
-// 	m_physicsWorld->addEntity(cube.data());
+	GameObjectPtr go = createEmptyGameObject("Rigid Cube");
+	LoaderThread loader(this, "../Resource/Models/Common/box.obj", go, m_sceneRootNode, false);
+	BoxRigidBodyPtr cube(new BoxRigidBody());
+	cube->setPosition(vec3(0, 1, 0));
+	//cube->setLinearVelocity(vec3(50,0,0));
+	cube->setAngularVelocity(vec3(0, 10, 0));
+	cube->setMass(100);
+	cube->setGravityFactor(0.0f);
+	go->attachComponent(cube);
+	m_physicsWorld->addEntity(cube.data());
 
 	// particle system
 // 	GameObjectPtr particle = createParticleSystem("Rigid Cube");
-// 	particle->setPosition(45, -50, 45);
+// 	particle->setPosition(0.45f, -0.50f, 0.45f);
 // 	particle->setRotation(180, 0, 0);
 // 	ComponentPtr comp = particle->getComponent("ParticleSystem");
 // 	ParticleSystemPtr ps = comp.dynamicCast<ParticleSystem>();
+// 	ps->setGravityFactor(0.1);
 // 	ps->toggleRandomColor(true);
 // 	ps->setMaxLife(4);
 // 	ps->setMinLife(2);

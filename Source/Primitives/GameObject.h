@@ -66,9 +66,9 @@ public:
 			m_modelMatrix.setToIdentity();
 
 			m_modelMatrix.translate(m_position);
-			m_modelMatrix.rotate(m_rotation.x(), Vector3D::UNIT_X);
-			m_modelMatrix.rotate(m_rotation.y(), Vector3D::UNIT_Y);
-			m_modelMatrix.rotate(m_rotation.z(), Vector3D::UNIT_Z);
+			m_modelMatrix.rotate(m_rotation.x(), Vector3::UNIT_X);
+			m_modelMatrix.rotate(m_rotation.y(), Vector3::UNIT_Y);
+			m_modelMatrix.rotate(m_rotation.z(), Vector3::UNIT_Z);
 			m_modelMatrix.scale(m_scale);
 
 			m_modelMatrixDirty = false;
