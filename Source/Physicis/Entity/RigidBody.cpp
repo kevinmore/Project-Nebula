@@ -1,77 +1,7 @@
 #include "RigidBody.h"
 #include <Physicis/World/PhysicsWorld.h>
 #include <Physicis/World/PhysicsWorldObject.inl>
-
-
-/**
- * Internal function to do an intertia tensor transform by a quaternion.
- * Note that the implementation of this function was created by an
- * automated code-generator and optimizer.
- */
-static inline void _transformInertiaTensor(mat3 &iitWorld,
-                                           const quart &q,
-                                           const mat3 &iitBody,
-                                           const mat4 &rotmat)
-{
-    float t4 = rotmat(0, 0)*iitBody.m[0][0]+
-        rotmat(0, 1)*iitBody.m[1][0]+
-        rotmat(0, 2)*iitBody.m[2][0];
-    float t9 = rotmat(0, 0)*iitBody.m[0][1]+
-        rotmat(0, 1)*iitBody.m[1][1]+
-        rotmat(0, 2)*iitBody.m[2][1];
-    float t14 = rotmat(0, 0)*iitBody.m[0][2]+
-        rotmat(0, 1)*iitBody.m[1][2]+
-        rotmat(0, 2)*iitBody.m[2][2];
-    float t28 = rotmat(1, 0)*iitBody.m[0][0]+
-        rotmat(1, 1)*iitBody.m[1][0]+
-        rotmat(1, 2)*iitBody.m[2][0];
-    float t33 = rotmat(1, 0)*iitBody.m[0][1]+
-        rotmat(1, 1)*iitBody.m[1][1]+
-        rotmat(1, 2)*iitBody.m[2][1];
-    float t38 = rotmat(1, 0)*iitBody.m[0][2]+
-        rotmat(1, 1)*iitBody.m[1][2]+
-        rotmat(1, 2)*iitBody.m[2][2];
-    float t52 = rotmat(2, 0)*iitBody.m[0][0]+
-        rotmat(2, 1)*iitBody.m[1][0]+
-        rotmat(2, 2)*iitBody.m[2][0];
-    float t57 = rotmat(2, 0)*iitBody.m[0][1]+
-        rotmat(2, 1)*iitBody.m[1][1]+
-        rotmat(2, 2)*iitBody.m[2][1];
-    float t62 = rotmat(2, 0)*iitBody.m[0][2]+
-        rotmat(2, 1)*iitBody.m[1][2]+
-        rotmat(2, 2)*iitBody.m[2][2];
-
-    iitWorld.m[0][0] = t4*rotmat(0, 0)+
-        t9*rotmat(0, 1)+
-        t14*rotmat(0, 2);
-    iitWorld.m[0][1] = t4*rotmat(1, 0)+
-        t9*rotmat(1, 1)+
-        t14*rotmat(1, 2);
-    iitWorld.m[0][2] = t4*rotmat(2, 0)+
-        t9*rotmat(2, 1)+
-        t14*rotmat(2, 2);
-    iitWorld.m[1][0] = t28*rotmat(0, 0)+
-        t33*rotmat(0, 1)+
-        t38*rotmat(0, 2);
-    iitWorld.m[1][1] = t28*rotmat(1, 0)+
-        t33*rotmat(1, 1)+
-        t38*rotmat(1, 2);
-    iitWorld.m[1][2] = t28*rotmat(2, 0)+
-        t33*rotmat(2, 1)+
-        t38*rotmat(2, 2);
-    iitWorld.m[2][0] = t52*rotmat(0, 0)+
-        t57*rotmat(0, 1)+
-        t62*rotmat(0, 2);
-    iitWorld.m[2][1] = t52*rotmat(1, 0)+
-        t57*rotmat(1, 1)+
-        t62*rotmat(1, 2);
-    iitWorld.m[2][2] = t52*rotmat(2, 0)+
-        t57*rotmat(2, 1)+
-        t62*rotmat(2, 2);
-}
-
-
-
+#include <Physicis/Collider/AbstractCollider.h>
 
 
 RigidBody::RigidBody(const vec3& position, const quart& rotation, QObject* parent)
@@ -105,6 +35,11 @@ RigidBody::RigidBody(const vec3& position, const quart& rotation, QObject* paren
 	m_inertiaTensor.setToIdentity();
 	m_inertiaTensorInv.setToIdentity();
 	Math::Matrix3::setInverse(m_inertiaTensorInv);
+}
+
+RigidBody::~RigidBody()
+{
+	 SAFE_DELETE(m_shape);
 }
 
 void RigidBody::setShape( const AbstractShape* shape )
@@ -183,4 +118,10 @@ void RigidBody::update( const float dt )
 	m_deltaPosition = m_linearVelocity * dt;
 	m_position += m_deltaPosition;
 	m_transformMatrix.translate(m_position);
+}
+
+void RigidBody::attachCollider( AbstractCollider* col )
+{
+	m_collider = col;
+	col->setRigidBody(this);
 }

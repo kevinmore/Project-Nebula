@@ -67,18 +67,29 @@ void Scene::initialize()
 	GameObjectPtr go = createEmptyGameObject("Rigid Sphere");
 	LoaderThread loader(this, "../Resource/Models/Common/woodenball.obj", go, m_sceneRootNode, false);
 	SphereRigidBodyPtr rb(new SphereRigidBody());
-	rb->setPosition(vec3(0, 1, 0));
+	rb->setPosition(vec3(-2, 1, 0));
 	rb->setGravityFactor(0.0f);
-	//rb->setLinearVelocity(vec3(0.1,0,0.1));
-	
+	rb->setLinearVelocity(vec3(0.5,0,0));
 	go->attachComponent(rb);
+	SphereColliderPtr collider(new SphereCollider(rb->getPosition(), 0.5f, this));
+	go->attachComponent(collider);
+	rb->attachCollider(collider.data());
 	m_physicsWorld->addEntity(rb.data());
 
-// 	SphereColliderPtr collider(new SphereCollider(vec3(0, 1, 0), 1.f, this));
-// 	go->attachComponent(collider);
+	GameObjectPtr go2 = createEmptyGameObject("Rigid Sphere2");
+	LoaderThread loader2(this, "../Resource/Models/Common/woodenball.obj", go2, m_sceneRootNode, false);
+	SphereRigidBodyPtr rb2(new SphereRigidBody());
+	rb2->setPosition(vec3(2, 1, 0));
+	rb2->setGravityFactor(0.0f);
+	rb2->setLinearVelocity(vec3(-0.5,0,0));
+	go2->attachComponent(rb2);
+	SphereColliderPtr collider2(new SphereCollider(rb2->getPosition(), 0.5f, this));
+	go2->attachComponent(collider2);
+	rb2->attachCollider(collider2.data());
+	m_physicsWorld->addEntity(rb2.data());
 
-	BoxColliderPtr collider(new BoxCollider(vec3(0, 1, 0), vec3(0.5, 0.5, 0.5), this));
-	go->attachComponent(collider);
+// 	BoxColliderPtr collider(new BoxCollider(vec3(0, 1, 0), vec3(0.5, 0.5, 0.5), this));
+// 	go->attachComponent(collider);
 
 
 
@@ -111,6 +122,8 @@ void Scene::initPhysicsModule()
 
 void Scene::update(float currentTime)
 {
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 	// update the camera
 	m_camera->update(currentTime - m_relativeTime);
 
@@ -125,13 +138,10 @@ void Scene::update(float currentTime)
 	if (!m_bPhysicsPaused || m_bStepPhysics)
 	{
 		// update the physics world
-		m_physicsWorld->update(dt);
+		m_physicsWorld->simulate(dt);
 	}
 	
-
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	// render skybox first
+	// render sky box
 	if (m_bShowSkybox) 
 		m_skybox->render(m_relativeTime);
 
@@ -140,49 +150,6 @@ void Scene::update(float currentTime)
 
 	// always reset the flag of step physics
 	m_bStepPhysics = false;
-
-// 	m_light.setPosition(m_camera->position());
-// 	m_light.setDirection(m_camera->viewCenter());
-// 	m_light.render(m_shaderProgram, m_camera->viewMatrix());
-
-	
-	// make the object to follow a curve path
-// 	QSharedPointer<StaticModel> target = m_modelManager->getModel("coffecup").dynamicCast<StaticModel>();
-// 	vec3 curPos = m_path[qFloor(t*500)%m_path.size()];
-// 	target->getActor()->setPosition(curPos);
-
-	// pass in the target position to the Rigged Model
-// 	QSharedPointer<RiggedModel> man = m_modelManager->getModel("m005").dynamicCast<RiggedModel>();
-// 	vec3 modelSpaceTargetPos = vec3(curPos.x(), -curPos.y(), -curPos.z()); // hack, need to multiply by several matrixes
-// 	man->setReachableTargetPos(modelSpaceTargetPos);
-
-
-	// render all static models
-	//m_modelManager->renderStaticModels(t);
-
-	
-	//m_modelManager->renderRiggedModels(t);
-
-	/*
-	// render NPCs
-	for (int i = 0; i < m_NPCs.size(); ++i)
-	{
-		m_NPCs[i]->render(t);
-		// checking distance to the player
-		QVector<NPCController*> socialTargets = m_playerController->getSocialTargets();
-		float distance = (m_NPCs[i]->getActor()->position() - m_playerController->getActor()->position()).length();
-		int index = socialTargets.indexOf(m_NPCs[i]);
-		if (distance > 200.0f && index > -1)
-			socialTargets.removeAt(index);
-		if (distance <= 200.0f && index == -1)
-			socialTargets.push_back(m_NPCs[i]);
-	}
-	*/
-
-	// render the character controlled by the user
-	//if(m_modelManager->m_riggedModels.size() > 0) m_playerController->render(t);
-
-	
 }
 
 Camera* Scene::getCamera()

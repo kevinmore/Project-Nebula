@@ -1,6 +1,7 @@
 #pragma once
 #include "PhysicsWorldConfig.h"
 #include "PhysicsWorldObject.h"
+#include "Physicis/Collider/AbstractCollider.h"
 
 class PhysicsWorld
 {
@@ -10,8 +11,10 @@ public:
 
 	PhysicsWorldConfig getConfig() const;
 
-	void update(const float deltaTime);
-	
+	void simulate(const float deltaTime);
+	void handleCollisions();
+
+
 	bool isLocked();
 	void lock();
 	void unlock();
@@ -19,10 +22,13 @@ public:
 	void addEntity(PhysicsWorldObject* entity);
 	void removeEntity(PhysicsWorldObject* entity);
 
+	int entitiesCount();
+
 private:
 	PhysicsWorldConfig m_config;
 	float m_time;
 	bool m_locked;
-	QList<PhysicsWorldObject*> m_objectList;
+	QList<PhysicsWorldObject*> m_entityList;
+	QVector<AbstractCollider*> m_colliderList;
 };
 

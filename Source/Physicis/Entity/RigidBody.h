@@ -38,6 +38,7 @@ struct MassProperties
 	mat3 m_inertiaTensor;
 };
 
+class AbstractCollider;
 class RigidBody : public PhysicsWorldObject
 {
 public:
@@ -58,7 +59,7 @@ public:
 
 	virtual QString className() { return "RigidBody"; }
 
-	virtual ~RigidBody() { SAFE_DELETE(m_shape); }
+	virtual ~RigidBody();
 	virtual void update(const float dt);
 	//
 	// Shape
@@ -66,6 +67,12 @@ public:
 
 	void setShape(const AbstractShape* shape);
 	const AbstractShape* getShape() const;
+
+	//
+	// Collider
+	//
+	void attachCollider(AbstractCollider* col);
+	inline AbstractCollider* getCollider() const { return m_collider; };
 
 	//
 	// MASS, INERTIA AND DENSITY PROPERTIES.
@@ -369,6 +376,9 @@ public:
 	vec3 m_forceAccum;
 
 	vec3 m_torqueAccum;
+
+private:
+	AbstractCollider* m_collider;
 };
 
 typedef QSharedPointer<RigidBody> RigidBodyPtr;

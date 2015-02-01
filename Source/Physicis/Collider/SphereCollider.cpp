@@ -24,7 +24,7 @@ CollisionFeedback SphereCollider::intersect( AbstractCollider* other )
 	float radiusSum = m_sphereShape.getRadius() + sp->getGeometryShape().getRadius();
 	float centerDis = (m_center - sp->getCenter()).length();
 
-	return CollisionFeedback(centerDis > radiusSum, centerDis - radiusSum);
+	return CollisionFeedback(centerDis <= radiusSum, centerDis - radiusSum);
 }
 
 void SphereCollider::init()
