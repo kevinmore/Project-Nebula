@@ -16,13 +16,14 @@ MainWindow::MainWindow(QWidget *parent)
 	  m_scene(nullptr),
 	  m_camera(nullptr)
 {
-
+	// redirect the system out put message to the status bar
 	connect(LogCenter::instance(), SIGNAL(message(QtMsgType, QMessageLogContext, QString)), 
 		this, SLOT(showMessage(QtMsgType, QMessageLogContext, QString)));
 
 	initializeCanvas();
 	initializeRightDockableArea();
 	initializeMenuBar();
+	initializeToolBar();
 
 	resize(1600, 900);
 
@@ -60,6 +61,21 @@ void MainWindow::initializeCanvas()
 	addDockWidget(Qt::LeftDockWidgetArea, dock_canvas);
 	setCentralWidget(dock_canvas);
 }
+
+
+void MainWindow::initializeToolBar()
+{
+	QToolBar* toolBar = new QToolBar("Nebula", this);
+
+	QAction* playAction = toolBar->addAction(QIcon("../Resource/StyleSheets/Icons/play.png"), "Play", m_scene, SLOT(play()));
+	playAction->setToolTip("Click to Update the Physics World");
+
+	QAction* pauseAction = toolBar->addAction(QIcon("../Resource/StyleSheets/Icons/stop.png"), "Play", m_scene, SLOT(pause()));
+	pauseAction->setToolTip("Click to Pause the Physics World");
+
+	addToolBar(Qt::LeftToolBarArea, toolBar);
+}
+
 
 void MainWindow::initializeMenuBar()
 {

@@ -15,6 +15,7 @@ public:
 
 private:
 	void initializeCanvas();
+	void initializeToolBar();
 	void initializeMenuBar();
 	void initializeRightDockableArea();
 	void initializeParamsArea();

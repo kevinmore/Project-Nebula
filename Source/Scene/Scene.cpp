@@ -182,22 +182,20 @@ void Scene::update(float currentTime)
 	// record the absolute time
 	m_absoluteTime = currentTime;
 
-	// do nothing when the scene is paused
-	// not fully implemented
-// 	if (m_bPaused)
-// 	{
-// 		return;
-// 	}
-
 	// update the time
 	float dt = m_absoluteTime - m_delayedTime - m_relativeTime;
 	m_relativeTime = m_absoluteTime - m_delayedTime;
 
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	// do nothing when the scene is paused
+	// not fully implemented
+	if (!m_bPaused)
+	{
+		// update the physics world
+		m_physicsWorld->update(dt);
+	}
 	
 
-	// update the physics world
-	m_physicsWorld->update(m_relativeTime);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// render skybox first
 	if (m_bShowSkybox) 

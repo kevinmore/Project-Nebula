@@ -36,6 +36,16 @@ Camera::~Camera()
 {
 }
 
+void Camera::resetCamera()
+{
+	m_position = vec3(vec3(0.0f, 2.0f, 2.0f));
+	m_upVector = vec3(Vector3::UNIT_Y);
+	m_viewCenter = vec3(vec3(0.0f, 1.0f, 0.0f));
+	m_cameraToCenter = m_viewCenter - m_position;
+
+	m_viewMatrixDirty = true;
+}
+
 void Camera::updateOrthogonalProjection()
 {
 	m_projectionMatrix.setToIdentity();
@@ -424,16 +434,6 @@ void Camera::rotateAboutViewCenter(const quart& q)
 	m_upVector = q.rotatedVector(m_upVector);
 	m_cameraToCenter = q.rotatedVector(m_cameraToCenter);
 	m_position = m_viewCenter - m_cameraToCenter;
-
-	m_viewMatrixDirty = true;
-}
-
-void Camera::resetCamera()
-{
-	m_position = vec3(vec3(0.0f, 2.0f, 2.0f));
-	m_upVector = vec3(Vector3::UNIT_Y);
-	m_viewCenter = vec3(Vector3::ZERO);
-	m_cameraToCenter = m_viewCenter - m_position;
 
 	m_viewMatrixDirty = true;
 }

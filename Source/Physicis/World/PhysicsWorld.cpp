@@ -17,11 +17,8 @@ PhysicsWorldConfig PhysicsWorld::getConfig() const
 	return m_config;
 }
 
-void PhysicsWorld::update(const float currentTime)
+void PhysicsWorld::update(const float deltaTime)
 {
-	float dt = currentTime - m_time;
-	m_time = currentTime;
-
 	// don't update the physics world when it is locked
 	if (m_locked)
 	{
@@ -32,7 +29,7 @@ void PhysicsWorld::update(const float currentTime)
 	foreach(PhysicsWorldObject* obj, m_objectList)
 	{
 		if(obj)
-			obj->update(dt);
+			obj->update(deltaTime);
 	}
 }
 

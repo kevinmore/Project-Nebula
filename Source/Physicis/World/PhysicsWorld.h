@@ -10,7 +10,7 @@ public:
 
 	PhysicsWorldConfig getConfig() const;
 
-	void update(const float currentTime);
+	void update(const float deltaTime);
 	
 	bool isLocked();
 	void lock();

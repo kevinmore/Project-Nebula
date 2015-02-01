@@ -13,4 +13,3 @@ public:
 private:
 	SphereShape m_sphereShape;
 };
-
