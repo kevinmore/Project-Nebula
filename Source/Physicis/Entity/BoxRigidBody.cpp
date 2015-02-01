@@ -44,9 +44,11 @@ void BoxRigidBody::setMassInv( float mInv )
 
 void BoxRigidBody::setBoxHalfExtents( const vec3& halfExtents )
 {
+	// resize the shape
 	BoxShape* box = (BoxShape*)m_shape;
 	box->setHalfExtents(halfExtents);
 
+	// re compute the inertia tensor
 	Math::Matrix3::setBoxInertiaTensor(m_inertiaTensor, halfExtents, m_mass);
 	m_inertiaTensorInv = m_inertiaTensor;
 	Math::Matrix3::setInverse(m_inertiaTensorInv);
@@ -128,6 +130,9 @@ void BoxRigidBody::update( const float dt )
 {
 	m_transformMatrix.setToIdentity();
 
+	// update the linear properties in the parent first
+	RigidBody::update(dt);
+
 	// update the angular properties
 	m_eularAngles += m_angularVelocity * dt;
 
@@ -156,13 +161,5 @@ void BoxRigidBody::update( const float dt )
 
 	m_rotationMatrix = rotX * rotY * rotZ;
 	m_inertiaTensorInvWorld = m_inertiaTensorInv * m_rotationMatrix;
-
-	// update the linear properties in the parent
-	RigidBody::update(dt);
 }
-
-
-
-
-
 

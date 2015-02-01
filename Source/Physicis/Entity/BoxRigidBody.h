@@ -18,7 +18,7 @@ public:
 	/// Sets the inverse mass of the rigid body.
 	void setMassInv(float mInv);
 
-	// Sets the half extents, this will update the inertia tensor
+	/// Sets the half extents, this will update the inertia tensor
 	void setBoxHalfExtents(const vec3& halfExtents);
 
 	/// Gets the inertia tensor of the rigid body in local space.
@@ -53,6 +53,7 @@ public:
 
 	/// Applies the specified torque (in world space) to the rigid body. (note: the inline is for internal use only)
 	virtual void applyTorque(const float deltaTime, const vec3& torque);
+
 };
 
 typedef QSharedPointer<BoxRigidBody> BoxRigidBodyPtr;

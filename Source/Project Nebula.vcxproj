@@ -16,6 +16,7 @@
     <ClCompile Include="Animation\IK\FABRIKSolver.cpp" />
     <ClCompile Include="Animation\IK\CCDIKSolver.cpp" />
     <ClCompile Include="Animation\Rig\Pose.cpp" />
+    <ClCompile Include="Physicis\Collider\BoxCollider.cpp" />
     <ClCompile Include="Physicis\Collider\AbstractCollider.cpp" />
     <ClCompile Include="Physicis\Collider\CollisionFeedback.cpp" />
     <ClCompile Include="Physicis\Entity\SphereRigidBody.cpp" />
@@ -74,6 +75,7 @@
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Physicis\Collider\BoxCollider.h" />
     <ClInclude Include="Physicis\Collider\AbstractCollider.h" />
     <ClInclude Include="Animation\FK\FKController.h" />
     <ClInclude Include="Animation\Rig\BoneInfo.h" />

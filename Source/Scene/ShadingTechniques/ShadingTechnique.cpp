@@ -81,15 +81,15 @@ bool ShadingTechnique::compileShader()
 		SNPRINTF(Name, sizeof(Name), "gPointLights[%d].Atten.Exp", i);
 		m_pointLightsLocation[i].Atten.Exp = getUniformLocation(Name);
 
-		if (m_pointLightsLocation[i].Color == INVALID_LOCATION ||
-			m_pointLightsLocation[i].AmbientIntensity == INVALID_LOCATION ||
-			m_pointLightsLocation[i].Position == INVALID_LOCATION ||
-			m_pointLightsLocation[i].DiffuseIntensity == INVALID_LOCATION ||
-			m_pointLightsLocation[i].Atten.Constant == INVALID_LOCATION ||
-			m_pointLightsLocation[i].Atten.Linear == INVALID_LOCATION ||
-			m_pointLightsLocation[i].Atten.Exp == INVALID_LOCATION) {
-				return false;
-		}
+// 		if (m_pointLightsLocation[i].Color == INVALID_LOCATION ||
+// 			m_pointLightsLocation[i].AmbientIntensity == INVALID_LOCATION ||
+// 			m_pointLightsLocation[i].Position == INVALID_LOCATION ||
+// 			m_pointLightsLocation[i].DiffuseIntensity == INVALID_LOCATION ||
+// 			m_pointLightsLocation[i].Atten.Constant == INVALID_LOCATION ||
+// 			m_pointLightsLocation[i].Atten.Linear == INVALID_LOCATION ||
+// 			m_pointLightsLocation[i].Atten.Exp == INVALID_LOCATION) {
+// 				return false;
+//		}
 	}
 
 	for (unsigned int i = 0 ; i < ARRAY_SIZE_IN_ELEMENTS(m_spotLightsLocation) ; i++) {
@@ -122,17 +122,17 @@ bool ShadingTechnique::compileShader()
 		SNPRINTF(Name, sizeof(Name), "gSpotLights[%d].Base.Atten.Exp", i);
 		m_spotLightsLocation[i].Atten.Exp = getUniformLocation(Name);
 
-		if (m_spotLightsLocation[i].Color == INVALID_LOCATION ||
-			m_spotLightsLocation[i].AmbientIntensity == INVALID_LOCATION ||
-			m_spotLightsLocation[i].Position == INVALID_LOCATION ||
-			m_spotLightsLocation[i].Direction == INVALID_LOCATION ||
-			m_spotLightsLocation[i].Cutoff == INVALID_LOCATION ||
-			m_spotLightsLocation[i].DiffuseIntensity == INVALID_LOCATION ||
-			m_spotLightsLocation[i].Atten.Constant == INVALID_LOCATION ||
-			m_spotLightsLocation[i].Atten.Linear == INVALID_LOCATION ||
-			m_spotLightsLocation[i].Atten.Exp == INVALID_LOCATION) {
-				return false;
-		}
+// 		if (m_spotLightsLocation[i].Color == INVALID_LOCATION ||
+// 			m_spotLightsLocation[i].AmbientIntensity == INVALID_LOCATION ||
+// 			m_spotLightsLocation[i].Position == INVALID_LOCATION ||
+// 			m_spotLightsLocation[i].Direction == INVALID_LOCATION ||
+// 			m_spotLightsLocation[i].Cutoff == INVALID_LOCATION ||
+// 			m_spotLightsLocation[i].DiffuseIntensity == INVALID_LOCATION ||
+// 			m_spotLightsLocation[i].Atten.Constant == INVALID_LOCATION ||
+// 			m_spotLightsLocation[i].Atten.Linear == INVALID_LOCATION ||
+// 			m_spotLightsLocation[i].Atten.Exp == INVALID_LOCATION) {
+// 				return false;
+// 		}
 	}
 
 	if (m_shaderType == RIGGED)

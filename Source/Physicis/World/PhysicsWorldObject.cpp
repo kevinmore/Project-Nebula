@@ -1,7 +1,7 @@
 #include "PhysicsWorldObject.h"
 #include "PhysicsWorld.h"
 
-PhysicsWorldObject::PhysicsWorldObject()
+PhysicsWorldObject::PhysicsWorldObject(QObject* parent)
 	: Component()
 {
 }

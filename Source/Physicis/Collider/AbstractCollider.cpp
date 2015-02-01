@@ -22,7 +22,7 @@ void AbstractCollider::render( const float currentTime )
 {
 	m_renderingEffect->enable();
 
-	mat4 modelMatrix = m_actor->getTranformMatrix();
+	mat4 modelMatrix = m_actor->getTranformMatrix() * m_transformMatrix;
 	m_renderingEffect->setEyeWorldPos(m_scene->getCamera()->position());
 	m_renderingEffect->setMVPMatrix(m_scene->getCamera()->viewProjectionMatrix() * modelMatrix);
 	m_renderingEffect->setModelMatrix(modelMatrix); 

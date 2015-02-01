@@ -5,6 +5,7 @@
 #include <Physicis/Entity/BoxRigidBody.h>
 #include <Physicis/Entity/SphereRigidBody.h>
 #include <Physicis/Collider/SphereCollider.h>
+#include <Physicis/Collider/BoxCollider.h>
 
 Scene::Scene(QObject* parent)
 	: AbstractScene(parent),
@@ -68,12 +69,16 @@ void Scene::initialize()
 	SphereRigidBodyPtr rb(new SphereRigidBody());
 	rb->setPosition(vec3(0, 1, 0));
 	rb->setGravityFactor(0.0f);
+	//rb->setLinearVelocity(vec3(0.1,0,0.1));
+	
 	go->attachComponent(rb);
 	m_physicsWorld->addEntity(rb.data());
-	SphereColliderPtr collider(new SphereCollider(vec3(0, 1, 0), 0.5f, this));
+
+// 	SphereColliderPtr collider(new SphereCollider(vec3(0, 1, 0), 1.f, this));
+// 	go->attachComponent(collider);
+
+	BoxColliderPtr collider(new BoxCollider(vec3(0, 1, 0), vec3(0.5, 0.5, 0.5), this));
 	go->attachComponent(collider);
-
-
 
 
 

@@ -44,9 +44,11 @@ void SphereRigidBody::setMassInv( float mInv )
 
 void SphereRigidBody::setSphereRadius( float newRadius )
 {
+	// resize the shape
 	SphereShape* sphere = (SphereShape*)m_shape;
 	sphere->setRadius(newRadius);
 
+	// re compute the inertia tensor
 	Math::Matrix3::setSphereInertiaTensor(m_inertiaTensor, newRadius, m_mass);
 	m_inertiaTensorInv = m_inertiaTensor;
 	Math::Matrix3::setInverse(m_inertiaTensorInv);
@@ -129,6 +131,9 @@ void SphereRigidBody::update( const float dt )
 {
 	m_transformMatrix.setToIdentity();
 
+	// update the linear properties in the parent first
+	RigidBody::update(dt);
+
 	// update the angular properties
 	m_eularAngles += m_angularVelocity * dt;
 
@@ -157,7 +162,4 @@ void SphereRigidBody::update( const float dt )
 
 	m_rotationMatrix = rotX * rotY * rotZ;
 	m_inertiaTensorInvWorld = m_inertiaTensorInv * m_rotationMatrix;
-
-	// update the linear properties in the parent
-	RigidBody::update(dt);
 }

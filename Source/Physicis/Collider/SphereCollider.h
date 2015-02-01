@@ -9,7 +9,9 @@ public:
 	SphereCollider(const vec3& center, const float radius, Scene* scene);
 	SphereShape getGeometryShape() const;
 
-	//virtual CollisionFeedback intersect(AbstractCollider* other);
+	void setRadius(const float radius);
+
+	virtual CollisionFeedback intersect(AbstractCollider* other);
 
 protected:
 	virtual void init();

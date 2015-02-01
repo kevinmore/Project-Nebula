@@ -62,6 +62,7 @@
     <ClCompile Include="Physicis\Collider\CollisionFeedback.cpp" />
     <ClCompile Include="Physicis\World\PhysicsWorldObject.cpp" />
     <ClCompile Include="Physicis\Collider\AbstractCollider.cpp" />
+    <ClCompile Include="Physicis\Collider\BoxCollider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Primitives\Texture.h" />
@@ -120,6 +121,7 @@
     <ClInclude Include="Physicis\Collider\CollisionFeedback.h" />
     <ClInclude Include="Physicis\Collider\AbstractCollider.h" />
     <ClInclude Include="Scene\Scene.h" />
+    <ClInclude Include="Physicis\Collider\BoxCollider.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="UI\HierarchyWidget.ui" />

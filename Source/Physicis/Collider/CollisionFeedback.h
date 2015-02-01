@@ -2,6 +2,7 @@
 class CollisionFeedback
 {
 public:
+	CollisionFeedback();
 	CollisionFeedback(const bool collidingState, const float distance);
 
 	inline float getDistance() const { return m_distance; }
