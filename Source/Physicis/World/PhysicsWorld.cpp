@@ -60,7 +60,7 @@ void PhysicsWorld::addEntity( PhysicsWorldObject* entity )
 	lock();
 	// add the rigid body and its collider
 	m_entityList << entity;
-	m_colliderList << dynamic_cast<RigidBody*>(entity)->getCollider();
+	m_colliderList << dynamic_cast<RigidBody*>(entity)->getCollider().data();
 	entity->setWorld(this);
 	unlock();
 }
@@ -70,7 +70,7 @@ void PhysicsWorld::removeEntity( PhysicsWorldObject* entity )
 	lock();
 	// remove the rigid body and its collider
 	m_entityList.removeOne(entity);
-	m_colliderList.removeAt(m_colliderList.indexOf(dynamic_cast<RigidBody*>(entity)->getCollider()));
+	m_colliderList.removeAt(m_colliderList.indexOf(dynamic_cast<RigidBody*>(entity)->getCollider().data()));
 	unlock();
 }
 
@@ -86,11 +86,11 @@ void PhysicsWorld::handleCollisions()
 	{
 		for (int j = i + 1; j < m_colliderList.size(); ++j)
 		{
-			SphereCollider* c1 = dynamic_cast<SphereCollider*>(m_colliderList[i]);
-			SphereCollider* c2 = dynamic_cast<SphereCollider*>(m_colliderList[j]);
+			AbstractCollider* c1 = m_colliderList[i];
+			AbstractCollider* c2 = m_colliderList[j];
 
 			CollisionFeedback result = c1->intersect(c2);
-			// if they are colliding, reverse their linear velocity
+
 			if (result.isColliding())
 			{
 				RigidBody* rb1 = c1->getRigidBody();

@@ -4,7 +4,7 @@
 #include <Physicis/World/PhysicsWorldObject.inl>
 #include <Physicis/Geometry/SphereShape.h>
 
-SphereRigidBody::SphereRigidBody(const vec3& position, const quart& rotation)
+SphereRigidBody::SphereRigidBody(const vec3& position, const quat& rotation)
 	: RigidBody(position, rotation)
 {
 	m_MotionType = RigidBody::MOTION_SPHERE_INERTIA;
@@ -137,29 +137,9 @@ void SphereRigidBody::update( const float dt )
 	// update the angular properties
 	m_eularAngles += m_angularVelocity * dt;
 
-	quart oldRotation = m_rotation;
-	m_rotation = quart::fromAxisAndAngle(Math::Vector3::UNIT_X, m_eularAngles.x())
-		* quart::fromAxisAndAngle(Math::Vector3::UNIT_Y, m_eularAngles.y())
-		* quart::fromAxisAndAngle(Math::Vector3::UNIT_Z, m_eularAngles.z());
-
+	m_rotation = Math::Quaternion::computeQuaternion(m_eularAngles);
 	m_transformMatrix.rotate(m_rotation);
 
-	mat3 rotX, rotY, rotZ;
-	rotX.m[1][1] =  qCos(m_eularAngles.x());
-	rotX.m[1][2] = -qSin(m_eularAngles.x());
-	rotX.m[2][1] =  qSin(m_eularAngles.x());
-	rotX.m[2][2] =  qCos(m_eularAngles.x());
-
-	rotY.m[0][0] =  qCos(m_eularAngles.y());
-	rotY.m[0][2] =  qSin(m_eularAngles.y());
-	rotY.m[2][0] = -qSin(m_eularAngles.y());
-	rotY.m[2][2] =  qCos(m_eularAngles.y());
-
-	rotZ.m[0][0] =  qCos(m_eularAngles.z());
-	rotZ.m[0][1] = -qSin(m_eularAngles.z());
-	rotZ.m[1][0] =  qSin(m_eularAngles.z());
-	rotZ.m[1][1] =  qCos(m_eularAngles.z());
-
-	m_rotationMatrix = rotX * rotY * rotZ;
+	m_rotationMatrix = Math::Matrix3::computeRotationMatrix(m_eularAngles);
 	m_inertiaTensorInvWorld = m_inertiaTensorInv * m_rotationMatrix;
 }

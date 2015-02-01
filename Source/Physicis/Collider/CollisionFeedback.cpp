@@ -3,10 +3,10 @@
 
 CollisionFeedback::CollisionFeedback()
 	: m_colliding(false),
-	  m_distance(0.0f)
+	  m_distanceSqaured(0.0f)
 {}
 
-CollisionFeedback::CollisionFeedback( const bool collidingState, const float distance )
+CollisionFeedback::CollisionFeedback( const bool collidingState, const float distanceSqaured )
 	: m_colliding(collidingState),
-	  m_distance(distance)
+	  m_distanceSqaured(distanceSqaured)
 {}

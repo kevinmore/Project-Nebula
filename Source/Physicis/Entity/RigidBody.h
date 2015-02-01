@@ -39,6 +39,8 @@ struct MassProperties
 };
 
 class AbstractCollider;
+typedef QSharedPointer<AbstractCollider> ColliderPtr;
+
 class RigidBody : public PhysicsWorldObject
 {
 public:
@@ -54,7 +56,7 @@ public:
 
 	// Construct a default rigid body
 	RigidBody(const vec3& position = Math::Vector3::ZERO, 
-		      const quart& rotation = Math::Quaternion::ZERO, 
+		      const quat& rotation = Math::Quaternion::ZERO, 
 			  QObject* parent = 0);
 
 	virtual QString className() { return "RigidBody"; }
@@ -71,8 +73,8 @@ public:
 	//
 	// Collider
 	//
-	void attachCollider(AbstractCollider* col);
-	inline AbstractCollider* getCollider() const { return m_collider; };
+	void attachCollider(ColliderPtr col);
+	inline ColliderPtr getCollider() const { return m_collider; };
 
 	//
 	// MASS, INERTIA AND DENSITY PROPERTIES.
@@ -139,20 +141,20 @@ public:
 	void setPosition(const vec3& position);
 
 	/// Returns the rotation from local to world space for this rigid body.
-	inline const quart& getRotation() const { return m_rotation; }
+	inline const quat& getRotation() const { return m_rotation; }
 
 	/// Returns the rotation changed from local to world space for this rigid body.
-	inline const quart& getDeltaRotation() const { return m_deltaRotation;	}
+	inline const quat& getDeltaRotation() const { return m_deltaRotation;	}
 	inline const vec3& getEularAngles() const { return m_eularAngles;}
-
+	inline const mat3& getRotationMatrix() const { return m_rotationMatrix; }
 	inline const mat4& getTransformMatrix() const { return m_transformMatrix; }
 
 	/// Sets the rotation from local to world Space for this rigid body.
 	/// This activates the body and its simulation island if it is inactive.
-	void setRotation(const quart& rotation);
+	void setRotation(const quat& rotation);
 
 	/// Sets the position and rotation of the rigid body, in world space.
-	void setPositionAndRotation(const vec3& position, const quart& rotation);
+	void setPositionAndRotation(const vec3& position, const quat& rotation);
 
 	//
 	// VELOCITY ACCESS.
@@ -299,11 +301,11 @@ public:
 
 	/// The initial rotation of the body.
 	/// This defaults to the Identity quaternion.
-	quart m_rotation;
+	quat m_rotation;
 
 	/// The rotation changed of the body after each update.
 	/// This defaults to the Identity quaternion.
-	quart m_deltaRotation;
+	quat m_deltaRotation;
 
 	// The rotation matrix of the body
 	// This defaults to the identity matrix
@@ -378,7 +380,7 @@ public:
 	vec3 m_torqueAccum;
 
 private:
-	AbstractCollider* m_collider;
+	ColliderPtr m_collider;
 };
 
 typedef QSharedPointer<RigidBody> RigidBodyPtr;

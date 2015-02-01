@@ -2,9 +2,9 @@
 #include <Physicis/World/PhysicsWorld.h>
 #include <Physicis/World/PhysicsWorldObject.inl>
 #include <Physicis/Collider/AbstractCollider.h>
+#include <Primitives/GameObject.h>
 
-
-RigidBody::RigidBody(const vec3& position, const quart& rotation, QObject* parent)
+RigidBody::RigidBody(const vec3& position, const quat& rotation, QObject* parent)
 	: PhysicsWorldObject(parent)
 {
 	m_position = position;
@@ -68,7 +68,7 @@ void RigidBody::setPosition( const vec3& pos )
 	m_transformMatrix.translate(pos);
 }
 
-void RigidBody::setRotation( const quart& rot )
+void RigidBody::setRotation( const quat& rot )
 {
 	m_rotation = rot;
 	m_transformMatrix.setToIdentity();
@@ -97,7 +97,7 @@ void RigidBody::setCenterOfMassLocal(const vec3& centerOfMass)
 	m_centerOfMass = centerOfMass;
 }
 
-void RigidBody::setPositionAndRotation( const vec3& position, const quart& rotation )
+void RigidBody::setPositionAndRotation( const vec3& position, const quat& rotation )
 {
 	m_position = position;
 	m_rotation = rotation;
@@ -125,8 +125,11 @@ void RigidBody::update( const float dt )
 	m_collider->setCenter(m_position);
 }
 
-void RigidBody::attachCollider( AbstractCollider* col )
+void RigidBody::attachCollider( ColliderPtr col )
 {
 	m_collider = col;
 	col->setRigidBody(this);
+
+	// attach the collider to the game object
+	gameObject()->attachComponent(col);
 }

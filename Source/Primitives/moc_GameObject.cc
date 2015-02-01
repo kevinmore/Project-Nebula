@@ -217,7 +217,7 @@ void GameObject::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 16: _t->rotateY((*reinterpret_cast< float(*)>(_a[1]))); break;
         case 17: _t->rotateZ((*reinterpret_cast< float(*)>(_a[1]))); break;
         case 18: _t->rotate((*reinterpret_cast< const vec3(*)>(_a[1]))); break;
-        case 19: _t->rotate((*reinterpret_cast< const quart(*)>(_a[1]))); break;
+        case 19: _t->rotate((*reinterpret_cast< const quat(*)>(_a[1]))); break;
         case 20: _t->scaleX((*reinterpret_cast< float(*)>(_a[1]))); break;
         case 21: _t->scaleY((*reinterpret_cast< float(*)>(_a[1]))); break;
         case 22: _t->scaleZ((*reinterpret_cast< float(*)>(_a[1]))); break;

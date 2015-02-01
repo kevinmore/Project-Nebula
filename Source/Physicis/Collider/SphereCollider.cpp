@@ -21,11 +21,16 @@ SphereShape SphereCollider::getGeometryShape() const
 
 CollisionFeedback SphereCollider::intersect( AbstractCollider* other )
 {
+	if (other->m_colliderType != AbstractCollider::COLLIDER_SPHERE)
+	{
+		qWarning() << "Collision detection between sphere and other colliders are not implemented yet.";
+		return CollisionFeedback();
+	}
 	SphereCollider* sp = dynamic_cast<SphereCollider*>(other);
 	float radiusSum = m_sphereShape.getRadius() + sp->getGeometryShape().getRadius();
-	float centerDis = (m_center - sp->getCenter()).length();
+	float centerDisSqaure = (m_center - sp->getCenter()).lengthSquared();
 
-	return CollisionFeedback(centerDis <= radiusSum, centerDis - radiusSum);
+	return CollisionFeedback(centerDisSqaure < radiusSum, centerDisSqaure - radiusSum * radiusSum);
 }
 
 void SphereCollider::init()

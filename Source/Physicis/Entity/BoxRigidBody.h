@@ -7,7 +7,7 @@ public:
 
 	/// Default constructor - sets the initial velocity to zero
 	BoxRigidBody(const vec3& position = Math::Vector3::ZERO,
-		         const quart& rotation = Math::Quaternion::ZERO);
+		         const quat& rotation = Math::Quaternion::ZERO);
 
 	/// Updates the properties of the rigid body
 	virtual void update(const float dt);

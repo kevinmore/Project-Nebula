@@ -13,6 +13,46 @@ namespace Math
 
 	namespace Matrix3
 	{
+		static vec3 getColumn(const mat3& m, uint i)
+		{
+			if (i > 2) 
+				return vec3(0, 0, 0);
+			else
+				return vec3(m.m[0][i], m.m[1][i], m.m[2][i]);
+		}
+
+		static vec3 getRow(const mat3& m, uint i)
+		{
+			if (i > 2) 
+				return vec3(0, 0, 0);
+			else
+				return vec3(m.m[i][0], m.m[i][1], m.m[i][2]);
+		}
+
+		/**
+         * compute a rotation matrix from the given eular angles
+         */
+		static mat3 computeRotationMatrix(const vec3& eularAngles)
+		{
+			mat3 rotX, rotY, rotZ;
+			rotX.m[1][1] =  qCos(eularAngles.x());
+			rotX.m[1][2] = -qSin(eularAngles.x());
+			rotX.m[2][1] =  qSin(eularAngles.x());
+			rotX.m[2][2] =  qCos(eularAngles.x());
+
+			rotY.m[0][0] =  qCos(eularAngles.y());
+			rotY.m[0][2] =  qSin(eularAngles.y());
+			rotY.m[2][0] = -qSin(eularAngles.y());
+			rotY.m[2][2] =  qCos(eularAngles.y());
+
+			rotZ.m[0][0] =  qCos(eularAngles.z());
+			rotZ.m[0][1] = -qSin(eularAngles.z());
+			rotZ.m[1][0] =  qSin(eularAngles.z());
+			rotZ.m[1][1] =  qCos(eularAngles.z());
+
+			return rotX * rotY * rotZ;
+		}
+
 		/**
          * Sets the value of the matrix from inertia tensor values.
          */
@@ -102,7 +142,7 @@ namespace Math
          * Sets this matrix to be the rotation matrix corresponding to
          * the given quaternion.
          */
-        static void setOrientation(mat3& m, const quart &q)
+        static void setOrientation(mat3& m, const quat &q)
         {
 			vec4 v = q.toVector4D();
 
@@ -119,7 +159,7 @@ namespace Math
 	}
 	
 
-	static void decomposeMat4(mat4& matIn, vec3& scalingOut, quart& rotationOut, vec3& positionOut)
+	static void decomposeMat4(mat4& matIn, vec3& scalingOut, quat& rotationOut, vec3& positionOut)
 	{
 		// extract translation
 		positionOut.setX(matIn(0, 3));
@@ -217,18 +257,18 @@ namespace Math
 		{
 			// decompose
 			vec3	    scaling_from;
-			quart rotation_from;
+			quat rotation_from;
 			vec3	    position_from;
 			decomposeMat4(from, scaling_from, rotation_from, position_from);
 
 			vec3	    scaling_to;
-			quart rotation_to;
+			quat rotation_to;
 			vec3	    position_to;
 			decomposeMat4(to, scaling_to, rotation_to, position_to);
 
 			// lerp for 3 components
 			vec3 scale(lerp(scaling_from, scaling_to, fraction));
-			quart rotation(quart::slerp(rotation_from, rotation_to, fraction));
+			quat rotation(quat::slerp(rotation_from, rotation_to, fraction));
 			vec3 position(lerp(position_from, position_to, fraction));
 
 			// compose the result
@@ -376,17 +416,17 @@ namespace Math
 
 
 	// Computes the quaternion that is equivalent to a given Euler Angle
-	static quart QuaternionFromEuler(EulerAngle& ea)
+	static quat QuaternionFromEuler(EulerAngle& ea)
 	{
 
- 		return quart::fromAxisAndAngle(vec3(0,0,1), ea.m_fRoll) *
-			   quart::fromAxisAndAngle(vec3(0,1,0), ea.m_fYaw) *
- 			   quart::fromAxisAndAngle(vec3(1,0,0), ea.m_fPitch);
+ 		return quat::fromAxisAndAngle(vec3(0,0,1), ea.m_fRoll) *
+			   quat::fromAxisAndAngle(vec3(0,1,0), ea.m_fYaw) *
+ 			   quat::fromAxisAndAngle(vec3(1,0,0), ea.m_fPitch);
 
 	}
 	
 	// return Euler angles
-	static EulerAngle QuaternionToEuler(quart& q)
+	static EulerAngle QuaternionToEuler(quat& q)
 	{
 		EulerAngle out;
 
@@ -475,6 +515,17 @@ namespace Math
 
 	namespace Quaternion
 	{
-		const quart ZERO = quart(1, 0, 0, 0);
+		const quat ZERO = quat(1, 0, 0, 0);
+
+		/**
+         * compute a quaternion from the given eular angles
+         */
+		static quat computeQuaternion(const vec3& eularAngles)
+		{
+			return quat::fromAxisAndAngle(Math::Vector3::UNIT_X, eularAngles.x())
+				 * quat::fromAxisAndAngle(Math::Vector3::UNIT_Y, eularAngles.y())
+				 * quat::fromAxisAndAngle(Math::Vector3::UNIT_Z, eularAngles.z());
+		}
+
 	}
 }

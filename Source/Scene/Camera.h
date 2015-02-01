@@ -73,11 +73,11 @@ public:
 	mat4 projectionMatrix() const;
 	mat4 viewProjectionMatrix() const;
 
-	quart tiltRotation(const float& angle) const;
-	quart rollRotation(const float& angle) const;
+	quat tiltRotation(const float& angle) const;
+	quat rollRotation(const float& angle) const;
 
-	quart panRotation(const float& angle) const;
-	quart panRotation(const float& angle, const vec3& axis) const;
+	quat panRotation(const float& angle) const;
+	quat panRotation(const float& angle, const vec3& axis) const;
 
 
 	void setPosition(const vec3& position);
@@ -103,8 +103,8 @@ public:
 	void tiltAboutViewCenter(const float& angle);
 	void panAboutViewCenter(const float& angle);
 
-	void rotate(const quart& q);
-	void rotateAboutViewCenter(const quart& q);
+	void rotate(const quat& q);
+	void rotateAboutViewCenter(const quat& q);
 
 	// make the camera follow a game object
 	void followTarget(GameObject* target);

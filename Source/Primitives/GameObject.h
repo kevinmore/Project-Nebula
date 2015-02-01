@@ -125,7 +125,7 @@ public slots:
 	void rotateY(float y);
 	void rotateZ(float z);
 	void rotate(const vec3& delta);
-	void rotate(const quart& delta);
+	void rotate(const quat& delta);
 
 	void scaleX(float x);
 	void scaleY(float y);

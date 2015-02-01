@@ -356,71 +356,71 @@ void Camera::translateWorld(const vec3& vWorld , CameraTranslationOption option)
 	m_viewMatrixDirty = true;
 }
 
-quart Camera::tiltRotation(const float& angle) const
+quat Camera::tiltRotation(const float& angle) const
 {
 	vec3 xBasis = vec3::crossProduct(m_upVector, m_cameraToCenter.normalized()).normalized();
 
-	return quart::fromAxisAndAngle(xBasis, -angle);
+	return quat::fromAxisAndAngle(xBasis, -angle);
 }
 
-quart Camera::panRotation(const float& angle) const
+quat Camera::panRotation(const float& angle) const
 {
-	return quart::fromAxisAndAngle(m_upVector, angle);
+	return quat::fromAxisAndAngle(m_upVector, angle);
 }
 
-quart Camera::panRotation(const float& angle, const vec3& axis) const
+quat Camera::panRotation(const float& angle, const vec3& axis) const
 {
-	return quart::fromAxisAndAngle(axis, angle);
+	return quat::fromAxisAndAngle(axis, angle);
 }
 
-quart Camera::rollRotation(const float& angle) const
+quat Camera::rollRotation(const float& angle) const
 {
-	return quart::fromAxisAndAngle(m_cameraToCenter, -angle);
+	return quat::fromAxisAndAngle(m_cameraToCenter, -angle);
 }
 
 void Camera::tilt(const float& angle)
 {
-	quart q = tiltRotation(angle);
+	quat q = tiltRotation(angle);
 	rotate(q);
 }
 
 void Camera::pan(const float& angle)
 {
-	quart q = panRotation(-angle);
+	quat q = panRotation(-angle);
 	rotate(q);
 }
 
 void Camera::pan(const float& angle, const vec3& axis)
 {
-	quart q = panRotation(-angle, axis);
+	quat q = panRotation(-angle, axis);
 	rotate(q);
 }
 
 void Camera::roll(const float& angle)
 {
-	quart q = rollRotation(-angle);
+	quat q = rollRotation(-angle);
 	rotate(q);
 }
 
 void Camera::tiltAboutViewCenter(const float& angle)
 {
-	quart q = tiltRotation(-angle);
+	quat q = tiltRotation(-angle);
 	rotateAboutViewCenter(q);
 }
 
 void Camera::panAboutViewCenter(const float& angle)
 {
-	quart q = panRotation(angle, Math::Vector3::UNIT_Y);
+	quat q = panRotation(angle, Math::Vector3::UNIT_Y);
 	rotateAboutViewCenter(q);
 }
 
 void Camera::rollAboutViewCenter(const float& angle)
 {
-	quart q = rollRotation(angle);
+	quat q = rollRotation(angle);
 	rotateAboutViewCenter(q);
 }
 
-void Camera::rotate(const quart& q)
+void Camera::rotate(const quat& q)
 {
 	m_upVector = q.rotatedVector(m_upVector);
 	m_cameraToCenter = q.rotatedVector(m_cameraToCenter);
@@ -429,7 +429,7 @@ void Camera::rotate(const quart& q)
 	m_viewMatrixDirty = true;
 }
 
-void Camera::rotateAboutViewCenter(const quart& q)
+void Camera::rotateAboutViewCenter(const quat& q)
 {
 	m_upVector = q.rotatedVector(m_upVector);
 	m_cameraToCenter = q.rotatedVector(m_cameraToCenter);
