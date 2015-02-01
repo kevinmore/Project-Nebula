@@ -7,7 +7,7 @@ class PhysicsWorld;
 class PhysicsWorldObject : public Component
 {
 public:
-	PhysicsWorldObject(QObject* parent = 0);
+	PhysicsWorldObject();
 	~PhysicsWorldObject();
 
 	virtual QString className() { return "PhysicsWorldObject"; }

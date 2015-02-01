@@ -9,7 +9,7 @@ public:
 	SphereCollider(const vec3& center, const float radius, Scene* scene);
 	SphereShape getGeometryShape() const;
 
-	virtual CollisionFeedback intersect(AbstractCollider* other);
+	//virtual CollisionFeedback intersect(AbstractCollider* other);
 
 protected:
 	virtual void init();
@@ -17,3 +17,5 @@ protected:
 private:
 	SphereShape m_sphereShape;
 };
+
+typedef QSharedPointer<SphereCollider> SphereColliderPtr;

@@ -14,7 +14,7 @@ public:
 
 	inline vec3 getCenter() const { return m_center; }
 
-	virtual CollisionFeedback intersect(const AbstractCollider& other) = 0;
+	//virtual CollisionFeedback intersect(const AbstractCollider& other) = 0;
 
 	virtual QString className() { return "Collider"; }
 	virtual void render(const float currentTime);
@@ -29,3 +29,5 @@ protected:
 	Scene* m_scene;
 	vec3 m_center;
 };
+
+typedef QSharedPointer<AbstractCollider> ColliderPtr;
