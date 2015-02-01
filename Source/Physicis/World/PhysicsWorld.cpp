@@ -96,8 +96,18 @@ void PhysicsWorld::handleCollisions()
 				RigidBody* rb1 = c1->getRigidBody();
 				RigidBody* rb2 = c2->getRigidBody();
 
- 				rb1->setLinearVelocity(-rb1->getLinearVelocity());
- 				rb2->setLinearVelocity(-rb2->getLinearVelocity());
+				float m1 = rb1->getMass();
+				float m2 = rb2->getMass();
+				vec3 v1 = rb1->getLinearVelocity();
+				vec3 v2 = rb2->getLinearVelocity();
+
+				// Momentum Conservation Principle
+				// in this case, the system does not lose kinematics energy
+				vec3 v1Prime = v1*(m1-m2)/(m1+m2) + v2*(2*m2)/(m1+m2);
+				vec3 v2Prime = v1*(2*m1)/(m1+m2) - v2*(m1-m2)/(m1+m2);
+
+ 				rb1->setLinearVelocity(v1Prime);
+ 				rb2->setLinearVelocity(v2Prime);
 			}
 		}
 	}

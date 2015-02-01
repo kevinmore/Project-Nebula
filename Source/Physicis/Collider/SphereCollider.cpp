@@ -6,6 +6,7 @@ SphereCollider::SphereCollider( const vec3& center, const float radius, Scene* s
 	: AbstractCollider(center, scene)
 {
 	m_sphereShape = SphereShape(center, radius);
+	m_colliderType = AbstractCollider::COLLIDER_SPHERE;
 
 	// the default model loaded here is a sphere with radius = 0.5
 	// we need to scale it

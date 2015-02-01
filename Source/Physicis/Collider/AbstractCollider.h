@@ -11,6 +11,14 @@ class RigidBody;
 class AbstractCollider : public Component, protected QOpenGLFunctions_4_3_Core
 {
 public:
+	
+	enum ColliderType
+	{
+		COLLIDER_SPHERE,
+		COLLIDER_BOX,
+		COLLIDER_MAX_ID
+	};
+
 	AbstractCollider(const vec3& center, Scene* scene);
 
 	inline vec3 getCenter() const { return m_center; }
@@ -23,6 +31,8 @@ public:
 
 	virtual QString className() { return "Collider"; }
 	virtual void render(const float currentTime);
+
+	ColliderType m_colliderType;
 
 protected:
 	virtual void init();

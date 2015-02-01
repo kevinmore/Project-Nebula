@@ -67,7 +67,8 @@ void Scene::initialize()
 	GameObjectPtr go = createEmptyGameObject("Rigid Sphere");
 	LoaderThread loader(this, "../Resource/Models/Common/woodenball.obj", go, m_sceneRootNode, false);
 	SphereRigidBodyPtr rb(new SphereRigidBody());
-	rb->setPosition(vec3(-5, 1, 0));
+	rb->setPosition(vec3(-3, 1, -0.4));
+	rb->setMass(10.f);
 	rb->setGravityFactor(0.0f);
 	rb->setLinearVelocity(Math::Random::random(vec3(0.1, 0, 0), vec3(3, 0, 0)));
 	rb->setAngularVelocity(Math::Random::random(vec3(-0, 0, 0), vec3(60, 60, 60)));
@@ -80,7 +81,7 @@ void Scene::initialize()
 	GameObjectPtr go2 = createEmptyGameObject("Rigid Sphere2");
 	LoaderThread loader2(this, "../Resource/Models/Common/woodenball.obj", go2, m_sceneRootNode, false);
 	SphereRigidBodyPtr rb2(new SphereRigidBody());
-	rb2->setPosition(vec3(5, 1, 0));
+	rb2->setPosition(vec3(3, 1.5, 0.4));
 	rb2->setGravityFactor(0.0f);
 	rb2->setLinearVelocity(Math::Random::random(vec3(-0.1, 0, 0), vec3(-3, 0, 0)));
 	rb2->setAngularVelocity(Math::Random::random(vec3(-0, 0, 0), vec3(60, 60, 60)));

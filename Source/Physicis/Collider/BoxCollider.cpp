@@ -5,6 +5,7 @@ BoxCollider::BoxCollider( const vec3& center, const vec3& halfExtents, Scene* sc
 	: AbstractCollider(center, scene)
 {
 	m_boxShape = BoxShape(center, halfExtents);
+	m_colliderType = AbstractCollider::COLLIDER_BOX;
 
 	// the default model loaded here is a cube with half extent = 0.5
 	// we need to scale it
