@@ -28,8 +28,7 @@ void PhysicsWorld::update(const float deltaTime)
 	// update the physics objects
 	foreach(PhysicsWorldObject* obj, m_objectList)
 	{
-		if(obj)
-			obj->update(deltaTime);
+		obj->update(deltaTime);
 	}
 }
 

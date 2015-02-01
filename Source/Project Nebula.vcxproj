@@ -19,11 +19,11 @@
     <ClCompile Include="Physicis\Collider\CollisionFeedback.cpp" />
     <ClCompile Include="Physicis\Entity\SphereRigidBody.cpp" />
     <ClCompile Include="Physicis\Collider\SphereCollider.cpp" />
+    <ClCompile Include="Physicis\World\PhysicsWorldObject.cpp" />
     <ClCompile Include="Utility\AssimpThread.cpp" />
     <ClCompile Include="Physicis\Entity\BoxRigidBody.cpp" />
     <ClCompile Include="Physicis\World\PhysicsWorldConfig.cpp" />
     <ClCompile Include="Physicis\World\PhysicsWorld.cpp" />
-    <ClCompile Include="Physicis\World\PhysicsWorldObject.cpp" />
     <ClCompile Include="Primitives\CubeMapTexture.cpp" />
     <ClCompile Include="Physicis\Particles\moc_ParticleSystem.cc" />
     <ClCompile Include="Physicis\Entity\RigidBody.cpp" />

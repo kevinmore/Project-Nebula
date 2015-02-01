@@ -13,7 +13,8 @@ Scene::Scene(QObject* parent)
 	  m_relativeTime(0.0f),
 	  m_delayedTime(0.0f),
 	  m_bShowSkybox(false),
-	  m_bPaused(false),
+	  m_bPhysicsPaused(false),
+	  m_bStepPhysics(false),
 	  m_physicsWorld(0)
 {
 	// Initializing the lights
@@ -186,9 +187,8 @@ void Scene::update(float currentTime)
 	float dt = m_absoluteTime - m_delayedTime - m_relativeTime;
 	m_relativeTime = m_absoluteTime - m_delayedTime;
 
-	// do nothing when the scene is paused
-	// not fully implemented
-	if (!m_bPaused)
+	// do nothing when the physics world is paused
+	if (!m_bPhysicsPaused || m_bStepPhysics)
 	{
 		// update the physics world
 		m_physicsWorld->update(dt);
@@ -204,6 +204,8 @@ void Scene::update(float currentTime)
 	// render all
 	m_objectManager->renderAll(m_relativeTime);
 
+	// always reset the flag of step physics
+	m_bStepPhysics = false;
 
 // 	m_light.setPosition(m_camera->position());
 // 	m_light.setDirection(m_camera->viewCenter());
@@ -314,7 +316,8 @@ void Scene::showOpenSceneDialog()
 		"../Resource/Scenes",
 		tr("Scene File (*.nebula)"));
 
-	loadScene(fileName);
+	if (!fileName.isEmpty())
+		loadScene(fileName);
 
 	play();
 }
@@ -329,7 +332,8 @@ void Scene::showSaveSceneDialog()
 		"../Resource/Scenes",
 		tr("Scene File (*.nebula)"));
 
-	saveScene(fileName);
+	if (!fileName.isEmpty())
+		saveScene(fileName);
 
 	play();
 }
@@ -507,12 +511,19 @@ void Scene::resize(int width, int height)
 void Scene::pause()
 {
 	// pause the scene
-	m_bPaused = true;
+	m_bPhysicsPaused = true;
 }
 
 void Scene::play()
 {
 	// un-pause the scene and set the delayed time
-	m_bPaused = false;
+	m_bPhysicsPaused = false;
 	m_delayedTime += m_absoluteTime - m_relativeTime;
+}
+
+void Scene::step()
+{
+	// pause the physics world first
+	m_bPhysicsPaused = true;
+	m_bStepPhysics = true;
 }

@@ -70,8 +70,32 @@ void MainWindow::initializeToolBar()
 	QAction* playAction = toolBar->addAction(QIcon("../Resource/StyleSheets/Icons/play.png"), "Play", m_scene, SLOT(play()));
 	playAction->setToolTip("Click to Update the Physics World");
 
-	QAction* pauseAction = toolBar->addAction(QIcon("../Resource/StyleSheets/Icons/stop.png"), "Play", m_scene, SLOT(pause()));
+	QAction* pauseAction = toolBar->addAction(QIcon("../Resource/StyleSheets/Icons/pause.png"), "Pause", m_scene, SLOT(pause()));
 	pauseAction->setToolTip("Click to Pause the Physics World");
+
+	QAction* stepAction = toolBar->addAction(QIcon("../Resource/StyleSheets/Icons/forwardtoend.png"), "Step", m_scene, SLOT(step()));
+	stepAction->setToolTip("Click to Step the Physics World");
+	
+	toolBar->addSeparator();
+
+	QAction* loadModelAction = toolBar->addAction(QIcon("../Resource/StyleSheets/Icons/model.png"), "Load Model", m_scene, SLOT(showLoadModelDialog()));
+	loadModelAction->setToolTip("Click to Load Model");
+
+	toolBar->addSeparator();
+
+	QAction* openSceneAction = toolBar->addAction(QIcon("../Resource/StyleSheets/Icons/folder.png"), "Open Scene", m_scene, SLOT(showOpenSceneDialog()));
+	openSceneAction->setToolTip("Click to Open a Scene");
+
+	QAction* saveSceneAction = toolBar->addAction(QIcon("../Resource/StyleSheets/Icons/disk.png"), "Save Scene", m_scene, SLOT(showSaveSceneDialog()));
+	saveSceneAction->setToolTip("Click to Save the current Scene");
+
+	toolBar->addSeparator();
+
+	QAction* resetCameraAction = toolBar->addAction(QIcon("../Resource/StyleSheets/Icons/camera.png"), "Reset Scene", m_camera, SLOT(resetCamera()));
+	resetCameraAction->setToolTip("Click to Reset Camera");
+
+	QAction* resetSceneAction = toolBar->addAction(QIcon("../Resource/StyleSheets/Icons/reload.png"), "Reset Scene", m_scene, SLOT(resetToDefaultScene()));
+	resetSceneAction->setToolTip("Click to Reset the Scene to default");
 
 	addToolBar(Qt::LeftToolBarArea, toolBar);
 }

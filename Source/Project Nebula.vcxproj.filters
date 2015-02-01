@@ -49,7 +49,6 @@
     <ClCompile Include="Scene\Managers\moc_ObjectManager.cc" />
     <ClCompile Include="Physicis\World\PhysicsWorldConfig.cpp" />
     <ClCompile Include="Physicis\World\PhysicsWorld.cpp" />
-    <ClCompile Include="Physicis\World\PhysicsWorldObject.cpp" />
     <ClCompile Include="Physicis\Entity\RigidBody.cpp" />
     <ClCompile Include="Physicis\Entity\BoxRigidBody.cpp" />
     <ClCompile Include="Primitives\Puppet.cpp" />
@@ -61,6 +60,7 @@
     <ClCompile Include="Physicis\Entity\SphereRigidBody.cpp" />
     <ClCompile Include="Physicis\Collider\SphereCollider.cpp" />
     <ClCompile Include="Physicis\Collider\CollisionFeedback.cpp" />
+    <ClCompile Include="Physicis\World\PhysicsWorldObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Primitives\Texture.h" />
@@ -108,7 +108,6 @@
     <ClInclude Include="Physicis\Particles\ParticleSystem.h" />
     <ClInclude Include="Physicis\Entity\RigidBody.h" />
     <ClInclude Include="UI\MainWindow.h" />
-    <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Primitives\Puppet.h" />
     <ClInclude Include="UI\HierarchyWidget.h" />
     <ClInclude Include="Utility\ModelLoader.h" />
@@ -119,6 +118,7 @@
     <ClInclude Include="Physicis\Collider\SphereCollider.h" />
     <ClInclude Include="Physicis\Collider\CollisionFeedback.h" />
     <ClInclude Include="Physicis\Collider\AbstractCollider.h" />
+    <ClInclude Include="Scene\Scene.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="UI\HierarchyWidget.ui" />

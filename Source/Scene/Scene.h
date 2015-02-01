@@ -79,7 +79,7 @@ public slots:
 
 	void pause();
 	void play();
-
+	void step();
 
 signals:
 	void updateHierarchy();
@@ -90,7 +90,7 @@ private:
 
 	void initPhysicsModule();
 
-	bool m_bPaused;
+	mutable bool m_bPhysicsPaused, m_bStepPhysics;
 	
 
 	GameObject* m_sceneRootNode;
