@@ -8,6 +8,4 @@ PhysicsWorldObject::PhysicsWorldObject(QObject* parent)
 
 PhysicsWorldObject::~PhysicsWorldObject()
 {
-	// remove it from the world
-	m_world->removeEntity(this);
 }

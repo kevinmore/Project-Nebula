@@ -34,12 +34,6 @@ void PhysicsWorld::simulate(const float deltaTime)
 	foreach(PhysicsWorldObject* ent, m_entityList)
 	{
 		ent->update(deltaTime);
-
-		// sync the center position for the collider
-		ComponentPtr comp = ent->gameObject()->getComponent("Collider");
- 		ColliderPtr col = comp.dynamicCast<AbstractCollider>();
-		RigidBody* rb = dynamic_cast<RigidBody*>(ent);
-		col->setCenter(rb->getPosition());
 	}
 
 	// handle the collision detection
@@ -75,10 +69,8 @@ void PhysicsWorld::removeEntity( PhysicsWorldObject* entity )
 {
 	lock();
 	// remove the rigid body and its collider
-	RigidBody* rb = dynamic_cast<RigidBody*>(entity);
-	AbstractCollider* col = rb->getCollider();
-	m_colliderList.removeAt(m_colliderList.indexOf(col));
 	m_entityList.removeOne(entity);
+	m_colliderList.removeAt(m_colliderList.indexOf(dynamic_cast<RigidBody*>(entity)->getCollider()));
 	unlock();
 }
 
@@ -104,10 +96,8 @@ void PhysicsWorld::handleCollisions()
 				RigidBody* rb1 = c1->getRigidBody();
 				RigidBody* rb2 = c2->getRigidBody();
 
-// 				rb1->setLinearVelocity(-rb1->getLinearVelocity());
-// 				rb2->setLinearVelocity(-rb2->getLinearVelocity());
-				rb1->setLinearVelocity(vec3(0,0,0));
-				rb2->setLinearVelocity(vec3(0,0,0));
+ 				rb1->setLinearVelocity(-rb1->getLinearVelocity());
+ 				rb2->setLinearVelocity(-rb2->getLinearVelocity());
 			}
 		}
 	}

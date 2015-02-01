@@ -40,6 +40,8 @@ RigidBody::RigidBody(const vec3& position, const quart& rotation, QObject* paren
 RigidBody::~RigidBody()
 {
 	 SAFE_DELETE(m_shape);
+	 // remove it from the world
+	 m_world->removeEntity(this);
 }
 
 void RigidBody::setShape( const AbstractShape* shape )
@@ -118,6 +120,9 @@ void RigidBody::update( const float dt )
 	m_deltaPosition = m_linearVelocity * dt;
 	m_position += m_deltaPosition;
 	m_transformMatrix.translate(m_position);
+
+	// sync the center position for the collider
+	m_collider->setCenter(m_position);
 }
 
 void RigidBody::attachCollider( AbstractCollider* col )
