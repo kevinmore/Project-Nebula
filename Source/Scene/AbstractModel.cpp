@@ -2,7 +2,7 @@
 AbstractModel::AbstractModel(ShadingTechniquePtr tech, const QString& fileName) 
 	: Component(0),
 	  m_fileName(fileName),
-	  m_RenderingEffect(tech)
+	  m_renderingEffect(tech)
 {
 	if (tech)
 	{
@@ -22,11 +22,11 @@ void AbstractModel::init()
 void AbstractModel::drawElements( unsigned int index)
 {
 
-	if (m_polygonMode == Fill)
-		glEnable(GL_CULL_FACE);
-	else
-		glDisable(GL_CULL_FACE);
+	GLint oldCullFaceMode, oldPolygonMode;
+	glGetIntegerv(GL_CULL_FACE_MODE, &oldCullFaceMode);
+	glGetIntegerv(GL_POLYGON_MODE, &oldPolygonMode);
 
+	glDisable(GL_CULL_FACE);
 	glPolygonMode(GL_FRONT_AND_BACK, m_polygonMode);
 
 	glBindVertexArray(m_vao);
@@ -42,10 +42,8 @@ void AbstractModel::drawElements( unsigned int index)
 	// Make sure the VAO is not changed from the outside    
 	glBindVertexArray(0);
 
-	if (m_polygonMode == Fill)
-		glDisable(GL_CULL_FACE);
-	else
-		glEnable(GL_CULL_FACE);
+	glCullFace(oldCullFaceMode);        
+	glPolygonMode(GL_FRONT_AND_BACK, oldPolygonMode);
 }
 
 void AbstractModel::setPolygonMode( PolygonMode mode )

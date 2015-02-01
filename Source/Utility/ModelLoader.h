@@ -61,7 +61,7 @@ class Scene;
 class ModelLoader : protected QOpenGLFunctions_4_3_Core
 {
 public:
-	ModelLoader(Scene* scene);
+	ModelLoader(Scene* scene = 0);
 	virtual ~ModelLoader();
 
 	enum MODEL_TYPE

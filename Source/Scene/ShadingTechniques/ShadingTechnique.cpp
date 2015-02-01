@@ -9,7 +9,7 @@
 
 using namespace std;
 
-ShadingTechnique::ShadingTechnique(Scene* scene, const QString &shaderName, ShaderType shaderType)
+ShadingTechnique::ShadingTechnique(const QString &shaderName, ShaderType shaderType, Scene* scene)
 	: Technique(shaderName),
 	  m_scene(scene),
 	  m_shaderType(shaderType),
@@ -24,7 +24,7 @@ ShadingTechnique::ShadingTechnique(Scene* scene, const QString &shaderName, Shad
 void ShadingTechnique::enable()
 {
 	m_shaderProgram->bind();
-	if (usingCubeMap)
+	if (usingCubeMap && m_scene)
 	{
 		SkyboxPtr skybox = m_scene->getSkybox();
 		if(!skybox) return;
@@ -267,6 +267,7 @@ void ShadingTechnique::setBoneTransform(uint Index, const mat4& Transform)
 
 void ShadingTechnique::initLights()
 {
+	if (!m_scene) return;
 	LightPtr light = m_scene->getLight();
 }
 

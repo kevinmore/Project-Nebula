@@ -213,7 +213,7 @@ GLuint ModelLoader::installShader()
 
 	// combine the shader name
 	shaderName = shaderPrefix + shaderFeatures;
-	m_effect = ShadingTechniquePtr(new ShadingTechnique(m_scene, shaderName, shaderType));
+	m_effect = ShadingTechniquePtr(new ShadingTechnique(shaderName, shaderType, m_scene));
 
 	return m_effect->getShaderProgram()->programId();
 }

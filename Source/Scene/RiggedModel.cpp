@@ -41,10 +41,10 @@ RiggedModel::RiggedModel( const RiggedModel* orignal )
 
 	// install shader
 	QString shaderName = orignal->getShadingTech()->shaderFileName();
-	m_RenderingEffect = ShadingTechniquePtr(new ShadingTechnique(m_scene, shaderName, ShadingTechnique::RIGGED));
+	m_renderingEffect = ShadingTechniquePtr(new ShadingTechnique(shaderName, ShadingTechnique::RIGGED, m_scene));
 	// copy the vao
 	m_vao = orignal->getShadingTech()->getVAO();
-	m_RenderingEffect->setVAO(m_vao);
+	m_renderingEffect->setVAO(m_vao);
 }
 
 
@@ -218,16 +218,16 @@ void RiggedModel::render( const float currentTime )
 	}
 	//m_actor->translateInWorld(m_actor->globalSpeed() * dt); // this is for inplace locamotion
 	
-	m_RenderingEffect->enable();
+	m_renderingEffect->enable();
 
-	QMatrix4x4 modelMatrix = m_actor->getTranformMatrix();
+	mat4 modelMatrix = m_actor->getTranformMatrix();
 	modelMatrix.rotate(90, Math::Vector3::UNIT_X); // this is for dae files
 	//QMatrix3x3 normalMatrix = modelViewMatrix.normalMatrix();
 
-	m_RenderingEffect->setEyeWorldPos(m_scene->getCamera()->position());
-	m_RenderingEffect->setMVPMatrix(m_scene->getCamera()->viewProjectionMatrix() * modelMatrix);
-	m_RenderingEffect->setModelMatrix(modelMatrix); 
-	m_RenderingEffect->setViewMatrix(m_scene->getCamera()->viewMatrix());
+	m_renderingEffect->setEyeWorldPos(m_scene->getCamera()->position());
+	m_renderingEffect->setMVPMatrix(m_scene->getCamera()->viewProjectionMatrix() * modelMatrix);
+	m_renderingEffect->setModelMatrix(modelMatrix); 
+	m_renderingEffect->setViewMatrix(m_scene->getCamera()->viewMatrix());
 
 	// do the skeleton animation here
 	// check if the model has animation first
@@ -259,7 +259,7 @@ void RiggedModel::render( const float currentTime )
  	// update the bone positions
 	for (int i = 0 ; i < Transforms.size() ; ++i) 
 	{
-		m_RenderingEffect->setBoneTransform(i, Transforms[i]);
+		m_renderingEffect->setBoneTransform(i, Transforms[i]);
 	}
 
 
@@ -291,7 +291,7 @@ void RiggedModel::render( const float currentTime )
 		}
 
 		// enable the material
-		m_RenderingEffect->setMaterial(m_materials[i]);
+		m_renderingEffect->setMaterial(m_materials[i]);
 
 		drawElements(i);
 	}

@@ -68,7 +68,7 @@ void Skybox::render( const float currentTime )
 {
 	m_skyboxTechnique->enable();
 
-	QMatrix4x4 modelMatrix;
+	mat4 modelMatrix;
 	modelMatrix.translate(m_scene->getCamera()->position());
 
 	GLint OldCullFaceMode;

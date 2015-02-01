@@ -27,10 +27,10 @@ GLint Technique::getUniformLocation(const char* pUniformName)
 {
     GLuint location = m_shaderProgram->uniformLocation(pUniformName);
 
-	if (location == INVALID_LOCATION) 
-	{
-		qWarning() << "Warning! Unable to get the location of uniform" << pUniformName << "of Shader:" << m_shaderFileName;
-	}
+// 	if (location == INVALID_LOCATION) 
+// 	{
+// 		qWarning() << "Warning! Unable to get the location of uniform" << pUniformName << "of Shader:" << m_shaderFileName;
+// 	}
 
 	return location;
 }

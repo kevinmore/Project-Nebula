@@ -26,7 +26,7 @@ public:
 	QString fileName() const { return m_fileName; }
 	void setFileName(QString& file) { m_fileName = file; }
 
-	ShadingTechniquePtr renderingEffect() const { return m_RenderingEffect; }
+	ShadingTechniquePtr renderingEffect() const { return m_renderingEffect; }
 	MaterialPtr getMaterial() const { return m_materials[0]; }
 
 
@@ -45,7 +45,7 @@ protected:
 	void drawElements(unsigned int index);
 
 	QString m_fileName;
-	ShadingTechniquePtr m_RenderingEffect;
+	ShadingTechniquePtr m_renderingEffect;
 	QVector<MeshPtr> m_meshes;
 	QVector<MaterialPtr> m_materials;
 	GLuint m_vao;

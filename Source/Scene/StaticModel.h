@@ -20,7 +20,7 @@ public:
 
 	virtual void render( const float currentTime );
 	//virtual QString className() { return "StaticModel"; }
-	ShadingTechniquePtr getShadingTech() const { return m_RenderingEffect; }
+	ShadingTechniquePtr getShadingTech() const { return m_renderingEffect; }
 
 	Scene* getScene() const { return m_scene; }
 	QVector<ModelDataPtr> getModelData() const { return m_modelDataVector; }

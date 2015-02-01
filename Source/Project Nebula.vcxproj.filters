@@ -61,6 +61,7 @@
     <ClCompile Include="Physicis\Collider\SphereCollider.cpp" />
     <ClCompile Include="Physicis\Collider\CollisionFeedback.cpp" />
     <ClCompile Include="Physicis\World\PhysicsWorldObject.cpp" />
+    <ClCompile Include="Physicis\Collider\AbstractCollider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Primitives\Texture.h" />

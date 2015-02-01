@@ -24,7 +24,7 @@ public:
 	//virtual QString className() { return "RiggedModel"; }
 	virtual void render( const float currentTime );
 
-	ShadingTechniquePtr getShadingTech() const { return m_RenderingEffect; }
+	ShadingTechniquePtr getShadingTech() const { return m_renderingEffect; }
 
 	Scene* getScene() const { return m_scene; }
 	QVector<ModelDataPtr> getModelData() const { return m_modelDataVector; }

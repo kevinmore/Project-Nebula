@@ -25,10 +25,10 @@ StaticModel::StaticModel( const StaticModel* orignal )
 
 	// install shader
 	QString shaderName = orignal->getShadingTech()->shaderFileName();
-	m_RenderingEffect = ShadingTechniquePtr(new ShadingTechnique(m_scene, shaderName, ShadingTechnique::STATIC));
+	m_renderingEffect = ShadingTechniquePtr(new ShadingTechnique(shaderName, ShadingTechnique::STATIC, m_scene));
 	// copy the vao
 	m_vao = orignal->getShadingTech()->getVAO();
-	m_RenderingEffect->setVAO(m_vao);
+	m_renderingEffect->setVAO(m_vao);
 }
 
 
@@ -124,15 +124,15 @@ void StaticModel::initialize(QVector<ModelDataPtr> modelDataVector)
 
 void StaticModel::render( float time )
 {
-	m_RenderingEffect->enable();
+	m_renderingEffect->enable();
 
-	QMatrix4x4 modelMatrix = m_actor->getTranformMatrix();
+	mat4 modelMatrix = m_actor->getTranformMatrix();
 	
 	//QMatrix3x3 normalMatrix = modelViewMatrix.normalMatrix();
-	m_RenderingEffect->setEyeWorldPos(m_scene->getCamera()->position());
-	m_RenderingEffect->setMVPMatrix(m_scene->getCamera()->viewProjectionMatrix() * modelMatrix);
-	m_RenderingEffect->setModelMatrix(modelMatrix); 
-	m_RenderingEffect->setViewMatrix(m_scene->getCamera()->viewMatrix());
+	m_renderingEffect->setEyeWorldPos(m_scene->getCamera()->position());
+	m_renderingEffect->setMVPMatrix(m_scene->getCamera()->viewProjectionMatrix() * modelMatrix);
+	m_renderingEffect->setModelMatrix(modelMatrix); 
+	m_renderingEffect->setViewMatrix(m_scene->getCamera()->viewMatrix());
 
 	// draw each mesh
 	for(int i = 0; i < m_meshes.size(); ++i)
@@ -162,7 +162,7 @@ void StaticModel::render( float time )
 		}
 
 		// enable the material
-		m_RenderingEffect->setMaterial(m_materials[i]);
+		m_renderingEffect->setMaterial(m_materials[i]);
 
 		drawElements(i);
 	}
