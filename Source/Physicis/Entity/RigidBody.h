@@ -1,7 +1,6 @@
 #pragma once
 #include <Physicis/World/PhysicsWorldObject.h>
-#include <Physicis/Geometry/BoxShape.h>
-#include <Physicis/Geometry/SphereShape.h>
+#include <Physicis/Geometry/AbstractShape.h>
 #include <Utility/Math.h>
 
 struct MassProperties

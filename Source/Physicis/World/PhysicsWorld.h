@@ -1,9 +1,6 @@
 #pragma once
 #include "PhysicsWorldConfig.h"
 #include "PhysicsWorldObject.h"
-#include <Physicis/Entity/BoxRigidBody.h>
-#include <Physicis/Geometry/BoxShape.h>
-#include <Physicis/Geometry/SphereShape.h>
 
 class PhysicsWorld
 {

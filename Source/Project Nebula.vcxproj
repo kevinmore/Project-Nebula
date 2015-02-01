@@ -16,9 +16,11 @@
     <ClCompile Include="Animation\IK\FABRIKSolver.cpp" />
     <ClCompile Include="Animation\IK\CCDIKSolver.cpp" />
     <ClCompile Include="Animation\Rig\Pose.cpp" />
+    <ClCompile Include="Physicis\Collider\CollisionFeedback.cpp" />
+    <ClCompile Include="Physicis\Entity\SphereRigidBody.cpp" />
+    <ClCompile Include="Physicis\Collider\SphereCollider.cpp" />
     <ClCompile Include="Utility\AssimpThread.cpp" />
     <ClCompile Include="Physicis\Entity\BoxRigidBody.cpp" />
-    <ClCompile Include="Physicis\Geometry\BoxShape.cpp" />
     <ClCompile Include="Physicis\World\PhysicsWorldConfig.cpp" />
     <ClCompile Include="Physicis\World\PhysicsWorld.cpp" />
     <ClCompile Include="Physicis\World\PhysicsWorldObject.cpp" />
@@ -34,7 +36,6 @@
     <ClCompile Include="Primitives\Component.cpp" />
     <ClCompile Include="Scene\ShadingTechniques\SkyboxTechnique.cpp" />
     <ClCompile Include="Scene\Skybox.cpp" />
-    <ClCompile Include="Physicis\Geometry\SphereShape.cpp" />
     <ClCompile Include="UI\moc_SkyboxDialog.cc" />
     <ClCompile Include="UI\SkyboxDialog.cpp" />
     <ClCompile Include="Utility\LogCenter.cpp" />
@@ -70,15 +71,19 @@
     <ClCompile Include="Scene\Managers\MaterialManager.cpp" />
     <ClCompile Include="Scene\Managers\TextureManager.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Utility\OpenGLUniformBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Physicis\Collider\AbstractCollider.h" />
     <ClInclude Include="Animation\FK\FKController.h" />
     <ClInclude Include="Animation\Rig\BoneInfo.h" />
     <ClInclude Include="Animation\IK\FABRIKSolver.h" />
     <ClInclude Include="Animation\IK\CCDIKSolver.h" />
     <ClInclude Include="Animation\Rig\Pose.h" />
+    <ClInclude Include="Physicis\Collider\CollisionFeedback.h" />
+    <ClInclude Include="Physicis\Entity\SphereRigidBody.h" />
+    <ClInclude Include="Physicis\Geometry\SphereShape.h" />
     <ClInclude Include="Primitives\Puppet.h" />
+    <ClInclude Include="Physicis\Collider\SphereCollider.h" />
     <ClInclude Include="Utility\AssimpThread.h" />
     <ClInclude Include="UI\Canvas.h" />
     <ClInclude Include="UI\HierarchyWidget.h" />
@@ -98,7 +103,6 @@
     <ClInclude Include="Scene\Skybox.h" />
     <ClInclude Include="UI\SkyboxDialog.h" />
     <ClInclude Include="Physicis\Geometry\AbstractShape.h" />
-    <ClInclude Include="Physicis\Geometry\SphereShape.h" />
     <ClInclude Include="UI\ui_HierarchyWidget.h" />
     <ClInclude Include="UI\ui_SkyboxWidget.h" />
     <ClInclude Include="Utility\Serialization.h" />
@@ -125,7 +129,6 @@
     <ClInclude Include="Scene\Managers\TextureManager.h" />
     <ClInclude Include="Utility\Math.h" />
     <ClInclude Include="Utility\EngineCommon.h" />
-    <ClInclude Include="Utility\OpenGLUniformBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Physicis\World\PhysicsWorldObject.inl" />

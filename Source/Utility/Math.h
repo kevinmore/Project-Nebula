@@ -42,12 +42,25 @@ namespace Math
          * a rectangular block aligned with the body's coordinate
          * system with the given axis half-sizes and mass.
          */
-        static void setBlockInertiaTensor(mat3& matIn, const vec3& halfSizes, float mass)
+        static void setBoxInertiaTensor(mat3& matIn, const vec3& halfSizes, float mass)
         {
             vec3 squares(halfSizes.x() * halfSizes.x(), halfSizes.y() * halfSizes.y(), halfSizes.z() * halfSizes.z());
 			setInertiaTensorCoeffs(matIn, 0.3333f * mass * (squares.y() + squares.z()),
 										  0.3333f * mass * (squares.x() + squares.z()),
 										  0.3333f * mass * (squares.x() + squares.y()));
+        }
+
+		/**
+         * Sets the value of the matrix as an inertia tensor of
+         * a sphere aligned with the body's coordinate
+         * system with the given radius and mass.
+         */
+        static void setSphereInertiaTensor(mat3& matIn, float radius, float mass)
+        {
+			float square = radius * radius;
+			setInertiaTensorCoeffs(matIn, 0.4f * mass * square,
+										  0.4f * mass * square,
+										  0.4f * mass * square);
         }
 
 		 /**

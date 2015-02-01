@@ -1,7 +1,5 @@
 #include "PhysicsWorld.h"
 #include "PhysicsWorldObject.inl"
-#include <Physicis/Entity/BoxRigidBody.h>
-#include <Physicis/Geometry/BoxShape.h>
 
 PhysicsWorld::PhysicsWorld(const PhysicsWorldConfig& config)
 	: m_config(config),
@@ -33,7 +31,8 @@ void PhysicsWorld::update(const float currentTime)
 	// update the physics objects
 	foreach(PhysicsWorldObject* obj, m_objectList)
 	{
-		obj->update(dt);
+		if(obj)
+			obj->update(dt);
 	}
 }
 

@@ -1,13 +1,12 @@
 #pragma once
 #include "RigidBody.h"
 
-class BoxRigidBody : public RigidBody
+class SphereRigidBody : public RigidBody
 {
 public:
-
 	/// Default constructor - sets the initial velocity to zero
-	BoxRigidBody(const vec3& position = Math::Vector3::ZERO,
-		         const quart& rotation = Math::Quaternion::ZERO);
+	SphereRigidBody(const vec3& position = Math::Vector3::ZERO,
+				    const quart& rotation = Math::Quaternion::ZERO);
 
 	/// Updates the properties of the rigid body
 	virtual void update(const float dt);
@@ -18,8 +17,8 @@ public:
 	/// Sets the inverse mass of the rigid body.
 	void setMassInv(float mInv);
 
-	// Sets the half extents, this will update the inertia tensor
-	void setBoxHalfExtents(const vec3& halfExtents);
+	/// Sets the radius of the sphere
+	void setSphereRadius(float newRadius);
 
 	/// Gets the inertia tensor of the rigid body in local space.
 	virtual mat3 getInertiaLocal() const;
@@ -55,4 +54,4 @@ public:
 	virtual void applyTorque(const float deltaTime, const vec3& torque);
 };
 
-typedef QSharedPointer<BoxRigidBody> BoxRigidBodyPtr;
+typedef QSharedPointer<SphereRigidBody> SphereRigidBodyPtr;

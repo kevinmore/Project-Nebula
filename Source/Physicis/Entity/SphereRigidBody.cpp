@@ -1,23 +1,23 @@
-#include "BoxRigidBody.h"
+#include "SphereRigidBody.h"
 #include <Utility/Math.h>
 #include <Physicis/World/PhysicsWorld.h>
 #include <Physicis/World/PhysicsWorldObject.inl>
-#include <Physicis/Geometry/BoxShape.h>
+#include <Physicis/Geometry/SphereShape.h>
 
-BoxRigidBody::BoxRigidBody( const vec3& position, const quart& rotation )
+SphereRigidBody::SphereRigidBody(const vec3& position, const quart& rotation)
 	: RigidBody(position, rotation)
 {
-	m_MotionType = RigidBody::MOTION_BOX_INERTIA;
-	vec3 halfSize(0.5, 0.5, 0.5);
-	m_shape = new BoxShape(m_centerOfMass, halfSize);
+	m_MotionType = RigidBody::MOTION_SPHERE_INERTIA;
+	float radius = 0.5f;
+	m_shape = new SphereShape(m_centerOfMass, radius);
 
-	Math::Matrix3::setBoxInertiaTensor(m_inertiaTensor, halfSize, m_mass);
+	Math::Matrix3::setSphereInertiaTensor(m_inertiaTensor, radius, m_mass);
 	m_inertiaTensorInv = m_inertiaTensor;
 	Math::Matrix3::setInverse(m_inertiaTensorInv);
 }
 
 
-void BoxRigidBody::setMass( float m )
+void SphereRigidBody::setMass( float m )
 {
 	float massInv;
 	if (m == 0.0f)
@@ -30,35 +30,34 @@ void BoxRigidBody::setMass( float m )
 	setMassInv(massInv);
 }
 
-void BoxRigidBody::setMassInv( float mInv )
+void SphereRigidBody::setMassInv( float mInv )
 {
 	m_massInv = mInv;
 
-	BoxShape* box = (BoxShape*)m_shape;
+	SphereShape* sphere = (SphereShape*)m_shape;
 
-	Math::Matrix3::setBoxInertiaTensor(m_inertiaTensor, box->getHalfExtents(), m_mass);
+	Math::Matrix3::setSphereInertiaTensor(m_inertiaTensor, sphere->getRadius(), m_mass);
 	m_inertiaTensorInv = m_inertiaTensor;
 	Math::Matrix3::setInverse(m_inertiaTensorInv);
 }
 
 
-void BoxRigidBody::setBoxHalfExtents( const vec3& halfExtents )
+void SphereRigidBody::setSphereRadius( float newRadius )
 {
-	BoxShape* box = (BoxShape*)m_shape;
-	box->setHalfExtents(halfExtents);
+	SphereShape* sphere = (SphereShape*)m_shape;
+	sphere->setRadius(newRadius);
 
-	Math::Matrix3::setBoxInertiaTensor(m_inertiaTensor, halfExtents, m_mass);
+	Math::Matrix3::setSphereInertiaTensor(m_inertiaTensor, newRadius, m_mass);
 	m_inertiaTensorInv = m_inertiaTensor;
 	Math::Matrix3::setInverse(m_inertiaTensorInv);
 }
 
-
-mat3 BoxRigidBody::getInertiaLocal() const
+mat3 SphereRigidBody::getInertiaLocal() const
 {
 	return m_inertiaTensor;
 }
 
-void BoxRigidBody::setInertiaLocal( const mat3& inertia )
+void SphereRigidBody::setInertiaLocal( const mat3& inertia )
 {
 	m_inertiaTensor = inertia;
 
@@ -66,30 +65,32 @@ void BoxRigidBody::setInertiaLocal( const mat3& inertia )
 	Math::Matrix3::setInverse(m_inertiaTensorInv);
 }
 
-mat3 BoxRigidBody::getInertiaInvLocal() const
+mat3 SphereRigidBody::getInertiaInvLocal() const
 {
 	return m_inertiaTensorInv;
 }
 
-void BoxRigidBody::setInertiaInvLocal( const mat3& inertiaInv )
+void SphereRigidBody::setInertiaInvLocal( const mat3& inertiaInv )
 {
 	m_inertiaTensorInv = inertiaInv;
 }
 
-mat3 BoxRigidBody::getInertiaWorld() const
+
+mat3 SphereRigidBody::getInertiaWorld() const
 {
 	mat3 temp = m_inertiaTensorInvWorld;
 	Math::Matrix3::setInverse(temp);
-	
+
 	return temp;
 }
 
-mat3 BoxRigidBody::getInertiaInvWorld() const
+mat3 SphereRigidBody::getInertiaInvWorld() const
 {
 	return m_inertiaTensorInvWorld;
 }
 
-void BoxRigidBody::applyPointImpulse( const vec3& imp, const vec3& p )
+
+void SphereRigidBody::applyPointImpulse( const vec3& imp, const vec3& p )
 {
 	// PSEUDOCODE IS m_linearVelocity += m_massInv * imp;
 	// PSEUDOCODE IS m_angularVelocity += getWorldInertiaInv() * (p - centerOfMassWorld).cross(imp);
@@ -101,7 +102,7 @@ void BoxRigidBody::applyPointImpulse( const vec3& imp, const vec3& p )
 	m_angularVelocity += dv;
 }
 
-void BoxRigidBody::applyAngularImpulse( const vec3& imp )
+void SphereRigidBody::applyAngularImpulse( const vec3& imp )
 {
 	// PSEUDOCODE IS m_angularVelocity += m_worldInertiaInv * imp;
 	vec3 dv = Math::Vector3::setMul(imp, m_inertiaTensorInvWorld);
@@ -109,22 +110,22 @@ void BoxRigidBody::applyAngularImpulse( const vec3& imp )
 	m_angularVelocity += dv;
 }
 
-void BoxRigidBody::applyForce( const float deltaTime, const vec3& force )
+void SphereRigidBody::applyForce( const float deltaTime, const vec3& force )
 {
 	applyLinearImpulse(force * deltaTime);
 }
 
-void BoxRigidBody::applyForce( const float deltaTime, const vec3& force, const vec3& p )
+void SphereRigidBody::applyForce( const float deltaTime, const vec3& force, const vec3& p )
 {
 	applyPointImpulse(force * deltaTime, p);
 }
 
-void BoxRigidBody::applyTorque( const float deltaTime, const vec3& torque )
+void SphereRigidBody::applyTorque( const float deltaTime, const vec3& torque )
 {
 	applyAngularImpulse(torque * deltaTime);
 }
 
-void BoxRigidBody::update( const float dt )
+void SphereRigidBody::update( const float dt )
 {
 	m_transformMatrix.setToIdentity();
 
@@ -133,11 +134,11 @@ void BoxRigidBody::update( const float dt )
 
 	quart oldRotation = m_rotation;
 	m_rotation = quart::fromAxisAndAngle(Math::Vector3::UNIT_X, m_eularAngles.x())
-			   * quart::fromAxisAndAngle(Math::Vector3::UNIT_Y, m_eularAngles.y())
-		       * quart::fromAxisAndAngle(Math::Vector3::UNIT_Z, m_eularAngles.z());
+		* quart::fromAxisAndAngle(Math::Vector3::UNIT_Y, m_eularAngles.y())
+		* quart::fromAxisAndAngle(Math::Vector3::UNIT_Z, m_eularAngles.z());
 
 	m_transformMatrix.rotate(m_rotation);
-	
+
 	mat3 rotX, rotY, rotZ;
 	rotX.m[1][1] =  qCos(m_eularAngles.x());
 	rotX.m[1][2] = -qSin(m_eularAngles.x());
@@ -160,9 +161,3 @@ void BoxRigidBody::update( const float dt )
 	// update the linear properties in the parent
 	RigidBody::update(dt);
 }
-
-
-
-
-
-

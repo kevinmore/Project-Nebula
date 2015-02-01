@@ -6,14 +6,18 @@ class SphereShape : public AbstractShape
 public:
 
 	/// Creates an arbitrary sphere with given center and radius.
-	inline SphereShape();
-	inline SphereShape(const vec3& center, float radius);
-	~SphereShape();
+	SphereShape()
+		: AbstractShape(AbstractShape::SPHERE, vec3(0, 0, 0)),
+		m_radius(0.5f)
+	{}
 
-	inline float getRadius() const;
-	inline void setRadius(float newRadius);
+	SphereShape(const vec3& center, float radius)
+		: AbstractShape(AbstractShape::SPHERE, center),
+		m_radius(radius)
+	{}
 
-	
+	float getRadius() const { return m_radius; }
+	void setRadius(float newRadius) { m_radius = newRadius; }
 
 protected:
 	float m_radius;

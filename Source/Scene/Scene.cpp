@@ -2,6 +2,8 @@
 #include <Utility/LoaderThread.h>
 #include <Utility/Serialization.h>
 #include <Primitives/Puppet.h>
+#include <Physicis/Entity/BoxRigidBody.h>
+#include <Physicis/Entity/SphereRigidBody.h>
 
 Scene::Scene(QObject* parent)
 	: AbstractScene(parent),
@@ -59,16 +61,27 @@ void Scene::initialize()
 	// show sky box for demo purpose
 	//toggleSkybox(true);
 	// setup a basic physics world
-	GameObjectPtr go = createEmptyGameObject("Rigid Cube");
-	LoaderThread loader(this, "../Resource/Models/Common/box.obj", go, m_sceneRootNode, false);
-	BoxRigidBodyPtr cube(new BoxRigidBody());
-	cube->setPosition(vec3(0, 1, 0));
+// 	GameObjectPtr go = createEmptyGameObject("Rigid Cube");
+// 	LoaderThread loader(this, "../Resource/Models/Common/cube.obj", go, m_sceneRootNode, false);
+// 	BoxRigidBodyPtr cube(new BoxRigidBody());
+// 	cube->setPosition(vec3(0, 1, 0));
+// 	//cube->setLinearVelocity(vec3(50,0,0));
+// 	cube->setAngularVelocity(vec3(0, 10, 0));
+// 	cube->setMass(100);
+// 	cube->setGravityFactor(0.0f);
+// 	go->attachComponent(cube);
+// 	m_physicsWorld->addEntity(cube.data());
+
+	GameObjectPtr go = createEmptyGameObject("Rigid Sphere");
+	LoaderThread loader(this, "../Resource/Models/Common/woodenball.obj", go, m_sceneRootNode, false);
+	SphereRigidBodyPtr sphere(new SphereRigidBody());
+	sphere->setPosition(vec3(0, 1, 0));
 	//cube->setLinearVelocity(vec3(50,0,0));
-	cube->setAngularVelocity(vec3(0, 10, 0));
-	cube->setMass(100);
-	cube->setGravityFactor(0.0f);
-	go->attachComponent(cube);
-	m_physicsWorld->addEntity(cube.data());
+	//sphere->setAngularVelocity(vec3(0, 10, 0));
+	//sphere->setMass(100);
+	sphere->setGravityFactor(0.0f);
+	go->attachComponent(sphere);
+	m_physicsWorld->addEntity(sphere.data());
 
 	// particle system
 // 	GameObjectPtr particle = createParticleSystem("Rigid Cube");

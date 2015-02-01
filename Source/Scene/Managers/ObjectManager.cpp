@@ -2,6 +2,8 @@
 #include <Scene/Scene.h>
 #include <Animation/FK/FKController.h>
 #include <Animation/IK/FABRIKSolver.h>
+#include <Physicis/Entity/BoxRigidBody.h>
+#include <Physicis/Entity/SphereRigidBody.h>
 
 ObjectManager::ObjectManager(Scene* scene, QObject* parent)
 	: QObject(parent),
@@ -48,8 +50,8 @@ void ObjectManager::renderAll(const float currentTime)
 // 				ParticleSystemPtr ps = child->getComponent("ParticleSystem").dynamicCast<ParticleSystem>();
 // 				rb->applyPointImpulse(ps->getLinearImpuse() * 0.8f, child->position() / 100.0f);
 // 			}
- 			//rb->applyAngularImpulse(vec3(0,0.1,0));
-			rb->applyPointImpulse(vec3(0.1, 0, 0), vec3(0.2, 0, 0.2));
+ 			rb->applyAngularImpulse(vec3(0,0.1,0));
+			//rb->applyPointImpulse(vec3(0.1, 0, 0), vec3(0.2, 0, 0.2));
 			go->setTransformMatrix(rb->getTransformMatrix());
 		}
 	}
