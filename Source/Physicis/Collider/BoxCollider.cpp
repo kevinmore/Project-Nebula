@@ -24,7 +24,7 @@ CollisionFeedback BoxCollider::intersect( AbstractCollider* other )
 {
 	if (other->m_colliderType != AbstractCollider::COLLIDER_BOX)
 	{
-		qWarning() << "Collision detection between OBB and other colliders are not implemented yet.";
+		//qWarning() << "Collision detection between OBB and other colliders are not implemented yet.";
 		return CollisionFeedback();
 	}
 	BoxCollider* b = dynamic_cast<BoxCollider*>(other);
@@ -38,10 +38,10 @@ CollisionFeedback BoxCollider::intersect( AbstractCollider* other )
 	float ra, rb;
 	mat3 R, AbsR;
 
-	vec3 ea = getGeometryShape().getHalfExtents();
+	vec3 ea = m_boxShape.getHalfExtents();
 	vec3 eb = b->getGeometryShape().getHalfExtents();
 
-	mat3 rotaionA = getRigidBody()->getRotationMatrix();
+	mat3 rotaionA = m_rigidBody->getRotationMatrix();
 	mat3 rotaionB = b->getRigidBody()->getRotationMatrix();
 
 
@@ -51,7 +51,7 @@ CollisionFeedback BoxCollider::intersect( AbstractCollider* other )
 			R.m[i][j] = vec3::dotProduct(Matrix3::getRow(rotaionA, i), Matrix3::getRow(rotaionB, j));
 
 	// Compute translation vector t
-	vec3 t = other->getCenter() - getCenter();
+	vec3 t = other->getCenter() - m_center;
 	// Bring translation into a¡¯s coordinate frame
 	float tx = vec3::dotProduct(t, Matrix3::getRow(rotaionA, 0));
 	float ty = vec3::dotProduct(t, Matrix3::getRow(rotaionA, 1));

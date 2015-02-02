@@ -15,7 +15,7 @@ Scene::Scene(QObject* parent)
 	  m_relativeTime(0.0f),
 	  m_delayedTime(0.0f),
 	  m_bShowSkybox(false),
-	  m_bPhysicsPaused(false),
+	  m_bPhysicsPaused(true),
 	  m_bStepPhysics(false),
 	  m_physicsWorld(0)
 {
@@ -63,34 +63,36 @@ void Scene::initialize()
 	
 	// show sky box for demo purpose
 	//toggleSkybox(true);
+
 	// setup a basic physics world
-	GameObjectPtr go = createEmptyGameObject("Rigid Sphere");
-	LoaderThread loader(this, "../Resource/Models/Common/woodenball.obj", go, m_sceneRootNode, false);
-	SphereRigidBodyPtr rb(new SphereRigidBody());
-	rb->setPosition(vec3(-3, 1, -0.4));
-	rb->setGravityFactor(0.0f);
-	rb->setLinearVelocity(Math::Random::random(vec3(0.1, 0, 0), vec3(3, 0, 0)));
-	rb->setAngularVelocity(Math::Random::random(vec3(-0, 0, 0), vec3(60, 60, 60)));
-	go->attachComponent(rb);
+	// setup a demo room
+	GameObjectPtr go = createEmptyGameObject("Boarder");
+	go->setPosition(0, 6, 0);
+	BoxColliderPtr boarder(new BoxCollider(vec3(0, 6, 0), vec3(6, 6, 6), this));
+	boarder->setColor(Qt::cyan);
+	go->attachComponent(boarder);
 
-// 	SphereColliderPtr collider(new SphereCollider(rb->getPosition(), 0.5f, this));
-// 	rb->attachCollider(collider);
-	BoxColliderPtr collider(new BoxCollider(rb->getPosition(), vec3(0.5, 0.5, 0.5), this));
-	rb->attachCollider(collider);
+	// create rigid bodies for simulation
+	for(int i = 0; i < 20; ++i)
+	{
+		float ratio = Math::Random::random(0.5f, 1.2f);
+		go = createEmptyGameObject("Rigid Sphere");
+		go->setScale(50);
+		LoaderThread loader(this, "../Resource/Models/BroadPhaseDemo/robot.obj", go, m_sceneRootNode, false);
+		SphereRigidBodyPtr rb(new SphereRigidBody());
+		rb->setPosition(Math::Random::random(vec3(-4, 1, -4), vec3(3, 9, 4)));
+		rb->setGravityFactor(0.0f);
+		rb->setLinearVelocity(Math::Random::random(vec3(-4, -4, -4), vec3(4, 4, 4)));
+		rb->setAngularVelocity(Math::Random::random(vec3(0, 0, 0), vec3(100, 100, 100)));
+		go->attachComponent(rb);
+		SphereColliderPtr collider(new SphereCollider(rb->getPosition(), 0.5f, this));
+// 		BoxColliderPtr collider(new BoxCollider(rb->getPosition(), vec3(0.5, 0.5, 0.3), this));
+ 		rb->attachCollider(collider);
+		m_physicsWorld->addEntity(rb.data());
+	}
 
-	m_physicsWorld->addEntity(rb.data());
 
-	GameObjectPtr go2 = createEmptyGameObject("Rigid Sphere2");
-	LoaderThread loader2(this, "../Resource/Models/Common/woodenball.obj", go2, m_sceneRootNode, false);
-	SphereRigidBodyPtr rb2(new SphereRigidBody());
-	rb2->setPosition(vec3(3, 1.5, 0.4));
-	rb2->setGravityFactor(0.0f);
-	rb2->setLinearVelocity(Math::Random::random(vec3(-0.1, 0, 0), vec3(-3, 0, 0)));
-	rb2->setAngularVelocity(Math::Random::random(vec3(-0, 0, 0), vec3(60, 60, 60)));
-	go2->attachComponent(rb2);
-	BoxColliderPtr collider2(new BoxCollider(rb2->getPosition(), vec3(0.5, 0.5, 0.5), this));
-	rb2->attachCollider(collider2);
-	m_physicsWorld->addEntity(rb2.data());
+
 
 // 	BoxColliderPtr collider(new BoxCollider(vec3(0, 1, 0), vec3(0.5, 0.5, 0.5), this));
 // 	go->attachComponent(collider);

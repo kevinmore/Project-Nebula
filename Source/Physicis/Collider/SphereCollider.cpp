@@ -23,7 +23,7 @@ CollisionFeedback SphereCollider::intersect( AbstractCollider* other )
 {
 	if (other->m_colliderType != AbstractCollider::COLLIDER_SPHERE)
 	{
-		qWarning() << "Collision detection between sphere and other colliders are not implemented yet.";
+		//qWarning() << "Collision detection between sphere and other colliders are not implemented yet.";
 		return CollisionFeedback();
 	}
 	SphereCollider* sp = dynamic_cast<SphereCollider*>(other);

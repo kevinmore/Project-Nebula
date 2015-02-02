@@ -32,6 +32,8 @@ public:
 	virtual QString className() { return "Collider"; }
 	virtual void render(const float currentTime);
 
+	void setColor(const QColor& col);
+
 	ColliderType m_colliderType;
 
 protected:

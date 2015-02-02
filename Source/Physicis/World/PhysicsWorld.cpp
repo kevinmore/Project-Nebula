@@ -34,6 +34,64 @@ void PhysicsWorld::simulate(const float deltaTime)
 	foreach(PhysicsWorldObject* ent, m_entityList)
 	{
 		ent->update(deltaTime);
+
+		// make sure they are in the room
+		RigidBody* rb = dynamic_cast<RigidBody*>(ent);
+		vec3 pos = rb->getPosition();
+		if (pos.x() > 5)
+		{
+			rb->setLinearVelocity(Math::Vector3::reflect(rb->getLinearVelocity(), vec3(-1,0,0)));
+			vec3 v = rb->getLinearVelocity();
+			if (qAbs(v.x()) < 0.5f)
+			{
+				rb->setLinearVelocity(vec3(v.x() - 1.0f, v.y(), v.z()));
+			}
+		}
+		if ( pos.x() < -5)
+		{
+			rb->setLinearVelocity(Math::Vector3::reflect(rb->getLinearVelocity(), vec3(1,0,0)));
+			vec3 v = rb->getLinearVelocity();
+			if (qAbs(v.x()) < 0.5f)
+			{
+				rb->setLinearVelocity(vec3(v.x() + 1.0f, v.y(), v.z()));
+			}
+		}
+		if (pos.y() > 10)
+		{
+			rb->setLinearVelocity(Math::Vector3::reflect(rb->getLinearVelocity(), vec3(0,-1,0)));
+			vec3 v = rb->getLinearVelocity();
+			if (qAbs(v.y()) < 0.5f)
+			{
+				rb->setLinearVelocity(vec3(v.x(), v.y() - 1.0f, v.z()));
+			}
+		}
+		if ( pos.y() < 1)
+		{
+			rb->setLinearVelocity(Math::Vector3::reflect(rb->getLinearVelocity(), vec3(0,1,0)));
+			vec3 v = rb->getLinearVelocity();
+			if (qAbs(v.y()) < 0.5f)
+			{
+				rb->setLinearVelocity(vec3(v.x(), v.y() + 1.0f, v.z()));
+			}
+		}
+		if (pos.z() > 5)
+		{
+			rb->setLinearVelocity(Math::Vector3::reflect(rb->getLinearVelocity(), vec3(0,0,-1)));
+			vec3 v = rb->getLinearVelocity();
+			if (qAbs(v.z()) < 0.5f)
+			{
+				rb->setLinearVelocity(vec3(v.x(), v.y(), v.z() - 1.0f));
+			}
+		}
+		if ( pos.z() < -5)
+		{
+			rb->setLinearVelocity(Math::Vector3::reflect(rb->getLinearVelocity(), vec3(0,0,1)));
+			vec3 v = rb->getLinearVelocity();
+			if (qAbs(v.z()) < 0.5f)
+			{
+				rb->setLinearVelocity(vec3(v.x(), v.y(), v.z() + 1.0f));
+			}
+		}
 	}
 
 	// handle the collision detection
@@ -88,6 +146,10 @@ void PhysicsWorld::handleCollisions()
 		{
 			AbstractCollider* c1 = m_colliderList[i];
 			AbstractCollider* c2 = m_colliderList[j];
+			
+			// mark the bounding volume as green
+			c1->setColor(Qt::green);
+			c2->setColor(Qt::green);
 
 			CollisionFeedback result = c1->intersect(c2);
 
@@ -108,7 +170,12 @@ void PhysicsWorld::handleCollisions()
 
  				rb1->setLinearVelocity(v1Prime);
  				rb2->setLinearVelocity(v2Prime);
+
+				// mark the bounding volume as red
+				c1->setColor(Qt::red);
+				c2->setColor(Qt::red);
 			}
+
 		}
 	}
 }

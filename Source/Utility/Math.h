@@ -506,6 +506,12 @@ namespace Math
 
 			return result;
 		}
+
+		// reflect a vector3 based on a normal vector
+		static vec3 reflect(const vec3& vecIn, const vec3& surfaceNormal)
+		{
+			return vecIn - 2 * vec3::dotProduct(vecIn, surfaceNormal) * surfaceNormal;
+		}
 	}
 
 	namespace Vector4

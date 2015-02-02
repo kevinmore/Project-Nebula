@@ -15,6 +15,8 @@ void AbstractCollider::init()
 	Q_ASSERT(initializeOpenGLFunctions());
 
 	m_renderingEffect = ShadingTechniquePtr(new ShadingTechnique("static_bounding_volume"));
+	// the initial color is green, when it collides, it goes to red
+	m_renderingEffect->setMatEmissiveColor(Qt::green);
 }
 
 
@@ -23,6 +25,9 @@ void AbstractCollider::render( const float currentTime )
 	m_renderingEffect->enable();
 
 	mat4 modelMatrix = m_actor->getTranformMatrix() * m_transformMatrix;
+	// do not scale, even when the game object is scaled
+	vec3 scale = m_actor->scale();
+	modelMatrix.scale(1.0f/scale.x(), 1.0f/scale.y(), 1.0f/scale.z());
 	m_renderingEffect->setEyeWorldPos(m_scene->getCamera()->position());
 	m_renderingEffect->setMVPMatrix(m_scene->getCamera()->viewProjectionMatrix() * modelMatrix);
 	m_renderingEffect->setModelMatrix(modelMatrix); 
@@ -59,4 +64,10 @@ void AbstractCollider::drawElements( uint index )
 
 	// Make sure the VAO is not changed from the outside    
 	glBindVertexArray(0);
+}
+
+void AbstractCollider::setColor(const QColor& col)
+{
+	m_renderingEffect->enable();
+	m_renderingEffect->setMatEmissiveColor(col);
 }
