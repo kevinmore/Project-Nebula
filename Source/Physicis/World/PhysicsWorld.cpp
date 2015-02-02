@@ -42,54 +42,54 @@ void PhysicsWorld::simulate(const float deltaTime)
 		{
 			rb->setLinearVelocity(Math::Vector3::reflect(rb->getLinearVelocity(), vec3(-1,0,0)));
 			vec3 v = rb->getLinearVelocity();
-			if (qAbs(v.x()) < 0.5f)
+			if (qAbs(v.x()) < 1.0f)
 			{
-				rb->setLinearVelocity(vec3(v.x() - 1.0f, v.y(), v.z()));
+				rb->setLinearVelocity(vec3( - 1.0f, v.y(), v.z()));
 			}
 		}
 		if ( pos.x() < -5)
 		{
 			rb->setLinearVelocity(Math::Vector3::reflect(rb->getLinearVelocity(), vec3(1,0,0)));
 			vec3 v = rb->getLinearVelocity();
-			if (qAbs(v.x()) < 0.5f)
+			if (qAbs(v.x()) < 1.0f)
 			{
-				rb->setLinearVelocity(vec3(v.x() + 1.0f, v.y(), v.z()));
+				rb->setLinearVelocity(vec3(+ 1.0f, v.y(), v.z()));
 			}
 		}
 		if (pos.y() > 10)
 		{
 			rb->setLinearVelocity(Math::Vector3::reflect(rb->getLinearVelocity(), vec3(0,-1,0)));
 			vec3 v = rb->getLinearVelocity();
-			if (qAbs(v.y()) < 0.5f)
+			if (qAbs(v.y()) < 1.0f)
 			{
-				rb->setLinearVelocity(vec3(v.x(), v.y() - 1.0f, v.z()));
+				rb->setLinearVelocity(vec3(v.x(), - 1.0f, v.z()));
 			}
 		}
 		if ( pos.y() < 1)
 		{
 			rb->setLinearVelocity(Math::Vector3::reflect(rb->getLinearVelocity(), vec3(0,1,0)));
 			vec3 v = rb->getLinearVelocity();
-			if (qAbs(v.y()) < 0.5f)
+			if (qAbs(v.y()) < 1.0f)
 			{
-				rb->setLinearVelocity(vec3(v.x(), v.y() + 1.0f, v.z()));
+				rb->setLinearVelocity(vec3(v.x(), + 1.0f, v.z()));
 			}
 		}
 		if (pos.z() > 5)
 		{
 			rb->setLinearVelocity(Math::Vector3::reflect(rb->getLinearVelocity(), vec3(0,0,-1)));
 			vec3 v = rb->getLinearVelocity();
-			if (qAbs(v.z()) < 0.5f)
+			if (qAbs(v.z()) < 1.0f)
 			{
-				rb->setLinearVelocity(vec3(v.x(), v.y(), v.z() - 1.0f));
+				rb->setLinearVelocity(vec3(v.x(), v.y(), - 1.0f));
 			}
 		}
 		if ( pos.z() < -5)
 		{
 			rb->setLinearVelocity(Math::Vector3::reflect(rb->getLinearVelocity(), vec3(0,0,1)));
 			vec3 v = rb->getLinearVelocity();
-			if (qAbs(v.z()) < 0.5f)
+			if (qAbs(v.z()) < 1.0f)
 			{
-				rb->setLinearVelocity(vec3(v.x(), v.y(), v.z() + 1.0f));
+				rb->setLinearVelocity(vec3(v.x(), v.y(), 1.0f));
 			}
 		}
 	}

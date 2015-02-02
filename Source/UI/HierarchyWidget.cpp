@@ -145,10 +145,12 @@ void HierarchyWidget::resetSelectedObject()
 void HierarchyWidget::readGameObject(QTreeWidgetItem* current, QTreeWidgetItem* previous)
 {
 	if (!current) return;
+	
 
 	// disconnect previous connections
 	disconnectPreviousObject();
-
+	//disconnect(0, 0, this, SLOT(handleGameObjectTransformation(const vec3&, const vec3&, const vec3&)));
+	
 	// if the current item is the scene node (root), ignore
 	if(current == ui->treeWidget->topLevelItem(0)) 
 	{
@@ -162,21 +164,11 @@ void HierarchyWidget::readGameObject(QTreeWidgetItem* current, QTreeWidgetItem* 
 	m_currentObject = m_scene->objectManager()->getGameObject(current->text(0)).data();
 	if(!m_currentObject) return;
 
-	// map the transformation into the transform tab
-	ui->doubleSpinBox_PositionX->setValue(m_currentObject->position().x());
-	ui->doubleSpinBox_PositionY->setValue(m_currentObject->position().y());
-	ui->doubleSpinBox_PositionZ->setValue(m_currentObject->position().z());
+// 	connect(m_currentObject, SIGNAL(updateTransformation(const vec3&, const vec3&, const vec3&)),
+// 		this, SLOT(handleGameObjectTransformation(const vec3&, const vec3&, const vec3&)));
 
-	ui->doubleSpinBox_RotationX->setValue(m_currentObject->rotation().x());
-	ui->doubleSpinBox_RotationY->setValue(m_currentObject->rotation().y());
-	ui->doubleSpinBox_RotationZ->setValue(m_currentObject->rotation().z());
-	ui->dial_RotationX->setValue((int)m_currentObject->rotation().x());
-	ui->dial_RotationY->setValue((int)m_currentObject->rotation().y());
-	ui->dial_RotationZ->setValue((int)m_currentObject->rotation().z());
-	
-	ui->doubleSpinBox_ScaleX->setValue(m_currentObject->scale().x());
-	ui->doubleSpinBox_ScaleY->setValue(m_currentObject->scale().y());
-	ui->doubleSpinBox_ScaleZ->setValue(m_currentObject->scale().z());
+	// map the transformation into the transform tab
+	fillInTransformTab();
 
 	// map the shading properties into the material tab
 	readShadingProperties();
@@ -223,18 +215,7 @@ void HierarchyWidget::clearTransformationArea()
 void HierarchyWidget::connectCurrentObject()
 {
 	// transformation tab related
-	connect(ui->doubleSpinBox_PositionX, SIGNAL(valueChanged(double)), m_currentObject, SLOT(fixedTranslateX(double)));
-	connect(ui->doubleSpinBox_PositionY, SIGNAL(valueChanged(double)), m_currentObject, SLOT(fixedTranslateY(double)));
-	connect(ui->doubleSpinBox_PositionZ, SIGNAL(valueChanged(double)), m_currentObject, SLOT(fixedTranslateZ(double)));
-	connect(ui->doubleSpinBox_RotationX, SIGNAL(valueChanged(double)), m_currentObject, SLOT(fixedRotateX(double)));
-	connect(ui->doubleSpinBox_RotationY, SIGNAL(valueChanged(double)), m_currentObject, SLOT(fixedRotateY(double)));
-	connect(ui->doubleSpinBox_RotationZ, SIGNAL(valueChanged(double)), m_currentObject, SLOT(fixedRotateZ(double)));
-	connect(ui->doubleSpinBox_ScaleX,	 SIGNAL(valueChanged(double)), m_currentObject, SLOT(fixedScaleX(double)));
-	connect(ui->doubleSpinBox_ScaleY,	 SIGNAL(valueChanged(double)), m_currentObject, SLOT(fixedScaleY(double)));
-	connect(ui->doubleSpinBox_ScaleZ,	 SIGNAL(valueChanged(double)), m_currentObject, SLOT(fixedScaleZ(double)));
-	connect(ui->doubleSpinBox_RotationX, SIGNAL(valueChanged(double)), this, SLOT(onRotationXSpinChange(double)));
-	connect(ui->doubleSpinBox_RotationY, SIGNAL(valueChanged(double)), this, SLOT(onRotationYSpinChange(double)));
-	connect(ui->doubleSpinBox_RotationZ, SIGNAL(valueChanged(double)), this, SLOT(onRotationZSpinChange(double)));
+	connectTransformTab();
 
 	// puppet tab related
 	connect(ui->pushButton_PuppetGo, SIGNAL(clicked()), this, SLOT(assignPuppet()));
@@ -249,15 +230,7 @@ void HierarchyWidget::connectCurrentObject()
 void HierarchyWidget::disconnectPreviousObject()
 {
 	// transformation tab related
-	disconnect(ui->doubleSpinBox_PositionX, SIGNAL(valueChanged(double)), 0, 0);
-	disconnect(ui->doubleSpinBox_PositionY, SIGNAL(valueChanged(double)), 0, 0);
-	disconnect(ui->doubleSpinBox_PositionZ, SIGNAL(valueChanged(double)), 0, 0);
-	disconnect(ui->doubleSpinBox_RotationX, SIGNAL(valueChanged(double)), 0, 0);
-	disconnect(ui->doubleSpinBox_RotationY, SIGNAL(valueChanged(double)), 0, 0);
-	disconnect(ui->doubleSpinBox_RotationZ, SIGNAL(valueChanged(double)), 0, 0);
-	disconnect(ui->doubleSpinBox_ScaleX,		SIGNAL(valueChanged(double)), 0, 0);
-	disconnect(ui->doubleSpinBox_ScaleY,		SIGNAL(valueChanged(double)), 0, 0);
-	disconnect(ui->doubleSpinBox_ScaleZ,		SIGNAL(valueChanged(double)), 0, 0);
+	disconnectTransformTab();
 
 	// puppet tab related
 	disconnect(ui->pushButton_PuppetGo, SIGNAL(clicked()), 0, 0);
@@ -719,4 +692,59 @@ void HierarchyWidget::assignPuppet()
 	if (!speed.isNull())
 		// this instance will be removed automatically
 		Puppet* pup = new Puppet(m_currentObject, type, speed, duration);
+}
+
+void HierarchyWidget::handleGameObjectTransformation( const vec3& pos, const vec3& rot, const vec3& scale )
+{
+	// disconnect the transform tab
+	// because here its read only
+	qDebug() << "current pos:" << pos;
+}
+
+void HierarchyWidget::disconnectTransformTab()
+{
+	disconnect(ui->doubleSpinBox_PositionX, SIGNAL(valueChanged(double)), 0, 0);
+	disconnect(ui->doubleSpinBox_PositionY, SIGNAL(valueChanged(double)), 0, 0);
+	disconnect(ui->doubleSpinBox_PositionZ, SIGNAL(valueChanged(double)), 0, 0);
+	disconnect(ui->doubleSpinBox_RotationX, SIGNAL(valueChanged(double)), 0, 0);
+	disconnect(ui->doubleSpinBox_RotationY, SIGNAL(valueChanged(double)), 0, 0);
+	disconnect(ui->doubleSpinBox_RotationZ, SIGNAL(valueChanged(double)), 0, 0);
+	disconnect(ui->doubleSpinBox_ScaleX,		SIGNAL(valueChanged(double)), 0, 0);
+	disconnect(ui->doubleSpinBox_ScaleY,		SIGNAL(valueChanged(double)), 0, 0);
+	disconnect(ui->doubleSpinBox_ScaleZ,		SIGNAL(valueChanged(double)), 0, 0);
+}
+
+void HierarchyWidget::connectTransformTab()
+{
+
+	connect(ui->doubleSpinBox_PositionX, SIGNAL(valueChanged(double)), m_currentObject, SLOT(fixedTranslateX(double)));
+	connect(ui->doubleSpinBox_PositionY, SIGNAL(valueChanged(double)), m_currentObject, SLOT(fixedTranslateY(double)));
+	connect(ui->doubleSpinBox_PositionZ, SIGNAL(valueChanged(double)), m_currentObject, SLOT(fixedTranslateZ(double)));
+	connect(ui->doubleSpinBox_RotationX, SIGNAL(valueChanged(double)), m_currentObject, SLOT(fixedRotateX(double)));
+	connect(ui->doubleSpinBox_RotationY, SIGNAL(valueChanged(double)), m_currentObject, SLOT(fixedRotateY(double)));
+	connect(ui->doubleSpinBox_RotationZ, SIGNAL(valueChanged(double)), m_currentObject, SLOT(fixedRotateZ(double)));
+	connect(ui->doubleSpinBox_ScaleX,	 SIGNAL(valueChanged(double)), m_currentObject, SLOT(fixedScaleX(double)));
+	connect(ui->doubleSpinBox_ScaleY,	 SIGNAL(valueChanged(double)), m_currentObject, SLOT(fixedScaleY(double)));
+	connect(ui->doubleSpinBox_ScaleZ,	 SIGNAL(valueChanged(double)), m_currentObject, SLOT(fixedScaleZ(double)));
+	connect(ui->doubleSpinBox_RotationX, SIGNAL(valueChanged(double)), this, SLOT(onRotationXSpinChange(double)));
+	connect(ui->doubleSpinBox_RotationY, SIGNAL(valueChanged(double)), this, SLOT(onRotationYSpinChange(double)));
+	connect(ui->doubleSpinBox_RotationZ, SIGNAL(valueChanged(double)), this, SLOT(onRotationZSpinChange(double)));
+}
+
+void HierarchyWidget::fillInTransformTab()
+{
+	ui->doubleSpinBox_PositionX->setValue(m_currentObject->position().x());
+	ui->doubleSpinBox_PositionY->setValue(m_currentObject->position().y());
+	ui->doubleSpinBox_PositionZ->setValue(m_currentObject->position().z());
+
+	ui->doubleSpinBox_RotationX->setValue(m_currentObject->rotation().x());
+	ui->doubleSpinBox_RotationY->setValue(m_currentObject->rotation().y());
+	ui->doubleSpinBox_RotationZ->setValue(m_currentObject->rotation().z());
+	ui->dial_RotationX->setValue((int)m_currentObject->rotation().x());
+	ui->dial_RotationY->setValue((int)m_currentObject->rotation().y());
+	ui->dial_RotationZ->setValue((int)m_currentObject->rotation().z());
+
+	ui->doubleSpinBox_ScaleX->setValue(m_currentObject->scale().x());
+	ui->doubleSpinBox_ScaleY->setValue(m_currentObject->scale().y());
+	ui->doubleSpinBox_ScaleZ->setValue(m_currentObject->scale().z());
 }

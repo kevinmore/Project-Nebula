@@ -38,7 +38,7 @@ void SphereCollider::init()
 	AbstractCollider::init();
 
 	ModelLoader loader;
-	QVector<ModelDataPtr> modelDataVector = loader.loadModel("../Resource/Models/Common/sphere.obj", m_renderingEffect->getShaderProgram()->programId());
+	QVector<ModelDataPtr> modelDataVector = loader.loadModel("../Resource/Models/Common/boundingsphere.obj", m_renderingEffect->getShaderProgram()->programId());
 	m_vao = loader.getVAO();
 
 	// traverse modelData vector

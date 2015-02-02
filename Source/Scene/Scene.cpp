@@ -76,7 +76,7 @@ void Scene::initialize()
 	for(int i = 0; i < 30; ++i)
 	{
 		float ratio = Math::Random::random(0.5f, 1.2f);
-		go = createEmptyGameObject("Rigid Sphere");
+		go = createEmptyGameObject("Gundam");
 		go->setScale(50);
 		LoaderThread loader(this, "../Resource/Models/BroadPhaseDemo/robot.obj", go, m_sceneRootNode, false);
 		SphereRigidBodyPtr rb(new SphereRigidBody());

@@ -52,9 +52,12 @@ void ObjectManager::renderAll(const float currentTime)
 // 			}
  			//rb->applyAngularImpulse(vec3(0,0.1,0.1));
 			//rb->applyPointImpulse(vec3(0.1, 0, 0), vec3(0.2, 0, 0.2));
-			mat4 temp = rb->getTransformMatrix();
-			temp.scale(go->scale());
-			go->setTransformMatrix(temp);
+			go->setPosition(rb->getPosition());
+			go->setRotation(rb->getEularAngles());
+
+// 			mat4 temp = rb->getTransformMatrix();
+// 			temp.scale(go->scale());
+// 			go->setTransformMatrix(temp);
 		}
 	}
 

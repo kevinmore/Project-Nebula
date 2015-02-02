@@ -111,10 +111,8 @@
     <ClInclude Include="Physicis\Entity\RigidBody.h" />
     <ClInclude Include="UI\MainWindow.h" />
     <ClInclude Include="Primitives\Puppet.h" />
-    <ClInclude Include="UI\HierarchyWidget.h" />
     <ClInclude Include="Utility\ModelLoader.h" />
     <ClInclude Include="Utility\AssimpThread.h" />
-    <ClInclude Include="Primitives\GameObject.h" />
     <ClInclude Include="Physicis\Geometry\SphereShape.h" />
     <ClInclude Include="Physicis\Entity\SphereRigidBody.h" />
     <ClInclude Include="Physicis\Collider\SphereCollider.h" />
@@ -127,5 +125,9 @@
     <None Include="UI\HierarchyWidget.ui" />
     <None Include="UI\SkyboxWidget.ui" />
     <None Include="Physicis\World\PhysicsWorldObject.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMOC Include="Primitives\GameObject.h" />
+    <QtMOC Include="UI\HierarchyWidget.h" />
   </ItemGroup>
 </Project>

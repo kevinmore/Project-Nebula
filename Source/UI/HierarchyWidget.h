@@ -32,6 +32,10 @@ private:
 	void searchSuitableShaders(ModelPtr currentModel);
 	void connectSliderBarAndDoubleSpinBox(QSlider* slider, QDoubleSpinBox* box);
 
+	void disconnectTransformTab();
+	void connectTransformTab();
+	void fillInTransformTab();
+
 private slots:
 	void connectCurrentObject();
 	void disconnectPreviousObject();
@@ -39,6 +43,7 @@ private slots:
 	void resetSelectedObject();
 	void renameGameObject(QTreeWidgetItem * item, int column);
 	void deleteGameObject();
+	void handleGameObjectTransformation(const vec3& pos, const vec3& rot, const vec3& scale);
 	void showMouseRightButton(const QPoint& point);
 	void setColorPickerEnabled(bool status);
 	void changeShader(const QString& shaderFile);

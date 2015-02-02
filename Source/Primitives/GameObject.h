@@ -73,6 +73,7 @@ public:
 
 			m_modelMatrixDirty = false;
 		}
+		emit updateTransformation(m_position, m_rotation, m_scale);
 		GameObject* parent = dynamic_cast<GameObject*>(this->parent());
 		if (parent)
 			return parent->getTranformMatrix() * m_modelMatrix;
@@ -100,6 +101,7 @@ public:
 signals:
 	void synchronized();
 	void componentAttached(ComponentPtr comp);
+	void updateTransformation(const vec3& pos, const vec3& rot, const vec3& scale);
 
 public slots:
 	/// the 9 functions below will reset the model matrix
