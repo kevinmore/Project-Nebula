@@ -34,64 +34,6 @@ void PhysicsWorld::simulate(const float deltaTime)
 	foreach(PhysicsWorldObject* ent, m_entityList)
 	{
 		ent->update(deltaTime);
-
-		// make sure they are in the room
-		RigidBody* rb = dynamic_cast<RigidBody*>(ent);
-		vec3 pos = rb->getPosition();
-		if (pos.x() > 5)
-		{
-			rb->setLinearVelocity(Math::Vector3::reflect(rb->getLinearVelocity(), vec3(-1,0,0)));
-			vec3 v = rb->getLinearVelocity();
-			if (qAbs(v.x()) < 1.0f)
-			{
-				rb->setLinearVelocity(vec3( - 1.0f, v.y(), v.z()));
-			}
-		}
-		if ( pos.x() < -5)
-		{
-			rb->setLinearVelocity(Math::Vector3::reflect(rb->getLinearVelocity(), vec3(1,0,0)));
-			vec3 v = rb->getLinearVelocity();
-			if (qAbs(v.x()) < 1.0f)
-			{
-				rb->setLinearVelocity(vec3(+ 1.0f, v.y(), v.z()));
-			}
-		}
-		if (pos.y() > 10)
-		{
-			rb->setLinearVelocity(Math::Vector3::reflect(rb->getLinearVelocity(), vec3(0,-1,0)));
-			vec3 v = rb->getLinearVelocity();
-			if (qAbs(v.y()) < 1.0f)
-			{
-				rb->setLinearVelocity(vec3(v.x(), - 1.0f, v.z()));
-			}
-		}
-		if ( pos.y() < 1)
-		{
-			rb->setLinearVelocity(Math::Vector3::reflect(rb->getLinearVelocity(), vec3(0,1,0)));
-			vec3 v = rb->getLinearVelocity();
-			if (qAbs(v.y()) < 1.0f)
-			{
-				rb->setLinearVelocity(vec3(v.x(), + 1.0f, v.z()));
-			}
-		}
-		if (pos.z() > 5)
-		{
-			rb->setLinearVelocity(Math::Vector3::reflect(rb->getLinearVelocity(), vec3(0,0,-1)));
-			vec3 v = rb->getLinearVelocity();
-			if (qAbs(v.z()) < 1.0f)
-			{
-				rb->setLinearVelocity(vec3(v.x(), v.y(), - 1.0f));
-			}
-		}
-		if ( pos.z() < -5)
-		{
-			rb->setLinearVelocity(Math::Vector3::reflect(rb->getLinearVelocity(), vec3(0,0,1)));
-			vec3 v = rb->getLinearVelocity();
-			if (qAbs(v.z()) < 1.0f)
-			{
-				rb->setLinearVelocity(vec3(v.x(), v.y(), 1.0f));
-			}
-		}
 	}
 
 	// handle the collision detection
@@ -175,7 +117,68 @@ void PhysicsWorld::handleCollisions()
 				c1->setColor(Qt::red);
 				c2->setColor(Qt::red);
 			}
+			boarderCheck(c1->getRigidBody());
+			boarderCheck(c2->getRigidBody());
 
+		}
+	}
+}
+
+void PhysicsWorld::boarderCheck( RigidBody* rb )
+{
+	vec3 pos = rb->getPosition();
+	if (pos.x() > 5)
+	{
+		rb->setLinearVelocity(Math::Vector3::reflect(rb->getLinearVelocity(), vec3(-1,0,0)));
+		vec3 v = rb->getLinearVelocity();
+		if (qAbs(v.x()) < 1.0f)
+		{
+			rb->setLinearVelocity(vec3( - 1.0f, v.y(), v.z()));
+		}
+	}
+	if ( pos.x() < -5)
+	{
+		rb->setLinearVelocity(Math::Vector3::reflect(rb->getLinearVelocity(), vec3(1,0,0)));
+		vec3 v = rb->getLinearVelocity();
+		if (qAbs(v.x()) < 1.0f)
+		{
+			rb->setLinearVelocity(vec3(+ 1.0f, v.y(), v.z()));
+		}
+	}
+	if (pos.y() > 10)
+	{
+		rb->setLinearVelocity(Math::Vector3::reflect(rb->getLinearVelocity(), vec3(0,-1,0)));
+		vec3 v = rb->getLinearVelocity();
+		if (qAbs(v.y()) < 1.0f)
+		{
+			rb->setLinearVelocity(vec3(v.x(), - 1.0f, v.z()));
+		}
+	}
+	if ( pos.y() < 1)
+	{
+		rb->setLinearVelocity(Math::Vector3::reflect(rb->getLinearVelocity(), vec3(0,1,0)));
+		vec3 v = rb->getLinearVelocity();
+		if (qAbs(v.y()) < 1.0f)
+		{
+			rb->setLinearVelocity(vec3(v.x(), + 1.0f, v.z()));
+		}
+	}
+	if (pos.z() > 5)
+	{
+		rb->setLinearVelocity(Math::Vector3::reflect(rb->getLinearVelocity(), vec3(0,0,-1)));
+		vec3 v = rb->getLinearVelocity();
+		if (qAbs(v.z()) < 1.0f)
+		{
+			rb->setLinearVelocity(vec3(v.x(), v.y(), - 1.0f));
+		}
+	}
+	if ( pos.z() < -5)
+	{
+		rb->setLinearVelocity(Math::Vector3::reflect(rb->getLinearVelocity(), vec3(0,0,1)));
+		vec3 v = rb->getLinearVelocity();
+		if (qAbs(v.z()) < 1.0f)
+		{
+			rb->setLinearVelocity(vec3(v.x(), v.y(), 1.0f));
 		}
 	}
 }

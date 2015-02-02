@@ -30,5 +30,6 @@ private:
 	bool m_locked;
 	QList<PhysicsWorldObject*> m_entityList;
 	QVector<AbstractCollider*> m_colliderList;
+	void boarderCheck(RigidBody* rb);
 };
 
