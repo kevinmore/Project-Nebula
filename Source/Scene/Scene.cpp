@@ -73,14 +73,14 @@ void Scene::initialize()
 	go->attachComponent(boarder);
 
 	// create rigid bodies for simulation
-	for(int i = 0; i < 20; ++i)
+	for(int i = 0; i < 30; ++i)
 	{
 		float ratio = Math::Random::random(0.5f, 1.2f);
 		go = createEmptyGameObject("Rigid Sphere");
 		go->setScale(50);
 		LoaderThread loader(this, "../Resource/Models/BroadPhaseDemo/robot.obj", go, m_sceneRootNode, false);
 		SphereRigidBodyPtr rb(new SphereRigidBody());
-		rb->setPosition(Math::Random::random(vec3(-4, 1, -4), vec3(3, 9, 4)));
+		rb->setPosition(Math::Random::random(vec3(-4, 1, -4), vec3(4, 9, 4)));
 		rb->setGravityFactor(0.0f);
 		rb->setLinearVelocity(Math::Random::random(vec3(-4, -4, -4), vec3(4, 4, 4)));
 		rb->setAngularVelocity(Math::Random::random(vec3(0, 0, 0), vec3(100, 100, 100)));
