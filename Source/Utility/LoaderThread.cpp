@@ -101,7 +101,6 @@ ModelPtr LoaderThread::loadModel( const QString& customName, const QString& file
 			RiggedModel* copyModel = new RiggedModel(original);
 			pModel.reset(copyModel);
 		}
-		qDebug() << "Made a copy from" << fileName;
 	}
 	// if the model doesn't exist, load it from file
 	else
@@ -109,7 +108,6 @@ ModelPtr LoaderThread::loadModel( const QString& customName, const QString& file
 		ModelLoaderPtr modelLoader(new ModelLoader(m_scene));
 		QVector<ModelDataPtr> modelDataArray = modelLoader->loadModel(fileName, 0, m_objectManager->m_loadingFlag);
 		if(modelDataArray.size() == 0) return pModel;
-		BoxCollider bc = modelLoader->getBoundingBox();
 		// create different types of models
 		if (modelLoader->getModelType() == ModelLoader::STATIC_MODEL)
 		{
@@ -122,6 +120,9 @@ ModelPtr LoaderThread::loadModel( const QString& customName, const QString& file
 			pModel.reset(rm);
 		}
 		m_objectManager->m_modelLoaders.push_back(modelLoader);
+
+		// assign the bounding box
+		pModel->setBoundingBox(modelLoader->getBoundingBox());
 	}
 
 	if (generateGameObject)

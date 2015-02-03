@@ -33,6 +33,7 @@ public:
 	virtual void render(const float currentTime);
 
 	void setColor(const QColor& col);
+	Scene* getScene() const { return m_scene; }
 
 	ColliderType m_colliderType;
 

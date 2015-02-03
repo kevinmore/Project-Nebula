@@ -77,6 +77,7 @@ public slots:
 
 	void toggleSkybox(bool state);
 
+	void toggleDebugMode(bool state);
 	void pause();
 	void play();
 	void step();
@@ -120,6 +121,7 @@ private:
 	ParticleSystem* m_particleSystem;
 	SkyboxPtr m_skybox;
 	bool m_bShowSkybox;
+	bool m_debugMode;
 	//
 	// Physics
 	//

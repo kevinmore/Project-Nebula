@@ -50,3 +50,13 @@ void AbstractModel::setPolygonMode( PolygonMode mode )
 {
 	m_polygonMode = mode;
 }
+
+void AbstractModel::setBoundingBox( const BoxCollider& box )
+{
+	m_boundingBox = BoxColliderPtr(new BoxCollider(box.getCenter(), box.getGeometryShape().getHalfExtents(), box.getScene()));
+}
+
+BoxColliderPtr AbstractModel::getBoundingBox() const
+{
+	return m_boundingBox;
+}

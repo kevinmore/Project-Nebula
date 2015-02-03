@@ -108,9 +108,6 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName, GLuint sh
 		modelDataVector[i] = ModelDataPtr(md);
 	}
 
-	qDebug() << m_minX << m_maxX <<m_minY << m_maxY << m_minZ << m_maxZ;
-
-
 	// generate the skeleton of the model
 	// specify the root bone
 	if(m_BoneMapping.size() > 0 && m_modelType == RIGGED_MODEL)
@@ -550,5 +547,5 @@ BoxCollider ModelLoader::getBoundingBox()
 
 	vec3 center((m_maxX + m_minX) * 0.5f, (m_maxY + m_minY) * 0.5f, (m_maxZ + m_minZ) * 0.5f);
 
-	return BoxCollider(center, halfExtents, m_scene);
+	return BoxCollider(halfExtents, halfExtents, m_scene);
 }

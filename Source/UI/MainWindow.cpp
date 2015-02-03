@@ -185,6 +185,7 @@ void MainWindow::initializeMenuBar()
 	msaaAction->setChecked(true);
 	optionMenu->addAction(msaaAction);
 
+	// model processing group
 	QMenu *modelProcessMenu = optionMenu->addMenu("&Model Processing Quality");
 	QActionGroup* modelProcessOptions = new QActionGroup(this);
 	modelProcessOptions->setExclusive(true);
@@ -205,13 +206,17 @@ void MainWindow::initializeMenuBar()
 	modelProcessOptions->addAction(fastProcess);
 	modelProcessOptions->addAction(qualityProcess);
 	modelProcessOptions->addAction(maxQualityProcess);
-
 	connect(modelProcessOptions, SIGNAL(triggered(QAction*)), this, SLOT(actionTriggered(QAction*)));
 
 	QAction *writeLogAction = new QAction("&Write Log Into File", this);
 	writeLogAction->setCheckable(true);
 	writeLogAction->setChecked(false);
 	optionMenu->addAction(writeLogAction);
+
+	QAction *debugModeAction = new QAction("&Debug Mode", this);
+	debugModeAction->setCheckable(true);
+	debugModeAction->setChecked(false);
+	sytemMenu->addAction(debugModeAction);
 
 	QAction *gpuInfoAction = new QAction("&GPU Info", this);
 	sytemMenu->addAction(gpuInfoAction);
@@ -236,6 +241,7 @@ void MainWindow::initializeMenuBar()
 	connect(bgColorAction,    SIGNAL(triggered()),     this, SLOT(showBackGroundColorPicker()));
 	connect(skyboxSettingsAction,    SIGNAL(triggered()),     this, SLOT(showSkyboxDialog()));
 	connect(toggleSkyboxAction, SIGNAL(triggered(bool)), m_scene, SLOT(toggleSkybox(bool)));
+	connect(debugModeAction, SIGNAL(triggered(bool)), m_scene, SLOT(toggleDebugMode(bool)));
 }
 
 void MainWindow::initializeRightDockableArea()

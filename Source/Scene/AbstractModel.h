@@ -12,6 +12,7 @@
 #include <Primitives/Material.h>
 #include <Scene/ShadingTechniques/ShadingTechnique.h>
 
+#include <Physicis/Collider/BoxCollider.h>
 
 
 class AbstractModel : public Component, protected QOpenGLFunctions_4_3_Core
@@ -28,6 +29,9 @@ public:
 
 	ShadingTechniquePtr renderingEffect() const { return m_renderingEffect; }
 	MaterialPtr getMaterial() const { return m_materials[0]; }
+
+	void setBoundingBox(const BoxCollider& box);
+	BoxColliderPtr getBoundingBox() const;
 
 	enum PolygonMode
 	{
@@ -49,4 +53,5 @@ protected:
 	QVector<MaterialPtr> m_materials;
 	GLuint m_vao;
 	PolygonMode m_polygonMode;
+	BoxColliderPtr m_boundingBox;
 };

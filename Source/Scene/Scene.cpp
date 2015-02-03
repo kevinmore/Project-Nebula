@@ -17,7 +17,8 @@ Scene::Scene(QObject* parent)
 	  m_bShowSkybox(false),
 	  m_bPhysicsPaused(true),
 	  m_bStepPhysics(false),
-	  m_physicsWorld(0)
+	  m_physicsWorld(0),
+	  m_debugMode(false)
 {
 	// Initializing the lights
 	m_light = LightPtr(new Light("Main Light"));
@@ -153,6 +154,12 @@ void Scene::update(float currentTime)
 
 	// render all
 	m_objectManager->renderAll(m_relativeTime);
+
+	// if the debug mode is on, show extra information
+	if (m_debugMode)
+	{
+		m_objectManager->renderDebugInfo(currentTime);
+	}
 
 	// always reset the flag of step physics
 	m_bStepPhysics = false;
@@ -433,4 +440,9 @@ void Scene::step()
 	// pause the physics world first
 	m_bPhysicsPaused = true;
 	m_bStepPhysics = true;
+}
+
+void Scene::toggleDebugMode( bool state )
+{
+	m_debugMode = state;
 }
