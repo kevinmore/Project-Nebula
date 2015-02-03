@@ -29,7 +29,6 @@ public:
 	ShadingTechniquePtr renderingEffect() const { return m_renderingEffect; }
 	MaterialPtr getMaterial() const { return m_materials[0]; }
 
-
 	enum PolygonMode
 	{
 		Fill  = GL_FILL,

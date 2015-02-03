@@ -50,4 +50,3 @@ void AbstractModel::setPolygonMode( PolygonMode mode )
 {
 	m_polygonMode = mode;
 }
-

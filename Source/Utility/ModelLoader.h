@@ -8,6 +8,7 @@
 #include <QOpenGLFunctions_4_3_Core>
 #include <QSharedPointer>
 #include <Scene/ShadingTechniques/ShadingTechnique.h>
+#include <Physicis/Collider/BoxCollider.h>
 
 struct MeshData
 {
@@ -89,6 +90,7 @@ public:
 	Skeleton* getSkeletom() const { return m_skeleton; }
 	ShadingTechniquePtr getRenderingEffect() const { return m_effect; }
 	MODEL_TYPE getModelType() const { return m_modelType; }
+	BoxCollider getBoundingBox();
 
 private:
 	/*

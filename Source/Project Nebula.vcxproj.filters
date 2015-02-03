@@ -120,14 +120,12 @@
     <ClInclude Include="Physicis\Collider\AbstractCollider.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Physicis\Collider\BoxCollider.h" />
+    <ClInclude Include="Primitives\GameObject.h" />
+    <ClInclude Include="UI\HierarchyWidget.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="UI\HierarchyWidget.ui" />
     <None Include="UI\SkyboxWidget.ui" />
     <None Include="Physicis\World\PhysicsWorldObject.inl" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtMOC Include="Primitives\GameObject.h" />
-    <QtMOC Include="UI\HierarchyWidget.h" />
   </ItemGroup>
 </Project>
