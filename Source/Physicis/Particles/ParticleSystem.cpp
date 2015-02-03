@@ -99,7 +99,7 @@ void ParticleSystem::updateParticles( float fTimePassed )
 
 	QQuaternion rotation;
 	vec3 scale;
-	Math::decomposeMat4(m_actor->getTranformMatrix(), scale, rotation, vGenPosition);
+	Math::decomposeMat4(m_actor->getTransformMatrix(), scale, rotation, vGenPosition);
 
 	particleUpdater->getShaderProgram()->setUniformValue("fTimePassed", fTimePassed);
 	particleUpdater->getShaderProgram()->setUniformValue("fParticleMass", m_fParticleMass);

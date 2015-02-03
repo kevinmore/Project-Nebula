@@ -246,18 +246,17 @@ void Canvas::mouseMoveEvent(QMouseEvent* e)
 	m_pos = e->pos();
 
 	// do a ray casting to pick game objects
-// 	vec3 direction;
-// 	screenToWorldRay(e->pos(), direction);
-// 	qDebug() << direction;
-// 	foreach(GameObjectPtr go, getScene()->objectManager()->m_gameObjectMap.values())
-// 	{
-// 		float intersection_distance = 0.0f;
-// 		if(testRaySpehreIntersection(direction, 1.0f, go, intersection_distance))
-// 		{
-// 
-// 			qDebug() << "found" << go->objectName() << "distance:" << intersection_distance;
-// 		}
-// 	}
+	vec3 direction;
+	screenToWorldRay(e->pos(), direction);
+	foreach(GameObjectPtr go, getScene()->objectManager()->m_gameObjectMap.values())
+	{
+		float distance = 0.0f;
+		if(testRayOBBIntersection(direction, go, distance))
+		{
+
+			qDebug() << "found" << go->objectName() << "distance:" << distance;
+		}
+	}
 
 	
 
@@ -337,26 +336,32 @@ void Canvas::screenToWorldRay( const QPoint& mousePos, vec3& outDirection )
 
 bool Canvas::testRayOBBIntersection( 
 	const vec3& rayDirection, 	   // Ray direction (NOT target position!), in world space. Must be normalize()'d.
-	const vec3& aabbMin, 		   // Minimum X,Y,Z coords of the mesh when not transformed at all.
-	const vec3& aabbMax, 		   // Maximum X,Y,Z coords. Often aabb_min*-1 if your mesh is centered, but it's not always the case.
-	GameObjectPtr target, 	   // Transformation applied to the mesh (which will thus be also applied to its bounding box)
+	const GameObjectPtr target, 	   // Transformation applied to the mesh (which will thus be also applied to its bounding box)
 	float& intersectionDistance    // Output : distance between ray_origin and the intersection with the OBB
 	)
 {
+	// Retrieve the bounding box
+	ModelPtr model = target->getComponent("Model").dynamicCast<AbstractModel>();
+	if(!model) return false;
+	BoxColliderPtr box = model->getBoundingBox();
+	vec3 center = box->getCenter();
+	vec3 halfExtents = box->getGeometryShape().getHalfExtents();
+	mat4 modelMatrix = target->getTransformMatrix();
+	vec3 aabbMin = center - halfExtents;
+	vec3 aabbMax = center + halfExtents;
+
 	// Intersection method from Real-Time Rendering and Essential Mathematics for Games
 	float tMin = 0.0f;
 	float tMax = 100000.0f;
-	//qDebug() << target->objectName();
 	vec3 rayOrigin = getScene()->getCamera()->position();
 	vec3 delta = target->position() - rayOrigin;
-	vec3 eularAngles = target->rotation();
-	quat rotation = Math::Quaternion::computeQuaternion(eularAngles);
-	//qDebug() << target->getTranformMatrix();
+
+
 	// Test intersection with the 2 planes perpendicular to the OBB's X axis
 	{
-		vec3 xaxis = rotation.rotatedVector(Math::Vector3::UNIT_X);
+		vec3 xaxis(modelMatrix(0, 0), modelMatrix(1, 0), modelMatrix(2, 0));
 		float e = vec3::dotProduct(xaxis, delta);
-		float f = vec3::dotProduct(rayOrigin, xaxis);
+		float f = vec3::dotProduct(rayDirection, xaxis);
 
 		if ( fabs(f) > 0.001f ){ // Standard case
 
@@ -392,9 +397,9 @@ bool Canvas::testRayOBBIntersection(
 	// Test intersection with the 2 planes perpendicular to the OBB's Y axis
 	// Exactly the same thing than above.
 	{
-		vec3 yaxis = rotation.rotatedVector(Math::Vector3::UNIT_Y);
+		vec3 yaxis(modelMatrix(0, 1), modelMatrix(1, 1), modelMatrix(2, 1));
 		float e = vec3::dotProduct(yaxis, delta);
-		float f = vec3::dotProduct(rayOrigin, yaxis);
+		float f = vec3::dotProduct(rayDirection, yaxis);
 
 		if ( fabs(f) > 0.001f ){
 
@@ -419,9 +424,9 @@ bool Canvas::testRayOBBIntersection(
 	// Test intersection with the 2 planes perpendicular to the OBB's Z axis
 	// Exactly the same thing than above.
 	{
-		vec3 zaxis = rotation.rotatedVector(Math::Vector3::UNIT_Z);
+		vec3 zaxis(modelMatrix(0, 2), modelMatrix(1, 2), modelMatrix(2, 2));
 		float e = vec3::dotProduct(zaxis, delta);
-		float f = vec3::dotProduct(rayOrigin, zaxis);
+		float f = vec3::dotProduct(rayDirection, zaxis);
 
 		if ( fabs(f) > 0.001f ){
 
