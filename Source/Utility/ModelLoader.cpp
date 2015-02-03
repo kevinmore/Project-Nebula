@@ -86,7 +86,7 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName, GLuint sh
 	numVertices = 0;
 	numIndices  = 0;
 	m_NumBones = 0;
-
+	m_minX = m_maxX = m_minY = m_maxY = m_minZ = m_maxZ = 0.0f;
 	QVector<ModelDataPtr> modelDataVector;
 	modelDataVector.resize(m_aiScene->mNumMeshes);
 
@@ -107,6 +107,9 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName, GLuint sh
 
 		modelDataVector[i] = ModelDataPtr(md);
 	}
+
+	qDebug() << m_minX << m_maxX <<m_minY << m_maxY << m_minZ << m_maxZ;
+
 
 	// generate the skeleton of the model
 	// specify the root bone
@@ -162,6 +165,15 @@ void ModelLoader::prepareVertexContainers(unsigned int index, const aiMesh* mesh
 		const aiVector3D * pNormal   = mesh->HasNormals()               ? &(mesh->mNormals[i])          : &zero3D;
 		const aiVector3D * pTangent  = mesh->HasTangentsAndBitangents() ? &(mesh->mTangents[i])         : &zero3D;
 		
+		// check for bounding box limits
+		m_minX = qMin(pPos->x, m_minX);
+		m_minY = qMin(pPos->y, m_minY);
+		m_minZ = qMin(pPos->z, m_minZ);
+
+		m_maxX = qMax(pPos->x, m_maxX);
+		m_maxY = qMax(pPos->y, m_maxY);
+		m_maxZ = qMax(pPos->z, m_maxZ);
+
 		m_positions << vec3(pPos->x, pPos->y, pPos->z);
 		m_colors    << vec4(pColor->r, pColor->g, pColor->b, pColor->a);
 		m_texCoords << vec2(pTexCoord->x, pTexCoord->y);

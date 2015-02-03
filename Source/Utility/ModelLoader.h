@@ -168,6 +168,9 @@ private:
 	mat4 m_GlobalInverseTransform;
 	MODEL_TYPE m_modelType;
 	ShadingTechniquePtr m_effect;
+
+	// bounding box limits
+	float m_minX, m_maxX, m_minY, m_maxY, m_minZ, m_maxZ;
 };
 
 typedef QSharedPointer<ModelLoader> ModelLoaderPtr;

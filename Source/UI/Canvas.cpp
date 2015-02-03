@@ -246,27 +246,18 @@ void Canvas::mouseMoveEvent(QMouseEvent* e)
 	m_pos = e->pos();
 
 	// do a ray casting to pick game objects
-	vec3 direction;
-	screenToWorldRay(e->pos(), direction);
-	qDebug() << direction;
-	// Traverse each game object and Test each each Oriented Bounding Box (OBB).
-	int closest_sphere_clicked = -1;
-	float closest_intersection = 0.0f;
-	foreach(GameObjectPtr go, getScene()->objectManager()->m_gameObjectMap.values())
-	{
-		float intersection_distance = 0.0f; // Output of testRayOBBIntersection()
-		// The ModelMatrix transforms :
-		// - the mesh to its desired position and orientation
-		// - but also the AABB (defined with aabb_min and aabb_max) into an OBB
-
-		
-
-		if(testRaySpehreIntersection(direction, 1.0f, go, intersection_distance))
-		{
-
-			qDebug() << "found" << go->objectName() << "distance:" << intersection_distance;
-		}
-	}
+// 	vec3 direction;
+// 	screenToWorldRay(e->pos(), direction);
+// 	qDebug() << direction;
+// 	foreach(GameObjectPtr go, getScene()->objectManager()->m_gameObjectMap.values())
+// 	{
+// 		float intersection_distance = 0.0f;
+// 		if(testRaySpehreIntersection(direction, 1.0f, go, intersection_distance))
+// 		{
+// 
+// 			qDebug() << "found" << go->objectName() << "distance:" << intersection_distance;
+// 		}
+// 	}
 
 	
 
