@@ -9,9 +9,11 @@ BoxCollider::BoxCollider( const vec3& center, const vec3& halfExtents, Scene* sc
 	m_boxShape = BoxShape(center, halfExtents);
 	m_colliderType = AbstractCollider::COLLIDER_BOX;
 
-	// the default model loaded here is a cube with half extent = 0.5
-	// we need to scale it
+	// the default model loaded here is a cube with half extent = 0.5, and the center is 0
+	// we need to translate and scale it
+	m_transformMatrix.translate(m_center);
 	m_transformMatrix.scale(halfExtents.x() / 0.5f, halfExtents.y() / 0.5f, halfExtents.z() / 0.5f);
+
 	init();
 }
 

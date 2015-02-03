@@ -8,9 +8,11 @@ SphereCollider::SphereCollider( const vec3& center, const float radius, Scene* s
 	m_sphereShape = SphereShape(center, radius);
 	m_colliderType = AbstractCollider::COLLIDER_SPHERE;
 
-	// the default model loaded here is a sphere with radius = 0.5
-	// we need to scale it
+	// the default model loaded here is a sphere with radius = 0.5, and the center is 0
+	// we need to translate and scale it
+	m_transformMatrix.translate(m_center);
 	m_transformMatrix.scale(radius / 0.5f);
+
 	init();
 }
 
