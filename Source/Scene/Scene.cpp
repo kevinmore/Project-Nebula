@@ -17,8 +17,7 @@ Scene::Scene(QObject* parent)
 	  m_bShowSkybox(false),
 	  m_bPhysicsPaused(true),
 	  m_bStepPhysics(false),
-	  m_physicsWorld(0),
-	  m_debugMode(false)
+	  m_physicsWorld(0)
 {
 	// Initializing the lights
 	m_light = LightPtr(new Light("Main Light"));
@@ -154,12 +153,6 @@ void Scene::update(float currentTime)
 
 	// render all
 	m_objectManager->renderAll(m_relativeTime);
-
-	// if the debug mode is on, show extra information
-	if (m_debugMode)
-	{
-		m_objectManager->renderDebugInfo(currentTime);
-	}
 
 	// always reset the flag of step physics
 	m_bStepPhysics = false;
@@ -444,5 +437,32 @@ void Scene::step()
 
 void Scene::toggleDebugMode( bool state )
 {
-	m_debugMode = state;
+	if (state)
+	{
+		// attach all the bounding boxes
+		foreach(ComponentPtr comp, m_objectManager->m_renderQueue)
+		{
+			ModelPtr model = comp.dynamicCast<AbstractModel>();
+			if (model)
+			{
+				BoxColliderPtr box = model->getBoundingBox();
+				if (box && !box->gameObject())
+					model->gameObject()->attachComponent(box);
+			}
+		}
+	}
+	else
+	{
+		// detach all the bounding boxes
+		foreach(ComponentPtr comp, m_objectManager->m_renderQueue)
+		{
+			ModelPtr model = comp.dynamicCast<AbstractModel>();
+			if (model)
+			{
+				BoxColliderPtr box = model->getBoundingBox();
+				if (box && box->gameObject())
+					box->gameObject()->detachComponent(box);
+			}
+		}
+	}
 }

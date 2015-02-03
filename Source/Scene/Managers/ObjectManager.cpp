@@ -22,11 +22,12 @@ void ObjectManager::registerGameObject( const QString& name, GameObjectPtr go )
 	// extract the renderable components
 	foreach(ComponentPtr comp, go->getComponents())
 	{
-		registerComponent(comp);
+		addComponentToRenderQueue(comp);
 	}
 
-	// listen for further updates
-	connect(go.data(), SIGNAL(componentAttached(ComponentPtr)), this, SLOT(registerComponent(ComponentPtr)));
+	// listen for further updates (attach and detach component)
+	connect(go.data(), SIGNAL(componentAttached(ComponentPtr)), this, SLOT(addComponentToRenderQueue(ComponentPtr)));
+	connect(go.data(), SIGNAL(componentDetached(ComponentPtr)), this, SLOT(removeComponentFromRenderQueue(ComponentPtr)));
 }
 
 GameObjectPtr ObjectManager::getGameObject( const QString& name )
@@ -124,7 +125,7 @@ Scene* ObjectManager::getScene() const
 	return m_scene;
 }
 
-void ObjectManager::registerComponent( ComponentPtr comp )
+void ObjectManager::addComponentToRenderQueue( ComponentPtr comp )
 {
 	// make sure the components in a smaller render layer gets in to the front
 	if (comp->renderLayer() < 0) return;
@@ -160,6 +161,14 @@ void ObjectManager::registerComponent( ComponentPtr comp )
 	}
 }
 
+void ObjectManager::removeComponentFromRenderQueue( ComponentPtr comp )
+{
+	// make sure the component is renderable
+	if (comp->renderLayer() < 0) return;
+	int idx = m_renderQueue.indexOf(comp);
+	m_renderQueue.remove(idx);
+}
+
 void ObjectManager::setLoadingFlag( const QString& flag )
 {
 	m_loadingFlag = flag;
@@ -175,16 +184,7 @@ void ObjectManager::renderDebugInfo(const float currentTime)
 		{
 			BoxColliderPtr box = model->getBoundingBox();
 			if (box)
-			{
-				if (!box->gameObject())
-				{
-					model->gameObject()->attachComponent(box);
-				}
-				else
-				{
-					box->render(currentTime);
-				}
-			}
+				box->render(currentTime);
 		}
 	}
 }

@@ -19,6 +19,13 @@ void Component::linkGameObject( GameObject* go )
 	m_actor = go;
 }
 
+
+void Component::dislinkGameObject()
+{
+	m_actor = NULL;
+}
+
+
 int Component::renderLayer() const
 {
 	return m_renderLayer;

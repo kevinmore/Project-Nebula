@@ -291,6 +291,14 @@ void GameObject::attachComponent( ComponentPtr pComponent )
 	emit componentAttached(pComponent);
 }
 
+void GameObject::detachComponent( ComponentPtr pComponent )
+{
+	m_components.removeAt(m_components.indexOf(pComponent));
+	pComponent->dislinkGameObject();
+
+	emit componentDetached(pComponent);
+}
+
 QVector<ComponentPtr> GameObject::getComponents()
 {
 	return m_components;

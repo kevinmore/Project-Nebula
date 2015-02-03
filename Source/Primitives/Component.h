@@ -15,6 +15,7 @@ public:
 
 	GameObject* gameObject() const;
 	void linkGameObject(GameObject* go);
+	void dislinkGameObject();
 
 	int renderLayer() const;
 

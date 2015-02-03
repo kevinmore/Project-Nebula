@@ -38,8 +38,8 @@ public:
 	QString m_loadingFlag;
 
 public slots:
-	void registerComponent(ComponentPtr comp);
-
+	void addComponentToRenderQueue(ComponentPtr comp);
+	void removeComponentFromRenderQueue(ComponentPtr comp);
 
 private:
 	Scene* m_scene;

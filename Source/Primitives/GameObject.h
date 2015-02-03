@@ -83,6 +83,7 @@ public:
 	/////////////////////////////inline section///////////////////////////////////
 
 	void attachComponent(ComponentPtr pComponent);
+	void detachComponent(ComponentPtr pComponent);
 	QVector<ComponentPtr> getComponents();
 	ComponentPtr getComponent(const QString& name);
 
@@ -101,6 +102,7 @@ public:
 signals:
 	void synchronized();
 	void componentAttached(ComponentPtr comp);
+	void componentDetached(ComponentPtr comp);
 	void updateTransformation(const vec3& pos, const vec3& rot, const vec3& scale);
 
 public slots:

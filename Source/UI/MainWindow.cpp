@@ -97,6 +97,13 @@ void MainWindow::initializeToolBar()
 	QAction* resetSceneAction = toolBar->addAction(QIcon("../Resource/StyleSheets/Icons/reload.png"), "Reset Scene", m_scene, SLOT(resetToDefaultScene()));
 	resetSceneAction->setToolTip("Click to Reset the Scene to default");
 
+	toolBar->addSeparator();
+
+	QAction* debugSceneAction = toolBar->addAction(QIcon("../Resource/StyleSheets/Icons/magnifyingglass.png"), "Toggle Debug Mode", m_scene, SLOT(toggleDebugMode(bool)));
+	debugSceneAction->setCheckable(true);
+	resetSceneAction->setToolTip("Click to Toggle the Debug Mode");
+
+	
 	addToolBar(Qt::LeftToolBarArea, toolBar);
 }
 

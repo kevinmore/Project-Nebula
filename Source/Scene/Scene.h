@@ -121,7 +121,6 @@ private:
 	ParticleSystem* m_particleSystem;
 	SkyboxPtr m_skybox;
 	bool m_bShowSkybox;
-	bool m_debugMode;
 	//
 	// Physics
 	//
