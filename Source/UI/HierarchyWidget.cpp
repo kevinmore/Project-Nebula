@@ -83,7 +83,7 @@ void HierarchyWidget::updateObjectTree()
 	// to avoid emitting itemChanged signal
 	ui->treeWidget->blockSignals(true);
 	ui->treeWidget->clear();
-	readHierarchy(m_scene->sceneNode(), 0);
+	readHierarchy(m_scene->sceneRoot(), 0);
 	ui->treeWidget->expandAll();
 	ui->treeWidget->blockSignals(false);
 }
@@ -134,7 +134,7 @@ void HierarchyWidget::resetSelectedObject()
 		return;
 	}
 	else if (current == ui->treeWidget->topLevelItem(0))
-		m_currentObject = m_scene->sceneNode();
+		m_currentObject = m_scene->sceneRoot();
 	else
 		m_currentObject = m_scene->objectManager()->getGameObject(current->text(0)).data();
 

@@ -51,7 +51,7 @@ public:
 	ObjectManager*  objectManager();
 
 	QStateMachine* getStateMachine() const { return m_stateMachine; }
-	GameObject* sceneNode() const { return m_sceneRootNode; }
+	GameObject* sceneRoot() const { return m_sceneRootNode; }
 	void setBackGroundColor(const QColor& col);
 	SkyboxPtr getSkybox() const  { return m_skybox; }
 	LightPtr getLight() const { return m_light; }

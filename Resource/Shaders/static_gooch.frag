@@ -97,8 +97,8 @@ vec4 CalcLightInternal(vec3 LightDirection, VSOutput In, float ShadowFactor)
     SpecularFactor = pow(SpecularFactor, material.shininess);   
 
 		
-	vec3 CoolColour = vec3(0.62, 0.58, 1.0);
-	vec3 WarmColour = vec3(1.0, 0.29, 0.29);
+	vec3 CoolColour = vec3(0.31, 0.29, 0.5);
+	vec3 WarmColour = vec3(0.5, 0.14, 0.14);
 	vec3 cool = min(CoolColour, 1.0);
 	vec3 warm = min(WarmColour, 1.0);
     

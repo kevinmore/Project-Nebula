@@ -233,6 +233,11 @@ void Canvas::mouseReleaseEvent(QMouseEvent* e)
 		setCursor(QCursor(Qt::ArrowCursor));
 		if(camera->isFollowingTarget()) camera->setViewCenterFixed(true);
 	}
+	else if (e->button() == Qt::LeftButton)
+	{
+		
+
+	}
 	QWindow::mouseReleaseEvent(e);
 }
 
@@ -240,20 +245,52 @@ void Canvas::mouseMoveEvent(QMouseEvent* e)
 {
 	m_pos = e->pos();
 
-	float dx = static_cast<float>(m_cameraSensitivity) * (static_cast<float>(m_pos.x()) - static_cast<float>(m_prevPos.x()));
-	float dy = static_cast<float>(-m_cameraSensitivity) * (static_cast<float>(m_pos.y()) - static_cast<float>(m_prevPos.y()));
+	// do a ray casting to pick game objects
+	vec3 direction;
+	screenToWorldRay(e->pos(), direction);
+	qDebug() << direction;
+	// Traverse each game object and Test each each Oriented Bounding Box (OBB).
+	int closest_sphere_clicked = -1;
+	float closest_intersection = 0.0f;
+	foreach(GameObjectPtr go, getScene()->objectManager()->m_gameObjectMap.values())
+	{
+		float intersection_distance = 0.0f; // Output of testRayOBBIntersection()
+		// The ModelMatrix transforms :
+		// - the mesh to its desired position and orientation
+		// - but also the AABB (defined with aabb_min and aabb_max) into an OBB
 
-	m_prevPos = m_pos;
+		
 
-	Camera* camera = getScene()->getCamera();
+		if(testRaySpehreIntersection(direction, 1.0f, go, intersection_distance))
+		{
+
+			qDebug() << "found" << go->objectName() << "distance:" << intersection_distance;
+		}
+	}
+
+	
 
 	if(m_rightButtonPressed)
 	{
+		float dx = static_cast<float>(m_cameraSensitivity) * (static_cast<float>(m_pos.x()) - static_cast<float>(m_prevPos.x()));
+		float dy = static_cast<float>(-m_cameraSensitivity) * (static_cast<float>(m_pos.y()) - static_cast<float>(m_prevPos.y()));
+
+		m_prevPos = m_pos;
+
+		Camera* camera = getScene()->getCamera();
+
 		camera->setPanAngle(dx);
 		camera->setTiltAngle(dy);
 	}
 	else if (m_middleButtonPressed)
 	{
+		float dx = static_cast<float>(m_cameraSensitivity) * (static_cast<float>(m_pos.x()) - static_cast<float>(m_prevPos.x()));
+		float dy = static_cast<float>(-m_cameraSensitivity) * (static_cast<float>(m_pos.y()) - static_cast<float>(m_prevPos.y()));
+
+		m_prevPos = m_pos;
+
+		Camera* camera = getScene()->getCamera();
+
 		if (camera->isFollowingTarget())
 		{
 			camera->setViewCenterFixed(false);
@@ -279,6 +316,187 @@ void Canvas::setCameraSensitivity(double sensitivity)
 {
 	m_cameraSensitivity = sensitivity;
 	getScene()->getCamera()->setSensitivity(sensitivity);
+}
+
+void Canvas::screenToWorldRay( const QPoint& mousePos, vec3& outDirection )
+{
+	// The ray Start and End positions, in Normalized Device Coordinates (Have you read Tutorial 4 ?)
+	vec4 lRayStart_NDC(
+		((float)mousePos.x()/(float)width()  - 0.5f) * 2.0f,
+		((float)mousePos.y()/(float)height() - 0.5f) * 2.0f,
+		-1.0, // The near plane maps to Z=-1 in Normalized Device Coordinates
+		1.0f
+		);
+	vec4 lRayEnd_NDC(
+		((float)mousePos.x()/(float)width()  - 0.5f) * 2.0f,
+		((float)mousePos.y()/(float)height() - 0.5f) * 2.0f,
+		0.0,
+		1.0f
+		);
+
+	Camera* camera = getScene()->getCamera();
+
+	mat4 M = (camera->projectionMatrix() * camera->viewMatrix()).inverted();
+
+	vec4 lRayEnd_world   = M * lRayEnd_NDC  ; lRayEnd_world  /=lRayEnd_world.w();
+
+	vec3 lRayDir_world(lRayEnd_world - camera->position());
+	outDirection = lRayDir_world.normalized();
+}
+
+bool Canvas::testRayOBBIntersection( 
+	const vec3& rayDirection, 	   // Ray direction (NOT target position!), in world space. Must be normalize()'d.
+	const vec3& aabbMin, 		   // Minimum X,Y,Z coords of the mesh when not transformed at all.
+	const vec3& aabbMax, 		   // Maximum X,Y,Z coords. Often aabb_min*-1 if your mesh is centered, but it's not always the case.
+	GameObjectPtr target, 	   // Transformation applied to the mesh (which will thus be also applied to its bounding box)
+	float& intersectionDistance    // Output : distance between ray_origin and the intersection with the OBB
+	)
+{
+	// Intersection method from Real-Time Rendering and Essential Mathematics for Games
+	float tMin = 0.0f;
+	float tMax = 100000.0f;
+	//qDebug() << target->objectName();
+	vec3 rayOrigin = getScene()->getCamera()->position();
+	vec3 delta = target->position() - rayOrigin;
+	vec3 eularAngles = target->rotation();
+	quat rotation = Math::Quaternion::computeQuaternion(eularAngles);
+	//qDebug() << target->getTranformMatrix();
+	// Test intersection with the 2 planes perpendicular to the OBB's X axis
+	{
+		vec3 xaxis = rotation.rotatedVector(Math::Vector3::UNIT_X);
+		float e = vec3::dotProduct(xaxis, delta);
+		float f = vec3::dotProduct(rayOrigin, xaxis);
+
+		if ( fabs(f) > 0.001f ){ // Standard case
+
+			float t1 = (e+aabbMin.x())/f; // Intersection with the "left" plane
+			float t2 = (e+aabbMax.x())/f; // Intersection with the "right" plane
+			// t1 and t2 now contain distances betwen ray origin and ray-plane intersections
+
+			// We want t1 to represent the nearest intersection, 
+			// so if it's not the case, invert t1 and t2
+			if (t1>t2){
+				float w=t1;t1=t2;t2=w; // swap t1 and t2
+			}
+
+			// tMax is the nearest "far" intersection (amongst the X,Y and Z planes pairs)
+			if ( t2 < tMax )
+				tMax = t2;
+			// tMin is the farthest "near" intersection (amongst the X,Y and Z planes pairs)
+			if ( t1 > tMin )
+				tMin = t1;
+
+			// And here's the trick :
+			// If "far" is closer than "near", then there is NO intersection.
+			// See the images in the tutorials for the visual explanation.
+			if (tMax < tMin )
+				return false;
+
+		}else{ // Rare case : the ray is almost parallel to the planes, so they don't have any "intersection"
+			if(-e+aabbMin.x() > 0.0f || -e+aabbMax.x() < 0.0f)
+				return false;
+		}
+	}
+
+	// Test intersection with the 2 planes perpendicular to the OBB's Y axis
+	// Exactly the same thing than above.
+	{
+		vec3 yaxis = rotation.rotatedVector(Math::Vector3::UNIT_Y);
+		float e = vec3::dotProduct(yaxis, delta);
+		float f = vec3::dotProduct(rayOrigin, yaxis);
+
+		if ( fabs(f) > 0.001f ){
+
+			float t1 = (e+aabbMin.y())/f;
+			float t2 = (e+aabbMax.y())/f;
+
+			if (t1>t2){float w=t1;t1=t2;t2=w;}
+
+			if ( t2 < tMax )
+				tMax = t2;
+			if ( t1 > tMin )
+				tMin = t1;
+			if (tMin > tMax)
+				return false;
+
+		}else{
+			if(-e+aabbMin.y() > 0.0f || -e+aabbMax.y() < 0.0f)
+				return false;
+		}
+	}
+
+	// Test intersection with the 2 planes perpendicular to the OBB's Z axis
+	// Exactly the same thing than above.
+	{
+		vec3 zaxis = rotation.rotatedVector(Math::Vector3::UNIT_Z);
+		float e = vec3::dotProduct(zaxis, delta);
+		float f = vec3::dotProduct(rayOrigin, zaxis);
+
+		if ( fabs(f) > 0.001f ){
+
+			float t1 = (e+aabbMin.z())/f;
+			float t2 = (e+aabbMax.z())/f;
+
+			if (t1>t2){float w=t1;t1=t2;t2=w;}
+
+			if ( t2 < tMax )
+				tMax = t2;
+			if ( t1 > tMin )
+				tMin = t1;
+			if (tMin > tMax)
+				return false;
+
+		}else{
+			if(-e+aabbMin.z() > 0.0f || -e+aabbMax.z() < 0.0f)
+				return false;
+		}
+	}
+
+	intersectionDistance = tMin;
+	return true;
+}
+
+bool Canvas::testRaySpehreIntersection( const vec3& rayDirection, const float radius, const GameObjectPtr target, float& intersectionDistance )
+{
+	// work out components of quadratic
+	vec3 rayOrigin = getScene()->getCamera()->position();
+	vec3 dist_to_sphere = rayOrigin - target->position();
+	float b = vec3::dotProduct(rayDirection, dist_to_sphere);
+	float c = dist_to_sphere.lengthSquared() - radius * radius;
+	float b_squared_minus_c = b * b - c;
+	// check for "imaginary" answer. == ray completely misses sphere
+	if (b_squared_minus_c < 0.0f) {
+		return false;
+	}
+	// check for ray hitting twice (in and out of the sphere)
+	if (b_squared_minus_c > 0.0f) {
+		// get the 2 intersection distances along ray
+		float t_a = -b + sqrt (b_squared_minus_c);
+		float t_b = -b - sqrt (b_squared_minus_c);
+		intersectionDistance = t_b;
+		// if behind viewer, throw one or both away
+		if (t_a < 0.0) {
+			if (t_b < 0.0) {
+				return false;
+			}
+		} else if (t_b < 0.0) {
+			intersectionDistance = t_a;
+		}
+
+		return true;
+	}
+	// check for ray hitting once (skimming the surface)
+	if (0.0f == b_squared_minus_c) {
+		// if behind viewer, throw away
+		float t = -b + sqrt (b_squared_minus_c);
+		if (t < 0.0f) {
+			return false;
+		}
+		intersectionDistance = t;
+		return true;
+	}
+	// note: could also check if ray origin is inside sphere radius
+	return false;
 }
 
 void Canvas::showGPUInfo()

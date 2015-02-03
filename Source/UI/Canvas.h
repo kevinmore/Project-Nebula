@@ -33,7 +33,13 @@ protected:
 
 private:
 	void initializeGL();
+	void screenToWorldRay(const QPoint& mousePos, vec3& outDirection);
+	bool testRayOBBIntersection(const vec3& rayDirection,
+								const vec3& aabbMin, const vec3& aabbMax, 
+								const GameObjectPtr target, float& intersectionDistance);
 
+	bool testRaySpehreIntersection(const vec3& rayDirection, const float radius, 
+									const GameObjectPtr target, float& intersectionDistance);
 public slots:
 	void setCameraSpeed(double speed);
 	void setCameraSensitivity(double sensitivity);

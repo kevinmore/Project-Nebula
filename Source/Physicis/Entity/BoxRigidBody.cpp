@@ -140,6 +140,6 @@ void BoxRigidBody::update( const float dt )
 	m_transformMatrix.rotate(m_rotation);
 	
 	m_rotationMatrix = Math::Matrix3::computeRotationMatrix(m_eularAngles);
-	m_inertiaTensorInvWorld = m_inertiaTensorInv * m_rotationMatrix;
+	m_inertiaTensorInvWorld =  m_rotationMatrix * m_inertiaTensorInv * m_rotationMatrix.transposed();
 }
 
