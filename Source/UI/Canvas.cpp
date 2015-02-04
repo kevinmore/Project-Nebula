@@ -350,6 +350,16 @@ bool Canvas::testRayOBBIntersection(
 	vec3 aabbMin = center - halfExtents;
 	vec3 aabbMax = center + halfExtents;
 
+	// apply a necessary scale to the aabb
+	vec3 scale = target->scale();
+	aabbMin.setX(aabbMin.x() * scale.x());
+	aabbMin.setY(aabbMin.y() * scale.y());
+	aabbMin.setZ(aabbMin.z() * scale.z());
+
+	aabbMax.setX(aabbMax.x() * scale.x());
+	aabbMax.setY(aabbMax.y() * scale.y());
+	aabbMax.setZ(aabbMax.z() * scale.z());
+
 	// Intersection method from Real-Time Rendering and Essential Mathematics for Games
 	float tMin = 0.0f;
 	float tMax = 100000.0f;
