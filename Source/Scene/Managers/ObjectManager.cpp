@@ -173,18 +173,3 @@ void ObjectManager::setLoadingFlag( const QString& flag )
 {
 	m_loadingFlag = flag;
 }
-
-void ObjectManager::renderDebugInfo(const float currentTime)
-{
-	// display the bounding boxes for each object
-	foreach(ComponentPtr comp, m_renderQueue)
-	{
-		ModelPtr model = comp.dynamicCast<AbstractModel>();
-		if (model)
-		{
-			BoxColliderPtr box = model->getBoundingBox();
-			if (box)
-				box->render(currentTime);
-		}
-	}
-}

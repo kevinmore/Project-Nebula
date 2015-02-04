@@ -25,8 +25,6 @@ public:
 	void setLoadingFlag(const QString& flag);
 
 	void renderAll(const float currentTime);
-	void renderDebugInfo(const float currentTime);
-
 
 	void deleteObject(const QString& name);
 

@@ -155,6 +155,9 @@ void HierarchyWidget::readGameObject(QTreeWidgetItem* current, QTreeWidgetItem* 
 	disconnectPreviousObject();
 	//disconnect(0, 0, this, SLOT(handleGameObjectTransformation(const vec3&, const vec3&, const vec3&)));
 	
+	// hide all bounding boxes
+	m_scene->toggleDebugMode(false);
+
 	// if the current item is the scene node (root), ignore
 	if(current == ui->treeWidget->topLevelItem(0)) 
 	{
@@ -167,6 +170,10 @@ void HierarchyWidget::readGameObject(QTreeWidgetItem* current, QTreeWidgetItem* 
 	// get the selected game object
 	m_currentObject = m_scene->objectManager()->getGameObject(current->text(0)).data();
 	if(!m_currentObject) return;
+
+	// show the bounding box
+	ModelPtr model = m_currentObject->getComponent("Model").dynamicCast<AbstractModel>();
+	if(model) model->showBoundingBox();
 
 // 	connect(m_currentObject, SIGNAL(updateTransformation(const vec3&, const vec3&, const vec3&)),
 // 		this, SLOT(handleGameObjectTransformation(const vec3&, const vec3&, const vec3&)));

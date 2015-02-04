@@ -443,7 +443,7 @@ void Scene::toggleDebugMode( bool state )
 		foreach(ComponentPtr comp, m_objectManager->m_renderQueue)
 		{
 			ModelPtr model = comp.dynamicCast<AbstractModel>();
-			if (model)
+			if (model && !model->getBoundingBox()->gameObject())
 				model->showBoundingBox();
 		}
 	}
@@ -453,7 +453,7 @@ void Scene::toggleDebugMode( bool state )
 		foreach(ComponentPtr comp, m_objectManager->m_renderQueue)
 		{
 			ModelPtr model = comp.dynamicCast<AbstractModel>();
-			if (model)
+			if (model && model->getBoundingBox()->gameObject())
 				model->hideBoundingBox();
 		}
 	}

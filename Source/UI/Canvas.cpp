@@ -355,15 +355,16 @@ bool Canvas::testRayOBBIntersection( const vec3& rayDirection, const GameObjectP
 	BoxColliderPtr box = model->getBoundingBox();
 	vec3 center = box->getCenter();
 	vec3 halfExtents = box->getGeometryShape().getHalfExtents();
+
+	// model space aabb boundaries
 	vec3 aabbMin = center - halfExtents;
 	vec3 aabbMax = center + halfExtents;
 
-	// apply a necessary scale to the aabb
+	// apply a necessary scale to the extents
 	vec3 scale = target->scale();
- 	aabbMin.setX(aabbMin.x() * scale.x());
+	aabbMin.setX(aabbMin.x() * scale.x());
 	aabbMin.setY(aabbMin.y() * scale.y());
 	aabbMin.setZ(aabbMin.z() * scale.z());
-
 	aabbMax.setX(aabbMax.x() * scale.x());
 	aabbMax.setY(aabbMax.y() * scale.y());
 	aabbMax.setZ(aabbMax.z() * scale.z());
@@ -374,11 +375,13 @@ bool Canvas::testRayOBBIntersection( const vec3& rayDirection, const GameObjectP
 	float tMin = 0.0f;
 	float tMax = 100000.0f;
 	vec3 rayOrigin = getScene()->getCamera()->position();
-	vec3 targetPos(modelMatrix(0, 3), modelMatrix(1, 3), modelMatrix(2, 3));
+	vec3 targetPos = target->position();
 	vec3 delta = targetPos - rayOrigin;
+	quat rotation = Math::Quaternion::computeQuaternion(target->rotation());
+
 	// Test intersection with the 2 planes perpendicular to the OBB's X axis
 	{
-		vec3 xaxis(modelMatrix(0, 0), modelMatrix(1, 0), modelMatrix(2, 0));
+		vec3 xaxis = rotation.rotatedVector(Math::Vector3::UNIT_X);
 		float e = vec3::dotProduct(xaxis, delta);
 		float f = vec3::dotProduct(rayDirection, xaxis);
 
@@ -416,7 +419,7 @@ bool Canvas::testRayOBBIntersection( const vec3& rayDirection, const GameObjectP
 	// Test intersection with the 2 planes perpendicular to the OBB's Y axis
 	// Exactly the same thing than above.
 	{
-		vec3 yaxis(modelMatrix(0, 1), modelMatrix(1, 1), modelMatrix(2, 1));
+		vec3 yaxis = rotation.rotatedVector(Math::Vector3::UNIT_Y);
 		float e = vec3::dotProduct(yaxis, delta);
 		float f = vec3::dotProduct(rayDirection, yaxis);
 
@@ -443,7 +446,7 @@ bool Canvas::testRayOBBIntersection( const vec3& rayDirection, const GameObjectP
 	// Test intersection with the 2 planes perpendicular to the OBB's Z axis
 	// Exactly the same thing than above.
 	{
-		vec3 zaxis(modelMatrix(0, 2), modelMatrix(1, 2), modelMatrix(2, 2));
+		vec3 zaxis = rotation.rotatedVector(Math::Vector3::UNIT_Z);
 		float e = vec3::dotProduct(zaxis, delta);
 		float f = vec3::dotProduct(rayDirection, zaxis);
 
