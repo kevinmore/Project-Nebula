@@ -346,7 +346,7 @@ bool Canvas::testRayOBBIntersection(
 	BoxColliderPtr box = model->getBoundingBox();
 	vec3 center = box->getCenter();
 	vec3 halfExtents = box->getGeometryShape().getHalfExtents();
-	mat4 modelMatrix = target->getTransformMatrix();
+	mat4 modelMatrix = target->getTransformMatrix() * box->getTransformMatrix();
 	vec3 aabbMin = center - halfExtents;
 	vec3 aabbMax = center + halfExtents;
 
@@ -364,8 +364,8 @@ bool Canvas::testRayOBBIntersection(
 	float tMin = 0.0f;
 	float tMax = 100000.0f;
 	vec3 rayOrigin = getScene()->getCamera()->position();
-	vec3 delta = target->position() - rayOrigin;
-
+	vec3 targetPos(modelMatrix(0, 3), modelMatrix(1, 3), modelMatrix(2, 3));
+	vec3 delta = targetPos - rayOrigin;
 
 	// Test intersection with the 2 planes perpendicular to the OBB's X axis
 	{

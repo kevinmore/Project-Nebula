@@ -33,6 +33,8 @@ public:
 	void setBoundingBox(const BoxCollider& box);
 	BoxColliderPtr getBoundingBox() const;
 
+	inline const mat4& getTransformMatrix() const { return m_transformMatrix; }
+
 	enum PolygonMode
 	{
 		Fill  = GL_FILL,
@@ -54,4 +56,5 @@ protected:
 	GLuint m_vao;
 	PolygonMode m_polygonMode;
 	BoxColliderPtr m_boundingBox;
+	mat4 m_transformMatrix;
 };

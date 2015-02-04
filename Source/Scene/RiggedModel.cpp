@@ -220,13 +220,13 @@ void RiggedModel::render( const float currentTime )
 	
 	m_renderingEffect->enable();
 
-	mat4 modelMatrix = m_actor->getTransformMatrix();
-	modelMatrix.rotate(90, Math::Vector3::UNIT_X); // this is for dae files
+	m_transformMatrix = m_actor->getTransformMatrix();
+	m_transformMatrix.rotate(90, Math::Vector3::UNIT_X); // this is for dae files
 	//QMatrix3x3 normalMatrix = modelViewMatrix.normalMatrix();
 
 	m_renderingEffect->setEyeWorldPos(m_scene->getCamera()->position());
-	m_renderingEffect->setMVPMatrix(m_scene->getCamera()->viewProjectionMatrix() * modelMatrix);
-	m_renderingEffect->setModelMatrix(modelMatrix); 
+	m_renderingEffect->setMVPMatrix(m_scene->getCamera()->viewProjectionMatrix() * m_transformMatrix);
+	m_renderingEffect->setModelMatrix(m_transformMatrix); 
 	m_renderingEffect->setViewMatrix(m_scene->getCamera()->viewMatrix());
 
 	// do the skeleton animation here

@@ -25,9 +25,6 @@ void AbstractCollider::render( const float currentTime )
 	m_renderingEffect->enable();
 
 	mat4 modelMatrix = m_actor->getTransformMatrix() * m_transformMatrix;
-	// do not scale, even when the game object is scaled
-// 	vec3 scale = m_actor->scale();
-// 	modelMatrix.scale(1.0f/scale.x(), 1.0f/scale.y(), 1.0f/scale.z());
 	m_renderingEffect->setEyeWorldPos(m_scene->getCamera()->position());
 	m_renderingEffect->setMVPMatrix(m_scene->getCamera()->viewProjectionMatrix() * modelMatrix);
 	m_renderingEffect->setModelMatrix(modelMatrix); 

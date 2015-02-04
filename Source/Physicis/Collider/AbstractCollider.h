@@ -35,6 +35,8 @@ public:
 	void setColor(const QColor& col);
 	Scene* getScene() const { return m_scene; }
 
+	inline const mat4& getTransformMatrix() { return m_transformMatrix; }
+
 	ColliderType m_colliderType;
 
 protected:
