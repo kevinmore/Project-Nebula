@@ -251,7 +251,8 @@ void Canvas::mouseMoveEvent(QMouseEvent* e)
 	foreach(GameObjectPtr go, getScene()->objectManager()->m_gameObjectMap.values())
 	{
 		float distance = 0.0f;
-		if(testRayOBBIntersection(direction, go, distance))
+		//if(testRayOBBIntersection(direction, go, distance))
+		if(simpleTest(direction, go))
 		{
 
 			qDebug() << "found" << go->objectName() << "distance:" << distance;
@@ -311,6 +312,7 @@ void Canvas::setCameraSensitivity(double sensitivity)
 void Canvas::screenToWorldRay( const QPoint& mousePos, vec3& outDirection )
 {
 	// The ray Start and End positions, in Normalized Device Coordinates (Have you read Tutorial 4 ?)
+	qDebug() << width() << height();
 	vec4 lRayStart_NDC(
 		((float)mousePos.x()/(float)width()  - 0.5f) * 2.0f,
 		((float)mousePos.y()/(float)height() - 0.5f) * 2.0f,
@@ -346,7 +348,6 @@ bool Canvas::testRayOBBIntersection(
 	BoxColliderPtr box = model->getBoundingBox();
 	vec3 center = box->getCenter();
 	vec3 halfExtents = box->getGeometryShape().getHalfExtents();
-	mat4 modelMatrix = target->getTransformMatrix() * box->getTransformMatrix();
 	vec3 aabbMin = center - halfExtents;
 	vec3 aabbMax = center + halfExtents;
 
@@ -360,16 +361,19 @@ bool Canvas::testRayOBBIntersection(
 	aabbMax.setY(aabbMax.y() * scale.y());
 	aabbMax.setZ(aabbMax.z() * scale.z());
 
+	mat4 modelMatrix = target->getTransformMatrix();
+
 	// Intersection method from Real-Time Rendering and Essential Mathematics for Games
-	float tMin = 0.0f;
+	float tMin = -100000.0f;
 	float tMax = 100000.0f;
 	vec3 rayOrigin = getScene()->getCamera()->position();
 	vec3 targetPos(modelMatrix(0, 3), modelMatrix(1, 3), modelMatrix(2, 3));
 	vec3 delta = targetPos - rayOrigin;
-
+	delta.normalize();
 	// Test intersection with the 2 planes perpendicular to the OBB's X axis
 	{
 		vec3 xaxis(modelMatrix(0, 0), modelMatrix(1, 0), modelMatrix(2, 0));
+		xaxis.normalize();
 		float e = vec3::dotProduct(xaxis, delta);
 		float f = vec3::dotProduct(rayDirection, xaxis);
 
@@ -408,6 +412,7 @@ bool Canvas::testRayOBBIntersection(
 	// Exactly the same thing than above.
 	{
 		vec3 yaxis(modelMatrix(0, 1), modelMatrix(1, 1), modelMatrix(2, 1));
+		yaxis.normalize();
 		float e = vec3::dotProduct(yaxis, delta);
 		float f = vec3::dotProduct(rayDirection, yaxis);
 
@@ -435,6 +440,7 @@ bool Canvas::testRayOBBIntersection(
 	// Exactly the same thing than above.
 	{
 		vec3 zaxis(modelMatrix(0, 2), modelMatrix(1, 2), modelMatrix(2, 2));
+		zaxis.normalize();
 		float e = vec3::dotProduct(zaxis, delta);
 		float f = vec3::dotProduct(rayDirection, zaxis);
 
@@ -460,6 +466,43 @@ bool Canvas::testRayOBBIntersection(
 
 	intersectionDistance = tMin;
 	return true;
+}
+
+bool Canvas::simpleTest( const vec3& rayDirection, const GameObjectPtr target )
+{
+	vec3 inv_dir(1.0f/rayDirection.x(), 1.0f/rayDirection.y(), 1.0f/rayDirection.z());
+
+	// Retrieve the bounding box
+	ModelPtr model = target->getComponent("Model").dynamicCast<AbstractModel>();
+	if(!model) return false;
+	BoxColliderPtr box = model->getBoundingBox();
+	vec3 center = box->getCenter();
+	vec3 halfExtents = box->getGeometryShape().getHalfExtents();
+	vec3 aabbMin = center - halfExtents;
+	vec3 aabbMax = center + halfExtents;
+
+	// apply a necessary scale to the aabb
+	vec3 scale = target->scale();
+	aabbMin.setX(aabbMin.x() * scale.x());
+	aabbMin.setY(aabbMin.y() * scale.y());
+	aabbMin.setZ(aabbMin.z() * scale.z());
+
+	aabbMax.setX(aabbMax.x() * scale.x());
+	aabbMax.setY(aabbMax.y() * scale.y());
+	aabbMax.setZ(aabbMax.z() * scale.z());
+
+	aabbMin += target->position();
+	aabbMax += target->position();
+
+	vec3 rayOrigin = getScene()->getCamera()->position();
+	vec3 tMin = (aabbMin - rayOrigin) * inv_dir;
+	vec3 tMax = (aabbMax - rayOrigin) * inv_dir;
+	vec3 t1(qMin(tMin.x(), tMax.x()), qMin(tMin.y(), tMax.y()), qMin(tMin.z(), tMax.z()));
+	vec3 t2(qMax(tMin.x(), tMax.x()), qMax(tMin.y(), tMax.y()), qMax(tMin.z(), tMax.z()));
+	float tNear = qMax(qMax(t1.x(), t1.y()), t1.z());
+	float tFar =  qMin(qMin(t2.x(), t2.y()), t2.z());
+
+	return tNear <= tFar;
 }
 
 bool Canvas::testRaySpehreIntersection( const vec3& rayDirection, const float radius, const GameObjectPtr target, float& intersectionDistance )

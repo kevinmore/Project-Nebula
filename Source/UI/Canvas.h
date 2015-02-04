@@ -36,7 +36,7 @@ private:
 	void screenToWorldRay(const QPoint& mousePos, vec3& outDirection);
 	bool testRayOBBIntersection(const vec3& rayDirection,
 								const GameObjectPtr target, float& intersectionDistance);
-
+	bool simpleTest(const vec3& rayDirection, const GameObjectPtr target);
 	bool testRaySpehreIntersection(const vec3& rayDirection, const float radius, 
 									const GameObjectPtr target, float& intersectionDistance);
 public slots:
