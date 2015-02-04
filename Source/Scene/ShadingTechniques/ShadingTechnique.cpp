@@ -45,7 +45,8 @@ bool ShadingTechnique::init()
 
 bool ShadingTechnique::compileShader()
 {
-	m_shaderProgram->addShaderFromSourceFile(QOpenGLShader::Vertex, m_shaderFilePath + m_shaderFileName + ".vert");
+	QString vertexShader = (m_shaderType == STATIC) ? "static.vert" : "skinning.vert";
+	m_shaderProgram->addShaderFromSourceFile(QOpenGLShader::Vertex, m_shaderFilePath + vertexShader);
 	m_shaderProgram->addShaderFromSourceFile(QOpenGLShader::Fragment, m_shaderFilePath + m_shaderFileName + ".frag");
 	m_shaderProgram->link();
 
