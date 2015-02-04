@@ -235,8 +235,10 @@ void Canvas::mouseReleaseEvent(QMouseEvent* e)
 	}
 	else if (e->button() == Qt::LeftButton)
 	{
-		
-
+		// do a ray casting to pick game objects
+		GameObjectPtr selectedObject = pickObject(e->pos());
+		if (selectedObject)
+			emit objectPicked(selectedObject->objectName());
 	}
 	QWindow::mouseReleaseEvent(e);
 }
@@ -244,22 +246,6 @@ void Canvas::mouseReleaseEvent(QMouseEvent* e)
 void Canvas::mouseMoveEvent(QMouseEvent* e)
 {
 	m_pos = e->pos();
-
-	// do a ray casting to pick game objects
-	vec3 direction;
-	screenToWorldRay(e->pos(), direction);
-	foreach(GameObjectPtr go, getScene()->objectManager()->m_gameObjectMap.values())
-	{
-		float distance = 0.0f;
-		//if(testRayOBBIntersection(direction, go, distance))
-		if(simpleTest(direction, go))
-		{
-
-			qDebug() << "found" << go->objectName() << "distance:" << distance;
-		}
-	}
-
-	
 
 	if(m_rightButtonPressed)
 	{
@@ -309,202 +295,6 @@ void Canvas::setCameraSensitivity(double sensitivity)
 	getScene()->getCamera()->setSensitivity(sensitivity);
 }
 
-void Canvas::screenToWorldRay( const QPoint& mousePos, vec3& outDirection )
-{
-	// The ray Start and End positions, in Normalized Device Coordinates (Have you read Tutorial 4 ?)
-	qDebug() << width() << height();
-	vec4 lRayStart_NDC(
-		((float)mousePos.x()/(float)width()  - 0.5f) * 2.0f,
-		((float)mousePos.y()/(float)height() - 0.5f) * 2.0f,
-		-1.0, // The near plane maps to Z=-1 in Normalized Device Coordinates
-		1.0f
-		);
-	vec4 lRayEnd_NDC(
-		((float)mousePos.x()/(float)width()  - 0.5f) * 2.0f,
-		((float)mousePos.y()/(float)height() - 0.5f) * 2.0f,
-		0.0,
-		1.0f
-		);
-
-	Camera* camera = getScene()->getCamera();
-
-	mat4 M = (camera->projectionMatrix() * camera->viewMatrix()).inverted();
-
-	vec4 lRayEnd_world   = M * lRayEnd_NDC  ; lRayEnd_world  /=lRayEnd_world.w();
-
-	vec3 lRayDir_world(lRayEnd_world - camera->position());
-	outDirection = lRayDir_world.normalized();
-}
-
-bool Canvas::testRayOBBIntersection( 
-	const vec3& rayDirection, 	   // Ray direction (NOT target position!), in world space. Must be normalize()'d.
-	const GameObjectPtr target, 	   // Transformation applied to the mesh (which will thus be also applied to its bounding box)
-	float& intersectionDistance    // Output : distance between ray_origin and the intersection with the OBB
-	)
-{
-	// Retrieve the bounding box
-	ModelPtr model = target->getComponent("Model").dynamicCast<AbstractModel>();
-	if(!model) return false;
-	BoxColliderPtr box = model->getBoundingBox();
-	vec3 center = box->getCenter();
-	vec3 halfExtents = box->getGeometryShape().getHalfExtents();
-	vec3 aabbMin = center - halfExtents;
-	vec3 aabbMax = center + halfExtents;
-
-	// apply a necessary scale to the aabb
-	vec3 scale = target->scale();
-	aabbMin.setX(aabbMin.x() * scale.x());
-	aabbMin.setY(aabbMin.y() * scale.y());
-	aabbMin.setZ(aabbMin.z() * scale.z());
-
-	aabbMax.setX(aabbMax.x() * scale.x());
-	aabbMax.setY(aabbMax.y() * scale.y());
-	aabbMax.setZ(aabbMax.z() * scale.z());
-
-	mat4 modelMatrix = target->getTransformMatrix();
-
-	// Intersection method from Real-Time Rendering and Essential Mathematics for Games
-	float tMin = -100000.0f;
-	float tMax = 100000.0f;
-	vec3 rayOrigin = getScene()->getCamera()->position();
-	vec3 targetPos(modelMatrix(0, 3), modelMatrix(1, 3), modelMatrix(2, 3));
-	vec3 delta = targetPos - rayOrigin;
-	delta.normalize();
-	// Test intersection with the 2 planes perpendicular to the OBB's X axis
-	{
-		vec3 xaxis(modelMatrix(0, 0), modelMatrix(1, 0), modelMatrix(2, 0));
-		xaxis.normalize();
-		float e = vec3::dotProduct(xaxis, delta);
-		float f = vec3::dotProduct(rayDirection, xaxis);
-
-		if ( fabs(f) > 0.001f ){ // Standard case
-
-			float t1 = (e+aabbMin.x())/f; // Intersection with the "left" plane
-			float t2 = (e+aabbMax.x())/f; // Intersection with the "right" plane
-			// t1 and t2 now contain distances betwen ray origin and ray-plane intersections
-
-			// We want t1 to represent the nearest intersection, 
-			// so if it's not the case, invert t1 and t2
-			if (t1>t2){
-				float w=t1;t1=t2;t2=w; // swap t1 and t2
-			}
-
-			// tMax is the nearest "far" intersection (amongst the X,Y and Z planes pairs)
-			if ( t2 < tMax )
-				tMax = t2;
-			// tMin is the farthest "near" intersection (amongst the X,Y and Z planes pairs)
-			if ( t1 > tMin )
-				tMin = t1;
-
-			// And here's the trick :
-			// If "far" is closer than "near", then there is NO intersection.
-			// See the images in the tutorials for the visual explanation.
-			if (tMax < tMin )
-				return false;
-
-		}else{ // Rare case : the ray is almost parallel to the planes, so they don't have any "intersection"
-			if(-e+aabbMin.x() > 0.0f || -e+aabbMax.x() < 0.0f)
-				return false;
-		}
-	}
-
-	// Test intersection with the 2 planes perpendicular to the OBB's Y axis
-	// Exactly the same thing than above.
-	{
-		vec3 yaxis(modelMatrix(0, 1), modelMatrix(1, 1), modelMatrix(2, 1));
-		yaxis.normalize();
-		float e = vec3::dotProduct(yaxis, delta);
-		float f = vec3::dotProduct(rayDirection, yaxis);
-
-		if ( fabs(f) > 0.001f ){
-
-			float t1 = (e+aabbMin.y())/f;
-			float t2 = (e+aabbMax.y())/f;
-
-			if (t1>t2){float w=t1;t1=t2;t2=w;}
-
-			if ( t2 < tMax )
-				tMax = t2;
-			if ( t1 > tMin )
-				tMin = t1;
-			if (tMin > tMax)
-				return false;
-
-		}else{
-			if(-e+aabbMin.y() > 0.0f || -e+aabbMax.y() < 0.0f)
-				return false;
-		}
-	}
-
-	// Test intersection with the 2 planes perpendicular to the OBB's Z axis
-	// Exactly the same thing than above.
-	{
-		vec3 zaxis(modelMatrix(0, 2), modelMatrix(1, 2), modelMatrix(2, 2));
-		zaxis.normalize();
-		float e = vec3::dotProduct(zaxis, delta);
-		float f = vec3::dotProduct(rayDirection, zaxis);
-
-		if ( fabs(f) > 0.001f ){
-
-			float t1 = (e+aabbMin.z())/f;
-			float t2 = (e+aabbMax.z())/f;
-
-			if (t1>t2){float w=t1;t1=t2;t2=w;}
-
-			if ( t2 < tMax )
-				tMax = t2;
-			if ( t1 > tMin )
-				tMin = t1;
-			if (tMin > tMax)
-				return false;
-
-		}else{
-			if(-e+aabbMin.z() > 0.0f || -e+aabbMax.z() < 0.0f)
-				return false;
-		}
-	}
-
-	intersectionDistance = tMin;
-	return true;
-}
-
-bool Canvas::simpleTest( const vec3& rayDirection, const GameObjectPtr target )
-{
-	vec3 inv_dir(1.0f/rayDirection.x(), 1.0f/rayDirection.y(), 1.0f/rayDirection.z());
-
-	// Retrieve the bounding box
-	ModelPtr model = target->getComponent("Model").dynamicCast<AbstractModel>();
-	if(!model) return false;
-	BoxColliderPtr box = model->getBoundingBox();
-	vec3 center = box->getCenter();
-	vec3 halfExtents = box->getGeometryShape().getHalfExtents();
-	vec3 aabbMin = center - halfExtents;
-	vec3 aabbMax = center + halfExtents;
-
-	// apply a necessary scale to the aabb
-	vec3 scale = target->scale();
-	aabbMin.setX(aabbMin.x() * scale.x());
-	aabbMin.setY(aabbMin.y() * scale.y());
-	aabbMin.setZ(aabbMin.z() * scale.z());
-
-	aabbMax.setX(aabbMax.x() * scale.x());
-	aabbMax.setY(aabbMax.y() * scale.y());
-	aabbMax.setZ(aabbMax.z() * scale.z());
-
-	aabbMin += target->position();
-	aabbMax += target->position();
-
-	vec3 rayOrigin = getScene()->getCamera()->position();
-	vec3 tMin = (aabbMin - rayOrigin) * inv_dir;
-	vec3 tMax = (aabbMax - rayOrigin) * inv_dir;
-	vec3 t1(qMin(tMin.x(), tMax.x()), qMin(tMin.y(), tMax.y()), qMin(tMin.z(), tMax.z()));
-	vec3 t2(qMax(tMin.x(), tMax.x()), qMax(tMin.y(), tMax.y()), qMax(tMin.z(), tMax.z()));
-	float tNear = qMax(qMax(t1.x(), t1.y()), t1.z());
-	float tFar =  qMin(qMin(t2.x(), t2.y()), t2.z());
-
-	return tNear <= tFar;
-}
-
 bool Canvas::testRaySpehreIntersection( const vec3& rayDirection, const float radius, const GameObjectPtr target, float& intersectionDistance )
 {
 	// work out components of quadratic
@@ -548,6 +338,156 @@ bool Canvas::testRaySpehreIntersection( const vec3& rayDirection, const float ra
 	return false;
 }
 
+bool Canvas::testRayOBBIntersection( const vec3& rayDirection, const GameObjectPtr target, float& intersectionDistance )
+{
+	// Retrieve the bounding box
+	ModelPtr model = target->getComponent("Model").dynamicCast<AbstractModel>();
+	if(!model) return false;
+	BoxColliderPtr box = model->getBoundingBox();
+	vec3 center = box->getCenter();
+	vec3 halfExtents = box->getGeometryShape().getHalfExtents();
+	vec3 aabbMin = center - halfExtents;
+	vec3 aabbMax = center + halfExtents;
+
+	// apply a necessary scale to the aabb
+	vec3 scale = target->scale();
+ 	aabbMin.setX(aabbMin.x() * scale.x());
+	aabbMin.setY(aabbMin.y() * scale.y());
+	aabbMin.setZ(aabbMin.z() * scale.z());
+
+	aabbMax.setX(aabbMax.x() * scale.x());
+	aabbMax.setY(aabbMax.y() * scale.y());
+	aabbMax.setZ(aabbMax.z() * scale.z());
+
+	mat4 modelMatrix = target->getTransformMatrix();
+
+	// Intersection method from Real-Time Rendering and Essential Mathematics for Games
+	float tMin = 0.0f;
+	float tMax = 100000.0f;
+	vec3 rayOrigin = getScene()->getCamera()->position();
+	vec3 targetPos(modelMatrix(0, 3), modelMatrix(1, 3), modelMatrix(2, 3));
+	vec3 delta = targetPos - rayOrigin;
+	// Test intersection with the 2 planes perpendicular to the OBB's X axis
+	{
+		vec3 xaxis(modelMatrix(0, 0), modelMatrix(1, 0), modelMatrix(2, 0));
+		float e = vec3::dotProduct(xaxis, delta);
+		float f = vec3::dotProduct(rayDirection, xaxis);
+
+		if ( fabs(f) > 0.001f ){ // Standard case
+
+			float t1 = (e+aabbMin.x())/f; // Intersection with the "left" plane
+			float t2 = (e+aabbMax.x())/f; // Intersection with the "right" plane
+			// t1 and t2 now contain distances betwen ray origin and ray-plane intersections
+
+			// We want t1 to represent the nearest intersection, 
+			// so if it's not the case, invert t1 and t2
+			if (t1>t2){
+				float w=t1;t1=t2;t2=w; // swap t1 and t2
+			}
+
+			// tMax is the nearest "far" intersection (amongst the X,Y and Z planes pairs)
+			if ( t2 < tMax )
+				tMax = t2;
+			// tMin is the farthest "near" intersection (amongst the X,Y and Z planes pairs)
+			if ( t1 > tMin )
+				tMin = t1;
+
+			// And here's the trick :
+			// If "far" is closer than "near", then there is NO intersection.
+			// See the images in the tutorials for the visual explanation.
+			if (tMax < tMin )
+				return false;
+
+		}else{ // Rare case : the ray is almost parallel to the planes, so they don't have any "intersection"
+			if(-e+aabbMin.x() > 0.0f || -e+aabbMax.x() < 0.0f)
+				return false;
+		}
+	}
+
+	// Test intersection with the 2 planes perpendicular to the OBB's Y axis
+	// Exactly the same thing than above.
+	{
+		vec3 yaxis(modelMatrix(0, 1), modelMatrix(1, 1), modelMatrix(2, 1));
+		float e = vec3::dotProduct(yaxis, delta);
+		float f = vec3::dotProduct(rayDirection, yaxis);
+
+		if ( fabs(f) > 0.001f ){
+
+			float t1 = (e+aabbMin.y())/f;
+			float t2 = (e+aabbMax.y())/f;
+
+			if (t1>t2){float w=t1;t1=t2;t2=w;}
+
+			if ( t2 < tMax )
+				tMax = t2;
+			if ( t1 > tMin )
+				tMin = t1;
+			if (tMin > tMax)
+				return false;
+
+		}else{
+			if(-e+aabbMin.y() > 0.0f || -e+aabbMax.y() < 0.0f)
+				return false;
+		}
+	}
+
+	// Test intersection with the 2 planes perpendicular to the OBB's Z axis
+	// Exactly the same thing than above.
+	{
+		vec3 zaxis(modelMatrix(0, 2), modelMatrix(1, 2), modelMatrix(2, 2));
+		float e = vec3::dotProduct(zaxis, delta);
+		float f = vec3::dotProduct(rayDirection, zaxis);
+
+		if ( fabs(f) > 0.001f ){
+
+			float t1 = (e+aabbMin.z())/f;
+			float t2 = (e+aabbMax.z())/f;
+
+			if (t1>t2){float w=t1;t1=t2;t2=w;}
+
+			if ( t2 < tMax )
+				tMax = t2;
+			if ( t1 > tMin )
+				tMin = t1;
+			if (tMin > tMax)
+				return false;
+
+		}else{
+			if(-e+aabbMin.z() > 0.0f || -e+aabbMax.z() < 0.0f)
+				return false;
+		}
+	}
+
+	intersectionDistance = tMin;
+	return true;
+}
+
+vec3 Canvas::getRayFromMouse( const QPoint& mousePos)
+{
+	// The ray Start and End positions, in Normalized Device Coordinates (Have you read Tutorial 4 ?)
+	vec4 lRayStart_NDC(
+		((float)mousePos.x()/(float)width()  - 0.5f) * 2.0f,
+		(0.5f - (float)mousePos.y()/(float)height()) * 2.0f,
+		-1.0, // The near plane maps to Z=-1 in Normalized Device Coordinates
+		1.0f
+		);
+	vec4 lRayEnd_NDC(
+		((float)mousePos.x()/(float)width()  - 0.5f) * 2.0f,
+		(0.5f - (float)mousePos.y()/(float)height()) * 2.0f,
+		0.0,
+		1.0f
+		);
+
+	Camera* camera = getScene()->getCamera();
+
+	mat4 M = (camera->projectionMatrix() * camera->viewMatrix()).inverted();
+
+	vec4 lRayEnd_world   = M * lRayEnd_NDC  ; lRayEnd_world  /=lRayEnd_world.w();
+
+	vec3 lRayDir_world(lRayEnd_world - camera->position());
+	return lRayDir_world.normalized();
+}
+
 void Canvas::showGPUInfo()
 {
 	QString info =  "OpenGL version - ";
@@ -560,4 +500,31 @@ void Canvas::showGPUInfo()
 	info += reinterpret_cast<const char*>(glGetString(GL_RENDERER));
 
 	QMessageBox::about(0, tr("GPU Information"), info);
+}
+
+GameObjectPtr Canvas::pickObject(const QPoint& mousePos)
+{
+	// get a ray from the mouse position
+	vec3 direction = getRayFromMouse(mousePos);
+
+	// prepare the container (a ray can hit several object)
+	QMap<float, GameObjectPtr> distanceMap;
+	foreach(GameObjectPtr go, getScene()->objectManager()->m_gameObjectMap.values())
+	{
+		float distance = 0.0f;
+		if(testRayOBBIntersection(direction, go, distance))
+		{
+			distanceMap[distance] = go;
+		}
+	}
+
+	// get the nearest object
+	float minDist = 10000.0f;
+	foreach(float val, distanceMap.keys())
+	{
+		minDist = qMin(minDist, val);
+	}
+
+	// NOTE: the returned object can be NULL
+	return distanceMap[minDist];
 }

@@ -1,6 +1,7 @@
 #pragma once
 #include <QWidget>
 #include <Scene/Scene.h>
+#include <UI/Canvas.h>
 
 namespace Ui {
 	class HierarchyViewer;
@@ -11,11 +12,12 @@ class HierarchyWidget : public QWidget
 	Q_OBJECT
 
 public:
-	HierarchyWidget(Scene* scene, QWidget *parent = 0);
+	HierarchyWidget(Scene* scene, Canvas* canvas, QWidget *parent = 0);
 	~HierarchyWidget();
 
 private:
 	Ui::HierarchyViewer *ui;
+	Canvas* m_canvas;
 	Scene* m_scene;
 	GameObject* m_currentObject;
 	ShadingTechnique* m_currentShadingTech;
@@ -63,7 +65,7 @@ private slots:
 
 public slots:
 	void updateObjectTree();
-
+	void onObjectPicked(const QString& name);
 
 protected:
 	bool eventFilter(QObject *obj, QEvent *ev); // install a filter event for the color picker

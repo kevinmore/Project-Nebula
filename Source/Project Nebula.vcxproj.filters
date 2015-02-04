@@ -101,7 +101,6 @@
     <ClInclude Include="Physicis\Geometry\AbstractShape.h" />
     <ClInclude Include="Physicis\World\PhysicsWorldObject.h" />
     <ClInclude Include="Physicis\Entity\BoxRigidBody.h" />
-    <ClInclude Include="UI\Canvas.h" />
     <ClInclude Include="Utility\LoaderThread.h" />
     <ClInclude Include="UI\SkyboxDialog.h" />
     <ClInclude Include="Scene\Camera.h" />
@@ -118,7 +117,6 @@
     <ClInclude Include="Physicis\Collider\CollisionFeedback.h" />
     <ClInclude Include="Physicis\Collider\AbstractCollider.h" />
     <ClInclude Include="Physicis\Collider\BoxCollider.h" />
-    <ClInclude Include="UI\HierarchyWidget.h" />
     <ClInclude Include="Scene\Scene.h" />
   </ItemGroup>
   <ItemGroup>
@@ -129,5 +127,7 @@
   <ItemGroup>
     <QtMOC Include="Primitives\GameObject.h" />
     <QtMOC Include="Scene\Managers\ObjectManager.h" />
+    <QtMOC Include="UI\Canvas.h" />
+    <QtMOC Include="UI\HierarchyWidget.h" />
   </ItemGroup>
 </Project>

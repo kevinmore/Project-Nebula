@@ -2,14 +2,18 @@
 #include "ui_HierarchyWidget.h"
 #include <Primitives/Puppet.h>
 
-HierarchyWidget::HierarchyWidget(Scene* scene, QWidget *parent)
+HierarchyWidget::HierarchyWidget(Scene* scene, Canvas* canvas, QWidget *parent)
 	: QWidget(parent),
 	  m_scene(scene),
+	  m_canvas(canvas),
 	  m_currentObject(0),
 	  ui(new Ui::HierarchyViewer)
 
 {
 	ui->setupUi(this);
+	// connection to a ray casting function in the scene
+	connect(m_canvas, SIGNAL(objectPicked(const QString&)), this, SLOT(onObjectPicked(const QString&)));
+
 	// tree widget related
 	connect(m_scene, SIGNAL(updateHierarchy()), this, SLOT(updateObjectTree()));
 
@@ -747,4 +751,16 @@ void HierarchyWidget::fillInTransformTab()
 	ui->doubleSpinBox_ScaleX->setValue(m_currentObject->scale().x());
 	ui->doubleSpinBox_ScaleY->setValue(m_currentObject->scale().y());
 	ui->doubleSpinBox_ScaleZ->setValue(m_currentObject->scale().z());
+}
+
+void HierarchyWidget::onObjectPicked( const QString& name )
+{
+	// find the item that has this name
+	//QTreeWidgetItem* selected = ui->treeWidget->findItems(name, Qt::MatchExactly).first();
+	QList<QTreeWidgetItem*> items = ui->treeWidget->findItems(name, Qt::MatchRecursive);
+
+	// this usually won't happen
+	if (items.size() == 0) return;
+
+	ui->treeWidget->setCurrentItem(items.first());
 }

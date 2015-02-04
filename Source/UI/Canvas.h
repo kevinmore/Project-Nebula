@@ -33,12 +33,14 @@ protected:
 
 private:
 	void initializeGL();
-	void screenToWorldRay(const QPoint& mousePos, vec3& outDirection);
+	vec3 getRayFromMouse(const QPoint& mousePos);
 	bool testRayOBBIntersection(const vec3& rayDirection,
 								const GameObjectPtr target, float& intersectionDistance);
-	bool simpleTest(const vec3& rayDirection, const GameObjectPtr target);
 	bool testRaySpehreIntersection(const vec3& rayDirection, const float radius, 
-									const GameObjectPtr target, float& intersectionDistance);
+								const GameObjectPtr target, float& intersectionDistance);
+
+	GameObjectPtr pickObject(const QPoint& mousePos);
+
 public slots:
 	void setCameraSpeed(double speed);
 	void setCameraSensitivity(double sensitivity);
@@ -51,6 +53,7 @@ protected slots:
 
 signals:
 	void updateFramerate();
+	void objectPicked(const QString& name);
 
 private:
 	QScopedPointer<QOpenGLContext> m_context;

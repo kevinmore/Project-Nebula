@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_HierarchyWidget_t {
-    QByteArrayData data[38];
-    char stringdata[598];
+    QByteArrayData data[40];
+    char stringdata[618];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -66,7 +66,9 @@ QT_MOC_LITERAL(33, 502, 21),
 QT_MOC_LITERAL(34, 524, 21),
 QT_MOC_LITERAL(35, 546, 21),
 QT_MOC_LITERAL(36, 568, 12),
-QT_MOC_LITERAL(37, 581, 16)
+QT_MOC_LITERAL(37, 581, 16),
+QT_MOC_LITERAL(38, 598, 14),
+QT_MOC_LITERAL(39, 613, 4)
     },
     "HierarchyWidget\0connectCurrentObject\0"
     "\0disconnectPreviousObject\0readGameObject\0"
@@ -84,7 +86,7 @@ QT_MOC_LITERAL(37, 581, 16)
     "onRotationYDialChange\0onRotationZDialChange\0"
     "onRotationXSpinChange\0onRotationYSpinChange\0"
     "onRotationZSpinChange\0assignPuppet\0"
-    "updateObjectTree"
+    "updateObjectTree\0onObjectPicked\0name"
 };
 #undef QT_MOC_LITERAL
 
@@ -94,7 +96,7 @@ static const uint qt_meta_data_HierarchyWidget[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      22,   14, // methods
+      23,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -102,28 +104,29 @@ static const uint qt_meta_data_HierarchyWidget[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,  124,    2, 0x08 /* Private */,
-       3,    0,  125,    2, 0x08 /* Private */,
-       4,    2,  126,    2, 0x08 /* Private */,
-       8,    0,  131,    2, 0x08 /* Private */,
-       9,    2,  132,    2, 0x08 /* Private */,
-      12,    0,  137,    2, 0x08 /* Private */,
-      13,    3,  138,    2, 0x08 /* Private */,
-      18,    1,  145,    2, 0x08 /* Private */,
-      20,    1,  148,    2, 0x08 /* Private */,
-      22,    1,  151,    2, 0x08 /* Private */,
-      24,    1,  154,    2, 0x08 /* Private */,
-      26,    1,  157,    2, 0x08 /* Private */,
-      27,    1,  160,    2, 0x08 /* Private */,
-      28,    1,  163,    2, 0x08 /* Private */,
-      29,    1,  166,    2, 0x08 /* Private */,
-      31,    1,  169,    2, 0x08 /* Private */,
-      32,    1,  172,    2, 0x08 /* Private */,
-      33,    1,  175,    2, 0x08 /* Private */,
-      34,    1,  178,    2, 0x08 /* Private */,
-      35,    1,  181,    2, 0x08 /* Private */,
-      36,    0,  184,    2, 0x08 /* Private */,
-      37,    0,  185,    2, 0x0a /* Public */,
+       1,    0,  129,    2, 0x08 /* Private */,
+       3,    0,  130,    2, 0x08 /* Private */,
+       4,    2,  131,    2, 0x08 /* Private */,
+       8,    0,  136,    2, 0x08 /* Private */,
+       9,    2,  137,    2, 0x08 /* Private */,
+      12,    0,  142,    2, 0x08 /* Private */,
+      13,    3,  143,    2, 0x08 /* Private */,
+      18,    1,  150,    2, 0x08 /* Private */,
+      20,    1,  153,    2, 0x08 /* Private */,
+      22,    1,  156,    2, 0x08 /* Private */,
+      24,    1,  159,    2, 0x08 /* Private */,
+      26,    1,  162,    2, 0x08 /* Private */,
+      27,    1,  165,    2, 0x08 /* Private */,
+      28,    1,  168,    2, 0x08 /* Private */,
+      29,    1,  171,    2, 0x08 /* Private */,
+      31,    1,  174,    2, 0x08 /* Private */,
+      32,    1,  177,    2, 0x08 /* Private */,
+      33,    1,  180,    2, 0x08 /* Private */,
+      34,    1,  183,    2, 0x08 /* Private */,
+      35,    1,  186,    2, 0x08 /* Private */,
+      36,    0,  189,    2, 0x08 /* Private */,
+      37,    0,  190,    2, 0x0a /* Public */,
+      38,    1,  191,    2, 0x0a /* Public */,
 
  // slots: parameters
     QMetaType::Void,
@@ -148,6 +151,7 @@ static const uint qt_meta_data_HierarchyWidget[] = {
     QMetaType::Void, QMetaType::Double,   30,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void, QMetaType::QString,   39,
 
        0        // eod
 };
@@ -179,6 +183,7 @@ void HierarchyWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         case 19: _t->onRotationZSpinChange((*reinterpret_cast< double(*)>(_a[1]))); break;
         case 20: _t->assignPuppet(); break;
         case 21: _t->updateObjectTree(); break;
+        case 22: _t->onObjectPicked((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -209,13 +214,13 @@ int HierarchyWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 22)
+        if (_id < 23)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 22;
+        _id -= 23;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 22)
+        if (_id < 23)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 22;
+        _id -= 23;
     }
     return _id;
 }

@@ -257,7 +257,7 @@ void MainWindow::initializeRightDockableArea()
 
 	// create hierarchy inspector
 	m_heirarchyViewer = new QDockWidget("Hierarchy Inspector", this);
-	HierarchyWidget* inspector = new HierarchyWidget(m_scene, this);
+	HierarchyWidget* inspector = new HierarchyWidget(m_scene, m_canvas.data(), this);
 	m_heirarchyViewer->setWidget(inspector);
 	m_heirarchyViewer->setFeatures(QDockWidget::AllDockWidgetFeatures);
 	//addDockWidget(Qt::RightDockWidgetArea, m_heirarchyViewer);

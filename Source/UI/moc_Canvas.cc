@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_Canvas_t {
-    QByteArrayData data[11];
-    char stringdata[119];
+    QByteArrayData data[13];
+    char stringdata[137];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -32,17 +32,20 @@ static const qt_meta_stringdata_Canvas_t qt_meta_stringdata_Canvas = {
 QT_MOC_LITERAL(0, 0, 6),
 QT_MOC_LITERAL(1, 7, 15),
 QT_MOC_LITERAL(2, 23, 0),
-QT_MOC_LITERAL(3, 24, 14),
-QT_MOC_LITERAL(4, 39, 5),
-QT_MOC_LITERAL(5, 45, 20),
-QT_MOC_LITERAL(6, 66, 11),
-QT_MOC_LITERAL(7, 78, 11),
-QT_MOC_LITERAL(8, 90, 8),
-QT_MOC_LITERAL(9, 99, 7),
-QT_MOC_LITERAL(10, 107, 11)
+QT_MOC_LITERAL(3, 24, 12),
+QT_MOC_LITERAL(4, 37, 4),
+QT_MOC_LITERAL(5, 42, 14),
+QT_MOC_LITERAL(6, 57, 5),
+QT_MOC_LITERAL(7, 63, 20),
+QT_MOC_LITERAL(8, 84, 11),
+QT_MOC_LITERAL(9, 96, 11),
+QT_MOC_LITERAL(10, 108, 8),
+QT_MOC_LITERAL(11, 117, 7),
+QT_MOC_LITERAL(12, 125, 11)
     },
-    "Canvas\0updateFramerate\0\0setCameraSpeed\0"
-    "speed\0setCameraSensitivity\0sensitivity\0"
+    "Canvas\0updateFramerate\0\0objectPicked\0"
+    "name\0setCameraSpeed\0speed\0"
+    "setCameraSensitivity\0sensitivity\0"
     "showGPUInfo\0resizeGL\0paintGL\0updateScene"
 };
 #undef QT_MOC_LITERAL
@@ -53,30 +56,32 @@ static const uint qt_meta_data_Canvas[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       7,   14, // methods
+       8,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       1,       // signalCount
+       2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   49,    2, 0x06 /* Public */,
+       1,    0,   54,    2, 0x06 /* Public */,
+       3,    1,   55,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       3,    1,   50,    2, 0x0a /* Public */,
-       5,    1,   53,    2, 0x0a /* Public */,
-       7,    0,   56,    2, 0x0a /* Public */,
-       8,    0,   57,    2, 0x09 /* Protected */,
-       9,    0,   58,    2, 0x09 /* Protected */,
-      10,    0,   59,    2, 0x09 /* Protected */,
+       5,    1,   58,    2, 0x0a /* Public */,
+       7,    1,   61,    2, 0x0a /* Public */,
+       9,    0,   64,    2, 0x0a /* Public */,
+      10,    0,   65,    2, 0x09 /* Protected */,
+      11,    0,   66,    2, 0x09 /* Protected */,
+      12,    0,   67,    2, 0x09 /* Protected */,
 
  // signals: parameters
     QMetaType::Void,
+    QMetaType::Void, QMetaType::QString,    4,
 
  // slots: parameters
-    QMetaType::Void, QMetaType::Double,    4,
     QMetaType::Void, QMetaType::Double,    6,
+    QMetaType::Void, QMetaType::Double,    8,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -91,12 +96,13 @@ void Canvas::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         Canvas *_t = static_cast<Canvas *>(_o);
         switch (_id) {
         case 0: _t->updateFramerate(); break;
-        case 1: _t->setCameraSpeed((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 2: _t->setCameraSensitivity((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 3: _t->showGPUInfo(); break;
-        case 4: _t->resizeGL(); break;
-        case 5: _t->paintGL(); break;
-        case 6: _t->updateScene(); break;
+        case 1: _t->objectPicked((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 2: _t->setCameraSpeed((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 3: _t->setCameraSensitivity((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 4: _t->showGPUInfo(); break;
+        case 5: _t->resizeGL(); break;
+        case 6: _t->paintGL(); break;
+        case 7: _t->updateScene(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -106,6 +112,12 @@ void Canvas::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
             typedef void (Canvas::*_t)();
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&Canvas::updateFramerate)) {
                 *result = 0;
+            }
+        }
+        {
+            typedef void (Canvas::*_t)(const QString & );
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&Canvas::objectPicked)) {
+                *result = 1;
             }
         }
     }
@@ -136,13 +148,13 @@ int Canvas::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 7)
+        if (_id < 8)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 7;
+        _id -= 8;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 7)
+        if (_id < 8)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 7;
+        _id -= 8;
     }
     return _id;
 }
@@ -151,5 +163,12 @@ int Canvas::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 void Canvas::updateFramerate()
 {
     QMetaObject::activate(this, &staticMetaObject, 0, 0);
+}
+
+// SIGNAL 1
+void Canvas::objectPicked(const QString & _t1)
+{
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 1, _a);
 }
 QT_END_MOC_NAMESPACE
