@@ -32,6 +32,8 @@ public:
 
 	void setBoundingBox(const BoxCollider& box);
 	BoxColliderPtr getBoundingBox() const;
+	void showBoundingBox();
+	void hideBoundingBox();
 
 	inline const mat4& getTransformMatrix() const { return m_transformMatrix; }
 

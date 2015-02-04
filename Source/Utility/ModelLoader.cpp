@@ -546,5 +546,7 @@ BoxCollider ModelLoader::getBoundingBox()
 	vec3 halfExtents((m_maxX - m_minX) * 0.5f, (m_maxY - m_minY) * 0.5f, (m_maxZ - m_minZ) * 0.5f);
 	vec3 center((m_maxX + m_minX) * 0.5f, (m_maxY + m_minY) * 0.5f, (m_maxZ + m_minZ) * 0.5f);
 
-	return BoxCollider(center, halfExtents, m_scene);
+	// make the bounding box slightly bitter than the actual one
+	// this is for a higher fault tolerance and a better visual result
+	return BoxCollider(center, halfExtents * 1.02f, m_scene);
 }

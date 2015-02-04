@@ -444,11 +444,7 @@ void Scene::toggleDebugMode( bool state )
 		{
 			ModelPtr model = comp.dynamicCast<AbstractModel>();
 			if (model)
-			{
-				BoxColliderPtr box = model->getBoundingBox();
-				if (box && !box->gameObject())
-					model->gameObject()->attachComponent(box);
-			}
+				model->showBoundingBox();
 		}
 	}
 	else
@@ -458,11 +454,7 @@ void Scene::toggleDebugMode( bool state )
 		{
 			ModelPtr model = comp.dynamicCast<AbstractModel>();
 			if (model)
-			{
-				BoxColliderPtr box = model->getBoundingBox();
-				if (box && box->gameObject())
-					box->gameObject()->detachComponent(box);
-			}
+				model->hideBoundingBox();
 		}
 	}
 }

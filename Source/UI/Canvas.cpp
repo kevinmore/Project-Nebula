@@ -235,10 +235,19 @@ void Canvas::mouseReleaseEvent(QMouseEvent* e)
 	}
 	else if (e->button() == Qt::LeftButton)
 	{
+		// clear the debug mode first
+		getScene()->toggleDebugMode(false);
+
 		// do a ray casting to pick game objects
 		GameObjectPtr selectedObject = pickObject(e->pos());
 		if (selectedObject)
-			emit objectPicked(selectedObject->objectName());
+		{
+			// show the bounding box
+			ModelPtr model = selectedObject->getComponent("Model").dynamicCast<AbstractModel>();
+			model->showBoundingBox();
+		}
+		// emit the signal
+		emit objectPicked(selectedObject);
 	}
 	QWindow::mouseReleaseEvent(e);
 }
@@ -488,20 +497,6 @@ vec3 Canvas::getRayFromMouse( const QPoint& mousePos)
 	return lRayDir_world.normalized();
 }
 
-void Canvas::showGPUInfo()
-{
-	QString info =  "OpenGL version - ";
-	info += reinterpret_cast<const char*>(glGetString(GL_VERSION));
-	info += "\n\nGLSL version - ";
-	info += reinterpret_cast<const char*>(glGetString(GL_SHADING_LANGUAGE_VERSION));
-	info += "\n\nVendor - ";
-	info += reinterpret_cast<const char*>(glGetString(GL_VENDOR));
-	info += "\n\nRenderer (GPU) - ";
-	info += reinterpret_cast<const char*>(glGetString(GL_RENDERER));
-
-	QMessageBox::about(0, tr("GPU Information"), info);
-}
-
 GameObjectPtr Canvas::pickObject(const QPoint& mousePos)
 {
 	// get a ray from the mouse position
@@ -527,4 +522,18 @@ GameObjectPtr Canvas::pickObject(const QPoint& mousePos)
 
 	// NOTE: the returned object can be NULL
 	return distanceMap[minDist];
+}
+
+void Canvas::showGPUInfo()
+{
+	QString info =  "OpenGL version - ";
+	info += reinterpret_cast<const char*>(glGetString(GL_VERSION));
+	info += "\n\nGLSL version - ";
+	info += reinterpret_cast<const char*>(glGetString(GL_SHADING_LANGUAGE_VERSION));
+	info += "\n\nVendor - ";
+	info += reinterpret_cast<const char*>(glGetString(GL_VENDOR));
+	info += "\n\nRenderer (GPU) - ";
+	info += reinterpret_cast<const char*>(glGetString(GL_RENDERER));
+
+	QMessageBox::about(0, tr("GPU Information"), info);
 }

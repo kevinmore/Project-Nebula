@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_HierarchyWidget_t {
-    QByteArrayData data[40];
-    char stringdata[618];
+    QByteArrayData data[41];
+    char stringdata[636];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -68,7 +68,8 @@ QT_MOC_LITERAL(35, 546, 21),
 QT_MOC_LITERAL(36, 568, 12),
 QT_MOC_LITERAL(37, 581, 16),
 QT_MOC_LITERAL(38, 598, 14),
-QT_MOC_LITERAL(39, 613, 4)
+QT_MOC_LITERAL(39, 613, 13),
+QT_MOC_LITERAL(40, 627, 8)
     },
     "HierarchyWidget\0connectCurrentObject\0"
     "\0disconnectPreviousObject\0readGameObject\0"
@@ -86,7 +87,8 @@ QT_MOC_LITERAL(39, 613, 4)
     "onRotationYDialChange\0onRotationZDialChange\0"
     "onRotationXSpinChange\0onRotationYSpinChange\0"
     "onRotationZSpinChange\0assignPuppet\0"
-    "updateObjectTree\0onObjectPicked\0name"
+    "updateObjectTree\0onObjectPicked\0"
+    "GameObjectPtr\0selected"
 };
 #undef QT_MOC_LITERAL
 
@@ -151,7 +153,7 @@ static const uint qt_meta_data_HierarchyWidget[] = {
     QMetaType::Void, QMetaType::Double,   30,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QString,   39,
+    QMetaType::Void, 0x80000000 | 39,   40,
 
        0        // eod
 };
@@ -183,7 +185,7 @@ void HierarchyWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         case 19: _t->onRotationZSpinChange((*reinterpret_cast< double(*)>(_a[1]))); break;
         case 20: _t->assignPuppet(); break;
         case 21: _t->updateObjectTree(); break;
-        case 22: _t->onObjectPicked((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 22: _t->onObjectPicked((*reinterpret_cast< GameObjectPtr(*)>(_a[1]))); break;
         default: ;
         }
     }

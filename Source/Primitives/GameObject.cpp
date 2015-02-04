@@ -293,7 +293,11 @@ void GameObject::attachComponent( ComponentPtr pComponent )
 
 void GameObject::detachComponent( ComponentPtr pComponent )
 {
-	m_components.removeAt(m_components.indexOf(pComponent));
+	int index = m_components.indexOf(pComponent);
+	// make sure that the component is already attached
+	if (index < 0) return;
+
+	m_components.removeAt(index);
 	pComponent->dislinkGameObject();
 
 	emit componentDetached(pComponent);

@@ -65,7 +65,7 @@ private slots:
 
 public slots:
 	void updateObjectTree();
-	void onObjectPicked(const QString& name);
+	void onObjectPicked(GameObjectPtr selected);
 
 protected:
 	bool eventFilter(QObject *obj, QEvent *ev); // install a filter event for the color picker

@@ -60,3 +60,13 @@ BoxColliderPtr AbstractModel::getBoundingBox() const
 {
 	return m_boundingBox;
 }
+
+void AbstractModel::showBoundingBox()
+{
+	gameObject()->attachComponent(m_boundingBox);
+}
+
+void AbstractModel::hideBoundingBox()
+{
+	gameObject()->detachComponent(m_boundingBox);
+}

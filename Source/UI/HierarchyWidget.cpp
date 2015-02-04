@@ -12,7 +12,7 @@ HierarchyWidget::HierarchyWidget(Scene* scene, Canvas* canvas, QWidget *parent)
 {
 	ui->setupUi(this);
 	// connection to a ray casting function in the scene
-	connect(m_canvas, SIGNAL(objectPicked(const QString&)), this, SLOT(onObjectPicked(const QString&)));
+	connect(m_canvas, SIGNAL(objectPicked(GameObjectPtr)), this, SLOT(onObjectPicked(GameObjectPtr)));
 
 	// tree widget related
 	connect(m_scene, SIGNAL(updateHierarchy()), this, SLOT(updateObjectTree()));
@@ -753,11 +753,17 @@ void HierarchyWidget::fillInTransformTab()
 	ui->doubleSpinBox_ScaleZ->setValue(m_currentObject->scale().z());
 }
 
-void HierarchyWidget::onObjectPicked( const QString& name )
+void HierarchyWidget::onObjectPicked( GameObjectPtr selected )
 {
+	// if nothing is selected
+	if (!selected)
+	{
+		ui->treeWidget->setCurrentIndex(ui->treeWidget->rootIndex());
+		return;
+	}
 	// find the item that has this name
 	//QTreeWidgetItem* selected = ui->treeWidget->findItems(name, Qt::MatchExactly).first();
-	QList<QTreeWidgetItem*> items = ui->treeWidget->findItems(name, Qt::MatchRecursive);
+	QList<QTreeWidgetItem*> items = ui->treeWidget->findItems(selected->objectName(), Qt::MatchRecursive);
 
 	// this usually won't happen
 	if (items.size() == 0) return;

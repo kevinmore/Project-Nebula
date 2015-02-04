@@ -53,7 +53,7 @@ protected slots:
 
 signals:
 	void updateFramerate();
-	void objectPicked(const QString& name);
+	void objectPicked(GameObjectPtr selected);
 
 private:
 	QScopedPointer<QOpenGLContext> m_context;
