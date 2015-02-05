@@ -13,6 +13,10 @@ HierarchyWidget::HierarchyWidget(Scene* scene, Canvas* canvas, QWidget *parent)
 	ui->setupUi(this);
 	// connection to a ray casting function in the scene
 	connect(m_canvas, SIGNAL(objectPicked(GameObjectPtr)), this, SLOT(onObjectPicked(GameObjectPtr)));
+	
+	// connection from canvas to delete object
+	connect(m_canvas, SIGNAL(deleteObject()), this, SLOT(deleteGameObject()));
+
 
 	// material change behaviour
 	connect(this, SIGNAL(materialChanged(MaterialPtr)), this, SLOT(assignMaterial(MaterialPtr)));
@@ -311,8 +315,10 @@ void HierarchyWidget::showMouseRightButton( const QPoint& point )
 void HierarchyWidget::deleteGameObject()
 {
 	// take the object from the map, and delete it
+	if (!m_currentObject) return;
 	m_scene->objectManager()->deleteObject(m_currentObject->objectName());
 	updateObjectTree();
+	m_currentObject = NULL;
 }
 
 void HierarchyWidget::connectParticleSystemTab(ParticleSystemPtr ps)
@@ -774,6 +780,9 @@ void HierarchyWidget::onObjectPicked( GameObjectPtr selected )
 	{
 		ui->treeWidget->setCurrentIndex(ui->treeWidget->rootIndex());
 		disconnectPreviousObject();
+		m_currentObject = NULL;
+		m_currentShadingTech = NULL;
+		
 		return;
 	}
 	// find the item that has this name

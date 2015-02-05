@@ -44,35 +44,35 @@ QT_MOC_LITERAL(11, 144, 19),
 QT_MOC_LITERAL(12, 164, 16),
 QT_MOC_LITERAL(13, 181, 4),
 QT_MOC_LITERAL(14, 186, 6),
-QT_MOC_LITERAL(15, 193, 16),
-QT_MOC_LITERAL(16, 210, 30),
-QT_MOC_LITERAL(17, 241, 4),
-QT_MOC_LITERAL(18, 246, 3),
-QT_MOC_LITERAL(19, 250, 3),
-QT_MOC_LITERAL(20, 254, 5),
-QT_MOC_LITERAL(21, 260, 20),
-QT_MOC_LITERAL(22, 281, 5),
-QT_MOC_LITERAL(23, 287, 21),
-QT_MOC_LITERAL(24, 309, 6),
-QT_MOC_LITERAL(25, 316, 12),
-QT_MOC_LITERAL(26, 329, 10),
-QT_MOC_LITERAL(27, 340, 23),
-QT_MOC_LITERAL(28, 364, 5),
-QT_MOC_LITERAL(29, 370, 26),
-QT_MOC_LITERAL(30, 397, 31),
-QT_MOC_LITERAL(31, 429, 34),
-QT_MOC_LITERAL(32, 464, 23),
-QT_MOC_LITERAL(33, 488, 26),
-QT_MOC_LITERAL(34, 515, 32),
-QT_MOC_LITERAL(35, 548, 35),
-QT_MOC_LITERAL(36, 584, 21),
-QT_MOC_LITERAL(37, 606, 3),
-QT_MOC_LITERAL(38, 610, 21),
-QT_MOC_LITERAL(39, 632, 21),
-QT_MOC_LITERAL(40, 654, 21),
-QT_MOC_LITERAL(41, 676, 21),
-QT_MOC_LITERAL(42, 698, 21),
-QT_MOC_LITERAL(43, 720, 12),
+QT_MOC_LITERAL(15, 193, 30),
+QT_MOC_LITERAL(16, 224, 4),
+QT_MOC_LITERAL(17, 229, 3),
+QT_MOC_LITERAL(18, 233, 3),
+QT_MOC_LITERAL(19, 237, 5),
+QT_MOC_LITERAL(20, 243, 20),
+QT_MOC_LITERAL(21, 264, 5),
+QT_MOC_LITERAL(22, 270, 21),
+QT_MOC_LITERAL(23, 292, 6),
+QT_MOC_LITERAL(24, 299, 12),
+QT_MOC_LITERAL(25, 312, 10),
+QT_MOC_LITERAL(26, 323, 23),
+QT_MOC_LITERAL(27, 347, 5),
+QT_MOC_LITERAL(28, 353, 26),
+QT_MOC_LITERAL(29, 380, 31),
+QT_MOC_LITERAL(30, 412, 34),
+QT_MOC_LITERAL(31, 447, 23),
+QT_MOC_LITERAL(32, 471, 26),
+QT_MOC_LITERAL(33, 498, 32),
+QT_MOC_LITERAL(34, 531, 35),
+QT_MOC_LITERAL(35, 567, 21),
+QT_MOC_LITERAL(36, 589, 3),
+QT_MOC_LITERAL(37, 593, 21),
+QT_MOC_LITERAL(38, 615, 21),
+QT_MOC_LITERAL(39, 637, 21),
+QT_MOC_LITERAL(40, 659, 21),
+QT_MOC_LITERAL(41, 681, 21),
+QT_MOC_LITERAL(42, 703, 12),
+QT_MOC_LITERAL(43, 716, 16),
 QT_MOC_LITERAL(44, 733, 16),
 QT_MOC_LITERAL(45, 750, 14),
 QT_MOC_LITERAL(46, 765, 13),
@@ -84,9 +84,8 @@ QT_MOC_LITERAL(48, 788, 14)
     "disconnectPreviousObject\0readGameObject\0"
     "QTreeWidgetItem*\0current\0previous\0"
     "resetSelectedObject\0renameGameObject\0"
-    "item\0column\0deleteGameObject\0"
-    "handleGameObjectTransformation\0vec3\0"
-    "pos\0rot\0scale\0showMouseRightButton\0"
+    "item\0column\0handleGameObjectTransformation\0"
+    "vec3\0pos\0rot\0scale\0showMouseRightButton\0"
     "point\0setColorPickerEnabled\0status\0"
     "changeShader\0shaderFile\0onShininessSliderChange\0"
     "value\0onShininessDoubleBoxChange\0"
@@ -100,8 +99,9 @@ QT_MOC_LITERAL(48, 788, 14)
     "onRotationYDialChange\0onRotationZDialChange\0"
     "onRotationXSpinChange\0onRotationYSpinChange\0"
     "onRotationZSpinChange\0assignPuppet\0"
-    "updateObjectTree\0onObjectPicked\0"
-    "GameObjectPtr\0selected\0assignMaterial"
+    "deleteGameObject\0updateObjectTree\0"
+    "onObjectPicked\0GameObjectPtr\0selected\0"
+    "assignMaterial"
 };
 #undef QT_MOC_LITERAL
 
@@ -127,26 +127,26 @@ static const uint qt_meta_data_HierarchyWidget[] = {
        7,    2,  164,    2, 0x08 /* Private */,
       11,    0,  169,    2, 0x08 /* Private */,
       12,    2,  170,    2, 0x08 /* Private */,
-      15,    0,  175,    2, 0x08 /* Private */,
-      16,    3,  176,    2, 0x08 /* Private */,
-      21,    1,  183,    2, 0x08 /* Private */,
-      23,    1,  186,    2, 0x08 /* Private */,
-      25,    1,  189,    2, 0x08 /* Private */,
-      27,    1,  192,    2, 0x08 /* Private */,
-      29,    1,  195,    2, 0x08 /* Private */,
-      30,    1,  198,    2, 0x08 /* Private */,
-      31,    1,  201,    2, 0x08 /* Private */,
-      32,    1,  204,    2, 0x08 /* Private */,
-      33,    1,  207,    2, 0x08 /* Private */,
-      34,    1,  210,    2, 0x08 /* Private */,
-      35,    1,  213,    2, 0x08 /* Private */,
-      36,    1,  216,    2, 0x08 /* Private */,
-      38,    1,  219,    2, 0x08 /* Private */,
-      39,    1,  222,    2, 0x08 /* Private */,
-      40,    1,  225,    2, 0x08 /* Private */,
-      41,    1,  228,    2, 0x08 /* Private */,
-      42,    1,  231,    2, 0x08 /* Private */,
-      43,    0,  234,    2, 0x08 /* Private */,
+      15,    3,  175,    2, 0x08 /* Private */,
+      20,    1,  182,    2, 0x08 /* Private */,
+      22,    1,  185,    2, 0x08 /* Private */,
+      24,    1,  188,    2, 0x08 /* Private */,
+      26,    1,  191,    2, 0x08 /* Private */,
+      28,    1,  194,    2, 0x08 /* Private */,
+      29,    1,  197,    2, 0x08 /* Private */,
+      30,    1,  200,    2, 0x08 /* Private */,
+      31,    1,  203,    2, 0x08 /* Private */,
+      32,    1,  206,    2, 0x08 /* Private */,
+      33,    1,  209,    2, 0x08 /* Private */,
+      34,    1,  212,    2, 0x08 /* Private */,
+      35,    1,  215,    2, 0x08 /* Private */,
+      37,    1,  218,    2, 0x08 /* Private */,
+      38,    1,  221,    2, 0x08 /* Private */,
+      39,    1,  224,    2, 0x08 /* Private */,
+      40,    1,  227,    2, 0x08 /* Private */,
+      41,    1,  230,    2, 0x08 /* Private */,
+      42,    0,  233,    2, 0x08 /* Private */,
+      43,    0,  234,    2, 0x0a /* Public */,
       44,    0,  235,    2, 0x0a /* Public */,
       45,    1,  236,    2, 0x0a /* Public */,
       48,    1,  239,    2, 0x0a /* Public */,
@@ -160,25 +160,25 @@ static const uint qt_meta_data_HierarchyWidget[] = {
     QMetaType::Void, 0x80000000 | 8, 0x80000000 | 8,    9,   10,
     QMetaType::Void,
     QMetaType::Void, 0x80000000 | 8, QMetaType::Int,   13,   14,
+    QMetaType::Void, 0x80000000 | 16, 0x80000000 | 16, 0x80000000 | 16,   17,   18,   19,
+    QMetaType::Void, QMetaType::QPoint,   21,
+    QMetaType::Void, QMetaType::Bool,   23,
+    QMetaType::Void, QMetaType::QString,   25,
+    QMetaType::Void, QMetaType::Int,   27,
+    QMetaType::Void, QMetaType::Double,   27,
+    QMetaType::Void, QMetaType::Int,   27,
+    QMetaType::Void, QMetaType::Double,   27,
+    QMetaType::Void, QMetaType::Int,   27,
+    QMetaType::Void, QMetaType::Double,   27,
+    QMetaType::Void, QMetaType::Int,   27,
+    QMetaType::Void, QMetaType::Double,   27,
+    QMetaType::Void, QMetaType::Int,   36,
+    QMetaType::Void, QMetaType::Int,   36,
+    QMetaType::Void, QMetaType::Int,   36,
+    QMetaType::Void, QMetaType::Double,   36,
+    QMetaType::Void, QMetaType::Double,   36,
+    QMetaType::Void, QMetaType::Double,   36,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 17, 0x80000000 | 17, 0x80000000 | 17,   18,   19,   20,
-    QMetaType::Void, QMetaType::QPoint,   22,
-    QMetaType::Void, QMetaType::Bool,   24,
-    QMetaType::Void, QMetaType::QString,   26,
-    QMetaType::Void, QMetaType::Int,   28,
-    QMetaType::Void, QMetaType::Double,   28,
-    QMetaType::Void, QMetaType::Int,   28,
-    QMetaType::Void, QMetaType::Double,   28,
-    QMetaType::Void, QMetaType::Int,   28,
-    QMetaType::Void, QMetaType::Double,   28,
-    QMetaType::Void, QMetaType::Int,   28,
-    QMetaType::Void, QMetaType::Double,   28,
-    QMetaType::Void, QMetaType::Int,   37,
-    QMetaType::Void, QMetaType::Int,   37,
-    QMetaType::Void, QMetaType::Int,   37,
-    QMetaType::Void, QMetaType::Double,   37,
-    QMetaType::Void, QMetaType::Double,   37,
-    QMetaType::Void, QMetaType::Double,   37,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void, 0x80000000 | 46,   47,
@@ -198,26 +198,26 @@ void HierarchyWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         case 3: _t->readGameObject((*reinterpret_cast< QTreeWidgetItem*(*)>(_a[1])),(*reinterpret_cast< QTreeWidgetItem*(*)>(_a[2]))); break;
         case 4: _t->resetSelectedObject(); break;
         case 5: _t->renameGameObject((*reinterpret_cast< QTreeWidgetItem*(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 6: _t->deleteGameObject(); break;
-        case 7: _t->handleGameObjectTransformation((*reinterpret_cast< const vec3(*)>(_a[1])),(*reinterpret_cast< const vec3(*)>(_a[2])),(*reinterpret_cast< const vec3(*)>(_a[3]))); break;
-        case 8: _t->showMouseRightButton((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
-        case 9: _t->setColorPickerEnabled((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 10: _t->changeShader((*reinterpret_cast< const QString(*)>(_a[1]))); break;
-        case 11: _t->onShininessSliderChange((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 12: _t->onShininessDoubleBoxChange((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 13: _t->onShininessStrengthSliderChange((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 14: _t->onShininessStrengthDoubleBoxChange((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 15: _t->onRoughnessSliderChange((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 16: _t->onRoughnessDoubleBoxChange((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 17: _t->onFresnelReflectanceSliderChange((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 18: _t->onFresnelReflectanceDoubleBoxChange((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 19: _t->onRotationXDialChange((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 20: _t->onRotationYDialChange((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 21: _t->onRotationZDialChange((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 22: _t->onRotationXSpinChange((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 23: _t->onRotationYSpinChange((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 24: _t->onRotationZSpinChange((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 25: _t->assignPuppet(); break;
+        case 6: _t->handleGameObjectTransformation((*reinterpret_cast< const vec3(*)>(_a[1])),(*reinterpret_cast< const vec3(*)>(_a[2])),(*reinterpret_cast< const vec3(*)>(_a[3]))); break;
+        case 7: _t->showMouseRightButton((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
+        case 8: _t->setColorPickerEnabled((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 9: _t->changeShader((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 10: _t->onShininessSliderChange((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 11: _t->onShininessDoubleBoxChange((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 12: _t->onShininessStrengthSliderChange((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 13: _t->onShininessStrengthDoubleBoxChange((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 14: _t->onRoughnessSliderChange((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 15: _t->onRoughnessDoubleBoxChange((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 16: _t->onFresnelReflectanceSliderChange((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 17: _t->onFresnelReflectanceDoubleBoxChange((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 18: _t->onRotationXDialChange((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 19: _t->onRotationYDialChange((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 20: _t->onRotationZDialChange((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 21: _t->onRotationXSpinChange((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 22: _t->onRotationYSpinChange((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 23: _t->onRotationZSpinChange((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 24: _t->assignPuppet(); break;
+        case 25: _t->deleteGameObject(); break;
         case 26: _t->updateObjectTree(); break;
         case 27: _t->onObjectPicked((*reinterpret_cast< GameObjectPtr(*)>(_a[1]))); break;
         case 28: _t->assignMaterial((*reinterpret_cast< MaterialPtr(*)>(_a[1]))); break;

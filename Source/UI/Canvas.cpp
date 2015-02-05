@@ -178,6 +178,10 @@ void Canvas::keyReleaseEvent(QKeyEvent* e)
 		camera->setViewCenterFixed(false);
 		break;
 
+	case Qt::Key_Delete:
+		emit deleteObject();
+		break;
+
 	default:
 		QWindow::keyReleaseEvent(e);
 	}
@@ -224,6 +228,8 @@ void Canvas::mouseReleaseEvent(QMouseEvent* e)
 	{
 		// clear the debug mode first
 		getScene()->toggleDebugMode(false);
+		// emit an empty game object
+		emit objectPicked(GameObjectPtr());
 
 		m_rightButtonPressed = false;
 	}

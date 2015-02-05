@@ -44,7 +44,6 @@ private slots:
 	void readGameObject(QTreeWidgetItem* current, QTreeWidgetItem* previous);
 	void resetSelectedObject();
 	void renameGameObject(QTreeWidgetItem * item, int column);
-	void deleteGameObject();
 	void handleGameObjectTransformation(const vec3& pos, const vec3& rot, const vec3& scale);
 	void showMouseRightButton(const QPoint& point);
 	void setColorPickerEnabled(bool status);
@@ -73,6 +72,7 @@ private slots:
 
 
 public slots:
+	void deleteGameObject();
 	void updateObjectTree();
 	void onObjectPicked(GameObjectPtr selected);
 	void assignMaterial(MaterialPtr mat);
