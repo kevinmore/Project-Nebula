@@ -432,6 +432,11 @@ void GameObject::addPuppet( PuppetPtr p )
 	m_puppets << p;
 }
 
+QList<PuppetPtr> GameObject::getPuppets()
+{
+	return m_puppets;
+}
+
 void GameObject::removePuppet( Puppet* p )
 {
 	foreach(PuppetPtr pP, m_puppets)

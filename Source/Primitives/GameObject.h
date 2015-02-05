@@ -46,6 +46,7 @@ public:
 
 	void addPuppet(PuppetPtr p);
 	void removePuppet(Puppet* p);
+	QList<PuppetPtr> getPuppets();
 
 	/////////////////////////////inline section///////////////////////////////////
 	inline vec3 position() const { return m_position; }

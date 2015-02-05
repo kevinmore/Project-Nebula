@@ -9,13 +9,17 @@ public:
 
 	enum Variable
 	{
-		Position,
+		Position = 0,
 		Rotation,
 		Scale,
 		Color
 	};
 
 	Puppet(GameObject* go, Variable val, const vec3& speed, float duration = 0.0f);
+
+	const int getVariable() const;
+	const vec3& getSpeed() const;
+	const float getDuration() const;
 
 private slots:
 	void update();

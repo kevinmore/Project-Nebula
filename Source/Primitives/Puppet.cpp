@@ -51,4 +51,19 @@ void Puppet::destroy()
 	m_target->removePuppet(this);
 }
 
+const int Puppet::getVariable() const
+{
+	return m_variable;
+}
+
+const vec3& Puppet::getSpeed() const
+{
+	return m_speed;
+}
+
+const float Puppet::getDuration() const
+{
+	return m_duration;
+}
+
 

@@ -1,6 +1,7 @@
 #pragma once
 #include <QtCore>
 #include <Scene/Scene.h>
+#include <Primitives/Puppet.h>
 
 /************************************************************************/
 /*                           IO Streams                                 */
@@ -142,10 +143,22 @@ QDataStream& operator << (QDataStream& out, ComponentPtr object)
 }
 
 /*
+* Puppet Only need Out stream
+*/
+// Order: Variable -> Speed -> Duration 
+QDataStream& operator << (QDataStream& out, PuppetPtr object)
+{
+	out << object->getVariable() << object->getSpeed() << object->getDuration();
+
+	return out;
+}
+
+
+/*
 * Game Object
 */
 // Order: Object Name -> Transformation (Position -> Rotation -> Scaling) -> Components Count 
-//     -> Component Type -> Each Component
+//     -> Component Type -> Each Component -> Puppets Count -> Each Puppet
 QDataStream& operator << (QDataStream& out, GameObjectPtr object)
 {
 	out << object->objectName() << object->position() << object->rotation() << object->scale();
@@ -156,6 +169,14 @@ QDataStream& operator << (QDataStream& out, GameObjectPtr object)
 	foreach(ComponentPtr comp, components)
 	{
 		out << comp->className() << comp;
+	}
+
+	QList<PuppetPtr> puppets = object->getPuppets();
+	out << puppets.size();
+
+	foreach(PuppetPtr p, puppets)
+	{
+		out << p;
 	}
 
 	return out;
@@ -213,6 +234,40 @@ QDataStream& operator >> (QDataStream& in, GameObjectPtr object)
 
 			in >> ps;
 		}
+	}
+
+	// process puppets
+	int puppetCount;
+	in >> puppetCount;
+
+	Puppet::Variable var;
+	int variableType;
+	vec3 speed;
+	float duration;
+
+	for (int i = 0; i < puppetCount; ++i)
+	{
+		in >> variableType >> speed >> duration;
+
+		switch(variableType)
+		{
+		case 0:
+			var = Puppet::Position;
+			break;
+		case 1:
+			var = Puppet::Rotation;
+			break;
+		case 2:
+			var = Puppet::Scale;
+			break;
+		case 3:
+			var = Puppet::Color;
+			break;
+		default:
+			break;
+		}
+
+		Puppet* p = new Puppet(object.data(), var, speed, duration);
 	}
 
 	return in;
