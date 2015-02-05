@@ -539,7 +539,7 @@ public:
         scrollArea_3->setWidgetResizable(true);
         scrollAreaWidgetContents_3 = new QWidget();
         scrollAreaWidgetContents_3->setObjectName(QStringLiteral("scrollAreaWidgetContents_3"));
-        scrollAreaWidgetContents_3->setGeometry(QRect(0, 0, 336, 390));
+        scrollAreaWidgetContents_3->setGeometry(QRect(0, 0, 318, 198));
         verticalLayout_3 = new QVBoxLayout(scrollAreaWidgetContents_3);
         verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
         horizontalLayout_36 = new QHBoxLayout();
@@ -660,7 +660,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 308, 1157));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 308, 1130));
         verticalLayout_4 = new QVBoxLayout(scrollAreaWidgetContents);
         verticalLayout_4->setObjectName(QStringLiteral("verticalLayout_4"));
         groupBox_7 = new QGroupBox(scrollAreaWidgetContents);
@@ -739,6 +739,7 @@ public:
         doubleSpinBox_ShininessStrength->setSizePolicy(sizePolicy4);
         doubleSpinBox_ShininessStrength->setMinimumSize(QSize(60, 0));
         doubleSpinBox_ShininessStrength->setMaximumSize(QSize(60, 16777215));
+        doubleSpinBox_ShininessStrength->setDecimals(4);
         doubleSpinBox_ShininessStrength->setMaximum(1);
         doubleSpinBox_ShininessStrength->setSingleStep(0.1);
         doubleSpinBox_ShininessStrength->setValue(1);
@@ -763,7 +764,7 @@ public:
         doubleSpinBox_Shininess->setSizePolicy(sizePolicy4);
         doubleSpinBox_Shininess->setMinimumSize(QSize(60, 0));
         doubleSpinBox_Shininess->setMaximumSize(QSize(60, 16777215));
-        doubleSpinBox_Shininess->setDecimals(2);
+        doubleSpinBox_Shininess->setDecimals(4);
         doubleSpinBox_Shininess->setMaximum(100);
         doubleSpinBox_Shininess->setSingleStep(0.1);
 
@@ -882,8 +883,10 @@ public:
         doubleSpinBox_Roughness->setSizePolicy(sizePolicy4);
         doubleSpinBox_Roughness->setMinimumSize(QSize(60, 0));
         doubleSpinBox_Roughness->setMaximumSize(QSize(60, 16777215));
+        doubleSpinBox_Roughness->setDecimals(4);
+        doubleSpinBox_Roughness->setMinimum(0.01);
         doubleSpinBox_Roughness->setMaximum(1);
-        doubleSpinBox_Roughness->setSingleStep(0.1);
+        doubleSpinBox_Roughness->setSingleStep(0.01);
         doubleSpinBox_Roughness->setValue(1);
 
         horizontalLayout_37->addWidget(doubleSpinBox_Roughness);
@@ -915,6 +918,7 @@ public:
         doubleSpinBox_fresnelReflectance->setSizePolicy(sizePolicy4);
         doubleSpinBox_fresnelReflectance->setMinimumSize(QSize(60, 0));
         doubleSpinBox_fresnelReflectance->setMaximumSize(QSize(60, 16777215));
+        doubleSpinBox_fresnelReflectance->setDecimals(4);
         doubleSpinBox_fresnelReflectance->setMaximum(1);
         doubleSpinBox_fresnelReflectance->setSingleStep(0.1);
         doubleSpinBox_fresnelReflectance->setValue(1);
@@ -1024,7 +1028,7 @@ public:
         scrollArea_2->setWidgetResizable(true);
         scrollAreaWidgetContents_2 = new QWidget();
         scrollAreaWidgetContents_2->setObjectName(QStringLiteral("scrollAreaWidgetContents_2"));
-        scrollAreaWidgetContents_2->setGeometry(QRect(0, 0, 323, 688));
+        scrollAreaWidgetContents_2->setGeometry(QRect(0, 0, 318, 648));
         verticalLayout_8 = new QVBoxLayout(scrollAreaWidgetContents_2);
         verticalLayout_8->setObjectName(QStringLiteral("verticalLayout_8"));
         gridLayout = new QGridLayout();

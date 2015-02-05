@@ -280,6 +280,8 @@ void ShadingTechnique::setMaterial( const Material& mat )
 	m_shaderProgram->setUniformValue("material.Ke", mat.m_emissiveColor);
 	m_shaderProgram->setUniformValue("material.shininessStrength", mat.m_shininessStrength);
 	m_shaderProgram->setUniformValue("material.shininess", mat.m_shininess);
+	m_shaderProgram->setUniformValue("material.roughnessValue", mat.m_roughness);
+	m_shaderProgram->setUniformValue("material.fresnelReflectance", mat.m_fresnelReflectance);
 }
 
 void ShadingTechnique::setMaterial( const MaterialPtr mat )
@@ -290,6 +292,8 @@ void ShadingTechnique::setMaterial( const MaterialPtr mat )
 	m_shaderProgram->setUniformValue("material.Ke", mat->m_emissiveColor);
 	m_shaderProgram->setUniformValue("material.shininessStrength", mat->m_shininessStrength);
 	m_shaderProgram->setUniformValue("material.shininess", mat->m_shininess);
+	m_shaderProgram->setUniformValue("material.roughnessValue", mat->m_roughness);
+	m_shaderProgram->setUniformValue("material.fresnelReflectance", mat->m_fresnelReflectance);
 }
 
 

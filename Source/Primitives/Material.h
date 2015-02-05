@@ -40,6 +40,8 @@ public:
 
 	float m_shininess;
 	float m_shininessStrength;
+	float m_roughness;
+	float m_fresnelReflectance;
 
 	int  m_twoSided;
 	int  m_blendMode;

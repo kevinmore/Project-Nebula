@@ -2,9 +2,10 @@
 
 const int MAX_POINT_LIGHTS = 2;
 const int MAX_SPOT_LIGHTS = 2;
+const float PI = 3.14159;
 
 in vec4 LightSpacePos0; 
-in vec4 Color0;
+in vec2 TexCoord0;
 in vec3 Normal0;                                                       
 in vec3 WorldPos0;                                                           
 
@@ -29,7 +30,7 @@ struct MaterialInfo
 
 struct VSOutput
 {
-    vec4 Color;
+    vec2 TexCoord;
     vec3 Normal;                                                                   
     vec3 WorldPos;
 	vec4 LightSpacePos;                                                                 
@@ -76,6 +77,7 @@ uniform int gNumSpotLights;
 uniform DirectionalLight gDirectionalLight;                                                 
 uniform PointLight gPointLights[MAX_POINT_LIGHTS];                                          
 uniform SpotLight gSpotLights[MAX_SPOT_LIGHTS];                                             
+uniform sampler2D gColorMap;                                                                
 uniform sampler2D gShadowMap;                                                         
 uniform vec3 gEyeWorldPos;                                                                  
 uniform MaterialInfo material;
@@ -86,7 +88,7 @@ float CalcShadowFactor(vec4 LightSpacePos)
     vec2 UVCoords;                                                                          
     UVCoords.x = 0.5 * ProjCoords.x + 0.5;                                                  
     UVCoords.y = 0.5 * ProjCoords.y + 0.5;                                                  
-    float Depth = Color0.a;                                          
+    float Depth = texture(gShadowMap, UVCoords).x;                                          
     if (Depth <= (ProjCoords.z + 0.005))                                                    
         return 0.5;                                                                         
     else                                                                                    
@@ -101,19 +103,62 @@ vec4 CalcLightInternal(BaseLight Light, vec3 LightDirection, VSOutput In, float 
 	vec4 DiffuseColor;                                                  
     vec4 SpecularColor;
 	                                                                                                                                                                                                                                                             
-    float NdotL = max(dot(In.Normal, -LightDirection), 0.0);
+    vec3 eyeDir  = normalize(gEyeWorldPos - In.WorldPos);     
+	// calculate intermediary values                        
+    float NdotL = dot(In.Normal, -LightDirection);
+	float NdotV = dot(In.Normal, eyeDir);
+
+	float angleVN = acos(NdotV);
+    float angleLN = acos(NdotL);
+
+	float alpha = max(angleVN, angleLN);
+    float beta = min(angleVN, angleLN);
+	float gamma = dot(eyeDir - In.Normal *NdotV, LightDirection - In.Normal * NdotL);
+       
+	float roughnessSquared = material.roughnessValue  * material.roughnessValue ;     
+	float roughnessSquared9 = (roughnessSquared / (roughnessSquared + 0.09));
+
+	// calculate C1, C2 and C3
+    float C1 = 1.0 - 0.5 * (roughnessSquared / (roughnessSquared + 0.33));
+    float C2 = 0.45 * roughnessSquared9;
+
+	if(gamma >= 0.0)
+    {
+        C2 *= sin(alpha);
+    }
+    else
+    {
+        C2 *= (sin(alpha) - pow((2.0 * beta) / PI, 3.0));
+    }
+
+	float powValue = (4.0 * alpha * beta) / (PI * PI);
+    float C3  = 0.125 * roughnessSquared9 * powValue * powValue;
+
+	// now calculate both main parts of the formula
+    float A = gamma * C2 * tan(beta);
+    float B = (1.0 - abs(gamma)) * C3 * tan((alpha + beta) / 2.0);
+
+	// put it all together
+    float L1 = max(0.0, NdotL) * (C1 + A + B);
+
+	// also calculate interreflection
+    float twoBetaPi = 2.0 * beta / PI;
+
+	//TODO: p is squared in this case... how to separate this?
+    float L2 = 0.17 * max(0.0, NdotL) * (roughnessSquared / (roughnessSquared + 0.13)) * (1.0 - gamma * twoBetaPi * twoBetaPi);
+
+	DiffuseColor = material.Kd * vec4(Light.Color, 1.0) * Light.DiffuseIntensity * (L1 + L2);
+
+
     float specular = 0.0;
-	DiffuseColor = material.Kd * vec4(Light.Color, 1.0) * Light.DiffuseIntensity * NdotL;
     if (NdotL > 0.0) 
 	{   
 		                                                               
-        vec3 eyeDir  = normalize(gEyeWorldPos - In.WorldPos);                             
         // calculate intermediary values
         vec3 halfVector = normalize( eyeDir - LightDirection);
         float NdotH = max(dot(In.Normal, halfVector), 0.0); 
         float NdotV = max(dot(In.Normal, eyeDir), 0.0); // note: this could also be NdotL, which is the same value
         float VdotH = max(dot(eyeDir, halfVector), 0.0);
-        float roughnessSquared = material.roughnessValue  * material.roughnessValue ;     
 		
 		// geometric attenuation
         float NH2 = 2.0 * NdotH;
@@ -179,7 +224,7 @@ vec4 CalcSpotLight(SpotLight l, VSOutput In)
 void main()
 {                                    
     VSOutput In;
-    In.Color = Color0;
+    In.TexCoord = TexCoord0;
 	In.Normal   = normalize(Normal0);
     In.WorldPos = WorldPos0;
 	In.LightSpacePos = LightSpacePos0;
@@ -198,5 +243,5 @@ void main()
         TotalLight += CalcSpotLight(gSpotLights[i], In);                                
     }                                                                                       
                                                                                             
-    FragColor = In.Color * TotalLight;     
+    FragColor = texture(gColorMap, In.TexCoord.xy) * TotalLight;     
 }

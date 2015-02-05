@@ -507,8 +507,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>336</width>
-            <height>390</height>
+            <width>318</width>
+            <height>198</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -688,7 +688,7 @@
             <x>0</x>
             <y>0</y>
             <width>308</width>
-            <height>1157</height>
+            <height>1130</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -810,6 +810,9 @@
                       <height>16777215</height>
                      </size>
                     </property>
+                    <property name="decimals">
+                     <number>4</number>
+                    </property>
                     <property name="maximum">
                      <double>1.000000000000000</double>
                     </property>
@@ -856,7 +859,7 @@
                      </size>
                     </property>
                     <property name="decimals">
-                     <number>2</number>
+                     <number>4</number>
                     </property>
                     <property name="maximum">
                      <double>100.000000000000000</double>
@@ -1079,11 +1082,17 @@
                       <height>16777215</height>
                      </size>
                     </property>
+                    <property name="decimals">
+                     <number>4</number>
+                    </property>
+                    <property name="minimum">
+                     <double>0.010000000000000</double>
+                    </property>
                     <property name="maximum">
                      <double>1.000000000000000</double>
                     </property>
                     <property name="singleStep">
-                     <double>0.100000000000000</double>
+                     <double>0.010000000000000</double>
                     </property>
                     <property name="value">
                      <double>1.000000000000000</double>
@@ -1142,6 +1151,9 @@
                       <width>60</width>
                       <height>16777215</height>
                      </size>
+                    </property>
+                    <property name="decimals">
+                     <number>4</number>
                     </property>
                     <property name="maximum">
                      <double>1.000000000000000</double>
@@ -1347,8 +1359,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>323</width>
-            <height>688</height>
+            <width>318</width>
+            <height>648</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_8">

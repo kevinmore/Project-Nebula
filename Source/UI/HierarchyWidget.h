@@ -71,9 +71,14 @@ private slots:
 
 	void assignPuppet();
 
+
 public slots:
 	void updateObjectTree();
 	void onObjectPicked(GameObjectPtr selected);
+	void assignMaterial(MaterialPtr mat);
+
+signals:
+	void materialChanged(MaterialPtr mat);
 
 protected:
 	bool eventFilter(QObject *obj, QEvent *ev); // install a filter event for the color picker

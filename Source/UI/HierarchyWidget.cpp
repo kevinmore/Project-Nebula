@@ -14,6 +14,9 @@ HierarchyWidget::HierarchyWidget(Scene* scene, Canvas* canvas, QWidget *parent)
 	// connection to a ray casting function in the scene
 	connect(m_canvas, SIGNAL(objectPicked(GameObjectPtr)), this, SLOT(onObjectPicked(GameObjectPtr)));
 
+	// material change behaviour
+	connect(this, SIGNAL(materialChanged(MaterialPtr)), this, SLOT(assignMaterial(MaterialPtr)));
+
 	// tree widget related
 	connect(m_scene, SIGNAL(updateHierarchy()), this, SLOT(updateObjectTree()));
 
@@ -431,14 +434,8 @@ bool HierarchyWidget::eventFilter( QObject *obj, QEvent *ev )
 				ui->graphicsView_AmbientColorPicker->setBackgroundBrush(QBrush(col, Qt::DiagCrossPattern));
 				
 				// change the material of the model
-				foreach(MaterialPtr mat, mats)
-				{
-					mat->m_ambientColor = col;
-				}
-
-				// set the diffuse color through the shading effect
-				m_currentShadingTech->enable();
-				m_currentShadingTech->setMatAmbientColor(col);
+				mats[0]->m_ambientColor = col;
+				emit materialChanged(mats[0]);
 			}
 			return true;
 		}
@@ -451,14 +448,8 @@ bool HierarchyWidget::eventFilter( QObject *obj, QEvent *ev )
 				ui->graphicsView_DiffuseColorPicker->setBackgroundBrush(QBrush(col, Qt::DiagCrossPattern));
 				
 				// change the material of the model
-				foreach(MaterialPtr mat, mats)
-				{
-					mat->m_diffuseColor = col;
-				}
-
-				// set the diffuse color through the shading effect
-				m_currentShadingTech->enable();
-				m_currentShadingTech->setMatDiffuseColor(col);
+				mats[0]->m_diffuseColor = col;
+				emit materialChanged(mats[0]);
 			}
 			return true;
 		}
@@ -471,14 +462,8 @@ bool HierarchyWidget::eventFilter( QObject *obj, QEvent *ev )
 				ui->graphicsView_SpecularColorPicker->setBackgroundBrush(QBrush(col, Qt::DiagCrossPattern));
 				
 				// change the material of the model
-				foreach(MaterialPtr mat, mats)
-				{
-					mat->m_specularColor = col;
-				}
-
-				// set the diffuse color through the shading effect
-				m_currentShadingTech->enable();
-				m_currentShadingTech->setMatSpecularColor(col);
+				mats[0]->m_specularColor = col;
+				emit materialChanged(mats[0]);
 			}
 			return true;
 		}
@@ -491,14 +476,8 @@ bool HierarchyWidget::eventFilter( QObject *obj, QEvent *ev )
 				ui->graphicsView_EmissiveColorPicker->setBackgroundBrush(QBrush(col, Qt::DiagCrossPattern));
 				
 				// change the material of the model
-				foreach(MaterialPtr mat, mats)
-				{
-					mat->m_emissiveColor = col;
-				}
-
-				// set the diffuse color through the shading effect
-				m_currentShadingTech->enable();
-				m_currentShadingTech->setMatEmissiveColor(col);
+				mats[0]->m_emissiveColor = col;
+				emit materialChanged(mats[0]);
 			}
 			return true;
 		}
@@ -573,96 +552,83 @@ void HierarchyWidget::changeShader( const QString& shaderFile )
 }
 
 
+void HierarchyWidget::assignMaterial( MaterialPtr mat )
+{
+	if (!m_currentShadingTech) return;
+	m_currentShadingTech->enable();
+	m_currentShadingTech->setMaterial(mat);
+}
+
 void HierarchyWidget::onShininessSliderChange( int value )
 {
 	ui->doubleSpinBox_Shininess->setValue(value);
-	if (!m_currentShadingTech) return;
-	m_currentShadingTech->enable();
-	m_currentShadingTech->setMatSpecularPower(value);
-
-	// change the material of the model
-	ComponentPtr comp = m_currentObject->getComponent("Model");
-	ModelPtr model = comp.dynamicCast<AbstractModel>();
-	QVector<MaterialPtr> mats = model->getMaterials();
-	m_currentShadingTech->setMaterial(mats[0]);
-	mats[0]->m_shininess = value;
 }
 
 void HierarchyWidget::onShininessDoubleBoxChange( double value )
 {
 	ui->horizontalSlider_Shininess->setValue(value);
-	if (!m_currentShadingTech) return;
-	m_currentShadingTech->enable();
-	m_currentShadingTech->setMatSpecularPower(value);
 
 	// change the material of the model
 	ComponentPtr comp = m_currentObject->getComponent("Model");
 	ModelPtr model = comp.dynamicCast<AbstractModel>();
 	QVector<MaterialPtr> mats = model->getMaterials();
-	m_currentShadingTech->setMaterial(mats[0]);
 	mats[0]->m_shininess = value;
+	
+	emit materialChanged(mats[0]);
 }
 
 void HierarchyWidget::onShininessStrengthSliderChange( int value )
 {
 	ui->doubleSpinBox_ShininessStrength->setValue(value/(double)100);
-	if (!m_currentShadingTech) return;
-	m_currentShadingTech->enable();
-	m_currentShadingTech->setMatSpecularIntensity(value/100.0f);
-
-	// change the material of the model
-	ComponentPtr comp = m_currentObject->getComponent("Model");
-	ModelPtr model = comp.dynamicCast<AbstractModel>();
-	QVector<MaterialPtr> mats = model->getMaterials();
-	m_currentShadingTech->setMaterial(mats[0]);
-	mats[0]->m_shininessStrength = value/100.0f;
 }
 
 void HierarchyWidget::onShininessStrengthDoubleBoxChange( double value )
 {
 	ui->horizontalSlider_ShininessStrength->setValue(value * 100);
-	if (!m_currentShadingTech) return;
-	m_currentShadingTech->enable();
-	m_currentShadingTech->setMatSpecularIntensity(value);
-
+	
 	// change the material of the model
 	ComponentPtr comp = m_currentObject->getComponent("Model");
 	ModelPtr model = comp.dynamicCast<AbstractModel>();
 	QVector<MaterialPtr> mats = model->getMaterials();
-	m_currentShadingTech->setMaterial(mats[0]);
 	mats[0]->m_shininessStrength = value;
+
+	emit materialChanged(mats[0]);
 }
 
 void HierarchyWidget::onRoughnessSliderChange( int value )
 {
 	ui->doubleSpinBox_Roughness->setValue(value/(double)100);
-	if (!m_currentShadingTech) return;
-	m_currentShadingTech->enable();
-	m_currentShadingTech->setMatRoughnessValue(value/100.0f);
 }
 
 void HierarchyWidget::onRoughnessDoubleBoxChange( double value )
 {
 	ui->horizontalSlider_Roughness->setValue(value * 100);
-	if (!m_currentShadingTech) return;
-	m_currentShadingTech->enable();
-	m_currentShadingTech->setMatRoughnessValue(value);
+	
+	// change the material of the model
+	ComponentPtr comp = m_currentObject->getComponent("Model");
+	ModelPtr model = comp.dynamicCast<AbstractModel>();
+	QVector<MaterialPtr> mats = model->getMaterials();
+	mats[0]->m_roughness = value;
+
+	emit materialChanged(mats[0]);
 }
 
 void HierarchyWidget::onFresnelReflectanceSliderChange( int value )
 {
 	ui->doubleSpinBox_fresnelReflectance->setValue(value/(double)100);
-	if (!m_currentShadingTech) return;
-	m_currentShadingTech->enable();
-	m_currentShadingTech->setMatFresnelReflectance(value/100.0f);
 }
 
 void HierarchyWidget::onFresnelReflectanceDoubleBoxChange( double value )
 {
 	ui->horizontalSlider_fresnelReflectance->setValue(value * 100);
-	if (!m_currentShadingTech) return;
-	m_currentShadingTech->enable();
-	m_currentShadingTech->setMatFresnelReflectance(value);
+
+	// change the material of the model
+	ComponentPtr comp = m_currentObject->getComponent("Model");
+	ModelPtr model = comp.dynamicCast<AbstractModel>();
+	QVector<MaterialPtr> mats = model->getMaterials();
+	mats[0]->m_fresnelReflectance = value;
+
+	emit materialChanged(mats[0]);
 }
 
 void HierarchyWidget::readShadingProperties()
@@ -688,7 +654,8 @@ void HierarchyWidget::readShadingProperties()
 
 	ui->doubleSpinBox_Shininess->setValue(mat->m_shininess);
 	ui->doubleSpinBox_ShininessStrength->setValue(mat->m_shininessStrength);
-
+	ui->doubleSpinBox_Roughness->setValue(mat->m_roughness);
+	ui->doubleSpinBox_fresnelReflectance->setValue(mat->m_fresnelReflectance);
 	// map the textures
 	
 }
