@@ -165,7 +165,7 @@ void StaticModel::render( float time )
 		}
 
 		// enable the material
-		m_renderingEffect->setMaterial(m_materials[i]);
+		m_renderingEffect->setMaterial(m_materials[0]); // hack
 
 		drawElements(i);
 	}
