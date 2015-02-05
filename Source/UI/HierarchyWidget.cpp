@@ -551,6 +551,7 @@ void HierarchyWidget::changeShader( const QString& shaderFile )
 	m_currentShadingTech->applyShader(shaderFile);
 
 	// re assign the material properties
+	if(!m_currentObject) return;
 	ComponentPtr comp = m_currentObject->getComponent("Model");
 	ModelPtr model = comp.dynamicCast<AbstractModel>();
 	QVector<MaterialPtr> mats = model->getMaterials();
@@ -575,6 +576,7 @@ void HierarchyWidget::onShininessDoubleBoxChange( double value )
 	ui->horizontalSlider_Shininess->setValue(value);
 
 	// change the material of the model
+	if(!m_currentObject) return;
 	ComponentPtr comp = m_currentObject->getComponent("Model");
 	ModelPtr model = comp.dynamicCast<AbstractModel>();
 	QVector<MaterialPtr> mats = model->getMaterials();
@@ -593,6 +595,7 @@ void HierarchyWidget::onShininessStrengthDoubleBoxChange( double value )
 	ui->horizontalSlider_ShininessStrength->setValue(value * 100);
 	
 	// change the material of the model
+	if(!m_currentObject) return;
 	ComponentPtr comp = m_currentObject->getComponent("Model");
 	ModelPtr model = comp.dynamicCast<AbstractModel>();
 	QVector<MaterialPtr> mats = model->getMaterials();
@@ -611,6 +614,7 @@ void HierarchyWidget::onRoughnessDoubleBoxChange( double value )
 	ui->horizontalSlider_Roughness->setValue(value * 100);
 	
 	// change the material of the model
+	if(!m_currentObject) return;
 	ComponentPtr comp = m_currentObject->getComponent("Model");
 	ModelPtr model = comp.dynamicCast<AbstractModel>();
 	QVector<MaterialPtr> mats = model->getMaterials();
@@ -629,6 +633,7 @@ void HierarchyWidget::onFresnelReflectanceDoubleBoxChange( double value )
 	ui->horizontalSlider_fresnelReflectance->setValue(value * 100);
 
 	// change the material of the model
+	if(!m_currentObject) return;
 	ComponentPtr comp = m_currentObject->getComponent("Model");
 	ModelPtr model = comp.dynamicCast<AbstractModel>();
 	QVector<MaterialPtr> mats = model->getMaterials();
