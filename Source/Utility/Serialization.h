@@ -6,16 +6,6 @@
 /*                           IO Streams                                 */
 /************************************************************************/
 /*
-* Model (Only need out stream)
-*/
-// Order: File Name -> Shader File Name
-QDataStream& operator << (QDataStream& out, ModelPtr object)
-{
-	out << object->fileName() << object->renderingEffect()->shaderFileName();
-	return out;
-}
-
-/*
 * Material
 */
 // Order: Name -> AmbientColor -> DiffuseColor -> SpecularColor -> Shininess -> Shininess Strength
@@ -65,6 +55,22 @@ QDataStream& operator >> (QDataStream& in, MaterialPtr object)
 	object->m_alphaBlending = alphaBlending;
 
 	return in;
+}
+
+/*
+* Model (Only need out stream)
+*/
+// Order: File Name -> Shader File Name -> Number of Materials -> Each Material
+QDataStream& operator << (QDataStream& out, ModelPtr object)
+{
+	out << object->fileName() << object->renderingEffect()->shaderFileName() << object->getMaterials().size();
+
+	foreach(MaterialPtr mat, object->getMaterials())
+	{
+		out << mat;
+	}
+
+	return out;
 }
 
 /*
@@ -180,8 +186,23 @@ QDataStream& operator >> (QDataStream& in, GameObjectPtr object)
 		{
 			// load a model and attach it to the this game object
 			QString fileName, shaderName;
-			in >> fileName >> shaderName;
+			int materialCount;
+			in >> fileName >> shaderName >> materialCount;
  			LoaderThread loader(object->getScene(), fileName, object, object->getScene()->sceneRoot(), false);
+
+			// get the model
+			ComponentPtr comp = object->getComponent("Model");
+			ModelPtr model = comp.dynamicCast<AbstractModel>();
+
+			// apply the saved shader
+			model->renderingEffect()->applyShader(shaderName);
+
+			// change the materials
+			QVector<MaterialPtr> mats = model->getMaterials();
+			for(int i = 0; i < materialCount; ++i)
+			{
+				in >> mats[i];
+			}
 		}
 		else if (className == "ParticleSystem")
 		{
