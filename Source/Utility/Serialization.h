@@ -16,6 +16,58 @@ QDataStream& operator << (QDataStream& out, ModelPtr object)
 }
 
 /*
+* Material
+*/
+// Order: Name -> AmbientColor -> DiffuseColor -> SpecularColor -> Shininess -> Shininess Strength
+//     -> Roughness -> Fresnel Reflectance -> Two Sided -> BlendMode -> AlphaBlending
+QDataStream& operator << (QDataStream& out, MaterialPtr object)
+{
+	out << object->m_name << object->m_ambientColor << object->m_diffuseColor << object->m_specularColor << object->m_emissiveColor
+		<< object->m_shininess << object->m_shininessStrength << object->m_roughness << object->m_fresnelReflectance
+		<< object->m_twoSided << object->m_blendMode << object->m_alphaBlending;
+
+	return out;
+}
+
+QDataStream& operator >> (QDataStream& in, MaterialPtr object)
+{
+	QString name;
+
+	QColor ambientColor;
+	QColor diffuseColor;
+	QColor specularColor;
+	QColor emissiveColor;
+
+	float shininess;
+	float shininessStrength;
+	float roughness;
+	float fresnelReflectance;
+
+	int  twoSided;
+	int  blendMode;
+	bool alphaBlending;
+
+	in >> name >> ambientColor >> diffuseColor >> specularColor >> emissiveColor
+	   >> shininess >> shininessStrength >> roughness >> fresnelReflectance
+	   >> twoSided >> blendMode >> alphaBlending;
+
+	object->m_name = name;
+	object->m_ambientColor = ambientColor;
+	object->m_diffuseColor = diffuseColor;
+	object->m_specularColor = specularColor;
+	object->m_emissiveColor = emissiveColor;
+	object->m_shininess = shininess;
+	object->m_shininessStrength = shininessStrength;
+	object->m_roughness = roughness;
+	object->m_fresnelReflectance = fresnelReflectance;
+	object->m_twoSided = twoSided;
+	object->m_blendMode = blendMode;
+	object->m_alphaBlending = alphaBlending;
+
+	return in;
+}
+
+/*
 * Particle System
 */
 // Order: Mass -> Gravity Factor -> Size -> Rate -> Amount -> MinLife -> MaxLife
