@@ -49,10 +49,18 @@ private slots:
 	void showMouseRightButton(const QPoint& point);
 	void setColorPickerEnabled(bool status);
 	void changeShader(const QString& shaderFile);
+
 	void onShininessSliderChange(int value);
 	void onShininessDoubleBoxChange(double value);
+
 	void onShininessStrengthSliderChange(int value);
 	void onShininessStrengthDoubleBoxChange(double value);
+
+	void onRoughnessSliderChange(int value);
+	void onRoughnessDoubleBoxChange(double value);
+
+	void onFresnelReflectanceSliderChange(int value);
+	void onFresnelReflectanceDoubleBoxChange(double value);
 
 	void onRotationXDialChange(int val);
 	void onRotationYDialChange(int val);

@@ -28,7 +28,7 @@ public:
 	void setFileName(QString& file) { m_fileName = file; }
 
 	ShadingTechniquePtr renderingEffect() const { return m_renderingEffect; }
-	MaterialPtr getMaterial() const { return m_materials[0]; }
+	QVector<MaterialPtr> getMaterials() const { return m_materials; }
 
 	void setBoundingBox(const BoxCollider& box);
 	BoxColliderPtr getBoundingBox() const;

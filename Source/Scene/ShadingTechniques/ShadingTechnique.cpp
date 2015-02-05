@@ -323,4 +323,12 @@ void ShadingTechnique::setMatSpecularPower(float power)
 	m_shaderProgram->setUniformValue("material.shininess", power);
 }
 
+void ShadingTechnique::setMatRoughnessValue( float val )
+{
+	m_shaderProgram->setUniformValue("material.roughnessValue", val);
+}
 
+void ShadingTechnique::setMatFresnelReflectance( float val )
+{
+	m_shaderProgram->setUniformValue("material.fresnelReflectance", val);
+}

@@ -91,7 +91,7 @@ void MainWindow::initializeToolBar()
 
 	toolBar->addSeparator();
 
-	QAction* resetCameraAction = toolBar->addAction(QIcon("../Resource/StyleSheets/Icons/camera.png"), "Reset Scene", m_camera, SLOT(resetCamera()));
+	QAction* resetCameraAction = toolBar->addAction(QIcon("../Resource/StyleSheets/Icons/camera.png"), "Reset Camera", m_camera, SLOT(resetCamera()));
 	resetCameraAction->setToolTip("Click to Reset Camera");
 
 	QAction* resetSceneAction = toolBar->addAction(QIcon("../Resource/StyleSheets/Icons/reload.png"), "Reset Scene", m_scene, SLOT(resetToDefaultScene()));
@@ -101,7 +101,7 @@ void MainWindow::initializeToolBar()
 
 	QAction* debugSceneAction = toolBar->addAction(QIcon("../Resource/StyleSheets/Icons/magnifyingglass.png"), "Toggle Debug Mode", m_scene, SLOT(toggleDebugMode(bool)));
 	debugSceneAction->setCheckable(true);
-	resetSceneAction->setToolTip("Click to Toggle the Debug Mode");
+	debugSceneAction->setToolTip("Click to Toggle the Debug Mode");
 
 	
 	addToolBar(Qt::LeftToolBarArea, toolBar);

@@ -44,7 +44,8 @@ public:
 	void setMatEmissiveColor(const QColor& col);
 	void setMatSpecularIntensity(float intensity);
 	void setMatSpecularPower(float power);
-
+	void setMatRoughnessValue(float val);
+	void setMatFresnelReflectance(float val);
 private:
     
 	virtual bool compileShader();

@@ -222,6 +222,9 @@ void Canvas::mouseReleaseEvent(QMouseEvent* e)
 {
 	if(e->button() == Qt::RightButton)
 	{
+		// clear the debug mode first
+		getScene()->toggleDebugMode(false);
+
 		m_rightButtonPressed = false;
 	}
 	else if (e->button() == Qt::MiddleButton)

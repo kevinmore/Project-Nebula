@@ -197,6 +197,7 @@ void Scene::resetToDefaultScene()
 {
 	glClearColor(0.39f, 0.39f, 0.39f, 0.0f);
 	clearScene();
+	toggleDebugMode(false);
 	m_camera->resetCamera();
 
 	// load the floor

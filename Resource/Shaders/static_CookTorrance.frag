@@ -18,8 +18,13 @@ struct MaterialInfo
     vec4 Ks; // Specular reflectivity
     vec4 Ke; // Emissive reflectivity
 
+	// below is used for phong shader
 	float shininessStrength; // Specular intensity
     float shininess; // Specular shininess exponent
+
+	// below is used for cook torrance shader
+	float roughnessValue; // 0 : smooth, 1: rough
+	float fresnelReflectance; // fresnel reflectance at normal incidence
 };
 
 struct VSOutput
@@ -88,34 +93,56 @@ float CalcShadowFactor(vec4 LightSpacePos)
         return 1.0;                                                                         
 } 
 
-vec4 CalcLightInternal(vec3 LightDirection, VSOutput In, float ShadowFactor)            
-{                                                                                           
-    float DiffuseFactor = dot(In.Normal, -LightDirection);
-	vec3 VertexToEye = normalize(gEyeWorldPos - In.WorldPos);                             
-    vec3 LightReflect = normalize(reflect(LightDirection, In.Normal));                     
-    float SpecularFactor = dot(VertexToEye, LightReflect);                              
-    SpecularFactor = pow(SpecularFactor, material.shininess);   
-
+vec4 CalcLightInternal(BaseLight Light, vec3 LightDirection, VSOutput In, float ShadowFactor)            
+{   
+	// Compute the ambient / diffuse / specular / emissive components for each fragment
+    vec4 AmbientColor = material.Ka * vec4(Light.Color, 1.0) * Light.AmbientIntensity;                   
+    vec4 EmissiveColor = material.Ke;     
+	vec4 DiffuseColor;                                                  
+    vec4 SpecularColor;
+	                                                                                                                                                                                                                                                             
+    float NdotL = max(dot(In.Normal, -LightDirection), 0.0);
+    float specular = 0.0;
+	DiffuseColor = material.Kd * vec4(Light.Color, 1.0) * Light.DiffuseIntensity * NdotL;
+    if (NdotL > 0.0) 
+	{   
+		                                                               
+        vec3 eyeDir  = normalize(gEyeWorldPos - In.WorldPos);                             
+        // calculate intermediary values
+        vec3 halfVector = normalize( eyeDir - LightDirection);
+        float NdotH = max(dot(In.Normal, halfVector), 0.0); 
+        float NdotV = max(dot(In.Normal, eyeDir), 0.0); // note: this could also be NdotL, which is the same value
+        float VdotH = max(dot(eyeDir, halfVector), 0.0);
+        float mSquared = material.roughnessValue  * material.roughnessValue ;     
 		
-	vec3 CoolColour = vec3(0.62, 0.58, 1.0);
-	vec3 WarmColour = vec3(1.0, 0.28, 0.28);
-	vec3 cool = min(CoolColour, 1.0);
-	vec3 warm = min(WarmColour, 1.0);
-    
-	vec3 colour = min(mix(cool, warm, DiffuseFactor), 1.0);
-
-    float OutlineFactor = dot(VertexToEye, In.Normal);
-	if (OutlineFactor < 0.2) colour = vec3(0,0,0);
-		                           
-    vec4 FinalColor = vec4(colour, 1.0);                                                                          
-                                                                                           
-                                                                                            
-    return FinalColor;
+		// geometric attenuation
+        float NH2 = 2.0 * NdotH;
+        float g1 = (NH2 * NdotV) / VdotH;
+        float g2 = (NH2 * NdotL) / VdotH;
+        float geoAtt = min(1.0, min(g1, g2));
+		
+		 // roughness (or: microfacet distribution function)
+        // beckmann distribution function
+        float r1 = 1.0 / ( 4.0 * mSquared * pow(NdotH, 4.0));
+        float r2 = (NdotH * NdotH - 1.0) / (mSquared * NdotH * NdotH);
+        float roughness = r1 * exp(r2);
+		
+		// fresnel
+        // Schlick approximation
+        float fresnel = pow(1.0 - VdotH, 5.0);
+        fresnel *= (1.0 - material.fresnelReflectance);
+        fresnel += material.fresnelReflectance;              
+		
+		specular = (fresnel * geoAtt * roughness) / (NdotV * NdotL * 3.14);                                                               
+    }                                                                                       
+	vec3 finalValue = Light.Color * NdotL * specular * material.shininessStrength;
+	SpecularColor = material.Ks * vec4(finalValue, 1.0);                                                                                         
+    return (AmbientColor + EmissiveColor + ShadowFactor * (DiffuseColor + SpecularColor)); 
 }                                                                                           
                                                                                             
 vec4 CalcDirectionalLight(VSOutput In)                                                      
 {                                                                                           
-    return CalcLightInternal(gDirectionalLight.Direction, In, 1.0);  
+    return CalcLightInternal(gDirectionalLight.Base, gDirectionalLight.Direction, In, 1.0);  
 }                                                                                           
                                                                                             
 vec4 CalcPointLight(PointLight l, VSOutput In)                                       
@@ -126,7 +153,7 @@ vec4 CalcPointLight(PointLight l, VSOutput In)
     
 	float ShadowFactor = 1;//CalcShadowFactor(In.LightSpacePos);
 	                                                                               
-    vec4 Color = CalcLightInternal(LightDirection, In, 1);                         
+    vec4 Color = CalcLightInternal(l.Base, LightDirection, In, 1);                         
     float Attenuation =  l.Atten.Constant +                                                 
                          l.Atten.Linear * Distance +                                        
                          l.Atten.Exp * Distance * Distance;                                 
@@ -157,19 +184,19 @@ void main()
     In.WorldPos = WorldPos0;
 	In.LightSpacePos = LightSpacePos0;
 
-	vec4 TotalLight;
+	
 
+    vec4 TotalLight = CalcDirectionalLight(In);                                         
+                                                                                            
     for (int i = 0 ; i < gNumPointLights ; i++) {                                           
         TotalLight += CalcPointLight(gPointLights[i], In);                              
     }                                                                                       
     
-	TotalLight /= gNumPointLights;
-	                                                                                        
+	TotalLight /= 2.0; 
+	                                                                                       
     for (int i = 0 ; i < gNumSpotLights ; i++) {                                            
         TotalLight += CalcSpotLight(gSpotLights[i], In);                                
     }                                                                                       
-    
-	TotalLight /= gNumPointLights;
-	                                                                                       
-    FragColor = TotalLight;     
+                                                                                            
+    FragColor = In.Color * TotalLight;     
 }
