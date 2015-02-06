@@ -4,11 +4,6 @@
 #include <QtMath>
 #include <Scene/Scene.h>
 
-#define SNPRINTF _snprintf_s
-
-
-using namespace std;
-
 ShadingTechnique::ShadingTechnique(const QString &shaderName, ShaderType shaderType, Scene* scene)
 	: Technique(shaderName),
 	  m_scene(scene),
@@ -54,112 +49,6 @@ bool ShadingTechnique::compileShader()
 		usingCubeMap = true;
 	else
 		usingCubeMap = false;
-
-	m_numPointLightsLocation = getUniformLocation("gNumPointLights");
-	m_numSpotLightsLocation = getUniformLocation("gNumSpotLights");
-		
-	for (unsigned int i = 0 ; i < ARRAY_SIZE_IN_ELEMENTS(m_pointLightsLocation) ; i++) {
-		char Name[128];
-		memset(Name, 0, sizeof(Name));
-		SNPRINTF(Name, sizeof(Name), "gPointLights[%d].Base.Color", i);
-		m_pointLightsLocation[i].Color = getUniformLocation(Name);
-
-		SNPRINTF(Name, sizeof(Name), "gPointLights[%d].Base.AmbientIntensity", i);
-		m_pointLightsLocation[i].AmbientIntensity = getUniformLocation(Name);
-
-		SNPRINTF(Name, sizeof(Name), "gPointLights[%d].Position", i);
-		m_pointLightsLocation[i].Position = getUniformLocation(Name);
-
-		SNPRINTF(Name, sizeof(Name), "gPointLights[%d].Base.DiffuseIntensity", i);
-		m_pointLightsLocation[i].DiffuseIntensity = getUniformLocation(Name);
-
-		SNPRINTF(Name, sizeof(Name), "gPointLights[%d].Atten.Constant", i);
-		m_pointLightsLocation[i].Atten.Constant = getUniformLocation(Name);
-
-		SNPRINTF(Name, sizeof(Name), "gPointLights[%d].Atten.Linear", i);
-		m_pointLightsLocation[i].Atten.Linear = getUniformLocation(Name);
-
-		SNPRINTF(Name, sizeof(Name), "gPointLights[%d].Atten.Exp", i);
-		m_pointLightsLocation[i].Atten.Exp = getUniformLocation(Name);
-
-// 		if (m_pointLightsLocation[i].Color == INVALID_LOCATION ||
-// 			m_pointLightsLocation[i].AmbientIntensity == INVALID_LOCATION ||
-// 			m_pointLightsLocation[i].Position == INVALID_LOCATION ||
-// 			m_pointLightsLocation[i].DiffuseIntensity == INVALID_LOCATION ||
-// 			m_pointLightsLocation[i].Atten.Constant == INVALID_LOCATION ||
-// 			m_pointLightsLocation[i].Atten.Linear == INVALID_LOCATION ||
-// 			m_pointLightsLocation[i].Atten.Exp == INVALID_LOCATION) {
-// 				return false;
-//		}
-	}
-
-	for (unsigned int i = 0 ; i < ARRAY_SIZE_IN_ELEMENTS(m_spotLightsLocation) ; i++) {
-		char Name[128];
-		memset(Name, 0, sizeof(Name));
-		SNPRINTF(Name, sizeof(Name), "gSpotLights[%d].Base.Base.Color", i);
-		m_spotLightsLocation[i].Color = getUniformLocation(Name);
-
-		SNPRINTF(Name, sizeof(Name), "gSpotLights[%d].Base.Base.AmbientIntensity", i);
-		m_spotLightsLocation[i].AmbientIntensity = getUniformLocation(Name);
-
-		SNPRINTF(Name, sizeof(Name), "gSpotLights[%d].Base.Position", i);
-		m_spotLightsLocation[i].Position = getUniformLocation(Name);
-
-		SNPRINTF(Name, sizeof(Name), "gSpotLights[%d].Direction", i);
-		m_spotLightsLocation[i].Direction = getUniformLocation(Name);
-
-		SNPRINTF(Name, sizeof(Name), "gSpotLights[%d].Cutoff", i);
-		m_spotLightsLocation[i].Cutoff = getUniformLocation(Name);
-
-		SNPRINTF(Name, sizeof(Name), "gSpotLights[%d].Base.Base.DiffuseIntensity", i);
-		m_spotLightsLocation[i].DiffuseIntensity = getUniformLocation(Name);
-
-		SNPRINTF(Name, sizeof(Name), "gSpotLights[%d].Base.Atten.Constant", i);
-		m_spotLightsLocation[i].Atten.Constant = getUniformLocation(Name);
-
-		SNPRINTF(Name, sizeof(Name), "gSpotLights[%d].Base.Atten.Linear", i);
-		m_spotLightsLocation[i].Atten.Linear = getUniformLocation(Name);
-
-		SNPRINTF(Name, sizeof(Name), "gSpotLights[%d].Base.Atten.Exp", i);
-		m_spotLightsLocation[i].Atten.Exp = getUniformLocation(Name);
-
-// 		if (m_spotLightsLocation[i].Color == INVALID_LOCATION ||
-// 			m_spotLightsLocation[i].AmbientIntensity == INVALID_LOCATION ||
-// 			m_spotLightsLocation[i].Position == INVALID_LOCATION ||
-// 			m_spotLightsLocation[i].Direction == INVALID_LOCATION ||
-// 			m_spotLightsLocation[i].Cutoff == INVALID_LOCATION ||
-// 			m_spotLightsLocation[i].DiffuseIntensity == INVALID_LOCATION ||
-// 			m_spotLightsLocation[i].Atten.Constant == INVALID_LOCATION ||
-// 			m_spotLightsLocation[i].Atten.Linear == INVALID_LOCATION ||
-// 			m_spotLightsLocation[i].Atten.Exp == INVALID_LOCATION) {
-// 				return false;
-// 		}
-	}
-
-	if (m_shaderType == RIGGED)
-	{
-		for (unsigned int i = 0 ; i < ARRAY_SIZE_IN_ELEMENTS(m_boneLocation) ; i++) {
-			char Name[128];
-			memset(Name, 0, sizeof(Name));
-			SNPRINTF(Name, sizeof(Name), "gBones[%d]", i);
-			m_boneLocation[i] = getUniformLocation(Name);
-		}
-	}
-
-
-
-// 	DirectionalLight directionalLight;
-// 	directionalLight.Color = vec3(1.0f, 1.0f, 1.0f);
-// 	directionalLight.AmbientIntensity = 0.55f;
-// 	directionalLight.DiffuseIntensity = 0.9f;
-// 	directionalLight.Direction = vec3(-1.0f, -1.0, -1.0);
-// 
-// 	enable();
-// 	setColorTextureUnit(0);
-// 	setNormalMapTextureUnit(2);
-// 	setDirectionalLight(directionalLight);
-// 	setMatSpecularIntensity(1.0f);
-// 	setMatSpecularPower(5);
 
 	PointLight pl[2];
 	pl[0].Position = vec3(2,2,0);
@@ -227,43 +116,48 @@ void ShadingTechnique::setEyeWorldPos(const vec3& EyeWorldPos)
 
 void ShadingTechnique::setPointLights(unsigned int NumLights, const PointLight* pLights)
 {
-    glUniform1i(m_numPointLightsLocation, NumLights);
-    
-    for (unsigned int i = 0 ; i < NumLights ; i++) {
-        glUniform3f(m_pointLightsLocation[i].Color, pLights[i].Color.x(), pLights[i].Color.y(), pLights[i].Color.z());
-        glUniform1f(m_pointLightsLocation[i].AmbientIntensity, pLights[i].AmbientIntensity);
-        glUniform1f(m_pointLightsLocation[i].DiffuseIntensity, pLights[i].DiffuseIntensity);
-        glUniform3f(m_pointLightsLocation[i].Position, pLights[i].Position.x(), pLights[i].Position.y(), pLights[i].Position.z());
-        glUniform1f(m_pointLightsLocation[i].Atten.Constant, pLights[i].Attenuation.Constant);
-        glUniform1f(m_pointLightsLocation[i].Atten.Linear, pLights[i].Attenuation.Linear);
-        glUniform1f(m_pointLightsLocation[i].Atten.Exp, pLights[i].Attenuation.Exp);
-    }
+	m_shaderProgram->setUniformValue("gNumPointLights", NumLights);
+	for(uint i = 0; i < NumLights; ++i)
+	{
+		QString lightString = "gPointLights["+ QString::number(i) + "].";
+
+		m_shaderProgram->setUniformValue((lightString + "Base.Color").toStdString().c_str(), pLights[i].Color);
+		m_shaderProgram->setUniformValue((lightString + "Base.AmbientIntensity").toStdString().c_str(), pLights[i].AmbientIntensity);
+		m_shaderProgram->setUniformValue((lightString + "Base.DiffuseIntensity").toStdString().c_str(), pLights[i].DiffuseIntensity);
+		m_shaderProgram->setUniformValue((lightString + "Position").toStdString().c_str(), pLights[i].Position);
+		m_shaderProgram->setUniformValue((lightString + "Atten.Constant").toStdString().c_str(), pLights[i].Attenuation.Constant);
+		m_shaderProgram->setUniformValue((lightString + "Atten.Linear").toStdString().c_str(), pLights[i].Attenuation.Linear);
+		m_shaderProgram->setUniformValue((lightString + "Atten.Exp").toStdString().c_str(), pLights[i].Attenuation.Exp);
+	}
+
 }
 
 void ShadingTechnique::setSpotLights(unsigned int NumLights, const SpotLight* pLights)
 {
-    glUniform1i(m_numSpotLightsLocation, NumLights);
 
-    for (unsigned int i = 0 ; i < NumLights ; i++) {
-        glUniform3f(m_spotLightsLocation[i].Color, pLights[i].Color.x(), pLights[i].Color.y(), pLights[i].Color.z());
-        glUniform1f(m_spotLightsLocation[i].AmbientIntensity, pLights[i].AmbientIntensity);
-        glUniform1f(m_spotLightsLocation[i].DiffuseIntensity, pLights[i].DiffuseIntensity);
-        glUniform3f(m_spotLightsLocation[i].Position,  pLights[i].Position.x(), pLights[i].Position.y(), pLights[i].Position.z());
-        vec3 Direction = pLights[i].Direction;
-        Direction.normalize();
-        glUniform3f(m_spotLightsLocation[i].Direction, Direction.x(), Direction.y(), Direction.z());
-        glUniform1f(m_spotLightsLocation[i].Cutoff, cosf(qDegreesToRadians(pLights[i].Cutoff)));
-        glUniform1f(m_spotLightsLocation[i].Atten.Constant, pLights[i].Attenuation.Constant);
-        glUniform1f(m_spotLightsLocation[i].Atten.Linear,   pLights[i].Attenuation.Linear);
-        glUniform1f(m_spotLightsLocation[i].Atten.Exp,      pLights[i].Attenuation.Exp);
-    }
+	m_shaderProgram->setUniformValue("gNumSpotLights", NumLights);
+	for(uint i = 0; i < NumLights; ++i)
+	{
+		QString lightString = "gSpotLights["+ QString::number(i) + "].";
+
+		m_shaderProgram->setUniformValue((lightString + "Base.Base.Color").toStdString().c_str(), pLights[i].Color);
+		m_shaderProgram->setUniformValue((lightString + "Base.Base.AmbientIntensity").toStdString().c_str(), pLights[i].AmbientIntensity);
+		m_shaderProgram->setUniformValue((lightString + "Base.Base.DiffuseIntensity").toStdString().c_str(), pLights[i].DiffuseIntensity);
+		m_shaderProgram->setUniformValue((lightString + "Base.Atten.Constant").toStdString().c_str(), pLights[i].Attenuation.Constant);
+		m_shaderProgram->setUniformValue((lightString + "Base.Atten.Linear").toStdString().c_str(), pLights[i].Attenuation.Linear);
+		m_shaderProgram->setUniformValue((lightString + "Base.Atten.Exp").toStdString().c_str(), pLights[i].Attenuation.Exp);
+		m_shaderProgram->setUniformValue((lightString + "Position").toStdString().c_str(), pLights[i].Position);
+		m_shaderProgram->setUniformValue((lightString + "Direction").toStdString().c_str(), pLights[i].Direction.normalized());
+		m_shaderProgram->setUniformValue((lightString + "Cutoff").toStdString().c_str(), cosf(qDegreesToRadians(pLights[i].Cutoff)));
+	}
 }
 
 
 void ShadingTechnique::setBoneTransform(uint Index, const mat4& Transform)
 {
     assert(Index < MAX_BONES);
-    glUniformMatrix4fv(m_boneLocation[Index], 1, GL_FALSE, (const GLfloat*)Transform.data());       
+	QString boneString = "gBones["+ QString::number(Index) + "]";
+	m_shaderProgram->setUniformValue(boneString.toStdString().c_str(), Transform);
 }
 
 void ShadingTechnique::initLights()

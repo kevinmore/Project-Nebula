@@ -54,8 +54,6 @@ private:
 	Scene* m_scene;
 	ShaderType m_shaderType;
 
-	GLuint m_numPointLightsLocation;
-	GLuint m_numSpotLightsLocation;
 
 	bool usingCubeMap;
 
@@ -91,8 +89,6 @@ private:
             GLuint Exp;
         } Atten;
     } m_spotLightsLocation[MAX_SPOT_LIGHTS];
-    
-    GLuint m_boneLocation[MAX_BONES];
 };
 
 typedef QSharedPointer<ShadingTechnique> ShadingTechniquePtr;
