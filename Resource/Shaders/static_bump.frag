@@ -174,7 +174,6 @@ void main()
 {                                    
     VSOutput In;
     In.Color = Color0;
-	In.TexCoord = TexCoord0;
 	In.Normal   = CalcBumpedNormal();
     In.WorldPos = WorldPos0;
 	In.LightSpacePos = LightSpacePos0;

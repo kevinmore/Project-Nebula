@@ -555,6 +555,7 @@ void HierarchyWidget::changeShader( const QString& shaderFile )
 	ComponentPtr comp = m_currentObject->getComponent("Model");
 	ModelPtr model = comp.dynamicCast<AbstractModel>();
 	QVector<MaterialPtr> mats = model->getMaterials();
+	m_currentShadingTech->enable();
 	m_currentShadingTech->setMaterial(mats[0]);
 }
 
