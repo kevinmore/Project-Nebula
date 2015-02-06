@@ -269,7 +269,9 @@ void ShadingTechnique::setBoneTransform(uint Index, const mat4& Transform)
 void ShadingTechnique::initLights()
 {
 	if (!m_scene) return;
-	LightPtr light = m_scene->getLight();
+	QList<LightPtr> lights = m_scene->getLights();
+
+	qDebug() << "Lights count:" << lights.size();
 }
 
 void ShadingTechnique::setMaterial( const Material& mat )

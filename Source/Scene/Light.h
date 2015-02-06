@@ -1,7 +1,8 @@
 #pragma once
 #include <Utility/EngineCommon.h>
+#include <Primitives/Component.h>
 
-class Light
+class Light : public Component
 {
 public:
 	enum LightType
@@ -14,6 +15,8 @@ public:
 	Light(const QString& name);
 	~Light();
 
+	virtual QString className() { return "Light"; }
+	virtual void render(const float currentTime) {/*do noting*/}
 
 	void setType(LightType type);
 	LightType type() const;

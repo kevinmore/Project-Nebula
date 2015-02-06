@@ -5,13 +5,14 @@ const float INNER_ANGLE = 30.0f; // 30deg = 0.6981rad = cos(2PI/9) = 0.76604;
 const float OUTER_ANGLE = 40.0f; // 40deg = 0.5235rad = cos(1PI/6) = 0.86602;
 
 Light::Light(const QString& name) :
+	Component(),
 	m_name(name),
 	m_type(PointLight),
-	m_position(vec3(0, 200, 0)),
-	m_direction(vec3(-1, -1, -1)),
+	m_position(Math::Vector3::ZERO),
+	m_direction(Math::Vector3::NEGATIVE_UNIT_Z),
 	m_ambientColor(Qt::black),
 	m_diffuseColor(Qt::white),
-	m_specularColor(Qt::black),
+	m_specularColor(Qt::white),
 	m_constantAttenuation(1.0f),
 	m_linearAttenuation(0.0f),
 	m_quadraticAttenuation(0.0f),
@@ -256,40 +257,3 @@ float Light::spotOuterAngle() const
 {
 	return m_spotOuterAngle;
 }
-
-// void Light::render(const QOpenGLShaderProgramPtr& shader, const QMatrix4x4& viewMatrix)
-// {
-// 	shader->setUniformValue("light.intensity", m_intensity);
-// 
-// 	shader->setUniformValue("light.Ka", m_ambientColor);
-// 	shader->setUniformValue("light.Kd", m_diffuseColor);
-// 	shader->setUniformValue("light.Ks", m_specularColor);
-// 
-// 	switch(m_type)
-// 	{
-// 	case PointLight:
-// 		shader->setUniformValue("light.position", viewMatrix * QVector4D(m_position, 1.0f));
-// 
-// 		shader->setUniformValue("light.constantAttenuation",  m_constantAttenuation);
-// 		shader->setUniformValue("light.linearAttenuation",    m_linearAttenuation);
-// 		shader->setUniformValue("light.quadraticAttenuation", m_quadraticAttenuation);
-// 		break;
-// 
-// 	case SpotLight:
-// 		shader->setUniformValue("light.position", viewMatrix * QVector4D(m_position, 1.0f));
-// 		shader->setUniformValue("light.direction", viewMatrix * QVector4D(m_direction, 1.0f));
-// 
-// 		shader->setUniformValue("light.constantAttenuation",  m_constantAttenuation);
-// 		shader->setUniformValue("light.linearAttenuation",    m_linearAttenuation);
-// 		shader->setUniformValue("light.quadraticAttenuation", m_quadraticAttenuation);
-// 
-// 		shader->setUniformValue("light.spotFalloff",    m_spotFalloff);
-// 		shader->setUniformValue("light.spotInnerAngle", m_spotInnerAngle);
-// 		shader->setUniformValue("light.spotOuterAngle", m_spotOuterAngle);
-// 		break;
-// 
-// 	case DirectionalLight:
-// 		shader->setUniformValue("light.direction", viewMatrix * QVector4D(m_direction, 1.0f));
-// 		break;
-// 	}
-// }
