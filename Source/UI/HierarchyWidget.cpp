@@ -556,7 +556,7 @@ void HierarchyWidget::changeShader( const QString& shaderFile )
 	ModelPtr model = comp.dynamicCast<AbstractModel>();
 	QVector<MaterialPtr> mats = model->getMaterials();
 	m_currentShadingTech->enable();
-	m_currentShadingTech->setMaterial(mats[0]);
+	m_currentShadingTech->setMaterial(mats[0].data());
 }
 
 
@@ -564,7 +564,7 @@ void HierarchyWidget::assignMaterial( MaterialPtr mat )
 {
 	if (!m_currentShadingTech) return;
 	m_currentShadingTech->enable();
-	m_currentShadingTech->setMaterial(mat);
+	m_currentShadingTech->setMaterial(mat.data());
 }
 
 void HierarchyWidget::onShininessSliderChange( int value )

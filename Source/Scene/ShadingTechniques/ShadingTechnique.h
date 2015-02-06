@@ -23,21 +23,19 @@ public:
     virtual bool init();
 	virtual void enable();
 
+	void setLight(uint index, const Light* light);
+
     void setMVPMatrix(const mat4& mvp);
     void setModelMatrix(const mat4& model);
 	void setViewMatrix(const mat4& view);
     void setColorTextureUnit(uint TextureUnit);
 	void setShadowMapTextureUnit(uint TextureUnit);
 	void setNormalMapTextureUnit(uint TextureUnit);
-    void setDirectionalLight(const DirectionalLight& Light);
-    void setPointLights(uint NumLights, const PointLight* pLights);
-    void setSpotLights(uint NumLights, const SpotLight* pLights);
     void setEyeWorldPos(const vec3& EyeWorldPos);
     
     void setBoneTransform(uint Index, const mat4& Transform);
 
-	void setMaterial(const Material& mat);
-	void setMaterial(const MaterialPtr mat);
+	void setMaterial(const Material* mat);
 	void setMatAmbientColor(const QColor& col);
 	void setMatDiffuseColor(const QColor& col);
 	void setMatSpecularColor(const QColor& col);
@@ -46,6 +44,7 @@ public:
 	void setMatSpecularPower(float power);
 	void setMatRoughnessValue(float val);
 	void setMatFresnelReflectance(float val);
+
 private:
     
 	virtual bool compileShader();
@@ -56,39 +55,6 @@ private:
 
 
 	bool usingCubeMap;
-
-    struct {
-        GLuint Color;
-        GLuint AmbientIntensity;
-        GLuint DiffuseIntensity;
-        GLuint Direction;
-    } m_dirLightLocation;
-
-    struct {
-        GLuint Color;
-        GLuint AmbientIntensity;
-        GLuint DiffuseIntensity;
-        GLuint Position;
-        struct {
-            GLuint Constant;
-            GLuint Linear;
-            GLuint Exp;
-        } Atten;
-    } m_pointLightsLocation[MAX_POINT_LIGHTS];
-
-    struct {
-        GLuint Color;
-        GLuint AmbientIntensity;
-        GLuint DiffuseIntensity;
-        GLuint Position;
-        GLuint Direction;
-        GLuint Cutoff;
-        struct {
-            GLuint Constant;
-            GLuint Linear;
-            GLuint Exp;
-        } Atten;
-    } m_spotLightsLocation[MAX_SPOT_LIGHTS];
 };
 
 typedef QSharedPointer<ShadingTechnique> ShadingTechniquePtr;

@@ -16,6 +16,7 @@ void AbstractCollider::init()
 
 	m_renderingEffect = ShadingTechniquePtr(new ShadingTechnique("static_bounding_volume"));
 	// the initial color is green, when it collides, it goes to red
+	m_renderingEffect->enable();
 	m_renderingEffect->setMatEmissiveColor(Qt::green);
 }
 

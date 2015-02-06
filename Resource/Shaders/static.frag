@@ -33,9 +33,8 @@ struct VSOutput
 
 struct BaseLight
 {
-    vec3 Color;
-    float AmbientIntensity;
-    float DiffuseIntensity;
+    vec4 Color;
+    float Intensity;
 };
 
 struct DirectionalLight
@@ -91,8 +90,8 @@ float CalcShadowFactor(vec4 LightSpacePos)
 vec4 CalcLightInternal(BaseLight Light, vec3 LightDirection, VSOutput In, float ShadowFactor)            
 {                                                                                           
     // Compute the ambient / diffuse / specular / emissive components for each fragment
-    vec4 AmbientColor = material.Ka * vec4(Light.Color, 1.0) * Light.AmbientIntensity;                   
-    vec4 EmissiveColor = material.Ke;     
+    vec4 AmbientColor = material.Ka * Light.Color * Light.Intensity;                   
+    vec4 EmissiveColor = material.Ke * Light.Color;     
 	                                                                                                                                                                    
     vec4 DiffuseColor  = vec4(0, 0, 0, 0);                                                  
     vec4 SpecularColor = vec4(0, 0, 0, 0);          
@@ -100,7 +99,7 @@ vec4 CalcLightInternal(BaseLight Light, vec3 LightDirection, VSOutput In, float 
      float DiffuseFactor = dot(In.Normal, -LightDirection);
     if (DiffuseFactor > 0.0) 
 	{                                                                
-        DiffuseColor = material.Kd * vec4(Light.Color, 1.0) * Light.DiffuseIntensity * DiffuseFactor;    
+        DiffuseColor = material.Kd * Light.Color * Light.Intensity * DiffuseFactor;    
                                                                                             
         vec3 VertexToEye = normalize(gEyeWorldPos - In.WorldPos);                             
         vec3 LightReflect = normalize(reflect(LightDirection, In.Normal));                     
@@ -109,7 +108,7 @@ vec4 CalcLightInternal(BaseLight Light, vec3 LightDirection, VSOutput In, float 
 		                            
         if (SpecularFactor > 0.0) 
 		{                                                           
-            SpecularColor = material.Ks * vec4(Light.Color, 1.0) *                                       
+            SpecularColor = material.Ks * Light.Color *                                       
                             material.shininessStrength * SpecularFactor;                         
         }                                                                                   
     }                                                                                       

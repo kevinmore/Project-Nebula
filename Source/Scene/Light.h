@@ -22,24 +22,12 @@ public:
 	LightType type() const;
 
 	void setIntensity(float intensity);
+	float intensity() const;
 
-	void setUniqueColor(const QColor& color);
-	void setUniqueColor(float r, float g, float b);
+	void setColor(const QColor& color);
+	void setColor(float r, float g, float b);
 
-	void setColors(const QColor& ambientColor, const QColor& diffuseColor, const QColor& specularColor);
-
-	void setAmbientColor(const QColor& color);
-	void setAmbientColor(float r, float g, float b);
-
-	void setDiffuseColor(const QColor& color);
-	void setDiffuseColor(float r, float g, float b);
-
-	void setSpecularColor(const QColor& color);
-	void setSpecularColor(float r, float g, float b);
-
-	const QColor& ambientColor() const;
-	const QColor& diffuseColor() const;
-	const QColor& specularColor() const;
+	const QColor& color() const;
 
 	void setDirection(const vec3& direction);
 	void setDirection(float x, float y, float z);
@@ -69,8 +57,6 @@ public:
 	float spotInnerAngle() const;
 	float spotOuterAngle() const;
 
-	//void render(const QOpenGLShaderProgramPtr& shader, const QMatrix4x4& viewMatrix);
-
 private:
 	QString   m_name;
 	LightType m_type;
@@ -78,9 +64,7 @@ private:
 	vec3 m_position;
 	vec3 m_direction;
 
-	QColor m_ambientColor;
-	QColor m_diffuseColor;
-	QColor m_specularColor;
+	QColor m_color;
 
 	float m_constantAttenuation;
 	float m_linearAttenuation;

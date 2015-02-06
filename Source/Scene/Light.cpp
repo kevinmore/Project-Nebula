@@ -10,9 +10,7 @@ Light::Light(const QString& name) :
 	m_type(PointLight),
 	m_position(Math::Vector3::ZERO),
 	m_direction(Math::Vector3::NEGATIVE_UNIT_Z),
-	m_ambientColor(Qt::black),
-	m_diffuseColor(Qt::white),
-	m_specularColor(Qt::white),
+	m_color(Qt::white),
 	m_constantAttenuation(1.0f),
 	m_linearAttenuation(0.0f),
 	m_quadraticAttenuation(0.0f),
@@ -39,87 +37,27 @@ void Light::setIntensity(float intensity)
 	m_intensity = intensity;
 }
 
-void Light::setUniqueColor(const QColor& color)
+float Light::intensity() const
+{
+	return m_intensity;
+}
+
+void Light::setColor(const QColor& color)
 {
 	if(color.alpha())
-		qWarning("The alpha channel of light colors should be equal to 0");
+		qWarning("The alpha channel of light color should be equal to 0");
 
-	m_ambientColor  = color;
-	m_diffuseColor  = color;
-	m_specularColor = color;
+	m_color  = color;
 }
 
-void Light::setUniqueColor(float r, float g, float b)
+void Light::setColor(float r, float g, float b)
 {
-	m_ambientColor.setRgbF(r, g, b, 0.0);
-	m_diffuseColor.setRgbF(r, g, b, 0.0);
-	m_specularColor.setRgbF(r, g, b, 0.0);
+	m_color.setRgbF(r, g, b, 0.0);
 }
 
-void Light::setColors(const QColor& ambientColor,
-					  const QColor& diffuseColor,
-					  const QColor& specularColor)
+const QColor& Light::color() const
 {
-	if(ambientColor.alpha() || diffuseColor.alpha() || specularColor.alpha())
-		qWarning("The alpha channel of light colors should be equal to 0");
-
-	m_ambientColor = ambientColor;
-	m_diffuseColor = diffuseColor;
-	m_specularColor = specularColor;
-}
-
-void Light::setAmbientColor(const QColor& color)
-{
-	if(color.alpha())
-		qWarning("The alpha channel of ambient light color should be equal to 0");
-
-	m_ambientColor = color;
-}
-
-void Light::setAmbientColor(float r, float g, float b)
-{
-	m_ambientColor.setRgbF(r, g, b, 0.0);
-}
-
-void Light::setDiffuseColor(const QColor& color)
-{
-	if(color.alpha())
-		qWarning("The alpha channel of diffuse light color should be equal to 0");
-
-	m_diffuseColor = color;
-}
-
-void Light::setDiffuseColor(float r, float g, float b)
-{
-	m_diffuseColor.setRgbF(r, g, b, 0.0);
-}
-
-void Light::setSpecularColor(const QColor& color)
-{
-	if(color.alpha())
-		qWarning("The alpha channel of specular light color should be equal to 0");
-
-	m_specularColor = color;
-}
-
-void Light::setSpecularColor(float r, float g, float b)
-{
-	m_specularColor.setRgbF(r, g, b, 0.0);
-}
-
-const QColor& Light::ambientColor() const
-{
-	return m_ambientColor;
-}
-
-const QColor& Light::diffuseColor() const
-{
-	return m_diffuseColor;
-}
-
-const QColor& Light::specularColor() const
-{
-	return m_specularColor;
+	return m_color;
 }
 
 void Light::setPosition(const QVector3D& position)
@@ -165,7 +103,7 @@ void Light::setDirection(float x, float y, float z)
 
 const QVector3D& Light::direction() const
 {
-	return m_direction;
+	return m_direction.normalized();
 }
 
 void Light::setAttenuation(float constantFactor,

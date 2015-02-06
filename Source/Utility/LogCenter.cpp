@@ -11,7 +11,7 @@
 void static logCenterFunction(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
 	// detail the information
-	QString dt = QDateTime::currentDateTime().toString("yyyy-mm-dd hh:mm:ss");
+	QString dt = QDateTime::currentDateTime().toString(Qt::ISODate);
 	QString strLog = QString("\n[%1] ").arg(dt);
 
 	switch (type)

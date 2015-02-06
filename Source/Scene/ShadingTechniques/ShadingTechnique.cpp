@@ -50,33 +50,92 @@ bool ShadingTechnique::compileShader()
 	else
 		usingCubeMap = false;
 
-	PointLight pl[2];
-	pl[0].Position = vec3(2,2,0);
-	pl[0].Color = vec3(1.0f, 1.0f, 1.0f);
-	pl[0].AmbientIntensity = 0.55f;
-	pl[0].DiffuseIntensity = 0.9f;
-
-	pl[1].Position = vec3(-2,2,0);
-	pl[1].Color = vec3(1.0f, 1.0f, 1.0f);
-	pl[1].AmbientIntensity = 0.55f;
-	pl[1].DiffuseIntensity = 0.9f;
-
-	enable();
-	setPointLights(2, pl);
-
+	// process the lights in the scene
 	initLights();
 
 	return true;
 }
 
-void ShadingTechnique::setDirectionalLight(const DirectionalLight& Light)
+void ShadingTechnique::initLights()
 {
-   	m_shaderProgram->setUniformValue("gDirectionalLight.Base.Color", Light.Color);
- 	m_shaderProgram->setUniformValue("gDirectionalLight.Direction", Light.Direction.normalized());
- 	m_shaderProgram->setUniformValue("gDirectionalLight.Base.AmbientIntensity", Light.AmbientIntensity);
- 	m_shaderProgram->setUniformValue("gDirectionalLight.Base.DiffuseIntensity", Light.DiffuseIntensity);
+	// get the lights from the scene
+	if (!m_scene) return;
+	QList<LightPtr> lights = m_scene->getLights();
+
+	// process each light
+	uint dircLightsCount, pointLightsCount, spotLightsCount;
+	dircLightsCount = pointLightsCount = spotLightsCount = 0;
+
+	m_shaderProgram->bind();
+
+	foreach(LightPtr light, lights)
+	{
+		Light::LightType type = light->type();
+
+		switch(type)
+		{
+		case Light::DirectionalLight:
+			setLight(dircLightsCount, light.data());
+			++dircLightsCount;
+			break;
+		case Light::PointLight:
+			setLight(pointLightsCount, light.data());
+			++pointLightsCount;
+			break;
+		case Light::SpotLight:
+			setLight(spotLightsCount, light.data());
+			++spotLightsCount;
+			break;
+		default:
+			break;
+		}
+	}
+
+	m_shaderProgram->setUniformValue("gNumPointLights", pointLightsCount);
+	m_shaderProgram->setUniformValue("gNumSpotLights", spotLightsCount);
 }
 
+void ShadingTechnique::setLight( uint index, const Light* light )
+{
+	Light::LightType type = light->type();
+	QString lightString;
+
+	switch(type)
+	{
+	case Light::DirectionalLight:
+		m_shaderProgram->setUniformValue("gDirectionalLight.Base.Color", light->color());
+		m_shaderProgram->setUniformValue("gDirectionalLight.Base.Intensity", light->intensity());
+		m_shaderProgram->setUniformValue("gDirectionalLight.Direction", light->direction());
+		break;
+
+	case Light::PointLight:
+		lightString = "gPointLights["+ QString::number(index) + "].";
+
+ 		m_shaderProgram->setUniformValue((lightString + "Base.Color").toStdString().c_str(), light->color());
+ 		m_shaderProgram->setUniformValue((lightString + "Base.Intensity").toStdString().c_str(), light->intensity());
+ 		m_shaderProgram->setUniformValue((lightString + "Position").toStdString().c_str(), light->position());
+		m_shaderProgram->setUniformValue((lightString + "Atten.Constant").toStdString().c_str(), light->constantAttenuation());
+		m_shaderProgram->setUniformValue((lightString + "Atten.Linear").toStdString().c_str(), light->linearAttenuation());
+		m_shaderProgram->setUniformValue((lightString + "Atten.Exp").toStdString().c_str(), light->quadraticAttenuation());
+		break;
+
+	case Light::SpotLight:
+		lightString = "gSpotLights["+ QString::number(index) + "].";
+
+		m_shaderProgram->setUniformValue((lightString + "Base.Base.Color").toStdString().c_str(), light->color());
+		m_shaderProgram->setUniformValue((lightString + "Base.Base.Intensity").toStdString().c_str(), light->intensity());
+		m_shaderProgram->setUniformValue((lightString + "Base.Atten.Constant").toStdString().c_str(), light->constantAttenuation());
+		m_shaderProgram->setUniformValue((lightString + "Base.Atten.Linear").toStdString().c_str(), light->linearAttenuation());
+		m_shaderProgram->setUniformValue((lightString + "Base.Atten.Exp").toStdString().c_str(), light->quadraticAttenuation());
+
+		m_shaderProgram->setUniformValue((lightString + "Position").toStdString().c_str(), light->position());
+		m_shaderProgram->setUniformValue((lightString + "Direction").toStdString().c_str(), light->direction());
+		break;
+
+	default:
+		break;
+	}
+}
 
 void ShadingTechnique::setMVPMatrix(const mat4& mvp)
 {
@@ -87,7 +146,6 @@ void ShadingTechnique::setModelMatrix(const mat4& model)
 {
 	m_shaderProgram->setUniformValue("gWorld", model);
 }
-
 
 void ShadingTechnique::setViewMatrix( const mat4& view )
 {
@@ -114,45 +172,6 @@ void ShadingTechnique::setEyeWorldPos(const vec3& EyeWorldPos)
 	m_shaderProgram->setUniformValue("gEyeWorldPos", EyeWorldPos);
 }
 
-void ShadingTechnique::setPointLights(unsigned int NumLights, const PointLight* pLights)
-{
-	m_shaderProgram->setUniformValue("gNumPointLights", NumLights);
-	for(uint i = 0; i < NumLights; ++i)
-	{
-		QString lightString = "gPointLights["+ QString::number(i) + "].";
-
-		m_shaderProgram->setUniformValue((lightString + "Base.Color").toStdString().c_str(), pLights[i].Color);
-		m_shaderProgram->setUniformValue((lightString + "Base.AmbientIntensity").toStdString().c_str(), pLights[i].AmbientIntensity);
-		m_shaderProgram->setUniformValue((lightString + "Base.DiffuseIntensity").toStdString().c_str(), pLights[i].DiffuseIntensity);
-		m_shaderProgram->setUniformValue((lightString + "Position").toStdString().c_str(), pLights[i].Position);
-		m_shaderProgram->setUniformValue((lightString + "Atten.Constant").toStdString().c_str(), pLights[i].Attenuation.Constant);
-		m_shaderProgram->setUniformValue((lightString + "Atten.Linear").toStdString().c_str(), pLights[i].Attenuation.Linear);
-		m_shaderProgram->setUniformValue((lightString + "Atten.Exp").toStdString().c_str(), pLights[i].Attenuation.Exp);
-	}
-
-}
-
-void ShadingTechnique::setSpotLights(unsigned int NumLights, const SpotLight* pLights)
-{
-
-	m_shaderProgram->setUniformValue("gNumSpotLights", NumLights);
-	for(uint i = 0; i < NumLights; ++i)
-	{
-		QString lightString = "gSpotLights["+ QString::number(i) + "].";
-
-		m_shaderProgram->setUniformValue((lightString + "Base.Base.Color").toStdString().c_str(), pLights[i].Color);
-		m_shaderProgram->setUniformValue((lightString + "Base.Base.AmbientIntensity").toStdString().c_str(), pLights[i].AmbientIntensity);
-		m_shaderProgram->setUniformValue((lightString + "Base.Base.DiffuseIntensity").toStdString().c_str(), pLights[i].DiffuseIntensity);
-		m_shaderProgram->setUniformValue((lightString + "Base.Atten.Constant").toStdString().c_str(), pLights[i].Attenuation.Constant);
-		m_shaderProgram->setUniformValue((lightString + "Base.Atten.Linear").toStdString().c_str(), pLights[i].Attenuation.Linear);
-		m_shaderProgram->setUniformValue((lightString + "Base.Atten.Exp").toStdString().c_str(), pLights[i].Attenuation.Exp);
-		m_shaderProgram->setUniformValue((lightString + "Position").toStdString().c_str(), pLights[i].Position);
-		m_shaderProgram->setUniformValue((lightString + "Direction").toStdString().c_str(), pLights[i].Direction.normalized());
-		m_shaderProgram->setUniformValue((lightString + "Cutoff").toStdString().c_str(), cosf(qDegreesToRadians(pLights[i].Cutoff)));
-	}
-}
-
-
 void ShadingTechnique::setBoneTransform(uint Index, const mat4& Transform)
 {
     assert(Index < MAX_BONES);
@@ -160,27 +179,7 @@ void ShadingTechnique::setBoneTransform(uint Index, const mat4& Transform)
 	m_shaderProgram->setUniformValue(boneString.toStdString().c_str(), Transform);
 }
 
-void ShadingTechnique::initLights()
-{
-	if (!m_scene) return;
-	QList<LightPtr> lights = m_scene->getLights();
-
-	qDebug() << "Lights count:" << lights.size();
-}
-
-void ShadingTechnique::setMaterial( const Material& mat )
-{
-	m_shaderProgram->setUniformValue("material.Ka", mat.m_ambientColor);
-	m_shaderProgram->setUniformValue("material.Kd", mat.m_diffuseColor);
-	m_shaderProgram->setUniformValue("material.Ks", mat.m_specularColor);
-	m_shaderProgram->setUniformValue("material.Ke", mat.m_emissiveColor);
-	m_shaderProgram->setUniformValue("material.shininessStrength", mat.m_shininessStrength);
-	m_shaderProgram->setUniformValue("material.shininess", mat.m_shininess);
-	m_shaderProgram->setUniformValue("material.roughnessValue", mat.m_roughness);
-	m_shaderProgram->setUniformValue("material.fresnelReflectance", mat.m_fresnelReflectance);
-}
-
-void ShadingTechnique::setMaterial( const MaterialPtr mat )
+void ShadingTechnique::setMaterial( const Material* mat )
 {
 	m_shaderProgram->setUniformValue("material.Ka", mat->m_ambientColor);
 	m_shaderProgram->setUniformValue("material.Kd", mat->m_diffuseColor);
@@ -191,7 +190,6 @@ void ShadingTechnique::setMaterial( const MaterialPtr mat )
 	m_shaderProgram->setUniformValue("material.roughnessValue", mat->m_roughness);
 	m_shaderProgram->setUniformValue("material.fresnelReflectance", mat->m_fresnelReflectance);
 }
-
 
 void ShadingTechnique::setMatAmbientColor( const QColor& col )
 {

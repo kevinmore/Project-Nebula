@@ -294,7 +294,7 @@ void RiggedModel::render( const float currentTime )
 		}
 
 		// enable the material
-		m_renderingEffect->setMaterial(m_materials[0]); // hack
+		m_renderingEffect->setMaterial(m_materials[0].data()); // hack
 
 		drawElements(i);
 	}
