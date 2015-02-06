@@ -7,8 +7,22 @@ in vec4 LightSpacePos0;
 in vec4 Color0;
 in vec3 Normal0;                                                       
 in vec3 WorldPos0;                                                           
+in vec2 TexCoord0;                                                                 
+in vec3 Tangent0; 
 
 out vec4 FragColor;
+
+struct VSOutput
+{
+    vec4 Color;
+	vec2 TexCoord;                                                                 
+    vec3 Normal;
+	vec3 Tangent;                                                                   
+    vec3 WorldPos;
+	vec4 LightSpacePos;                                                                 
+};
+
+
 
 // Material properties
 struct MaterialInfo
@@ -22,20 +36,11 @@ struct MaterialInfo
     float shininess; // Specular shininess exponent
 };
 
-struct VSOutput
-{
-    vec4 Color;
-    vec3 Normal;                                                                   
-    vec3 WorldPos;
-	vec4 LightSpacePos;                                                                 
-};
-
 
 struct BaseLight
 {
-    vec3 Color;
-    float AmbientIntensity;
-    float DiffuseIntensity;
+    vec4 Color;
+    float Intensity;
 };
 
 struct DirectionalLight
@@ -61,10 +66,9 @@ struct PointLight
 struct SpotLight                                                                            
 {                                                                                           
     PointLight Base;  
-	vec3 Position;                                                               
     vec3 Direction;                                                                         
     float Cutoff;                                                                           
-};                                                                                          
+};                                                                                                          
                                                                                             
 uniform int gNumPointLights;                                                                
 uniform int gNumSpotLights;                                                                 
@@ -136,7 +140,7 @@ vec4 CalcPointLight(PointLight l, VSOutput In)
                                                                                             
 vec4 CalcSpotLight(SpotLight l, VSOutput In)                                         
 {                                                                                           
-    vec3 LightToPixel = normalize(In.WorldPos - l.Position);                             
+    vec3 LightToPixel = normalize(In.WorldPos - l.Base.Position);                             
     float SpotFactor = dot(LightToPixel, l.Direction);                                      
                                                                                             
     if (SpotFactor > l.Cutoff) {                                                            

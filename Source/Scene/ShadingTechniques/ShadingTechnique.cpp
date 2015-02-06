@@ -75,15 +75,15 @@ void ShadingTechnique::initLights()
 		switch(type)
 		{
 		case Light::DirectionalLight:
-			setLight(dircLightsCount, light.data());
+			setLight(type, dircLightsCount, light.data());
 			++dircLightsCount;
 			break;
 		case Light::PointLight:
-			setLight(pointLightsCount, light.data());
+			setLight(type, pointLightsCount, light.data());
 			++pointLightsCount;
 			break;
 		case Light::SpotLight:
-			setLight(spotLightsCount, light.data());
+			setLight(type, spotLightsCount, light.data());
 			++spotLightsCount;
 			break;
 		default:
@@ -95,9 +95,8 @@ void ShadingTechnique::initLights()
 	m_shaderProgram->setUniformValue("gNumSpotLights", spotLightsCount);
 }
 
-void ShadingTechnique::setLight( uint index, const Light* light )
+void ShadingTechnique::setLight( Light::LightType type, uint index, const Light* light )
 {
-	Light::LightType type = light->type();
 	QString lightString;
 
 	switch(type)
@@ -127,8 +126,7 @@ void ShadingTechnique::setLight( uint index, const Light* light )
 		m_shaderProgram->setUniformValue((lightString + "Base.Atten.Constant").toStdString().c_str(), light->constantAttenuation());
 		m_shaderProgram->setUniformValue((lightString + "Base.Atten.Linear").toStdString().c_str(), light->linearAttenuation());
 		m_shaderProgram->setUniformValue((lightString + "Base.Atten.Exp").toStdString().c_str(), light->quadraticAttenuation());
-
-		m_shaderProgram->setUniformValue((lightString + "Position").toStdString().c_str(), light->position());
+		m_shaderProgram->setUniformValue((lightString + "Base.Position").toStdString().c_str(), light->position());
 		m_shaderProgram->setUniformValue((lightString + "Direction").toStdString().c_str(), light->direction());
 		break;
 

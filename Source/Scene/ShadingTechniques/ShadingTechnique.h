@@ -23,7 +23,7 @@ public:
     virtual bool init();
 	virtual void enable();
 
-	void setLight(uint index, const Light* light);
+	void setLight(Light::LightType type, uint index, const Light* light);
 
     void setMVPMatrix(const mat4& mvp);
     void setModelMatrix(const mat4& model);

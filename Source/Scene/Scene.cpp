@@ -20,7 +20,9 @@ Scene::Scene(QObject* parent)
 	  m_physicsWorld(0)
 {
 	// Initializing the lights
-	m_lights << LightPtr(new Light("Main Light"));
+	LightPtr mainLight(new Light("Main Light"));
+	mainLight->setPosition(1.0f, 1.0f, 1.0f);
+	m_lights << mainLight;
 }
 
 Scene::~Scene()

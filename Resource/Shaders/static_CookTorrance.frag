@@ -7,8 +7,22 @@ in vec4 LightSpacePos0;
 in vec4 Color0;
 in vec3 Normal0;                                                       
 in vec3 WorldPos0;                                                           
+in vec2 TexCoord0;                                                                 
+in vec3 Tangent0; 
 
 out vec4 FragColor;
+
+struct VSOutput
+{
+    vec4 Color;
+	vec2 TexCoord;                                                                 
+    vec3 Normal;
+	vec3 Tangent;                                                                   
+    vec3 WorldPos;
+	vec4 LightSpacePos;                                                                 
+};
+
+
 
 // Material properties
 struct MaterialInfo
@@ -18,7 +32,6 @@ struct MaterialInfo
     vec4 Ks; // Specular reflectivity
     vec4 Ke; // Emissive reflectivity
 
-	// below is used for phong shader
 	float shininessStrength; // Specular intensity
     float shininess; // Specular shininess exponent
 
@@ -27,20 +40,11 @@ struct MaterialInfo
 	float fresnelReflectance; // fresnel reflectance at normal incidence
 };
 
-struct VSOutput
-{
-    vec4 Color;
-    vec3 Normal;                                                                   
-    vec3 WorldPos;
-	vec4 LightSpacePos;                                                                 
-};
-
 
 struct BaseLight
 {
-    vec3 Color;
-    float AmbientIntensity;
-    float DiffuseIntensity;
+    vec4 Color;
+    float Intensity;
 };
 
 struct DirectionalLight
@@ -66,10 +70,9 @@ struct PointLight
 struct SpotLight                                                                            
 {                                                                                           
     PointLight Base;  
-	vec3 Position;                                                               
     vec3 Direction;                                                                         
     float Cutoff;                                                                           
-};                                                                                          
+};                                                                                               
                                                                                             
 uniform int gNumPointLights;                                                                
 uniform int gNumSpotLights;                                                                 
@@ -96,14 +99,14 @@ float CalcShadowFactor(vec4 LightSpacePos)
 vec4 CalcLightInternal(BaseLight Light, vec3 LightDirection, VSOutput In, float ShadowFactor)            
 {   
 	// Compute the ambient / diffuse / specular / emissive components for each fragment
-    vec4 AmbientColor = material.Ka * vec4(Light.Color, 1.0) * Light.AmbientIntensity;                   
-    vec4 EmissiveColor = material.Ke;     
+    vec4 AmbientColor = material.Ka * Light.Color * Light.Intensity;                   
+    vec4 EmissiveColor = material.Ke * Light.Color;     
 	vec4 DiffuseColor;                                                  
     vec4 SpecularColor;
 	                                                                                                                                                                                                                                                             
     float NdotL = max(dot(In.Normal, -LightDirection), 0.0);
     float specular = 0.0;
-	DiffuseColor = material.Kd * vec4(Light.Color, 1.0) * Light.DiffuseIntensity * NdotL;
+	DiffuseColor = material.Kd * Light.Color * Light.Intensity * NdotL;
     if (NdotL > 0.0) 
 	{   
 		                                                               
@@ -135,8 +138,8 @@ vec4 CalcLightInternal(BaseLight Light, vec3 LightDirection, VSOutput In, float 
 		
 		specular = (fresnel * geoAtt * roughness) / (NdotV * NdotL * 3.14);                                                               
     }                                                                                       
-	vec3 finalValue = Light.Color * NdotL * specular * material.shininessStrength;
-	SpecularColor = material.Ks * vec4(finalValue, 1.0);                                                                                         
+	vec4 finalValue = Light.Color * NdotL * specular * material.shininessStrength;
+	SpecularColor = material.Ks * finalValue;                                                                                         
     return (AmbientColor + EmissiveColor + ShadowFactor * (DiffuseColor + SpecularColor)); 
 }                                                                                           
                                                                                             
@@ -163,7 +166,7 @@ vec4 CalcPointLight(PointLight l, VSOutput In)
                                                                                             
 vec4 CalcSpotLight(SpotLight l, VSOutput In)                                         
 {                                                                                           
-    vec3 LightToPixel = normalize(In.WorldPos - l.Position);                             
+    vec3 LightToPixel = normalize(In.WorldPos - l.Base.Position);                             
     float SpotFactor = dot(LightToPixel, l.Direction);                                      
                                                                                             
     if (SpotFactor > l.Cutoff) {                                                            
