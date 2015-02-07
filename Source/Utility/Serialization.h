@@ -220,7 +220,10 @@ QDataStream& operator >> (QDataStream& in, GameObjectPtr object)
 
 			// change the materials
 			QVector<MaterialPtr> mats = model->getMaterials();
-			for(int i = 0; i < materialCount; ++i)
+			if (mats.size() != materialCount)
+				qWarning() << "Materials doesn't match, did you change the model processing option?";
+
+			for(int i = 0; i < mats.size(); ++i)
 			{
 				in >> mats[i];
 			}
