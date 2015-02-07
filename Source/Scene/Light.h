@@ -13,7 +13,9 @@ public:
 	{
 		PointLight,
 		DirectionalLight,
-		SpotLight
+		SpotLight,
+		AmbientLight,
+		AreaLight
 	};
 
 	Light(Scene* scene, GameObject* go);
@@ -25,23 +27,23 @@ public:
 	void setType(LightType type);
 	LightType type() const;
 
-	void setIntensity(float intensity);
-	float intensity() const;
-
 	void setColor(const QColor& color);
 	void setColor(float r, float g, float b);
 
 	const QColor& color() const;
 
-	void setDirection(const vec3& direction);
-	void setDirection(float x, float y, float z);
-
-	const vec3 direction() const;
+	void setIntensity(float intensity);
+	float intensity() const;
 
 	void setPosition(const vec3& position);
 	void setPosition(float x, float y, float z);
 
 	const vec3& position() const;
+
+	void setDirection(const vec3& direction);
+	void setDirection(float x, float y, float z);
+
+	const vec3 direction() const;
 
 	void setAttenuation(float constantFactor, float linearFactor, float quadraticFactor);
 

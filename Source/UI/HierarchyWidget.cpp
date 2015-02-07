@@ -46,6 +46,7 @@ HierarchyWidget::HierarchyWidget(Scene* scene, Canvas* canvas, QWidget *parent)
 	int tabCount = ui->tabWidget->count();
 	m_renderingTab = ui->tabWidget->widget(2);
 	m_particleSystemTab = ui->tabWidget->widget(3);
+	m_lightTab = ui->tabWidget->widget(4);
 
 	// remove the unnecessary tabs
 	for (int i = 0; i < tabCount - 2; ++i)
@@ -61,14 +62,13 @@ HierarchyWidget::HierarchyWidget(Scene* scene, Canvas* canvas, QWidget *parent)
 	ui->graphicsView_DiffuseColorPicker->setScene(new QGraphicsScene(this));
 	ui->graphicsView_SpecularColorPicker->setScene(new QGraphicsScene(this));
 	ui->graphicsView_EmissiveColorPicker->setScene(new QGraphicsScene(this));
-	ui->graphicsView_AmbientColorPicker->setBackgroundBrush(QBrush(Qt::black, Qt::DiagCrossPattern));
-	ui->graphicsView_DiffuseColorPicker->setBackgroundBrush(QBrush(Qt::white, Qt::DiagCrossPattern));
-	ui->graphicsView_SpecularColorPicker->setBackgroundBrush(QBrush(Qt::white, Qt::DiagCrossPattern));
-	ui->graphicsView_EmissiveColorPicker->setBackgroundBrush(QBrush(Qt::black, Qt::DiagCrossPattern));
+
 	ui->graphicsView_DiffuseMapPicker->setScene(new QGraphicsScene(this));
 	ui->graphicsView_NormalMapPicker->setScene(new QGraphicsScene(this));
 	ui->graphicsView_SpecularMapPicker->setScene(new QGraphicsScene(this));
 	ui->graphicsView_EmissiveMapPicker->setScene(new QGraphicsScene(this));
+
+	ui->graphicsView_LightColorPicker->setScene(new QGraphicsScene(this));
 
 	ui->graphicsView_AmbientColorPicker->installEventFilter(this);
 	ui->graphicsView_DiffuseColorPicker->installEventFilter(this);
@@ -78,6 +78,8 @@ HierarchyWidget::HierarchyWidget(Scene* scene, Canvas* canvas, QWidget *parent)
 
 	ui->graphicsView_ColorPicker->installEventFilter(this);
 	ui->graphicsView_ParticleTexturePicker->installEventFilter(this);
+
+	ui->graphicsView_LightColorPicker->installEventFilter(this);
 
 	connect(ui->doubleSpinBox_Shininess, SIGNAL(valueChanged(double)), this, SLOT(onShininessDoubleBoxChange(double)));
 	connect(ui->doubleSpinBox_ShininessStrength, SIGNAL(valueChanged(double)), this, SLOT(onShininessStrengthDoubleBoxChange(double)));
@@ -90,6 +92,18 @@ HierarchyWidget::HierarchyWidget(Scene* scene, Canvas* canvas, QWidget *parent)
 
 	connect(ui->horizontalSlider_fresnelReflectance, SIGNAL(valueChanged(int)), this, SLOT(onFresnelReflectanceSliderChange(int)));
 	connect(ui->doubleSpinBox_fresnelReflectance, SIGNAL(valueChanged(double)), this, SLOT(onFresnelReflectanceDoubleBoxChange(double)));
+
+	connect(ui->horizontalSlider_LightAttConst, SIGNAL(valueChanged(int)), this, SLOT(onConstantAttenuationSliderChange(int)));
+	connect(ui->doubleSpinBox_LightAttConst, SIGNAL(valueChanged(double)), this, SLOT(onConstantAttenuationDoubleBoxChange(double)));
+
+	connect(ui->horizontalSlider_LightAttLinear, SIGNAL(valueChanged(int)), this, SLOT(onLinearAttenuationSliderChange(int)));
+	connect(ui->doubleSpinBox_LightAttLinear, SIGNAL(valueChanged(double)), this, SLOT(onLinearAttenuationDoubleBoxChange(double)));
+
+	connect(ui->horizontalSlider_LightAttQuad, SIGNAL(valueChanged(int)), this, SLOT(onQuadraticAttenuationSliderChange(int)));
+	connect(ui->doubleSpinBox_LightAttQuad, SIGNAL(valueChanged(double)), this, SLOT(onQuadraticAttenuationDoubleBoxChange(double)));
+
+	connect(ui->horizontalSlider_LightIntensity, SIGNAL(valueChanged(int)), this, SLOT(onLightIntensitySliderChange(int)));
+	connect(ui->doubleSpinBox_LightIntensity, SIGNAL(valueChanged(double)), this, SLOT(onLightIntensityDoubleBoxChange(double)));
 
 	connect(ui->checkBox_RandomColor, SIGNAL(toggled(bool)), this, SLOT(setColorPickerEnabled(bool)));
 	connect(ui->checkBox_EnableCollision, SIGNAL(toggled(bool)), ui->doubleSpinBox_Restitution, SLOT(setEnabled(bool)));
@@ -173,6 +187,7 @@ void HierarchyWidget::readGameObject(QTreeWidgetItem* current, QTreeWidgetItem* 
 	// reset the tab widget
 	ui->tabWidget->removeTab(ui->tabWidget->indexOf(m_renderingTab));
 	ui->tabWidget->removeTab(ui->tabWidget->indexOf(m_particleSystemTab));
+	ui->tabWidget->removeTab(ui->tabWidget->indexOf(m_lightTab));
 
 	if (!current) return;
 
@@ -190,6 +205,8 @@ void HierarchyWidget::readGameObject(QTreeWidgetItem* current, QTreeWidgetItem* 
 		clearTransformationArea();
 		m_currentObject = NULL;
 		m_currentShadingTech = NULL;
+		m_currentLight = NULL;
+
 		return;
 	}
 
@@ -206,15 +223,8 @@ void HierarchyWidget::readGameObject(QTreeWidgetItem* current, QTreeWidgetItem* 
 	foreach(QString type, componentTypes)
 	{
 		ComponentPtr comp = m_currentObject->getComponent(type);
-		if (type == "ParticleSystem")
-		{
-			ui->tabWidget->addTab(m_particleSystemTab, "Particle System");
-			ui->tabWidget->setCurrentWidget(m_particleSystemTab);
-			ParticleSystemPtr ps = comp.dynamicCast<ParticleSystem>();
-			readParticleSystemConfig(ps);
-			connectParticleSystemTab(ps);
-		}
-		else if (type == "Model")
+		
+		if (type == "Model")
 		{
 			ui->tabWidget->addTab(m_renderingTab, "Rendering");
 
@@ -231,6 +241,19 @@ void HierarchyWidget::readGameObject(QTreeWidgetItem* current, QTreeWidgetItem* 
 
 			// map the shading properties into the material tab
 			readShadingProperties();
+		}
+		else if (type == "ParticleSystem")
+		{
+			ui->tabWidget->addTab(m_particleSystemTab, "Particle System");
+			ui->tabWidget->setCurrentWidget(m_particleSystemTab);
+			ParticleSystemPtr ps = comp.dynamicCast<ParticleSystem>();
+			readParticleSystemConfig(ps);
+			connectParticleSystemTab(ps);
+		}
+		else if (type == "Light")
+		{
+			ui->tabWidget->addTab(m_lightTab, "Light");
+			readLightSourceProperties(comp.dynamicCast<Light>());
 		}
 	}
 
@@ -310,6 +333,9 @@ void HierarchyWidget::disconnectPreviousObject()
 	disconnect(ui->checkBox_RandomColor,			SIGNAL(toggled(bool)),		  0, 0);
 	disconnect(ui->checkBox_EnableCollision, SIGNAL(toggled(bool)), 0, 0);
 	disconnect(ui->doubleSpinBox_Restitution,	SIGNAL(valueChanged(double)), 0, 0);
+
+	// light tab related
+	disconnect(ui->comboBox_LightType, 0, 0, 0);
 }
 
 void HierarchyWidget::renameGameObject( QTreeWidgetItem * item, int column )
@@ -525,6 +551,21 @@ bool HierarchyWidget::eventFilter( QObject *obj, QEvent *ev )
 
 			return true;
 		}
+		else if (obj == ui->graphicsView_LightColorPicker)
+		{
+			if (!m_currentLight) return true;
+			QColor col = QColorDialog::getColor(m_currentLight->color(), this);
+			if(col.isValid()) 
+			{
+				// apply the color to the particle system and color picker both
+				ui->graphicsView_LightColorPicker->setBackgroundBrush(QBrush(col, Qt::DiagCrossPattern));
+
+				// change the color of the light
+				m_currentLight->setColor(col);
+			}
+
+			return true;
+		}
 		else
 		{
 			return QWidget::eventFilter(obj, ev);
@@ -646,6 +687,58 @@ void HierarchyWidget::onFresnelReflectanceDoubleBoxChange( double value )
 	m_currentMaterials[0]->m_fresnelReflectance = value;
 
 	emit materialChanged(m_currentMaterials[0]);
+}
+
+void HierarchyWidget::onConstantAttenuationSliderChange( int value )
+{
+	ui->doubleSpinBox_LightAttConst->setValue(value/(double)100);
+}
+
+void HierarchyWidget::onConstantAttenuationDoubleBoxChange( double value )
+{
+	ui->horizontalSlider_LightAttConst->setValue(value * 100);
+
+	// change the light property
+	if(m_currentLight) m_currentLight->setConstantAttenuation(value);
+}
+
+void HierarchyWidget::onLinearAttenuationSliderChange( int value )
+{
+	ui->doubleSpinBox_LightAttLinear->setValue(value/(double)100);
+}
+
+void HierarchyWidget::onLinearAttenuationDoubleBoxChange( double value )
+{
+	ui->horizontalSlider_LightAttLinear->setValue(value * 100);
+
+	// change the light property
+	if(m_currentLight) m_currentLight->setLinearAttenuation(value);
+}
+
+void HierarchyWidget::onQuadraticAttenuationSliderChange( int value )
+{
+	ui->doubleSpinBox_LightAttQuad->setValue(value/(double)100);
+}
+
+void HierarchyWidget::onQuadraticAttenuationDoubleBoxChange( double value )
+{
+	ui->horizontalSlider_LightAttQuad->setValue(value * 100);
+
+	// change the light property
+	if(m_currentLight) m_currentLight->setQuadraticAttenuation(value);
+}
+
+void HierarchyWidget::onLightIntensitySliderChange( int value )
+{
+	ui->doubleSpinBox_LightIntensity->setValue(value/(double)100);
+}
+
+void HierarchyWidget::onLightIntensityDoubleBoxChange( double value )
+{
+	ui->horizontalSlider_LightIntensity->setValue(value * 100);
+
+	// change the light property
+	if(m_currentLight) m_currentLight->setIntensity(value);
 }
 
 void HierarchyWidget::readShadingProperties()
@@ -798,6 +891,7 @@ void HierarchyWidget::onObjectPicked( GameObjectPtr selected )
 		disconnectPreviousObject();
 		m_currentObject = NULL;
 		m_currentShadingTech = NULL;
+		m_currentLight = NULL;
 		m_currentMaterials.clear();
 		return;
 	}
@@ -811,3 +905,70 @@ void HierarchyWidget::onObjectPicked( GameObjectPtr selected )
 
 	ui->treeWidget->setCurrentItem(items.first());
 }
+
+void HierarchyWidget::readLightSourceProperties(LightPtr light)
+{
+	m_currentLight = light.data();
+	Light::LightType type = light->type();
+
+	if (type == Light::PointLight)
+	{
+		ui->comboBox_LightType->setCurrentText("Point Light");
+		// show the attenuation group
+		ui->groupBox_LightAtt->show();
+	}
+	else if (type == Light::DirectionalLight)
+	{
+		ui->comboBox_LightType->setCurrentText("Directional Light");
+		// hide the attenuation group
+		ui->groupBox_LightAtt->hide();
+	}
+	else if (type == Light::SpotLight)
+	{
+		ui->comboBox_LightType->setCurrentText("Spot Light");
+		// show the attenuation group
+		ui->groupBox_LightAtt->show();
+	}
+	else if (type == Light::AmbientLight)
+		ui->comboBox_LightType->setCurrentText("Ambient Light");
+	else if (type == Light::AreaLight)
+		ui->comboBox_LightType->setCurrentText("Area Light");
+
+	ui->graphicsView_LightColorPicker->setBackgroundBrush(QBrush(light->color(), Qt::DiagCrossPattern));
+
+	ui->doubleSpinBox_LightAttConst->setValue(light->constantAttenuation());
+	ui->doubleSpinBox_LightAttLinear->setValue(light->linearAttenuation());
+	ui->doubleSpinBox_LightAttQuad->setValue(light->quadraticAttenuation());
+
+	// connect the combo box of light type
+	connect(ui->comboBox_LightType, SIGNAL(currentTextChanged(const QString&)), this, SLOT(changeLightType(const QString&)));
+}
+
+void HierarchyWidget::changeLightType( const QString& type )
+{
+	if(!m_currentLight) return;
+
+	if (type == "Point Light")
+	{
+		m_currentLight->setType(Light::PointLight);
+		// show the attenuation group
+		ui->groupBox_LightAtt->show();
+	}
+	else if (type == "Directional Light")
+	{
+		m_currentLight->setType(Light::DirectionalLight);
+		// hide the attenuation group
+		ui->groupBox_LightAtt->hide();
+	}
+	else if (type == "Spot Light")
+	{
+		m_currentLight->setType(Light::SpotLight);
+		// show the attenuation group
+		ui->groupBox_LightAtt->show();
+	}
+	else if (type == "Ambient Light")
+		m_currentLight->setType(Light::AmbientLight);
+	else if (type == "Area Light")
+		m_currentLight->setType(Light::AreaLight);
+}	
+

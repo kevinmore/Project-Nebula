@@ -22,6 +22,14 @@ GameObject::GameObject(Scene* scene, GameObject* parent)
 
 GameObject::~GameObject()
 {
+	// remove the light from the light list of the scene
+	foreach(ComponentPtr comp, m_components)
+	{
+		LightPtr l = comp.dynamicCast<Light>();
+		if (l)
+			m_scene->removeLight(l.data());
+	}
+
 	m_components.clear();
 }
 

@@ -118,7 +118,6 @@
     <ClInclude Include="Physicis\Collider\BoxCollider.h" />
     <ClInclude Include="UI\Canvas.h" />
     <ClInclude Include="Scene\Managers\ObjectManager.h" />
-    <ClInclude Include="UI\HierarchyWidget.h" />
     <ClInclude Include="Scene\ShadingTechniques\ParticleTechnique.h" />
     <ClInclude Include="Scene\ShadingTechniques\ShadingTechnique.h" />
   </ItemGroup>
@@ -131,5 +130,6 @@
     <QtMOC Include="Scene\Scene.h" />
     <QtMOC Include="Primitives\GameObject.h" />
     <QtMOC Include="Scene\Light.h" />
+    <QtMOC Include="UI\HierarchyWidget.h" />
   </ItemGroup>
 </Project>

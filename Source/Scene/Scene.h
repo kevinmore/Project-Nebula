@@ -75,7 +75,7 @@ public slots:
 	void modelLoaded();
 	GameObjectPtr createEmptyGameObject(const QString& name = "Game Object");
 	GameObjectPtr createParticleSystem(const QString& parentName = "Scene Root");
-	GameObjectPtr createLight(const QString& parentName = "Scene Root");
+	GameObjectPtr createLight(GameObject* parent = 0);
 
 	void toggleSkybox(bool state);
 

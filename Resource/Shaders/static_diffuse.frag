@@ -1,5 +1,6 @@
 #version 430
 
+const int MAX_DIRENCTIONAL_LIGHTS = 2;
 const int MAX_POINT_LIGHTS = 2;
 const int MAX_SPOT_LIGHTS = 2;
 
@@ -67,10 +68,11 @@ struct SpotLight
     vec3 Direction;                                                                         
     float Cutoff;                                                                           
 };                                                                                          
-                                                                                            
+
+uniform int gNumDirectionalLights;                                                                                            
 uniform int gNumPointLights;                                                                
 uniform int gNumSpotLights;                                                                 
-uniform DirectionalLight gDirectionalLight;                                                 
+uniform DirectionalLight gDirectionalLights[MAX_DIRENCTIONAL_LIGHTS];                                                 
 uniform PointLight gPointLights[MAX_POINT_LIGHTS];                                          
 uniform SpotLight gSpotLights[MAX_SPOT_LIGHTS];                                             
 uniform sampler2D gColorMap;                                                                
@@ -120,9 +122,9 @@ vec4 CalcLightInternal(BaseLight Light, vec3 LightDirection, VSOutput In, float 
     return (AmbientColor + EmissiveColor + ShadowFactor * (DiffuseColor + SpecularColor)); 
 }                                                                                           
                                                                                             
-vec4 CalcDirectionalLight(VSOutput In)                                                      
+vec4 CalcDirectionalLight(DirectionalLight l, VSOutput In)                                                      
 {                                                                                           
-    return CalcLightInternal(gDirectionalLight.Base, gDirectionalLight.Direction, In, 1.0);  
+    return CalcLightInternal(l.Base, l.Direction, In, 1.0);  
 }                                                                                           
                                                                                             
 vec4 CalcPointLight(PointLight l, VSOutput In)                                       
@@ -164,7 +166,11 @@ void main()
     In.WorldPos = WorldPos0;
 	In.LightSpacePos = LightSpacePos0;
 
-    vec4 TotalLight = CalcDirectionalLight(In);                                         
+    vec4 TotalLight;
+	
+	for (int i = 0 ; i < gNumDirectionalLights ; i++) {                                           
+        TotalLight += CalcDirectionalLight(gDirectionalLights[i], In);                              
+    } 
                                                                                             
     for (int i = 0 ; i < gNumPointLights ; i++) {                                           
         TotalLight += CalcPointLight(gPointLights[i], In);                              

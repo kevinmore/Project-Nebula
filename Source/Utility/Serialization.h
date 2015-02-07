@@ -123,7 +123,90 @@ QDataStream& operator >> (QDataStream& in, ParticleSystemPtr object)
 }
 
 /*
-* Components (Model, Particle System) Only need Out stream
+* Light
+*/
+// Order: Type -> Color -> Intensity -> Position -> Direction
+//     -> Constant Attenuation -> Linear Attenuation -> Quadratic Attenuation
+//     -> Spot Fall Off -> Spot Inner Angle -> Spot Outer Angle
+
+QDataStream& operator << (QDataStream& out, LightPtr object)
+{
+	int type;
+	switch(object->type())
+	{
+	case Light::PointLight:
+		type = 0;
+		break;
+	case Light::DirectionalLight:
+		type = 1;
+		break;
+	case Light::SpotLight:
+		type = 2;
+		break;
+	case Light::AmbientLight:
+		type = 3;
+		break;
+	case Light::AreaLight:
+		type = 4;
+		break;
+	default:
+		break;
+	}
+
+	out << type << object->color() << object->intensity() << object->position()
+		<< object->direction() << object->constantAttenuation() << object->linearAttenuation()
+		<< object->quadraticAttenuation() << object->spotFallOff() << object->spotInnerAngle()
+		<< object->spotOuterAngle();
+
+	return out;
+}
+
+QDataStream& operator >> (QDataStream& in, LightPtr object)
+{
+	int lightType;
+	Light::LightType type;
+
+	QColor col;
+	float intensity, attConst, attLinear, attQuad, falloff, innerAngle, outerAngle;
+	vec3 pos, dir;
+
+	in >> lightType >> intensity >> pos >> dir >> attConst >> attLinear >> attQuad
+		>> falloff >> innerAngle >> outerAngle;
+
+	switch(lightType)
+	{
+	case 0:
+		type = Light::PointLight;
+		break;
+	case 1:
+		type = Light::DirectionalLight;
+		break;
+	case 2:
+		type = Light::SpotLight;
+		break;
+	case 3:
+		type = Light::AmbientLight;
+		break;
+	case 4:
+		type = Light::AreaLight;
+		break;
+	default:
+		break;
+	}
+
+	object->setType(type);
+	object->setIntensity(intensity);
+	object->gameObject()->setPosition(pos);
+	object->gameObject()->setRotation(dir);
+	object->setAttenuation(attConst, attLinear, attQuad);
+	object->setSpotFalloff(falloff);
+	object->setSpotInnerAngle(innerAngle);
+	object->setSpotOuterAngle(outerAngle);
+
+	return in;
+}
+/*
+* Components (Only need Out stream)
 */
 
 QDataStream& operator << (QDataStream& out, ComponentPtr object)
@@ -138,7 +221,11 @@ QDataStream& operator << (QDataStream& out, ComponentPtr object)
 		ParticleSystemPtr ps = object.dynamicCast<ParticleSystem>();
 		out << ps;
 	}
-
+	else if (object->className() == "Light")
+	{
+		LightPtr light = object.dynamicCast<Light>();
+		out << light;
+	}
 	return out;
 }
 
@@ -237,6 +324,17 @@ QDataStream& operator >> (QDataStream& in, GameObjectPtr object)
 
 			in >> ps;
 		}
+		else if (className == "Light")
+		{
+			// create a light source
+			GameObjectPtr go = object->getScene()->createLight(object.data());
+			// get the light component
+			ComponentPtr comp = go->getComponent("Light");
+			LightPtr light = comp.dynamicCast<Light>();
+
+			in >> light;
+		}
+
 	}
 
 	// process puppets

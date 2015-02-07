@@ -228,13 +228,42 @@ public:
     QHBoxLayout *horizontalLayout_28;
     QLabel *label_31;
     QDoubleSpinBox *doubleSpinBox_MaxVelocityZ;
+    QWidget *LightTab;
+    QVBoxLayout *verticalLayout_5;
+    QScrollArea *scrollArea_4;
+    QWidget *scrollAreaWidgetContents_4;
+    QVBoxLayout *verticalLayout_16;
+    QGridLayout *gridLayout_2;
+    QGraphicsView *graphicsView_LightColorPicker;
+    QLabel *label_57;
+    QComboBox *comboBox_LightType;
+    QLabel *label_58;
+    QLabel *label_35;
+    QHBoxLayout *horizontalLayout_43;
+    QSlider *horizontalSlider_LightIntensity;
+    QDoubleSpinBox *doubleSpinBox_LightIntensity;
+    QGroupBox *groupBox_LightAtt;
+    QVBoxLayout *verticalLayout_14;
+    QGridLayout *gridLayout_6;
+    QLabel *label_3;
+    QLabel *label_2;
+    QLabel *label;
+    QHBoxLayout *horizontalLayout_39;
+    QSlider *horizontalSlider_LightAttConst;
+    QDoubleSpinBox *doubleSpinBox_LightAttConst;
+    QHBoxLayout *horizontalLayout_41;
+    QSlider *horizontalSlider_LightAttLinear;
+    QDoubleSpinBox *doubleSpinBox_LightAttLinear;
+    QHBoxLayout *horizontalLayout_42;
+    QSlider *horizontalSlider_LightAttQuad;
+    QDoubleSpinBox *doubleSpinBox_LightAttQuad;
 
     void setupUi(QWidget *HierarchyViewer)
     {
         if (HierarchyViewer->objectName().isEmpty())
             HierarchyViewer->setObjectName(QStringLiteral("HierarchyViewer"));
         HierarchyViewer->setEnabled(true);
-        HierarchyViewer->resize(369, 769);
+        HierarchyViewer->resize(370, 726);
         QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Preferred);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -539,7 +568,7 @@ public:
         scrollArea_3->setWidgetResizable(true);
         scrollAreaWidgetContents_3 = new QWidget();
         scrollAreaWidgetContents_3->setObjectName(QStringLiteral("scrollAreaWidgetContents_3"));
-        scrollAreaWidgetContents_3->setGeometry(QRect(0, 0, 318, 198));
+        scrollAreaWidgetContents_3->setGeometry(QRect(0, 0, 336, 390));
         verticalLayout_3 = new QVBoxLayout(scrollAreaWidgetContents_3);
         verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
         horizontalLayout_36 = new QHBoxLayout();
@@ -660,7 +689,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 308, 1130));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 309, 1157));
         verticalLayout_4 = new QVBoxLayout(scrollAreaWidgetContents);
         verticalLayout_4->setObjectName(QStringLiteral("verticalLayout_4"));
         groupBox_7 = new QGroupBox(scrollAreaWidgetContents);
@@ -765,6 +794,7 @@ public:
         doubleSpinBox_Shininess->setMinimumSize(QSize(60, 0));
         doubleSpinBox_Shininess->setMaximumSize(QSize(60, 16777215));
         doubleSpinBox_Shininess->setDecimals(4);
+        doubleSpinBox_Shininess->setMinimum(1);
         doubleSpinBox_Shininess->setMaximum(100);
         doubleSpinBox_Shininess->setSingleStep(0.1);
 
@@ -1028,7 +1058,7 @@ public:
         scrollArea_2->setWidgetResizable(true);
         scrollAreaWidgetContents_2 = new QWidget();
         scrollAreaWidgetContents_2->setObjectName(QStringLiteral("scrollAreaWidgetContents_2"));
-        scrollAreaWidgetContents_2->setGeometry(QRect(0, 0, 318, 648));
+        scrollAreaWidgetContents_2->setGeometry(QRect(0, 0, 323, 688));
         verticalLayout_8 = new QVBoxLayout(scrollAreaWidgetContents_2);
         verticalLayout_8->setObjectName(QStringLiteral("verticalLayout_8"));
         gridLayout = new QGridLayout();
@@ -1462,6 +1492,207 @@ public:
         verticalLayout_7->addWidget(scrollArea_2);
 
         tabWidget->addTab(ParticleTab, QString());
+        LightTab = new QWidget();
+        LightTab->setObjectName(QStringLiteral("LightTab"));
+        verticalLayout_5 = new QVBoxLayout(LightTab);
+        verticalLayout_5->setObjectName(QStringLiteral("verticalLayout_5"));
+        scrollArea_4 = new QScrollArea(LightTab);
+        scrollArea_4->setObjectName(QStringLiteral("scrollArea_4"));
+        scrollArea_4->setWidgetResizable(true);
+        scrollAreaWidgetContents_4 = new QWidget();
+        scrollAreaWidgetContents_4->setObjectName(QStringLiteral("scrollAreaWidgetContents_4"));
+        scrollAreaWidgetContents_4->setGeometry(QRect(0, 0, 326, 407));
+        verticalLayout_16 = new QVBoxLayout(scrollAreaWidgetContents_4);
+        verticalLayout_16->setObjectName(QStringLiteral("verticalLayout_16"));
+        gridLayout_2 = new QGridLayout();
+        gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
+        graphicsView_LightColorPicker = new QGraphicsView(scrollAreaWidgetContents_4);
+        graphicsView_LightColorPicker->setObjectName(QStringLiteral("graphicsView_LightColorPicker"));
+        sizePolicy6.setHeightForWidth(graphicsView_LightColorPicker->sizePolicy().hasHeightForWidth());
+        graphicsView_LightColorPicker->setSizePolicy(sizePolicy6);
+        graphicsView_LightColorPicker->setMinimumSize(QSize(20, 20));
+
+        gridLayout_2->addWidget(graphicsView_LightColorPicker, 1, 1, 1, 1);
+
+        label_57 = new QLabel(scrollAreaWidgetContents_4);
+        label_57->setObjectName(QStringLiteral("label_57"));
+        sizePolicy2.setHeightForWidth(label_57->sizePolicy().hasHeightForWidth());
+        label_57->setSizePolicy(sizePolicy2);
+        label_57->setMinimumSize(QSize(50, 0));
+        label_57->setMaximumSize(QSize(50, 16777215));
+        label_57->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
+
+        gridLayout_2->addWidget(label_57, 0, 0, 1, 1);
+
+        comboBox_LightType = new QComboBox(scrollAreaWidgetContents_4);
+        comboBox_LightType->setObjectName(QStringLiteral("comboBox_LightType"));
+        sizePolicy2.setHeightForWidth(comboBox_LightType->sizePolicy().hasHeightForWidth());
+        comboBox_LightType->setSizePolicy(sizePolicy2);
+
+        gridLayout_2->addWidget(comboBox_LightType, 0, 1, 1, 1);
+
+        label_58 = new QLabel(scrollAreaWidgetContents_4);
+        label_58->setObjectName(QStringLiteral("label_58"));
+        sizePolicy2.setHeightForWidth(label_58->sizePolicy().hasHeightForWidth());
+        label_58->setSizePolicy(sizePolicy2);
+        label_58->setMinimumSize(QSize(50, 0));
+        label_58->setMaximumSize(QSize(50, 16777215));
+        label_58->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
+
+        gridLayout_2->addWidget(label_58, 1, 0, 1, 1);
+
+        label_35 = new QLabel(scrollAreaWidgetContents_4);
+        label_35->setObjectName(QStringLiteral("label_35"));
+
+        gridLayout_2->addWidget(label_35, 2, 0, 1, 1);
+
+        horizontalLayout_43 = new QHBoxLayout();
+        horizontalLayout_43->setObjectName(QStringLiteral("horizontalLayout_43"));
+        horizontalSlider_LightIntensity = new QSlider(scrollAreaWidgetContents_4);
+        horizontalSlider_LightIntensity->setObjectName(QStringLiteral("horizontalSlider_LightIntensity"));
+        sizePolicy2.setHeightForWidth(horizontalSlider_LightIntensity->sizePolicy().hasHeightForWidth());
+        horizontalSlider_LightIntensity->setSizePolicy(sizePolicy2);
+        horizontalSlider_LightIntensity->setMaximum(100);
+        horizontalSlider_LightIntensity->setValue(100);
+        horizontalSlider_LightIntensity->setOrientation(Qt::Horizontal);
+
+        horizontalLayout_43->addWidget(horizontalSlider_LightIntensity);
+
+        doubleSpinBox_LightIntensity = new QDoubleSpinBox(scrollAreaWidgetContents_4);
+        doubleSpinBox_LightIntensity->setObjectName(QStringLiteral("doubleSpinBox_LightIntensity"));
+        sizePolicy4.setHeightForWidth(doubleSpinBox_LightIntensity->sizePolicy().hasHeightForWidth());
+        doubleSpinBox_LightIntensity->setSizePolicy(sizePolicy4);
+        doubleSpinBox_LightIntensity->setMinimumSize(QSize(60, 0));
+        doubleSpinBox_LightIntensity->setMaximumSize(QSize(60, 16777215));
+        doubleSpinBox_LightIntensity->setDecimals(4);
+        doubleSpinBox_LightIntensity->setMaximum(1);
+        doubleSpinBox_LightIntensity->setSingleStep(0.1);
+        doubleSpinBox_LightIntensity->setValue(1);
+
+        horizontalLayout_43->addWidget(doubleSpinBox_LightIntensity);
+
+
+        gridLayout_2->addLayout(horizontalLayout_43, 2, 1, 1, 1);
+
+
+        verticalLayout_16->addLayout(gridLayout_2);
+
+        groupBox_LightAtt = new QGroupBox(scrollAreaWidgetContents_4);
+        groupBox_LightAtt->setObjectName(QStringLiteral("groupBox_LightAtt"));
+        verticalLayout_14 = new QVBoxLayout(groupBox_LightAtt);
+        verticalLayout_14->setObjectName(QStringLiteral("verticalLayout_14"));
+        gridLayout_6 = new QGridLayout();
+        gridLayout_6->setObjectName(QStringLiteral("gridLayout_6"));
+        label_3 = new QLabel(groupBox_LightAtt);
+        label_3->setObjectName(QStringLiteral("label_3"));
+
+        gridLayout_6->addWidget(label_3, 2, 0, 1, 1);
+
+        label_2 = new QLabel(groupBox_LightAtt);
+        label_2->setObjectName(QStringLiteral("label_2"));
+
+        gridLayout_6->addWidget(label_2, 1, 0, 1, 1);
+
+        label = new QLabel(groupBox_LightAtt);
+        label->setObjectName(QStringLiteral("label"));
+
+        gridLayout_6->addWidget(label, 0, 0, 1, 1);
+
+        horizontalLayout_39 = new QHBoxLayout();
+        horizontalLayout_39->setObjectName(QStringLiteral("horizontalLayout_39"));
+        horizontalSlider_LightAttConst = new QSlider(groupBox_LightAtt);
+        horizontalSlider_LightAttConst->setObjectName(QStringLiteral("horizontalSlider_LightAttConst"));
+        sizePolicy2.setHeightForWidth(horizontalSlider_LightAttConst->sizePolicy().hasHeightForWidth());
+        horizontalSlider_LightAttConst->setSizePolicy(sizePolicy2);
+        horizontalSlider_LightAttConst->setMaximum(100);
+        horizontalSlider_LightAttConst->setValue(100);
+        horizontalSlider_LightAttConst->setOrientation(Qt::Horizontal);
+
+        horizontalLayout_39->addWidget(horizontalSlider_LightAttConst);
+
+        doubleSpinBox_LightAttConst = new QDoubleSpinBox(groupBox_LightAtt);
+        doubleSpinBox_LightAttConst->setObjectName(QStringLiteral("doubleSpinBox_LightAttConst"));
+        sizePolicy4.setHeightForWidth(doubleSpinBox_LightAttConst->sizePolicy().hasHeightForWidth());
+        doubleSpinBox_LightAttConst->setSizePolicy(sizePolicy4);
+        doubleSpinBox_LightAttConst->setMinimumSize(QSize(60, 0));
+        doubleSpinBox_LightAttConst->setMaximumSize(QSize(60, 16777215));
+        doubleSpinBox_LightAttConst->setDecimals(4);
+        doubleSpinBox_LightAttConst->setMaximum(1);
+        doubleSpinBox_LightAttConst->setSingleStep(0.1);
+        doubleSpinBox_LightAttConst->setValue(1);
+
+        horizontalLayout_39->addWidget(doubleSpinBox_LightAttConst);
+
+
+        gridLayout_6->addLayout(horizontalLayout_39, 0, 1, 1, 1);
+
+        horizontalLayout_41 = new QHBoxLayout();
+        horizontalLayout_41->setObjectName(QStringLiteral("horizontalLayout_41"));
+        horizontalSlider_LightAttLinear = new QSlider(groupBox_LightAtt);
+        horizontalSlider_LightAttLinear->setObjectName(QStringLiteral("horizontalSlider_LightAttLinear"));
+        sizePolicy2.setHeightForWidth(horizontalSlider_LightAttLinear->sizePolicy().hasHeightForWidth());
+        horizontalSlider_LightAttLinear->setSizePolicy(sizePolicy2);
+        horizontalSlider_LightAttLinear->setMaximum(100);
+        horizontalSlider_LightAttLinear->setValue(100);
+        horizontalSlider_LightAttLinear->setOrientation(Qt::Horizontal);
+
+        horizontalLayout_41->addWidget(horizontalSlider_LightAttLinear);
+
+        doubleSpinBox_LightAttLinear = new QDoubleSpinBox(groupBox_LightAtt);
+        doubleSpinBox_LightAttLinear->setObjectName(QStringLiteral("doubleSpinBox_LightAttLinear"));
+        sizePolicy4.setHeightForWidth(doubleSpinBox_LightAttLinear->sizePolicy().hasHeightForWidth());
+        doubleSpinBox_LightAttLinear->setSizePolicy(sizePolicy4);
+        doubleSpinBox_LightAttLinear->setMinimumSize(QSize(60, 0));
+        doubleSpinBox_LightAttLinear->setMaximumSize(QSize(60, 16777215));
+        doubleSpinBox_LightAttLinear->setDecimals(4);
+        doubleSpinBox_LightAttLinear->setMaximum(1);
+        doubleSpinBox_LightAttLinear->setSingleStep(0.1);
+        doubleSpinBox_LightAttLinear->setValue(1);
+
+        horizontalLayout_41->addWidget(doubleSpinBox_LightAttLinear);
+
+
+        gridLayout_6->addLayout(horizontalLayout_41, 1, 1, 1, 1);
+
+        horizontalLayout_42 = new QHBoxLayout();
+        horizontalLayout_42->setObjectName(QStringLiteral("horizontalLayout_42"));
+        horizontalSlider_LightAttQuad = new QSlider(groupBox_LightAtt);
+        horizontalSlider_LightAttQuad->setObjectName(QStringLiteral("horizontalSlider_LightAttQuad"));
+        sizePolicy2.setHeightForWidth(horizontalSlider_LightAttQuad->sizePolicy().hasHeightForWidth());
+        horizontalSlider_LightAttQuad->setSizePolicy(sizePolicy2);
+        horizontalSlider_LightAttQuad->setMaximum(100);
+        horizontalSlider_LightAttQuad->setValue(100);
+        horizontalSlider_LightAttQuad->setOrientation(Qt::Horizontal);
+
+        horizontalLayout_42->addWidget(horizontalSlider_LightAttQuad);
+
+        doubleSpinBox_LightAttQuad = new QDoubleSpinBox(groupBox_LightAtt);
+        doubleSpinBox_LightAttQuad->setObjectName(QStringLiteral("doubleSpinBox_LightAttQuad"));
+        sizePolicy4.setHeightForWidth(doubleSpinBox_LightAttQuad->sizePolicy().hasHeightForWidth());
+        doubleSpinBox_LightAttQuad->setSizePolicy(sizePolicy4);
+        doubleSpinBox_LightAttQuad->setMinimumSize(QSize(60, 0));
+        doubleSpinBox_LightAttQuad->setMaximumSize(QSize(60, 16777215));
+        doubleSpinBox_LightAttQuad->setDecimals(4);
+        doubleSpinBox_LightAttQuad->setMaximum(1);
+        doubleSpinBox_LightAttQuad->setSingleStep(0.1);
+        doubleSpinBox_LightAttQuad->setValue(1);
+
+        horizontalLayout_42->addWidget(doubleSpinBox_LightAttQuad);
+
+
+        gridLayout_6->addLayout(horizontalLayout_42, 2, 1, 1, 1);
+
+
+        verticalLayout_14->addLayout(gridLayout_6);
+
+
+        verticalLayout_16->addWidget(groupBox_LightAtt);
+
+        scrollArea_4->setWidget(scrollAreaWidgetContents_4);
+
+        verticalLayout_5->addWidget(scrollArea_4);
+
+        tabWidget->addTab(LightTab, QString());
 
         verticalLayout->addWidget(tabWidget);
 
@@ -1471,7 +1702,7 @@ public:
         QObject::connect(spinBox_EmitAmount, SIGNAL(valueChanged(int)), horizontalSlider_EmitAmount, SLOT(setValue(int)));
         QObject::connect(checkBox_EnableCollision, SIGNAL(toggled(bool)), doubleSpinBox_Restitution, SLOT(setEnabled(bool)));
 
-        tabWidget->setCurrentIndex(2);
+        tabWidget->setCurrentIndex(4);
 
 
         QMetaObject::connectSlotsByName(HierarchyViewer);
@@ -1560,6 +1791,22 @@ public:
         label_30->setText(QApplication::translate("HierarchyViewer", "Y", 0));
         label_31->setText(QApplication::translate("HierarchyViewer", "Z", 0));
         tabWidget->setTabText(tabWidget->indexOf(ParticleTab), QApplication::translate("HierarchyViewer", "Particle System", 0));
+        label_57->setText(QApplication::translate("HierarchyViewer", "Type", 0));
+        comboBox_LightType->clear();
+        comboBox_LightType->insertItems(0, QStringList()
+         << QApplication::translate("HierarchyViewer", "Point Light", 0)
+         << QApplication::translate("HierarchyViewer", "Directional Light", 0)
+         << QApplication::translate("HierarchyViewer", "Spot Light", 0)
+         << QApplication::translate("HierarchyViewer", "Ambient Light", 0)
+         << QApplication::translate("HierarchyViewer", "Area Light", 0)
+        );
+        label_58->setText(QApplication::translate("HierarchyViewer", "Color", 0));
+        label_35->setText(QApplication::translate("HierarchyViewer", "Intensity", 0));
+        groupBox_LightAtt->setTitle(QApplication::translate("HierarchyViewer", "Attenuation", 0));
+        label_3->setText(QApplication::translate("HierarchyViewer", "Quadratic", 0));
+        label_2->setText(QApplication::translate("HierarchyViewer", "Linear", 0));
+        label->setText(QApplication::translate("HierarchyViewer", "Constant", 0));
+        tabWidget->setTabText(tabWidget->indexOf(LightTab), QApplication::translate("HierarchyViewer", "Light Source", 0));
     } // retranslateUi
 
 };

@@ -318,12 +318,11 @@ GameObjectPtr Scene::createParticleSystem(const QString& parentName)
 	return ref;
 }
 
-GameObjectPtr Scene::createLight( const QString& parentName /*= "Scene Root"*/ )
+GameObjectPtr Scene::createLight( GameObject* parent )
 {
-	GameObjectPtr parent = m_objectManager->getGameObject(parentName);
 	// check if the parent exist
 	GameObjectPtr ref = parent 
-		? m_objectManager->createGameObject("Light", parent.data())
+		? m_objectManager->createGameObject("Light", parent)
 		: m_objectManager->createGameObject("Light", m_sceneRootNode);
 
 

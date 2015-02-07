@@ -97,6 +97,7 @@ void ShadingTechnique::updateLights()
 		}
 	}
 
+	m_shaderProgram->setUniformValue("gNumDirectionalLights", dircLightsCount);
 	m_shaderProgram->setUniformValue("gNumPointLights", pointLightsCount);
 	m_shaderProgram->setUniformValue("gNumSpotLights", spotLightsCount);
 }
@@ -108,9 +109,11 @@ void ShadingTechnique::setLight( Light::LightType type, uint index, const Light*
 	switch(type)
 	{
 	case Light::DirectionalLight:
-		m_shaderProgram->setUniformValue("gDirectionalLight.Base.Color", light->color());
-		m_shaderProgram->setUniformValue("gDirectionalLight.Base.Intensity", light->intensity());
-		m_shaderProgram->setUniformValue("gDirectionalLight.Direction", light->direction());
+		lightString = "gDirectionalLights["+ QString::number(index) + "].";
+
+		m_shaderProgram->setUniformValue((lightString + "Base.Color").toStdString().c_str(), light->color());
+		m_shaderProgram->setUniformValue((lightString + "Base.Intensity").toStdString().c_str(), light->intensity());
+		m_shaderProgram->setUniformValue((lightString + "Direction").toStdString().c_str(), light->direction());
 		break;
 
 	case Light::PointLight:

@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_Scene_t {
-    QByteArrayData data[32];
-    char stringdata[396];
+    QByteArrayData data[34];
+    char stringdata[415];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -53,14 +53,16 @@ QT_MOC_LITERAL(20, 278, 4),
 QT_MOC_LITERAL(21, 283, 20),
 QT_MOC_LITERAL(22, 304, 10),
 QT_MOC_LITERAL(23, 315, 11),
-QT_MOC_LITERAL(24, 327, 12),
-QT_MOC_LITERAL(25, 340, 15),
-QT_MOC_LITERAL(26, 356, 5),
-QT_MOC_LITERAL(27, 362, 4),
-QT_MOC_LITERAL(28, 367, 4),
-QT_MOC_LITERAL(29, 372, 14),
-QT_MOC_LITERAL(30, 387, 6),
-QT_MOC_LITERAL(31, 394, 1)
+QT_MOC_LITERAL(24, 327, 11),
+QT_MOC_LITERAL(25, 339, 6),
+QT_MOC_LITERAL(26, 346, 12),
+QT_MOC_LITERAL(27, 359, 15),
+QT_MOC_LITERAL(28, 375, 5),
+QT_MOC_LITERAL(29, 381, 4),
+QT_MOC_LITERAL(30, 386, 4),
+QT_MOC_LITERAL(31, 391, 14),
+QT_MOC_LITERAL(32, 406, 6),
+QT_MOC_LITERAL(33, 413, 1)
     },
     "Scene\0updateHierarchy\0\0ligthsChanged\0"
     "toggleFill\0state\0toggleWireframe\0"
@@ -71,9 +73,9 @@ QT_MOC_LITERAL(31, 394, 1)
     "showSaveSceneDialog\0modelLoaded\0"
     "createEmptyGameObject\0GameObjectPtr\0"
     "name\0createParticleSystem\0parentName\0"
-    "createLight\0toggleSkybox\0toggleDebugMode\0"
-    "pause\0play\0step\0onLightChanged\0Light*\0"
-    "l"
+    "createLight\0GameObject*\0parent\0"
+    "toggleSkybox\0toggleDebugMode\0pause\0"
+    "play\0step\0onLightChanged\0Light*\0l"
 };
 #undef QT_MOC_LITERAL
 
@@ -114,12 +116,12 @@ static const uint qt_meta_data_Scene[] = {
       21,    0,  185,    2, 0x2a /* Public | MethodCloned */,
       23,    1,  186,    2, 0x0a /* Public */,
       23,    0,  189,    2, 0x2a /* Public | MethodCloned */,
-      24,    1,  190,    2, 0x0a /* Public */,
-      25,    1,  193,    2, 0x0a /* Public */,
-      26,    0,  196,    2, 0x0a /* Public */,
-      27,    0,  197,    2, 0x0a /* Public */,
-      28,    0,  198,    2, 0x0a /* Public */,
-      29,    1,  199,    2, 0x0a /* Public */,
+      26,    1,  190,    2, 0x0a /* Public */,
+      27,    1,  193,    2, 0x0a /* Public */,
+      28,    0,  196,    2, 0x0a /* Public */,
+      29,    0,  197,    2, 0x0a /* Public */,
+      30,    0,  198,    2, 0x0a /* Public */,
+      31,    1,  199,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -143,14 +145,14 @@ static const uint qt_meta_data_Scene[] = {
     0x80000000 | 19,
     0x80000000 | 19, QMetaType::QString,   22,
     0x80000000 | 19,
-    0x80000000 | 19, QMetaType::QString,   22,
+    0x80000000 | 19, 0x80000000 | 24,   25,
     0x80000000 | 19,
     QMetaType::Void, QMetaType::Bool,    5,
     QMetaType::Void, QMetaType::Bool,    5,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 30,   31,
+    QMetaType::Void, 0x80000000 | 32,   33,
 
        0        // eod
 };
@@ -183,7 +185,7 @@ void Scene::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void 
             if (_a[0]) *reinterpret_cast< GameObjectPtr*>(_a[0]) = _r; }  break;
         case 18: { GameObjectPtr _r = _t->createParticleSystem();
             if (_a[0]) *reinterpret_cast< GameObjectPtr*>(_a[0]) = _r; }  break;
-        case 19: { GameObjectPtr _r = _t->createLight((*reinterpret_cast< const QString(*)>(_a[1])));
+        case 19: { GameObjectPtr _r = _t->createLight((*reinterpret_cast< GameObject*(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< GameObjectPtr*>(_a[0]) = _r; }  break;
         case 20: { GameObjectPtr _r = _t->createLight();
             if (_a[0]) *reinterpret_cast< GameObjectPtr*>(_a[0]) = _r; }  break;

@@ -29,8 +29,7 @@ Light::Light(Scene* scene, GameObject* go) :
 
 Light::~Light() 
 {
-	// remove itself from the light list of the scene
-	m_scene->removeLight(this);
+	
 }
 
 void Light::setType(LightType type)
@@ -58,9 +57,6 @@ float Light::intensity() const
 
 void Light::setColor(const QColor& color)
 {
-	if(color.alpha())
-		qWarning("The alpha channel of light color should be equal to 0");
-
 	m_color  = color;
 	emit propertiesChanged(this);
 }

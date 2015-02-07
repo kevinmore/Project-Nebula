@@ -22,14 +22,16 @@ private:
 	GameObject* m_currentObject;
 	ShadingTechnique* m_currentShadingTech;
 	QVector<Material*> m_currentMaterials;
+	Light* m_currentLight;
 
 	QAction* m_deleteAction;
-	QWidget *m_renderingTab, *m_particleSystemTab;
+	QWidget *m_renderingTab, *m_particleSystemTab, *m_lightTab;
 
 	void readHierarchy(GameObject* go, QTreeWidgetItem* parentItem); // go through the game objects
 	void resetHierarchy(GameObject* go); // reset every game object from the given one
 	void clearTransformationArea();
 	void readShadingProperties();
+	void readLightSourceProperties(LightPtr light);
 	void connectParticleSystemTab(ParticleSystemPtr ps);
 	void readParticleSystemConfig(ParticleSystemPtr ps);
 	void searchSuitableShaders(ModelPtr currentModel);
@@ -49,6 +51,7 @@ private slots:
 	void showMouseRightButton(const QPoint& point);
 	void setColorPickerEnabled(bool status);
 	void changeShader(const QString& shaderFile);
+	void changeLightType(const QString& type);
 
 	void onShininessSliderChange(int value);
 	void onShininessDoubleBoxChange(double value);
@@ -61,6 +64,18 @@ private slots:
 
 	void onFresnelReflectanceSliderChange(int value);
 	void onFresnelReflectanceDoubleBoxChange(double value);
+
+	void onConstantAttenuationSliderChange(int value);
+	void onConstantAttenuationDoubleBoxChange(double value);
+
+	void onLinearAttenuationSliderChange(int value);
+	void onLinearAttenuationDoubleBoxChange(double value);
+
+	void onQuadraticAttenuationSliderChange(int value);
+	void onQuadraticAttenuationDoubleBoxChange(double value);
+
+	void onLightIntensitySliderChange(int value);
+	void onLightIntensityDoubleBoxChange(double value);
 
 	void onRotationXDialChange(int val);
 	void onRotationYDialChange(int val);
