@@ -481,3 +481,16 @@ void GameObject::togglePoints( bool state )
 		}
 	}
 }
+
+QStringList GameObject::getComponentsTypes()
+{
+	QStringList types;
+	foreach(ComponentPtr comp, m_components)
+	{
+		QString t = comp->className();
+		if(types.count(t) == 0)
+			types << t;
+	}
+
+	return types;
+}

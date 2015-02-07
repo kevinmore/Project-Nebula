@@ -443,6 +443,10 @@ void Camera::followTarget( GameObject* target )
 	m_viewCenterFixed = true;
 	m_isFollowing = true;
 	m_followingTarget = target;
+	if (target)
+	{
+		m_viewCenter = target->position();
+	}
 
 	m_viewType = ThirdPerson;
 }

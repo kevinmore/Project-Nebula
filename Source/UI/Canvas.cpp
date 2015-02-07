@@ -229,7 +229,7 @@ void Canvas::mouseReleaseEvent(QMouseEvent* e)
 		// clear the debug mode first
 		getScene()->toggleDebugMode(false);
 		// emit an empty game object
-		emit objectPicked(GameObjectPtr());
+		//emit objectPicked(GameObjectPtr());
 
 		m_rightButtonPressed = false;
 	}

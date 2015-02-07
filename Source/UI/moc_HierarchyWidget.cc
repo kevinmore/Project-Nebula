@@ -20,7 +20,7 @@
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_HierarchyWidget_t {
     QByteArrayData data[49];
-    char stringdata[803];
+    char stringdata[801];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -32,55 +32,55 @@ static const qt_meta_stringdata_HierarchyWidget_t qt_meta_stringdata_HierarchyWi
 QT_MOC_LITERAL(0, 0, 15),
 QT_MOC_LITERAL(1, 16, 15),
 QT_MOC_LITERAL(2, 32, 0),
-QT_MOC_LITERAL(3, 33, 11),
-QT_MOC_LITERAL(4, 45, 3),
-QT_MOC_LITERAL(5, 49, 20),
-QT_MOC_LITERAL(6, 70, 24),
-QT_MOC_LITERAL(7, 95, 14),
-QT_MOC_LITERAL(8, 110, 16),
-QT_MOC_LITERAL(9, 127, 7),
-QT_MOC_LITERAL(10, 135, 8),
-QT_MOC_LITERAL(11, 144, 19),
-QT_MOC_LITERAL(12, 164, 16),
-QT_MOC_LITERAL(13, 181, 4),
-QT_MOC_LITERAL(14, 186, 6),
-QT_MOC_LITERAL(15, 193, 30),
-QT_MOC_LITERAL(16, 224, 4),
-QT_MOC_LITERAL(17, 229, 3),
-QT_MOC_LITERAL(18, 233, 3),
-QT_MOC_LITERAL(19, 237, 5),
-QT_MOC_LITERAL(20, 243, 20),
-QT_MOC_LITERAL(21, 264, 5),
-QT_MOC_LITERAL(22, 270, 21),
-QT_MOC_LITERAL(23, 292, 6),
-QT_MOC_LITERAL(24, 299, 12),
-QT_MOC_LITERAL(25, 312, 10),
-QT_MOC_LITERAL(26, 323, 23),
-QT_MOC_LITERAL(27, 347, 5),
-QT_MOC_LITERAL(28, 353, 26),
-QT_MOC_LITERAL(29, 380, 31),
-QT_MOC_LITERAL(30, 412, 34),
-QT_MOC_LITERAL(31, 447, 23),
-QT_MOC_LITERAL(32, 471, 26),
-QT_MOC_LITERAL(33, 498, 32),
-QT_MOC_LITERAL(34, 531, 35),
-QT_MOC_LITERAL(35, 567, 21),
-QT_MOC_LITERAL(36, 589, 3),
-QT_MOC_LITERAL(37, 593, 21),
-QT_MOC_LITERAL(38, 615, 21),
-QT_MOC_LITERAL(39, 637, 21),
-QT_MOC_LITERAL(40, 659, 21),
-QT_MOC_LITERAL(41, 681, 21),
-QT_MOC_LITERAL(42, 703, 12),
-QT_MOC_LITERAL(43, 716, 16),
-QT_MOC_LITERAL(44, 733, 16),
-QT_MOC_LITERAL(45, 750, 14),
-QT_MOC_LITERAL(46, 765, 13),
-QT_MOC_LITERAL(47, 779, 8),
-QT_MOC_LITERAL(48, 788, 14)
+QT_MOC_LITERAL(3, 33, 9),
+QT_MOC_LITERAL(4, 43, 3),
+QT_MOC_LITERAL(5, 47, 20),
+QT_MOC_LITERAL(6, 68, 24),
+QT_MOC_LITERAL(7, 93, 14),
+QT_MOC_LITERAL(8, 108, 16),
+QT_MOC_LITERAL(9, 125, 7),
+QT_MOC_LITERAL(10, 133, 8),
+QT_MOC_LITERAL(11, 142, 19),
+QT_MOC_LITERAL(12, 162, 16),
+QT_MOC_LITERAL(13, 179, 4),
+QT_MOC_LITERAL(14, 184, 6),
+QT_MOC_LITERAL(15, 191, 30),
+QT_MOC_LITERAL(16, 222, 4),
+QT_MOC_LITERAL(17, 227, 3),
+QT_MOC_LITERAL(18, 231, 3),
+QT_MOC_LITERAL(19, 235, 5),
+QT_MOC_LITERAL(20, 241, 20),
+QT_MOC_LITERAL(21, 262, 5),
+QT_MOC_LITERAL(22, 268, 21),
+QT_MOC_LITERAL(23, 290, 6),
+QT_MOC_LITERAL(24, 297, 12),
+QT_MOC_LITERAL(25, 310, 10),
+QT_MOC_LITERAL(26, 321, 23),
+QT_MOC_LITERAL(27, 345, 5),
+QT_MOC_LITERAL(28, 351, 26),
+QT_MOC_LITERAL(29, 378, 31),
+QT_MOC_LITERAL(30, 410, 34),
+QT_MOC_LITERAL(31, 445, 23),
+QT_MOC_LITERAL(32, 469, 26),
+QT_MOC_LITERAL(33, 496, 32),
+QT_MOC_LITERAL(34, 529, 35),
+QT_MOC_LITERAL(35, 565, 21),
+QT_MOC_LITERAL(36, 587, 3),
+QT_MOC_LITERAL(37, 591, 21),
+QT_MOC_LITERAL(38, 613, 21),
+QT_MOC_LITERAL(39, 635, 21),
+QT_MOC_LITERAL(40, 657, 21),
+QT_MOC_LITERAL(41, 679, 21),
+QT_MOC_LITERAL(42, 701, 12),
+QT_MOC_LITERAL(43, 714, 16),
+QT_MOC_LITERAL(44, 731, 16),
+QT_MOC_LITERAL(45, 748, 14),
+QT_MOC_LITERAL(46, 763, 13),
+QT_MOC_LITERAL(47, 777, 8),
+QT_MOC_LITERAL(48, 786, 14)
     },
     "HierarchyWidget\0materialChanged\0\0"
-    "MaterialPtr\0mat\0connectCurrentObject\0"
+    "Material*\0mat\0connectCurrentObject\0"
     "disconnectPreviousObject\0readGameObject\0"
     "QTreeWidgetItem*\0current\0previous\0"
     "resetSelectedObject\0renameGameObject\0"
@@ -192,7 +192,7 @@ void HierarchyWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
     if (_c == QMetaObject::InvokeMetaMethod) {
         HierarchyWidget *_t = static_cast<HierarchyWidget *>(_o);
         switch (_id) {
-        case 0: _t->materialChanged((*reinterpret_cast< MaterialPtr(*)>(_a[1]))); break;
+        case 0: _t->materialChanged((*reinterpret_cast< Material*(*)>(_a[1]))); break;
         case 1: _t->connectCurrentObject(); break;
         case 2: _t->disconnectPreviousObject(); break;
         case 3: _t->readGameObject((*reinterpret_cast< QTreeWidgetItem*(*)>(_a[1])),(*reinterpret_cast< QTreeWidgetItem*(*)>(_a[2]))); break;
@@ -220,14 +220,14 @@ void HierarchyWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         case 25: _t->deleteGameObject(); break;
         case 26: _t->updateObjectTree(); break;
         case 27: _t->onObjectPicked((*reinterpret_cast< GameObjectPtr(*)>(_a[1]))); break;
-        case 28: _t->assignMaterial((*reinterpret_cast< MaterialPtr(*)>(_a[1]))); break;
+        case 28: _t->assignMaterial((*reinterpret_cast< Material*(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         void **func = reinterpret_cast<void **>(_a[1]);
         {
-            typedef void (HierarchyWidget::*_t)(MaterialPtr );
+            typedef void (HierarchyWidget::*_t)(Material * );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&HierarchyWidget::materialChanged)) {
                 *result = 0;
             }
@@ -272,7 +272,7 @@ int HierarchyWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void HierarchyWidget::materialChanged(MaterialPtr _t1)
+void HierarchyWidget::materialChanged(Material * _t1)
 {
     void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);

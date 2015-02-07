@@ -87,6 +87,7 @@ public:
 	void detachComponent(ComponentPtr pComponent);
 	QVector<ComponentPtr> getComponents();
 	ComponentPtr getComponent(const QString& name);
+	QStringList getComponentsTypes();
 
 	enum MovingBehaviour
 	{

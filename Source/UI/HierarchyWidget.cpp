@@ -19,7 +19,7 @@ HierarchyWidget::HierarchyWidget(Scene* scene, Canvas* canvas, QWidget *parent)
 
 
 	// material change behaviour
-	connect(this, SIGNAL(materialChanged(MaterialPtr)), this, SLOT(assignMaterial(MaterialPtr)));
+	connect(this, SIGNAL(materialChanged(Material*)), this, SLOT(assignMaterial(Material*)));
 
 	// tree widget related
 	connect(m_scene, SIGNAL(updateHierarchy()), this, SLOT(updateObjectTree()));
@@ -43,8 +43,16 @@ HierarchyWidget::HierarchyWidget(Scene* scene, Canvas* canvas, QWidget *parent)
 	connect(m_deleteAction, SIGNAL(triggered()), this, SLOT(deleteGameObject()));
 
 	// tab widget
-	particleSystemTab = ui->tabWidget->widget(3);
-	ui->tabWidget->removeTab(3);
+	int tabCount = ui->tabWidget->count();
+	m_renderingTab = ui->tabWidget->widget(2);
+	m_particleSystemTab = ui->tabWidget->widget(3);
+
+	// remove the unnecessary tabs
+	for (uint i = 0; i < tabCount - 2; ++i)
+	{
+		ui->tabWidget->removeTab(2);
+	}
+
 	ui->tabWidget->setCurrentIndex(0);
 	ui->graphicsView_ColorPicker->setScene(new QGraphicsScene(this));
 	ui->graphicsView_ParticleTexturePicker->setScene(new QGraphicsScene(this));
@@ -162,6 +170,10 @@ void HierarchyWidget::resetSelectedObject()
 
 void HierarchyWidget::readGameObject(QTreeWidgetItem* current, QTreeWidgetItem* previous)
 {
+	// reset the tab widget
+	ui->tabWidget->removeTab(ui->tabWidget->indexOf(m_renderingTab));
+	ui->tabWidget->removeTab(ui->tabWidget->indexOf(m_particleSystemTab));
+
 	if (!current) return;
 
 	// disconnect previous connections
@@ -170,6 +182,7 @@ void HierarchyWidget::readGameObject(QTreeWidgetItem* current, QTreeWidgetItem* 
 	
 	// hide all bounding boxes
 	m_scene->toggleDebugMode(false);
+	m_currentMaterials.clear();
 
 	// if the current item is the scene node (root), ignore
 	if(current == ui->treeWidget->topLevelItem(0)) 
@@ -184,38 +197,47 @@ void HierarchyWidget::readGameObject(QTreeWidgetItem* current, QTreeWidgetItem* 
 	m_currentObject = m_scene->objectManager()->getGameObject(current->text(0)).data();
 	if(!m_currentObject) return;
 
-	// show the bounding box
-	ModelPtr model = m_currentObject->getComponent("Model").dynamicCast<AbstractModel>();
-	if(model) model->showBoundingBox();
-
-// 	connect(m_currentObject, SIGNAL(updateTransformation(const vec3&, const vec3&, const vec3&)),
-// 		this, SLOT(handleGameObjectTransformation(const vec3&, const vec3&, const vec3&)));
-
 	// map the transformation into the transform tab
 	fillInTransformTab();
 
-	// map the shading properties into the material tab
-	readShadingProperties();
+	// show the bounding box
+	ModelPtr model = m_currentObject->getComponent("Model").dynamicCast<AbstractModel>();
+	if(model && model->getBoundingBox()) model->showBoundingBox();
+
+	// get the materials of the model
+	QVector<MaterialPtr> mats = model->getMaterials();
+	foreach(MaterialPtr mat, mats)
+	{
+		m_currentMaterials << mat.data();
+	}
+
+	// process components and set up tabs
+	QStringList componentTypes = m_currentObject->getComponentsTypes();
+
+	foreach(QString type, componentTypes)
+	{
+		ComponentPtr comp = m_currentObject->getComponent(type);
+		if (type == "ParticleSystem")
+		{
+			ui->tabWidget->addTab(m_particleSystemTab, "Particle System");
+			ui->tabWidget->setCurrentWidget(m_particleSystemTab);
+			ParticleSystemPtr ps = comp.dynamicCast<ParticleSystem>();
+			readParticleSystemConfig(ps);
+			connectParticleSystemTab(ps);
+		}
+		else if (type == "Model")
+		{
+			ui->tabWidget->addTab(m_renderingTab, "Rendering");
+			// map the shading properties into the material tab
+			readShadingProperties();
+		}
+	}
+
+// 	connect(m_currentObject, SIGNAL(updateTransformation(const vec3&, const vec3&, const vec3&)),
+// 		this, SLOT(handleGameObjectTransformation(const vec3&, const vec3&, const vec3&)));
 	
 	// set connections
 	connectCurrentObject();
-
-	// if the game object has a particle system attached to
-	// show the particle system tab
-	ui->tabWidget->removeTab(ui->tabWidget->indexOf(particleSystemTab));
-	foreach(ComponentPtr comp, m_currentObject->getComponents())
-	{
-		if (comp->className() == "ParticleSystem")
-		{
-			ParticleSystemPtr ps = comp.dynamicCast<ParticleSystem>();
-			ui->tabWidget->addTab(particleSystemTab, "Particle System");
-			ui->tabWidget->setCurrentWidget(particleSystemTab);
-			readParticleSystemConfig(ps);
-			connectParticleSystemTab(ps);
-			
-			break;
-		}
-	}
 }
 
 void HierarchyWidget::clearTransformationArea()
@@ -392,11 +414,6 @@ bool HierarchyWidget::eventFilter( QObject *obj, QEvent *ev )
 	// pop up a color dialog when the user clicks the color picker
 	if (ev->type() == QEvent::MouseButtonPress)
 	{
-		if (!m_currentShadingTech) return true;
-		ComponentPtr comp = m_currentObject->getComponent("Model");
-		ModelPtr model = comp.dynamicCast<AbstractModel>();
-		QVector<MaterialPtr> mats = model->getMaterials();
-
 		if (obj == ui->graphicsView_ColorPicker 
 			&& ui->graphicsView_ColorPicker->isEnabled())
 		{
@@ -433,57 +450,61 @@ bool HierarchyWidget::eventFilter( QObject *obj, QEvent *ev )
 		/// Material section
 		else if (obj == ui->graphicsView_AmbientColorPicker)
 		{
-			QColor col = QColorDialog::getColor(mats[0]->m_ambientColor, this);
+			if(m_currentMaterials.size() == 0) return true;
+			QColor col = QColorDialog::getColor(m_currentMaterials[0]->m_ambientColor, this);
 			if(col.isValid()) 
 			{
 				// apply the color to the particle system and color picker both
 				ui->graphicsView_AmbientColorPicker->setBackgroundBrush(QBrush(col, Qt::DiagCrossPattern));
 				
 				// change the material of the model
-				mats[0]->m_ambientColor = col;
-				emit materialChanged(mats[0]);
+				m_currentMaterials[0]->m_ambientColor = col;
+				emit materialChanged(m_currentMaterials[0]);
 			}
 			return true;
 		}
 		else if (obj == ui->graphicsView_DiffuseColorPicker)
 		{
-			QColor col = QColorDialog::getColor(mats[0]->m_diffuseColor, this);
+			if(m_currentMaterials.size() == 0) return true;
+			QColor col = QColorDialog::getColor(m_currentMaterials[0]->m_diffuseColor, this);
 			if(col.isValid()) 
 			{
 				// apply the color to the particle system and color picker both
 				ui->graphicsView_DiffuseColorPicker->setBackgroundBrush(QBrush(col, Qt::DiagCrossPattern));
 				
 				// change the material of the model
-				mats[0]->m_diffuseColor = col;
-				emit materialChanged(mats[0]);
+				m_currentMaterials[0]->m_diffuseColor = col;
+				emit materialChanged(m_currentMaterials[0]);
 			}
 			return true;
 		}
 		else if (obj == ui->graphicsView_SpecularColorPicker)
 		{
-			QColor col = QColorDialog::getColor(mats[0]->m_specularColor, this);
+			if(m_currentMaterials.size() == 0) return true;
+			QColor col = QColorDialog::getColor(m_currentMaterials[0]->m_specularColor, this);
 			if(col.isValid()) 
 			{
 				// apply the color to the particle system and color picker both
 				ui->graphicsView_SpecularColorPicker->setBackgroundBrush(QBrush(col, Qt::DiagCrossPattern));
 				
 				// change the material of the model
-				mats[0]->m_specularColor = col;
-				emit materialChanged(mats[0]);
+				m_currentMaterials[0]->m_specularColor = col;
+				emit materialChanged(m_currentMaterials[0]);
 			}
 			return true;
 		}
 		else if (obj == ui->graphicsView_EmissiveColorPicker)
 		{
-			QColor col = QColorDialog::getColor(mats[0]->m_emissiveColor, this);
+			if(m_currentMaterials.size() == 0) return true;
+			QColor col = QColorDialog::getColor(m_currentMaterials[0]->m_emissiveColor, this);
 			if(col.isValid()) 
 			{
 				// apply the color to the particle system and color picker both
 				ui->graphicsView_EmissiveColorPicker->setBackgroundBrush(QBrush(col, Qt::DiagCrossPattern));
 				
 				// change the material of the model
-				mats[0]->m_emissiveColor = col;
-				emit materialChanged(mats[0]);
+				m_currentMaterials[0]->m_emissiveColor = col;
+				emit materialChanged(m_currentMaterials[0]);
 			}
 			return true;
 		}
@@ -551,20 +572,15 @@ void HierarchyWidget::changeShader( const QString& shaderFile )
 	m_currentShadingTech->applyShader(shaderFile);
 
 	// re assign the material properties
-	if(!m_currentObject) return;
-	ComponentPtr comp = m_currentObject->getComponent("Model");
-	ModelPtr model = comp.dynamicCast<AbstractModel>();
-	QVector<MaterialPtr> mats = model->getMaterials();
-	m_currentShadingTech->enable();
-	m_currentShadingTech->setMaterial(mats[0].data());
+	assignMaterial(m_currentMaterials[0]);
 }
 
 
-void HierarchyWidget::assignMaterial( MaterialPtr mat )
+void HierarchyWidget::assignMaterial( Material* mat )
 {
-	if (!m_currentShadingTech) return;
+	if (!m_currentShadingTech || !m_currentObject || !mat) return;
 	m_currentShadingTech->enable();
-	m_currentShadingTech->setMaterial(mat.data());
+	m_currentShadingTech->setMaterial(mat);
 }
 
 void HierarchyWidget::onShininessSliderChange( int value )
@@ -577,13 +593,10 @@ void HierarchyWidget::onShininessDoubleBoxChange( double value )
 	ui->horizontalSlider_Shininess->setValue(value);
 
 	// change the material of the model
-	if(!m_currentObject) return;
-	ComponentPtr comp = m_currentObject->getComponent("Model");
-	ModelPtr model = comp.dynamicCast<AbstractModel>();
-	QVector<MaterialPtr> mats = model->getMaterials();
-	mats[0]->m_shininess = value;
+	if(m_currentMaterials.size() == 0) return;
+	m_currentMaterials[0]->m_shininess = value;
 	
-	emit materialChanged(mats[0]);
+	emit materialChanged(m_currentMaterials[0]);
 }
 
 void HierarchyWidget::onShininessStrengthSliderChange( int value )
@@ -596,13 +609,10 @@ void HierarchyWidget::onShininessStrengthDoubleBoxChange( double value )
 	ui->horizontalSlider_ShininessStrength->setValue(value * 100);
 	
 	// change the material of the model
-	if(!m_currentObject) return;
-	ComponentPtr comp = m_currentObject->getComponent("Model");
-	ModelPtr model = comp.dynamicCast<AbstractModel>();
-	QVector<MaterialPtr> mats = model->getMaterials();
-	mats[0]->m_shininessStrength = value;
+	if(m_currentMaterials.size() == 0) return;
+	m_currentMaterials[0]->m_shininessStrength = value;
 
-	emit materialChanged(mats[0]);
+	emit materialChanged(m_currentMaterials[0]);
 }
 
 void HierarchyWidget::onRoughnessSliderChange( int value )
@@ -615,13 +625,10 @@ void HierarchyWidget::onRoughnessDoubleBoxChange( double value )
 	ui->horizontalSlider_Roughness->setValue(value * 100);
 	
 	// change the material of the model
-	if(!m_currentObject) return;
-	ComponentPtr comp = m_currentObject->getComponent("Model");
-	ModelPtr model = comp.dynamicCast<AbstractModel>();
-	QVector<MaterialPtr> mats = model->getMaterials();
-	mats[0]->m_roughness = value;
+	if(m_currentMaterials.size() == 0) return;
+	m_currentMaterials[0]->m_roughness = value;
 
-	emit materialChanged(mats[0]);
+	emit materialChanged(m_currentMaterials[0]);
 }
 
 void HierarchyWidget::onFresnelReflectanceSliderChange( int value )
@@ -634,13 +641,10 @@ void HierarchyWidget::onFresnelReflectanceDoubleBoxChange( double value )
 	ui->horizontalSlider_fresnelReflectance->setValue(value * 100);
 
 	// change the material of the model
-	if(!m_currentObject) return;
-	ComponentPtr comp = m_currentObject->getComponent("Model");
-	ModelPtr model = comp.dynamicCast<AbstractModel>();
-	QVector<MaterialPtr> mats = model->getMaterials();
-	mats[0]->m_fresnelReflectance = value;
+	if(m_currentMaterials.size() == 0) return;
+	m_currentMaterials[0]->m_fresnelReflectance = value;
 
-	emit materialChanged(mats[0]);
+	emit materialChanged(m_currentMaterials[0]);
 }
 
 void HierarchyWidget::readShadingProperties()
@@ -781,16 +785,22 @@ void HierarchyWidget::fillInTransformTab()
 
 void HierarchyWidget::onObjectPicked( GameObjectPtr selected )
 {
+	// make the camera follow the object
+	//m_scene->getCamera()->followTarget(m_currentObject);
+
 	// if nothing is selected
 	if (!selected)
 	{
 		ui->treeWidget->setCurrentIndex(ui->treeWidget->rootIndex());
+		ui->tabWidget->removeTab(ui->tabWidget->indexOf(m_renderingTab));
+		ui->tabWidget->removeTab(ui->tabWidget->indexOf(m_particleSystemTab));
 		disconnectPreviousObject();
 		m_currentObject = NULL;
 		m_currentShadingTech = NULL;
-		
+		m_currentMaterials.clear();
 		return;
 	}
+
 	// find the item that has this name
 	//QTreeWidgetItem* selected = ui->treeWidget->findItems(name, Qt::MatchExactly).first();
 	QList<QTreeWidgetItem*> items = ui->treeWidget->findItems(selected->objectName(), Qt::MatchRecursive);

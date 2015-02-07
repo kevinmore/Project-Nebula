@@ -21,9 +21,10 @@ private:
 	Scene* m_scene;
 	GameObject* m_currentObject;
 	ShadingTechnique* m_currentShadingTech;
+	QVector<Material*> m_currentMaterials;
 
 	QAction* m_deleteAction;
-	QWidget* particleSystemTab;
+	QWidget *m_renderingTab, *m_particleSystemTab;
 
 	void readHierarchy(GameObject* go, QTreeWidgetItem* parentItem); // go through the game objects
 	void resetHierarchy(GameObject* go); // reset every game object from the given one
@@ -75,10 +76,10 @@ public slots:
 	void deleteGameObject();
 	void updateObjectTree();
 	void onObjectPicked(GameObjectPtr selected);
-	void assignMaterial(MaterialPtr mat);
+	void assignMaterial(Material* mat);
 
 signals:
-	void materialChanged(MaterialPtr mat);
+	void materialChanged(Material* mat);
 
 protected:
 	bool eventFilter(QObject *obj, QEvent *ev); // install a filter event for the color picker
