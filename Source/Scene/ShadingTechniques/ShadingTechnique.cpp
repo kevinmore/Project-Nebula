@@ -35,6 +35,12 @@ bool ShadingTechnique::init()
         return false;
     }
 
+	// if it's not used by a collider
+	if (m_scene)
+	{
+		connect(m_scene, SIGNAL(ligthsChanged()), this, SLOT(updateLights()));
+	}
+
 	return compileShader();
 }
 
@@ -51,12 +57,12 @@ bool ShadingTechnique::compileShader()
 		usingCubeMap = false;
 
 	// process the lights in the scene
-	initLights();
+	updateLights();
 
 	return true;
 }
 
-void ShadingTechnique::initLights()
+void ShadingTechnique::updateLights()
 {
 	// get the lights from the scene
 	if (!m_scene) return;

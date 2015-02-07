@@ -19,14 +19,6 @@ Scene::Scene(QObject* parent)
 	  m_bStepPhysics(false),
 	  m_physicsWorld(0)
 {
-	// Initializing the lights
-	LightPtr pointLight1(new Light("Light1"));
-	pointLight1->setPosition(2.0f, 2.0f, 0.0f);
-	m_lights << pointLight1;
-
-	LightPtr pointLight2(new Light("Light2"));
-	pointLight2->setPosition(-2.0f, 2.0f, 0.0f);
-	m_lights << pointLight2;
 }
 
 Scene::~Scene()
@@ -48,11 +40,6 @@ void Scene::initialize()
 	glDepthFunc(GL_LEQUAL);
 
 	glEnable(GL_CULL_FACE);
-
-//     m_light.setType(Light::SpotLight);
-//     m_light.setUniqueColor(1.0, 1.0, 1.0);
-//     m_light.setAttenuation(1.0f, 0.14f, 0.07f);
-//     m_light.setIntensity(3.0f);
 
 	m_objectManager = new ObjectManager(this, this);
 	m_materialManager = new MaterialManager(this);
@@ -195,7 +182,9 @@ void Scene::clearScene()
 	m_textureManager->clear();
 	m_meshManager->clear();
 	m_objectManager->clear();
+	m_lights.clear();
 
+	emit ligthsChanged();
 	emit updateHierarchy();
 }
 
@@ -205,6 +194,10 @@ void Scene::resetToDefaultScene()
 	clearScene();
 	toggleDebugMode(false);
 	m_camera->resetCamera();
+
+	// Initializing the lights
+	GameObjectPtr lightObject = createLight();
+	lightObject->fixedTranslateY(2);
 
 	// load the floor
 	GameObjectPtr floorRef(new GameObject(this));
@@ -321,6 +314,26 @@ GameObjectPtr Scene::createParticleSystem(const QString& parentName)
 	ref->attachComponent(ps);
 	ps->initParticleSystem();
 	ps->assingCollisionObject(m_objectManager->getGameObject("hexagonFloor"));
+
+	return ref;
+}
+
+GameObjectPtr Scene::createLight( const QString& parentName /*= "Scene Root"*/ )
+{
+	GameObjectPtr parent = m_objectManager->getGameObject(parentName);
+	// check if the parent exist
+	GameObjectPtr ref = parent 
+		? m_objectManager->createGameObject("Light", parent.data())
+		: m_objectManager->createGameObject("Light", m_sceneRootNode);
+
+
+	// light
+	LightPtr l(new Light(this, ref.data()));
+	m_lights << l;
+	ref->attachComponent(l);
+
+	emit updateHierarchy();
+	emit ligthsChanged();
 
 	return ref;
 }
@@ -462,6 +475,41 @@ void Scene::toggleDebugMode( bool state )
 			ModelPtr model = comp.dynamicCast<AbstractModel>();
 			if (model && model->getBoundingBox()->gameObject())
 				model->hideBoundingBox();
+		}
+	}
+}
+
+void Scene::onLightChanged( Light* l )
+{
+	// find the light in the list
+	LightPtr source;
+
+	foreach(LightPtr light, m_lights)
+	{
+		if (light.data() == l)
+		{
+			source = light;
+			break;
+		}
+	}
+	
+	// check if the source exists,
+	// if it does, emit the signal
+	if (source)
+	{
+		emit ligthsChanged();
+	}
+}
+
+void Scene::removeLight( Light* l )
+{
+	foreach(LightPtr light, m_lights)
+	{
+		if (light.data() == l)
+		{
+			m_lights.removeOne(light);
+			emit ligthsChanged();
+			break;
 		}
 	}
 }

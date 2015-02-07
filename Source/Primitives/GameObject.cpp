@@ -16,6 +16,7 @@ GameObject::GameObject(Scene* scene, GameObject* parent)
 	  m_isMoving(false)
 {
 	connect(this, SIGNAL(synchronized()), this, SLOT(calculateSpeed()));
+
 	m_lifeTimer.start();
 }
 
@@ -24,11 +25,12 @@ GameObject::~GameObject()
 	m_components.clear();
 }
 
-void GameObject::setPosition(const QVector3D& positionVector)
+void GameObject::setPosition(const vec3& positionVector)
 {
 	m_position = positionVector;
 
 	m_modelMatrixDirty = true;
+	emit transformChanged(m_position, m_rotation, m_scale);
 }
 
 void GameObject::setPosition(double x, double y, double z)
@@ -38,13 +40,15 @@ void GameObject::setPosition(double x, double y, double z)
 	m_position.setZ(z);
 
 	m_modelMatrixDirty = true;
+	emit transformChanged(m_position, m_rotation, m_scale);
 }
 
-void GameObject::setRotation(const QVector3D& rotationVector)
+void GameObject::setRotation(const vec3& rotationVector)
 {
 	m_rotation = rotationVector;
 
 	m_modelMatrixDirty = true;
+	emit transformChanged(m_position, m_rotation, m_scale);
 }
 
 void GameObject::setRotation(double x, double y, double z)
@@ -54,13 +58,15 @@ void GameObject::setRotation(double x, double y, double z)
 	m_rotation.setZ(z);
 
 	m_modelMatrixDirty = true;
+	emit transformChanged(m_position, m_rotation, m_scale);
 }
 
-void GameObject::setScale(const QVector3D& scale)
+void GameObject::setScale(const vec3& scale)
 {
 	m_scale = scale;
 
 	m_modelMatrixDirty = true;
+	emit transformChanged(m_position, m_rotation, m_scale);
 }
 
 void GameObject::setScale(double x, double y, double z)
@@ -70,6 +76,7 @@ void GameObject::setScale(double x, double y, double z)
 	m_scale.setZ(z);
 
 	m_modelMatrixDirty = true;
+	emit transformChanged(m_position, m_rotation, m_scale);
 }
 
 void GameObject::setScale(double scaleFactor)
@@ -79,60 +86,70 @@ void GameObject::setScale(double scaleFactor)
 	m_scale.setZ(scaleFactor);
 
 	m_modelMatrixDirty = true;
+	emit transformChanged(m_position, m_rotation, m_scale);
 }
 
 void GameObject::fixedTranslateX(double x)
 {
 	m_position.setX(x);
 	m_modelMatrixDirty = true;
+	emit transformChanged(m_position, m_rotation, m_scale);
 }
 
 void GameObject::fixedTranslateY(double y)
 {
 	m_position.setY(y);
 	m_modelMatrixDirty = true;
+	emit transformChanged(m_position, m_rotation, m_scale);
 }
 
 void GameObject::fixedTranslateZ(double z)
 {
 	m_position.setZ(z);
 	m_modelMatrixDirty = true;
+	emit transformChanged(m_position, m_rotation, m_scale);
 }
 
 void GameObject::fixedRotateX(double x)
 {
 	m_rotation.setX(x);
 	m_modelMatrixDirty = true;
+	emit transformChanged(m_position, m_rotation, m_scale);
 }
 
 void GameObject::fixedRotateY(double y)
 {
 	m_rotation.setY(y);
 	m_modelMatrixDirty = true;
+	emit transformChanged(m_position, m_rotation, m_scale);
 }
 
 void GameObject::fixedRotateZ(double z)
 {
 	m_rotation.setZ(z);
 	m_modelMatrixDirty = true;
+	emit transformChanged(m_position, m_rotation, m_scale);
 }
 
 void GameObject::fixedScaleX(double x)
 {
 	m_scale.setX(x);
 	m_modelMatrixDirty = true;
+	emit transformChanged(m_position, m_rotation, m_scale);
 }
 
 void GameObject::fixedScaleY(double y)
 {
 	m_scale.setY(y);
 	m_modelMatrixDirty = true;
+	emit transformChanged(m_position, m_rotation, m_scale);
 }
 
 void GameObject::fixedScaleZ(double z)
 {
 	m_scale.setZ(z);
 	m_modelMatrixDirty = true;
+	emit transformChanged(m_position, m_rotation, m_scale);
 }
 
 void GameObject::reset()
@@ -141,9 +158,10 @@ void GameObject::reset()
 	setRotation(Vector3::ZERO);
 	setScale(Vector3::UNIT_SCALE);
 	m_puppets.clear();
+	emit transformChanged(m_position, m_rotation, m_scale);
 }
 
-void GameObject::setSpeed( const QVector3D& speed )
+void GameObject::setSpeed( const vec3& speed )
 {
 	m_speed = speed;
 }
@@ -162,7 +180,7 @@ void GameObject::setLocalSpeed( const QString& paramString )
 }
 
 
-QVector3D GameObject::globalSpeed() const
+vec3 GameObject::globalSpeed() const
 {
 	quat rotX = quat::fromAxisAndAngle(Math::Vector3::UNIT_X, m_rotation.x());
 	quat rotY = quat::fromAxisAndAngle(Math::Vector3::UNIT_Y, m_rotation.y());
@@ -172,7 +190,7 @@ QVector3D GameObject::globalSpeed() const
 	return rot.rotatedVector(m_speed);
 }
 
-void GameObject::translateInWorld( const QVector3D& delta )
+void GameObject::translateInWorld( const vec3& delta )
 {
 	m_modelMatrix.translate(delta);
 	m_prevPosition = m_position;
@@ -275,7 +293,7 @@ void GameObject::resetSpeed()
 	setSpeed(0.0f, 0.0f, 0.0f);
 }
 
-QVector3D GameObject::predictedPosition()  const
+vec3 GameObject::predictedPosition()  const
 {
 	float currentTime = (float)m_lifeTimer.elapsed()/1000;
 	const float dt = currentTime - m_time;
@@ -335,6 +353,7 @@ void GameObject::translateX( float x )
 	m_position.setX(m_position.x() + x);
 	m_modelMatrix.translate(x, 0.0f, 0.0f);
 	m_modelMatrixDirty = false;
+	emit transformChanged(m_position, m_rotation, m_scale);
 }
 
 void GameObject::translateY( float y )
@@ -342,6 +361,7 @@ void GameObject::translateY( float y )
 	m_position.setY(m_position.y() + y);
 	m_modelMatrix.translate(0.0f, y, 0.0f);
 	m_modelMatrixDirty = false;
+	emit transformChanged(m_position, m_rotation, m_scale);
 }
 
 void GameObject::translateZ( float z )
@@ -349,6 +369,7 @@ void GameObject::translateZ( float z )
 	m_position.setZ(m_position.z() + z);
 	m_modelMatrix.translate(0.0f, 0.0f, z);
 	m_modelMatrixDirty = false;
+	emit transformChanged(m_position, m_rotation, m_scale);
 }
 
 void GameObject::translate( const vec3& delta )
@@ -356,6 +377,7 @@ void GameObject::translate( const vec3& delta )
 	m_position += delta;
 	m_modelMatrix.translate(delta);
 	m_modelMatrixDirty = false;
+	emit transformChanged(m_position, m_rotation, m_scale);
 }
 
 void GameObject::rotateX( float x )
@@ -363,6 +385,7 @@ void GameObject::rotateX( float x )
 	m_rotation.setX(m_rotation.x() + x);
 	m_modelMatrix.rotate(x, Math::Vector3::UNIT_X);
 	m_modelMatrixDirty = false;
+	emit transformChanged(m_position, m_rotation, m_scale);
 }
 
 void GameObject::rotateY( float y )
@@ -370,6 +393,7 @@ void GameObject::rotateY( float y )
 	m_rotation.setY(m_rotation.y() + y);
 	m_modelMatrix.rotate(y, Math::Vector3::UNIT_Y);
 	m_modelMatrixDirty = false;
+	emit transformChanged(m_position, m_rotation, m_scale);
 }
 
 void GameObject::rotateZ( float z )
@@ -377,6 +401,7 @@ void GameObject::rotateZ( float z )
 	m_rotation.setZ(m_rotation.z() + z);
 	m_modelMatrix.rotate(z, Math::Vector3::UNIT_Z);
 	m_modelMatrixDirty = false;
+	emit transformChanged(m_position, m_rotation, m_scale);
 }
 
 void GameObject::rotate( const vec3& delta )
@@ -386,12 +411,14 @@ void GameObject::rotate( const vec3& delta )
 	m_modelMatrix.rotate(delta.y(), Vector3::UNIT_Y);
 	m_modelMatrix.rotate(delta.z(), Vector3::UNIT_Z);
 	m_modelMatrixDirty = false;
+	emit transformChanged(m_position, m_rotation, m_scale);
 }
 
 void GameObject::rotate( const quat& delta )
 {
 	m_modelMatrix.rotate(delta);
 	m_modelMatrixDirty = false;
+	emit transformChanged(m_position, m_rotation, m_scale);
 }
 
 void GameObject::scaleX( float x )
@@ -399,6 +426,7 @@ void GameObject::scaleX( float x )
 	m_scale.setX(m_scale.x() + x);
 	m_modelMatrix.scale(m_scale);
 	m_modelMatrixDirty = false;
+	emit transformChanged(m_position, m_rotation, m_scale);
 }
 
 void GameObject::scaleY( float y )
@@ -406,6 +434,7 @@ void GameObject::scaleY( float y )
 	m_scale.setY(m_scale.y() + y);
 	m_modelMatrix.scale(m_scale);
 	m_modelMatrixDirty = false;
+	emit transformChanged(m_position, m_rotation, m_scale);
 }
 
 void GameObject::scaleZ( float z )
@@ -413,6 +442,7 @@ void GameObject::scaleZ( float z )
 	m_scale.setZ(m_scale.z() + z);
 	m_modelMatrix.scale(m_scale);
 	m_modelMatrixDirty = false;
+	emit transformChanged(m_position, m_rotation, m_scale);
 }
 
 void GameObject::scale( const vec3& delta )
@@ -420,6 +450,7 @@ void GameObject::scale( const vec3& delta )
 	m_scale += delta;
 	m_modelMatrix.scale(m_scale);
 	m_modelMatrixDirty = false;
+	emit transformChanged(m_position, m_rotation, m_scale);
 }
 
 void GameObject::clearPuppets()

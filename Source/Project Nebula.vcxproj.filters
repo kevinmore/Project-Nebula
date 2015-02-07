@@ -63,13 +63,14 @@
     <ClCompile Include="Physicis\World\PhysicsWorldObject.cpp" />
     <ClCompile Include="Physicis\Collider\AbstractCollider.cpp" />
     <ClCompile Include="Physicis\Collider\BoxCollider.cpp" />
+    <ClCompile Include="Scene\ShadingTechniques\moc_ShadingTechnique.cc" />
+    <ClCompile Include="Scene\moc_Light.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Primitives\Texture.h" />
     <ClInclude Include="Primitives\Material.h" />
     <ClInclude Include="Primitives\Mesh.h" />
     <ClInclude Include="Utility\Math.h" />
-    <ClInclude Include="Scene\Light.h" />
     <ClInclude Include="Scene\AbstractScene.h" />
     <ClInclude Include="Scene\AbstractModel.h" />
     <ClInclude Include="Scene\Managers\MeshManager.h" />
@@ -80,7 +81,6 @@
     <ClInclude Include="Animation\Rig\BoneInfo.h" />
     <ClInclude Include="Scene\RiggedModel.h" />
     <ClInclude Include="Scene\StaticModel.h" />
-    <ClInclude Include="Scene\ShadingTechniques\ShadingTechnique.h" />
     <ClInclude Include="Animation\IK\FABRIKSolver.h" />
     <ClInclude Include="Animation\IK\CCDIKSolver.h" />
     <ClInclude Include="Animation\Rig\Pose.h" />
@@ -90,7 +90,6 @@
     <ClInclude Include="Utility\Serialization.h" />
     <ClInclude Include="UI\ui_HierarchyWidget.h" />
     <ClInclude Include="Primitives\Component.h" />
-    <ClInclude Include="Scene\ShadingTechniques\ParticleTechnique.h" />
     <ClInclude Include="Primitives\CubeMapTexture.h" />
     <ClInclude Include="Scene\ShadingTechniques\SkyboxTechnique.h" />
     <ClInclude Include="Scene\Skybox.h" />
@@ -117,10 +116,11 @@
     <ClInclude Include="Physicis\Collider\CollisionFeedback.h" />
     <ClInclude Include="Physicis\Collider\AbstractCollider.h" />
     <ClInclude Include="Physicis\Collider\BoxCollider.h" />
-    <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="UI\Canvas.h" />
-    <ClInclude Include="Primitives\GameObject.h" />
     <ClInclude Include="Scene\Managers\ObjectManager.h" />
+    <ClInclude Include="UI\HierarchyWidget.h" />
+    <ClInclude Include="Scene\ShadingTechniques\ParticleTechnique.h" />
+    <ClInclude Include="Scene\ShadingTechniques\ShadingTechnique.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="UI\HierarchyWidget.ui" />
@@ -128,6 +128,8 @@
     <None Include="Physicis\World\PhysicsWorldObject.inl" />
   </ItemGroup>
   <ItemGroup>
-    <QtMOC Include="UI\HierarchyWidget.h" />
+    <QtMOC Include="Scene\Scene.h" />
+    <QtMOC Include="Primitives\GameObject.h" />
+    <QtMOC Include="Scene\Light.h" />
   </ItemGroup>
 </Project>

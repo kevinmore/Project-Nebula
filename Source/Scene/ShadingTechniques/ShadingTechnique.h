@@ -7,6 +7,8 @@
 class Scene;
 class ShadingTechnique : public Technique 
 {
+	Q_OBJECT
+
 public:
 
     static const uint MAX_POINT_LIGHTS = 2;
@@ -45,10 +47,12 @@ public:
 	void setMatRoughnessValue(float val);
 	void setMatFresnelReflectance(float val);
 
+public slots:
+	void updateLights();
+
 private:
     
 	virtual bool compileShader();
-	void initLights();
 
 	Scene* m_scene;
 	ShaderType m_shaderType;

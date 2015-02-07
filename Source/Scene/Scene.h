@@ -55,6 +55,7 @@ public:
 	void setBackGroundColor(const QColor& col);
 	SkyboxPtr getSkybox() const  { return m_skybox; }
 	QList<LightPtr> getLights() const { return m_lights; }
+	void removeLight(Light* l);
 
 public slots:
 	void toggleFill(bool state);
@@ -74,6 +75,7 @@ public slots:
 	void modelLoaded();
 	GameObjectPtr createEmptyGameObject(const QString& name = "Game Object");
 	GameObjectPtr createParticleSystem(const QString& parentName = "Scene Root");
+	GameObjectPtr createLight(const QString& parentName = "Scene Root");
 
 	void toggleSkybox(bool state);
 
@@ -82,8 +84,11 @@ public slots:
 	void play();
 	void step();
 
+	void onLightChanged(Light* l);
+
 signals:
 	void updateHierarchy();
+	void ligthsChanged();
 
 private:
 	void loadScene(QString& fileName);

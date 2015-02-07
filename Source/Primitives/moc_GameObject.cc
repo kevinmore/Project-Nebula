@@ -20,7 +20,7 @@
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_GameObject_t {
     QByteArrayData data[52];
-    char stringdata[546];
+    char stringdata[542];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -36,57 +36,57 @@ QT_MOC_LITERAL(3, 25, 17),
 QT_MOC_LITERAL(4, 43, 12),
 QT_MOC_LITERAL(5, 56, 4),
 QT_MOC_LITERAL(6, 61, 17),
-QT_MOC_LITERAL(7, 79, 20),
-QT_MOC_LITERAL(8, 100, 4),
-QT_MOC_LITERAL(9, 105, 3),
-QT_MOC_LITERAL(10, 109, 3),
-QT_MOC_LITERAL(11, 113, 5),
-QT_MOC_LITERAL(12, 119, 15),
-QT_MOC_LITERAL(13, 135, 1),
-QT_MOC_LITERAL(14, 137, 15),
-QT_MOC_LITERAL(15, 153, 1),
-QT_MOC_LITERAL(16, 155, 15),
-QT_MOC_LITERAL(17, 171, 1),
-QT_MOC_LITERAL(18, 173, 12),
-QT_MOC_LITERAL(19, 186, 12),
-QT_MOC_LITERAL(20, 199, 12),
-QT_MOC_LITERAL(21, 212, 11),
-QT_MOC_LITERAL(22, 224, 11),
-QT_MOC_LITERAL(23, 236, 11),
-QT_MOC_LITERAL(24, 248, 10),
-QT_MOC_LITERAL(25, 259, 10),
-QT_MOC_LITERAL(26, 270, 10),
-QT_MOC_LITERAL(27, 281, 9),
-QT_MOC_LITERAL(28, 291, 5),
-QT_MOC_LITERAL(29, 297, 7),
-QT_MOC_LITERAL(30, 305, 7),
-QT_MOC_LITERAL(31, 313, 7),
-QT_MOC_LITERAL(32, 321, 6),
-QT_MOC_LITERAL(33, 328, 4),
-QT_MOC_LITERAL(34, 333, 6),
-QT_MOC_LITERAL(35, 340, 6),
-QT_MOC_LITERAL(36, 347, 6),
-QT_MOC_LITERAL(37, 354, 16),
-QT_MOC_LITERAL(38, 371, 11),
-QT_MOC_LITERAL(39, 383, 13),
-QT_MOC_LITERAL(40, 397, 25),
-QT_MOC_LITERAL(41, 423, 13),
-QT_MOC_LITERAL(42, 437, 10),
-QT_MOC_LITERAL(43, 448, 14),
-QT_MOC_LITERAL(44, 463, 12),
-QT_MOC_LITERAL(45, 476, 5),
-QT_MOC_LITERAL(46, 482, 10),
-QT_MOC_LITERAL(47, 493, 5),
-QT_MOC_LITERAL(48, 499, 15),
-QT_MOC_LITERAL(49, 515, 12),
-QT_MOC_LITERAL(50, 528, 6),
-QT_MOC_LITERAL(51, 535, 10)
+QT_MOC_LITERAL(7, 79, 16),
+QT_MOC_LITERAL(8, 96, 4),
+QT_MOC_LITERAL(9, 101, 3),
+QT_MOC_LITERAL(10, 105, 3),
+QT_MOC_LITERAL(11, 109, 5),
+QT_MOC_LITERAL(12, 115, 15),
+QT_MOC_LITERAL(13, 131, 1),
+QT_MOC_LITERAL(14, 133, 15),
+QT_MOC_LITERAL(15, 149, 1),
+QT_MOC_LITERAL(16, 151, 15),
+QT_MOC_LITERAL(17, 167, 1),
+QT_MOC_LITERAL(18, 169, 12),
+QT_MOC_LITERAL(19, 182, 12),
+QT_MOC_LITERAL(20, 195, 12),
+QT_MOC_LITERAL(21, 208, 11),
+QT_MOC_LITERAL(22, 220, 11),
+QT_MOC_LITERAL(23, 232, 11),
+QT_MOC_LITERAL(24, 244, 10),
+QT_MOC_LITERAL(25, 255, 10),
+QT_MOC_LITERAL(26, 266, 10),
+QT_MOC_LITERAL(27, 277, 9),
+QT_MOC_LITERAL(28, 287, 5),
+QT_MOC_LITERAL(29, 293, 7),
+QT_MOC_LITERAL(30, 301, 7),
+QT_MOC_LITERAL(31, 309, 7),
+QT_MOC_LITERAL(32, 317, 6),
+QT_MOC_LITERAL(33, 324, 4),
+QT_MOC_LITERAL(34, 329, 6),
+QT_MOC_LITERAL(35, 336, 6),
+QT_MOC_LITERAL(36, 343, 6),
+QT_MOC_LITERAL(37, 350, 16),
+QT_MOC_LITERAL(38, 367, 11),
+QT_MOC_LITERAL(39, 379, 13),
+QT_MOC_LITERAL(40, 393, 25),
+QT_MOC_LITERAL(41, 419, 13),
+QT_MOC_LITERAL(42, 433, 10),
+QT_MOC_LITERAL(43, 444, 14),
+QT_MOC_LITERAL(44, 459, 12),
+QT_MOC_LITERAL(45, 472, 5),
+QT_MOC_LITERAL(46, 478, 10),
+QT_MOC_LITERAL(47, 489, 5),
+QT_MOC_LITERAL(48, 495, 15),
+QT_MOC_LITERAL(49, 511, 12),
+QT_MOC_LITERAL(50, 524, 6),
+QT_MOC_LITERAL(51, 531, 10)
     },
     "GameObject\0synchronized\0\0componentAttached\0"
     "ComponentPtr\0comp\0componentDetached\0"
-    "updateTransformation\0vec3\0pos\0rot\0"
-    "scale\0fixedTranslateX\0x\0fixedTranslateY\0"
-    "y\0fixedTranslateZ\0z\0fixedRotateX\0"
+    "transformChanged\0vec3\0pos\0rot\0scale\0"
+    "fixedTranslateX\0x\0fixedTranslateY\0y\0"
+    "fixedTranslateZ\0z\0fixedRotateX\0"
     "fixedRotateY\0fixedRotateZ\0fixedScaleX\0"
     "fixedScaleY\0fixedScaleZ\0translateX\0"
     "translateY\0translateZ\0translate\0delta\0"
@@ -210,7 +210,7 @@ void GameObject::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 0: _t->synchronized(); break;
         case 1: _t->componentAttached((*reinterpret_cast< ComponentPtr(*)>(_a[1]))); break;
         case 2: _t->componentDetached((*reinterpret_cast< ComponentPtr(*)>(_a[1]))); break;
-        case 3: _t->updateTransformation((*reinterpret_cast< const vec3(*)>(_a[1])),(*reinterpret_cast< const vec3(*)>(_a[2])),(*reinterpret_cast< const vec3(*)>(_a[3]))); break;
+        case 3: _t->transformChanged((*reinterpret_cast< const vec3(*)>(_a[1])),(*reinterpret_cast< const vec3(*)>(_a[2])),(*reinterpret_cast< const vec3(*)>(_a[3]))); break;
         case 4: _t->fixedTranslateX((*reinterpret_cast< double(*)>(_a[1]))); break;
         case 5: _t->fixedTranslateY((*reinterpret_cast< double(*)>(_a[1]))); break;
         case 6: _t->fixedTranslateZ((*reinterpret_cast< double(*)>(_a[1]))); break;
@@ -269,7 +269,7 @@ void GameObject::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         }
         {
             typedef void (GameObject::*_t)(const vec3 & , const vec3 & , const vec3 & );
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&GameObject::updateTransformation)) {
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&GameObject::transformChanged)) {
                 *result = 3;
             }
         }
@@ -368,7 +368,7 @@ void GameObject::componentDetached(ComponentPtr _t1)
 }
 
 // SIGNAL 3
-void GameObject::updateTransformation(const vec3 & _t1, const vec3 & _t2, const vec3 & _t3)
+void GameObject::transformChanged(const vec3 & _t1, const vec3 & _t2, const vec3 & _t3)
 {
     void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)), const_cast<void*>(reinterpret_cast<const void*>(&_t3)) };
     QMetaObject::activate(this, &staticMetaObject, 3, _a);

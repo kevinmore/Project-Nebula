@@ -139,6 +139,9 @@ void MainWindow::initializeMenuBar()
 	QAction *createParticleSystemAction = new QAction("Particle System", this);
 	createGameObjectMenu->addAction(createParticleSystemAction);
 
+	QAction *createLightAction = new QAction("Light", this);
+	createGameObjectMenu->addAction(createLightAction);
+
 	// ############ Scene Menu ############
 	QMenu *sceneMenu = menuBar()->addMenu("&Scene");
 	
@@ -239,6 +242,7 @@ void MainWindow::initializeMenuBar()
 	connect(clearSceneAction, SIGNAL(triggered()),     m_scene, SLOT(clearScene()));
 	connect(createEmpty,      SIGNAL(triggered()),     m_scene, SLOT(createEmptyGameObject()));
 	connect(createParticleSystemAction, SIGNAL(triggered()), m_scene, SLOT(createParticleSystem()));
+	connect(createLightAction, SIGNAL(triggered()), m_scene, SLOT(createLight()));
 	connect(exitAction,       SIGNAL(triggered()),     qApp,    SLOT(quit()));
 	connect(fullscreenAction, SIGNAL(triggered(bool)), this,    SLOT(setFullScreen(bool)));
 	connect(msaaAction,       SIGNAL(triggered(bool)), m_scene, SLOT(toggleAA(bool)));

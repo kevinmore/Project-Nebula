@@ -48,7 +48,7 @@ HierarchyWidget::HierarchyWidget(Scene* scene, Canvas* canvas, QWidget *parent)
 	m_particleSystemTab = ui->tabWidget->widget(3);
 
 	// remove the unnecessary tabs
-	for (uint i = 0; i < tabCount - 2; ++i)
+	for (int i = 0; i < tabCount - 2; ++i)
 	{
 		ui->tabWidget->removeTab(2);
 	}
@@ -200,17 +200,6 @@ void HierarchyWidget::readGameObject(QTreeWidgetItem* current, QTreeWidgetItem* 
 	// map the transformation into the transform tab
 	fillInTransformTab();
 
-	// show the bounding box
-	ModelPtr model = m_currentObject->getComponent("Model").dynamicCast<AbstractModel>();
-	if(model && model->getBoundingBox()) model->showBoundingBox();
-
-	// get the materials of the model
-	QVector<MaterialPtr> mats = model->getMaterials();
-	foreach(MaterialPtr mat, mats)
-	{
-		m_currentMaterials << mat.data();
-	}
-
 	// process components and set up tabs
 	QStringList componentTypes = m_currentObject->getComponentsTypes();
 
@@ -228,12 +217,24 @@ void HierarchyWidget::readGameObject(QTreeWidgetItem* current, QTreeWidgetItem* 
 		else if (type == "Model")
 		{
 			ui->tabWidget->addTab(m_renderingTab, "Rendering");
+
+			// show the bounding box
+			ModelPtr model = comp.dynamicCast<AbstractModel>();
+			if(model && model->getBoundingBox()) model->showBoundingBox();
+
+			// get the materials of the model
+			QVector<MaterialPtr> mats = model->getMaterials();
+			foreach(MaterialPtr mat, mats)
+			{
+				m_currentMaterials << mat.data();
+			}
+
 			// map the shading properties into the material tab
 			readShadingProperties();
 		}
 	}
 
-// 	connect(m_currentObject, SIGNAL(updateTransformation(const vec3&, const vec3&, const vec3&)),
+// 	connect(m_currentObject, SIGNAL(transformChanged(const vec3&, const vec3&, const vec3&)),
 // 		this, SLOT(handleGameObjectTransformation(const vec3&, const vec3&, const vec3&)));
 	
 	// set connections

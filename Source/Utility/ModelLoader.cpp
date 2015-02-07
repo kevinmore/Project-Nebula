@@ -45,7 +45,7 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName, GLuint sh
 	else if (loadingFlags == "Max Quality")
 		flags = aiProcessPreset_TargetRealtime_MaxQuality | aiProcess_FlipUVs;
 
-	qDebug() << "Processing model file...";
+	//qDebug() << "Processing model file...";
 	m_aiScene = m_importer.ReadFile(fileName.toStdString(), flags);
 	
 	if(!m_aiScene)
@@ -141,7 +141,7 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName, GLuint sh
 	if (m_aiScene->HasAnimations()) 
 		summary += " Contains " + QString::number(m_aiScene->mAnimations[0]->mDuration) + " seconds animation.";
 
-	qDebug() << summary;
+	//qDebug() << summary;
 	
 	// clean up
 	clear();

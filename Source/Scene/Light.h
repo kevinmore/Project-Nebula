@@ -2,8 +2,12 @@
 #include <Utility/EngineCommon.h>
 #include <Primitives/Component.h>
 
+class Scene;
 class Light : public Component
 {
+
+	Q_OBJECT
+
 public:
 	enum LightType
 	{
@@ -12,7 +16,7 @@ public:
 		SpotLight
 	};
 
-	Light(const QString& name);
+	Light(Scene* scene, GameObject* go);
 	~Light();
 
 	virtual QString className() { return "Light"; }
@@ -32,7 +36,7 @@ public:
 	void setDirection(const vec3& direction);
 	void setDirection(float x, float y, float z);
 
-	const vec3& direction() const;
+	const vec3 direction() const;
 
 	void setPosition(const vec3& position);
 	void setPosition(float x, float y, float z);
@@ -57,8 +61,15 @@ public:
 	float spotInnerAngle() const;
 	float spotOuterAngle() const;
 
+signals:
+	void propertiesChanged(Light* l);
+
+private slots:
+	void syncTransform(const vec3& pos, const vec3& rot, const vec3& scale);
+
 private:
-	QString   m_name;
+	Scene* m_scene;
+
 	LightType m_type;
 
 	vec3 m_position;

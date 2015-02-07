@@ -9,7 +9,7 @@
 typedef QSharedPointer<QOpenGLShaderProgram> QOpenGLShaderProgramPtr;
 
 
-class Technique : protected QOpenGLFunctions_4_3_Core
+class Technique : public QObject, protected QOpenGLFunctions_4_3_Core
 {
 public:
 
