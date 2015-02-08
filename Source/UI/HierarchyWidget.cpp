@@ -578,7 +578,7 @@ bool HierarchyWidget::eventFilter( QObject *obj, QEvent *ev )
 	}
 }
 
-void HierarchyWidget::searchSuitableShaders(ModelPtr currentModel)
+void HierarchyWidget::searchShaders()
 {
 	// don't apply shader when searching for shaders
 	disconnect(ui->comboBox_SahderFiles, 0, 0, 0);
@@ -594,14 +594,8 @@ void HierarchyWidget::searchSuitableShaders(ModelPtr currentModel)
 		int dot = fileName.lastIndexOf(".");
 		fileName = fileName.left(dot);
 		
-		if ((currentModel.dynamicCast<StaticModel>()
-			&& fileName.contains("static")) || 
-			(currentModel.dynamicCast<RiggedModel>()
-			&& fileName.contains("skinning")))
-		{
-			// only add the right types of shaders
-			ui->comboBox_SahderFiles->addItem(fileName);
-		}
+		// only add the right types of shaders
+		ui->comboBox_SahderFiles->addItem(fileName);
 	}
 	
 	// connect it when the loading is finished
@@ -749,7 +743,7 @@ void HierarchyWidget::readShadingProperties()
 	ComponentPtr comp = m_currentObject->getComponent("Model");
 	ModelPtr model = comp.dynamicCast<AbstractModel>();
 	if (!model) return;
-	searchSuitableShaders(model);
+	searchShaders();
 
 	m_currentShadingTech = model->renderingEffect().data();
 	if (!m_currentShadingTech) return;

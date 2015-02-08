@@ -34,7 +34,7 @@ private:
 	void readLightSourceProperties(LightPtr light);
 	void connectParticleSystemTab(ParticleSystemPtr ps);
 	void readParticleSystemConfig(ParticleSystemPtr ps);
-	void searchSuitableShaders(ModelPtr currentModel);
+	void searchShaders();
 	void connectSliderBarAndDoubleSpinBox(QSlider* slider, QDoubleSpinBox* box);
 
 	void disconnectTransformTab();

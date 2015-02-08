@@ -25,7 +25,7 @@ public:
 
 	bool isTranslucent() const { return m_alphaBlending; }
 
-	void addTexture(TexturePtr tex) { m_textures << tex; }
+	void addTexture(TexturePtr tex);
 
 	void bind();
 
@@ -46,6 +46,9 @@ public:
 	int  m_twoSided;
 	int  m_blendMode;
 	bool m_alphaBlending;
+
+	bool m_hasDiffuseMap;
+	bool m_hasNormalMap;
 
 	enum BlendMode 
 	{

@@ -201,28 +201,19 @@ void ModelLoader::prepareVertexContainers(unsigned int index, const aiMesh* mesh
 
 GLuint ModelLoader::installShader()
 {
-	QString shaderName, shaderPrefix, shaderFeatures;
 	ShadingTechnique::ShaderType shaderType;
 
 	// process shader prefix (skinning or static)
 	if (m_modelType == RIGGED_MODEL)
 	{
 		shaderType = ShadingTechnique::RIGGED;
-		shaderPrefix = "skinning";
 	}
 	else if (m_modelType == STATIC_MODEL)
 	{
 		shaderType = ShadingTechnique::STATIC;
-		shaderPrefix = "static";
 	}
 
-	// process shader features (diffuse, bump, specular ...)
-	if (m_modelFeatures.hasColorMap) shaderFeatures += "_diffuse";
-	if (m_modelFeatures.hasNormalMap) shaderFeatures += "_bump";
-
-	// combine the shader name
-	shaderName = shaderPrefix + shaderFeatures;
-	m_effect = ShadingTechniquePtr(new ShadingTechnique(shaderName, shaderType, m_scene));
+	m_effect = ShadingTechniquePtr(new ShadingTechnique("common", shaderType, m_scene));
 
 	return m_effect->getShaderProgram()->programId();
 }

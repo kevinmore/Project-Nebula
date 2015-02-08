@@ -177,10 +177,18 @@ QDataStream& operator >> (QDataStream& in, LightPtr object)
 	object->setIntensity(intensity);
 	object->gameObject()->setPosition(pos);
 	object->gameObject()->setRotation(dir);
-	object->setAttenuation(attConst, attLinear, attQuad);
-	object->setSpotFalloff(falloff);
-	object->setSpotInnerAngle(innerAngle);
-	object->setSpotOuterAngle(outerAngle);
+
+	if (type == Light::PointLight || type == Light::SpotLight)
+	{
+		object->setAttenuation(attConst, attLinear, attQuad);
+	}
+
+	if (type == Light::SpotLight)
+	{
+		object->setSpotFalloff(falloff);
+		object->setSpotInnerAngle(innerAngle);
+		object->setSpotOuterAngle(outerAngle);
+	}
 
 	return in;
 }

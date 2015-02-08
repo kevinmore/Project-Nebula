@@ -270,28 +270,7 @@ void RiggedModel::render( const float currentTime )
 	for(int i = 0; i < m_meshes.size(); ++i)
 	{
 		// bind the material
-		if (m_materials[i])
-		{
-			foreach(TexturePtr tex, m_materials[i]->m_textures)
-			{
-				if (tex->usage() == Texture::DiffuseMap)
-					tex->bind(DIFFUSE_TEXTURE_UNIT);
-
-				else if (tex->usage() == Texture::NormalMap)
-					tex->bind(NORMAL_TEXTURE_UNIT);
-
-// 				else if (tex->usage() == Texture::OpacityMap || m_materials[i]->isTranslucent())
-// 				{
-// 					glDepthMask(GL_FALSE);
-// 					glEnable(GL_BLEND);
-// 
-// 					tex->bind(DIFFUSE_TEXTURE_UNIT);
-// 
-// 					glDisable(GL_BLEND);
-// 					glDepthMask(GL_TRUE);
-// 				}
-			}
-		}
+		m_materials[i]->bind();
 
 		// enable the material
 		m_renderingEffect->setMaterial(m_materials[0].data()); // hack

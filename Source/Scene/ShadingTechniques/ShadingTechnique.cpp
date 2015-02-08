@@ -192,6 +192,8 @@ void ShadingTechnique::setMaterial( const Material* mat )
 	m_shaderProgram->setUniformValue("material.Kd", mat->m_diffuseColor);
 	m_shaderProgram->setUniformValue("material.Ks", mat->m_specularColor);
 	m_shaderProgram->setUniformValue("material.Ke", mat->m_emissiveColor);
+	m_shaderProgram->setUniformValue("material.hasDiffuseMap", mat->m_hasDiffuseMap);
+	m_shaderProgram->setUniformValue("material.hasNormalMap", mat->m_hasNormalMap);
 	m_shaderProgram->setUniformValue("material.shininessStrength", mat->m_shininessStrength);
 	m_shaderProgram->setUniformValue("material.shininess", mat->m_shininess);
 	m_shaderProgram->setUniformValue("material.roughnessValue", mat->m_roughness);

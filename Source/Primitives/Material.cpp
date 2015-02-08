@@ -12,7 +12,9 @@ Material::Material( const QString& name )
 	m_fresnelReflectance(0.5f), // cook torrance
 	m_twoSided(1),
 	m_blendMode(Default),
-	m_alphaBlending(false)
+	m_alphaBlending(false),
+	m_hasDiffuseMap(false),
+	m_hasNormalMap(false)
 {
 	init();
 }
@@ -39,7 +41,9 @@ Material::Material(const QString& name,
 	  m_fresnelReflectance(0.5f), // cook torrance
 	  m_twoSided(twoSided),
 	  m_blendMode(blendMode),
-	  m_alphaBlending(alphaBlending)
+	  m_alphaBlending(alphaBlending),
+	  m_hasDiffuseMap(false),
+	  m_hasNormalMap(false)
 {
 	init();
 }
@@ -72,4 +76,25 @@ void Material::bind()
 			break;
 		}
 	}
+
+	// bind the textures
+	foreach(TexturePtr tex, m_textures)
+	{
+		if (tex->usage() == Texture::DiffuseMap)
+			tex->bind(DIFFUSE_TEXTURE_UNIT);
+
+		else if (tex->usage() == Texture::NormalMap)
+			tex->bind(NORMAL_TEXTURE_UNIT);
+	}
+}
+
+void Material::addTexture( TexturePtr tex )
+{
+	m_textures << tex;
+
+	// check which texture type it is
+	if(tex->usage() == Texture::DiffuseMap)
+		m_hasDiffuseMap = true;
+	else if (tex->usage() == Texture::NormalMap)
+		m_hasNormalMap = true;
 }
