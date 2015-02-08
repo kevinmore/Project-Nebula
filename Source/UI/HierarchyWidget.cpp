@@ -280,6 +280,7 @@ void HierarchyWidget::clearTransformationArea()
 	ui->doubleSpinBox_ScaleX->setValue(1);
 	ui->doubleSpinBox_ScaleY->setValue(1);
 	ui->doubleSpinBox_ScaleZ->setValue(1);
+	ui->doubleSpinBox_ScaleFactor->setValue(1);
 }
 
 void HierarchyWidget::connectCurrentObject()
@@ -840,6 +841,12 @@ void HierarchyWidget::disconnectTransformTab()
 	disconnect(ui->doubleSpinBox_ScaleX,		SIGNAL(valueChanged(double)), 0, 0);
 	disconnect(ui->doubleSpinBox_ScaleY,		SIGNAL(valueChanged(double)), 0, 0);
 	disconnect(ui->doubleSpinBox_ScaleZ,		SIGNAL(valueChanged(double)), 0, 0);
+	disconnect(ui->doubleSpinBox_ScaleFactor, 0, 0, 0);
+	disconnect(ui->pushButton_Scale001, 0, 0, 0);
+	disconnect(ui->pushButton_Scale01, 0, 0, 0);
+	disconnect(ui->pushButton_Scale1, 0, 0, 0);
+	disconnect(ui->pushButton_Scale10, 0, 0, 0);
+	disconnect(ui->pushButton_Scale100, 0, 0, 0);
 }
 
 void HierarchyWidget::connectTransformTab()
@@ -857,6 +864,13 @@ void HierarchyWidget::connectTransformTab()
 	connect(ui->doubleSpinBox_RotationX, SIGNAL(valueChanged(double)), this, SLOT(onRotationXSpinChange(double)));
 	connect(ui->doubleSpinBox_RotationY, SIGNAL(valueChanged(double)), this, SLOT(onRotationYSpinChange(double)));
 	connect(ui->doubleSpinBox_RotationZ, SIGNAL(valueChanged(double)), this, SLOT(onRotationZSpinChange(double)));
+	connect(ui->doubleSpinBox_ScaleFactor, SIGNAL(valueChanged(double)), this, SLOT(onScaleFactorDoubleBoxChange(double)));
+	connect(ui->pushButton_Scale001, SIGNAL(clicked()), this, SLOT(onScale001Pushed()));
+	connect(ui->pushButton_Scale01, SIGNAL(clicked()), this, SLOT(onScale01Pushed()));
+	connect(ui->pushButton_Scale1, SIGNAL(clicked()), this, SLOT(onScale1Pushed()));
+	connect(ui->pushButton_Scale10, SIGNAL(clicked()), this, SLOT(onScale10Pushed()));
+	connect(ui->pushButton_Scale100, SIGNAL(clicked()), this, SLOT(onScale100Pushed()));
+
 }
 
 void HierarchyWidget::fillInTransformTab()
@@ -972,3 +986,34 @@ void HierarchyWidget::changeLightType( const QString& type )
 		m_currentLight->setType(Light::AreaLight);
 }	
 
+void HierarchyWidget::onScaleFactorDoubleBoxChange( double value )
+{
+	ui->doubleSpinBox_ScaleX->setValue(value);
+	ui->doubleSpinBox_ScaleY->setValue(value);
+	ui->doubleSpinBox_ScaleZ->setValue(value);
+}
+
+void HierarchyWidget::onScale001Pushed()
+{
+	ui->doubleSpinBox_ScaleFactor->setValue(0.01);
+}
+
+void HierarchyWidget::onScale01Pushed()
+{
+	ui->doubleSpinBox_ScaleFactor->setValue(0.1);
+}
+
+void HierarchyWidget::onScale1Pushed()
+{
+	ui->doubleSpinBox_ScaleFactor->setValue(1);
+}
+
+void HierarchyWidget::onScale10Pushed()
+{
+	ui->doubleSpinBox_ScaleFactor->setValue(10);
+}
+
+void HierarchyWidget::onScale100Pushed()
+{
+	ui->doubleSpinBox_ScaleFactor->setValue(100);
+}

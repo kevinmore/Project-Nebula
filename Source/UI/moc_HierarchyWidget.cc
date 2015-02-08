@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_HierarchyWidget_t {
-    QByteArrayData data[59];
-    char stringdata[1094];
+    QByteArrayData data[65];
+    char stringdata[1204];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -81,13 +81,19 @@ QT_MOC_LITERAL(48, 906, 21),
 QT_MOC_LITERAL(49, 928, 21),
 QT_MOC_LITERAL(50, 950, 21),
 QT_MOC_LITERAL(51, 972, 21),
-QT_MOC_LITERAL(52, 994, 12),
-QT_MOC_LITERAL(53, 1007, 16),
-QT_MOC_LITERAL(54, 1024, 16),
-QT_MOC_LITERAL(55, 1041, 14),
-QT_MOC_LITERAL(56, 1056, 13),
-QT_MOC_LITERAL(57, 1070, 8),
-QT_MOC_LITERAL(58, 1079, 14)
+QT_MOC_LITERAL(52, 994, 28),
+QT_MOC_LITERAL(53, 1023, 16),
+QT_MOC_LITERAL(54, 1040, 15),
+QT_MOC_LITERAL(55, 1056, 14),
+QT_MOC_LITERAL(56, 1071, 15),
+QT_MOC_LITERAL(57, 1087, 16),
+QT_MOC_LITERAL(58, 1104, 12),
+QT_MOC_LITERAL(59, 1117, 16),
+QT_MOC_LITERAL(60, 1134, 16),
+QT_MOC_LITERAL(61, 1151, 14),
+QT_MOC_LITERAL(62, 1166, 13),
+QT_MOC_LITERAL(63, 1180, 8),
+QT_MOC_LITERAL(64, 1189, 14)
     },
     "HierarchyWidget\0materialChanged\0\0"
     "Material*\0mat\0connectCurrentObject\0"
@@ -117,7 +123,11 @@ QT_MOC_LITERAL(58, 1079, 14)
     "onRotationXDialChange\0val\0"
     "onRotationYDialChange\0onRotationZDialChange\0"
     "onRotationXSpinChange\0onRotationYSpinChange\0"
-    "onRotationZSpinChange\0assignPuppet\0"
+    "onRotationZSpinChange\0"
+    "onScaleFactorDoubleBoxChange\0"
+    "onScale001Pushed\0onScale01Pushed\0"
+    "onScale1Pushed\0onScale10Pushed\0"
+    "onScale100Pushed\0assignPuppet\0"
     "deleteGameObject\0updateObjectTree\0"
     "onObjectPicked\0GameObjectPtr\0selected\0"
     "assignMaterial"
@@ -130,7 +140,7 @@ static const uint qt_meta_data_HierarchyWidget[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      38,   14, // methods
+      44,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -138,46 +148,52 @@ static const uint qt_meta_data_HierarchyWidget[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,  204,    2, 0x06 /* Public */,
+       1,    1,  234,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       5,    0,  207,    2, 0x08 /* Private */,
-       6,    0,  208,    2, 0x08 /* Private */,
-       7,    2,  209,    2, 0x08 /* Private */,
-      11,    0,  214,    2, 0x08 /* Private */,
-      12,    2,  215,    2, 0x08 /* Private */,
-      15,    3,  220,    2, 0x08 /* Private */,
-      20,    1,  227,    2, 0x08 /* Private */,
-      22,    1,  230,    2, 0x08 /* Private */,
-      24,    1,  233,    2, 0x08 /* Private */,
-      26,    1,  236,    2, 0x08 /* Private */,
-      28,    1,  239,    2, 0x08 /* Private */,
-      30,    1,  242,    2, 0x08 /* Private */,
-      31,    1,  245,    2, 0x08 /* Private */,
-      32,    1,  248,    2, 0x08 /* Private */,
-      33,    1,  251,    2, 0x08 /* Private */,
-      34,    1,  254,    2, 0x08 /* Private */,
-      35,    1,  257,    2, 0x08 /* Private */,
-      36,    1,  260,    2, 0x08 /* Private */,
-      37,    1,  263,    2, 0x08 /* Private */,
-      38,    1,  266,    2, 0x08 /* Private */,
-      39,    1,  269,    2, 0x08 /* Private */,
-      40,    1,  272,    2, 0x08 /* Private */,
-      41,    1,  275,    2, 0x08 /* Private */,
-      42,    1,  278,    2, 0x08 /* Private */,
-      43,    1,  281,    2, 0x08 /* Private */,
-      44,    1,  284,    2, 0x08 /* Private */,
-      45,    1,  287,    2, 0x08 /* Private */,
-      47,    1,  290,    2, 0x08 /* Private */,
-      48,    1,  293,    2, 0x08 /* Private */,
-      49,    1,  296,    2, 0x08 /* Private */,
-      50,    1,  299,    2, 0x08 /* Private */,
-      51,    1,  302,    2, 0x08 /* Private */,
-      52,    0,  305,    2, 0x08 /* Private */,
-      53,    0,  306,    2, 0x0a /* Public */,
-      54,    0,  307,    2, 0x0a /* Public */,
-      55,    1,  308,    2, 0x0a /* Public */,
-      58,    1,  311,    2, 0x0a /* Public */,
+       5,    0,  237,    2, 0x08 /* Private */,
+       6,    0,  238,    2, 0x08 /* Private */,
+       7,    2,  239,    2, 0x08 /* Private */,
+      11,    0,  244,    2, 0x08 /* Private */,
+      12,    2,  245,    2, 0x08 /* Private */,
+      15,    3,  250,    2, 0x08 /* Private */,
+      20,    1,  257,    2, 0x08 /* Private */,
+      22,    1,  260,    2, 0x08 /* Private */,
+      24,    1,  263,    2, 0x08 /* Private */,
+      26,    1,  266,    2, 0x08 /* Private */,
+      28,    1,  269,    2, 0x08 /* Private */,
+      30,    1,  272,    2, 0x08 /* Private */,
+      31,    1,  275,    2, 0x08 /* Private */,
+      32,    1,  278,    2, 0x08 /* Private */,
+      33,    1,  281,    2, 0x08 /* Private */,
+      34,    1,  284,    2, 0x08 /* Private */,
+      35,    1,  287,    2, 0x08 /* Private */,
+      36,    1,  290,    2, 0x08 /* Private */,
+      37,    1,  293,    2, 0x08 /* Private */,
+      38,    1,  296,    2, 0x08 /* Private */,
+      39,    1,  299,    2, 0x08 /* Private */,
+      40,    1,  302,    2, 0x08 /* Private */,
+      41,    1,  305,    2, 0x08 /* Private */,
+      42,    1,  308,    2, 0x08 /* Private */,
+      43,    1,  311,    2, 0x08 /* Private */,
+      44,    1,  314,    2, 0x08 /* Private */,
+      45,    1,  317,    2, 0x08 /* Private */,
+      47,    1,  320,    2, 0x08 /* Private */,
+      48,    1,  323,    2, 0x08 /* Private */,
+      49,    1,  326,    2, 0x08 /* Private */,
+      50,    1,  329,    2, 0x08 /* Private */,
+      51,    1,  332,    2, 0x08 /* Private */,
+      52,    1,  335,    2, 0x08 /* Private */,
+      53,    0,  338,    2, 0x08 /* Private */,
+      54,    0,  339,    2, 0x08 /* Private */,
+      55,    0,  340,    2, 0x08 /* Private */,
+      56,    0,  341,    2, 0x08 /* Private */,
+      57,    0,  342,    2, 0x08 /* Private */,
+      58,    0,  343,    2, 0x08 /* Private */,
+      59,    0,  344,    2, 0x0a /* Public */,
+      60,    0,  345,    2, 0x0a /* Public */,
+      61,    1,  346,    2, 0x0a /* Public */,
+      64,    1,  349,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3,    4,
@@ -215,10 +231,16 @@ static const uint qt_meta_data_HierarchyWidget[] = {
     QMetaType::Void, QMetaType::Double,   46,
     QMetaType::Void, QMetaType::Double,   46,
     QMetaType::Void, QMetaType::Double,   46,
+    QMetaType::Void, QMetaType::Double,   29,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 56,   57,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 62,   63,
     QMetaType::Void, 0x80000000 | 3,    4,
 
        0        // eod
@@ -262,11 +284,17 @@ void HierarchyWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         case 30: _t->onRotationXSpinChange((*reinterpret_cast< double(*)>(_a[1]))); break;
         case 31: _t->onRotationYSpinChange((*reinterpret_cast< double(*)>(_a[1]))); break;
         case 32: _t->onRotationZSpinChange((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 33: _t->assignPuppet(); break;
-        case 34: _t->deleteGameObject(); break;
-        case 35: _t->updateObjectTree(); break;
-        case 36: _t->onObjectPicked((*reinterpret_cast< GameObjectPtr(*)>(_a[1]))); break;
-        case 37: _t->assignMaterial((*reinterpret_cast< Material*(*)>(_a[1]))); break;
+        case 33: _t->onScaleFactorDoubleBoxChange((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 34: _t->onScale001Pushed(); break;
+        case 35: _t->onScale01Pushed(); break;
+        case 36: _t->onScale1Pushed(); break;
+        case 37: _t->onScale10Pushed(); break;
+        case 38: _t->onScale100Pushed(); break;
+        case 39: _t->assignPuppet(); break;
+        case 40: _t->deleteGameObject(); break;
+        case 41: _t->updateObjectTree(); break;
+        case 42: _t->onObjectPicked((*reinterpret_cast< GameObjectPtr(*)>(_a[1]))); break;
+        case 43: _t->assignMaterial((*reinterpret_cast< Material*(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -306,13 +334,13 @@ int HierarchyWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 38)
+        if (_id < 44)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 38;
+        _id -= 44;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 38)
+        if (_id < 44)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 38;
+        _id -= 44;
     }
     return _id;
 }

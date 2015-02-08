@@ -84,6 +84,12 @@ private slots:
 	void onRotationYSpinChange(double val);
 	void onRotationZSpinChange(double val);
 
+	void onScaleFactorDoubleBoxChange(double value);
+	void onScale001Pushed();
+	void onScale01Pushed();
+	void onScale1Pushed();
+	void onScale10Pushed();
+	void onScale100Pushed();
 	void assignPuppet();
 
 
