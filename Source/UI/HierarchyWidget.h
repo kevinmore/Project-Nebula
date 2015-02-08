@@ -97,10 +97,10 @@ public slots:
 	void deleteGameObject();
 	void updateObjectTree();
 	void onObjectPicked(GameObjectPtr selected);
-	void assignMaterial(Material* mat);
+	void assignMaterial();
 
 signals:
-	void materialChanged(Material* mat);
+	void materialChanged();
 
 protected:
 	bool eventFilter(QObject *obj, QEvent *ev); // install a filter event for the color picker

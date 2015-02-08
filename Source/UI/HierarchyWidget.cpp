@@ -19,7 +19,7 @@ HierarchyWidget::HierarchyWidget(Scene* scene, Canvas* canvas, QWidget *parent)
 
 
 	// material change behaviour
-	connect(this, SIGNAL(materialChanged(Material*)), this, SLOT(assignMaterial(Material*)));
+	connect(this, SIGNAL(materialChanged()), this, SLOT(assignMaterial()));
 
 	// tree widget related
 	connect(m_scene, SIGNAL(updateHierarchy()), this, SLOT(updateObjectTree()));
@@ -487,7 +487,7 @@ bool HierarchyWidget::eventFilter( QObject *obj, QEvent *ev )
 				
 				// change the material of the model
 				m_currentMaterials[0]->m_ambientColor = col;
-				emit materialChanged(m_currentMaterials[0]);
+				emit materialChanged();
 			}
 			return true;
 		}
@@ -502,7 +502,7 @@ bool HierarchyWidget::eventFilter( QObject *obj, QEvent *ev )
 				
 				// change the material of the model
 				m_currentMaterials[0]->m_diffuseColor = col;
-				emit materialChanged(m_currentMaterials[0]);
+				emit materialChanged();
 			}
 			return true;
 		}
@@ -517,7 +517,7 @@ bool HierarchyWidget::eventFilter( QObject *obj, QEvent *ev )
 				
 				// change the material of the model
 				m_currentMaterials[0]->m_specularColor = col;
-				emit materialChanged(m_currentMaterials[0]);
+				emit materialChanged();
 			}
 			return true;
 		}
@@ -532,7 +532,7 @@ bool HierarchyWidget::eventFilter( QObject *obj, QEvent *ev )
 				
 				// change the material of the model
 				m_currentMaterials[0]->m_emissiveColor = col;
-				emit materialChanged(m_currentMaterials[0]);
+				emit materialChanged();
 			}
 			return true;
 		}
@@ -609,15 +609,15 @@ void HierarchyWidget::changeShader( const QString& shaderFile )
 	m_currentShadingTech->applyShader(shaderFile);
 
 	// re assign the material properties
-	assignMaterial(m_currentMaterials[0]);
+	assignMaterial();
 }
 
 
-void HierarchyWidget::assignMaterial( Material* mat )
+void HierarchyWidget::assignMaterial()
 {
-	if (!m_currentShadingTech || !m_currentObject || !mat) return;
+	if (!m_currentShadingTech || !m_currentObject || m_currentMaterials.size() == 0) return;
 	m_currentShadingTech->enable();
-	m_currentShadingTech->setMaterial(mat);
+	m_currentShadingTech->setMaterial(m_currentMaterials[0]);
 }
 
 void HierarchyWidget::onShininessSliderChange( int value )
@@ -631,9 +631,12 @@ void HierarchyWidget::onShininessDoubleBoxChange( double value )
 
 	// change the material of the model
 	if(m_currentMaterials.size() == 0) return;
-	m_currentMaterials[0]->m_shininess = value;
+	foreach(Material* mat, m_currentMaterials)
+	{
+		mat->m_shininess = value;
+	}
 	
-	emit materialChanged(m_currentMaterials[0]);
+	emit materialChanged();
 }
 
 void HierarchyWidget::onShininessStrengthSliderChange( int value )
@@ -647,9 +650,12 @@ void HierarchyWidget::onShininessStrengthDoubleBoxChange( double value )
 	
 	// change the material of the model
 	if(m_currentMaterials.size() == 0) return;
-	m_currentMaterials[0]->m_shininessStrength = value;
+	foreach(Material* mat, m_currentMaterials)
+	{
+		mat->m_shininessStrength = value;
+	}
 
-	emit materialChanged(m_currentMaterials[0]);
+	emit materialChanged();
 }
 
 void HierarchyWidget::onRoughnessSliderChange( int value )
@@ -663,9 +669,12 @@ void HierarchyWidget::onRoughnessDoubleBoxChange( double value )
 	
 	// change the material of the model
 	if(m_currentMaterials.size() == 0) return;
-	m_currentMaterials[0]->m_roughness = value;
+	foreach(Material* mat, m_currentMaterials)
+	{
+		mat->m_roughness = value;
+	}
 
-	emit materialChanged(m_currentMaterials[0]);
+	emit materialChanged();
 }
 
 void HierarchyWidget::onFresnelReflectanceSliderChange( int value )
@@ -679,9 +688,12 @@ void HierarchyWidget::onFresnelReflectanceDoubleBoxChange( double value )
 
 	// change the material of the model
 	if(m_currentMaterials.size() == 0) return;
-	m_currentMaterials[0]->m_fresnelReflectance = value;
+	foreach(Material* mat, m_currentMaterials)
+	{
+		mat->m_fresnelReflectance = value;
+	}
 
-	emit materialChanged(m_currentMaterials[0]);
+	emit materialChanged();
 }
 
 void HierarchyWidget::onConstantAttenuationSliderChange( int value )

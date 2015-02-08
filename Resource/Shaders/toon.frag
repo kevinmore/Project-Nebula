@@ -93,7 +93,7 @@ float CalcShadowFactor(vec4 LightSpacePos)
     vec2 UVCoords;                                                                          
     UVCoords.x = 0.5 * ProjCoords.x + 0.5;                                                  
     UVCoords.y = 0.5 * ProjCoords.y + 0.5;                                                  
-    float Depth = texture(gShadowMap, UVCoords).x;                                          
+    float Depth = texture(gShadowMap, UVCoords).x;                                            
     if (Depth <= (ProjCoords.z + 0.005))                                                    
         return 0.5;                                                                         
     else                                                                                    
@@ -104,92 +104,41 @@ vec4 CalcLightInternal(BaseLight Light, vec3 LightDirection, VSOutput In, float 
 {                                                                                           
     // Compute the ambient / diffuse / specular / emissive components for each fragment
     vec4 AmbientColor = material.Ka * Light.Color * Light.Intensity;                   
-    vec4 EmissiveColor = material.Ke;                                                                                                                                      
-    vec4 DiffuseColor;                                                  
-    vec4 SpecularColor;          
-	                                        
-    vec3 eyeDir  = normalize(gEyeWorldPos - In.WorldPos);     
-
-	/////////////////////////// Calculate the Diffuse Color //////////////////////////////
-	// calculate intermediary values                        
-    float NdotL = dot(In.Normal, -LightDirection);
-	float NdotV = dot(In.Normal, eyeDir);
-
-	float angleVN = acos(NdotV);
-    float angleLN = acos(NdotL);
-
-	float alpha = max(angleVN, angleLN);
-    float beta = min(angleVN, angleLN);
-	float gamma = dot(eyeDir - In.Normal *NdotV, LightDirection - In.Normal * NdotL);
-       
-	float roughnessSquared = material.roughnessValue  * material.roughnessValue ;     
-	float roughnessSquared9 = (roughnessSquared / (roughnessSquared + 0.09));
-
-	// calculate C1, C2 and C3
-    float C1 = 1.0 - 0.5 * (roughnessSquared / (roughnessSquared + 0.33));
-    float C2 = 0.45 * roughnessSquared9;
-
-	if(gamma >= 0.0)
-    {
-        C2 *= sin(alpha);
-    }
-    else
-    {
-        C2 *= (sin(alpha) - pow((2.0 * beta) / PI, 3.0));
-    }
-
-	float powValue = (4.0 * alpha * beta) / (PI * PI);
-    float C3  = 0.125 * roughnessSquared9 * powValue * powValue;
-
-	// now calculate both main parts of the formula
-    float A = gamma * C2 * tan(beta);
-    float B = (1.0 - abs(gamma)) * C3 * tan((alpha + beta) / 2.0);
-
-	// put it all together
-    float L1 = max(0.0, NdotL) * (C1 + A + B);
-
-	// also calculate interreflection
-    float twoBetaPi = 2.0 * beta / PI;
-
-	//TODO: p is squared in this case... how to separate this?
-    float L2 = 0.17 * max(0.0, NdotL) * (roughnessSquared / (roughnessSquared + 0.13)) * (1.0 - gamma * twoBetaPi * twoBetaPi);
-
-	DiffuseColor = material.Kd * Light.Color * Light.Intensity * (L1 + L2);	
-
-
-	/////////////////////////// Calculate the Specular Color //////////////////////////////
-	float specularFactor = 0.0;
-    if (NdotL > 0.0) 
-	{   
-        // calculate intermediary values
-        vec3 halfVector = normalize( eyeDir - LightDirection);
-        float NdotH = max(dot(In.Normal, halfVector), 0.0); 
-        float NdotV = max(dot(In.Normal, eyeDir), 0.0); // note: this could also be NdotL, which is the same value
-        float VdotH = max(dot(eyeDir, halfVector), 0.0);
+    vec4 EmissiveColor = material.Ke * Light.Color;     
+	                                                                                                                                                                    
+    vec4 DiffuseColor  = vec4(0, 0, 0, 0);                                                  
+    vec4 SpecularColor = vec4(0, 0, 0, 0);          
+	vec4 FinalColor = vec4(0, 0, 0, 0);
+	                    
+    float DiffuseFactor = dot(In.Normal, -LightDirection);
+    if (DiffuseFactor > 0.0) 
+	{                                                         
+        DiffuseColor = material.Kd * Light.Color * Light.Intensity * DiffuseFactor;    
+                                                                                            
+        vec3 VertexToEye = normalize(gEyeWorldPos - In.WorldPos);                             
+		float OutlineFactor = dot(VertexToEye, In.Normal);
 		
-		// geometric attenuation
-        float NH2 = 2.0 * NdotH;
-        float g1 = (NH2 * NdotV) / VdotH;
-        float g2 = (NH2 * NdotL) / VdotH;
-        float geoAtt = min(1.0, min(g1, g2));
-		
-		 // roughness (or: microfacet distribution function)
-        // beckmann distribution function
-        float r1 = 1.0 / ( 4.0 * roughnessSquared * pow(NdotH, 4.0));
-        float r2 = (NdotH * NdotH - 1.0) / (roughnessSquared * NdotH * NdotH);
-        float roughness = r1 * exp(r2);
-		
-		// fresnel
-        // Schlick approximation
-        float fresnel = pow(1.0 - VdotH, 5.0);
-        fresnel *= (1.0 - material.fresnelReflectance);
-        fresnel += material.fresnelReflectance;              
-		
-		specularFactor = (fresnel * geoAtt * roughness) / (NdotV * NdotL * 3.14);                                                               
-    }
-	specularFactor = max(specularFactor, 0.01);                                                                                       
-	SpecularColor = material.Ks * Light.Color * NdotL * specularFactor * material.shininessStrength;
-    return (AmbientColor + EmissiveColor + ShadowFactor * (DiffuseColor + SpecularColor)); 
+        SpecularColor = material.Ks * Light.Color;                         
+   
+		if(DiffuseFactor < 0.2)
+		{
+			FinalColor = AmbientColor;
+		}
+		else if(DiffuseFactor >= 0.2 && DiffuseFactor < 0.8)
+		{
+			FinalColor = DiffuseColor;
+		}
+		else
+		{
+			FinalColor = SpecularColor;
+		} 
+		if(OutlineFactor < 0.3)
+		{
+			FinalColor = vec4(0, 0, 0, 0);
+		}                                                                        
+    }                                                                                       
+                                                                                          
+    return (EmissiveColor + ShadowFactor * FinalColor); 
 }                                                                                           
                                                                                             
 vec4 CalcDirectionalLight(DirectionalLight l, VSOutput In)                                                      
@@ -205,7 +154,7 @@ vec4 CalcPointLight(PointLight l, VSOutput In)
     
 	float ShadowFactor = 1;//CalcShadowFactor(In.LightSpacePos);
 	                                                                               
-    vec4 Color = CalcLightInternal(l.Base, LightDirection, In, ShadowFactor);                         
+    vec4 Color = CalcLightInternal(l.Base, LightDirection, In, 1);                         
     float Attenuation =  l.Atten.Constant +                                                 
                          l.Atten.Linear * Distance +                                        
                          l.Atten.Exp * Distance * Distance;                                 
@@ -231,7 +180,7 @@ vec4 CalcSpotLight(SpotLight l, VSOutput In)
 void main()
 {                                    
     VSOutput In;
-	In.Color = Color0;
+    In.Color = Color0;
     In.TexCoord = TexCoord0;
 	In.Normal   = normalize(Normal0);
     In.WorldPos = WorldPos0;
@@ -255,7 +204,7 @@ void main()
 	if(material.hasDiffuseMap)
 		baseColor = texture(gColorMap, In.TexCoord.xy);
 	else
-		baseColor = Color0;
-	                                                                                        
+		baseColor = Color0;                                                      
+                                                                                            
     FragColor = baseColor * TotalLight;     
 }

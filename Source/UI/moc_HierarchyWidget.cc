@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_HierarchyWidget_t {
-    QByteArrayData data[65];
-    char stringdata[1204];
+    QByteArrayData data[63];
+    char stringdata[1190];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -32,76 +32,74 @@ static const qt_meta_stringdata_HierarchyWidget_t qt_meta_stringdata_HierarchyWi
 QT_MOC_LITERAL(0, 0, 15),
 QT_MOC_LITERAL(1, 16, 15),
 QT_MOC_LITERAL(2, 32, 0),
-QT_MOC_LITERAL(3, 33, 9),
-QT_MOC_LITERAL(4, 43, 3),
-QT_MOC_LITERAL(5, 47, 20),
-QT_MOC_LITERAL(6, 68, 24),
-QT_MOC_LITERAL(7, 93, 14),
-QT_MOC_LITERAL(8, 108, 16),
-QT_MOC_LITERAL(9, 125, 7),
-QT_MOC_LITERAL(10, 133, 8),
-QT_MOC_LITERAL(11, 142, 19),
-QT_MOC_LITERAL(12, 162, 16),
-QT_MOC_LITERAL(13, 179, 4),
-QT_MOC_LITERAL(14, 184, 6),
-QT_MOC_LITERAL(15, 191, 30),
-QT_MOC_LITERAL(16, 222, 4),
-QT_MOC_LITERAL(17, 227, 3),
-QT_MOC_LITERAL(18, 231, 3),
-QT_MOC_LITERAL(19, 235, 5),
-QT_MOC_LITERAL(20, 241, 20),
-QT_MOC_LITERAL(21, 262, 5),
-QT_MOC_LITERAL(22, 268, 21),
-QT_MOC_LITERAL(23, 290, 6),
-QT_MOC_LITERAL(24, 297, 12),
-QT_MOC_LITERAL(25, 310, 10),
-QT_MOC_LITERAL(26, 321, 15),
-QT_MOC_LITERAL(27, 337, 4),
-QT_MOC_LITERAL(28, 342, 23),
-QT_MOC_LITERAL(29, 366, 5),
-QT_MOC_LITERAL(30, 372, 26),
-QT_MOC_LITERAL(31, 399, 31),
-QT_MOC_LITERAL(32, 431, 34),
-QT_MOC_LITERAL(33, 466, 23),
-QT_MOC_LITERAL(34, 490, 26),
-QT_MOC_LITERAL(35, 517, 32),
-QT_MOC_LITERAL(36, 550, 35),
-QT_MOC_LITERAL(37, 586, 33),
-QT_MOC_LITERAL(38, 620, 36),
-QT_MOC_LITERAL(39, 657, 31),
-QT_MOC_LITERAL(40, 689, 34),
-QT_MOC_LITERAL(41, 724, 34),
-QT_MOC_LITERAL(42, 759, 37),
-QT_MOC_LITERAL(43, 797, 28),
-QT_MOC_LITERAL(44, 826, 31),
-QT_MOC_LITERAL(45, 858, 21),
-QT_MOC_LITERAL(46, 880, 3),
-QT_MOC_LITERAL(47, 884, 21),
-QT_MOC_LITERAL(48, 906, 21),
-QT_MOC_LITERAL(49, 928, 21),
-QT_MOC_LITERAL(50, 950, 21),
-QT_MOC_LITERAL(51, 972, 21),
-QT_MOC_LITERAL(52, 994, 28),
-QT_MOC_LITERAL(53, 1023, 16),
-QT_MOC_LITERAL(54, 1040, 15),
-QT_MOC_LITERAL(55, 1056, 14),
-QT_MOC_LITERAL(56, 1071, 15),
-QT_MOC_LITERAL(57, 1087, 16),
-QT_MOC_LITERAL(58, 1104, 12),
-QT_MOC_LITERAL(59, 1117, 16),
-QT_MOC_LITERAL(60, 1134, 16),
-QT_MOC_LITERAL(61, 1151, 14),
-QT_MOC_LITERAL(62, 1166, 13),
-QT_MOC_LITERAL(63, 1180, 8),
-QT_MOC_LITERAL(64, 1189, 14)
+QT_MOC_LITERAL(3, 33, 20),
+QT_MOC_LITERAL(4, 54, 24),
+QT_MOC_LITERAL(5, 79, 14),
+QT_MOC_LITERAL(6, 94, 16),
+QT_MOC_LITERAL(7, 111, 7),
+QT_MOC_LITERAL(8, 119, 8),
+QT_MOC_LITERAL(9, 128, 19),
+QT_MOC_LITERAL(10, 148, 16),
+QT_MOC_LITERAL(11, 165, 4),
+QT_MOC_LITERAL(12, 170, 6),
+QT_MOC_LITERAL(13, 177, 30),
+QT_MOC_LITERAL(14, 208, 4),
+QT_MOC_LITERAL(15, 213, 3),
+QT_MOC_LITERAL(16, 217, 3),
+QT_MOC_LITERAL(17, 221, 5),
+QT_MOC_LITERAL(18, 227, 20),
+QT_MOC_LITERAL(19, 248, 5),
+QT_MOC_LITERAL(20, 254, 21),
+QT_MOC_LITERAL(21, 276, 6),
+QT_MOC_LITERAL(22, 283, 12),
+QT_MOC_LITERAL(23, 296, 10),
+QT_MOC_LITERAL(24, 307, 15),
+QT_MOC_LITERAL(25, 323, 4),
+QT_MOC_LITERAL(26, 328, 23),
+QT_MOC_LITERAL(27, 352, 5),
+QT_MOC_LITERAL(28, 358, 26),
+QT_MOC_LITERAL(29, 385, 31),
+QT_MOC_LITERAL(30, 417, 34),
+QT_MOC_LITERAL(31, 452, 23),
+QT_MOC_LITERAL(32, 476, 26),
+QT_MOC_LITERAL(33, 503, 32),
+QT_MOC_LITERAL(34, 536, 35),
+QT_MOC_LITERAL(35, 572, 33),
+QT_MOC_LITERAL(36, 606, 36),
+QT_MOC_LITERAL(37, 643, 31),
+QT_MOC_LITERAL(38, 675, 34),
+QT_MOC_LITERAL(39, 710, 34),
+QT_MOC_LITERAL(40, 745, 37),
+QT_MOC_LITERAL(41, 783, 28),
+QT_MOC_LITERAL(42, 812, 31),
+QT_MOC_LITERAL(43, 844, 21),
+QT_MOC_LITERAL(44, 866, 3),
+QT_MOC_LITERAL(45, 870, 21),
+QT_MOC_LITERAL(46, 892, 21),
+QT_MOC_LITERAL(47, 914, 21),
+QT_MOC_LITERAL(48, 936, 21),
+QT_MOC_LITERAL(49, 958, 21),
+QT_MOC_LITERAL(50, 980, 28),
+QT_MOC_LITERAL(51, 1009, 16),
+QT_MOC_LITERAL(52, 1026, 15),
+QT_MOC_LITERAL(53, 1042, 14),
+QT_MOC_LITERAL(54, 1057, 15),
+QT_MOC_LITERAL(55, 1073, 16),
+QT_MOC_LITERAL(56, 1090, 12),
+QT_MOC_LITERAL(57, 1103, 16),
+QT_MOC_LITERAL(58, 1120, 16),
+QT_MOC_LITERAL(59, 1137, 14),
+QT_MOC_LITERAL(60, 1152, 13),
+QT_MOC_LITERAL(61, 1166, 8),
+QT_MOC_LITERAL(62, 1175, 14)
     },
     "HierarchyWidget\0materialChanged\0\0"
-    "Material*\0mat\0connectCurrentObject\0"
-    "disconnectPreviousObject\0readGameObject\0"
-    "QTreeWidgetItem*\0current\0previous\0"
-    "resetSelectedObject\0renameGameObject\0"
-    "item\0column\0handleGameObjectTransformation\0"
-    "vec3\0pos\0rot\0scale\0showMouseRightButton\0"
+    "connectCurrentObject\0disconnectPreviousObject\0"
+    "readGameObject\0QTreeWidgetItem*\0current\0"
+    "previous\0resetSelectedObject\0"
+    "renameGameObject\0item\0column\0"
+    "handleGameObjectTransformation\0vec3\0"
+    "pos\0rot\0scale\0showMouseRightButton\0"
     "point\0setColorPickerEnabled\0status\0"
     "changeShader\0shaderFile\0changeLightType\0"
     "type\0onShininessSliderChange\0value\0"
@@ -148,90 +146,90 @@ static const uint qt_meta_data_HierarchyWidget[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,  234,    2, 0x06 /* Public */,
+       1,    0,  234,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       5,    0,  237,    2, 0x08 /* Private */,
-       6,    0,  238,    2, 0x08 /* Private */,
-       7,    2,  239,    2, 0x08 /* Private */,
-      11,    0,  244,    2, 0x08 /* Private */,
-      12,    2,  245,    2, 0x08 /* Private */,
-      15,    3,  250,    2, 0x08 /* Private */,
-      20,    1,  257,    2, 0x08 /* Private */,
-      22,    1,  260,    2, 0x08 /* Private */,
-      24,    1,  263,    2, 0x08 /* Private */,
-      26,    1,  266,    2, 0x08 /* Private */,
-      28,    1,  269,    2, 0x08 /* Private */,
-      30,    1,  272,    2, 0x08 /* Private */,
-      31,    1,  275,    2, 0x08 /* Private */,
-      32,    1,  278,    2, 0x08 /* Private */,
-      33,    1,  281,    2, 0x08 /* Private */,
-      34,    1,  284,    2, 0x08 /* Private */,
-      35,    1,  287,    2, 0x08 /* Private */,
-      36,    1,  290,    2, 0x08 /* Private */,
-      37,    1,  293,    2, 0x08 /* Private */,
-      38,    1,  296,    2, 0x08 /* Private */,
-      39,    1,  299,    2, 0x08 /* Private */,
-      40,    1,  302,    2, 0x08 /* Private */,
-      41,    1,  305,    2, 0x08 /* Private */,
-      42,    1,  308,    2, 0x08 /* Private */,
-      43,    1,  311,    2, 0x08 /* Private */,
-      44,    1,  314,    2, 0x08 /* Private */,
-      45,    1,  317,    2, 0x08 /* Private */,
-      47,    1,  320,    2, 0x08 /* Private */,
-      48,    1,  323,    2, 0x08 /* Private */,
-      49,    1,  326,    2, 0x08 /* Private */,
-      50,    1,  329,    2, 0x08 /* Private */,
-      51,    1,  332,    2, 0x08 /* Private */,
-      52,    1,  335,    2, 0x08 /* Private */,
+       3,    0,  235,    2, 0x08 /* Private */,
+       4,    0,  236,    2, 0x08 /* Private */,
+       5,    2,  237,    2, 0x08 /* Private */,
+       9,    0,  242,    2, 0x08 /* Private */,
+      10,    2,  243,    2, 0x08 /* Private */,
+      13,    3,  248,    2, 0x08 /* Private */,
+      18,    1,  255,    2, 0x08 /* Private */,
+      20,    1,  258,    2, 0x08 /* Private */,
+      22,    1,  261,    2, 0x08 /* Private */,
+      24,    1,  264,    2, 0x08 /* Private */,
+      26,    1,  267,    2, 0x08 /* Private */,
+      28,    1,  270,    2, 0x08 /* Private */,
+      29,    1,  273,    2, 0x08 /* Private */,
+      30,    1,  276,    2, 0x08 /* Private */,
+      31,    1,  279,    2, 0x08 /* Private */,
+      32,    1,  282,    2, 0x08 /* Private */,
+      33,    1,  285,    2, 0x08 /* Private */,
+      34,    1,  288,    2, 0x08 /* Private */,
+      35,    1,  291,    2, 0x08 /* Private */,
+      36,    1,  294,    2, 0x08 /* Private */,
+      37,    1,  297,    2, 0x08 /* Private */,
+      38,    1,  300,    2, 0x08 /* Private */,
+      39,    1,  303,    2, 0x08 /* Private */,
+      40,    1,  306,    2, 0x08 /* Private */,
+      41,    1,  309,    2, 0x08 /* Private */,
+      42,    1,  312,    2, 0x08 /* Private */,
+      43,    1,  315,    2, 0x08 /* Private */,
+      45,    1,  318,    2, 0x08 /* Private */,
+      46,    1,  321,    2, 0x08 /* Private */,
+      47,    1,  324,    2, 0x08 /* Private */,
+      48,    1,  327,    2, 0x08 /* Private */,
+      49,    1,  330,    2, 0x08 /* Private */,
+      50,    1,  333,    2, 0x08 /* Private */,
+      51,    0,  336,    2, 0x08 /* Private */,
+      52,    0,  337,    2, 0x08 /* Private */,
       53,    0,  338,    2, 0x08 /* Private */,
       54,    0,  339,    2, 0x08 /* Private */,
       55,    0,  340,    2, 0x08 /* Private */,
       56,    0,  341,    2, 0x08 /* Private */,
-      57,    0,  342,    2, 0x08 /* Private */,
-      58,    0,  343,    2, 0x08 /* Private */,
-      59,    0,  344,    2, 0x0a /* Public */,
-      60,    0,  345,    2, 0x0a /* Public */,
-      61,    1,  346,    2, 0x0a /* Public */,
-      64,    1,  349,    2, 0x0a /* Public */,
+      57,    0,  342,    2, 0x0a /* Public */,
+      58,    0,  343,    2, 0x0a /* Public */,
+      59,    1,  344,    2, 0x0a /* Public */,
+      62,    0,  347,    2, 0x0a /* Public */,
 
  // signals: parameters
-    QMetaType::Void, 0x80000000 | 3,    4,
+    QMetaType::Void,
 
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 8, 0x80000000 | 8,    9,   10,
+    QMetaType::Void, 0x80000000 | 6, 0x80000000 | 6,    7,    8,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 8, QMetaType::Int,   13,   14,
-    QMetaType::Void, 0x80000000 | 16, 0x80000000 | 16, 0x80000000 | 16,   17,   18,   19,
-    QMetaType::Void, QMetaType::QPoint,   21,
-    QMetaType::Void, QMetaType::Bool,   23,
+    QMetaType::Void, 0x80000000 | 6, QMetaType::Int,   11,   12,
+    QMetaType::Void, 0x80000000 | 14, 0x80000000 | 14, 0x80000000 | 14,   15,   16,   17,
+    QMetaType::Void, QMetaType::QPoint,   19,
+    QMetaType::Void, QMetaType::Bool,   21,
+    QMetaType::Void, QMetaType::QString,   23,
     QMetaType::Void, QMetaType::QString,   25,
-    QMetaType::Void, QMetaType::QString,   27,
-    QMetaType::Void, QMetaType::Int,   29,
-    QMetaType::Void, QMetaType::Double,   29,
-    QMetaType::Void, QMetaType::Int,   29,
-    QMetaType::Void, QMetaType::Double,   29,
-    QMetaType::Void, QMetaType::Int,   29,
-    QMetaType::Void, QMetaType::Double,   29,
-    QMetaType::Void, QMetaType::Int,   29,
-    QMetaType::Void, QMetaType::Double,   29,
-    QMetaType::Void, QMetaType::Int,   29,
-    QMetaType::Void, QMetaType::Double,   29,
-    QMetaType::Void, QMetaType::Int,   29,
-    QMetaType::Void, QMetaType::Double,   29,
-    QMetaType::Void, QMetaType::Int,   29,
-    QMetaType::Void, QMetaType::Double,   29,
-    QMetaType::Void, QMetaType::Int,   29,
-    QMetaType::Void, QMetaType::Double,   29,
-    QMetaType::Void, QMetaType::Int,   46,
-    QMetaType::Void, QMetaType::Int,   46,
-    QMetaType::Void, QMetaType::Int,   46,
-    QMetaType::Void, QMetaType::Double,   46,
-    QMetaType::Void, QMetaType::Double,   46,
-    QMetaType::Void, QMetaType::Double,   46,
-    QMetaType::Void, QMetaType::Double,   29,
+    QMetaType::Void, QMetaType::Int,   27,
+    QMetaType::Void, QMetaType::Double,   27,
+    QMetaType::Void, QMetaType::Int,   27,
+    QMetaType::Void, QMetaType::Double,   27,
+    QMetaType::Void, QMetaType::Int,   27,
+    QMetaType::Void, QMetaType::Double,   27,
+    QMetaType::Void, QMetaType::Int,   27,
+    QMetaType::Void, QMetaType::Double,   27,
+    QMetaType::Void, QMetaType::Int,   27,
+    QMetaType::Void, QMetaType::Double,   27,
+    QMetaType::Void, QMetaType::Int,   27,
+    QMetaType::Void, QMetaType::Double,   27,
+    QMetaType::Void, QMetaType::Int,   27,
+    QMetaType::Void, QMetaType::Double,   27,
+    QMetaType::Void, QMetaType::Int,   27,
+    QMetaType::Void, QMetaType::Double,   27,
+    QMetaType::Void, QMetaType::Int,   44,
+    QMetaType::Void, QMetaType::Int,   44,
+    QMetaType::Void, QMetaType::Int,   44,
+    QMetaType::Void, QMetaType::Double,   44,
+    QMetaType::Void, QMetaType::Double,   44,
+    QMetaType::Void, QMetaType::Double,   44,
+    QMetaType::Void, QMetaType::Double,   27,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -240,8 +238,8 @@ static const uint qt_meta_data_HierarchyWidget[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 62,   63,
-    QMetaType::Void, 0x80000000 | 3,    4,
+    QMetaType::Void, 0x80000000 | 60,   61,
+    QMetaType::Void,
 
        0        // eod
 };
@@ -251,7 +249,7 @@ void HierarchyWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
     if (_c == QMetaObject::InvokeMetaMethod) {
         HierarchyWidget *_t = static_cast<HierarchyWidget *>(_o);
         switch (_id) {
-        case 0: _t->materialChanged((*reinterpret_cast< Material*(*)>(_a[1]))); break;
+        case 0: _t->materialChanged(); break;
         case 1: _t->connectCurrentObject(); break;
         case 2: _t->disconnectPreviousObject(); break;
         case 3: _t->readGameObject((*reinterpret_cast< QTreeWidgetItem*(*)>(_a[1])),(*reinterpret_cast< QTreeWidgetItem*(*)>(_a[2]))); break;
@@ -294,14 +292,14 @@ void HierarchyWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         case 40: _t->deleteGameObject(); break;
         case 41: _t->updateObjectTree(); break;
         case 42: _t->onObjectPicked((*reinterpret_cast< GameObjectPtr(*)>(_a[1]))); break;
-        case 43: _t->assignMaterial((*reinterpret_cast< Material*(*)>(_a[1]))); break;
+        case 43: _t->assignMaterial(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         void **func = reinterpret_cast<void **>(_a[1]);
         {
-            typedef void (HierarchyWidget::*_t)(Material * );
+            typedef void (HierarchyWidget::*_t)();
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&HierarchyWidget::materialChanged)) {
                 *result = 0;
             }
@@ -346,9 +344,8 @@ int HierarchyWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void HierarchyWidget::materialChanged(Material * _t1)
+void HierarchyWidget::materialChanged()
 {
-    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
-    QMetaObject::activate(this, &staticMetaObject, 0, _a);
+    QMetaObject::activate(this, &staticMetaObject, 0, 0);
 }
 QT_END_MOC_NAMESPACE
