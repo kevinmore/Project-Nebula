@@ -325,14 +325,12 @@ GameObjectPtr Scene::createLight( GameObject* parent )
 		? m_objectManager->createGameObject("Light", parent)
 		: m_objectManager->createGameObject("Light", m_sceneRootNode);
 
-
 	// light
 	LightPtr l(new Light(this, ref.data()));
-	m_lights << l;
+	addLight(l);
 	ref->attachComponent(l);
 
 	emit updateHierarchy();
-	emit ligthsChanged();
 
 	return ref;
 }
@@ -511,4 +509,10 @@ void Scene::removeLight( Light* l )
 			break;
 		}
 	}
+}
+
+void Scene::addLight( LightPtr l )
+{
+	m_lights << l;
+	emit ligthsChanged();
 }

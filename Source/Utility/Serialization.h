@@ -131,29 +131,7 @@ QDataStream& operator >> (QDataStream& in, ParticleSystemPtr object)
 
 QDataStream& operator << (QDataStream& out, LightPtr object)
 {
-	int type;
-	switch(object->type())
-	{
-	case Light::PointLight:
-		type = 0;
-		break;
-	case Light::DirectionalLight:
-		type = 1;
-		break;
-	case Light::SpotLight:
-		type = 2;
-		break;
-	case Light::AmbientLight:
-		type = 3;
-		break;
-	case Light::AreaLight:
-		type = 4;
-		break;
-	default:
-		break;
-	}
-
-	out << type << object->color() << object->intensity() << object->position()
+	out << object->type() << object->color() << object->intensity() << object->position()
 		<< object->direction() << object->constantAttenuation() << object->linearAttenuation()
 		<< object->quadraticAttenuation() << object->spotFallOff() << object->spotInnerAngle()
 		<< object->spotOuterAngle();
@@ -170,7 +148,7 @@ QDataStream& operator >> (QDataStream& in, LightPtr object)
 	float intensity, attConst, attLinear, attQuad, falloff, innerAngle, outerAngle;
 	vec3 pos, dir;
 
-	in >> lightType >> intensity >> pos >> dir >> attConst >> attLinear >> attQuad
+	in >> lightType >> col >> intensity >> pos >> dir >> attConst >> attLinear >> attQuad
 		>> falloff >> innerAngle >> outerAngle;
 
 	switch(lightType)
@@ -195,6 +173,7 @@ QDataStream& operator >> (QDataStream& in, LightPtr object)
 	}
 
 	object->setType(type);
+	object->setColor(col);
 	object->setIntensity(intensity);
 	object->gameObject()->setPosition(pos);
 	object->gameObject()->setRotation(dir);
@@ -205,10 +184,10 @@ QDataStream& operator >> (QDataStream& in, LightPtr object)
 
 	return in;
 }
+
 /*
 * Components (Only need Out stream)
 */
-
 QDataStream& operator << (QDataStream& out, ComponentPtr object)
 {
 	if (object->className() == "Model")
@@ -327,11 +306,9 @@ QDataStream& operator >> (QDataStream& in, GameObjectPtr object)
 		else if (className == "Light")
 		{
 			// create a light source
-			GameObjectPtr go = object->getScene()->createLight(object.data());
-			// get the light component
-			ComponentPtr comp = go->getComponent("Light");
-			LightPtr light = comp.dynamicCast<Light>();
-
+			LightPtr light(new Light(object->getScene(), object.data()));
+			object->getScene()->addLight(light);
+			object->attachComponent(light);
 			in >> light;
 		}
 
