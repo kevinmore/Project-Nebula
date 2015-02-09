@@ -66,6 +66,11 @@
     <ClCompile Include="Scene\ShadingTechniques\moc_ShadingTechnique.cc" />
     <ClCompile Include="Scene\moc_Light.cc" />
     <ClCompile Include="Physicis\Geometry\ConvexShape.cpp" />
+    <ClCompile Include="Physicis\NarrowPhaseCollision\NarrowPhaseCollisionDetection.cpp" />
+    <ClCompile Include="Physicis\NarrowPhaseCollision\GJKSimplex.cpp" />
+    <ClCompile Include="Physicis\NarrowPhaseCollision\EPATriangle.cpp" />
+    <ClCompile Include="Physicis\NarrowPhaseCollision\EPAPolytope.cpp" />
+    <ClCompile Include="Physicis\NarrowPhaseCollision\EPAAlgorithm.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Primitives\Texture.h" />
@@ -122,16 +127,20 @@
     <ClInclude Include="Scene\ShadingTechniques\ParticleTechnique.h" />
     <ClInclude Include="Scene\ShadingTechniques\ShadingTechnique.h" />
     <ClInclude Include="Physicis\Geometry\ConvexShape.h" />
+    <ClInclude Include="Physicis\NarrowPhaseCollision\NarrowPhaseCollisionDetection.h" />
+    <ClInclude Include="Physicis\NarrowPhaseCollision\GJKSimplex.h" />
+    <ClInclude Include="UI\HierarchyWidget.h" />
+    <ClInclude Include="Scene\Scene.h" />
+    <ClInclude Include="Primitives\GameObject.h" />
+    <ClInclude Include="Scene\Light.h" />
+    <ClInclude Include="Physicis\NarrowPhaseCollision\EPAPolytope.h" />
+    <ClInclude Include="Physicis\NarrowPhaseCollision\EPAEdge.h" />
+    <ClInclude Include="Physicis\NarrowPhaseCollision\EPATriangle.h" />
+    <ClInclude Include="Physicis\NarrowPhaseCollision\EPAAlgorithm.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="UI\HierarchyWidget.ui" />
     <None Include="UI\SkyboxWidget.ui" />
     <None Include="Physicis\World\PhysicsWorldObject.inl" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtMOC Include="Scene\Scene.h" />
-    <QtMOC Include="Primitives\GameObject.h" />
-    <QtMOC Include="Scene\Light.h" />
-    <QtMOC Include="UI\HierarchyWidget.h" />
   </ItemGroup>
 </Project>
