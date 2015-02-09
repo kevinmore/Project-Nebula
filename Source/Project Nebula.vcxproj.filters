@@ -65,6 +65,7 @@
     <ClCompile Include="Physicis\Collider\BoxCollider.cpp" />
     <ClCompile Include="Scene\ShadingTechniques\moc_ShadingTechnique.cc" />
     <ClCompile Include="Scene\moc_Light.cc" />
+    <ClCompile Include="Physicis\Geometry\ConvexShape.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Primitives\Texture.h" />
@@ -120,6 +121,7 @@
     <ClInclude Include="Scene\Managers\ObjectManager.h" />
     <ClInclude Include="Scene\ShadingTechniques\ParticleTechnique.h" />
     <ClInclude Include="Scene\ShadingTechniques\ShadingTechnique.h" />
+    <ClInclude Include="Physicis\Geometry\ConvexShape.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="UI\HierarchyWidget.ui" />

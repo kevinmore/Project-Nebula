@@ -12,7 +12,7 @@ public:
 		TRIANGLE,		
 		BOX,		
 		CAPSULE,
-		CONVEX_VERTICES	
+		CONVEXBODY
 	};
 
 	AbstractShape(ShapeType shapeType, const vec3& pt) 

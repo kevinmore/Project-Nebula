@@ -9,6 +9,7 @@
 #include <QSharedPointer>
 #include <Scene/ShadingTechniques/ShadingTechnique.h>
 #include <Physicis/Collider/BoxCollider.h>
+#include <Physicis/Geometry/ConvexShape.h>
 
 struct MeshData
 {
@@ -91,6 +92,7 @@ public:
 	ShadingTechniquePtr getRenderingEffect() const { return m_effect; }
 	MODEL_TYPE getModelType() const { return m_modelType; }
 	BoxCollider getBoundingBox();
+	ConvexShape getConvexShape();
 
 private:
 	/*
@@ -126,13 +128,17 @@ private:
 	/*
 	 *	Vertex Data Containers
 	 */
-	QVector<QVector3D> m_positions;
-	QVector<QVector4D> m_colors;
-	QVector<QVector2D> m_texCoords;
-	QVector<QVector3D> m_normals;
-	QVector<QVector3D> m_tangents;
+	QVector<vec3> m_positions;
+	QVector<vec4> m_colors;
+	QVector<vec2> m_texCoords;
+	QVector<vec3> m_normals;
+	QVector<vec3> m_tangents;
 	QVector<unsigned int> m_indices;
 
+	/*
+	 *	Face Container (for convex shape)
+	 */
+	QVector<vec3> m_faces;
 
 
 	/*

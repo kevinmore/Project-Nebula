@@ -20,6 +20,7 @@ void ModelLoader::clear()
 	m_normals.clear();
 	m_tangents.clear();
 	m_indices.clear();
+	m_faces.clear();
 	m_Bones.clear();
 
 	if (m_Buffers.size()) 
@@ -79,6 +80,7 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName, GLuint sh
 	m_normals.reserve(numVertices);
 	m_texCoords.reserve(numVertices);
 	m_tangents.reserve(numVertices);
+	m_faces.reserve(numFaces);
 	m_indices.reserve(numIndices);
 	if(m_modelType == RIGGED_MODEL)
 		m_Bones.resize(numVertices);
@@ -143,8 +145,6 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName, GLuint sh
 
 	//qDebug() << summary;
 	
-	// clean up
-	clear();
 	return modelDataVector;
 }
 
@@ -154,7 +154,7 @@ void ModelLoader::prepareVertexContainers(unsigned int index, const aiMesh* mesh
 	const aiColor4D  zeroColor(1.0f, 1.0f, 1.0f, 1.0f);
 
 	// Populate the vertex attribute vectors
-	for(unsigned int i = 0; i < mesh->mNumVertices; ++i)
+	for(uint i = 0; i < mesh->mNumVertices; ++i)
 	{
 		const aiVector3D * pPos      = &(mesh->mVertices[i]);
 		const aiColor4D  * pColor    = mesh->HasVertexColors(0)         ? &(mesh->mColors[0][i])        : &zeroColor;
@@ -192,10 +192,11 @@ void ModelLoader::prepareVertexContainers(unsigned int index, const aiMesh* mesh
 			qWarning(qPrintable(QObject::tr("Unsupported number of indices per face (%1)").arg(face.mNumIndices)));
 			break;
 		}
-
-		m_indices << (face.mIndices[0]);
-		m_indices << (face.mIndices[1]);
-		m_indices << (face.mIndices[2]);
+		else
+		{
+			m_faces << vec3(face.mIndices[0], face.mIndices[1], face.mIndices[2]);
+			m_indices << face.mIndices[0] << face.mIndices[1] << face.mIndices[2];
+		}
 	}
 }
 
@@ -540,4 +541,9 @@ BoxCollider ModelLoader::getBoundingBox()
 	// make the bounding box slightly bitter than the actual one
 	// this is for a higher fault tolerance and a better visual result
 	return BoxCollider(center, halfExtents * 1.02f, m_scene);
+}
+
+ConvexShape ModelLoader::getConvexShape()
+{
+	return ConvexShape(m_positions, m_faces);
 }

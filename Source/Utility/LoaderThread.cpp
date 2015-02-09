@@ -123,6 +123,11 @@ ModelPtr LoaderThread::loadModel( const QString& customName, const QString& file
 
 		// assign the bounding box
 		pModel->setBoundingBox(modelLoader->getBoundingBox());
+
+		ConvexShape shpe = modelLoader->getConvexShape();
+		vec3 max = shpe.furthestPoint(vec3(1, 1, 1));
+		qDebug() << max;
+		//vec3 min = shpe.polyMin(vec3(0, 1, 0));
 	}
 
 	if (generateGameObject)
