@@ -2,6 +2,7 @@
 #include <Utility/EngineCommon.h>
 
 class CollisionObject;
+class GJKAlgorithm;
 class NarrowCollisionInfo
 {
 public:
@@ -29,16 +30,16 @@ class NarrowPhaseCollisionDetection
 {
 public:
 	NarrowPhaseCollisionDetection();
-	virtual ~NarrowPhaseCollisionDetection();
+	~NarrowPhaseCollisionDetection();
 
-	std::vector<NarrowCollisionInfo>& GetPairs() { return m_CollisionPairs; }
-	const std::vector<NarrowCollisionInfo>& GetPairs() const { return m_CollisionPairs; }
-	void AddPair(const NarrowCollisionInfo pair) { m_CollisionPairs.push_back(pair); }
+	std::vector<NarrowCollisionInfo>& getPairs() { return m_CollisionPairs; }
+	const std::vector<NarrowCollisionInfo>& getPairs() const { return m_CollisionPairs; }
+	void addPair(const NarrowCollisionInfo pair) { m_CollisionPairs.push_back(pair); }
 
-	int CheckCollisions();
+	int checkCollisions();
 
 protected:
+	GJKAlgorithm* m_pAlgorithm;
 	std::vector<NarrowCollisionInfo> m_CollisionPairs;
-
 };
 

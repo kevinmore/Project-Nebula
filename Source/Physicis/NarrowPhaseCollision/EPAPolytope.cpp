@@ -2,47 +2,47 @@
 #include "EPAPolytope.h"
 
 EPAPolytope::EPAPolytope()
-	: m_Count(0)
+	: m_count(0)
 {}
 
 EPAPolytope::~EPAPolytope()
 {
-	Clear();
+	clear();
 }
 
-void EPAPolytope::Clear()
+void EPAPolytope::clear()
 {
-	for (int i = 0; i < m_Triangles.size(); i++ )
-		delete m_Triangles[i];
+	for (int i = 0; i < m_triangles.size(); i++ )
+		delete m_triangles[i];
 
-	m_Count = 0;
-	m_Triangles.clear();
+	m_count = 0;
+	m_triangles.clear();
 
-	m_Vertices.clear();
-	m_SilhouetteVertices.clear();
-	m_SilhouetteTriangles.clear();
-	m_SilhouetteEdges.clear();
-	m_SupportPointsA.clear();
-	m_SupportPointsB.clear();
+	m_vertices.clear();
+	m_silhouetteVertices.clear();
+	m_silhouetteTriangles.clear();
+	m_silhouetteEdges.clear();
+	m_supportPointsA.clear();
+	m_supportPointsB.clear();
 }
 
-EPATriangle* EPAPolytope::PopAClosestTriangleToOriginFromHeap()
+EPATriangle* EPAPolytope::popAClosestTriangleToOriginFromHeap()
 {
 	EPATriangle* pReturnTriangle = NULL;
 
-	if ( m_Triangles.size() == 0 )
+	if ( m_triangles.size() == 0 )
 		return pReturnTriangle;
 
 	float minDistSqr = FLT_MAX;
 
-	for ( int i = 0; i < (int)m_Triangles.size(); i++ )
+	for ( int i = 0; i < (int)m_triangles.size(); i++ )
 	{
-		if ( !m_Triangles[i]->IsObsolete() && m_Triangles[i]->IsClosestPointInternal() )
+		if ( !m_triangles[i]->isObsolete() && m_triangles[i]->isClosestPointInternal() )
 		{
-			if ( m_Triangles[i]->GetDistSqr() < minDistSqr )
+			if ( m_triangles[i]->getDistSqr() < minDistSqr )
 			{
-				minDistSqr = m_Triangles[i]->GetDistSqr();
-				pReturnTriangle = m_Triangles[i];
+				minDistSqr = m_triangles[i]->getDistSqr();
+				pReturnTriangle = m_triangles[i];
 			}
 		}
 	}
@@ -57,20 +57,20 @@ static bool CheckWinding(const vec3& p0, const vec3& p1, const vec3& p2)
 }
 
 
-bool EPAPolytope::AddTetrahedron( const vec3& p0, const vec3& p1, const vec3& p2, const vec3& p3 )
+bool EPAPolytope::addTetrahedron( const vec3& p0, const vec3& p1, const vec3& p2, const vec3& p3 )
 {
 	int index[4];
-	m_Vertices.push_back(p0);
-	index[0] = (int)m_Vertices.size() - 1;
+	m_vertices.push_back(p0);
+	index[0] = (int)m_vertices.size() - 1;
 
-	m_Vertices.push_back(p1);
-	index[1] = (int)m_Vertices.size() - 1;
+	m_vertices.push_back(p1);
+	index[1] = (int)m_vertices.size() - 1;
 
-	m_Vertices.push_back(p2);
-	index[2] = (int)m_Vertices.size() - 1;
+	m_vertices.push_back(p2);
+	index[2] = (int)m_vertices.size() - 1;
 
-	m_Vertices.push_back(p3);
-	index[3] = (int)m_Vertices.size() - 1;
+	m_vertices.push_back(p3);
+	index[3] = (int)m_vertices.size() - 1;
 
 	EPATriangle* pTri[4];
 
@@ -98,48 +98,48 @@ bool EPAPolytope::AddTetrahedron( const vec3& p0, const vec3& p1, const vec3& p2
 	}
 
 	// construct adjacency
-	pTri[0]->m_AdjacentTriangles[0] = pTri[1];
-	pTri[0]->m_AdjacentTriangles[1] = pTri[3];
-	pTri[0]->m_AdjacentTriangles[2] = pTri[2];
+	pTri[0]->m_adjacentTriangles[0] = pTri[1];
+	pTri[0]->m_adjacentTriangles[1] = pTri[3];
+	pTri[0]->m_adjacentTriangles[2] = pTri[2];
 
-	pTri[1]->m_AdjacentTriangles[0] = pTri[2];
-	pTri[1]->m_AdjacentTriangles[1] = pTri[3];
-	pTri[1]->m_AdjacentTriangles[2] = pTri[0];
+	pTri[1]->m_adjacentTriangles[0] = pTri[2];
+	pTri[1]->m_adjacentTriangles[1] = pTri[3];
+	pTri[1]->m_adjacentTriangles[2] = pTri[0];
 
-	pTri[2]->m_AdjacentTriangles[0] = pTri[0];
-	pTri[2]->m_AdjacentTriangles[1] = pTri[3];
-	pTri[2]->m_AdjacentTriangles[2] = pTri[1];
+	pTri[2]->m_adjacentTriangles[0] = pTri[0];
+	pTri[2]->m_adjacentTriangles[1] = pTri[3];
+	pTri[2]->m_adjacentTriangles[2] = pTri[1];
 
-	pTri[3]->m_AdjacentTriangles[0] = pTri[1];
-	pTri[3]->m_AdjacentTriangles[1] = pTri[2];
-	pTri[3]->m_AdjacentTriangles[2] = pTri[0];
+	pTri[3]->m_adjacentTriangles[0] = pTri[1];
+	pTri[3]->m_adjacentTriangles[1] = pTri[2];
+	pTri[3]->m_adjacentTriangles[2] = pTri[0];
 
-	pTri[0]->m_Edges[0]->m_pPairEdge = pTri[1]->m_Edges[2];
-	pTri[0]->m_Edges[1]->m_pPairEdge = pTri[3]->m_Edges[2];
-	pTri[0]->m_Edges[2]->m_pPairEdge = pTri[2]->m_Edges[0];
+	pTri[0]->m_edges[0]->m_pPairEdge = pTri[1]->m_edges[2];
+	pTri[0]->m_edges[1]->m_pPairEdge = pTri[3]->m_edges[2];
+	pTri[0]->m_edges[2]->m_pPairEdge = pTri[2]->m_edges[0];
 
-	pTri[1]->m_Edges[0]->m_pPairEdge = pTri[2]->m_Edges[2];
-	pTri[1]->m_Edges[1]->m_pPairEdge = pTri[3]->m_Edges[0];
-	pTri[1]->m_Edges[2]->m_pPairEdge = pTri[0]->m_Edges[0];
+	pTri[1]->m_edges[0]->m_pPairEdge = pTri[2]->m_edges[2];
+	pTri[1]->m_edges[1]->m_pPairEdge = pTri[3]->m_edges[0];
+	pTri[1]->m_edges[2]->m_pPairEdge = pTri[0]->m_edges[0];
 
-	pTri[2]->m_Edges[0]->m_pPairEdge = pTri[0]->m_Edges[2];
-	pTri[2]->m_Edges[1]->m_pPairEdge = pTri[3]->m_Edges[1];
-	pTri[2]->m_Edges[2]->m_pPairEdge = pTri[1]->m_Edges[0];
+	pTri[2]->m_edges[0]->m_pPairEdge = pTri[0]->m_edges[2];
+	pTri[2]->m_edges[1]->m_pPairEdge = pTri[3]->m_edges[1];
+	pTri[2]->m_edges[2]->m_pPairEdge = pTri[1]->m_edges[0];
 
-	pTri[3]->m_Edges[0]->m_pPairEdge = pTri[1]->m_Edges[1];
-	pTri[3]->m_Edges[1]->m_pPairEdge = pTri[2]->m_Edges[1];
-	pTri[3]->m_Edges[2]->m_pPairEdge = pTri[0]->m_Edges[1];
+	pTri[3]->m_edges[0]->m_pPairEdge = pTri[1]->m_edges[1];
+	pTri[3]->m_edges[1]->m_pPairEdge = pTri[2]->m_edges[1];
+	pTri[3]->m_edges[2]->m_pPairEdge = pTri[0]->m_edges[1];
 
 	EPATriangleComparison compare;
 
 	for ( int i = 0; i < 4; i++ )
 	{
-		pTri[i]->ComputeClosestPointToOrigin(*this);
+		pTri[i]->computeClosestPointToOrigin(*this);
 
-		pTri[i]->m_Index = m_Count++;
+		pTri[i]->m_index = m_count++;
 
-		m_Triangles.push_back(pTri[i]);
-		std::push_heap(m_Triangles.begin(), m_Triangles.end(), compare);
+		m_triangles.push_back(pTri[i]);
+		std::push_heap(m_triangles.begin(), m_triangles.end(), compare);
 	}
 
 	return true;
@@ -151,7 +151,7 @@ bool EPAPolytope::AddTetrahedron( const vec3& p0, const vec3& p1, const vec3& p2
 // w0 is in the side of the direction which is calculated by (p1-p0).Cross(p2-p0)
 // w1 is in the side of the direction which is calculated by -(p1-p0).Cross(p2-p0)
 // By gluing these two tetrahedrons, hexahedron can be formed.
-bool EPAPolytope::AddHexahedron( const vec3& p0, const vec3& p1, const vec3& p2, const vec3& w0, const vec3& w1 )
+bool EPAPolytope::addHexahedron( const vec3& p0, const vec3& p1, const vec3& p2, const vec3& w0, const vec3& w1 )
 {
 	if ( vec3::dotProduct(vec3::crossProduct(p1-p0, p2-p0), w0-p0) <= 0 )
 		return false;
@@ -160,157 +160,157 @@ bool EPAPolytope::AddHexahedron( const vec3& p0, const vec3& p1, const vec3& p2,
 		return false;
 
 	int index[5];
-	m_Vertices.push_back(p0);
-	index[0] = (int)m_Vertices.size() - 1;
+	m_vertices.push_back(p0);
+	index[0] = (int)m_vertices.size() - 1;
 
-	m_Vertices.push_back(p1);
-	index[1] = (int)m_Vertices.size() - 1;
+	m_vertices.push_back(p1);
+	index[1] = (int)m_vertices.size() - 1;
 
-	m_Vertices.push_back(p2);
-	index[2] = (int)m_Vertices.size() - 1;
+	m_vertices.push_back(p2);
+	index[2] = (int)m_vertices.size() - 1;
 
-	m_Vertices.push_back(w0);
-	index[3] = (int)m_Vertices.size() - 1;
+	m_vertices.push_back(w0);
+	index[3] = (int)m_vertices.size() - 1;
 
-	m_Vertices.push_back(w1);
-	index[4] = (int)m_Vertices.size() - 1;
+	m_vertices.push_back(w1);
+	index[4] = (int)m_vertices.size() - 1;
 
 	EPATriangle* pTri[6];
 
-	pTri[0] = new EPATriangle(index[0], index[1], index[3]); Q_ASSERT(CheckWinding(m_Vertices[index[0]], m_Vertices[index[1]], m_Vertices[index[3]]));
-	pTri[1] = new EPATriangle(index[1], index[2], index[3]); Q_ASSERT(CheckWinding(m_Vertices[index[1]], m_Vertices[index[2]], m_Vertices[index[3]]));
-	pTri[2] = new EPATriangle(index[2], index[0], index[3]); Q_ASSERT(CheckWinding(m_Vertices[index[2]], m_Vertices[index[0]], m_Vertices[index[3]]));
-	pTri[3] = new EPATriangle(index[1], index[0], index[4]); Q_ASSERT(CheckWinding(m_Vertices[index[1]], m_Vertices[index[0]], m_Vertices[index[4]]));
-	pTri[4] = new EPATriangle(index[2], index[1], index[4]); Q_ASSERT(CheckWinding(m_Vertices[index[2]], m_Vertices[index[1]], m_Vertices[index[4]]));
-	pTri[5] = new EPATriangle(index[0], index[2], index[4]); Q_ASSERT(CheckWinding(m_Vertices[index[0]], m_Vertices[index[2]], m_Vertices[index[4]]));
+	pTri[0] = new EPATriangle(index[0], index[1], index[3]); Q_ASSERT(CheckWinding(m_vertices[index[0]], m_vertices[index[1]], m_vertices[index[3]]));
+	pTri[1] = new EPATriangle(index[1], index[2], index[3]); Q_ASSERT(CheckWinding(m_vertices[index[1]], m_vertices[index[2]], m_vertices[index[3]]));
+	pTri[2] = new EPATriangle(index[2], index[0], index[3]); Q_ASSERT(CheckWinding(m_vertices[index[2]], m_vertices[index[0]], m_vertices[index[3]]));
+	pTri[3] = new EPATriangle(index[1], index[0], index[4]); Q_ASSERT(CheckWinding(m_vertices[index[1]], m_vertices[index[0]], m_vertices[index[4]]));
+	pTri[4] = new EPATriangle(index[2], index[1], index[4]); Q_ASSERT(CheckWinding(m_vertices[index[2]], m_vertices[index[1]], m_vertices[index[4]]));
+	pTri[5] = new EPATriangle(index[0], index[2], index[4]); Q_ASSERT(CheckWinding(m_vertices[index[0]], m_vertices[index[2]], m_vertices[index[4]]));
 
 	// construct adjacency
-	pTri[0]->m_AdjacentTriangles[0] = pTri[3];
-	pTri[0]->m_AdjacentTriangles[1] = pTri[1];
-	pTri[0]->m_AdjacentTriangles[2] = pTri[2];
+	pTri[0]->m_adjacentTriangles[0] = pTri[3];
+	pTri[0]->m_adjacentTriangles[1] = pTri[1];
+	pTri[0]->m_adjacentTriangles[2] = pTri[2];
 
-	pTri[1]->m_AdjacentTriangles[0] = pTri[4];
-	pTri[1]->m_AdjacentTriangles[1] = pTri[2];
-	pTri[1]->m_AdjacentTriangles[2] = pTri[0];
+	pTri[1]->m_adjacentTriangles[0] = pTri[4];
+	pTri[1]->m_adjacentTriangles[1] = pTri[2];
+	pTri[1]->m_adjacentTriangles[2] = pTri[0];
 
-	pTri[2]->m_AdjacentTriangles[0] = pTri[5];
-	pTri[2]->m_AdjacentTriangles[1] = pTri[0];
-	pTri[2]->m_AdjacentTriangles[2] = pTri[1];
+	pTri[2]->m_adjacentTriangles[0] = pTri[5];
+	pTri[2]->m_adjacentTriangles[1] = pTri[0];
+	pTri[2]->m_adjacentTriangles[2] = pTri[1];
 
-	pTri[3]->m_AdjacentTriangles[0] = pTri[0];
-	pTri[3]->m_AdjacentTriangles[1] = pTri[5];
-	pTri[3]->m_AdjacentTriangles[2] = pTri[4];
+	pTri[3]->m_adjacentTriangles[0] = pTri[0];
+	pTri[3]->m_adjacentTriangles[1] = pTri[5];
+	pTri[3]->m_adjacentTriangles[2] = pTri[4];
 
-	pTri[4]->m_AdjacentTriangles[0] = pTri[1];
-	pTri[4]->m_AdjacentTriangles[1] = pTri[3];
-	pTri[4]->m_AdjacentTriangles[2] = pTri[5];
+	pTri[4]->m_adjacentTriangles[0] = pTri[1];
+	pTri[4]->m_adjacentTriangles[1] = pTri[3];
+	pTri[4]->m_adjacentTriangles[2] = pTri[5];
 
-	pTri[5]->m_AdjacentTriangles[0] = pTri[2];
-	pTri[5]->m_AdjacentTriangles[1] = pTri[4];
-	pTri[5]->m_AdjacentTriangles[2] = pTri[3];
+	pTri[5]->m_adjacentTriangles[0] = pTri[2];
+	pTri[5]->m_adjacentTriangles[1] = pTri[4];
+	pTri[5]->m_adjacentTriangles[2] = pTri[3];
 
-	pTri[0]->m_Edges[0]->m_pPairEdge = pTri[3]->m_Edges[0];
-	pTri[0]->m_Edges[1]->m_pPairEdge = pTri[1]->m_Edges[2];
-	pTri[0]->m_Edges[2]->m_pPairEdge = pTri[2]->m_Edges[1];
+	pTri[0]->m_edges[0]->m_pPairEdge = pTri[3]->m_edges[0];
+	pTri[0]->m_edges[1]->m_pPairEdge = pTri[1]->m_edges[2];
+	pTri[0]->m_edges[2]->m_pPairEdge = pTri[2]->m_edges[1];
 
-	pTri[1]->m_Edges[0]->m_pPairEdge = pTri[4]->m_Edges[0];
-	pTri[1]->m_Edges[1]->m_pPairEdge = pTri[2]->m_Edges[2];
-	pTri[1]->m_Edges[2]->m_pPairEdge = pTri[0]->m_Edges[1];
+	pTri[1]->m_edges[0]->m_pPairEdge = pTri[4]->m_edges[0];
+	pTri[1]->m_edges[1]->m_pPairEdge = pTri[2]->m_edges[2];
+	pTri[1]->m_edges[2]->m_pPairEdge = pTri[0]->m_edges[1];
 
-	pTri[2]->m_Edges[0]->m_pPairEdge = pTri[5]->m_Edges[0];
-	pTri[2]->m_Edges[1]->m_pPairEdge = pTri[0]->m_Edges[2];
-	pTri[2]->m_Edges[2]->m_pPairEdge = pTri[1]->m_Edges[1];
+	pTri[2]->m_edges[0]->m_pPairEdge = pTri[5]->m_edges[0];
+	pTri[2]->m_edges[1]->m_pPairEdge = pTri[0]->m_edges[2];
+	pTri[2]->m_edges[2]->m_pPairEdge = pTri[1]->m_edges[1];
 
-	pTri[3]->m_Edges[0]->m_pPairEdge = pTri[0]->m_Edges[0];
-	pTri[3]->m_Edges[1]->m_pPairEdge = pTri[5]->m_Edges[2];
-	pTri[3]->m_Edges[2]->m_pPairEdge = pTri[4]->m_Edges[1];
+	pTri[3]->m_edges[0]->m_pPairEdge = pTri[0]->m_edges[0];
+	pTri[3]->m_edges[1]->m_pPairEdge = pTri[5]->m_edges[2];
+	pTri[3]->m_edges[2]->m_pPairEdge = pTri[4]->m_edges[1];
 
-	pTri[4]->m_Edges[0]->m_pPairEdge = pTri[1]->m_Edges[0];
-	pTri[4]->m_Edges[1]->m_pPairEdge = pTri[3]->m_Edges[2];
-	pTri[4]->m_Edges[2]->m_pPairEdge = pTri[5]->m_Edges[1];
+	pTri[4]->m_edges[0]->m_pPairEdge = pTri[1]->m_edges[0];
+	pTri[4]->m_edges[1]->m_pPairEdge = pTri[3]->m_edges[2];
+	pTri[4]->m_edges[2]->m_pPairEdge = pTri[5]->m_edges[1];
 
-	pTri[5]->m_Edges[0]->m_pPairEdge = pTri[2]->m_Edges[0];
-	pTri[5]->m_Edges[1]->m_pPairEdge = pTri[4]->m_Edges[2];
-	pTri[5]->m_Edges[2]->m_pPairEdge = pTri[3]->m_Edges[1];
+	pTri[5]->m_edges[0]->m_pPairEdge = pTri[2]->m_edges[0];
+	pTri[5]->m_edges[1]->m_pPairEdge = pTri[4]->m_edges[2];
+	pTri[5]->m_edges[2]->m_pPairEdge = pTri[3]->m_edges[1];
 
 	EPATriangleComparison compare;
 
 	for ( int i = 0; i < 6; i++ )
 	{
-		pTri[i]->ComputeClosestPointToOrigin(*this);
+		pTri[i]->computeClosestPointToOrigin(*this);
 
-		pTri[i]->m_Index = m_Count++;
+		pTri[i]->m_index = m_count++;
 
 		for ( int j = 0; j < 3; j++ )
 		{
-			if ( !(pTri[i]->m_AdjacentTriangles[j] == pTri[i]->m_Edges[j]->m_pPairEdge->GetEPATriangle()) )
+			if ( !(pTri[i]->m_adjacentTriangles[j] == pTri[i]->m_edges[j]->m_pPairEdge->getEPATriangle()) )
 				return false;
 		}
 
-		m_Triangles.push_back(pTri[i]);
-		std::push_heap(m_Triangles.begin(), m_Triangles.end(), compare);
+		m_triangles.push_back(pTri[i]);
+		std::push_heap(m_triangles.begin(), m_triangles.end(), compare);
 	}
 
 	return true;
 }
 
-bool EPAPolytope::ExpandPolytopeWithNewPoint( const vec3& w, EPATriangle* pTriangleUsedToObtainW )
+bool EPAPolytope::expandPolytopeWithNewPoint( const vec3& w, EPATriangle* pTriangleUsedToObtainW )
 {
-	for (int i = 0; i < m_Triangles.size(); i++ )
+	for (int i = 0; i < m_triangles.size(); i++ )
 	{
-		m_Triangles[i]->m_bVisible = false;
+		m_triangles[i]->m_bVisible = false;
 	}
 
-	m_SilhouetteVertices.clear();
-	m_SilhouetteVertices.reserve(20);
-	m_SilhouetteTriangles.clear();
-	m_SilhouetteTriangles.reserve(20);
-	m_SilhouetteEdges.clear();
-	m_SilhouetteEdges.reserve(20);
+	m_silhouetteVertices.clear();
+	m_silhouetteVertices.reserve(20);
+	m_silhouetteTriangles.clear();
+	m_silhouetteTriangles.reserve(20);
+	m_silhouetteEdges.clear();
+	m_silhouetteEdges.reserve(20);
 
-	m_Vertices.push_back(w);
-	int indexVertexW = (int)m_Vertices.size() - 1;
+	m_vertices.push_back(w);
+	int indexVertexW = (int)m_vertices.size() - 1;
 
-	Q_ASSERT(pTriangleUsedToObtainW->IsObsolete() == false);
+	Q_ASSERT(pTriangleUsedToObtainW->isObsolete() == false);
 
 	pTriangleUsedToObtainW->m_bVisible = true;
-	pTriangleUsedToObtainW->SetObsolete(true);
+	pTriangleUsedToObtainW->setObsolete(true);
 
-	for ( int i = 0; i < (int)m_Triangles.size(); i++ )
+	for ( int i = 0; i < (int)m_triangles.size(); i++ )
 	{
-		if ( m_Triangles[i]->IsObsolete() )
+		if ( m_triangles[i]->isObsolete() )
 			continue;
 
-		int index = m_Triangles[i]->m_Index;
-		bool b = m_Triangles[i]->IsVisibleFromPoint(w);
+		int index = m_triangles[i]->m_index;
+		bool b = m_triangles[i]->isVisibleFromPoint(w);
 	}
 
 	// 'Flood Fill Silhouette' algorithm to detect visible triangles and silhouette loop of edges from w.
 	for ( int i = 0; i < 3; i++ )
-		pTriangleUsedToObtainW->m_Edges[i]->m_pPairEdge->m_pEPATriangle->DoSilhouette(w, pTriangleUsedToObtainW->m_Edges[i], *this);
+		pTriangleUsedToObtainW->m_edges[i]->m_pPairEdge->m_pEPATriangle->doSilhouette(w, pTriangleUsedToObtainW->m_edges[i], *this);
 
-	Q_ASSERT(m_SilhouetteVertices.size() >= 3);
-	Q_ASSERT(m_SilhouetteTriangles.size() >= 3);
+	Q_ASSERT(m_silhouetteVertices.size() >= 3);
+	Q_ASSERT(m_silhouetteTriangles.size() >= 3);
 
 	// Now, we create new triangles to patch the silhouette loop 
-	int silhouetteSize = (int)m_SilhouetteVertices.size();
+	int silhouetteSize = (int)m_silhouetteVertices.size();
 
-	for ( int i = 0; i < (int)m_Triangles.size(); i++ )
+	for ( int i = 0; i < (int)m_triangles.size(); i++ )
 	{
-		if ( m_Triangles[i]->IsObsolete() )
+		if ( m_triangles[i]->isObsolete() )
 			continue;
 
-		if ( m_Triangles[i]->m_bVisible )
-			if ( m_Triangles[i]->IsVisibleFromPoint(w) != true )
+		if ( m_triangles[i]->m_bVisible )
+			if ( m_triangles[i]->isVisibleFromPoint(w) != true )
 				return false;
 			else
-				if ( m_Triangles[i]->IsVisibleFromPoint(w) != false )
+				if ( m_triangles[i]->isVisibleFromPoint(w) != false )
 					return false;
 	}
 
 	for ( int i = 0; i < (int)silhouetteSize; i++ )
 	{
-		if ( m_SilhouetteTriangles[i]->IsVisibleFromPoint(w) != false )
+		if ( m_silhouetteTriangles[i]->isVisibleFromPoint(w) != false )
 			return false;
 	}
 
@@ -323,9 +323,9 @@ bool EPAPolytope::ExpandPolytopeWithNewPoint( const vec3& w, EPATriangle* pTrian
 	{
 		int j = i+1 < silhouetteSize ? i+1 : 0;
 
-		EPATriangle* pTri = new EPATriangle(indexVertexW, m_SilhouetteVertices[i], m_SilhouetteVertices[j]);
+		EPATriangle* pTri = new EPATriangle(indexVertexW, m_silhouetteVertices[i], m_silhouetteVertices[j]);
 		newTriangles.push_back(pTri);
-		pTri->ComputeClosestPointToOrigin(*this);
+		pTri->computeClosestPointToOrigin(*this);
 	}
 
 	for ( int i = 0; i < silhouetteSize; i++ )
@@ -333,35 +333,35 @@ bool EPAPolytope::ExpandPolytopeWithNewPoint( const vec3& w, EPATriangle* pTrian
 		int j = (i+1 < silhouetteSize)? i+1 : 0;
 		int k = (i-1 < 0)? silhouetteSize-1 : i-1;
 
-		newTriangles[i]->m_AdjacentTriangles[2] = newTriangles[j];
-		newTriangles[i]->m_Edges[2]->m_pPairEdge = newTriangles[j]->m_Edges[0];
+		newTriangles[i]->m_adjacentTriangles[2] = newTriangles[j];
+		newTriangles[i]->m_edges[2]->m_pPairEdge = newTriangles[j]->m_edges[0];
 
-		newTriangles[i]->m_AdjacentTriangles[0] = newTriangles[k];
-		newTriangles[i]->m_Edges[0]->m_pPairEdge = newTriangles[k]->m_Edges[2];
+		newTriangles[i]->m_adjacentTriangles[0] = newTriangles[k];
+		newTriangles[i]->m_edges[0]->m_pPairEdge = newTriangles[k]->m_edges[2];
 
-		newTriangles[i]->m_AdjacentTriangles[1] = m_SilhouetteTriangles[i];
-		newTriangles[i]->m_Edges[1]->m_pPairEdge = m_SilhouetteEdges[i];
-		m_SilhouetteEdges[i]->m_pPairEdge = newTriangles[i]->m_Edges[1];
-		m_SilhouetteTriangles[i]->m_AdjacentTriangles[m_SilhouetteEdges[i]->m_IndexLocal] = newTriangles[i];
+		newTriangles[i]->m_adjacentTriangles[1] = m_silhouetteTriangles[i];
+		newTriangles[i]->m_edges[1]->m_pPairEdge = m_silhouetteEdges[i];
+		m_silhouetteEdges[i]->m_pPairEdge = newTriangles[i]->m_edges[1];
+		m_silhouetteTriangles[i]->m_adjacentTriangles[m_silhouetteEdges[i]->m_indexLocal] = newTriangles[i];
 	}
 
 	for ( int i = 0; i < silhouetteSize; i++ )
 	{	
-		newTriangles[i]->m_Index = m_Count++;
+		newTriangles[i]->m_index = m_count++;
 
-		m_Triangles.push_back(newTriangles[i]);
-		std::push_heap(m_Triangles.begin(), m_Triangles.end(), compare);
+		m_triangles.push_back(newTriangles[i]);
+		std::push_heap(m_triangles.begin(), m_triangles.end(), compare);
 	}
 
-	for ( int i = 0; i < GetTriangles().size(); i++ )
+	for ( int i = 0; i < getTriangles().size(); i++ )
 	{
-		if ( !GetTriangles()[i]->IsObsolete() )
+		if ( !getTriangles()[i]->isObsolete() )
 		{
 			for ( int j = 0; j < 3; j++ )
 			{
-				EPAEdge* edge = GetTriangles()[i]->GetEdge(j);
-				Q_ASSERT(edge->GetIndexVertex(0) == edge->m_pPairEdge->GetIndexVertex(1));
-				Q_ASSERT(edge->GetIndexVertex(1) == edge->m_pPairEdge->GetIndexVertex(0));
+				EPAEdge* edge = getTriangles()[i]->getEdge(j);
+				Q_ASSERT(edge->getIndexVertex(0) == edge->m_pPairEdge->getIndexVertex(1));
+				Q_ASSERT(edge->getIndexVertex(1) == edge->m_pPairEdge->getIndexVertex(0));
 			}
 		}
 	}
@@ -369,7 +369,7 @@ bool EPAPolytope::ExpandPolytopeWithNewPoint( const vec3& w, EPATriangle* pTrian
 	return true;
 }
 
-bool EPAPolytope::IsOriginInTetrahedron( const vec3& p1, const vec3& p2, const vec3& p3, const vec3& p4 )
+bool EPAPolytope::isOriginInTetrahedron( const vec3& p1, const vec3& p2, const vec3& p3, const vec3& p4 )
 {
 	float proj1, proj2;
 

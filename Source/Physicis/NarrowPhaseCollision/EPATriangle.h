@@ -11,47 +11,47 @@ public:
 	EPATriangle(int indexVertex0, int indexVertex1, int indexVertex2);
 	~EPATriangle();
 
-	int GetIndexVertex(int i) const 
+	int getIndexVertex(int i) const 
 	{ 
 		Q_ASSERT(0 <= i && i < 3);
-		return m_IndicesVertex[i]; 
+		return m_indicesVertex[i]; 
 	}
 
-	EPAEdge* GetEdge(int i)
+	EPAEdge* getEdge(int i)
 	{
 		Q_ASSERT(0 <= i && i < 3);
-		return m_Edges[i];
+		return m_edges[i];
 	}
 
-	void SetAdjacentEdge(int index, EPAEdge& EPAEdge);
-	float GetDistSqr() const { return m_DistSqr; }
-	bool IsObsolete() const { return m_bObsolete; }
-	void SetObsolete(bool bObsolete) { m_bObsolete = bObsolete; }	
-	const vec3& GetClosestPoint() const { return m_ClosestPointToOrigin; }
-	bool IsClosestPointInternal() const;
-	bool IsVisibleFromPoint(const vec3& point) const;
-	bool ComputeClosestPointToOrigin(const EPAPolytope& EPAPolytope);
-	vec3 GetClosestPointToOriginInSupportPntSpace(const QVector<vec3>& supportPoints) const;
-	bool DoSilhouette(const vec3& w, EPAEdge* edge, EPAPolytope& EPAPolytope);
+	void setAdjacentEdge(int index, EPAEdge& EPAEdge);
+	float getDistSqr() const { return m_distSqrd; }
+	bool isObsolete() const { return m_bObsolete; }
+	void setObsolete(bool bObsolete) { m_bObsolete = bObsolete; }	
+	const vec3& getClosestPoint() const { return m_closestPointToOrigin; }
+	bool isClosestPointInternal() const;
+	bool isVisibleFromPoint(const vec3& point) const;
+	bool computeClosestPointToOrigin(const EPAPolytope& EPAPolytope);
+	vec3 getClosestPointToOriginInSupportPntSpace(const QVector<vec3>& supportPoints) const;
+	bool doSilhouette(const vec3& w, EPAEdge* edge, EPAPolytope& EPAPolytope);
 
 	bool operator<(const EPATriangle& other) const;
 
 private:
-	int m_IndicesVertex[3];
-	EPATriangle* m_AdjacentTriangles[3];
-	EPAEdge* m_Edges[3];
+	int m_indicesVertex[3];
+	EPATriangle* m_adjacentTriangles[3];
+	EPAEdge* m_edges[3];
 	bool m_bObsolete;
-	float m_Det;
+	float m_det;
 
-	vec3 m_ClosestPointToOrigin; 
+	vec3 m_closestPointToOrigin; 
 
-	float m_Lambda1; 
-	float m_Lambda2;
+	float m_lambda1; 
+	float m_lambda2;
 
 	// squared distance to origin
-	float m_DistSqr; // = m_ClosestPointToOrigin.LenghSqr()
+	float m_distSqrd; // = m_ClosestPointToOrigin.LenghSqr()
 
-	int m_Index;
+	int m_index;
 	bool m_bVisible;
 };
 
@@ -60,6 +60,6 @@ class EPATriangleComparison
 public:
 	bool operator() (const EPATriangle* pTriA, const EPATriangle* pTriB) 
 	{
-		return (pTriA->GetDistSqr() > pTriB->GetDistSqr());
+		return (pTriA->getDistSqr() > pTriB->getDistSqr());
 	}
 };

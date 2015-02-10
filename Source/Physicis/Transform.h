@@ -8,19 +8,19 @@ public:
 	Transform(const Transform& other);
 	Transform(const vec3& translation, const quat& rotation);
 
-	const vec3& GetTranslation() const { return m_Translation; }
-	const quat& GetRotation() const { return m_Rotation; }
-	vec3& GetTranslation() { return m_Translation; }
-	quat& GetRotation() { return m_Rotation; }
-	void Inverse();
-	Transform InverseOther() const;
+	const vec3& getTranslation() const { return m_translation; }
+	const quat& getRotation() const { return m_rotation; }
+	vec3& getTranslation() { return m_translation; }
+	quat& getRotation() { return m_rotation; }
+	void inverse();
+	Transform inversed() const;
 
 	vec3 operator*(const vec3& vector) const;
 	Transform operator*(const Transform& transform) const;
 	Transform& operator=(const Transform& other);
 
 private:
-	vec3 m_Translation;
-	quat m_Rotation;
+	vec3 m_translation;
+	quat m_rotation;
 };
 

@@ -50,7 +50,7 @@ void GJKSimplex::addPoint( const vec3& point, const vec3& suppPointA, const vec3
 
 	// Add the point into the simplex
 	m_Points[m_lastFound] = point;
-	m_lengthSqr[m_lastFound] = point.lengthSquared();
+	m_lengthSqrd[m_lastFound] = point.lengthSquared();
 	m_allBits = m_curBits | m_lastBit;
 
 	updateDiffLengths();    
@@ -127,7 +127,7 @@ bool GJKSimplex::runJohnsonAlgorithm( vec3& v )
 			m_curBits = subset | m_lastBit;   
 
 			v = vec3(0, 0, 0);
-			m_maxLengthSqr = 0.0;
+			m_maxLengthSqrd = 0.0;
 			float sum = 0.0;
 
 			for ( int i=0, bit = 0x1; i < 4; i++, bit <<= 1 ) 
@@ -137,8 +137,8 @@ bool GJKSimplex::runJohnsonAlgorithm( vec3& v )
 					sum += m_det[m_curBits][i];
 					v += m_det[m_curBits][i] * m_Points[i];
 
-					if ( m_maxLengthSqr < m_lengthSqr[i] ) 
-						m_maxLengthSqr = m_lengthSqr[i];
+					if ( m_maxLengthSqrd < m_lengthSqrd[i] ) 
+						m_maxLengthSqrd = m_lengthSqrd[i];
 				}
 			}
 
@@ -152,7 +152,7 @@ bool GJKSimplex::runJohnsonAlgorithm( vec3& v )
 	if ( isValidSubset(m_lastBit) ) 
 	{
 		m_curBits = m_lastBit;                  
-		m_maxLengthSqr = m_lengthSqr[m_lastFound];
+		m_maxLengthSqrd = m_lengthSqrd[m_lastFound];
 		v = m_Points[m_lastFound];                
 		return true;
 	}
@@ -199,7 +199,7 @@ void GJKSimplex::updateDiffLengths()
 		{
 			m_diffLength[i][m_lastFound] = m_Points[i] - m_Points[m_lastFound];
 			m_diffLength[m_lastFound][i] = -m_diffLength[i][m_lastFound];
-			m_diffLengthSqr[i][m_lastFound] = m_diffLengthSqr[m_lastFound][i] = m_diffLength[i][m_lastFound].lengthSquared();
+			m_diffLengthSqrd[i][m_lastFound] = m_diffLengthSqrd[m_lastFound][i] = m_diffLength[i][m_lastFound].lengthSquared();
 		}
 	}
 }
@@ -227,15 +227,15 @@ void GJKSimplex::calcDeterminants()
 					int k;
 					uint bit3 = bitJ | bit2;
 
-					k = m_diffLengthSqr[i][j] < m_diffLengthSqr[m_lastFound][j] ? i : m_lastFound;
+					k = m_diffLengthSqrd[i][j] < m_diffLengthSqrd[m_lastFound][j] ? i : m_lastFound;
 					m_det[bit3][j] = m_det[bit2][i] * vec3::dotProduct(m_diffLength[k][j], m_Points[i]) +
 						m_det[bit2][m_lastFound] * vec3::dotProduct(m_diffLength[k][j], m_Points[m_lastFound]);
 
-					k = m_diffLengthSqr[j][i] < m_diffLengthSqr[m_lastFound][i] ? j : m_lastFound;
+					k = m_diffLengthSqrd[j][i] < m_diffLengthSqrd[m_lastFound][i] ? j : m_lastFound;
 					m_det[bit3][i] = m_det[bitJ | m_lastBit][j] * vec3::dotProduct(m_diffLength[k][i], m_Points[j]) +
 						m_det[bitJ | m_lastBit][m_lastFound] * vec3::dotProduct(m_diffLength[k][i], m_Points[m_lastFound]);
 
-					k = m_diffLengthSqr[i][m_lastFound] < m_diffLengthSqr[j][m_lastFound] ? i : j;
+					k = m_diffLengthSqrd[i][m_lastFound] < m_diffLengthSqrd[j][m_lastFound] ? i : j;
 					m_det[bit3][m_lastFound] = m_det[bitJ | bitI][j] * vec3::dotProduct(m_diffLength[k][m_lastFound], m_Points[j]) +
 						m_det[bitJ | bitI][i] * vec3::dotProduct(m_diffLength[k][m_lastFound], m_Points[i]);
 				}
@@ -247,22 +247,22 @@ void GJKSimplex::calcDeterminants()
 	{
 		int k;
 
-		k = m_diffLengthSqr[1][0] < m_diffLengthSqr[2][0] ? (m_diffLengthSqr[1][0] < m_diffLengthSqr[3][0] ? 1 : 3) : (m_diffLengthSqr[2][0] < m_diffLengthSqr[3][0] ? 2 : 3);
+		k = m_diffLengthSqrd[1][0] < m_diffLengthSqrd[2][0] ? (m_diffLengthSqrd[1][0] < m_diffLengthSqrd[3][0] ? 1 : 3) : (m_diffLengthSqrd[2][0] < m_diffLengthSqrd[3][0] ? 2 : 3);
 		m_det[0xf][0] = m_det[0xe][1] * vec3::dotProduct(m_diffLength[k][0], m_Points[1]) +
 			m_det[0xe][2] * vec3::dotProduct(m_diffLength[k][0], m_Points[2]) +
 			m_det[0xe][3] * vec3::dotProduct(m_diffLength[k][0], m_Points[3]);
 
-		k = m_diffLengthSqr[0][1] < m_diffLengthSqr[2][1] ? (m_diffLengthSqr[0][1] < m_diffLengthSqr[3][1] ? 0 : 3) : (m_diffLengthSqr[2][1] < m_diffLengthSqr[3][1] ? 2 : 3);
+		k = m_diffLengthSqrd[0][1] < m_diffLengthSqrd[2][1] ? (m_diffLengthSqrd[0][1] < m_diffLengthSqrd[3][1] ? 0 : 3) : (m_diffLengthSqrd[2][1] < m_diffLengthSqrd[3][1] ? 2 : 3);
 		m_det[0xf][1] = m_det[0xd][0] * vec3::dotProduct(m_diffLength[k][1], m_Points[0]) +
 			m_det[0xd][2] * vec3::dotProduct(m_diffLength[k][1], m_Points[2]) +
 			m_det[0xd][3] * vec3::dotProduct(m_diffLength[k][1], m_Points[3]);
 
-		k = m_diffLengthSqr[0][2] < m_diffLengthSqr[1][2] ? (m_diffLengthSqr[0][2] < m_diffLengthSqr[3][2] ? 0 : 3) : (m_diffLengthSqr[1][2] < m_diffLengthSqr[3][2] ? 1 : 3);
+		k = m_diffLengthSqrd[0][2] < m_diffLengthSqrd[1][2] ? (m_diffLengthSqrd[0][2] < m_diffLengthSqrd[3][2] ? 0 : 3) : (m_diffLengthSqrd[1][2] < m_diffLengthSqrd[3][2] ? 1 : 3);
 		m_det[0xf][2] = m_det[0xb][0] * vec3::dotProduct(m_diffLength[k][2], m_Points[0]) +
 			m_det[0xb][1] * vec3::dotProduct(m_diffLength[k][2], m_Points[1]) +
 			m_det[0xb][3] * vec3::dotProduct(m_diffLength[k][2], m_Points[3]);
 
-		k = m_diffLengthSqr[0][3] < m_diffLengthSqr[1][3] ? (m_diffLengthSqr[0][3] < m_diffLengthSqr[2][3] ? 0 : 2) : (m_diffLengthSqr[1][3] < m_diffLengthSqr[2][3] ? 1 : 2);
+		k = m_diffLengthSqrd[0][3] < m_diffLengthSqrd[1][3] ? (m_diffLengthSqrd[0][3] < m_diffLengthSqrd[2][3] ? 0 : 2) : (m_diffLengthSqrd[1][3] < m_diffLengthSqrd[2][3] ? 1 : 2);
 		m_det[0xf][3] = m_det[0x7][0] * vec3::dotProduct(m_diffLength[k][3], m_Points[0]) +
 			m_det[0x7][1] * vec3::dotProduct(m_diffLength[k][3], m_Points[1]) +
 			m_det[0x7][2] * vec3::dotProduct(m_diffLength[k][3], m_Points[2]);

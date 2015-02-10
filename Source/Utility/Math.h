@@ -54,6 +54,26 @@ namespace Math
 		}
 
 		/**
+         * compute a rotation matrix from the given quaternion.
+         */
+        static mat3 computeRotationMatrix(const quat &q)
+        {
+			vec4 v = q.toVector4D();
+			mat3 m;
+			m.m[0][0] = 1 - (2*v.y()*v.y() + 2*v.z()*v.z());
+			m.m[0][1] = 2*v.x()*v.y() + 2*v.z()*v.w();
+			m.m[0][2] = 2*v.x()*v.z() - 2*v.y()*v.w();
+			m.m[1][0] = 2*v.x()*v.y() - 2*v.z()*v.w();
+			m.m[1][1] = 1 - (2*v.x()*v.x()  + 2*v.z()*v.z());
+			m.m[1][2] = 2*v.y()*v.z() + 2*v.x()*v.w();
+			m.m[2][0] = 2*v.x()*v.z() + 2*v.y()*v.w();
+			m.m[2][1] = 2*v.y()*v.z() - 2*v.x()*v.w();
+			m.m[2][2] = 1 - (2*v.x()*v.x()  + 2*v.y()*v.y());
+
+			return m;
+        }
+
+		/**
          * Sets the value of the matrix from inertia tensor values.
          */
         static void setInertiaTensorCoeffs(mat3& matIn, float ix, float iy, float iz,
@@ -138,24 +158,6 @@ namespace Math
             m.m[2][2] = (t4-t8)*t17;
         }
 
-		/**
-         * Sets this matrix to be the rotation matrix corresponding to
-         * the given quaternion.
-         */
-        static void setOrientation(mat3& m, const quat &q)
-        {
-			vec4 v = q.toVector4D();
-
-			m.m[0][0] = 1 - (2*v.y()*v.y() + 2*v.z()*v.z());
-			m.m[0][1] = 2*v.x()*v.y() + 2*v.z()*v.w();
-			m.m[0][2] = 2*v.x()*v.z() - 2*v.y()*v.w();
-			m.m[1][0] = 2*v.x()*v.y() - 2*v.z()*v.w();
-			m.m[1][1] = 1 - (2*v.x()*v.x()  + 2*v.z()*v.z());
-			m.m[1][2] = 2*v.y()*v.z() + 2*v.x()*v.w();
-			m.m[2][0] = 2*v.x()*v.z() + 2*v.y()*v.w();
-			m.m[2][1] = 2*v.y()*v.z() - 2*v.x()*v.w();
-			m.m[2][2] = 1 - (2*v.x()*v.x()  + 2*v.y()*v.y());
-        }
 	}
 	
 

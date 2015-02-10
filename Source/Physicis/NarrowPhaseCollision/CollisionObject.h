@@ -17,7 +17,7 @@ private:
 	std::vector<int> m_IndexEdges;
 
 public:
-	void SetFaceIndex(int indexFace)
+	void setFaceIndex(int indexFace)
 	{
 		std::vector<int>::iterator iter = std::find(m_IndexFaces.begin(), m_IndexFaces.end(), indexFace);
 
@@ -27,12 +27,12 @@ public:
 		}
 	}
 
-	const std::vector<int>& GetFaceIndeces() const
+	const std::vector<int>& getFaceIndeces() const
 	{		
 		return m_IndexFaces;
 	}
 
-	void SetEdgeIndex(int indexEdge)
+	void setEdgeIndex(int indexEdge)
 	{
 		std::vector<int>::iterator iter = std::find(m_IndexEdges.begin(), m_IndexEdges.end(), indexEdge);
 
@@ -42,7 +42,7 @@ public:
 		}
 	}
 
-	const std::vector<int>& GetEdgeIndeces() const
+	const std::vector<int>& getEdgeIndeces() const
 	{		
 		return m_IndexEdges;
 	}
@@ -102,29 +102,29 @@ protected:
 	int m_IndexTriangle[2];
 
 public:
-	int GetVertexIndex(int i) const 
+	int getVertexIndex(int i) const 
 	{
 		Q_ASSERT( 0 <= i && i <= 1 );
 
 		return m_IndexVrx[i];
 	}
 
-	int GetIndex() const { return m_Index; }
-	void SetIndex(int index) { m_Index = index; }
+	int getIndex() const { return m_Index; }
+	void setIndex(int index) { m_Index = index; }
 
-	int GetTriangleIndex(int i) const 
+	int getTriangleIndex(int i) const 
 	{ 
 		Q_ASSERT( 0 <= i && i <= 1 );
 		return m_IndexTriangle[i]; 
 	}
 
-	void SetTriangleIndex(int i, int indexTriangle) 
+	void setTriangleIndex(int i, int indexTriangle) 
 	{
 		Q_ASSERT( 0 <= i && i <= 1 );
 		m_IndexTriangle[i] = indexTriangle;
 	}
 
-	int GetTheOtherVertexIndex(int indexVert)
+	int getTheOtherVertexIndex(int indexVert)
 	{
 		Q_ASSERT(indexVert == m_IndexVrx[0] || indexVert == m_IndexVrx[1]);
 
@@ -182,37 +182,37 @@ protected:
 	float m_PlaneEqn[4];
 
 public:
-	int GetVertexIndex(int i) const 
+	int getVertexIndex(int i) const 
 	{
 		Q_ASSERT( 0 <= i && i < 3 );
 		return m_IndexVrx[i];
 	}
 
-	void SetVertexIndex(int i, int vertexIndex)
+	void setVertexIndex(int i, int vertexIndex)
 	{
 		Q_ASSERT( 0 <= i && i < 3 );
 		m_IndexVrx[i] = vertexIndex;
 	}
 
-	int GetEdgeIndex(int i) const 
+	int getEdgeIndex(int i) const 
 	{
 		Q_ASSERT( 0 <= i && i < 3 );
 		return m_IndexEdge[i];
 	}
 
-	void SetEdgeIndex(int i, int edgeIndex) 
+	void setEdgeIndex(int i, int edgeIndex) 
 	{
 		Q_ASSERT( 0 <= i && i < 3 );
 		m_IndexEdge[i] = edgeIndex;
 	}
 
-	bool GetWindingOrderEdge(int i) const
+	bool getWindingOrderEdge(int i) const
 	{
 		Q_ASSERT( 0 <= i && i < 3 );
 		return m_WindingOrderEdge[i];
 	}
 
-	bool GetWindingOrderEdgeByGlobalEdgeIndex(int indexEdge) const
+	bool getWindingOrderEdgeByGlobalEdgeIndex(int indexEdge) const
 	{
 		for ( int i = 0; i < 3; i++ )
 		{
@@ -224,19 +224,19 @@ public:
 		return true;
 	}
 
-	void SetWindingOrderEdge(int i, bool bWindingOderEdge)
+	void setWindingOrderEdge(int i, bool bWindingOderEdge)
 	{
 		Q_ASSERT( 0 <= i && i < 3 );
 		m_WindingOrderEdge[i] = bWindingOderEdge;
 	}
 
-	int GetIndex() const { return m_Index; }
-	void SetIndex(int index) { m_Index = index; }
+	int getIndex() const { return m_Index; }
+	void setIndex(int index) { m_Index = index; }
 
-	float* PlaneEquation() { return m_PlaneEqn; }
-	const float* PlaneEquation() const { return m_PlaneEqn; }
+	float* planeEquation() { return m_PlaneEqn; }
+	const float* planeEquation() const { return m_PlaneEqn; }
 
-	vec3 GetNormal() const { return vec3(m_PlaneEqn[0], m_PlaneEqn[1], m_PlaneEqn[2]); }
+	vec3 getNormal() const { return vec3(m_PlaneEqn[0], m_PlaneEqn[1], m_PlaneEqn[2]); }
 
 	TriangleFace& operator=(const TriangleFace& other);
 };
@@ -265,52 +265,55 @@ public:
 	virtual QString className() { return "CollisionObject"; }
 	virtual void render(const float currentTime) {/*do noting*/}
 
-	bool Create();
+	CollisionObjectType getCollisionObjectType() const { return m_collisionObjectType; }
+	void setCollisionObjectType(CollisionObjectType collisionObjectType);
 
-	CollisionObjectType GetCollisionObjectType() const { return m_CollisionObjectType; }
-	void SetCollisionObjectType(CollisionObjectType collisionObjectType);
+	void setSize(float x, float y, float z) { m_halfExtent = vec3(x/2.0f, y/2.0f, z/2.0f); }
+	void setColor(float r, float g, float b) { m_color[0] = r; m_color[1] = g; m_color[2] = b; m_color[3] = 1.0; }
 
-	void SetSize(float x, float y, float z) { m_HalfExtent = vec3(x/2.0f, y/2.0f, z/2.0f); }
-	void SetColor(float r, float g, float b) { m_Color[0] = r; m_Color[1] = g; m_Color[2] = b; m_Color[3] = 1.0; }
+	std::vector<Vertex>& getVertices() { return m_vertices; }
+	const std::vector<Vertex>& getVertices() const { return m_vertices; }
 
-	std::vector<Vertex>& GetVertices() { return m_Vertices; }
-	const std::vector<Vertex>& GetVertices() const { return m_Vertices; }
+	std::vector<vec3>& getNormals() { return m_normals; }
+	const std::vector<vec3>& getNormals() const { return m_normals; }
 
-	std::vector<vec3>& GetNormals() { return m_Normals; }
-	const std::vector<vec3>& GetNormals() const { return m_Normals; }
+	std::vector<TriangleFace>& getFaces() { return m_faces; }
+	const std::vector<TriangleFace>& getFaces() const { return m_faces; }
 
-	std::vector<TriangleFace>& GetFaces() { return m_Faces; }
-	const std::vector<TriangleFace>& GetFaces() const { return m_Faces; }
+	std::vector<Edge>& getEdges() { return m_edges; }
+	const std::vector<Edge>& getEdges() const { return m_edges; }
 
-	std::vector<Edge>& GetEdges() { return m_Edges; }
-	const std::vector<Edge>& GetEdges() const { return m_Edges; }
+	float getMargin() const { return m_margin; }
+	void setMargin(float margin) { m_margin = margin; }
 
-	const Transform& GetTransform() const;
-	Transform& GetTransform();
+	const Transform& getTransform() const;
+	Transform& getTransform();
 
-	vec3 GetSize() const { return 2.0 * m_HalfExtent; }
+	vec3 getSize() const { return 2.0 * m_halfExtent; }
 
-	vec3 GetLocalSupportPoint(const vec3& dir, float margin = 0) const;
+	vec3 getLocalSupportPoint(const vec3& dir, float margin = 0) const;
 
 	CollisionObject& operator=(const CollisionObject& other);
 
 protected:
-	CollisionObjectType m_CollisionObjectType; 
+	CollisionObjectType m_collisionObjectType; 
 
 	// transforms local to world. 
-	Transform m_Transform;
+	Transform m_transform;
 
-	vec3 m_HalfExtent;
+	vec3 m_halfExtent;
 
-	float m_Color[4];
+	float m_color[4];
+
+	float m_margin;
 
 	// For ConvexHull
-	std::vector<Vertex> m_Vertices;	
-	std::vector<vec3> m_Normals;
-	std::vector<TriangleFace> m_Faces;
-	std::vector<Edge> m_Edges;
+	std::vector<Vertex> m_vertices;	
+	std::vector<vec3> m_normals;
+	std::vector<TriangleFace> m_faces;
+	std::vector<Edge> m_edges;
 
 	// For visualization
-	std::vector<vec3> m_VisualizedPoints;
+	std::vector<vec3> m_visualizedPoints;
 };
 

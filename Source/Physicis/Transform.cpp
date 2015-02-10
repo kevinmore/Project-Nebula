@@ -7,38 +7,38 @@ Transform::Transform()
 
 Transform::Transform( const Transform& other )
 {
-	m_Translation = other.m_Translation;
-	m_Rotation = other.m_Rotation;
+	m_translation = other.m_translation;
+	m_rotation = other.m_rotation;
 }
 
 Transform::Transform( const vec3& translation, const quat& rotation )
 {
-	m_Translation = translation;
-	m_Rotation = rotation;
+	m_translation = translation;
+	m_rotation = rotation;
 }
 
-void Transform::Inverse()
+void Transform::inverse()
 {
-	m_Rotation = m_Rotation.conjugate();
-	m_Translation = m_Rotation.rotatedVector(-m_Translation);
+	m_rotation = m_rotation.conjugate();
+	m_translation = m_rotation.rotatedVector(-m_translation);
 }
 
-Transform Transform::InverseOther() const
+Transform Transform::inversed() const
 {
 	Transform other(*this);
-	other.Inverse();
+	other.inverse();
 	return other;
 }
 
 vec3 Transform::operator*( const vec3& vector ) const
 {
-	return m_Rotation.rotatedVector(vector) + m_Translation;
+	return m_rotation.rotatedVector(vector) + m_translation;
 }
 
 Transform Transform::operator*( const Transform& transform ) const
 {
-	return Transform(m_Rotation.rotatedVector(transform.GetTranslation()) + m_Translation, 
-		m_Rotation * transform.GetRotation());
+	return Transform(m_rotation.rotatedVector(transform.getTranslation()) + m_translation, 
+		m_rotation * transform.getRotation());
 }
 
 Transform& Transform::operator=( const Transform& other )
@@ -46,8 +46,8 @@ Transform& Transform::operator=( const Transform& other )
 	if ( this == &other )
 		return (*this);
 
-	m_Translation = other.m_Translation;
-	m_Rotation = other.m_Rotation;
+	m_translation = other.m_translation;
+	m_rotation = other.m_rotation;
 
 	return (*this);
 }

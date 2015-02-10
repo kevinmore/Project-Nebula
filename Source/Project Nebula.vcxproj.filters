@@ -73,6 +73,7 @@
     <ClCompile Include="Physicis\Transform.cpp" />
     <ClCompile Include="Physicis\NarrowPhaseCollision\CollisionObject.cpp" />
     <ClCompile Include="Physicis\NarrowPhaseCollision\EPAAlgorithm.cpp" />
+    <ClCompile Include="Physicis\NarrowPhaseCollision\GJKAlgorithm.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Primitives\Texture.h" />
@@ -141,6 +142,7 @@
     <ClInclude Include="Physicis\Transform.h" />
     <ClInclude Include="Physicis\NarrowPhaseCollision\CollisionObject.h" />
     <ClInclude Include="Physicis\NarrowPhaseCollision\EPAAlgorithm.h" />
+    <ClInclude Include="Physicis\NarrowPhaseCollision\GJKAlgorithm.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="UI\HierarchyWidget.ui" />

@@ -8,7 +8,7 @@ public:
 
 	inline bool isFull() const;
 	inline bool isEmpty() const;
-	inline float maxLengthSqr() const;
+	inline float maxLengthSqrd() const;
 	int getPoints(QVector<vec3>& suppPointsA, QVector<vec3>& suppPointsB, QVector<vec3>& points) const;
 	void addPoint(const vec3& point, const vec3& suppPointA, const vec3& suppPointB);
 	bool isDegenerate(const vec3& point) const;
@@ -24,12 +24,12 @@ private:
 	//vec3 computeClosestPointForSubset(uint subset);
 
 	vec3 m_Points[4];
-	float m_lengthSqr[4]; // m_LengthSqr[i] = m_Points[i].LengthSqr()
-	float m_maxLengthSqr; // Maximum value among m_LengthSqr[i]
+	float m_lengthSqrd[4]; // m_LengthSqrd[i] = m_Points[i].LengthSqrd()
+	float m_maxLengthSqrd; // Maximum value among m_LengthSqrd[i]
 	vec3 m_suppPointsA[4];
 	vec3 m_suppPointsB[4];
 	vec3 m_diffLength[4][4]; // m_DiffLength[i][j] = m_Points[i] - m_Points[j]
-	float m_diffLengthSqr[4][4];
+	float m_diffLengthSqrd[4][4];
 	float m_det[16][4]; // Determinant 
 
 	uint m_curBits;
@@ -57,7 +57,7 @@ inline bool GJKSimplex::isEmpty() const
 }
 
 // Return the maximum squared length of a point
-inline float GJKSimplex::maxLengthSqr() const 
+inline float GJKSimplex::maxLengthSqrd() const 
 {
-	return m_maxLengthSqr;
+	return m_maxLengthSqrd;
 }
