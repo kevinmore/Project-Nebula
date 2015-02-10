@@ -70,6 +70,8 @@
     <ClCompile Include="Physicis\NarrowPhaseCollision\GJKSimplex.cpp" />
     <ClCompile Include="Physicis\NarrowPhaseCollision\EPATriangle.cpp" />
     <ClCompile Include="Physicis\NarrowPhaseCollision\EPAPolytope.cpp" />
+    <ClCompile Include="Physicis\Transform.cpp" />
+    <ClCompile Include="Physicis\NarrowPhaseCollision\CollisionObject.cpp" />
     <ClCompile Include="Physicis\NarrowPhaseCollision\EPAAlgorithm.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -136,6 +138,8 @@
     <ClInclude Include="Physicis\NarrowPhaseCollision\EPAPolytope.h" />
     <ClInclude Include="Physicis\NarrowPhaseCollision\EPAEdge.h" />
     <ClInclude Include="Physicis\NarrowPhaseCollision\EPATriangle.h" />
+    <ClInclude Include="Physicis\Transform.h" />
+    <ClInclude Include="Physicis\NarrowPhaseCollision\CollisionObject.h" />
     <ClInclude Include="Physicis\NarrowPhaseCollision\EPAAlgorithm.h" />
   </ItemGroup>
   <ItemGroup>

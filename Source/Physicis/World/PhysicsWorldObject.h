@@ -1,5 +1,4 @@
 #pragma once
-#include <QObject>
 #include <Physicis/Geometry/AbstractShape.h>
 #include <Primitives/Component.h>
 

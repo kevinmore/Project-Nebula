@@ -16,6 +16,7 @@
     <ClCompile Include="Animation\IK\FABRIKSolver.cpp" />
     <ClCompile Include="Animation\IK\CCDIKSolver.cpp" />
     <ClCompile Include="Animation\Rig\Pose.cpp" />
+    <ClCompile Include="Physicis\NarrowPhaseCollision\CollisionObject.cpp" />
     <ClCompile Include="Physicis\NarrowPhaseCollision\EPAAlgorithm.cpp" />
     <ClCompile Include="Physicis\NarrowPhaseCollision\EPAPolytope.cpp" />
     <ClCompile Include="Physicis\NarrowPhaseCollision\EPATriangle.cpp" />
@@ -30,6 +31,7 @@
     <ClCompile Include="Physicis\World\PhysicsWorldObject.cpp" />
     <ClCompile Include="Scene\moc_Light.cc" />
     <ClCompile Include="Scene\ShadingTechniques\moc_ShadingTechnique.cc" />
+    <ClCompile Include="Physicis\Transform.cpp" />
     <ClCompile Include="Utility\AssimpThread.cpp" />
     <ClCompile Include="Physicis\Entity\BoxRigidBody.cpp" />
     <ClCompile Include="Physicis\World\PhysicsWorldConfig.cpp" />
@@ -83,6 +85,7 @@
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Physicis\NarrowPhaseCollision\CollisionObject.h" />
     <ClInclude Include="Physicis\NarrowPhaseCollision\EPAAlgorithm.h" />
     <ClInclude Include="Physicis\NarrowPhaseCollision\EPAEdge.h" />
     <ClInclude Include="Physicis\NarrowPhaseCollision\EPAPolytope.h" />
@@ -102,6 +105,7 @@
     <ClInclude Include="Physicis\Geometry\SphereShape.h" />
     <ClInclude Include="Primitives\Puppet.h" />
     <ClInclude Include="Physicis\Collider\SphereCollider.h" />
+    <ClInclude Include="Physicis\Transform.h" />
     <ClInclude Include="Utility\AssimpThread.h" />
     <ClInclude Include="UI\Canvas.h" />
     <ClInclude Include="UI\HierarchyWidget.h" />

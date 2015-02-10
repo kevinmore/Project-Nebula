@@ -3,6 +3,7 @@
 #include "GJKSimplex.h"
 #include "EPAEdge.h"
 #include "EPATriangle.h"
+#include "CollisionObject.h"
 
 EPAAlgorithm::EPAAlgorithm(){}
 EPAAlgorithm::~EPAAlgorithm(){}

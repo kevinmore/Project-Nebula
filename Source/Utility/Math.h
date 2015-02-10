@@ -533,5 +533,30 @@ namespace Math
 				 * quat::fromAxisAndAngle(Math::Vector3::UNIT_Z, eularAngles.z());
 		}
 
+		// same to quat.conjugate()
+		static void setInverse(quat& q)
+		{
+			float lengthSqr = q.lengthSquared();
+
+			if(lengthSqr == 0.0) return;
+
+			q.setX(-q.x()/lengthSqr);
+			q.setY(-q.y()/lengthSqr);
+			q.setZ(-q.z()/lengthSqr);
+			q.setScalar(q.scalar()/lengthSqr);
+		}
+
+		// same to quat.rotatedVector
+		static vec3 rotate(const quat& q, const vec3& vec)
+		{
+			vec3 uv, uuv;
+			vec3 qvec(q.x(), q.y(), q.z());
+			uv = vec3::crossProduct(qvec, vec);
+			uuv = vec3::crossProduct(qvec, uv);
+			uv *= (2.0f * q.scalar());
+			uuv *= 2.0f;
+
+			return vec + uv + uuv;
+		}
 	}
 }
