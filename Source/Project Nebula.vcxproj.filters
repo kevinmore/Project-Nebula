@@ -73,6 +73,7 @@
     <ClCompile Include="Physicis\Geometry\Polytope.cpp" />
     <ClCompile Include="Physicis\Geometry\Simplex.cpp" />
     <ClCompile Include="Physicis\Geometry\Triangle.cpp" />
+    <ClCompile Include="Physicis\Collision\Collider\ConvexHullCollider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Primitives\Texture.h" />
@@ -141,6 +142,7 @@
     <ClInclude Include="Physicis\Geometry\Polytope.h" />
     <ClInclude Include="Physicis\Geometry\Simplex.h" />
     <ClInclude Include="Physicis\Geometry\Edge.h" />
+    <ClInclude Include="Physicis\Collision\Collider\ConvexHullCollider.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="UI\HierarchyWidget.ui" />

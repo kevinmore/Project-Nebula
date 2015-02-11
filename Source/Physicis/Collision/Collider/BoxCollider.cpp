@@ -4,15 +4,19 @@
 using namespace Math;
 
 BoxCollider::BoxCollider( const vec3& center, const vec3& halfExtents, Scene* scene )
-	: ICollider(center, scene)
+	: ICollider(center, scene),
+	  m_boxShape(center, halfExtents)
 {
-	m_boxShape = BoxShape(center, halfExtents);
 	m_colliderType = ICollider::COLLIDER_BOX;
 
 	// the default model loaded here is a cube with half extent = 0.5, and the center is 0
 	// we need to translate and scale it
 	m_transformMatrix.translate(m_center);
 	m_transformMatrix.scale(halfExtents.x() / 0.5f, halfExtents.y() / 0.5f, halfExtents.z() / 0.5f);
+
+	// make the bounding box look slightly bitter than the actual one
+	// this is for a better visual result
+	m_transformMatrix.scale(1.02f);
 
 	init();
 }

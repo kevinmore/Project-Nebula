@@ -13,6 +13,7 @@
 #include <Scene/ShadingTechniques/ShadingTechnique.h>
 
 #include <Physicis/Collision/Collider/BoxCollider.h>
+#include <Physicis/Collision/Collider/ConvexHullCollider.h>
 
 
 class IModel : public Component, protected QOpenGLFunctions_4_3_Core
@@ -34,6 +35,10 @@ public:
 	BoxColliderPtr getBoundingBox() const;
 	void showBoundingBox();
 	void hideBoundingBox();
+
+	void setConvexHullCollider(const ConvexHullCollider& ch);
+	ConvexHullColliderPtr getConvexHullCollider() const;
+
 
 	inline const mat4& getTransformMatrix() const { return m_transformMatrix; }
 
@@ -58,5 +63,7 @@ protected:
 	GLuint m_vao;
 	PolygonMode m_polygonMode;
 	BoxColliderPtr m_boundingBox;
+	ConvexHullColliderPtr m_convexHull;
+
 	mat4 m_transformMatrix;
 };

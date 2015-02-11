@@ -16,6 +16,7 @@
     <ClCompile Include="Animation\IK\FABRIKSolver.cpp" />
     <ClCompile Include="Animation\IK\CCDIKSolver.cpp" />
     <ClCompile Include="Animation\Rig\Pose.cpp" />
+    <ClCompile Include="Physicis\Collision\Collider\ConvexHullCollider.cpp" />
     <ClCompile Include="Physicis\Geometry\Polytope.cpp" />
     <ClCompile Include="Physicis\Collision\NarrowPhase\EPASolver.cpp" />
     <ClCompile Include="Physicis\Geometry\Triangle.cpp" />
@@ -85,6 +86,7 @@
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Physicis\Collision\Collider\ConvexHullCollider.h" />
     <ClInclude Include="Physicis\Geometry\Edge.h" />
     <ClInclude Include="Physicis\Geometry\Polytope.h" />
     <ClInclude Include="Physicis\Collision\NarrowPhase\EPASolver.h" />

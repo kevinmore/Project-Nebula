@@ -9,7 +9,7 @@
 #include <QSharedPointer>
 #include <Scene/ShadingTechniques/ShadingTechnique.h>
 #include <Physicis/Collision/Collider/BoxCollider.h>
-#include <Physicis/Geometry/ConvexShape.h>
+#include <Physicis/Collision/Collider/ConvexHullCollider.h>
 
 struct MeshData
 {
@@ -92,7 +92,7 @@ public:
 	ShadingTechniquePtr getRenderingEffect() const { return m_effect; }
 	MODEL_TYPE getModelType() const { return m_modelType; }
 	BoxCollider getBoundingBox();
-	ConvexShape getConvexShape();
+	ConvexHullCollider getConvexHullCollider();
 
 private:
 	/*

@@ -6,10 +6,21 @@ class Scene;
 class ConvexHullCollider : public ICollider
 {
 public:
-	ConvexHullCollider(void);
-	~ConvexHullCollider(void);
+	ConvexHullCollider(const vec3& center, const QVector<vec3>& vertices, 
+		const QVector<vec3>& faces, Scene* scene);
 
-	virtual BroadPhaseCollisionFeedback onBroadPhase(ICollider* other) 
-	{/*do nothing, this collider is for narrow phase collision detection*/}
+	ConvexShape getGeometryShape() const;
+
+	virtual BroadPhaseCollisionFeedback onBroadPhase(ICollider* other); 
+
+	/// Get the extreme vertex in the given direction
+	virtual vec3 getLocalSupportPoint(const vec3& dir, float margin = 0) const;
+
+protected:
+	virtual void init(){}
+
+private:
+	ConvexShape m_convexShape;
 };
 
+typedef QSharedPointer<ConvexHullCollider> ConvexHullColliderPtr;

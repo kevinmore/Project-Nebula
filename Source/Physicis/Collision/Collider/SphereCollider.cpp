@@ -3,9 +3,9 @@
 
 
 SphereCollider::SphereCollider( const vec3& center, const float radius, Scene* scene )
-	: ICollider(center, scene)
+	: ICollider(center, scene),
+	  m_sphereShape(center, radius)
 {
-	m_sphereShape = SphereShape(center, radius);
 	m_colliderType = ICollider::COLLIDER_SPHERE;
 
 	// the default model loaded here is a sphere with radius = 0.5, and the center is 0
@@ -64,14 +64,6 @@ void SphereCollider::setRadius( const float radius )
 
 vec3 SphereCollider::getLocalSupportPoint( const vec3& dir, float margin /*= 0*/ ) const
 {
-	vec3 supportPoint;
-
 	float radius = m_sphereShape.getRadius();
-
-	if ( dir.lengthSquared() > 0.0 )
-		supportPoint = (radius + margin) * dir.normalized();
-	else
-		supportPoint = vec3(0, radius + margin, 0);
-
-	return supportPoint;
+	return (radius + margin) * dir.normalized();
 }

@@ -117,8 +117,8 @@ void PhysicsWorld::handleCollisions()
 				c1->setColor(Qt::red);
 				c2->setColor(Qt::red);
 			}
-			boarderCheck(c1->getRigidBody());
-			boarderCheck(c2->getRigidBody());
+// 			boarderCheck(c1->getRigidBody());
+// 			boarderCheck(c2->getRigidBody());
 
 		}
 	}

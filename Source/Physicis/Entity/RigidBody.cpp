@@ -131,5 +131,5 @@ void RigidBody::attachCollider( ColliderPtr col )
 	col->setRigidBody(this);
 
 	// attach the collider to the game object
-	gameObject()->attachComponent(col);
+//	gameObject()->attachComponent(col);
 }

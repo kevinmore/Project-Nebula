@@ -59,30 +59,46 @@ void Scene::initialize()
 
 	// setup a basic physics world
 	// setup a demo room
-// 	GameObjectPtr go = createEmptyGameObject("Boarder");
-// 	go->setPosition(0, 6, 0);
-// 	BoxColliderPtr boarder(new BoxCollider(vec3(0, 6, 0), vec3(6, 6, 6), this));
-// 	boarder->setColor(Qt::cyan);
-// 	go->attachComponent(boarder);
-// 
-// 	// create rigid bodies for simulation
-// 	for(int i = 0; i < 30; ++i)
+	GameObjectPtr go = createEmptyGameObject("Gundam");
+	go->setScale(50);
+	LoaderThread loader(this, "../Resource/Models/BroadPhaseDemo/robot.obj", go, m_sceneRootNode, false);
+	SphereRigidBodyPtr rb(new SphereRigidBody());
+	rb->setPosition(vec3(-1, 1, 0));
+	rb->setGravityFactor(0.0f);
+	rb->setLinearVelocity(vec3(1, 0, 0));
+	ModelPtr model = m_objectManager->getGameObject("Gundam")->getComponent("Model").dynamicCast<IModel>();
+	rb->attachCollider(model->getBoundingBox());
+	go->attachComponent(rb);
+	m_physicsWorld->addEntity(rb.data());
+
+	// broad phase demo
 // 	{
-// 		float ratio = Math::Random::random(0.5f, 1.2f);
-// 		go = createEmptyGameObject("Gundam");
-// 		go->setScale(50);
-// 		LoaderThread loader(this, "../Resource/Models/BroadPhaseDemo/robot.obj", go, m_sceneRootNode, false);
-// 		SphereRigidBodyPtr rb(new SphereRigidBody());
-// 		rb->setPosition(Math::Random::random(vec3(-4, 1, -4), vec3(4, 9, 4)));
-// 		rb->setGravityFactor(0.0f);
-// 		rb->setLinearVelocity(Math::Random::random(vec3(-4, -4, -4), vec3(4, 4, 4)));
-// 		rb->setAngularVelocity(Math::Random::random(vec3(0, 0, 0), vec3(100, 100, 100)));
-// 		go->attachComponent(rb);
-// 		SphereColliderPtr collider(new SphereCollider(rb->getPosition(), 0.5f, this));
-// // 		BoxColliderPtr collider(new BoxCollider(rb->getPosition(), vec3(0.5, 0.5, 0.3), this));
-//  		rb->attachCollider(collider);
-// 		m_physicsWorld->addEntity(rb.data());
+// 	 	GameObjectPtr go = createEmptyGameObject("Boarder");
+// 	 	go->setPosition(0, 6, 0);
+// 	 	BoxColliderPtr boarder(new BoxCollider(vec3(0, 6, 0), vec3(6, 6, 6), this));
+// 	 	boarder->setColor(Qt::cyan);
+// 	 	go->attachComponent(boarder);
+// 	 
+// 	 	// create rigid bodies for simulation
+// 	 	for(int i = 0; i < 30; ++i)
+// 	 	{
+// 	 		float ratio = Math::Random::random(0.5f, 1.2f);
+// 	 		go = createEmptyGameObject("Gundam");
+// 	 		go->setScale(50);
+// 	 		LoaderThread loader(this, "../Resource/Models/BroadPhaseDemo/robot.obj", go, m_sceneRootNode, false);
+// 	 		SphereRigidBodyPtr rb(new SphereRigidBody());
+// 	 		rb->setPosition(Math::Random::random(vec3(-4, 1, -4), vec3(4, 9, 4)));
+// 	 		rb->setGravityFactor(0.0f);
+// 	 		rb->setLinearVelocity(Math::Random::random(vec3(-4, -4, -4), vec3(4, 4, 4)));
+// 	 		rb->setAngularVelocity(Math::Random::random(vec3(0, 0, 0), vec3(100, 100, 100)));
+// 	 		go->attachComponent(rb);
+// 	 		SphereColliderPtr collider(new SphereCollider(rb->getPosition(), 0.5f, this));
+// 	     // BoxColliderPtr collider(new BoxCollider(rb->getPosition(), vec3(0.5, 0.5, 0.3), this));
+// 	  		rb->attachCollider(collider);
+// 	 		m_physicsWorld->addEntity(rb.data());
+// 	 	}
 // 	}
+
 
 
 
@@ -90,24 +106,6 @@ void Scene::initialize()
 // 	BoxColliderPtr collider(new BoxCollider(vec3(0, 1, 0), vec3(0.5, 0.5, 0.5), this));
 // 	go->attachComponent(collider);
 
-
-
-	// particle system
-// 	GameObjectPtr particle = createParticleSystem("Rigid Cube");
-// 	particle->setPosition(0.45f, -0.50f, 0.45f);
-// 	particle->setRotation(180, 0, 0);
-// 	ComponentPtr comp = particle->getComponent("ParticleSystem");
-// 	ParticleSystemPtr ps = comp.dynamicCast<ParticleSystem>();
-// 	ps->setGravityFactor(0.1);
-// 	ps->toggleRandomColor(true);
-// 	ps->setMaxLife(4);
-// 	ps->setMinLife(2);
-// 	ps->toggleCollision(true);
-// 	ps->setRestitution(0.2);
-// 	ps->setMaxVelX(0);
-// 	ps->setMaxVelZ(0);
-// 	ps->setMinVelX(0);
-// 	ps->setMinVelZ(0);
 
 }
 
