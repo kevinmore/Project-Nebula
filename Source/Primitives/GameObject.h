@@ -3,6 +3,7 @@
 #include <Utility/Math.h>
 #include <QSharedPointer>
 #include <QElapsedTimer>
+#include "Transform.h"
 using namespace Math;
 
 class Puppet;
@@ -49,9 +50,9 @@ public:
 	QList<PuppetPtr> getPuppets();
 
 	/////////////////////////////inline section///////////////////////////////////
-	inline vec3 position() const { return m_position; }
-	inline vec3 rotation() const { return m_rotation; }
-	inline vec3 scale() const { return m_scale; }
+	inline vec3 position() const { return m_transform.getPosition(); }
+	inline vec3 rotation() const { return m_transform.getEulerAngles(); }
+	inline vec3 scale() const { return m_transform.getScale(); }
 	inline vec3 localSpeed() const { return m_speed; }
 
 	inline void setTransformMatrix(const mat4& transform)
@@ -64,13 +65,7 @@ public:
 	{
 		if(m_modelMatrixDirty)
 		{
-			m_modelMatrix.setToIdentity();
-
-			m_modelMatrix.translate(m_position);
-			m_modelMatrix.rotate(m_rotation.x(), Vector3::UNIT_X);
-			m_modelMatrix.rotate(m_rotation.y(), Vector3::UNIT_Y);
-			m_modelMatrix.rotate(m_rotation.z(), Vector3::UNIT_Z);
-			m_modelMatrix.scale(m_scale);
+			m_modelMatrix = m_transform.getTransformMatrix();
 
 			m_modelMatrixDirty = false;
 		}
@@ -104,7 +99,7 @@ signals:
 	void synchronized();
 	void componentAttached(ComponentPtr comp);
 	void componentDetached(ComponentPtr comp);
-	void transformChanged(const vec3& pos, const vec3& rot, const vec3& scale);
+	void transformChanged(const Transform& transform);
 
 public slots:
 	/// the 9 functions below will reset the model matrix
@@ -139,7 +134,7 @@ public slots:
 
 	void translateInWorld(const QString& paramString);
 	void rotateInWorld(const QString& paramString);
-	void rotateInWorldAxisAndAngle(const QString& paramString);
+	//void rotateInWorldAxisAndAngle(const QString& paramString);
 	void setLocalSpeed(const QString& paramString);
 	void resetSpeed();
 
@@ -154,14 +149,14 @@ public slots:
 	void togglePoints(bool state);
 
 private:
-	vec3 m_position, m_prevPosition;
-	vec3 m_rotation;
-	vec3 m_scale;
+	Transform m_transform;
+	vec3 m_prevPosition;
+
 	vec3 m_speed;
 
 	mat4 m_modelMatrix;
 
-	bool m_modelMatrixDirty;
+	mutable bool m_modelMatrixDirty;
 
 	MovingBehaviour m_movingBehaviour;
 	

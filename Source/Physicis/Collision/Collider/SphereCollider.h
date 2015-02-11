@@ -11,7 +11,7 @@ public:
 
 	void setRadius(const float radius);
 
-	virtual BroadPhaseCollisionFeedback intersect(ICollider* other);
+	virtual BroadPhaseCollisionFeedback onBroadPhase(ICollider* other);
 
 protected:
 	virtual void init();

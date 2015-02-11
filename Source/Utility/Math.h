@@ -30,25 +30,25 @@ namespace Math
 		}
 
 		/**
-         * compute a rotation matrix from the given eular angles
+         * compute a rotation matrix from the given euler angles
          */
-		static mat3 computeRotationMatrix(const vec3& eularAngles)
+		static mat3 computeRotationMatrix(const vec3& eulerAngles)
 		{
 			mat3 rotX, rotY, rotZ;
-			rotX.m[1][1] =  qCos(eularAngles.x());
-			rotX.m[1][2] = -qSin(eularAngles.x());
-			rotX.m[2][1] =  qSin(eularAngles.x());
-			rotX.m[2][2] =  qCos(eularAngles.x());
+			rotX.m[1][1] =  qCos(eulerAngles.x());
+			rotX.m[1][2] = -qSin(eulerAngles.x());
+			rotX.m[2][1] =  qSin(eulerAngles.x());
+			rotX.m[2][2] =  qCos(eulerAngles.x());
 
-			rotY.m[0][0] =  qCos(eularAngles.y());
-			rotY.m[0][2] =  qSin(eularAngles.y());
-			rotY.m[2][0] = -qSin(eularAngles.y());
-			rotY.m[2][2] =  qCos(eularAngles.y());
+			rotY.m[0][0] =  qCos(eulerAngles.y());
+			rotY.m[0][2] =  qSin(eulerAngles.y());
+			rotY.m[2][0] = -qSin(eulerAngles.y());
+			rotY.m[2][2] =  qCos(eulerAngles.y());
 
-			rotZ.m[0][0] =  qCos(eularAngles.z());
-			rotZ.m[0][1] = -qSin(eularAngles.z());
-			rotZ.m[1][0] =  qSin(eularAngles.z());
-			rotZ.m[1][1] =  qCos(eularAngles.z());
+			rotZ.m[0][0] =  qCos(eulerAngles.z());
+			rotZ.m[0][1] = -qSin(eulerAngles.z());
+			rotZ.m[1][0] =  qSin(eulerAngles.z());
+			rotZ.m[1][1] =  qCos(eulerAngles.z());
 
 			return rotX * rotY * rotZ;
 		}
@@ -526,13 +526,33 @@ namespace Math
 		const quat ZERO = quat(1, 0, 0, 0);
 
 		/**
-         * compute a quaternion from the given eular angles
+         * compute a quaternion from the given euler angles
          */
-		static quat computeQuaternion(const vec3& eularAngles)
+		static quat computeQuaternion(const vec3& eulerAngles)
 		{
-			return quat::fromAxisAndAngle(Math::Vector3::UNIT_X, eularAngles.x())
-				 * quat::fromAxisAndAngle(Math::Vector3::UNIT_Y, eularAngles.y())
-				 * quat::fromAxisAndAngle(Math::Vector3::UNIT_Z, eularAngles.z());
+			return quat::fromAxisAndAngle(Math::Vector3::UNIT_X, eulerAngles.x())
+				 * quat::fromAxisAndAngle(Math::Vector3::UNIT_Y, eulerAngles.y())
+				 * quat::fromAxisAndAngle(Math::Vector3::UNIT_Z, eulerAngles.z());
+		}
+
+		/**
+         * compute euler angles from the given quaternion
+         */
+		static vec3 computeEularAngles(const quat& q)
+		{
+			vec3 out;
+
+			vec4 v = q.toVector4D();
+			float x = v.x();
+			float y = v.y();
+			float z = v.z();
+			float w = v.w();
+
+			out.setX(qRadiansToDegrees(qAtan2(2 * (w * x + y * z) , 1 - 2 * (x * x + y * y))));
+			out.setY(qRadiansToDegrees(qSin(2 * (w * y - x * z))));
+			out.setZ(qRadiansToDegrees(qAtan2(2 * (w * z + x * y) , 1 - 2 * (y * y + z * z))));
+
+			return out;
 		}
 
 		// same to quat.conjugate()

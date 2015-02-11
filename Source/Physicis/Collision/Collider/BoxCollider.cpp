@@ -22,9 +22,9 @@ BoxShape BoxCollider::getGeometryShape() const
 	return m_boxShape;
 }
 
-BroadPhaseCollisionFeedback BoxCollider::intersect( ICollider* other )
+BroadPhaseCollisionFeedback BoxCollider::onBroadPhase( ICollider* other )
 {
-	if (other->m_colliderType != ICollider::COLLIDER_BOX)
+	if (other->getColliderType() != ICollider::COLLIDER_BOX)
 	{
 		//qWarning() << "Collision detection between OBB and other colliders are not implemented yet.";
 		return BroadPhaseCollisionFeedback();

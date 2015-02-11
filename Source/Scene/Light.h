@@ -1,6 +1,7 @@
 #pragma once
 #include <Utility/EngineCommon.h>
 #include <Primitives/Component.h>
+#include <Primitives/Transform.h>
 
 class Scene;
 class Light : public Component
@@ -67,7 +68,7 @@ signals:
 	void propertiesChanged(Light* l);
 
 private slots:
-	void syncTransform(const vec3& pos, const vec3& rot, const vec3& scale);
+	void syncTransform(const Transform& transform);
 
 private:
 	Scene* m_scene;

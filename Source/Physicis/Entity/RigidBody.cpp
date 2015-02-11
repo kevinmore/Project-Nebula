@@ -29,7 +29,7 @@ RigidBody::RigidBody(const vec3& position, const quat& rotation, QObject* parent
 	m_maxAngularVelocity = 200.0f;
 	m_timeFactor = 1.0f;
 
-	m_eularAngles = Math::Vector3::ZERO;
+	m_eulerAngles = Math::Vector3::ZERO;
 	m_objectRadius = 1.0f;
 	m_rotationMatrix.setToIdentity();
 	m_inertiaTensor.setToIdentity();

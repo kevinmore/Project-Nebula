@@ -18,7 +18,7 @@ int NarrowPhaseCollisionDetection::checkCollisions()
 
 	for ( std::vector<NarrowPhaseCollisionFeedback>::iterator iter = m_CollisionPairs.begin(); iter != m_CollisionPairs.end(); iter++ )
 	{
-		if ( m_pAlgorithm->checkCollision(*(*iter).pObjA, *(*iter).pObjB, &(*iter), true) )
+		if ( m_pAlgorithm->checkCollision(*(*iter).pObjA, *(*iter).pObjB, *iter, true) )
 			++numIntersections;
 	}
 

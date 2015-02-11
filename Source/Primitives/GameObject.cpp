@@ -6,13 +6,10 @@
 GameObject::GameObject(Scene* scene, GameObject* parent)
 	: QObject(parent),
 	  m_scene(scene),
-	  m_position(Vector3::ZERO),
-	  m_rotation(Vector3::ZERO),
-	  m_scale(Vector3::UNIT_SCALE),
 	  m_movingBehaviour(CONSECUTIVE),
 	  m_modelMatrixDirty(true),
 	  m_time(0.0f),
-	  m_prevPosition(m_position),
+	  m_prevPosition(Vector3::ZERO),
 	  m_isMoving(false)
 {
 	connect(this, SIGNAL(synchronized()), this, SLOT(calculateSpeed()));
@@ -35,138 +32,121 @@ GameObject::~GameObject()
 
 void GameObject::setPosition(const vec3& positionVector)
 {
-	m_position = positionVector;
-
+	m_transform.setPosition(positionVector);
 	m_modelMatrixDirty = true;
-	emit transformChanged(m_position, m_rotation, m_scale);
+	emit transformChanged(m_transform);
 }
 
 void GameObject::setPosition(double x, double y, double z)
 {
-	m_position.setX(x);
-	m_position.setY(y);
-	m_position.setZ(z);
-
+	m_transform.setPosition(x, y, z);
 	m_modelMatrixDirty = true;
-	emit transformChanged(m_position, m_rotation, m_scale);
+	emit transformChanged(m_transform);
 }
 
 void GameObject::setRotation(const vec3& rotationVector)
 {
-	m_rotation = rotationVector;
-
+	m_transform.setRotation(rotationVector);
 	m_modelMatrixDirty = true;
-	emit transformChanged(m_position, m_rotation, m_scale);
+	emit transformChanged(m_transform);
 }
 
 void GameObject::setRotation(double x, double y, double z)
 {
-	m_rotation.setX(x);
-	m_rotation.setY(y);
-	m_rotation.setZ(z);
-
+	m_transform.setRotation(x, y, z);
 	m_modelMatrixDirty = true;
-	emit transformChanged(m_position, m_rotation, m_scale);
+	emit transformChanged(m_transform);
 }
 
 void GameObject::setScale(const vec3& scale)
 {
-	m_scale = scale;
-
+	m_transform.setScale(scale);
 	m_modelMatrixDirty = true;
-	emit transformChanged(m_position, m_rotation, m_scale);
+	emit transformChanged(m_transform);
 }
 
 void GameObject::setScale(double x, double y, double z)
 {
-	m_scale.setX(x);
-	m_scale.setY(y);
-	m_scale.setZ(z);
-
+	m_transform.setScale(x, y, z);
 	m_modelMatrixDirty = true;
-	emit transformChanged(m_position, m_rotation, m_scale);
+	emit transformChanged(m_transform);
 }
 
 void GameObject::setScale(double scaleFactor)
 {
-	m_scale.setX(scaleFactor);
-	m_scale.setY(scaleFactor);
-	m_scale.setZ(scaleFactor);
-
+	m_transform.setScale(scaleFactor);
 	m_modelMatrixDirty = true;
-	emit transformChanged(m_position, m_rotation, m_scale);
+	emit transformChanged(m_transform);
 }
 
 void GameObject::fixedTranslateX(double x)
 {
-	m_position.setX(x);
+	m_transform.setPositionX(x);
 	m_modelMatrixDirty = true;
-	emit transformChanged(m_position, m_rotation, m_scale);
+	emit transformChanged(m_transform);
 }
 
 void GameObject::fixedTranslateY(double y)
 {
-	m_position.setY(y);
+	m_transform.setPositionY(y);
 	m_modelMatrixDirty = true;
-	emit transformChanged(m_position, m_rotation, m_scale);
+	emit transformChanged(m_transform);
 }
 
 void GameObject::fixedTranslateZ(double z)
 {
-	m_position.setZ(z);
+	m_transform.setPositionZ(z);
 	m_modelMatrixDirty = true;
-	emit transformChanged(m_position, m_rotation, m_scale);
+	emit transformChanged(m_transform);
 }
 
 void GameObject::fixedRotateX(double x)
 {
-	m_rotation.setX(x);
+	m_transform.setEulerAngleX(x);
 	m_modelMatrixDirty = true;
-	emit transformChanged(m_position, m_rotation, m_scale);
+	emit transformChanged(m_transform);
 }
 
 void GameObject::fixedRotateY(double y)
 {
-	m_rotation.setY(y);
+	m_transform.setEulerAngleY(y);
 	m_modelMatrixDirty = true;
-	emit transformChanged(m_position, m_rotation, m_scale);
+	emit transformChanged(m_transform);
 }
 
 void GameObject::fixedRotateZ(double z)
 {
-	m_rotation.setZ(z);
+	m_transform.setEulerAngleZ(z);
 	m_modelMatrixDirty = true;
-	emit transformChanged(m_position, m_rotation, m_scale);
+	emit transformChanged(m_transform);
 }
 
 void GameObject::fixedScaleX(double x)
 {
-	m_scale.setX(x);
+	m_transform.setScaleX(x);
 	m_modelMatrixDirty = true;
-	emit transformChanged(m_position, m_rotation, m_scale);
+	emit transformChanged(m_transform);
 }
 
 void GameObject::fixedScaleY(double y)
 {
-	m_scale.setY(y);
+	m_transform.setScaleY(y);
 	m_modelMatrixDirty = true;
-	emit transformChanged(m_position, m_rotation, m_scale);
+	emit transformChanged(m_transform);
 }
 
 void GameObject::fixedScaleZ(double z)
 {
-	m_scale.setZ(z);
+	m_transform.setScaleZ(z);
 	m_modelMatrixDirty = true;
-	emit transformChanged(m_position, m_rotation, m_scale);
+	emit transformChanged(m_transform);
 }
 
 void GameObject::reset()
 {
-	setPosition(Vector3::ZERO);
-	setRotation(Vector3::ZERO);
-	setScale(Vector3::UNIT_SCALE);
+	m_transform.reset();
 	m_puppets.clear();
-	emit transformChanged(m_position, m_rotation, m_scale);
+	emit transformChanged(m_transform);
 }
 
 void GameObject::setSpeed( const vec3& speed )
@@ -190,9 +170,9 @@ void GameObject::setLocalSpeed( const QString& paramString )
 
 vec3 GameObject::globalSpeed() const
 {
-	quat rotX = quat::fromAxisAndAngle(Math::Vector3::UNIT_X, m_rotation.x());
-	quat rotY = quat::fromAxisAndAngle(Math::Vector3::UNIT_Y, m_rotation.y());
-	quat rotZ = quat::fromAxisAndAngle(Math::Vector3::UNIT_Z, m_rotation.z());
+	quat rotX = quat::fromAxisAndAngle(Math::Vector3::UNIT_X, m_transform.getEulerAngles().x());
+	quat rotY = quat::fromAxisAndAngle(Math::Vector3::UNIT_Y, m_transform.getEulerAngles().y());
+	quat rotZ = quat::fromAxisAndAngle(Math::Vector3::UNIT_Z, m_transform.getEulerAngles().z());
 	quat rot = rotX * rotY * rotZ;
 
 	return rot.rotatedVector(m_speed);
@@ -201,8 +181,8 @@ vec3 GameObject::globalSpeed() const
 void GameObject::translateInWorld( const vec3& delta )
 {
 	m_modelMatrix.translate(delta);
-	m_prevPosition = m_position;
-	m_position += delta;
+	m_prevPosition = m_transform.getPosition();
+	m_transform.setPosition(m_prevPosition + delta);
 	m_modelMatrixDirty = false;
 }
 
@@ -210,8 +190,8 @@ void GameObject::translateInWorld( const QString& paramString )
 {
 	QStringList params = paramString.split(", ", QString::SkipEmptyParts);
 	vec3 delta(params[0].toFloat(), params[1].toFloat(), params[2].toFloat());
-	m_prevPosition = m_position;
-	m_position += delta;
+	m_prevPosition = m_transform.getPosition();
+	m_transform.setPosition(m_prevPosition + delta);
 	m_modelMatrix.translate(delta);
 
 	m_modelMatrixDirty = false;
@@ -233,35 +213,35 @@ void GameObject::rotateInWorld( const QString& paramString )
 	emit synchronized();
 }
 
-void GameObject::rotateInWorldAxisAndAngle( const QString& paramString )
-{
-	QStringList params = paramString.split(", ", QString::SkipEmptyParts);
-	QString axis   = params[0];
-	float amount = params[1].toFloat();
-	if (axis.toLower() == "x") 
-	{
-		m_modelMatrix.rotate(amount, Math::Vector3::UNIT_X);
-		m_rotation.setX(m_rotation.x() + amount);
-		if(m_rotation.x() > 180.0f) m_rotation.setX(m_rotation.x() - 360.0f);
-		if(m_rotation.x() <= -180.0f) m_rotation.setX(m_rotation.x() + 360.0f);
-	}
-	else if (axis.toLower() == "y") 
-	{
-		m_modelMatrix.rotate(amount, Math::Vector3::UNIT_Y);
-		m_rotation.setY(m_rotation.y() + amount);
-		if(m_rotation.y() > 180.0f) m_rotation.setY(m_rotation.y() - 360.0f);
-		if(m_rotation.y() <= -180.0f) m_rotation.setY(m_rotation.y() + 360.0f);
-	}
-	else if (axis.toLower() == "z") 
-	{
-		m_modelMatrix.rotate(amount, Math::Vector3::UNIT_Z);
-		m_rotation.setZ(m_rotation.z() + amount);
-		if(m_rotation.z() > 180.0f) m_rotation.setZ(m_rotation.z() - 360.0f);
-		if(m_rotation.z() <= -180.0f) m_rotation.setZ(m_rotation.z() + 360.0f);
-	}
-	m_modelMatrixDirty = false;
-	emit synchronized();
-}
+// void GameObject::rotateInWorldAxisAndAngle( const QString& paramString )
+// {
+// 	QStringList params = paramString.split(", ", QString::SkipEmptyParts);
+// 	QString axis   = params[0];
+// 	float amount = params[1].toFloat();
+// 	if (axis.toLower() == "x") 
+// 	{
+// 		m_modelMatrix.rotate(amount, Math::Vector3::UNIT_X);
+// 		m_rotation.setX(m_rotation.x() + amount);
+// 		if(m_rotation.x() > 180.0f) m_rotation.setX(m_rotation.x() - 360.0f);
+// 		if(m_rotation.x() <= -180.0f) m_rotation.setX(m_rotation.x() + 360.0f);
+// 	}
+// 	else if (axis.toLower() == "y") 
+// 	{
+// 		m_modelMatrix.rotate(amount, Math::Vector3::UNIT_Y);
+// 		m_rotation.setY(m_rotation.y() + amount);
+// 		if(m_rotation.y() > 180.0f) m_rotation.setY(m_rotation.y() - 360.0f);
+// 		if(m_rotation.y() <= -180.0f) m_rotation.setY(m_rotation.y() + 360.0f);
+// 	}
+// 	else if (axis.toLower() == "z") 
+// 	{
+// 		m_modelMatrix.rotate(amount, Math::Vector3::UNIT_Z);
+// 		m_rotation.setZ(m_rotation.z() + amount);
+// 		if(m_rotation.z() > 180.0f) m_rotation.setZ(m_rotation.z() - 360.0f);
+// 		if(m_rotation.z() <= -180.0f) m_rotation.setZ(m_rotation.z() + 360.0f);
+// 	}
+// 	m_modelMatrixDirty = false;
+// 	emit synchronized();
+// }
 
 void GameObject::setMovingBehaviour( MovingBehaviour type )
 {
@@ -283,7 +263,7 @@ void GameObject::calculateSpeed()
 		resetSpeed();
 		return;
 	}
-	m_speed = (m_position - m_prevPosition) / dt;
+	m_speed = (m_transform.getPosition() - m_prevPosition) / dt;
 }
 
 bool GameObject::isMoving() const
@@ -358,107 +338,107 @@ Scene* GameObject::getScene() const
 
 void GameObject::translateX( float x )
 {
-	m_position.setX(m_position.x() + x);
+	m_transform.setPositionX(m_transform.getPosition().x() + x);
 	m_modelMatrix.translate(x, 0.0f, 0.0f);
 	m_modelMatrixDirty = false;
-	emit transformChanged(m_position, m_rotation, m_scale);
+	emit transformChanged(m_transform);
 }
 
 void GameObject::translateY( float y )
 {
-	m_position.setY(m_position.y() + y);
+	m_transform.setPositionX(m_transform.getPosition().y() + y);
 	m_modelMatrix.translate(0.0f, y, 0.0f);
 	m_modelMatrixDirty = false;
-	emit transformChanged(m_position, m_rotation, m_scale);
+	emit transformChanged(m_transform);
 }
 
 void GameObject::translateZ( float z )
 {
-	m_position.setZ(m_position.z() + z);
+	m_transform.setPositionZ(m_transform.getPosition().z() + z);
 	m_modelMatrix.translate(0.0f, 0.0f, z);
 	m_modelMatrixDirty = false;
-	emit transformChanged(m_position, m_rotation, m_scale);
+	emit transformChanged(m_transform);
 }
 
 void GameObject::translate( const vec3& delta )
 {
-	m_position += delta;
+	m_transform.setPosition(m_transform.getPosition() + delta);
 	m_modelMatrix.translate(delta);
 	m_modelMatrixDirty = false;
-	emit transformChanged(m_position, m_rotation, m_scale);
+	emit transformChanged(m_transform);
 }
 
 void GameObject::rotateX( float x )
 {
-	m_rotation.setX(m_rotation.x() + x);
+	m_transform.setEulerAngleX(m_transform.getEulerAngles().x() + x);
 	m_modelMatrix.rotate(x, Math::Vector3::UNIT_X);
 	m_modelMatrixDirty = false;
-	emit transformChanged(m_position, m_rotation, m_scale);
+	emit transformChanged(m_transform);
 }
 
 void GameObject::rotateY( float y )
 {
-	m_rotation.setY(m_rotation.y() + y);
+	m_transform.setEulerAngleY(m_transform.getEulerAngles().y() + y);
 	m_modelMatrix.rotate(y, Math::Vector3::UNIT_Y);
 	m_modelMatrixDirty = false;
-	emit transformChanged(m_position, m_rotation, m_scale);
+	emit transformChanged(m_transform);
 }
 
 void GameObject::rotateZ( float z )
 {
-	m_rotation.setZ(m_rotation.z() + z);
+	m_transform.setEulerAngleZ(m_transform.getEulerAngles().z() + z);
 	m_modelMatrix.rotate(z, Math::Vector3::UNIT_Z);
 	m_modelMatrixDirty = false;
-	emit transformChanged(m_position, m_rotation, m_scale);
+	emit transformChanged(m_transform);
 }
 
 void GameObject::rotate( const vec3& delta )
 {
-	m_rotation += delta;
+	m_transform.setRotation(m_transform.getEulerAngles() + delta);
 	m_modelMatrix.rotate(delta.x(), Vector3::UNIT_X);
 	m_modelMatrix.rotate(delta.y(), Vector3::UNIT_Y);
 	m_modelMatrix.rotate(delta.z(), Vector3::UNIT_Z);
 	m_modelMatrixDirty = false;
-	emit transformChanged(m_position, m_rotation, m_scale);
+	emit transformChanged(m_transform);
 }
 
 void GameObject::rotate( const quat& delta )
 {
 	m_modelMatrix.rotate(delta);
 	m_modelMatrixDirty = false;
-	emit transformChanged(m_position, m_rotation, m_scale);
+	emit transformChanged(m_transform);
 }
 
 void GameObject::scaleX( float x )
 {
-	m_scale.setX(m_scale.x() + x);
-	m_modelMatrix.scale(m_scale);
+	m_transform.setScaleX(m_transform.getScale().x() + x);
+	m_modelMatrix.scale(m_transform.getScale());
 	m_modelMatrixDirty = false;
-	emit transformChanged(m_position, m_rotation, m_scale);
+	emit transformChanged(m_transform);
 }
 
 void GameObject::scaleY( float y )
 {
-	m_scale.setY(m_scale.y() + y);
-	m_modelMatrix.scale(m_scale);
+	m_transform.setScaleY(m_transform.getScale().y() + y);
+	m_modelMatrix.scale(m_transform.getScale());
 	m_modelMatrixDirty = false;
-	emit transformChanged(m_position, m_rotation, m_scale);
+	emit transformChanged(m_transform);
 }
 
 void GameObject::scaleZ( float z )
 {
-	m_scale.setZ(m_scale.z() + z);
-	m_modelMatrix.scale(m_scale);
+	m_transform.setScaleZ(m_transform.getScale().z() + z);
+	m_modelMatrix.scale(m_transform.getScale());
 	m_modelMatrixDirty = false;
-	emit transformChanged(m_position, m_rotation, m_scale);
+	emit transformChanged(m_transform);
 }
 
 void GameObject::scale( const vec3& delta )
 {
-	m_scale += delta;
-	m_modelMatrix.scale(m_scale);
+	m_transform.setScale(m_transform.getScale() + delta);
+	m_modelMatrix.scale(m_transform.getScale());
 	m_modelMatrixDirty = false;
-	emit transformChanged(m_position, m_rotation, m_scale);
+	emit transformChanged(m_transform);
 }
 
 void GameObject::clearPuppets()

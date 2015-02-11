@@ -32,7 +32,7 @@
     <ClCompile Include="Physicis\World\PhysicsWorldObject.cpp" />
     <ClCompile Include="Scene\moc_Light.cc" />
     <ClCompile Include="Scene\ShadingTechniques\moc_ShadingTechnique.cc" />
-    <ClCompile Include="Physicis\Transform.cpp" />
+    <ClCompile Include="Primitives\Transform.cpp" />
     <ClCompile Include="Utility\AssimpThread.cpp" />
     <ClCompile Include="Physicis\Entity\BoxRigidBody.cpp" />
     <ClCompile Include="Physicis\World\PhysicsWorldConfig.cpp" />
@@ -107,7 +107,7 @@
     <ClInclude Include="Physicis\Geometry\SphereShape.h" />
     <ClInclude Include="Primitives\Puppet.h" />
     <ClInclude Include="Physicis\Collision\Collider\SphereCollider.h" />
-    <ClInclude Include="Physicis\Transform.h" />
+    <ClInclude Include="Primitives\Transform.h" />
     <ClInclude Include="Utility\AssimpThread.h" />
     <ClInclude Include="UI\Canvas.h" />
     <ClInclude Include="UI\HierarchyWidget.h" />
@@ -144,8 +144,8 @@
     <ClInclude Include="Scene\IScene.h" />
     <ClInclude Include="Scene\Managers\MeshManager.h" />
     <ClInclude Include="Scene\Camera.h" />
-    <ClInclude Include="Primitives\GameObject.h" />
-    <ClInclude Include="Scene\Light.h" />
+    <QtMOC Include="Primitives\GameObject.h" />
+    <QtMOC Include="Scene\Light.h" />
     <ClInclude Include="Primitives\Mesh.h" />
     <ClInclude Include="Primitives\Material.h" />
     <ClInclude Include="Primitives\Texture.h" />

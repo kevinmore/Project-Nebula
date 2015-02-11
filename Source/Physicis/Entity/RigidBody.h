@@ -145,7 +145,7 @@ public:
 
 	/// Returns the rotation changed from local to world space for this rigid body.
 	inline const quat& getDeltaRotation() const { return m_deltaRotation;	}
-	inline const vec3& getEularAngles() const { return m_eularAngles;}
+	inline const vec3& getEulerAngles() const { return m_eulerAngles;}
 	inline const mat3& getRotationMatrix() const { return m_rotationMatrix; }
 	inline const mat4& getTransformMatrix() const { return m_transformMatrix; }
 
@@ -369,7 +369,7 @@ public:
 	float m_timeFactor;
 
 	/// The angular velocity * dt which was used in the last integration step.
-	vec3 m_eularAngles; 
+	vec3 m_eulerAngles; 
 
 	/// A sphere around the center of mass which completely encapsulates the object
 	float m_objectRadius;

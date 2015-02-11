@@ -5,14 +5,14 @@
 #include "CollisionObject.h"
 #include "EPAEdge.h"
 
-bool GJKSolver::generateCollisionInfo( const CollisionObject& objA, const CollisionObject& objB, const Transform &transB2A, const GJKSimplex& simplex, vec3 v, float distSqrd, NarrowPhaseCollisionFeedback* pCollisionInfo ) const
+bool GJKSolver::generateCollisionInfo( const CollisionObject& objA, const CollisionObject& objB, const Transform &transB2A, const GJKSimplex& simplex, vec3 v, float distSqrd, NarrowPhaseCollisionFeedback& pCollisionInfo ) const
 {
 	vec3 closestPntA;
 	vec3 closestPntB;
 	simplex.closestPointAandB(closestPntA, closestPntB);
 
 	float dist = sqrt(distSqrd);
-	pCollisionInfo->proximityDistance = dist;
+	pCollisionInfo.proximityDistance = dist;
 
 	Q_ASSERT(dist > 0.0);
 
@@ -29,19 +29,19 @@ bool GJKSolver::generateCollisionInfo( const CollisionObject& objA, const Collis
 	float margin = objA.getMargin() + objB.getMargin();
 	float penetrationDepth = margin - dist;
 
-	pCollisionInfo->penetrationDepth = penetrationDepth;
-	pCollisionInfo->witnessPntA = closestPntA;
-	pCollisionInfo->witnessPntB = closestPntB;
+	pCollisionInfo.penetrationDepth = penetrationDepth;
+	pCollisionInfo.witnessPntA = closestPntA;
+	pCollisionInfo.witnessPntB = closestPntB;
 
 	if ( penetrationDepth <= 0 )
-		pCollisionInfo->bIntersect = false;
+		pCollisionInfo.bIntersect = false;
 	else
-		pCollisionInfo->bIntersect = true;
+		pCollisionInfo.bIntersect = true;
 
-	return pCollisionInfo->bIntersect;
+	return pCollisionInfo.bIntersect;
 }
 
-bool GJKSolver::checkCollision( CollisionObject& objA, CollisionObject& objB, NarrowPhaseCollisionFeedback* pCollisionInfo, bool bProximity /*= false*/ )
+bool GJKSolver::checkCollision( CollisionObject& objA, CollisionObject& objB, NarrowPhaseCollisionFeedback& pCollisionInfo, bool bProximity /*= false*/ )
 {
 	vec3 suppPntA; // support point from object A
 	vec3 suppPntB; // support point from object B
@@ -60,15 +60,14 @@ bool GJKSolver::checkCollision( CollisionObject& objA, CollisionObject& objB, Na
 	quat rotA2B = objB.getTransform().getRotation().conjugate() * objA.getTransform().getRotation();
 
 	// closest point to the origin
-	// TODO:Need to use cached one to exploit frame coherence. 
 	vec3 v(1.0, 0.0, 0.0);
 
 	float distSqrd = FLT_MAX;
 	float distSqrdPrev = distSqrd;
 
-	int numIter = 0;
+	//int numIter = 0;
 
-	while ( 1 ) 
+	while (true) 
 	{
 		// support points are in local space of objA
 		suppPntA = objA.getLocalSupportPoint(-v);
@@ -106,7 +105,7 @@ bool GJKSolver::checkCollision( CollisionObject& objA, CollisionObject& objB, Na
 			return generateCollisionInfo(objA, objB, transB2A, simplex, v, distSqrd, pCollisionInfo);			
 		}
 
-		// Add w into simplex. Determinants will be computed inside AddPoint(..). 
+		// Add w into simplex. Determinants will be computed inside addPoint(..). 
 		simplex.addPoint(w, suppPntA, suppPntB);
 
 		if ( !simplex.isAffinelyIndependent() ) 
@@ -133,7 +132,7 @@ bool GJKSolver::checkCollision( CollisionObject& objA, CollisionObject& objB, Na
 		}
 
 		// If simplex is full, we found a simplex(tetrahedron) containing origin. 
-		// We stop iterating and pass this simplex to EPA to find penetration depth and closest points.
+		// We stop iterating and pass this simplex to EPA Solver to find penetration depth and closest points.
 		if ( simplex.isFull() )
 		{
 			if ( bFoundSeparatingAxis )
@@ -142,7 +141,7 @@ bool GJKSolver::checkCollision( CollisionObject& objA, CollisionObject& objB, Na
 				break;
 		}
 
-		// Instead seeing if distSqrd is zero within tolerance, we use relative tolerance using max sqaured lengh from simplex.
+		// Instead seeing if distSqrd is zero within tolerance, we use relative tolerance using max squared length from simplex.
 		// This is explained in 'Collision Detection in Interactive 3D'.
 		// So if distSqrd is less than or equal to EPSILON * (max squared length from simplex), we consider that we've found
 		// a simplex containing origin. In this case, the simplex could be a vertex, a line segment, a triangle or a tetrahedron. 
@@ -152,11 +151,11 @@ bool GJKSolver::checkCollision( CollisionObject& objA, CollisionObject& objB, Na
 		if ( distSqrd <= 1e-6 ) 
 			return false; // TODO:break or return false?
 
-		++numIter;
+		//++numIter;
 	} 
 
 	// TODO: Need to invesgate hybrid method metioned in Geno's book.
 	// TODO: Need to use GJK to compute the shallow penetration depth.
 
-	return m_EPAAlgorithm.computePenetrationDepthAndContactPoints(simplex, objA, objB, v, pCollisionInfo);
+	return m_EPASolver.computePenetrationDepthAndContactPoints(simplex, objA, objB, v, pCollisionInfo);
 }

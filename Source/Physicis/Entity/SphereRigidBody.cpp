@@ -135,11 +135,11 @@ void SphereRigidBody::update( const float dt )
 	RigidBody::update(dt);
 
 	// update the angular properties
-	m_eularAngles += m_angularVelocity * dt;
+	m_eulerAngles += m_angularVelocity * dt;
 
-	m_rotation = Math::Quaternion::computeQuaternion(m_eularAngles);
+	m_rotation = Math::Quaternion::computeQuaternion(m_eulerAngles);
 	m_transformMatrix.rotate(m_rotation);
 
-	m_rotationMatrix = Math::Matrix3::computeRotationMatrix(m_eularAngles);
+	m_rotationMatrix = Math::Matrix3::computeRotationMatrix(m_eulerAngles);
 	m_inertiaTensorInvWorld =  m_rotationMatrix * m_inertiaTensorInv * m_rotationMatrix.transposed();
 }

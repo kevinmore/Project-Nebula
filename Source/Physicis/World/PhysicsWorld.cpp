@@ -93,7 +93,7 @@ void PhysicsWorld::handleCollisions()
 			c1->setColor(Qt::green);
 			c2->setColor(Qt::green);
 
-			BroadPhaseCollisionFeedback result = c1->intersect(c2);
+			BroadPhaseCollisionFeedback result = c1->onBroadPhase(c2);
 
 			if (result.isColliding())
 			{

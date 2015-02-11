@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_Light_t {
-    QByteArrayData data[10];
-    char stringdata[67];
+    QByteArrayData data[8];
+    char stringdata[68];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -35,13 +35,11 @@ QT_MOC_LITERAL(2, 24, 0),
 QT_MOC_LITERAL(3, 25, 6),
 QT_MOC_LITERAL(4, 32, 1),
 QT_MOC_LITERAL(5, 34, 13),
-QT_MOC_LITERAL(6, 48, 4),
-QT_MOC_LITERAL(7, 53, 3),
-QT_MOC_LITERAL(8, 57, 3),
-QT_MOC_LITERAL(9, 61, 5)
+QT_MOC_LITERAL(6, 48, 9),
+QT_MOC_LITERAL(7, 58, 9)
     },
     "Light\0propertiesChanged\0\0Light*\0l\0"
-    "syncTransform\0vec3\0pos\0rot\0scale"
+    "syncTransform\0Transform\0transform"
 };
 #undef QT_MOC_LITERAL
 
@@ -62,13 +60,13 @@ static const uint qt_meta_data_Light[] = {
        1,    1,   24,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       5,    3,   27,    2, 0x08 /* Private */,
+       5,    1,   27,    2, 0x08 /* Private */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3,    4,
 
  // slots: parameters
-    QMetaType::Void, 0x80000000 | 6, 0x80000000 | 6, 0x80000000 | 6,    7,    8,    9,
+    QMetaType::Void, 0x80000000 | 6,    7,
 
        0        // eod
 };
@@ -79,7 +77,7 @@ void Light::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void 
         Light *_t = static_cast<Light *>(_o);
         switch (_id) {
         case 0: _t->propertiesChanged((*reinterpret_cast< Light*(*)>(_a[1]))); break;
-        case 1: _t->syncTransform((*reinterpret_cast< const vec3(*)>(_a[1])),(*reinterpret_cast< const vec3(*)>(_a[2])),(*reinterpret_cast< const vec3(*)>(_a[3]))); break;
+        case 1: _t->syncTransform((*reinterpret_cast< const Transform(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {

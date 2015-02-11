@@ -60,7 +60,6 @@
     <ClCompile Include="Scene\ShadingTechniques\moc_ShadingTechnique.cc" />
     <ClCompile Include="Scene\moc_Light.cc" />
     <ClCompile Include="Physicis\Geometry\ConvexShape.cpp" />
-    <ClCompile Include="Physicis\Transform.cpp" />
     <ClCompile Include="Physicis\Collision\BroadPhase\BroadPhaseCollisionFeedback..cpp" />
     <ClCompile Include="Physicis\Collision\Collider\BoxCollider.cpp" />
     <ClCompile Include="Physicis\Collision\Collider\SphereCollider.cpp" />
@@ -74,6 +73,7 @@
     <ClCompile Include="Physicis\Collision\Collider\ICollider.cpp" />
     <ClCompile Include="Scene\IModel.cpp" />
     <ClCompile Include="Scene\IScene.cpp" />
+    <ClCompile Include="Primitives\Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Primitives\Texture.h" />
@@ -125,9 +125,6 @@
     <ClInclude Include="Physicis\Geometry\ConvexShape.h" />
     <ClInclude Include="UI\HierarchyWidget.h" />
     <ClInclude Include="Scene\Scene.h" />
-    <ClInclude Include="Primitives\GameObject.h" />
-    <ClInclude Include="Scene\Light.h" />
-    <ClInclude Include="Physicis\Transform.h" />
     <ClInclude Include="Physicis\Collision\BroadPhase\BroadPhaseCollisionFeedback.h" />
     <ClInclude Include="Physicis\Collision\Collider\BoxCollider.h" />
     <ClInclude Include="Physicis\Collision\Collider\SphereCollider.h" />
@@ -139,14 +136,19 @@
     <ClInclude Include="Physicis\Collision\NarrowPhase\GJKSimplex.h" />
     <ClInclude Include="Physicis\Collision\NarrowPhase\GJKSolver.h" />
     <ClInclude Include="Physicis\Collision\NarrowPhase\NarrowPhaseCollisionDetection.h" />
-    <ClInclude Include="Physicis\Collision\Collider\ICollider.h" />
     <ClInclude Include="Physicis\Geometry\IShape.h" />
     <ClInclude Include="Scene\IModel.h" />
     <ClInclude Include="Scene\IScene.h" />
+    <ClInclude Include="Physicis\Collision\Collider\ICollider.h" />
+    <ClInclude Include="Primitives\Transform.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="UI\HierarchyWidget.ui" />
     <None Include="UI\SkyboxWidget.ui" />
     <None Include="Physicis\World\PhysicsWorldObject.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMOC Include="Primitives\GameObject.h" />
+    <QtMOC Include="Scene\Light.h" />
   </ItemGroup>
 </Project>

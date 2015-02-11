@@ -6,7 +6,6 @@
 #include <Physicis/Entity/SphereRigidBody.h>
 #include <Physicis/Collision/Collider/SphereCollider.h>
 #include <Physicis/Collision/Collider/BoxCollider.h>
-#include <Physicis/Transform.h>
 
 Scene::Scene(QObject* parent)
 	: IScene(parent),

@@ -23,8 +23,7 @@ Light::Light(Scene* scene, GameObject* go) :
 {
 	// connect to the scene
 	connect(this, SIGNAL(propertiesChanged(Light*)), m_scene, SLOT(onLightChanged(Light*)));
-	connect(go, SIGNAL(transformChanged(const vec3&, const vec3&, const vec3&)),
-		    this, SLOT(syncTransform(const vec3&, const vec3&, const vec3&)));
+	connect(go, SIGNAL(transformChanged(const Transform&)), this, SLOT(syncTransform(const Transform&)));
 }
 
 Light::~Light() 
@@ -230,12 +229,12 @@ float Light::spotOuterAngle() const
 	return m_spotOuterAngle;
 }
 
-void Light::syncTransform( const vec3& pos, const vec3& rot, const vec3& scale )
+void Light::syncTransform( const Transform& transform)
 {
 	// synchronize the position and rotation from the game object
 	// that this light attached to
-	m_position = pos;
-	m_direction = rot;
+	m_position = transform.getPosition();
+	m_direction = transform.getEulerAngles();
 
 	emit propertiesChanged(this);
 }

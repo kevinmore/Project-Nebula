@@ -1,53 +1,5 @@
 #include "CollisionObject.h"
 
-TriangleFace::TriangleFace() : m_bFlag(false)
-{
-	for ( int i = 0; i < 3; i++ )
-	{
-		m_IndexVrx[i] = -1;
-		m_IndexEdge[i] = -1;			
-	}
-
-	m_Index = -1;
-}
-
-TriangleFace::TriangleFace(const TriangleFace& other)
-{
-	for ( int i = 0; i < 3; i++ )
-	{
-		m_IndexVrx[i] = other.m_IndexVrx[i];
-		m_IndexEdge[i] = other.m_IndexEdge[i];
-	}
-
-	for ( int i = 0; i < 4; i++ )
-		m_PlaneEqn[i] = other.m_PlaneEqn[i];
-
-	m_bFlag = other.m_bFlag;
-	m_Index = other.m_Index;
-}
-
-TriangleFace::~TriangleFace() 
-{
-}
-
-TriangleFace& TriangleFace::operator=(const TriangleFace& other)
-{
-	for ( int i = 0; i < 3; i++ )
-	{
-		m_IndexVrx[i] = other.m_IndexVrx[i];
-		m_IndexEdge[i] = other.m_IndexEdge[i];
-	}
-
-	for ( int i = 0; i < 4; i++ )
-		m_PlaneEqn[i] = other.m_PlaneEqn[i];
-
-	m_Index = other.m_Index;
-	m_bFlag = other.m_bFlag;
-
-	return (*this);
-}
-
-
 CollisionObject::CollisionObject()
 	: m_halfExtent(vec3(1.0f, 1.0f, 1.0f)),
 	  m_margin(0.0001f)
@@ -66,9 +18,9 @@ CollisionObject::CollisionObject( const CollisionObject& other )
 		m_color[i] = other.m_color[i];
 
 	m_vertices = other.m_vertices;	
-	m_normals = other.m_normals;
-	m_faces = other.m_faces;
-	m_edges = other.m_edges;
+// 	m_normals = other.m_normals;
+// 	m_faces = other.m_faces;
+// 	m_edges = other.m_edges;
 
 	m_visualizedPoints = other.m_visualizedPoints;
 
@@ -179,9 +131,9 @@ CollisionObject& CollisionObject::operator=( const CollisionObject& other )
 		m_color[i] = other.m_color[i];
 
 	m_vertices = other.m_vertices;	
-	m_normals = other.m_normals;
-	m_faces = other.m_faces;
-	m_edges = other.m_edges;
+// 	m_normals = other.m_normals;
+// 	m_faces = other.m_faces;
+// 	m_edges = other.m_edges;
 
 	m_visualizedPoints = other.m_visualizedPoints;
 

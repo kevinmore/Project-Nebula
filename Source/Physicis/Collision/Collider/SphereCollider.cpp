@@ -21,9 +21,9 @@ SphereShape SphereCollider::getGeometryShape() const
 	return m_sphereShape;
 }
 
-BroadPhaseCollisionFeedback SphereCollider::intersect( ICollider* other )
+BroadPhaseCollisionFeedback SphereCollider::onBroadPhase( ICollider* other )
 {
-	if (other->m_colliderType != ICollider::COLLIDER_SPHERE)
+	if (other->getColliderType() != ICollider::COLLIDER_SPHERE)
 	{
 		//qWarning() << "Collision detection between sphere and other colliders are not implemented yet.";
 		return BroadPhaseCollisionFeedback();

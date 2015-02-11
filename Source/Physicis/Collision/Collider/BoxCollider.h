@@ -11,7 +11,7 @@ public:
 
 	void setHalfExtents(const vec3& halfExtents);
 
-	virtual BroadPhaseCollisionFeedback intersect(ICollider* other);
+	virtual BroadPhaseCollisionFeedback onBroadPhase(ICollider* other);
 
 protected:
 	virtual void init();

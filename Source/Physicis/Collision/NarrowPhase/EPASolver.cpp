@@ -8,7 +8,7 @@
 #include "NarrowPhaseCollisionDetection.h"
 using namespace Math;
 
-bool EPASolver::computePenetrationDepthAndContactPoints( const GJKSimplex& simplex, CollisionObject& objA, CollisionObject& objB, vec3& v, NarrowPhaseCollisionFeedback* pCollisionInfo, int maxIteration /*= 30*/ )
+bool EPASolver::computePenetrationDepthAndContactPoints( const GJKSimplex& simplex, CollisionObject& objA, CollisionObject& objB, vec3& v, NarrowPhaseCollisionFeedback& pCollisionInfo, int maxIteration /*= 30*/ )
 {
 	QVector<vec3> suppPointsA;       
 	QVector<vec3> suppPointsB;    
@@ -19,11 +19,11 @@ bool EPASolver::computePenetrationDepthAndContactPoints( const GJKSimplex& simpl
 	points.reserve(20);
 
 	// Initialize collision info
-	pCollisionInfo->bIntersect = false;
-	pCollisionInfo->penetrationDepth = 0;
-	pCollisionInfo->proximityDistance = 0;
-	pCollisionInfo->pObjA = &objA;
-	pCollisionInfo->pObjB = &objB;
+	pCollisionInfo.bIntersect = false;
+	pCollisionInfo.penetrationDepth = 0;
+	pCollisionInfo.proximityDistance = 0;
+	pCollisionInfo.pObjA = &objA;
+	pCollisionInfo.pObjB = &objB;
 
 	// transform a local position in objB space to local position in objA space
 	Transform transB2A = objA.getTransform().inversed() * objB.getTransform();
@@ -45,7 +45,7 @@ bool EPASolver::computePenetrationDepthAndContactPoints( const GJKSimplex& simpl
 	switch ( numVertices )
 	{
 	case 1:
-		// Two objects are barelly touching.
+		// Two objects are barely touching.
 		return false;
 
 	case 2:
@@ -99,20 +99,20 @@ bool EPASolver::computePenetrationDepthAndContactPoints( const GJKSimplex& simpl
 
 		if ( upperBound - lowerBound < 1e-4 || numIter == maxIteration - 1 )
 		{
-			pCollisionInfo->bIntersect = true;
-			pCollisionInfo->penetrationDepth = 0.5f * (upperBound + lowerBound);
-			pCollisionInfo->witnessPntA = pClosestTriangle->getClosestPointToOriginInSupportPntSpace(suppPointsA);
-			pCollisionInfo->witnessPntB = transA2B * pClosestTriangle->getClosestPointToOriginInSupportPntSpace(suppPointsB);
-			pCollisionInfo->proximityDistance = 0;
-			pCollisionInfo->pObjA = &objA;
-			pCollisionInfo->pObjB = &objB;
+			pCollisionInfo.bIntersect = true;
+			pCollisionInfo.penetrationDepth = 0.5f * (upperBound + lowerBound);
+			pCollisionInfo.witnessPntA = pClosestTriangle->getClosestPointToOriginInSupportPntSpace(suppPointsA);
+			pCollisionInfo.witnessPntB = transA2B * pClosestTriangle->getClosestPointToOriginInSupportPntSpace(suppPointsB);
+			pCollisionInfo.proximityDistance = 0;
+			pCollisionInfo.pObjA = &objA;
+			pCollisionInfo.pObjB = &objB;
 
 			break;
 		}
 
 		if ( !m_Polytope.expandPolytopeWithNewPoint(w, pClosestTriangle) )
 		{
-			pCollisionInfo->bIntersect = false;
+			pCollisionInfo.bIntersect = false;
 			return false;
 		}
 
@@ -123,5 +123,5 @@ bool EPASolver::computePenetrationDepthAndContactPoints( const GJKSimplex& simpl
 		numIter++;
 	}
 
-	return pCollisionInfo->bIntersect;
+	return pCollisionInfo.bIntersect;
 }
