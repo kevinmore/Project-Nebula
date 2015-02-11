@@ -72,8 +72,8 @@
     <ClCompile Include="Physicis\NarrowPhaseCollision\EPAPolytope.cpp" />
     <ClCompile Include="Physicis\Transform.cpp" />
     <ClCompile Include="Physicis\NarrowPhaseCollision\CollisionObject.cpp" />
-    <ClCompile Include="Physicis\NarrowPhaseCollision\EPAAlgorithm.cpp" />
-    <ClCompile Include="Physicis\NarrowPhaseCollision\GJKAlgorithm.cpp" />
+    <ClCompile Include="Physicis\NarrowPhaseCollision\GJKSolver.cpp" />
+    <ClCompile Include="Physicis\NarrowPhaseCollision\EPASolver.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Primitives\Texture.h" />
@@ -141,8 +141,8 @@
     <ClInclude Include="Physicis\NarrowPhaseCollision\EPATriangle.h" />
     <ClInclude Include="Physicis\Transform.h" />
     <ClInclude Include="Physicis\NarrowPhaseCollision\CollisionObject.h" />
-    <ClInclude Include="Physicis\NarrowPhaseCollision\EPAAlgorithm.h" />
-    <ClInclude Include="Physicis\NarrowPhaseCollision\GJKAlgorithm.h" />
+    <ClInclude Include="Physicis\NarrowPhaseCollision\GJKSolver.h" />
+    <ClInclude Include="Physicis\NarrowPhaseCollision\EPASolver.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="UI\HierarchyWidget.ui" />

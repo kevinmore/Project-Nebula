@@ -13,7 +13,7 @@ EPAPolytope::~EPAPolytope()
 void EPAPolytope::clear()
 {
 	for (int i = 0; i < m_triangles.size(); i++ )
-		delete m_triangles[i];
+		SAFE_DELETE(m_triangles[i]);
 
 	m_count = 0;
 	m_triangles.clear();

@@ -77,12 +77,7 @@ CollisionObject::CollisionObject( const CollisionObject& other )
 CollisionObject::~CollisionObject()
 {}
 
-const Transform& CollisionObject::getTransform() const 
-{ 
-	return m_transform; 
-}
-
-Transform& CollisionObject::getTransform() 
+Transform CollisionObject::getTransform() const 
 { 
 	return m_transform; 
 }

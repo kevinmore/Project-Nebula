@@ -4,11 +4,11 @@
 #include "EPAEdge.h"
 #include "EPATriangle.h"
 #include "CollisionObject.h"
-#include "EPAAlgorithm.h"
+#include "EPASolver.h"
 #include "NarrowPhaseCollisionDetection.h"
 using namespace Math;
 
-bool EPAAlgorithm::computePenetrationDepthAndContactPoints( const GJKSimplex& simplex, CollisionObject& objA, CollisionObject& objB, vec3& v, NarrowCollisionInfo* pCollisionInfo, int maxIteration /*= 30*/ )
+bool EPASolver::computePenetrationDepthAndContactPoints( const GJKSimplex& simplex, CollisionObject& objA, CollisionObject& objB, vec3& v, NarrowPhaseCollisionFeedback* pCollisionInfo, int maxIteration /*= 30*/ )
 {
 	QVector<vec3> suppPointsA;       
 	QVector<vec3> suppPointsB;    

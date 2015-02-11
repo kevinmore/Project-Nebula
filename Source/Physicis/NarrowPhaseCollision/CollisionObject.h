@@ -174,7 +174,7 @@ protected:
 	int m_IndexVrx[3];
 	int m_IndexEdge[3];
 
-	// If true, a vector formed by two points starting from CEdge::m_IndexVrx[0] and ending at CEdge::m_IndexVrx[1] will be right direction
+	// If true, a vector formed by two points starting from Edge::m_IndexVrx[0] and ending at Edge::m_IndexVrx[1] will be right direction
 	// in terms of normal vector of this triangle face. The right direction means three vectors will make the counter-clock-wise orientation
 	// around normal vector. If false, swap the two points and it will create the right direction. 
 	bool m_WindingOrderEdge[3]; 
@@ -234,7 +234,6 @@ public:
 	void setIndex(int index) { m_Index = index; }
 
 	float* planeEquation() { return m_PlaneEqn; }
-	const float* planeEquation() const { return m_PlaneEqn; }
 
 	vec3 getNormal() const { return vec3(m_PlaneEqn[0], m_PlaneEqn[1], m_PlaneEqn[2]); }
 
@@ -272,22 +271,14 @@ public:
 	void setColor(float r, float g, float b) { m_color[0] = r; m_color[1] = g; m_color[2] = b; m_color[3] = 1.0; }
 
 	std::vector<Vertex>& getVertices() { return m_vertices; }
-	const std::vector<Vertex>& getVertices() const { return m_vertices; }
-
 	std::vector<vec3>& getNormals() { return m_normals; }
-	const std::vector<vec3>& getNormals() const { return m_normals; }
-
 	std::vector<TriangleFace>& getFaces() { return m_faces; }
-	const std::vector<TriangleFace>& getFaces() const { return m_faces; }
-
 	std::vector<Edge>& getEdges() { return m_edges; }
-	const std::vector<Edge>& getEdges() const { return m_edges; }
 
 	float getMargin() const { return m_margin; }
 	void setMargin(float margin) { m_margin = margin; }
 
-	const Transform& getTransform() const;
-	Transform& getTransform();
+	Transform getTransform() const;
 
 	vec3 getSize() const { return 2.0 * m_halfExtent; }
 

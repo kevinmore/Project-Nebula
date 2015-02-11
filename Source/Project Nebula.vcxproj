@@ -16,9 +16,9 @@
     <ClCompile Include="Animation\IK\FABRIKSolver.cpp" />
     <ClCompile Include="Animation\IK\CCDIKSolver.cpp" />
     <ClCompile Include="Animation\Rig\Pose.cpp" />
-    <ClCompile Include="Physicis\NarrowPhaseCollision\GJKAlgorithm.cpp" />
+    <ClCompile Include="Physicis\NarrowPhaseCollision\GJKSolver.cpp" />
     <ClCompile Include="Physicis\NarrowPhaseCollision\CollisionObject.cpp" />
-    <ClCompile Include="Physicis\NarrowPhaseCollision\EPAAlgorithm.cpp" />
+    <ClCompile Include="Physicis\NarrowPhaseCollision\EPASolver.cpp" />
     <ClCompile Include="Physicis\NarrowPhaseCollision\EPAPolytope.cpp" />
     <ClCompile Include="Physicis\NarrowPhaseCollision\EPATriangle.cpp" />
     <ClCompile Include="Physicis\NarrowPhaseCollision\GJKSimplex.cpp" />
@@ -86,9 +86,9 @@
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Physicis\NarrowPhaseCollision\GJKAlgorithm.h" />
+    <ClInclude Include="Physicis\NarrowPhaseCollision\GJKSolver.h" />
     <ClInclude Include="Physicis\NarrowPhaseCollision\CollisionObject.h" />
-    <ClInclude Include="Physicis\NarrowPhaseCollision\EPAAlgorithm.h" />
+    <ClInclude Include="Physicis\NarrowPhaseCollision\EPASolver.h" />
     <ClInclude Include="Physicis\NarrowPhaseCollision\EPAEdge.h" />
     <ClInclude Include="Physicis\NarrowPhaseCollision\EPAPolytope.h" />
     <ClInclude Include="Physicis\NarrowPhaseCollision\EPATriangle.h" />

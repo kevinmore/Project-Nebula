@@ -1,11 +1,11 @@
-#include "GJKAlgorithm.h"
-#include "EPAAlgorithm.h"
+#include "GJKSolver.h"
+#include "EPASolver.h"
 #include "GJKSimplex.h"
 #include "NarrowPhaseCollisionDetection.h"
 #include "CollisionObject.h"
 #include "EPAEdge.h"
 
-bool GJKAlgorithm::generateCollisionInfo( const CollisionObject& objA, const CollisionObject& objB, const Transform &transB2A, const GJKSimplex& simplex, vec3 v, float distSqrd, NarrowCollisionInfo* pCollisionInfo ) const
+bool GJKSolver::generateCollisionInfo( const CollisionObject& objA, const CollisionObject& objB, const Transform &transB2A, const GJKSimplex& simplex, vec3 v, float distSqrd, NarrowPhaseCollisionFeedback* pCollisionInfo ) const
 {
 	vec3 closestPntA;
 	vec3 closestPntB;
@@ -41,7 +41,7 @@ bool GJKAlgorithm::generateCollisionInfo( const CollisionObject& objA, const Col
 	return pCollisionInfo->bIntersect;
 }
 
-bool GJKAlgorithm::checkCollision( CollisionObject& objA, CollisionObject& objB, NarrowCollisionInfo* pCollisionInfo, bool bProximity /*= false*/ )
+bool GJKSolver::checkCollision( CollisionObject& objA, CollisionObject& objB, NarrowPhaseCollisionFeedback* pCollisionInfo, bool bProximity /*= false*/ )
 {
 	vec3 suppPntA; // support point from object A
 	vec3 suppPntB; // support point from object B

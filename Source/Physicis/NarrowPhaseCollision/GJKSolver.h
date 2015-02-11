@@ -1,25 +1,25 @@
 #pragma once
-#include "EPAAlgorithm.h"
+#include "EPASolver.h"
 
 class EPAEdge;
 class GJKSimplex;
 class WorldSimulation;
 class Transform;
-class GJKAlgorithm
+class GJKSolver
 {
 public:
-	GJKAlgorithm(){}
-	~GJKAlgorithm(){}
+	GJKSolver(){}
+	~GJKSolver(){}
 
 	bool checkCollision(CollisionObject& objA, CollisionObject& objB, 
-		NarrowCollisionInfo* pCollisionInfo, bool bProximity = false);
+		NarrowPhaseCollisionFeedback* pCollisionInfo, bool bProximity = false);
 
 private:
 	// helper function to generate CollisionInfo
 	bool generateCollisionInfo(const CollisionObject& objA, const CollisionObject& objB, 
 		const Transform &transB2A, const GJKSimplex& simplex, 
-		vec3 v, float distSqrd, NarrowCollisionInfo* pCollisionInfo) const;
+		vec3 v, float distSqrd, NarrowPhaseCollisionFeedback* pCollisionInfo) const;
 
-	EPAAlgorithm m_EPAAlgorithm;
+	EPASolver m_EPAAlgorithm;
 };
 

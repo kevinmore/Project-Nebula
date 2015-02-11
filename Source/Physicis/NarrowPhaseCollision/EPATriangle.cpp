@@ -25,7 +25,7 @@ EPATriangle::EPATriangle( int indexVertex0, int indexVertex1, int indexVertex2 )
 EPATriangle::~EPATriangle()
 {
 	for ( int i = 0; i < 3; i++ )
-		delete m_edges[i];
+		SAFE_DELETE(m_edges[i]);
 }
 
 bool EPATriangle::isClosestPointInternal() const
