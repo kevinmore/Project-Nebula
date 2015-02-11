@@ -1,24 +1,24 @@
 #pragma once
 #include <Utility/EngineCommon.h>
 
-class CollisionObject;
+class ICollider;
 class GJKSolver;
 class NarrowPhaseCollisionFeedback
 {
 public:
 	NarrowPhaseCollisionFeedback() : pObjA(NULL), pObjB(NULL), bIntersect(false), penetrationDepth(0) {}
 
-	NarrowPhaseCollisionFeedback(CollisionObject* a, CollisionObject* b, bool intersect, const vec3& pa, const vec3& pb, float depth) 
+	NarrowPhaseCollisionFeedback(ICollider* a, ICollider* b, bool intersect, const vec3& pa, const vec3& pb, float depth) 
 		: pObjA(a), pObjB(b), bIntersect(intersect), 
 		witnessPntA(pa), witnessPntB(pb), 
 		penetrationDepth(depth) {}
 
-	NarrowPhaseCollisionFeedback(CollisionObject* a, CollisionObject* b) 
+	NarrowPhaseCollisionFeedback(ICollider* a, ICollider* b) 
 		: pObjA(a), pObjB(b), bIntersect(false), 																				  
 		penetrationDepth(0), proximityDistance(0) {}
 
-	CollisionObject* pObjA;
-	CollisionObject* pObjB;
+	ICollider* pObjA;
+	ICollider* pObjB;
 	bool bIntersect;
 	vec3 witnessPntA; // closest point in object A in local space of object A
 	vec3 witnessPntB; // closest point in object B in local space of object B

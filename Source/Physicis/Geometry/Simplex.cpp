@@ -1,13 +1,13 @@
-#include "GJKSimplex.h"
+#include "Simplex.h"
 
 
-GJKSimplex::GJKSimplex()
+Simplex::Simplex()
 	: m_curBits(0x0),
 	  m_allBits(0x0)
 {
 }
 
-int GJKSimplex::getPoints( QVector<vec3>& suppPointsA, QVector<vec3>& suppPointsB, QVector<vec3>& points ) const
+int Simplex::getPoints( QVector<vec3>& suppPointsA, QVector<vec3>& suppPointsB, QVector<vec3>& points ) const
 {
 	Q_ASSERT(suppPointsA.size() == 0 );
 	Q_ASSERT(suppPointsB.size() == 0 );
@@ -31,7 +31,7 @@ int GJKSimplex::getPoints( QVector<vec3>& suppPointsA, QVector<vec3>& suppPoints
 	return count;
 }
 
-void GJKSimplex::addPoint( const vec3& point, const vec3& suppPointA, const vec3& suppPointB )
+void Simplex::addPoint( const vec3& point, const vec3& suppPointA, const vec3& suppPointB )
 {
 	Q_ASSERT(!isFull());
 
@@ -61,7 +61,7 @@ void GJKSimplex::addPoint( const vec3& point, const vec3& suppPointA, const vec3
 	m_suppPointsB[m_lastFound] = suppPointB;
 }
 
-bool GJKSimplex::isDegenerate( const vec3& point ) const
+bool Simplex::isDegenerate( const vec3& point ) const
 {
 	for ( int i = 0, bit = 0x1; i < 4; i++, bit <<= 1 ) 
 	{
@@ -72,7 +72,7 @@ bool GJKSimplex::isDegenerate( const vec3& point ) const
 	return false;
 }
 
-bool GJKSimplex::isAffinelyIndependent() const
+bool Simplex::isAffinelyIndependent() const
 {
 	float sum = 0.0;
 	int i;
@@ -89,7 +89,7 @@ bool GJKSimplex::isAffinelyIndependent() const
 	return (sum > 0.0);
 }
 
-void GJKSimplex::closestPointAandB( vec3& pA, vec3& pB ) const
+void Simplex::closestPointAandB( vec3& pA, vec3& pB ) const
 {
 	float sum = 0.0;
 	pA = vec3(0, 0, 0);
@@ -115,7 +115,7 @@ void GJKSimplex::closestPointAandB( vec3& pA, vec3& pB ) const
 
 // Run Johnson's Algorithm and compute 'v' which is a closest point to the origin in this simplex. 
 // If this function succeeds, returns true. Otherwise, returns false.
-bool GJKSimplex::runJohnsonAlgorithm( vec3& v )
+bool Simplex::runJohnsonAlgorithm( vec3& v )
 {
 	uint subset;
 
@@ -164,7 +164,7 @@ bool GJKSimplex::runJohnsonAlgorithm( vec3& v )
 
 // To be a valid subset, all m_Det[subset][i] (i is part of 'subset') should be > 0 and 
 // all other m_Det[subset][j] (j is not part of 'subset') should be <= 0. 
-bool GJKSimplex::isValidSubset( uint subset ) const
+bool Simplex::isValidSubset( uint subset ) const
 {
 	int i;
 	uint bit;
@@ -188,7 +188,7 @@ bool GJKSimplex::isValidSubset( uint subset ) const
 	return true;
 }
 
-void GJKSimplex::updateDiffLengths()
+void Simplex::updateDiffLengths()
 {
 	int i;
 	uint bit;
@@ -204,7 +204,7 @@ void GJKSimplex::updateDiffLengths()
 	}
 }
 
-void GJKSimplex::calcDeterminants()
+void Simplex::calcDeterminants()
 {
 	m_det[m_lastBit][m_lastFound] = 1.0;
 

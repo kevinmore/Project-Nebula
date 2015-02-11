@@ -54,6 +54,7 @@ public:
 	inline vec3 rotation() const { return m_transform.getEulerAngles(); }
 	inline vec3 scale() const { return m_transform.getScale(); }
 	inline vec3 localSpeed() const { return m_speed; }
+	inline const Transform& getTransform() const { return m_transform; }
 
 	inline void setTransformMatrix(const mat4& transform)
 	{

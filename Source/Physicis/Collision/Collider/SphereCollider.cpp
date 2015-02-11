@@ -61,3 +61,17 @@ void SphereCollider::setRadius( const float radius )
 	m_transformMatrix.setToIdentity();
 	m_transformMatrix.scale(radius / 0.5f);
 }
+
+vec3 SphereCollider::getLocalSupportPoint( const vec3& dir, float margin /*= 0*/ ) const
+{
+	vec3 supportPoint;
+
+	float radius = m_sphereShape.getRadius();
+
+	if ( dir.lengthSquared() > 0.0 )
+		supportPoint = (radius + margin) * dir.normalized();
+	else
+		supportPoint = vec3(0, radius + margin, 0);
+
+	return supportPoint;
+}

@@ -1,26 +1,26 @@
 #pragma once
 #include <Utility/EngineCommon.h>
 
-class EPATriangle;
-class EPAEdge
+class Triangle;
+class Edge
 {
-	friend class EPATriangle;
-	friend class EPAPolytope;
+	friend class Triangle;
+	friend class Polytope;
 
 public:
-	EPAEdge(EPATriangle* pEPATriangle, int indexLocal, int indexVertex0, int indexVertex1)
+	Edge(Triangle* pEPATriangle, int indexLocal, int indexVertex0, int indexVertex1)
 	{
 		Q_ASSERT(indexLocal >= 0 && indexLocal < 3);
 		m_indexVertex[0] = indexVertex0;
 		m_indexVertex[1] = indexVertex1;
 	}
 
-	EPATriangle* m_pEPATriangle; // pointer to owner triangle
-	EPAEdge* m_pPairEdge;
+	Triangle* m_pEPATriangle; // pointer to owner triangle
+	Edge* m_pPairEdge;
 
 
 	int getIndexLocal() const { return m_indexLocal; }
-	EPATriangle* getEPATriangle() const { return m_pEPATriangle; }
+	Triangle* getTriangle() const { return m_pEPATriangle; }
 
 	int getIndexVertex(int i)
 	{

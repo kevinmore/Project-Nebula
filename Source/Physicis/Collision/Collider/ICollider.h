@@ -34,7 +34,6 @@ public:
 	inline RigidBody* getRigidBody() const { return m_rigidBody; }
 	void setRigidBody(RigidBody* rb) { m_rigidBody = rb; }
 
-	virtual BroadPhaseCollisionFeedback onBroadPhase(ICollider* other) = 0;
 
 	virtual QString className() { return "Collider"; }
 	virtual void render(const float currentTime);
@@ -50,14 +49,12 @@ public:
 	float getMargin() const { return m_margin; }
 	void setMargin(float margin) { m_margin = margin; }
 
-	void setSize(float x, float y, float z) { m_halfExtent = vec3(x/2.0f, y/2.0f, z/2.0f); }
-	vec3 getSize() const { return 2.0 * m_halfExtent; }
-
-	void setVertices(const QVector<vec3> vertices) { m_vertices = vertices; }
-	QVector<vec3> getVertices() const { return m_vertices; }
-
 	/// Get the extreme vertex in the given direction
-	vec3 getLocalSupportPoint(const vec3& dir, float margin = 0) const;
+	virtual vec3 getLocalSupportPoint(const vec3& dir, float margin = 0) const = 0;
+
+	/// Broad Phase Collision Detection
+	virtual BroadPhaseCollisionFeedback onBroadPhase(ICollider* other) = 0;
+
 
 protected:
 
@@ -69,8 +66,6 @@ protected:
 	mat4 m_transformMatrix;
 	float m_margin;
 	ColliderType m_colliderType;
-	vec3 m_halfExtent;
-	QVector<vec3> m_vertices;
 
 	/*
 	* For rendering

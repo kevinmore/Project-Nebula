@@ -26,6 +26,9 @@ public:
 		return m_vertices[indexMap[maxProj]];
 	}
 
+	void setVertices(const QVector<vec3> vertices) { m_vertices = vertices; }
+	QVector<vec3> getVertices() const { return m_vertices; }
+
 	/// Find the max projection on the axis using a hill-climbing algorithm
 // 	inline vec3 furthestPoint(vec3& axis) const
 // 	{

@@ -30,3 +30,8 @@ int Component::renderLayer() const
 {
 	return m_renderLayer;
 }
+
+const Transform& Component::getTransform() const
+{
+	return m_actor->getTransform();
+}

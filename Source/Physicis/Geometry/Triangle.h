@@ -1,15 +1,15 @@
 #pragma once
 
-#include "EPAEdge.h"
+#include "Edge.h"
 
-class EPATriangle
+class Triangle
 {
-friend class EPAPolytope;
+friend class Polytope;
 
 public:
-	EPATriangle();
-	EPATriangle(int indexVertex0, int indexVertex1, int indexVertex2);
-	~EPATriangle();
+	Triangle();
+	Triangle(int indexVertex0, int indexVertex1, int indexVertex2);
+	~Triangle();
 
 	int getIndexVertex(int i) const 
 	{ 
@@ -17,29 +17,29 @@ public:
 		return m_indicesVertex[i]; 
 	}
 
-	EPAEdge* getEdge(int i)
+	Edge* getEdge(int i)
 	{
 		Q_ASSERT(0 <= i && i < 3);
 		return m_edges[i];
 	}
 
-	void setAdjacentEdge(int index, EPAEdge& EPAEdge);
+	void setAdjacentEdge(int index, Edge& Edge);
 	float getDistSqr() const { return m_distSqrd; }
 	bool isObsolete() const { return m_bObsolete; }
 	void setObsolete(bool bObsolete) { m_bObsolete = bObsolete; }	
 	const vec3& getClosestPoint() const { return m_closestPointToOrigin; }
 	bool isClosestPointInternal() const;
 	bool isVisibleFromPoint(const vec3& point) const;
-	bool computeClosestPointToOrigin(const EPAPolytope& EPAPolytope);
+	bool computeClosestPointToOrigin(const Polytope& Polytope);
 	vec3 getClosestPointToOriginInSupportPntSpace(const QVector<vec3>& supportPoints) const;
-	bool doSilhouette(const vec3& w, EPAEdge* edge, EPAPolytope& EPAPolytope);
+	bool doSilhouette(const vec3& w, Edge* edge, Polytope& Polytope);
 
-	bool operator<(const EPATriangle& other) const;
+	bool operator<(const Triangle& other) const;
 
 private:
 	int m_indicesVertex[3];
-	EPATriangle* m_adjacentTriangles[3];
-	EPAEdge* m_edges[3];
+	Triangle* m_adjacentTriangles[3];
+	Edge* m_edges[3];
 	bool m_bObsolete;
 	float m_det;
 
@@ -58,7 +58,7 @@ private:
 class EPATriangleComparison 
 {
 public:
-	bool operator() (const EPATriangle* pTriA, const EPATriangle* pTriB) 
+	bool operator() (const Triangle* pTriA, const Triangle* pTriB) 
 	{
 		return (pTriA->getDistSqr() > pTriB->getDistSqr());
 	}

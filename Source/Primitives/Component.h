@@ -3,6 +3,7 @@
 /* Component that can be attached to a Game Object                      */
 /************************************************************************/
 #include <QSharedPointer>
+class Transform;
 class GameObject;
 class Component : public QObject
 {
@@ -16,6 +17,7 @@ public:
 	GameObject* gameObject() const;
 	void linkGameObject(GameObject* go);
 	void dislinkGameObject();
+	const Transform& getTransform() const;
 
 	int renderLayer() const;
 

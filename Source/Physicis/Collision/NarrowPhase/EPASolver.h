@@ -1,8 +1,8 @@
 #pragma once
-#include "EPAPolytope.h"
+#include <Physicis/Geometry/Polytope.h>
 
-class GJKSimplex;
-class CollisionObject;
+class Simplex;
+class ICollider;
 class NarrowPhaseCollisionFeedback;
 class EPASolver
 {
@@ -10,10 +10,10 @@ public:
 	EPASolver(){}
 	~EPASolver(){}
 
-	bool computePenetrationDepthAndContactPoints(const GJKSimplex& simplex, CollisionObject& objA, CollisionObject& objB, 
+	bool computePenetrationDepthAndContactPoints(const Simplex& simplex, ICollider* objA, ICollider* objB, 
 		vec3& v, NarrowPhaseCollisionFeedback& pCollisionInfo, int maxIteration = 30);
 
 private:
-	EPAPolytope m_Polytope;
+	Polytope m_Polytope;
 };
 

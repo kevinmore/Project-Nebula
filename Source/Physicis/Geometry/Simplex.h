@@ -1,10 +1,10 @@
 #pragma once
 #include <Utility/EngineCommon.h>
 
-class GJKSimplex
+class Simplex
 {
 public:
-	GJKSimplex();
+	Simplex();
 
 	inline bool isFull() const;
 	inline bool isEmpty() const;
@@ -39,25 +39,25 @@ private:
 };
 
 // Return true if the bits of "b" is a subset of the bits of "a"
-inline bool GJKSimplex::isSubset(uint containerSet, uint subSet) const 
+inline bool Simplex::isSubset(uint containerSet, uint subSet) const 
 {
 	return ((containerSet & subSet) == subSet);
 }
 
 // Return true if the simplex contains 4 points
-inline bool GJKSimplex::isFull() const 
+inline bool Simplex::isFull() const 
 {
 	return (m_curBits == 0xf);
 }
 
 // Return true if the simplex is empty
-inline bool GJKSimplex::isEmpty() const 
+inline bool Simplex::isEmpty() const 
 {
 	return (m_curBits == 0x0);
 }
 
 // Return the maximum squared length of a point
-inline float GJKSimplex::maxLengthSqrd() const 
+inline float Simplex::maxLengthSqrd() const 
 {
 	return m_maxLengthSqrd;
 }

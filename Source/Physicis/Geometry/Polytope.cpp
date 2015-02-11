@@ -1,16 +1,16 @@
 #include <algorithm>
-#include "EPAPolytope.h"
+#include "Polytope.h"
 
-EPAPolytope::EPAPolytope()
+Polytope::Polytope()
 	: m_count(0)
 {}
 
-EPAPolytope::~EPAPolytope()
+Polytope::~Polytope()
 {
 	clear();
 }
 
-void EPAPolytope::clear()
+void Polytope::clear()
 {
 	for (int i = 0; i < m_triangles.size(); i++ )
 		SAFE_DELETE(m_triangles[i]);
@@ -26,9 +26,9 @@ void EPAPolytope::clear()
 	m_supportPointsB.clear();
 }
 
-EPATriangle* EPAPolytope::popAClosestTriangleToOriginFromHeap()
+Triangle* Polytope::popAClosestTriangleToOriginFromHeap()
 {
-	EPATriangle* pReturnTriangle = NULL;
+	Triangle* pReturnTriangle = NULL;
 
 	if ( m_triangles.size() == 0 )
 		return pReturnTriangle;
@@ -57,7 +57,7 @@ static bool CheckWinding(const vec3& p0, const vec3& p1, const vec3& p2)
 }
 
 
-bool EPAPolytope::addTetrahedron( const vec3& p0, const vec3& p1, const vec3& p2, const vec3& p3 )
+bool Polytope::addTetrahedron( const vec3& p0, const vec3& p1, const vec3& p2, const vec3& p3 )
 {
 	int index[4];
 	m_vertices.push_back(p0);
@@ -72,7 +72,7 @@ bool EPAPolytope::addTetrahedron( const vec3& p0, const vec3& p1, const vec3& p2
 	m_vertices.push_back(p3);
 	index[3] = (int)m_vertices.size() - 1;
 
-	EPATriangle* pTri[4];
+	Triangle* pTri[4];
 
 	if ( vec3::dotProduct(vec3::crossProduct(p1-p0, p2-p0), p0) > 0 ) // p0, p1, p2 winding in counter-clockwise
 	{
@@ -80,10 +80,10 @@ bool EPAPolytope::addTetrahedron( const vec3& p0, const vec3& p1, const vec3& p2
 		if ( vec3::dotProduct(vec3::crossProduct(p1-p0, p2-p0), p3) >= 0 )
 			return false;
 
-		pTri[0] = new EPATriangle(index[0], index[1], index[2]); Q_ASSERT(CheckWinding(p0, p1, p2));
-		pTri[1] = new EPATriangle(index[0], index[3], index[1]); Q_ASSERT(CheckWinding(p0, p3, p1));
-		pTri[2] = new EPATriangle(index[0], index[2], index[3]); Q_ASSERT(CheckWinding(p0, p2, p3));
-		pTri[3] = new EPATriangle(index[1], index[3], index[2]); Q_ASSERT(CheckWinding(p1, p3, p2));
+		pTri[0] = new Triangle(index[0], index[1], index[2]); Q_ASSERT(CheckWinding(p0, p1, p2));
+		pTri[1] = new Triangle(index[0], index[3], index[1]); Q_ASSERT(CheckWinding(p0, p3, p1));
+		pTri[2] = new Triangle(index[0], index[2], index[3]); Q_ASSERT(CheckWinding(p0, p2, p3));
+		pTri[3] = new Triangle(index[1], index[3], index[2]); Q_ASSERT(CheckWinding(p1, p3, p2));
 	}
 	else // p0, p2, p1 winding in counter-clockwise
 	{
@@ -91,10 +91,10 @@ bool EPAPolytope::addTetrahedron( const vec3& p0, const vec3& p1, const vec3& p2
 		if ( vec3::dotProduct(vec3::crossProduct(p2-p0, p1-p0), p3) >= 0 )
 			return false;
 
-		pTri[0] = new EPATriangle(index[0], index[2], index[1]); Q_ASSERT(CheckWinding(p0, p2, p1));
-		pTri[1] = new EPATriangle(index[0], index[3], index[2]); Q_ASSERT(CheckWinding(p0, p3, p2));
-		pTri[2] = new EPATriangle(index[0], index[1], index[3]); Q_ASSERT(CheckWinding(p0, p1, p3));
-		pTri[3] = new EPATriangle(index[2], index[3], index[1]); Q_ASSERT(CheckWinding(p2, p3, p1));		
+		pTri[0] = new Triangle(index[0], index[2], index[1]); Q_ASSERT(CheckWinding(p0, p2, p1));
+		pTri[1] = new Triangle(index[0], index[3], index[2]); Q_ASSERT(CheckWinding(p0, p3, p2));
+		pTri[2] = new Triangle(index[0], index[1], index[3]); Q_ASSERT(CheckWinding(p0, p1, p3));
+		pTri[3] = new Triangle(index[2], index[3], index[1]); Q_ASSERT(CheckWinding(p2, p3, p1));		
 	}
 
 	// construct adjacency
@@ -151,7 +151,7 @@ bool EPAPolytope::addTetrahedron( const vec3& p0, const vec3& p1, const vec3& p2
 // w0 is in the side of the direction which is calculated by (p1-p0).Cross(p2-p0)
 // w1 is in the side of the direction which is calculated by -(p1-p0).Cross(p2-p0)
 // By gluing these two tetrahedrons, hexahedron can be formed.
-bool EPAPolytope::addHexahedron( const vec3& p0, const vec3& p1, const vec3& p2, const vec3& w0, const vec3& w1 )
+bool Polytope::addHexahedron( const vec3& p0, const vec3& p1, const vec3& p2, const vec3& w0, const vec3& w1 )
 {
 	if ( vec3::dotProduct(vec3::crossProduct(p1-p0, p2-p0), w0-p0) <= 0 )
 		return false;
@@ -175,14 +175,14 @@ bool EPAPolytope::addHexahedron( const vec3& p0, const vec3& p1, const vec3& p2,
 	m_vertices.push_back(w1);
 	index[4] = (int)m_vertices.size() - 1;
 
-	EPATriangle* pTri[6];
+	Triangle* pTri[6];
 
-	pTri[0] = new EPATriangle(index[0], index[1], index[3]); Q_ASSERT(CheckWinding(m_vertices[index[0]], m_vertices[index[1]], m_vertices[index[3]]));
-	pTri[1] = new EPATriangle(index[1], index[2], index[3]); Q_ASSERT(CheckWinding(m_vertices[index[1]], m_vertices[index[2]], m_vertices[index[3]]));
-	pTri[2] = new EPATriangle(index[2], index[0], index[3]); Q_ASSERT(CheckWinding(m_vertices[index[2]], m_vertices[index[0]], m_vertices[index[3]]));
-	pTri[3] = new EPATriangle(index[1], index[0], index[4]); Q_ASSERT(CheckWinding(m_vertices[index[1]], m_vertices[index[0]], m_vertices[index[4]]));
-	pTri[4] = new EPATriangle(index[2], index[1], index[4]); Q_ASSERT(CheckWinding(m_vertices[index[2]], m_vertices[index[1]], m_vertices[index[4]]));
-	pTri[5] = new EPATriangle(index[0], index[2], index[4]); Q_ASSERT(CheckWinding(m_vertices[index[0]], m_vertices[index[2]], m_vertices[index[4]]));
+	pTri[0] = new Triangle(index[0], index[1], index[3]); Q_ASSERT(CheckWinding(m_vertices[index[0]], m_vertices[index[1]], m_vertices[index[3]]));
+	pTri[1] = new Triangle(index[1], index[2], index[3]); Q_ASSERT(CheckWinding(m_vertices[index[1]], m_vertices[index[2]], m_vertices[index[3]]));
+	pTri[2] = new Triangle(index[2], index[0], index[3]); Q_ASSERT(CheckWinding(m_vertices[index[2]], m_vertices[index[0]], m_vertices[index[3]]));
+	pTri[3] = new Triangle(index[1], index[0], index[4]); Q_ASSERT(CheckWinding(m_vertices[index[1]], m_vertices[index[0]], m_vertices[index[4]]));
+	pTri[4] = new Triangle(index[2], index[1], index[4]); Q_ASSERT(CheckWinding(m_vertices[index[2]], m_vertices[index[1]], m_vertices[index[4]]));
+	pTri[5] = new Triangle(index[0], index[2], index[4]); Q_ASSERT(CheckWinding(m_vertices[index[0]], m_vertices[index[2]], m_vertices[index[4]]));
 
 	// construct adjacency
 	pTri[0]->m_adjacentTriangles[0] = pTri[3];
@@ -243,7 +243,7 @@ bool EPAPolytope::addHexahedron( const vec3& p0, const vec3& p1, const vec3& p2,
 
 		for ( int j = 0; j < 3; j++ )
 		{
-			if ( !(pTri[i]->m_adjacentTriangles[j] == pTri[i]->m_edges[j]->m_pPairEdge->getEPATriangle()) )
+			if ( !(pTri[i]->m_adjacentTriangles[j] == pTri[i]->m_edges[j]->m_pPairEdge->getTriangle()) )
 				return false;
 		}
 
@@ -254,7 +254,7 @@ bool EPAPolytope::addHexahedron( const vec3& p0, const vec3& p1, const vec3& p2,
 	return true;
 }
 
-bool EPAPolytope::expandPolytopeWithNewPoint( const vec3& w, EPATriangle* pTriangleUsedToObtainW )
+bool Polytope::expandPolytopeWithNewPoint( const vec3& w, Triangle* pTriangleUsedToObtainW )
 {
 	for (int i = 0; i < m_triangles.size(); i++ )
 	{
@@ -314,7 +314,7 @@ bool EPAPolytope::expandPolytopeWithNewPoint( const vec3& w, EPATriangle* pTrian
 			return false;
 	}
 
-	QVector<EPATriangle*> newTriangles;
+	QVector<Triangle*> newTriangles;
 	newTriangles.reserve(silhouetteSize);
 
 	EPATriangleComparison compare;
@@ -323,7 +323,7 @@ bool EPAPolytope::expandPolytopeWithNewPoint( const vec3& w, EPATriangle* pTrian
 	{
 		int j = i+1 < silhouetteSize ? i+1 : 0;
 
-		EPATriangle* pTri = new EPATriangle(indexVertexW, m_silhouetteVertices[i], m_silhouetteVertices[j]);
+		Triangle* pTri = new Triangle(indexVertexW, m_silhouetteVertices[i], m_silhouetteVertices[j]);
 		newTriangles.push_back(pTri);
 		pTri->computeClosestPointToOrigin(*this);
 	}
@@ -359,7 +359,7 @@ bool EPAPolytope::expandPolytopeWithNewPoint( const vec3& w, EPATriangle* pTrian
 		{
 			for ( int j = 0; j < 3; j++ )
 			{
-				EPAEdge* edge = getTriangles()[i]->getEdge(j);
+				Edge* edge = getTriangles()[i]->getEdge(j);
 				Q_ASSERT(edge->getIndexVertex(0) == edge->m_pPairEdge->getIndexVertex(1));
 				Q_ASSERT(edge->getIndexVertex(1) == edge->m_pPairEdge->getIndexVertex(0));
 			}
@@ -369,7 +369,7 @@ bool EPAPolytope::expandPolytopeWithNewPoint( const vec3& w, EPATriangle* pTrian
 	return true;
 }
 
-bool EPAPolytope::isOriginInTetrahedron( const vec3& p1, const vec3& p2, const vec3& p3, const vec3& p4 )
+bool Polytope::isOriginInTetrahedron( const vec3& p1, const vec3& p2, const vec3& p3, const vec3& p4 )
 {
 	float proj1, proj2;
 

@@ -167,3 +167,16 @@ void BoxCollider::setHalfExtents( const vec3& halfExtents )
 	m_transformMatrix.setToIdentity();
 	m_transformMatrix.scale(halfExtents.x() / 0.5f, halfExtents.y() / 0.5f, halfExtents.z() / 0.5f);
 }
+
+vec3 BoxCollider::getLocalSupportPoint( const vec3& dir, float margin /*= 0*/ ) const
+{
+	vec3 supportPoint;
+
+	vec3 halfExtents = m_boxShape.getHalfExtents();
+
+	supportPoint.setX(dir.x() < 0 ? -halfExtents.x() - margin : halfExtents.x() + margin);
+	supportPoint.setY(dir.y() < 0 ? -halfExtents.y() - margin : halfExtents.y() + margin);
+	supportPoint.setZ(dir.z() < 0 ? -halfExtents.z() - margin : halfExtents.z() + margin);
+
+	return supportPoint;
+}

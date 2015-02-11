@@ -1,11 +1,11 @@
 #include "GJKSolver.h"
 #include "EPASolver.h"
-#include "GJKSimplex.h"
 #include "NarrowPhaseCollisionDetection.h"
-#include "CollisionObject.h"
-#include "EPAEdge.h"
+#include <Physicis/Collision/Collider/ICollider.h>
+#include <Physicis/Geometry/Edge.h>
+#include <Physicis/Geometry/Simplex.h>
 
-bool GJKSolver::generateCollisionInfo( const CollisionObject& objA, const CollisionObject& objB, const Transform &transB2A, const GJKSimplex& simplex, vec3 v, float distSqrd, NarrowPhaseCollisionFeedback& pCollisionInfo ) const
+bool GJKSolver::generateCollisionInfo( const ICollider* objA, const ICollider* objB, const Transform &transB2A, const Simplex& simplex, vec3 v, float distSqrd, NarrowPhaseCollisionFeedback& pCollisionInfo ) const
 {
 	vec3 closestPntA;
 	vec3 closestPntB;
@@ -18,15 +18,15 @@ bool GJKSolver::generateCollisionInfo( const CollisionObject& objA, const Collis
 
 	vec3 n = v.normalized();
 
-	closestPntA = closestPntA + (objA.getMargin() * (-n));
-	closestPntB = closestPntB + (objB.getMargin() * (n));
+	closestPntA = closestPntA + (objA->getMargin() * (-n));
+	closestPntB = closestPntB + (objB->getMargin() * (n));
 	closestPntB = transB2A.inversed() * closestPntB;
 
 	// normal vector of collision
-	vec3 normalCollision = objA.getTransform().getRotation().rotatedVector(-n);
+	vec3 normalCollision = objA->getTransform().getRotation().rotatedVector(-n);
 			
 	// penetration depth
-	float margin = objA.getMargin() + objB.getMargin();
+	float margin = objA->getMargin() + objB->getMargin();
 	float penetrationDepth = margin - dist;
 
 	pCollisionInfo.penetrationDepth = penetrationDepth;
@@ -41,7 +41,7 @@ bool GJKSolver::generateCollisionInfo( const CollisionObject& objA, const Collis
 	return pCollisionInfo.bIntersect;
 }
 
-bool GJKSolver::checkCollision( CollisionObject& objA, CollisionObject& objB, NarrowPhaseCollisionFeedback& pCollisionInfo, bool bProximity /*= false*/ )
+bool GJKSolver::checkCollision( ICollider* objA, ICollider* objB, NarrowPhaseCollisionFeedback& pCollisionInfo, bool bProximity /*= false*/ )
 {
 	vec3 suppPntA; // support point from object A
 	vec3 suppPntB; // support point from object B
@@ -49,15 +49,15 @@ bool GJKSolver::checkCollision( CollisionObject& objA, CollisionObject& objB, Na
 	vec3 closestPntB;
 	vec3 w; // support point of Minkowski difference(A-B)
 	float vw; // v dot w
-	const float margin = objA.getMargin() + objB.getMargin();
+	const float margin = objA->getMargin() + objB->getMargin();
 	const float marginSqrd = margin * margin;
-	GJKSimplex simplex;
+	Simplex simplex;
 
 	// transform a local position in objB space to local position in objA space
-	Transform transB2A = objA.getTransform().inversed() * objB.getTransform();
+	Transform transB2A = objA->getTransform().inversed() * objB->getTransform();
 
 	// rotate matrix which transform a local vector in objA space to local vector in objB space
-	quat rotA2B = objB.getTransform().getRotation().conjugate() * objA.getTransform().getRotation();
+	quat rotA2B = objB->getTransform().getRotation().conjugate() * objA->getTransform().getRotation();
 
 	// closest point to the origin
 	vec3 v(1.0, 0.0, 0.0);
@@ -70,8 +70,8 @@ bool GJKSolver::checkCollision( CollisionObject& objA, CollisionObject& objB, Na
 	while (true) 
 	{
 		// support points are in local space of objA
-		suppPntA = objA.getLocalSupportPoint(-v);
-		suppPntB = transB2A * objB.getLocalSupportPoint(rotA2B.rotatedVector(v)); 
+		suppPntA = objA->getLocalSupportPoint(-v);
+		suppPntB = transB2A * objB->getLocalSupportPoint(rotA2B.rotatedVector(v)); 
 
 		// w is also in local space of objA
 		w = suppPntA - suppPntB;

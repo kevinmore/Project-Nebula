@@ -1,8 +1,8 @@
-#include "EPATriangle.h"
-#include "EPAPolytope.h"
+#include "Triangle.h"
+#include "Polytope.h"
 
 
-EPATriangle::EPATriangle()
+Triangle::Triangle()
 	: m_bObsolete(false),
 	  m_bVisible(false),
 	  m_index(0)
@@ -11,38 +11,38 @@ EPATriangle::EPATriangle()
 		m_edges[i] = NULL;
 }
 
-EPATriangle::EPATriangle( int indexVertex0, int indexVertex1, int indexVertex2 )
+Triangle::Triangle( int indexVertex0, int indexVertex1, int indexVertex2 )
 {
 	m_indicesVertex[0] = indexVertex0;
 	m_indicesVertex[1] = indexVertex1;
 	m_indicesVertex[2] = indexVertex2;
 
 	for ( unsigned int i = 0; i < 3; i++ )
-		m_edges[i] = new EPAEdge(this, i, m_indicesVertex[i], m_indicesVertex[(i+1) % 3]);
+		m_edges[i] = new Edge(this, i, m_indicesVertex[i], m_indicesVertex[(i+1) % 3]);
 }
 
 
-EPATriangle::~EPATriangle()
+Triangle::~Triangle()
 {
 	for ( int i = 0; i < 3; i++ )
 		SAFE_DELETE(m_edges[i]);
 }
 
-bool EPATriangle::isClosestPointInternal() const
+bool Triangle::isClosestPointInternal() const
 {
 	return ( m_lambda1 >= 0.0 && m_lambda2 >= 0.0 && (m_lambda1 + m_lambda2) <= m_det);
 }
 
-bool EPATriangle::isVisibleFromPoint(const vec3& point) const
+bool Triangle::isVisibleFromPoint(const vec3& point) const
 {
 	return vec3::dotProduct(point, m_closestPointToOrigin) >= m_distSqrd;
 }
 
-bool EPATriangle::computeClosestPointToOrigin(const EPAPolytope& EPAPolytope)
+bool Triangle::computeClosestPointToOrigin(const Polytope& Polytope)
 {
-	const vec3& p0 = EPAPolytope.m_vertices[m_indicesVertex[0]];
-	const vec3& p1 = EPAPolytope.m_vertices[m_indicesVertex[1]];
-	const vec3& p2 = EPAPolytope.m_vertices[m_indicesVertex[2]];
+	const vec3& p0 = Polytope.m_vertices[m_indicesVertex[0]];
+	const vec3& p1 = Polytope.m_vertices[m_indicesVertex[1]];
+	const vec3& p2 = Polytope.m_vertices[m_indicesVertex[2]];
 
 	vec3 v1 = p1 - p0;
 	vec3 v2 = p2 - p0;
@@ -68,7 +68,7 @@ bool EPATriangle::computeClosestPointToOrigin(const EPAPolytope& EPAPolytope)
 	return false;
 }
 
-vec3 EPATriangle::getClosestPointToOriginInSupportPntSpace( const QVector<vec3>& supportPoints ) const
+vec3 Triangle::getClosestPointToOriginInSupportPntSpace( const QVector<vec3>& supportPoints ) const
 {
 	const vec3* sp[3];
 
@@ -81,7 +81,7 @@ vec3 EPATriangle::getClosestPointToOriginInSupportPntSpace( const QVector<vec3>&
 // Please note that edge doesn't belong to this triangle. It is from the neighbor triangle.
 // edge->m_pEPATriangle is a neighbor triangle which called this function. 
 // edge->m_pPairEdge belongs to this triangle. 
-bool EPATriangle::doSilhouette(const vec3& w, EPAEdge* edge, EPAPolytope& EPAPolytope)
+bool Triangle::doSilhouette(const vec3& w, Edge* edge, Polytope& Polytope)
 {
 	int index = m_index;
 
@@ -95,9 +95,9 @@ bool EPATriangle::doSilhouette(const vec3& w, EPAEdge* edge, EPAPolytope& EPAPol
 	if ( !isVisibleFromPoint(w) ) // if this triangle is not visible from point w
 	{
 		int indexVertex0 = edge->m_indexVertex[0];
-		EPAPolytope.m_silhouetteVertices.push_back(indexVertex0);
-		EPAPolytope.m_silhouetteTriangles.push_back(this);
-		EPAPolytope.m_silhouetteEdges.push_back(edge->m_pPairEdge);
+		Polytope.m_silhouetteVertices.push_back(indexVertex0);
+		Polytope.m_silhouetteTriangles.push_back(this);
+		Polytope.m_silhouetteEdges.push_back(edge->m_pPairEdge);
 		return true;
 	}
 	else // if visible
@@ -105,23 +105,23 @@ bool EPATriangle::doSilhouette(const vec3& w, EPAEdge* edge, EPAPolytope& EPAPol
 		m_bVisible = true;
 
 		m_bObsolete = true;
-		EPAEdge* myEdge = edge->m_pPairEdge;
+		Edge* myEdge = edge->m_pPairEdge;
 
 		Q_ASSERT(m_edges[myEdge->m_indexLocal] == myEdge);
 
 		int indexNextEdgeCCW = (myEdge->m_indexLocal + 1) % 3;
 		Q_ASSERT(0 <= indexNextEdgeCCW && indexNextEdgeCCW < 3);
-		m_edges[indexNextEdgeCCW]->m_pPairEdge->m_pEPATriangle->doSilhouette(w, m_edges[indexNextEdgeCCW], EPAPolytope);
+		m_edges[indexNextEdgeCCW]->m_pPairEdge->m_pEPATriangle->doSilhouette(w, m_edges[indexNextEdgeCCW], Polytope);
 
 		indexNextEdgeCCW = (indexNextEdgeCCW + 1) % 3;
 		Q_ASSERT(0 <= indexNextEdgeCCW && indexNextEdgeCCW < 3);
-		m_edges[indexNextEdgeCCW]->m_pPairEdge->m_pEPATriangle->doSilhouette(w, m_edges[indexNextEdgeCCW], EPAPolytope);
+		m_edges[indexNextEdgeCCW]->m_pPairEdge->m_pEPATriangle->doSilhouette(w, m_edges[indexNextEdgeCCW], Polytope);
 	}
 
 	return true;
 }
 
-bool EPATriangle::operator<(const EPATriangle& other) const
+bool Triangle::operator<(const Triangle& other) const
 {
 	return m_distSqrd > other.m_distSqrd;
 }
