@@ -3,7 +3,7 @@
 #include <Animation/Rig/Pose.h>
 
 RiggedModel::RiggedModel(const QString& name, Scene* scene, ModelLoaderPtr loader)
-   : AbstractModel(loader->getRenderingEffect(), name),
+   : IModel(loader->getRenderingEffect(), name),
     m_modelLoader(loader),
     m_scene(scene),
 	m_skeleton(loader->getSkeletom()),
@@ -16,7 +16,7 @@ RiggedModel::RiggedModel(const QString& name, Scene* scene, ModelLoaderPtr loade
 }
 
 RiggedModel::RiggedModel(const QString& name, Scene* scene, ModelLoaderPtr loader, QVector<ModelDataPtr> modelData)
-  : AbstractModel(loader->getRenderingEffect(), name),
+  : IModel(loader->getRenderingEffect(), name),
     m_modelLoader(loader),
     m_scene(scene),
 	m_skeleton(loader->getSkeletom()),
@@ -74,7 +74,7 @@ RiggedModel::~RiggedModel()
 
 void RiggedModel::initialize(QVector<ModelDataPtr> modelDataVector)
 {
-	AbstractModel::init();
+	IModel::init();
 
 	m_meshManager     = m_scene->meshManager();
 	m_textureManager  = m_scene->textureManager();

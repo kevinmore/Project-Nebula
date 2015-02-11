@@ -1,7 +1,7 @@
 #pragma once
-#include "AbstractShape.h"
+#include "IShape.h"
 
-class ConvexShape : public AbstractShape
+class ConvexShape : public IShape
 {
 public:
 	/// Creates a convex shape with the given vertices and faces.

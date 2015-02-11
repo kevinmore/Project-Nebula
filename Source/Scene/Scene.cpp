@@ -4,12 +4,12 @@
 #include <Primitives/Puppet.h>
 #include <Physicis/Entity/BoxRigidBody.h>
 #include <Physicis/Entity/SphereRigidBody.h>
-#include <Physicis/Collider/SphereCollider.h>
-#include <Physicis/Collider/BoxCollider.h>
+#include <Physicis/Collision/Collider/SphereCollider.h>
+#include <Physicis/Collision/Collider/BoxCollider.h>
 #include <Physicis/Transform.h>
 
 Scene::Scene(QObject* parent)
-	: AbstractScene(parent),
+	: IScene(parent),
 	  m_camera(new Camera(NULL,this)),
 	  m_lightMode(PerFragmentPhong),
 	  m_absoluteTime(0.0f),
@@ -460,7 +460,7 @@ void Scene::toggleDebugMode( bool state )
 		// attach all the bounding boxes
 		foreach(ComponentPtr comp, m_objectManager->m_renderQueue)
 		{
-			ModelPtr model = comp.dynamicCast<AbstractModel>();
+			ModelPtr model = comp.dynamicCast<IModel>();
 			if (model && !model->getBoundingBox()->gameObject())
 				model->showBoundingBox();
 		}
@@ -470,7 +470,7 @@ void Scene::toggleDebugMode( bool state )
 		// detach all the bounding boxes
 		foreach(ComponentPtr comp, m_objectManager->m_renderQueue)
 		{
-			ModelPtr model = comp.dynamicCast<AbstractModel>();
+			ModelPtr model = comp.dynamicCast<IModel>();
 			if (model && model->getBoundingBox()->gameObject())
 				model->hideBoundingBox();
 		}

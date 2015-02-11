@@ -1,8 +1,8 @@
-#include "AbstractCollider.h"
+#include "ICollider.h"
 #include <Utility/ModelLoader.h>
 #include <Scene/Scene.h>
 
-AbstractCollider::AbstractCollider( const vec3& center, Scene* scene )
+ICollider::ICollider( const vec3& center, Scene* scene )
 	: Component(0),
 	  m_center(center),
 	  m_scene(scene)
@@ -10,7 +10,7 @@ AbstractCollider::AbstractCollider( const vec3& center, Scene* scene )
 	init();
 }
 
-void AbstractCollider::init()
+void ICollider::init()
 {
 	Q_ASSERT(initializeOpenGLFunctions());
 
@@ -21,7 +21,7 @@ void AbstractCollider::init()
 }
 
 
-void AbstractCollider::render( const float currentTime )
+void ICollider::render( const float currentTime )
 {
 	m_renderingEffect->enable();
 
@@ -48,7 +48,7 @@ void AbstractCollider::render( const float currentTime )
 
 }
 
-void AbstractCollider::drawElements( uint index )
+void ICollider::drawElements( uint index )
 {
 	glBindVertexArray(m_vao);
 
@@ -64,7 +64,7 @@ void AbstractCollider::drawElements( uint index )
 	glBindVertexArray(0);
 }
 
-void AbstractCollider::setColor(const QColor& col)
+void ICollider::setColor(const QColor& col)
 {
 	m_renderingEffect->enable();
 	m_renderingEffect->setMatEmissiveColor(col);

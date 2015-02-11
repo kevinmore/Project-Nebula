@@ -3,10 +3,10 @@
 #include <QOpenGLContext>
 #include <QElapsedTimer>
 
-class AbstractScene : public QObject
+class IScene : public QObject
 {
 public:
-	AbstractScene(QObject* parent = 0);
+	IScene(QObject* parent = 0);
 
     /**
      * Loading shaders, VBOs, IBOs, textures etc ...

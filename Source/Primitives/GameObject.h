@@ -7,12 +7,12 @@ using namespace Math;
 
 class Puppet;
 class Component;
-class AbstractModel;
+class IModel;
 class Scene;
 
 typedef QSharedPointer<Puppet> PuppetPtr;
 typedef QSharedPointer<Component> ComponentPtr;
-typedef QSharedPointer<AbstractModel> ModelPtr;
+typedef QSharedPointer<IModel> ModelPtr;
 
 class GameObject : public QObject
 {

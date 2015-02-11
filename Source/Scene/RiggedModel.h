@@ -1,5 +1,5 @@
 #pragma once
-#include <Scene/AbstractModel.h>
+#include <Scene/IModel.h>
 #include <Scene/Managers/MeshManager.h>
 #include <Scene/Managers/MaterialManager.h>
 #include <Scene/Managers/TextureManager.h>
@@ -10,7 +10,7 @@
 
 class Scene;
 
-class RiggedModel : public AbstractModel
+class RiggedModel : public IModel
 {
 public:
 	RiggedModel(const QString& name, Scene* scene, ModelLoaderPtr loader);

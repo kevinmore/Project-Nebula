@@ -15,7 +15,7 @@ public:
 		NarrowPhaseCollisionFeedback* pCollisionInfo, bool bProximity = false);
 
 private:
-	// helper function to generate CollisionInfo
+	// helper function to generate CollisionFeedback
 	bool generateCollisionInfo(const CollisionObject& objA, const CollisionObject& objB, 
 		const Transform &transB2A, const GJKSimplex& simplex, 
 		vec3 v, float distSqrd, NarrowPhaseCollisionFeedback* pCollisionInfo) const;

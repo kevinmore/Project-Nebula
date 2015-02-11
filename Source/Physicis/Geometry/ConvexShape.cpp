@@ -1,7 +1,7 @@
 #include "ConvexShape.h"
 
 ConvexShape::ConvexShape( const QVector<vec3>& vertices, const QVector<vec3>& faces )
-	: AbstractShape(AbstractShape::CONVEXBODY, vec3(0, 0, 0)),
+	: IShape(IShape::CONVEXBODY, vec3(0, 0, 0)),
 	  m_vertices(vertices)
 {
 	//QVector<vec2> edges;

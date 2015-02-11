@@ -1,6 +1,6 @@
 #pragma once
 #include <Physicis/World/PhysicsWorldObject.h>
-#include <Physicis/Geometry/AbstractShape.h>
+#include <Physicis/Geometry/IShape.h>
 #include <Utility/Math.h>
 
 struct MassProperties
@@ -38,8 +38,8 @@ struct MassProperties
 	mat3 m_inertiaTensor;
 };
 
-class AbstractCollider;
-typedef QSharedPointer<AbstractCollider> ColliderPtr;
+class ICollider;
+typedef QSharedPointer<ICollider> ColliderPtr;
 
 class RigidBody : public PhysicsWorldObject
 {
@@ -67,8 +67,8 @@ public:
 	// Shape
 	//
 
-	void setShape(const AbstractShape* shape);
-	const AbstractShape* getShape() const;
+	void setShape(const IShape* shape);
+	const IShape* getShape() const;
 
 	//
 	// Collider
@@ -281,7 +281,7 @@ public:
 	MotionType	m_MotionType;
 
 	/// The collision detection representation for this entity.
-	const AbstractShape* m_shape;
+	const IShape* m_shape;
 
 	/// The mass of the body.
 	/// This defaults to 1.

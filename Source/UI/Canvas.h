@@ -58,7 +58,7 @@ signals:
 
 private:
 	QScopedPointer<QOpenGLContext> m_context;
-	AbstractScene* m_scene;
+	IScene* m_scene;
 
 	QElapsedTimer m_updateTimer;
 

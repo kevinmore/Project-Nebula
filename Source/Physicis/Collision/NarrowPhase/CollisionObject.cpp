@@ -93,7 +93,7 @@ vec3 CollisionObject::getLocalSupportPoint( const vec3& dir, float margin /*= 0*
 
 	if ( m_collisionObjectType == Point )
 	{
-		if ( dir.lengthSquared() > 0.0 )
+		if ( dir.lengthSquared() > 0.0f )
 		{
 			vec3 dirN = dir.normalized();
 			supportPoint = margin*dirN;
@@ -101,7 +101,7 @@ vec3 CollisionObject::getLocalSupportPoint( const vec3& dir, float margin /*= 0*
 		else
 			supportPoint = vec3(margin, 0, 0);
 	}
-	else if ( m_collisionObjectType == LineSegment )
+	else if ( m_collisionObjectType == LineSegment || m_collisionObjectType == ConvexHull )
 	{
 		float maxDot = -FLT_MAX;
 
@@ -163,23 +163,6 @@ vec3 CollisionObject::getLocalSupportPoint( const vec3& dir, float margin /*= 0*
 			supportPoint += unitVec * margin;
 		}
 	}
-	else if ( m_collisionObjectType == ConvexHull )
-	{
-		float maxDot = -FLT_MAX;
-
-		for ( int i = 0; i < (int)m_vertices.size(); i++ )
-		{
-			const vec3& vertex = m_vertices[i];
-			float dot = vec3::dotProduct(vertex, dir);
-
-			if ( dot > maxDot )
-			{
-				supportPoint = vertex;
-				maxDot = dot;
-			}
-		}
-	}
-
 
 
 	return supportPoint;

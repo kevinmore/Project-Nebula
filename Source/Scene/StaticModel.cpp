@@ -2,14 +2,14 @@
 #include <Scene/Scene.h>
 
 StaticModel::StaticModel(const QString& name, Scene* scene, ShadingTechniquePtr tech)
-  : AbstractModel(tech, name),
+  : IModel(tech, name),
 	m_scene(scene)
 {
 	initialize();
 }
 
 StaticModel::StaticModel(const QString& name, Scene* scene, ShadingTechniquePtr tech, QVector<ModelDataPtr> modelData)
-  : AbstractModel(tech, name),
+  : IModel(tech, name),
     m_scene(scene)
 {
 	m_modelDataVector = modelData;
@@ -55,7 +55,7 @@ StaticModel::~StaticModel()
 
 void StaticModel::initialize(QVector<ModelDataPtr> modelDataVector)
 {
-	AbstractModel::init();
+	IModel::init();
 
 	m_meshManager     = m_scene->meshManager();
 	m_textureManager  = m_scene->textureManager();

@@ -1,11 +1,11 @@
 #pragma once
 #include <math.h>
 
-class CollisionFeedback
+class BroadPhaseCollisionFeedback
 {
 public:
-	CollisionFeedback();
-	CollisionFeedback(const bool collidingState, const float distanceSqaured);
+	BroadPhaseCollisionFeedback();
+	BroadPhaseCollisionFeedback(const bool collidingState, const float distanceSqaured);
 
 	inline float getDistance() const { return sqrt(m_distanceSqaured); }
 	inline bool isColliding() const  { return m_colliding;}

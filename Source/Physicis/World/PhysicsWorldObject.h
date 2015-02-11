@@ -1,5 +1,5 @@
 #pragma once
-#include <Physicis/Geometry/AbstractShape.h>
+#include <Physicis/Geometry/IShape.h>
 #include <Primitives/Component.h>
 
 class PhysicsWorld;

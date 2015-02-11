@@ -1,5 +1,5 @@
 #include "GameObject.h"
-#include <Scene/AbstractModel.h>
+#include <Scene/IModel.h>
 #include <Scene/Scene.h>
 #include "Puppet.h"
 
@@ -489,10 +489,10 @@ void GameObject::toggleFill( bool state )
 {
 	foreach(ComponentPtr comp, m_components)
 	{
-		ModelPtr model = comp.dynamicCast<AbstractModel>();
+		ModelPtr model = comp.dynamicCast<IModel>();
 		if (model)
 		{
-			model->setPolygonMode(AbstractModel::Fill);
+			model->setPolygonMode(IModel::Fill);
 		}
 	}
 }
@@ -501,10 +501,10 @@ void GameObject::toggleWireframe( bool state )
 {
 	foreach(ComponentPtr comp, m_components)
 	{
-		ModelPtr model = comp.dynamicCast<AbstractModel>();
+		ModelPtr model = comp.dynamicCast<IModel>();
 		if (model)
 		{
-			model->setPolygonMode(AbstractModel::Line);
+			model->setPolygonMode(IModel::Line);
 		}
 	}
 }
@@ -513,10 +513,10 @@ void GameObject::togglePoints( bool state )
 {
 	foreach(ComponentPtr comp, m_components)
 	{
-		ModelPtr model = comp.dynamicCast<AbstractModel>();
+		ModelPtr model = comp.dynamicCast<IModel>();
 		if (model)
 		{
-			model->setPolygonMode(AbstractModel::Point);
+			model->setPolygonMode(IModel::Point);
 		}
 	}
 }

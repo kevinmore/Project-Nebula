@@ -1,5 +1,5 @@
 #pragma once
-#include "CollisionFeedback.h"
+#include <Physicis/Collision/BroadPhase/BroadPhaseCollisionFeedback.h>
 #include <Utility/Math.h>
 #include <Primitives/Component.h>
 #include <Scene/ShadingTechniques/ShadingTechnique.h>
@@ -8,7 +8,7 @@
 
 class Scene;
 class RigidBody;
-class AbstractCollider : public Component, protected QOpenGLFunctions_4_3_Core
+class ICollider : public Component, protected QOpenGLFunctions_4_3_Core
 {
 public:
 	
@@ -19,7 +19,7 @@ public:
 		COLLIDER_MAX_ID
 	};
 
-	AbstractCollider(const vec3& center, Scene* scene);
+	ICollider(const vec3& center, Scene* scene);
 
 	inline vec3 getCenter() const { return m_center; }
 	inline void setCenter(const vec3& pos) { m_center = pos; }
@@ -27,7 +27,7 @@ public:
 	inline RigidBody* getRigidBody() const { return m_rigidBody; }
 	void setRigidBody(RigidBody* rb) { m_rigidBody = rb; }
 
-	virtual CollisionFeedback intersect(AbstractCollider* other) = 0;
+	virtual BroadPhaseCollisionFeedback intersect(ICollider* other) = 0;
 
 	virtual QString className() { return "Collider"; }
 	virtual void render(const float currentTime);
@@ -51,4 +51,4 @@ protected:
 	vec3 m_center;
 };
 
-typedef QSharedPointer<AbstractCollider> ColliderPtr;
+typedef QSharedPointer<ICollider> ColliderPtr;

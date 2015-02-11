@@ -12,14 +12,14 @@
 #include <Primitives/Material.h>
 #include <Scene/ShadingTechniques/ShadingTechnique.h>
 
-#include <Physicis/Collider/BoxCollider.h>
+#include <Physicis/Collision/Collider/BoxCollider.h>
 
 
-class AbstractModel : public Component, protected QOpenGLFunctions_4_3_Core
+class IModel : public Component, protected QOpenGLFunctions_4_3_Core
 {
 public:
-	AbstractModel(ShadingTechniquePtr tech = ShadingTechniquePtr(), const QString& fileName = "");
-	virtual ~AbstractModel() = 0;
+	IModel(ShadingTechniquePtr tech = ShadingTechniquePtr(), const QString& fileName = "");
+	virtual ~IModel() = 0;
 
 	virtual void render(const float currentTime) = 0;
 	virtual QString className() { return "Model"; }

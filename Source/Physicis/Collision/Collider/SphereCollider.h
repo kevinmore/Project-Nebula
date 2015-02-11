@@ -1,9 +1,9 @@
 #pragma once
 #include <Physicis/Geometry/SphereShape.h>
-#include "AbstractCollider.h"
+#include "ICollider.h"
 
 class Scene;
-class SphereCollider : public AbstractCollider
+class SphereCollider : public ICollider
 {
 public:
 	SphereCollider(const vec3& center, const float radius, Scene* scene);
@@ -11,7 +11,7 @@ public:
 
 	void setRadius(const float radius);
 
-	virtual CollisionFeedback intersect(AbstractCollider* other);
+	virtual BroadPhaseCollisionFeedback intersect(ICollider* other);
 
 protected:
 	virtual void init();

@@ -1,7 +1,7 @@
 #include "LoaderThread.h"
 #include <QFileDialog>
 #include <Scene/Scene.h>
-#include <Physicis/Collider/BoxCollider.h>
+#include <Physicis/Collision/Collider/BoxCollider.h>
 LoaderThread::LoaderThread(Scene* scene, const QString fileName, GameObjectPtr reference, GameObject* objectParent, bool generateGameObject)
 	: QThread(scene),
 	  m_scene(scene),
@@ -79,7 +79,7 @@ ModelPtr LoaderThread::loadModel( const QString& customName, const QString& file
 	// if the model already exists, make a copy
 	foreach(ComponentPtr comp, m_objectManager->m_renderQueue)
 	{
-		ModelPtr model = comp.dynamicCast<AbstractModel>();
+		ModelPtr model = comp.dynamicCast<IModel>();
 		if (model && fileName == model->fileName())
 		{
 			pModel = model;

@@ -8,7 +8,7 @@
 #include <QOpenGLFunctions_4_3_Core>
 #include <QSharedPointer>
 #include <Scene/ShadingTechniques/ShadingTechnique.h>
-#include <Physicis/Collider/BoxCollider.h>
+#include <Physicis/Collision/Collider/BoxCollider.h>
 #include <Physicis/Geometry/ConvexShape.h>
 
 struct MeshData

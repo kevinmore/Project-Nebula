@@ -1,7 +1,7 @@
 #include "RigidBody.h"
 #include <Physicis/World/PhysicsWorld.h>
 #include <Physicis/World/PhysicsWorldObject.inl>
-#include <Physicis/Collider/AbstractCollider.h>
+#include <Physicis/Collision/Collider/ICollider.h>
 #include <Primitives/GameObject.h>
 
 RigidBody::RigidBody(const vec3& position, const quat& rotation, QObject* parent)
@@ -44,12 +44,12 @@ RigidBody::~RigidBody()
 	 m_world->removeEntity(this);
 }
 
-void RigidBody::setShape( const AbstractShape* shape )
+void RigidBody::setShape( const IShape* shape )
 {
 	m_shape = shape;
 }
 
-const AbstractShape* RigidBody::getShape() const
+const IShape* RigidBody::getShape() const
 {
 	return m_shape;
 }

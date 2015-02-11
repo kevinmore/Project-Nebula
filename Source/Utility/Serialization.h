@@ -200,7 +200,7 @@ QDataStream& operator << (QDataStream& out, ComponentPtr object)
 {
 	if (object->className() == "Model")
 	{
-		ModelPtr model = object.dynamicCast<AbstractModel>();
+		ModelPtr model = object.dynamicCast<IModel>();
 		out << model;
 	}
 	else if (object->className() == "ParticleSystem")
@@ -287,7 +287,7 @@ QDataStream& operator >> (QDataStream& in, GameObjectPtr object)
 
 			// get the model
 			ComponentPtr comp = object->getComponent("Model");
-			ModelPtr model = comp.dynamicCast<AbstractModel>();
+			ModelPtr model = comp.dynamicCast<IModel>();
 
 			// apply the saved shader
 			model->renderingEffect()->applyShader(shaderName);

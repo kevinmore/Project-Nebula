@@ -2,7 +2,7 @@
 #include <QOpenGLFunctions_4_3_Core>
 #include <QSharedPointer>
 #include <QOpenGLShaderProgram>
-#include <Scene/AbstractScene.h>
+#include <Scene/IScene.h>
 #include <Scene/Light.h>
 #include <Scene/Camera.h>
 #include <Scene/RiggedModel.h>
@@ -20,7 +20,7 @@
 
 typedef QSharedPointer<QOpenGLShaderProgram> ShadersProgramPtr;
 
-class Scene : public AbstractScene, protected QOpenGLFunctions_4_3_Core
+class Scene : public IScene, protected QOpenGLFunctions_4_3_Core
 {
 	Q_OBJECT
 

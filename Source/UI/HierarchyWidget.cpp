@@ -229,7 +229,7 @@ void HierarchyWidget::readGameObject(QTreeWidgetItem* current, QTreeWidgetItem* 
 			ui->tabWidget->addTab(m_renderingTab, "Rendering");
 
 			// show the bounding box
-			ModelPtr model = comp.dynamicCast<AbstractModel>();
+			ModelPtr model = comp.dynamicCast<IModel>();
 			if(model && model->getBoundingBox()) model->showBoundingBox();
 
 			// get the materials of the model
@@ -540,7 +540,7 @@ bool HierarchyWidget::eventFilter( QObject *obj, QEvent *ev )
 		{
 			if (!m_currentShadingTech) return true;
 			ComponentPtr comp = m_currentObject->getComponent("Model");
-			ModelPtr model = comp.dynamicCast<AbstractModel>();
+			ModelPtr model = comp.dynamicCast<IModel>();
 			QString fileName = QFileDialog::getOpenFileName(0, tr("Select a normal map texture"),
 				QFileInfo(model->fileName()).absolutePath(),
 				tr("Texture File(*.*)"));
@@ -753,7 +753,7 @@ void HierarchyWidget::readShadingProperties()
 	ui->graphicsView_DiffuseMapPicker->scene()->clear();
 	ui->graphicsView_NormalMapPicker->scene()->clear();
 	ComponentPtr comp = m_currentObject->getComponent("Model");
-	ModelPtr model = comp.dynamicCast<AbstractModel>();
+	ModelPtr model = comp.dynamicCast<IModel>();
 	if (!model) return;
 	searchShaders();
 

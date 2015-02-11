@@ -1,8 +1,8 @@
 #include "PhysicsWorld.h"
 #include "PhysicsWorldObject.inl"
-#include <Physicis/Collider/BoxCollider.h>
-#include <Physicis/Collider/SphereCollider.h>
-#include <Physicis/Collider/CollisionFeedback.h>
+#include <Physicis/Collision/Collider/BoxCollider.h>
+#include <Physicis/Collision/Collider/SphereCollider.h>
+#include <Physicis/Collision/BroadPhase/BroadPhaseCollisionFeedback.h>
 #include <Physicis/Entity/RigidBody.h>
 #include <Primitives/GameObject.h>
 
@@ -86,14 +86,14 @@ void PhysicsWorld::handleCollisions()
 	{
 		for (int j = i + 1; j < m_colliderList.size(); ++j)
 		{
-			AbstractCollider* c1 = m_colliderList[i];
-			AbstractCollider* c2 = m_colliderList[j];
+			ICollider* c1 = m_colliderList[i];
+			ICollider* c2 = m_colliderList[j];
 			
 			// mark the bounding volume as green
 			c1->setColor(Qt::green);
 			c2->setColor(Qt::green);
 
-			CollisionFeedback result = c1->intersect(c2);
+			BroadPhaseCollisionFeedback result = c1->intersect(c2);
 
 			if (result.isColliding())
 			{

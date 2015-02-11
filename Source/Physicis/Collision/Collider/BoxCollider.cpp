@@ -4,10 +4,10 @@
 using namespace Math;
 
 BoxCollider::BoxCollider( const vec3& center, const vec3& halfExtents, Scene* scene )
-	: AbstractCollider(center, scene)
+	: ICollider(center, scene)
 {
 	m_boxShape = BoxShape(center, halfExtents);
-	m_colliderType = AbstractCollider::COLLIDER_BOX;
+	m_colliderType = ICollider::COLLIDER_BOX;
 
 	// the default model loaded here is a cube with half extent = 0.5, and the center is 0
 	// we need to translate and scale it
@@ -22,19 +22,19 @@ BoxShape BoxCollider::getGeometryShape() const
 	return m_boxShape;
 }
 
-CollisionFeedback BoxCollider::intersect( AbstractCollider* other )
+BroadPhaseCollisionFeedback BoxCollider::intersect( ICollider* other )
 {
-	if (other->m_colliderType != AbstractCollider::COLLIDER_BOX)
+	if (other->m_colliderType != ICollider::COLLIDER_BOX)
 	{
 		//qWarning() << "Collision detection between OBB and other colliders are not implemented yet.";
-		return CollisionFeedback();
+		return BroadPhaseCollisionFeedback();
 	}
 	BoxCollider* b = dynamic_cast<BoxCollider*>(other);
 	
 	// prepare feed back
 	float distanceSquared = (getCenter() - b->getCenter()).lengthSquared();
-	CollisionFeedback notIntersecting(false, distanceSquared);
-	CollisionFeedback isIntersecting(true, distanceSquared);
+	BroadPhaseCollisionFeedback notIntersecting(false, distanceSquared);
+	BroadPhaseCollisionFeedback isIntersecting(true, distanceSquared);
 
 	/// begin the separating axis tests
 	float ra, rb;
@@ -143,7 +143,7 @@ CollisionFeedback BoxCollider::intersect( AbstractCollider* other )
 
 void BoxCollider::init()
 {
-	AbstractCollider::init();
+	ICollider::init();
 
 	ModelLoader loader;
 	QVector<ModelDataPtr> modelDataVector = loader.loadModel("../Resource/Models/Common/cube.obj", m_renderingEffect->getShaderProgram()->programId());

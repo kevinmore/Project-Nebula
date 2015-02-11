@@ -1,7 +1,7 @@
 #pragma once
 #include "PhysicsWorldConfig.h"
 #include "PhysicsWorldObject.h"
-#include "Physicis/Collider/AbstractCollider.h"
+#include "Physicis/Collision/Collider/ICollider.h"
 
 class PhysicsWorld
 {
@@ -29,7 +29,7 @@ private:
 	float m_time;
 	bool m_locked;
 	QList<PhysicsWorldObject*> m_entityList;
-	QVector<AbstractCollider*> m_colliderList;
+	QVector<ICollider*> m_colliderList;
 	void boarderCheck(RigidBody* rb);
 };
 

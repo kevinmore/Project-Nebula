@@ -1,9 +1,9 @@
 #pragma once
 #include <Physicis/Geometry/BoxShape.h>
-#include "AbstractCollider.h"
+#include "ICollider.h"
 
 class Scene;
-class BoxCollider : public AbstractCollider
+class BoxCollider : public ICollider
 {
 public:
 	BoxCollider(const vec3& center, const vec3& halfExtents, Scene* scene);
@@ -11,7 +11,7 @@ public:
 
 	void setHalfExtents(const vec3& halfExtents);
 
-	virtual CollisionFeedback intersect(AbstractCollider* other);
+	virtual BroadPhaseCollisionFeedback intersect(ICollider* other);
 
 protected:
 	virtual void init();

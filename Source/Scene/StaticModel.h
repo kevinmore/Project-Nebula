@@ -1,5 +1,5 @@
 #pragma once
-#include <Scene/AbstractModel.h>
+#include <Scene/IModel.h>
 #include <Scene/Managers/MeshManager.h>
 #include <Scene/Managers/MaterialManager.h>
 #include <Scene/Managers/TextureManager.h>
@@ -7,7 +7,7 @@
 
 class Scene;
 
-class StaticModel : public AbstractModel
+class StaticModel : public IModel
 {
 public:
 	StaticModel(const QString& name, Scene* scene, ShadingTechniquePtr tech);

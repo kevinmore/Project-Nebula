@@ -216,7 +216,7 @@ void Scene::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void 
 }
 
 const QMetaObject Scene::staticMetaObject = {
-    { &AbstractScene::staticMetaObject, qt_meta_stringdata_Scene.data,
+    { &IScene::staticMetaObject, qt_meta_stringdata_Scene.data,
       qt_meta_data_Scene,  qt_static_metacall, 0, 0}
 };
 
@@ -233,12 +233,12 @@ void *Scene::qt_metacast(const char *_clname)
         return static_cast<void*>(const_cast< Scene*>(this));
     if (!strcmp(_clname, "QOpenGLFunctions_4_3_Core"))
         return static_cast< QOpenGLFunctions_4_3_Core*>(const_cast< Scene*>(this));
-    return AbstractScene::qt_metacast(_clname);
+    return IScene::qt_metacast(_clname);
 }
 
 int Scene::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
-    _id = AbstractScene::qt_metacall(_c, _id, _a);
+    _id = IScene::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {

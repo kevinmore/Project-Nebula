@@ -3,10 +3,10 @@
 
 
 SphereCollider::SphereCollider( const vec3& center, const float radius, Scene* scene )
-	: AbstractCollider(center, scene)
+	: ICollider(center, scene)
 {
 	m_sphereShape = SphereShape(center, radius);
-	m_colliderType = AbstractCollider::COLLIDER_SPHERE;
+	m_colliderType = ICollider::COLLIDER_SPHERE;
 
 	// the default model loaded here is a sphere with radius = 0.5, and the center is 0
 	// we need to translate and scale it
@@ -21,23 +21,23 @@ SphereShape SphereCollider::getGeometryShape() const
 	return m_sphereShape;
 }
 
-CollisionFeedback SphereCollider::intersect( AbstractCollider* other )
+BroadPhaseCollisionFeedback SphereCollider::intersect( ICollider* other )
 {
-	if (other->m_colliderType != AbstractCollider::COLLIDER_SPHERE)
+	if (other->m_colliderType != ICollider::COLLIDER_SPHERE)
 	{
 		//qWarning() << "Collision detection between sphere and other colliders are not implemented yet.";
-		return CollisionFeedback();
+		return BroadPhaseCollisionFeedback();
 	}
 	SphereCollider* sp = dynamic_cast<SphereCollider*>(other);
 	float radiusSum = m_sphereShape.getRadius() + sp->getGeometryShape().getRadius();
 	float centerDisSqaure = (m_center - sp->getCenter()).lengthSquared();
 
-	return CollisionFeedback(centerDisSqaure < radiusSum, centerDisSqaure - radiusSum * radiusSum);
+	return BroadPhaseCollisionFeedback(centerDisSqaure < radiusSum, centerDisSqaure - radiusSum * radiusSum);
 }
 
 void SphereCollider::init()
 {
-	AbstractCollider::init();
+	ICollider::init();
 
 	ModelLoader loader;
 	QVector<ModelDataPtr> modelDataVector = loader.loadModel("../Resource/Models/Common/boundingsphere.obj", m_renderingEffect->getShaderProgram()->programId());

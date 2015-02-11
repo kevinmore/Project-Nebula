@@ -252,7 +252,7 @@ void Canvas::mouseReleaseEvent(QMouseEvent* e)
 		if (selectedObject)
 		{
 			// show the bounding box
-			ModelPtr model = selectedObject->getComponent("Model").dynamicCast<AbstractModel>();
+			ModelPtr model = selectedObject->getComponent("Model").dynamicCast<IModel>();
 			model->showBoundingBox();
 		}
 		// emit the signal
@@ -359,7 +359,7 @@ bool Canvas::testRaySpehreIntersection( const vec3& rayDirection, const float ra
 bool Canvas::testRayOBBIntersection( const vec3& rayDirection, const GameObjectPtr target, float& intersectionDistance )
 {
 	// Retrieve the bounding box
-	ModelPtr model = target->getComponent("Model").dynamicCast<AbstractModel>();
+	ModelPtr model = target->getComponent("Model").dynamicCast<IModel>();
 	if(!model) return false;
 	BoxColliderPtr box = model->getBoundingBox();
 	vec3 center = box->getCenter();

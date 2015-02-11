@@ -1,7 +1,7 @@
 #pragma once
 #include <Utility/EngineCommon.h>
 
-class AbstractShape
+class IShape
 {
 public:
 
@@ -15,12 +15,12 @@ public:
 		CONVEXBODY
 	};
 
-	AbstractShape(ShapeType shapeType, const vec3& pt) 
+	IShape(ShapeType shapeType, const vec3& pt) 
 	{ 
 		m_type = shapeType; 
 		m_pos = pt;
 	}
-	~AbstractShape() {}
+	~IShape() {}
 
 	inline const vec3& getPosition() const { return m_pos; } 
 	inline void setPosition(const vec3& newPos) { m_pos = newPos; }

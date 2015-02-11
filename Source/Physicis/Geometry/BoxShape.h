@@ -1,17 +1,17 @@
 #pragma once
-#include "AbstractShape.h"
+#include "IShape.h"
 
-class BoxShape : public AbstractShape
+class BoxShape : public IShape
 {
 public:
 	/// Creates a box with the given half extents ( An (X by Y by Z) box has the half-extents (X/2, Y/2, Z/2) ).
 	BoxShape()
-		: AbstractShape(AbstractShape::BOX, vec3(0, 0, 0)),
+		: IShape(IShape::BOX, vec3(0, 0, 0)),
 		m_halfExtents(vec3(0.5, 0.5, 0.5))
 	{}
 
 	BoxShape(const vec3& center, const vec3& halfExtents)
-		: AbstractShape(AbstractShape::BOX, center),
+		: IShape(IShape::BOX, center),
 		m_halfExtents(halfExtents)
 	{}
 

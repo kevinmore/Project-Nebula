@@ -1,5 +1,5 @@
-#include "AbstractModel.h"
-AbstractModel::AbstractModel(ShadingTechniquePtr tech, const QString& fileName) 
+#include "IModel.h"
+IModel::IModel(ShadingTechniquePtr tech, const QString& fileName) 
 	: Component(0),
 	  m_fileName(fileName),
 	  m_renderingEffect(tech)
@@ -13,13 +13,13 @@ AbstractModel::AbstractModel(ShadingTechniquePtr tech, const QString& fileName)
 
 	setPolygonMode(Fill);
 }
-AbstractModel::~AbstractModel() {}
+IModel::~IModel() {}
 
-void AbstractModel::init()
+void IModel::init()
 {
 	Q_ASSERT(initializeOpenGLFunctions());
 }
-void AbstractModel::drawElements( unsigned int index)
+void IModel::drawElements( unsigned int index)
 {
 
 	GLint oldCullFaceMode, oldPolygonMode;
@@ -46,27 +46,27 @@ void AbstractModel::drawElements( unsigned int index)
 	glPolygonMode(GL_FRONT_AND_BACK, oldPolygonMode);
 }
 
-void AbstractModel::setPolygonMode( PolygonMode mode )
+void IModel::setPolygonMode( PolygonMode mode )
 {
 	m_polygonMode = mode;
 }
 
-void AbstractModel::setBoundingBox( const BoxCollider& box )
+void IModel::setBoundingBox( const BoxCollider& box )
 {
 	m_boundingBox = BoxColliderPtr(new BoxCollider(box.getCenter(), box.getGeometryShape().getHalfExtents(), box.getScene()));
 }
 
-BoxColliderPtr AbstractModel::getBoundingBox() const
+BoxColliderPtr IModel::getBoundingBox() const
 {
 	return m_boundingBox;
 }
 
-void AbstractModel::showBoundingBox()
+void IModel::showBoundingBox()
 {
 	gameObject()->attachComponent(m_boundingBox);
 }
 
-void AbstractModel::hideBoundingBox()
+void IModel::hideBoundingBox()
 {
 	gameObject()->detachComponent(m_boundingBox);
 }
