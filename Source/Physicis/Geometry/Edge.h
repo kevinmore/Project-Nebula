@@ -8,19 +8,21 @@ class Edge
 	friend class Polytope;
 
 public:
-	Edge(Triangle* pEPATriangle, int indexLocal, int indexVertex0, int indexVertex1)
+	Edge(Triangle* pTriangle, int indexLocal, int indexVertex0, int indexVertex1)
+		: m_pTriangle(pTriangle),
+		  m_indexLocal(indexLocal)
 	{
 		Q_ASSERT(indexLocal >= 0 && indexLocal < 3);
 		m_indexVertex[0] = indexVertex0;
 		m_indexVertex[1] = indexVertex1;
 	}
 
-	Triangle* m_pEPATriangle; // pointer to owner triangle
+	Triangle* m_pTriangle; // pointer to owner triangle
 	Edge* m_pPairEdge;
 
 
 	int getIndexLocal() const { return m_indexLocal; }
-	Triangle* getTriangle() const { return m_pEPATriangle; }
+	Triangle* getTriangle() const { return m_pTriangle; }
 
 	int getIndexVertex(int i)
 	{
@@ -29,7 +31,7 @@ public:
 	}
 
 private:
-	int m_indexLocal; // 0, 1 or 2 From m_pEPATriangle's point of view, 0, 1, 2 winding order is counter clockwise.
+	int m_indexLocal; // 0, 1 or 2 From m_pTriangle's point of view, 0, 1, 2 winding order is counter clockwise.
 
 	int m_indexVertex[2]; // m_IndexVertex[0] is index of starting vertex. m_IndexVertex[1] is index of ending vertex. 
 };

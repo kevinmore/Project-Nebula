@@ -3,15 +3,14 @@
 
 
 Triangle::Triangle()
-	: m_bObsolete(false),
-	  m_bVisible(false),
-	  m_index(0)
+	: m_bObsolete(false)
 {
 	for ( int i = 0; i < 3; i++ )
 		m_edges[i] = NULL;
 }
 
 Triangle::Triangle( int indexVertex0, int indexVertex1, int indexVertex2 )
+	: m_bObsolete(false)
 {
 	m_indicesVertex[0] = indexVertex0;
 	m_indicesVertex[1] = indexVertex1;
@@ -79,15 +78,13 @@ vec3 Triangle::getClosestPointToOriginInSupportPntSpace( const QVector<vec3>& su
 }
 
 // Please note that edge doesn't belong to this triangle. It is from the neighbor triangle.
-// edge->m_pEPATriangle is a neighbor triangle which called this function. 
+// edge->m_pTriangle is a neighbor triangle which called this function. 
 // edge->m_pPairEdge belongs to this triangle. 
 bool Triangle::doSilhouette(const vec3& w, Edge* edge, Polytope& Polytope)
 {
-	int index = m_index;
-
 	Q_ASSERT(edge != NULL);
 	Q_ASSERT(edge->m_pPairEdge != NULL);
-	Q_ASSERT(edge->m_pEPATriangle != NULL);
+	Q_ASSERT(edge->m_pTriangle != NULL);
 
 	if ( m_bObsolete )
 		return true;
@@ -102,8 +99,6 @@ bool Triangle::doSilhouette(const vec3& w, Edge* edge, Polytope& Polytope)
 	}
 	else // if visible
 	{
-		m_bVisible = true;
-
 		m_bObsolete = true;
 		Edge* myEdge = edge->m_pPairEdge;
 
@@ -111,11 +106,11 @@ bool Triangle::doSilhouette(const vec3& w, Edge* edge, Polytope& Polytope)
 
 		int indexNextEdgeCCW = (myEdge->m_indexLocal + 1) % 3;
 		Q_ASSERT(0 <= indexNextEdgeCCW && indexNextEdgeCCW < 3);
-		m_edges[indexNextEdgeCCW]->m_pPairEdge->m_pEPATriangle->doSilhouette(w, m_edges[indexNextEdgeCCW], Polytope);
+		m_edges[indexNextEdgeCCW]->m_pPairEdge->m_pTriangle->doSilhouette(w, m_edges[indexNextEdgeCCW], Polytope);
 
 		indexNextEdgeCCW = (indexNextEdgeCCW + 1) % 3;
 		Q_ASSERT(0 <= indexNextEdgeCCW && indexNextEdgeCCW < 3);
-		m_edges[indexNextEdgeCCW]->m_pPairEdge->m_pEPATriangle->doSilhouette(w, m_edges[indexNextEdgeCCW], Polytope);
+		m_edges[indexNextEdgeCCW]->m_pPairEdge->m_pTriangle->doSilhouette(w, m_edges[indexNextEdgeCCW], Polytope);
 	}
 
 	return true;

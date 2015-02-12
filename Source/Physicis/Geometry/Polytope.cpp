@@ -1,6 +1,13 @@
 #include <algorithm>
 #include "Polytope.h"
 
+static bool checkWinding(const vec3& p0, const vec3& p1, const vec3& p2)
+{
+	vec3 temp = vec3::crossProduct(p1 - p0, p2 - p0);
+	return vec3::dotProduct(temp, p0) > 0;
+}
+
+
 Polytope::Polytope()
 	: m_count(0)
 {}
@@ -33,44 +40,35 @@ Triangle* Polytope::popAClosestTriangleToOriginFromHeap()
 	if ( m_triangles.size() == 0 )
 		return pReturnTriangle;
 
-	float minDistSqr = FLT_MAX;
+	float minDistSqrd = FLT_MAX;
 
-	for ( int i = 0; i < (int)m_triangles.size(); i++ )
+	for ( int i = 0; i < m_triangles.size(); i++ )
 	{
-		if ( !m_triangles[i]->isObsolete() && m_triangles[i]->isClosestPointInternal() )
+		Triangle* pTri = m_triangles[i];
+		if ( !pTri->isObsolete() && pTri->isClosestPointInternal() && pTri->getDistSqrd() < minDistSqrd )
 		{
-			if ( m_triangles[i]->getDistSqr() < minDistSqr )
-			{
-				minDistSqr = m_triangles[i]->getDistSqr();
-				pReturnTriangle = m_triangles[i];
-			}
+			minDistSqrd = m_triangles[i]->getDistSqrd();
+			pReturnTriangle = m_triangles[i];
 		}
 	}
 
 	return pReturnTriangle;
 }
 
-static bool CheckWinding(const vec3& p0, const vec3& p1, const vec3& p2)
-{
-	vec3 temp = vec3::crossProduct(p1 - p0, p2 - p0);
-	return vec3::dotProduct(temp, p0) > 0;
-}
-
-
 bool Polytope::addTetrahedron( const vec3& p0, const vec3& p1, const vec3& p2, const vec3& p3 )
 {
 	int index[4];
 	m_vertices.push_back(p0);
-	index[0] = (int)m_vertices.size() - 1;
+	index[0] = m_vertices.size() - 1;
 
 	m_vertices.push_back(p1);
-	index[1] = (int)m_vertices.size() - 1;
+	index[1] = m_vertices.size() - 1;
 
 	m_vertices.push_back(p2);
-	index[2] = (int)m_vertices.size() - 1;
+	index[2] = m_vertices.size() - 1;
 
 	m_vertices.push_back(p3);
-	index[3] = (int)m_vertices.size() - 1;
+	index[3] = m_vertices.size() - 1;
 
 	Triangle* pTri[4];
 
@@ -80,10 +78,10 @@ bool Polytope::addTetrahedron( const vec3& p0, const vec3& p1, const vec3& p2, c
 		if ( vec3::dotProduct(vec3::crossProduct(p1-p0, p2-p0), p3) >= 0 )
 			return false;
 
-		pTri[0] = new Triangle(index[0], index[1], index[2]); Q_ASSERT(CheckWinding(p0, p1, p2));
-		pTri[1] = new Triangle(index[0], index[3], index[1]); Q_ASSERT(CheckWinding(p0, p3, p1));
-		pTri[2] = new Triangle(index[0], index[2], index[3]); Q_ASSERT(CheckWinding(p0, p2, p3));
-		pTri[3] = new Triangle(index[1], index[3], index[2]); Q_ASSERT(CheckWinding(p1, p3, p2));
+		pTri[0] = new Triangle(index[0], index[1], index[2]); Q_ASSERT(checkWinding(p0, p1, p2));
+		pTri[1] = new Triangle(index[0], index[3], index[1]); Q_ASSERT(checkWinding(p0, p3, p1));
+		pTri[2] = new Triangle(index[0], index[2], index[3]); Q_ASSERT(checkWinding(p0, p2, p3));
+		pTri[3] = new Triangle(index[1], index[3], index[2]); Q_ASSERT(checkWinding(p1, p3, p2));
 	}
 	else // p0, p2, p1 winding in counter-clockwise
 	{
@@ -91,10 +89,10 @@ bool Polytope::addTetrahedron( const vec3& p0, const vec3& p1, const vec3& p2, c
 		if ( vec3::dotProduct(vec3::crossProduct(p2-p0, p1-p0), p3) >= 0 )
 			return false;
 
-		pTri[0] = new Triangle(index[0], index[2], index[1]); Q_ASSERT(CheckWinding(p0, p2, p1));
-		pTri[1] = new Triangle(index[0], index[3], index[2]); Q_ASSERT(CheckWinding(p0, p3, p2));
-		pTri[2] = new Triangle(index[0], index[1], index[3]); Q_ASSERT(CheckWinding(p0, p1, p3));
-		pTri[3] = new Triangle(index[2], index[3], index[1]); Q_ASSERT(CheckWinding(p2, p3, p1));		
+		pTri[0] = new Triangle(index[0], index[2], index[1]); Q_ASSERT(checkWinding(p0, p2, p1));
+		pTri[1] = new Triangle(index[0], index[3], index[2]); Q_ASSERT(checkWinding(p0, p3, p2));
+		pTri[2] = new Triangle(index[0], index[1], index[3]); Q_ASSERT(checkWinding(p0, p1, p3));
+		pTri[3] = new Triangle(index[2], index[3], index[1]); Q_ASSERT(checkWinding(p2, p3, p1));		
 	}
 
 	// construct adjacency
@@ -136,8 +134,6 @@ bool Polytope::addTetrahedron( const vec3& p0, const vec3& p1, const vec3& p2, c
 	{
 		pTri[i]->computeClosestPointToOrigin(*this);
 
-		pTri[i]->m_index = m_count++;
-
 		m_triangles.push_back(pTri[i]);
 		std::push_heap(m_triangles.begin(), m_triangles.end(), compare);
 	}
@@ -161,28 +157,28 @@ bool Polytope::addHexahedron( const vec3& p0, const vec3& p1, const vec3& p2, co
 
 	int index[5];
 	m_vertices.push_back(p0);
-	index[0] = (int)m_vertices.size() - 1;
+	index[0] = m_vertices.size() - 1;
 
 	m_vertices.push_back(p1);
-	index[1] = (int)m_vertices.size() - 1;
+	index[1] = m_vertices.size() - 1;
 
 	m_vertices.push_back(p2);
-	index[2] = (int)m_vertices.size() - 1;
+	index[2] = m_vertices.size() - 1;
 
 	m_vertices.push_back(w0);
-	index[3] = (int)m_vertices.size() - 1;
+	index[3] = m_vertices.size() - 1;
 
 	m_vertices.push_back(w1);
-	index[4] = (int)m_vertices.size() - 1;
+	index[4] = m_vertices.size() - 1;
 
 	Triangle* pTri[6];
 
-	pTri[0] = new Triangle(index[0], index[1], index[3]); Q_ASSERT(CheckWinding(m_vertices[index[0]], m_vertices[index[1]], m_vertices[index[3]]));
-	pTri[1] = new Triangle(index[1], index[2], index[3]); Q_ASSERT(CheckWinding(m_vertices[index[1]], m_vertices[index[2]], m_vertices[index[3]]));
-	pTri[2] = new Triangle(index[2], index[0], index[3]); Q_ASSERT(CheckWinding(m_vertices[index[2]], m_vertices[index[0]], m_vertices[index[3]]));
-	pTri[3] = new Triangle(index[1], index[0], index[4]); Q_ASSERT(CheckWinding(m_vertices[index[1]], m_vertices[index[0]], m_vertices[index[4]]));
-	pTri[4] = new Triangle(index[2], index[1], index[4]); Q_ASSERT(CheckWinding(m_vertices[index[2]], m_vertices[index[1]], m_vertices[index[4]]));
-	pTri[5] = new Triangle(index[0], index[2], index[4]); Q_ASSERT(CheckWinding(m_vertices[index[0]], m_vertices[index[2]], m_vertices[index[4]]));
+	pTri[0] = new Triangle(index[0], index[1], index[3]); Q_ASSERT(checkWinding(m_vertices[index[0]], m_vertices[index[1]], m_vertices[index[3]]));
+	pTri[1] = new Triangle(index[1], index[2], index[3]); Q_ASSERT(checkWinding(m_vertices[index[1]], m_vertices[index[2]], m_vertices[index[3]]));
+	pTri[2] = new Triangle(index[2], index[0], index[3]); Q_ASSERT(checkWinding(m_vertices[index[2]], m_vertices[index[0]], m_vertices[index[3]]));
+	pTri[3] = new Triangle(index[1], index[0], index[4]); Q_ASSERT(checkWinding(m_vertices[index[1]], m_vertices[index[0]], m_vertices[index[4]]));
+	pTri[4] = new Triangle(index[2], index[1], index[4]); Q_ASSERT(checkWinding(m_vertices[index[2]], m_vertices[index[1]], m_vertices[index[4]]));
+	pTri[5] = new Triangle(index[0], index[2], index[4]); Q_ASSERT(checkWinding(m_vertices[index[0]], m_vertices[index[2]], m_vertices[index[4]]));
 
 	// construct adjacency
 	pTri[0]->m_adjacentTriangles[0] = pTri[3];
@@ -239,8 +235,6 @@ bool Polytope::addHexahedron( const vec3& p0, const vec3& p1, const vec3& p2, co
 	{
 		pTri[i]->computeClosestPointToOrigin(*this);
 
-		pTri[i]->m_index = m_count++;
-
 		for ( int j = 0; j < 3; j++ )
 		{
 			if ( !(pTri[i]->m_adjacentTriangles[j] == pTri[i]->m_edges[j]->m_pPairEdge->getTriangle()) )
@@ -256,11 +250,6 @@ bool Polytope::addHexahedron( const vec3& p0, const vec3& p1, const vec3& p2, co
 
 bool Polytope::expandPolytopeWithNewPoint( const vec3& w, Triangle* pTriangleUsedToObtainW )
 {
-	for (int i = 0; i < m_triangles.size(); i++ )
-	{
-		m_triangles[i]->m_bVisible = false;
-	}
-
 	m_silhouetteVertices.clear();
 	m_silhouetteVertices.reserve(20);
 	m_silhouetteTriangles.clear();
@@ -269,46 +258,27 @@ bool Polytope::expandPolytopeWithNewPoint( const vec3& w, Triangle* pTriangleUse
 	m_silhouetteEdges.reserve(20);
 
 	m_vertices.push_back(w);
-	int indexVertexW = (int)m_vertices.size() - 1;
+	int indexVertexW = m_vertices.size() - 1;
 
 	Q_ASSERT(pTriangleUsedToObtainW->isObsolete() == false);
 
-	pTriangleUsedToObtainW->m_bVisible = true;
 	pTriangleUsedToObtainW->setObsolete(true);
-
-	for ( int i = 0; i < (int)m_triangles.size(); i++ )
-	{
-		if ( m_triangles[i]->isObsolete() )
-			continue;
-
-		int index = m_triangles[i]->m_index;
-		bool b = m_triangles[i]->isVisibleFromPoint(w);
-	}
 
 	// 'Flood Fill Silhouette' algorithm to detect visible triangles and silhouette loop of edges from w.
 	for ( int i = 0; i < 3; i++ )
-		pTriangleUsedToObtainW->m_edges[i]->m_pPairEdge->m_pEPATriangle->doSilhouette(w, pTriangleUsedToObtainW->m_edges[i], *this);
+	{
+		Triangle* pTri = pTriangleUsedToObtainW->m_edges[i]->m_pPairEdge->m_pTriangle;
+		//Triangle* pTri = pTriangleUsedToObtainW->m_adjacentTriangles[i];
+		pTri->doSilhouette(w, pTriangleUsedToObtainW->m_edges[i], *this);
+	}
 
 	Q_ASSERT(m_silhouetteVertices.size() >= 3);
 	Q_ASSERT(m_silhouetteTriangles.size() >= 3);
 
 	// Now, we create new triangles to patch the silhouette loop 
-	int silhouetteSize = (int)m_silhouetteVertices.size();
+	int silhouetteSize = m_silhouetteVertices.size();
 
-	for ( int i = 0; i < (int)m_triangles.size(); i++ )
-	{
-		if ( m_triangles[i]->isObsolete() )
-			continue;
-
-		if ( m_triangles[i]->m_bVisible )
-			if ( m_triangles[i]->isVisibleFromPoint(w) != true )
-				return false;
-			else
-				if ( m_triangles[i]->isVisibleFromPoint(w) != false )
-					return false;
-	}
-
-	for ( int i = 0; i < (int)silhouetteSize; i++ )
+	for ( int i = 0; i < silhouetteSize; i++ )
 	{
 		if ( m_silhouetteTriangles[i]->isVisibleFromPoint(w) != false )
 			return false;
@@ -347,23 +317,8 @@ bool Polytope::expandPolytopeWithNewPoint( const vec3& w, Triangle* pTriangleUse
 
 	for ( int i = 0; i < silhouetteSize; i++ )
 	{	
-		newTriangles[i]->m_index = m_count++;
-
 		m_triangles.push_back(newTriangles[i]);
 		std::push_heap(m_triangles.begin(), m_triangles.end(), compare);
-	}
-
-	for ( int i = 0; i < getTriangles().size(); i++ )
-	{
-		if ( !getTriangles()[i]->isObsolete() )
-		{
-			for ( int j = 0; j < 3; j++ )
-			{
-				Edge* edge = getTriangles()[i]->getEdge(j);
-				Q_ASSERT(edge->getIndexVertex(0) == edge->m_pPairEdge->getIndexVertex(1));
-				Q_ASSERT(edge->getIndexVertex(1) == edge->m_pPairEdge->getIndexVertex(0));
-			}
-		}
 	}
 
 	return true;

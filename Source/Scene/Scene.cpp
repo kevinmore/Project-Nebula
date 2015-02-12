@@ -59,29 +59,29 @@ void Scene::initialize()
 
 	// setup a basic physics world
 	// setup a demo room
-	GameObjectPtr go = createEmptyGameObject("Gundam");
-	LoaderThread loader(this, "../Resource/Models/BroadPhaseDemo/robot.obj", go, m_sceneRootNode, false);
-	go->setScale(50);
+	GameObjectPtr go = createEmptyGameObject("Cube1");
+	LoaderThread loader(this, "../Resource/Models/Common/woodenbox.obj", go, m_sceneRootNode, false);
 	SphereRigidBodyPtr rb(new SphereRigidBody());
 	rb->setPosition(vec3(-1, 1, 0));
 	rb->setGravityFactor(0.0f);
 	rb->setLinearVelocity(vec3(1, 0, 0));
-	ModelPtr model = m_objectManager->getGameObject("Gundam")->getComponent("Model").dynamicCast<IModel>();
+	ModelPtr model = m_objectManager->getGameObject("Cube1")->getComponent("Model").dynamicCast<IModel>();
 	rb->attachCollider(model->getBoundingBox());
 	go->attachComponent(rb);
+	go->attachComponent(model->getConvexHullCollider());
 	m_physicsWorld->addEntity(rb.data());
 
-	GameObjectPtr go2 = createEmptyGameObject("Gundam2");
-	LoaderThread loader2(this, "../Resource/Models/BroadPhaseDemo/robot.obj", go2, m_sceneRootNode, false);
-	go2->setScale(50);
+	GameObjectPtr go2 = createEmptyGameObject("Cube2");
+	LoaderThread loader2(this, "../Resource/Models/Common/woodenbox.obj", go2, m_sceneRootNode, false);
 	SphereRigidBodyPtr rb2(new SphereRigidBody());
 	rb2->setPosition(vec3(1, 1, 0));
 	rb2->setGravityFactor(0.0f);
 	rb2->setLinearVelocity(vec3(-1, 0, 0));
 	rb2->setAngularVelocity(vec3(100, 100, 1));
-	ModelPtr model2 = m_objectManager->getGameObject("Gundam2")->getComponent("Model").dynamicCast<IModel>();
+	ModelPtr model2 = m_objectManager->getGameObject("Cube2")->getComponent("Model").dynamicCast<IModel>();
 	rb2->attachCollider(model2->getBoundingBox());
 	go2->attachComponent(rb2);
+	go2->attachComponent(model2->getConvexHullCollider());
 	m_physicsWorld->addEntity(rb2.data());
 
 	// broad phase demo

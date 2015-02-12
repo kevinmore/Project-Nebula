@@ -46,16 +46,24 @@ RiggedModel::RiggedModel( const RiggedModel* orignal )
 	m_vao = orignal->getShadingTech()->getVAO();
 	m_renderingEffect->setVAO(m_vao);
 
+	// get the scale
+	vec3 scale = orignal->getScale();
+
 	// copy the bounding box
 	BoxColliderPtr otherBox = orignal->getBoundingBox();
 	vec3 halfExtents = otherBox->getGeometryShape().getHalfExtents();
 
 	// reset the scale of the bounding box
-	vec3 scale = orignal->getScale();
 	halfExtents.setX(halfExtents.x() / scale.x());
 	halfExtents.setY(halfExtents.y() / scale.y());
 	halfExtents.setZ(halfExtents.z() / scale.z());
 	m_boundingBox  = BoxColliderPtr(new BoxCollider(otherBox->getCenter(), halfExtents, m_scene));
+
+	// copy the convexhull collider
+	ConvexHullColliderPtr otherCH = orignal->getConvexHullCollider();
+	ConvexShape shape = otherCH->getGeometryShape();
+	m_convexHull = ConvexHullColliderPtr(new ConvexHullCollider(otherCH->getCenter(), shape.getVertices(), shape.getFaces(), m_scene));
+	m_convexHull->getGeometryShape().setScale(scale);
 }
 
 

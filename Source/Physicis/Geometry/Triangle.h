@@ -24,7 +24,7 @@ public:
 	}
 
 	void setAdjacentEdge(int index, Edge& Edge);
-	float getDistSqr() const { return m_distSqrd; }
+	float getDistSqrd() const { return m_distSqrd; }
 	bool isObsolete() const { return m_bObsolete; }
 	void setObsolete(bool bObsolete) { m_bObsolete = bObsolete; }	
 	const vec3& getClosestPoint() const { return m_closestPointToOrigin; }
@@ -50,9 +50,6 @@ private:
 
 	// squared distance to origin
 	float m_distSqrd; // = m_ClosestPointToOrigin.LenghSqr()
-
-	int m_index;
-	bool m_bVisible;
 };
 
 class EPATriangleComparison 
@@ -60,6 +57,6 @@ class EPATriangleComparison
 public:
 	bool operator() (const Triangle* pTriA, const Triangle* pTriB) 
 	{
-		return (pTriA->getDistSqr() > pTriB->getDistSqr());
+		return (pTriA->getDistSqrd() > pTriB->getDistSqrd());
 	}
 };

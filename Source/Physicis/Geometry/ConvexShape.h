@@ -13,6 +13,7 @@ public:
 	void setFaces(const QVector<vec3> faces) { m_faces = faces; }
 	QVector<vec3> getFaces() const { return m_faces; }
 
+	void setScale(const vec3& scale);
 
 	float getInnderRadius();
 	float getOuttererRadius();

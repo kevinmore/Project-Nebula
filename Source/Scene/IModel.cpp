@@ -93,6 +93,9 @@ void IModel::syncTransform( const Transform& transform )
 									   halfExtents.y() * transform.getScale().y() / m_scale.y(), 
 									   halfExtents.z() * transform.getScale().z() / m_scale.z()));
 
+	// sync the size of the convex hull collider
+	m_convexHull->getGeometryShape().setScale(vec3(transform.getScale().x()/m_scale.x(),transform.getScale().y()/m_scale.y(),transform.getScale().z()/m_scale.z()));
+
 	m_scale = transform.getScale();
 }
 

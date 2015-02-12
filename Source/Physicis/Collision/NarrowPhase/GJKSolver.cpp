@@ -54,10 +54,14 @@ bool GJKSolver::checkCollision( ICollider* objA, ICollider* objB, NarrowPhaseCol
 	Simplex simplex;
 
 	// transform a local position in objB space to local position in objA space
-	Transform transB2A = objA->getTransform().inversed() * objB->getTransform();
+	Transform transA = objA->getTransform();
+	Transform transB = objB->getTransform();
+	Transform transB2A = transA.inversed() * transB;
 
 	// rotate matrix which transform a local vector in objA space to local vector in objB space
-	quat rotA2B = objB->getTransform().getRotation().conjugate() * objA->getTransform().getRotation();
+	quat rotA = objA->getTransform().getRotation();
+	quat rotB = objB->getTransform().getRotation();
+	quat rotA2B = rotB.conjugate() * rotA;
 
 	// closest point to the origin
 	vec3 v(1.0, 0.0, 0.0);

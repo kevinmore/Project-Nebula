@@ -1,5 +1,6 @@
 #pragma once
 #include <Utility/EngineCommon.h>
+#include "GJKSolver.h"
 
 class ICollider;
 class GJKSolver;
@@ -39,7 +40,7 @@ public:
 	int checkCollisions();
 
 protected:
-	GJKSolver* m_pAlgorithm;
+	GJKSolver m_solver;
 	std::vector<NarrowPhaseCollisionFeedback> m_CollisionPairs;
 };
 

@@ -2,9 +2,13 @@
 #include "PhysicsWorldObject.inl"
 #include <Physicis/Collision/Collider/BoxCollider.h>
 #include <Physicis/Collision/Collider/SphereCollider.h>
+#include <Physicis/Collision/Collider/ConvexHullCollider.h>
 #include <Physicis/Collision/BroadPhase/BroadPhaseCollisionFeedback.h>
+#include <Physicis/Collision/NarrowPhase/NarrowPhaseCollisionDetection.h>
+#include <Physicis/Collision/NarrowPhase/GJKSolver.h>
 #include <Physicis/Entity/RigidBody.h>
 #include <Primitives/GameObject.h>
+#include <Scene/IModel.h>
 
 PhysicsWorld::PhysicsWorld(const PhysicsWorldConfig& config)
 	: m_config(config),
@@ -118,12 +122,34 @@ void PhysicsWorld::handleCollisions()
 // 				rb2->setLinearVelocity(v2Prime);
 
 				// go to narrow phase
+				NarrowPhaseCollisionFeedback n;
+				GJKSolver solver;
+				ModelPtr model = c1->getRigidBody()->gameObject()->getComponent("Model").dynamicCast<IModel>();
+				ConvexHullColliderPtr ch1 = model->getConvexHullCollider();
+
+				model = c2->getRigidBody()->gameObject()->getComponent("Model").dynamicCast<IModel>();
+				ConvexHullColliderPtr ch2 = model->getConvexHullCollider();
+
+				if (solver.checkCollision(ch1.data(), ch2.data(), n, true))
+				{
+					qDebug() << "distance =" << n.witnessPntA;
+					
+					
+				}
 			}
 // 			boarderCheck(c1->getRigidBody());
 // 			boarderCheck(c2->getRigidBody());
 
 		}
 	}
+}
+
+void PhysicsWorld::addCollider( ICollider* collider )
+{
+	lock();
+	// add the rigid body and its collider
+	m_colliderList << collider;
+	unlock();
 }
 
 void PhysicsWorld::boarderCheck( RigidBody* rb )
@@ -183,12 +209,4 @@ void PhysicsWorld::boarderCheck( RigidBody* rb )
 			rb->setLinearVelocity(vec3(v.x(), v.y(), 1.0f));
 		}
 	}
-}
-
-void PhysicsWorld::addCollider( ICollider* collider )
-{
-	lock();
-	// add the rigid body and its collider
-	m_colliderList << collider;
-	unlock();
 }

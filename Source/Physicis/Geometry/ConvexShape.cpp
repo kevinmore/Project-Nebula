@@ -55,3 +55,13 @@ float ConvexShape::getOuttererRadius()
 	return m_outterRadius;
 }
 
+void ConvexShape::setScale( const vec3& scale )
+{
+	foreach(vec3 vertex, m_vertices)
+	{
+		vertex.setX(vertex.x() * scale.x());
+		vertex.setY(vertex.y() * scale.y());
+		vertex.setZ(vertex.z() * scale.z());
+	}
+}
+
