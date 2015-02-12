@@ -67,8 +67,8 @@ public:
 signals:
 	void propertiesChanged(Light* l);
 
-private slots:
-	void syncTransform(const Transform& transform);
+protected:
+	virtual void syncTransform(const Transform& transform);
 
 private:
 	Scene* m_scene;

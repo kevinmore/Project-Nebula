@@ -17,11 +17,13 @@ GameObject* Component::gameObject() const
 void Component::linkGameObject( GameObject* go )
 {
 	m_actor = go;
+	connect(go, SIGNAL(transformChanged(const Transform&)), this, SLOT(syncTransform(const Transform&)));
 }
 
 
 void Component::dislinkGameObject()
 {
+	disconnect(m_actor, 0, this, 0);
 	m_actor = NULL;
 }
 

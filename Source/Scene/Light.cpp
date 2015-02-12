@@ -23,7 +23,6 @@ Light::Light(Scene* scene, GameObject* go) :
 {
 	// connect to the scene
 	connect(this, SIGNAL(propertiesChanged(Light*)), m_scene, SLOT(onLightChanged(Light*)));
-	connect(go, SIGNAL(transformChanged(const Transform&)), this, SLOT(syncTransform(const Transform&)));
 }
 
 Light::~Light() 

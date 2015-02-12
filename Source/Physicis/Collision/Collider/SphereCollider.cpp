@@ -56,10 +56,6 @@ void SphereCollider::init()
 void SphereCollider::setRadius( const float radius )
 {
 	m_sphereShape.setRadius(radius);
-
-	// resize the transform matrix
-	m_transformMatrix.setToIdentity();
-	m_transformMatrix.scale(radius / 0.5f);
 }
 
 vec3 SphereCollider::getLocalSupportPoint( const vec3& dir, float margin /*= 0*/ ) const
