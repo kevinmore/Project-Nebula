@@ -132,7 +132,8 @@ void PhysicsWorld::handleCollisions()
 
 				if (solver.checkCollision(ch1.data(), ch2.data(), n, true))
 				{
-					qDebug() << "distance =" << n.witnessPntA;
+					qDebug() << "contact point A =" << n.witnessPntA;
+					qDebug() << "contact point B =" << n.witnessPntB;
 					
 					
 				}
