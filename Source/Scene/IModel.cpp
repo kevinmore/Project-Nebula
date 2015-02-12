@@ -2,7 +2,8 @@
 IModel::IModel(ShadingTechniquePtr tech, const QString& fileName) 
 	: Component(0),
 	  m_fileName(fileName),
-	  m_renderingEffect(tech)
+	  m_renderingEffect(tech),
+	  m_scale(Math::Vector3::UNIT_SCALE)
 {
 	if (tech)
 	{
@@ -81,3 +82,16 @@ ConvexHullColliderPtr IModel::getConvexHullCollider() const
 {
 	return m_convexHull;
 }
+
+void IModel::syncTransform( const Transform& transform )
+{
+	// sync the size of the collider
+//	if(transform.getScale() == m_scale) return;
+// 	m_scale = transform.getScale();
+//  	vec3 halfExtents = m_boundingBox->getGeometryShape().getHalfExtents();
+// 	qDebug() << halfExtents;
+// 	m_boundingBox->setHalfExtents(vec3(halfExtents.x() * m_scale.x(), 
+// 		halfExtents.y() * m_scale.y(), 
+// 		halfExtents.z() * m_scale.z()));
+}
+

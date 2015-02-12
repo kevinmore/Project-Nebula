@@ -14,7 +14,7 @@ BoxCollider::BoxCollider( const vec3& center, const vec3& halfExtents, Scene* sc
 	m_transformMatrix.translate(m_center);
 	m_transformMatrix.scale(halfExtents.x() / 0.5f, halfExtents.y() / 0.5f, halfExtents.z() / 0.5f);
 
-	// make the bounding box look slightly bitter than the actual one
+	// make the bounding box look slightly bigger than the actual one
 	// this is for a better visual result
 	m_transformMatrix.scale(1.02f);
 
@@ -44,6 +44,7 @@ BroadPhaseCollisionFeedback BoxCollider::onBroadPhase( ICollider* other )
 	float ra, rb;
 	mat3 R, AbsR;
 
+	// get the size
 	vec3 ea = m_boxShape.getHalfExtents();
 	vec3 eb = b->getGeometryShape().getHalfExtents();
 
@@ -166,10 +167,6 @@ void BoxCollider::init()
 void BoxCollider::setHalfExtents( const vec3& halfExtents )
 {
 	m_boxShape.setHalfExtents(halfExtents);
-
-	// resize the transform matrix
-	m_transformMatrix.setToIdentity();
-	m_transformMatrix.scale(halfExtents.x() / 0.5f, halfExtents.y() / 0.5f, halfExtents.z() / 0.5f);
 }
 
 vec3 BoxCollider::getLocalSupportPoint( const vec3& dir, float margin /*= 0*/ ) const

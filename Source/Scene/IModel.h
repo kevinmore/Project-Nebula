@@ -52,7 +52,7 @@ public:
 	void setPolygonMode(PolygonMode mode);
 
 protected:
-
+	virtual void syncTransform(const Transform& transform);
 	void init();
 	void drawElements(unsigned int index);
 
@@ -66,4 +66,5 @@ protected:
 	ConvexHullColliderPtr m_convexHull;
 
 	mat4 m_transformMatrix;
+	vec3 m_scale;
 };

@@ -7,6 +7,7 @@ GameObject::GameObject(Scene* scene, GameObject* parent)
 	: QObject(parent),
 	  m_scene(scene),
 	  m_movingBehaviour(CONSECUTIVE),
+	  m_transform(),
 	  m_modelMatrixDirty(true),
 	  m_time(0.0f),
 	  m_prevPosition(Vector3::ZERO),

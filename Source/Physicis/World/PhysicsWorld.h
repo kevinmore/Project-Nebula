@@ -21,6 +21,7 @@ public:
 
 	void addEntity(PhysicsWorldObject* entity);
 	void removeEntity(PhysicsWorldObject* entity);
+	void addCollider(ICollider* collider);
 
 	int entitiesCount();
 

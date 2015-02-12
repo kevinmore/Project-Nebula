@@ -74,6 +74,7 @@
     <ClCompile Include="Physicis\Geometry\Simplex.cpp" />
     <ClCompile Include="Physicis\Geometry\Triangle.cpp" />
     <ClCompile Include="Physicis\Collision\Collider\ConvexHullCollider.cpp" />
+    <ClCompile Include="Primitives\moc_Component.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Primitives\Texture.h" />
@@ -96,7 +97,6 @@
     <ClInclude Include="Scene\ShadingTechniques\Technique.h" />
     <ClInclude Include="Utility\Serialization.h" />
     <ClInclude Include="UI\ui_HierarchyWidget.h" />
-    <ClInclude Include="Primitives\Component.h" />
     <ClInclude Include="Primitives\CubeMapTexture.h" />
     <ClInclude Include="Scene\ShadingTechniques\SkyboxTechnique.h" />
     <ClInclude Include="Scene\Skybox.h" />
@@ -129,11 +129,9 @@
     <ClInclude Include="Physicis\Collision\Collider\BoxCollider.h" />
     <ClInclude Include="Physicis\Collision\Collider\SphereCollider.h" />
     <ClInclude Include="Physicis\Geometry\IShape.h" />
-    <ClInclude Include="Scene\IModel.h" />
     <ClInclude Include="Scene\IScene.h" />
     <ClInclude Include="Physicis\Collision\Collider\ICollider.h" />
     <ClInclude Include="Primitives\Transform.h" />
-    <ClInclude Include="Scene\Light.h" />
     <ClInclude Include="Primitives\GameObject.h" />
     <ClInclude Include="Physicis\Collision\NarrowPhase\EPASolver.h" />
     <ClInclude Include="Physicis\Collision\NarrowPhase\GJKSolver.h" />
@@ -143,6 +141,9 @@
     <ClInclude Include="Physicis\Geometry\Simplex.h" />
     <ClInclude Include="Physicis\Geometry\Edge.h" />
     <ClInclude Include="Physicis\Collision\Collider\ConvexHullCollider.h" />
+    <ClInclude Include="Scene\IModel.h" />
+    <ClInclude Include="Scene\Light.h" />
+    <ClInclude Include="Primitives\Component.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="UI\HierarchyWidget.ui" />

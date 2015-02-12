@@ -7,6 +7,8 @@ class Transform;
 class GameObject;
 class Component : public QObject
 {
+	Q_OBJECT
+
 public:
 	Component(int renderLayer = -1);
 	virtual ~Component() = 0;
@@ -25,4 +27,8 @@ protected:
 	GameObject* m_actor;
 	int m_renderLayer; // a component with a less renderOrder(e.g. 0) get rendered first
 					   // render layer < 0 means not renderable
+
+protected slots:
+	// call back function when the transform of the game object changes
+	virtual void syncTransform(const Transform& transform) {}
 };

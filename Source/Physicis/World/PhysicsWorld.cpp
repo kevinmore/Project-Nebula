@@ -97,25 +97,27 @@ void PhysicsWorld::handleCollisions()
 
 			if (result.isColliding())
 			{
-				RigidBody* rb1 = c1->getRigidBody();
-				RigidBody* rb2 = c2->getRigidBody();
-
-				float m1 = rb1->getMass();
-				float m2 = rb2->getMass();
-				vec3 v1 = rb1->getLinearVelocity();
-				vec3 v2 = rb2->getLinearVelocity();
-
-				// Momentum Conservation Principle
-				// in this case, the system does not lose kinematics energy
-				vec3 v1Prime = v1*(m1-m2)/(m1+m2) + v2*(2*m2)/(m1+m2);
-				vec3 v2Prime = v1*(2*m1)/(m1+m2) - v2*(m1-m2)/(m1+m2);
-
- 				rb1->setLinearVelocity(v1Prime);
- 				rb2->setLinearVelocity(v2Prime);
-
 				// mark the bounding volume as red
 				c1->setColor(Qt::red);
 				c2->setColor(Qt::red);
+
+// 				RigidBody* rb1 = c1->getRigidBody();
+// 				RigidBody* rb2 = c2->getRigidBody();
+// 
+// 				float m1 = rb1->getMass();
+// 				float m2 = rb2->getMass();
+// 				vec3 v1 = rb1->getLinearVelocity();
+// 				vec3 v2 = rb2->getLinearVelocity();
+// 
+// 				// Momentum Conservation Principle
+// 				// in this case, the system does not lose kinematics energy
+// 				vec3 v1Prime = v1*(m1-m2)/(m1+m2) + v2*(2*m2)/(m1+m2);
+// 				vec3 v2Prime = v1*(2*m1)/(m1+m2) - v2*(m1-m2)/(m1+m2);
+// 
+// 				rb1->setLinearVelocity(v1Prime);
+// 				rb2->setLinearVelocity(v2Prime);
+
+				// go to narrow phase
 			}
 // 			boarderCheck(c1->getRigidBody());
 // 			boarderCheck(c2->getRigidBody());
@@ -181,4 +183,12 @@ void PhysicsWorld::boarderCheck( RigidBody* rb )
 			rb->setLinearVelocity(vec3(v.x(), v.y(), 1.0f));
 		}
 	}
+}
+
+void PhysicsWorld::addCollider( ICollider* collider )
+{
+	lock();
+	// add the rigid body and its collider
+	m_colliderList << collider;
+	unlock();
 }

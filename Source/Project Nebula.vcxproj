@@ -30,6 +30,7 @@
     <ClCompile Include="Physicis\Entity\SphereRigidBody.cpp" />
     <ClCompile Include="Physicis\Collision\Collider\SphereCollider.cpp" />
     <ClCompile Include="Physicis\World\PhysicsWorldObject.cpp" />
+    <ClCompile Include="Primitives\moc_Component.cc" />
     <ClCompile Include="Scene\moc_Light.cc" />
     <ClCompile Include="Scene\ShadingTechniques\moc_ShadingTechnique.cc" />
     <ClCompile Include="Primitives\Transform.cpp" />
