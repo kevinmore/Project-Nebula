@@ -227,7 +227,7 @@ void Canvas::mouseReleaseEvent(QMouseEvent* e)
 	if(e->button() == Qt::RightButton)
 	{
 		// clear the debug mode first
-		getScene()->toggleDebugMode(false);
+		//getScene()->toggleDebugMode(false);
 		// emit an empty game object
 		//emit objectPicked(GameObjectPtr());
 
@@ -370,13 +370,13 @@ bool Canvas::testRayOBBIntersection( const vec3& rayDirection, const GameObjectP
 	vec3 aabbMax = center + halfExtents;
 
 	// apply a necessary scale to the extents
-	vec3 scale = target->scale();
-	aabbMin.setX(aabbMin.x() * scale.x());
-	aabbMin.setY(aabbMin.y() * scale.y());
-	aabbMin.setZ(aabbMin.z() * scale.z());
-	aabbMax.setX(aabbMax.x() * scale.x());
-	aabbMax.setY(aabbMax.y() * scale.y());
-	aabbMax.setZ(aabbMax.z() * scale.z());
+// 	vec3 scale = target->scale();
+// 	aabbMin.setX(aabbMin.x() * scale.x());
+// 	aabbMin.setY(aabbMin.y() * scale.y());
+// 	aabbMin.setZ(aabbMin.z() * scale.z());
+// 	aabbMax.setX(aabbMax.x() * scale.x());
+// 	aabbMax.setY(aabbMax.y() * scale.y());
+// 	aabbMax.setZ(aabbMax.z() * scale.z());
 
 	mat4 modelMatrix = target->getTransformMatrix();
 

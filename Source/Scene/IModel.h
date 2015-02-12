@@ -51,6 +51,8 @@ public:
 
 	void setPolygonMode(PolygonMode mode);
 
+	const vec3& getScale() const { return m_scale; }
+
 protected:
 	virtual void syncTransform(const Transform& transform);
 	void init();

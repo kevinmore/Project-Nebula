@@ -78,6 +78,7 @@ void Scene::initialize()
 	rb2->setPosition(vec3(1, 1, 0));
 	rb2->setGravityFactor(0.0f);
 	rb2->setLinearVelocity(vec3(-1, 0, 0));
+	rb2->setAngularVelocity(vec3(100, 100, 1));
 	ModelPtr model2 = m_objectManager->getGameObject("Gundam2")->getComponent("Model").dynamicCast<IModel>();
 	rb2->attachCollider(model2->getBoundingBox());
 	go2->attachComponent(rb2);

@@ -85,13 +85,14 @@ ConvexHullColliderPtr IModel::getConvexHullCollider() const
 
 void IModel::syncTransform( const Transform& transform )
 {
-	// sync the size of the collider
-//	if(transform.getScale() == m_scale) return;
-// 	m_scale = transform.getScale();
-//  	vec3 halfExtents = m_boundingBox->getGeometryShape().getHalfExtents();
-// 	qDebug() << halfExtents;
-// 	m_boundingBox->setHalfExtents(vec3(halfExtents.x() * m_scale.x(), 
-// 		halfExtents.y() * m_scale.y(), 
-// 		halfExtents.z() * m_scale.z()));
+	// sync the size of the box collider
+	if(transform.getScale() == m_scale) return;
+ 	vec3 halfExtents = m_boundingBox->getGeometryShape().getHalfExtents();
+	vec3 center = m_boundingBox->getGeometryShape().getPosition();
+	m_boundingBox->setHalfExtents(vec3(halfExtents.x() * transform.getScale().x() / m_scale.x(), 
+									   halfExtents.y() * transform.getScale().y() / m_scale.y(), 
+									   halfExtents.z() * transform.getScale().z() / m_scale.z()));
+
+	m_scale = transform.getScale();
 }
 

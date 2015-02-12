@@ -994,9 +994,16 @@ void HierarchyWidget::changeLightType( const QString& type )
 
 void HierarchyWidget::onScaleFactorDoubleBoxChange( double value )
 {
+	m_currentObject->setScale(value);
+	disconnect(ui->doubleSpinBox_ScaleX, 0, 0, 0);
+	disconnect(ui->doubleSpinBox_ScaleY, 0, 0, 0);
+	disconnect(ui->doubleSpinBox_ScaleZ, 0, 0, 0);
 	ui->doubleSpinBox_ScaleX->setValue(value);
 	ui->doubleSpinBox_ScaleY->setValue(value);
 	ui->doubleSpinBox_ScaleZ->setValue(value);
+	connect(ui->doubleSpinBox_ScaleX,	 SIGNAL(valueChanged(double)), m_currentObject, SLOT(fixedScaleX(double)));
+	connect(ui->doubleSpinBox_ScaleY,	 SIGNAL(valueChanged(double)), m_currentObject, SLOT(fixedScaleX(double)));
+	connect(ui->doubleSpinBox_ScaleZ,	 SIGNAL(valueChanged(double)), m_currentObject, SLOT(fixedScaleX(double)));
 }
 
 void HierarchyWidget::onScale001Pushed()

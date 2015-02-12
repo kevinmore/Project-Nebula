@@ -29,9 +29,17 @@ StaticModel::StaticModel( const StaticModel* orignal )
 	// copy the vao
 	m_vao = orignal->getShadingTech()->getVAO();
 	m_renderingEffect->setVAO(m_vao);
+
 	// copy the bounding box
 	BoxColliderPtr otherBox = orignal->getBoundingBox();
-	m_boundingBox  = BoxColliderPtr(new BoxCollider(otherBox->getCenter(), otherBox->getGeometryShape().getHalfExtents(), m_scene));
+	vec3 halfExtents = otherBox->getGeometryShape().getHalfExtents();
+
+	// reset the scale of the bounding box
+	vec3 scale = orignal->getScale();
+	halfExtents.setX(halfExtents.x() / scale.x());
+	halfExtents.setY(halfExtents.y() / scale.y());
+	halfExtents.setZ(halfExtents.z() / scale.z());
+	m_boundingBox  = BoxColliderPtr(new BoxCollider(otherBox->getCenter(), halfExtents, m_scene));
 }
 
 
