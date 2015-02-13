@@ -39,19 +39,8 @@ RigidBody::RigidBody(const vec3& position, const quat& rotation, QObject* parent
 
 RigidBody::~RigidBody()
 {
-	 SAFE_DELETE(m_shape);
 	 // remove it from the world
 	 m_world->removeEntity(this);
-}
-
-void RigidBody::setShape( const IShape* shape )
-{
-	m_shape = shape;
-}
-
-const IShape* RigidBody::getShape() const
-{
-	return m_shape;
 }
 
 void RigidBody::setMassProperties( const MassProperties& mp )

@@ -87,7 +87,7 @@ public:
 	void inverse();
 	Transform inversed() const;
 
-	vec3 operator*(const vec3& vector) const;
+	vec3 operator*(const vec3& pos) const;
 	Transform operator*(const Transform& transform) const;
 	Transform& operator=(const Transform& other);
 

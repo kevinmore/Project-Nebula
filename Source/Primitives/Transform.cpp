@@ -1,7 +1,6 @@
 #include "Transform.h"
 #include <Utility/Math.h>
 
-
 Transform::Transform()
 	: m_position(Vector3::ZERO),
 	  m_rotation(Vector3::ZERO),
@@ -13,6 +12,7 @@ Transform::Transform( const Transform& other )
 	m_position = other.m_position;
 	m_rotation = other.m_rotation;
 	m_scale    = other.m_scale;
+	m_eulerAngles = other.m_eulerAngles;
 }
 
 Transform::Transform( const vec3& translation, const quat& rotation, const vec3& scale )
@@ -20,6 +20,8 @@ Transform::Transform( const vec3& translation, const quat& rotation, const vec3&
 	m_position = translation;
 	m_rotation = rotation;
 	m_scale    = scale;
+
+	m_eulerAngles = Quaternion::computeEularAngles(rotation);
 }
 
 void Transform::inverse()
@@ -35,9 +37,9 @@ Transform Transform::inversed() const
 	return other;
 }
 
-vec3 Transform::operator*( const vec3& vector ) const
+vec3 Transform::operator*( const vec3& pos ) const
 {
-	return m_rotation.rotatedVector(vector) + m_position;
+	return m_rotation.rotatedVector(pos) + m_position;
 }
 
 Transform Transform::operator*( const Transform& transform ) const
@@ -54,6 +56,7 @@ Transform& Transform::operator=( const Transform& other )
 	m_position = other.m_position;
 	m_rotation = other.m_rotation;
 	m_scale    = other.m_scale;
+	m_eulerAngles = other.m_eulerAngles;
 
 	return (*this);
 }

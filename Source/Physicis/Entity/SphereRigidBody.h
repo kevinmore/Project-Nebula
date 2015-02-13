@@ -52,6 +52,11 @@ public:
 
 	/// Applies the specified torque (in world space) to the rigid body. (note: the inline is for internal use only)
 	virtual void applyTorque(const float deltaTime, const vec3& torque);
+
+private:
+
+	/// Radius of the sphere, used for compute the inertia tensor, default to 0.5
+	float m_radius;
 };
 
 typedef QSharedPointer<SphereRigidBody> SphereRigidBodyPtr;

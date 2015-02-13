@@ -5,13 +5,13 @@
 #include <Physicis/Geometry/BoxShape.h>
 
 BoxRigidBody::BoxRigidBody( const vec3& position, const quat& rotation )
-	: RigidBody(position, rotation)
+	: RigidBody(position, rotation),
+	  m_halfExtents(vec3(0.5f, 0.5f, 0.5f))
 {
 	m_MotionType = RigidBody::MOTION_BOX_INERTIA;
-	vec3 halfSize(0.5, 0.5, 0.5);
-	m_shape = new BoxShape(m_centerOfMass, halfSize);
 
-	Math::Matrix3::setBoxInertiaTensor(m_inertiaTensor, halfSize, m_mass);
+	// fill the tensor with the default size
+	Math::Matrix3::setBoxInertiaTensor(m_inertiaTensor, m_halfExtents, m_mass);
 	m_inertiaTensorInv = m_inertiaTensor;
 	Math::Matrix3::setInverse(m_inertiaTensorInv);
 }
@@ -34,9 +34,7 @@ void BoxRigidBody::setMassInv( float mInv )
 {
 	m_massInv = mInv;
 
-	BoxShape* box = (BoxShape*)m_shape;
-
-	Math::Matrix3::setBoxInertiaTensor(m_inertiaTensor, box->getHalfExtents(), m_mass);
+	Math::Matrix3::setBoxInertiaTensor(m_inertiaTensor, m_halfExtents, m_mass);
 	m_inertiaTensorInv = m_inertiaTensor;
 	Math::Matrix3::setInverse(m_inertiaTensorInv);
 }
@@ -44,16 +42,12 @@ void BoxRigidBody::setMassInv( float mInv )
 
 void BoxRigidBody::setBoxHalfExtents( const vec3& halfExtents )
 {
-	// resize the shape
-	BoxShape* box = (BoxShape*)m_shape;
-	box->setHalfExtents(halfExtents);
-
 	// re compute the inertia tensor
+	m_halfExtents = halfExtents;
 	Math::Matrix3::setBoxInertiaTensor(m_inertiaTensor, halfExtents, m_mass);
 	m_inertiaTensorInv = m_inertiaTensor;
 	Math::Matrix3::setInverse(m_inertiaTensorInv);
 }
-
 
 mat3 BoxRigidBody::getInertiaLocal() const
 {

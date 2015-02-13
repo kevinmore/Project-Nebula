@@ -54,6 +54,10 @@ public:
 	/// Applies the specified torque (in world space) to the rigid body. (note: the inline is for internal use only)
 	virtual void applyTorque(const float deltaTime, const vec3& torque);
 
+private:
+
+	/// Half extents of the box, used for compute the inertia tensor, default to (0.5, 0.5, 0.5)
+	vec3 m_halfExtents;
 };
 
 typedef QSharedPointer<BoxRigidBody> BoxRigidBodyPtr;

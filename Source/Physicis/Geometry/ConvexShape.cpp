@@ -22,13 +22,13 @@ ConvexShape::ConvexShape( const QVector<vec3>& vertices )
 		m_vertices << vec3(list->point[0], list->point[1], list->point[2]);
 		list = list->next;
 	}
-}
 
-ConvexShape::~ConvexShape()
-{
 	// free memory
 	qh_freeqhull(!qh_ALL);
 }
+
+ConvexShape::~ConvexShape()
+{}
 
 void ConvexShape::setScale( const vec3& scale )
 {

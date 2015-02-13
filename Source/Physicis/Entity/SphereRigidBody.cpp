@@ -5,13 +5,12 @@
 #include <Physicis/Geometry/SphereShape.h>
 
 SphereRigidBody::SphereRigidBody(const vec3& position, const quat& rotation)
-	: RigidBody(position, rotation)
+	: RigidBody(position, rotation),
+	  m_radius(0.5f)
 {
 	m_MotionType = RigidBody::MOTION_SPHERE_INERTIA;
-	float radius = 0.5f;
-	m_shape = new SphereShape(m_centerOfMass, radius);
 
-	Math::Matrix3::setSphereInertiaTensor(m_inertiaTensor, radius, m_mass);
+	Math::Matrix3::setSphereInertiaTensor(m_inertiaTensor, m_radius, m_mass);
 	m_inertiaTensorInv = m_inertiaTensor;
 	Math::Matrix3::setInverse(m_inertiaTensorInv);
 }
@@ -34,9 +33,7 @@ void SphereRigidBody::setMassInv( float mInv )
 {
 	m_massInv = mInv;
 
-	SphereShape* sphere = (SphereShape*)m_shape;
-
-	Math::Matrix3::setSphereInertiaTensor(m_inertiaTensor, sphere->getRadius(), m_mass);
+	Math::Matrix3::setSphereInertiaTensor(m_inertiaTensor, m_radius, m_mass);
 	m_inertiaTensorInv = m_inertiaTensor;
 	Math::Matrix3::setInverse(m_inertiaTensorInv);
 }
@@ -44,11 +41,8 @@ void SphereRigidBody::setMassInv( float mInv )
 
 void SphereRigidBody::setSphereRadius( float newRadius )
 {
-	// resize the shape
-	SphereShape* sphere = (SphereShape*)m_shape;
-	sphere->setRadius(newRadius);
-
 	// re compute the inertia tensor
+	m_radius = newRadius;
 	Math::Matrix3::setSphereInertiaTensor(m_inertiaTensor, newRadius, m_mass);
 	m_inertiaTensorInv = m_inertiaTensor;
 	Math::Matrix3::setInverse(m_inertiaTensorInv);

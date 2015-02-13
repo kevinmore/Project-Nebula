@@ -2,6 +2,7 @@
 #include <Physicis/World/PhysicsWorldObject.h>
 #include <Physicis/Geometry/IShape.h>
 #include <Utility/Math.h>
+#include <Primitives/Transform.h>
 
 struct MassProperties
 {
@@ -54,21 +55,16 @@ public:
 		MOTION_MAX_ID
 	};
 
-	// Construct a default rigid body
+	/// Construct a default rigid body
 	RigidBody(const vec3& position = Math::Vector3::ZERO, 
 		      const quat& rotation = Math::Quaternion::ZERO, 
 			  QObject* parent = 0);
 
+	/// Inherited from Component
 	virtual QString className() { return "RigidBody"; }
 
 	virtual ~RigidBody();
 	virtual void update(const float dt);
-	//
-	// Shape
-	//
-
-	void setShape(const IShape* shape);
-	const IShape* getShape() const;
 
 	//
 	// Collider
@@ -271,7 +267,7 @@ public:
 	/// Set the gravity factor.
 	inline void setGravityFactor(float gravityFactor) { m_gravityFactor = gravityFactor; }
 
-public:
+protected:
 
 	//
 	// Members
@@ -280,9 +276,6 @@ public:
 	/// The motion type of the rigid body.
 	MotionType	m_MotionType;
 
-	/// The collision detection representation for this entity.
-	const IShape* m_shape;
-
 	/// The mass of the body.
 	/// This defaults to 1.
 	float m_mass;
@@ -290,6 +283,13 @@ public:
 	/// The inverse mass of the body.
 	/// This defaults to 1.
 	float m_massInv;
+
+	/// Transform of the body
+	/// The initial position of the body.
+	/// This defaults to 0,0,0.
+	/// The initial rotation of the body.
+	/// This defaults to the Identity quaternion.
+	Transform m_transform;
 
 	/// The initial position of the body.
 	/// This defaults to 0,0,0.
@@ -379,7 +379,6 @@ public:
 
 	vec3 m_torqueAccum;
 
-private:
 	ColliderPtr m_collider;
 };
 
