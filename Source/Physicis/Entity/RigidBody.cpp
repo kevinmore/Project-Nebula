@@ -104,7 +104,14 @@ void RigidBody::attachCollider( ColliderPtr col )
 {
 	m_collider = col;
 	col->setRigidBody(this);
+}
 
-	// attach the collider to the game object
-//	gameObject()->attachComponent(col);
+void RigidBody::syncTransform( const Transform& transform )
+{
+	// only sync the transform when the physics world is locked
+	// this means that the engine is in editor mode
+	if (m_world->isLocked())
+	{
+		m_transform = transform;
+	}
 }

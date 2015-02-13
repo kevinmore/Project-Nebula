@@ -42,7 +42,7 @@ void ObjectManager::renderAll(const float currentTime)
 	foreach(GameObjectPtr go, m_gameObjectMap.values())
 	{
 		RigidBodyPtr rb = go->getComponent("RigidBody").dynamicCast<RigidBody>();
-		if (rb)
+		if (rb && rb->getMotionType() != RigidBody::MOTION_FIXED)
 		{
 // 			QObjectList children = go->children();
 // 			foreach(QObject* obj, children)

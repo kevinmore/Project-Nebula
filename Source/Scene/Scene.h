@@ -97,7 +97,7 @@ private:
 
 	void initPhysicsModule();
 
-	mutable bool m_bPhysicsPaused, m_bStepPhysics;
+	mutable bool m_bStepPhysics;
 	
 
 	GameObject* m_sceneRootNode;

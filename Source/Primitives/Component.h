@@ -22,6 +22,7 @@ public:
 	const Transform& getTransform() const;
 
 	int renderLayer() const;
+	void setRenderLayer(const int layerID);
 
 protected:
 	GameObject* m_actor;

@@ -15,7 +15,6 @@ Scene::Scene(QObject* parent)
 	  m_relativeTime(0.0f),
 	  m_delayedTime(0.0f),
 	  m_bShowSkybox(false),
-	  m_bPhysicsPaused(true),
 	  m_bStepPhysics(false),
 	  m_physicsWorld(0)
 {
@@ -61,19 +60,18 @@ void Scene::initialize()
 	// setup a demo room
 	GameObjectPtr go = createEmptyGameObject("Cube1");
 	LoaderThread loader(this, "../Resource/Models/Common/woodenbox.obj", go, m_sceneRootNode, false);
-	SphereRigidBodyPtr rb(new SphereRigidBody());
+	BoxRigidBodyPtr rb(new BoxRigidBody());
 	rb->setPosition(vec3(-1, 1, 0));
 	rb->setGravityFactor(0.0f);
 	rb->setLinearVelocity(vec3(1, 0, 0));
 	ModelPtr model = m_objectManager->getGameObject("Cube1")->getComponent("Model").dynamicCast<IModel>();
 	rb->attachCollider(model->getBoundingBox());
 	go->attachComponent(rb);
-	go->attachComponent(model->getConvexHullCollider());
 	m_physicsWorld->addEntity(rb.data());
 
 	GameObjectPtr go2 = createEmptyGameObject("Cube2");
 	LoaderThread loader2(this, "../Resource/Models/Common/woodenbox.obj", go2, m_sceneRootNode, false);
-	SphereRigidBodyPtr rb2(new SphereRigidBody());
+	BoxRigidBodyPtr rb2(new BoxRigidBody());
 	rb2->setPosition(vec3(1, 1, 0));
 	rb2->setGravityFactor(0.0f);
 	rb2->setLinearVelocity(vec3(-1, 0, 0));
@@ -81,7 +79,6 @@ void Scene::initialize()
 	ModelPtr model2 = m_objectManager->getGameObject("Cube2")->getComponent("Model").dynamicCast<IModel>();
 	rb2->attachCollider(model2->getBoundingBox());
 	go2->attachComponent(rb2);
-	go2->attachComponent(model2->getConvexHullCollider());
 	m_physicsWorld->addEntity(rb2.data());
 
 	// broad phase demo
@@ -119,7 +116,7 @@ void Scene::initialize()
 // 	BoxColliderPtr collider(new BoxCollider(vec3(0, 1, 0), vec3(0.5, 0.5, 0.5), this));
 // 	go->attachComponent(collider);
 
-
+	m_physicsWorld->lock();
 }
 
 
@@ -145,7 +142,7 @@ void Scene::update(float currentTime)
 	m_relativeTime = m_absoluteTime - m_delayedTime;
 
 	// do nothing when the physics world is paused
-	if (!m_bPhysicsPaused || m_bStepPhysics)
+	if (!m_physicsWorld->isLocked() || m_bStepPhysics)
 	{
 		// update the physics world
 		m_physicsWorld->simulate(dt);
@@ -197,6 +194,9 @@ void Scene::clearScene()
 
 	emit ligthsChanged();
 	emit updateHierarchy();
+
+	// reset the physics world
+	m_physicsWorld->reset();
 }
 
 void Scene::resetToDefaultScene()
@@ -213,6 +213,11 @@ void Scene::resetToDefaultScene()
 	// load the floor
 	GameObjectPtr floorRef(new GameObject(this));
 	LoaderThread loader(this, "../Resource/Models/Common/DemoRoom/WoodenFloor.obj", floorRef, m_sceneRootNode);
+	ModelPtr floor = m_objectManager->getGameObject("WoodenFloor")->getComponent("Model").dynamicCast<IModel>();
+	//m_physicsWorld->addCollider(floor->getBoundingBox().data());
+
+	// lock the physics world
+	m_physicsWorld->lock();
 }
 
 void Scene::showLoadModelDialog()
@@ -445,21 +450,21 @@ void Scene::resize(int width, int height)
 
 void Scene::pause()
 {
-	// pause the scene
-	m_bPhysicsPaused = true;
+	// pause the physics world
+	m_physicsWorld->lock();
 }
 
 void Scene::play()
 {
-	// un-pause the scene and set the delayed time
-	m_bPhysicsPaused = false;
+	// un-pause the physics world and set the delayed time
+	m_physicsWorld->unlock();
 	m_delayedTime += m_absoluteTime - m_relativeTime;
 }
 
 void Scene::step()
 {
 	// pause the physics world first
-	m_bPhysicsPaused = true;
+	m_physicsWorld->unlock();
 	m_bStepPhysics = true;
 }
 

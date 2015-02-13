@@ -25,6 +25,8 @@ public:
 
 	int entitiesCount();
 
+	void reset();
+
 private:
 	PhysicsWorldConfig m_config;
 	float m_time;

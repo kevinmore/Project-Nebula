@@ -35,9 +35,13 @@ void PhysicsWorld::simulate(const float deltaTime)
 	}
 
 	// update the physics objects
-	foreach(PhysicsWorldObject* ent, m_entityList)
+	foreach(PhysicsWorldObject* entity, m_entityList)
 	{
-		ent->update(deltaTime);
+		RigidBody* rb = dynamic_cast<RigidBody*>(entity);
+		if(rb->getMotionType() != RigidBody::MOTION_FIXED)
+		{
+			rb->update(deltaTime);
+		}
 	}
 
 	// handle the collision detection
@@ -61,21 +65,44 @@ void PhysicsWorld::unlock()
 
 void PhysicsWorld::addEntity( PhysicsWorldObject* entity )
 {
+	bool lockState = m_locked;
+
 	lock();
 	// add the rigid body and its collider
 	m_entityList << entity;
 	m_colliderList << dynamic_cast<RigidBody*>(entity)->getCollider().data();
 	entity->setWorld(this);
-	unlock();
+
+	// if the world is not locked before the operation
+	// unlock it
+	if(!lockState) unlock();
 }
 
 void PhysicsWorld::removeEntity( PhysicsWorldObject* entity )
 {
+	bool lockState = m_locked;
+
 	lock();
 	// remove the rigid body and its collider
 	m_entityList.removeOne(entity);
 	m_colliderList.removeAt(m_colliderList.indexOf(dynamic_cast<RigidBody*>(entity)->getCollider().data()));
-	unlock();
+
+	// if the world is not locked before the operation
+	// unlock it
+	if(!lockState) unlock();
+}
+
+void PhysicsWorld::addCollider( ICollider* collider )
+{
+	bool lockState = m_locked;
+
+	lock();
+	// add the rigid body and its collider
+	m_colliderList << collider;
+	
+	// if the world is not locked before the operation
+	// unlock it
+	if(!lockState) unlock();
 }
 
 int PhysicsWorld::entitiesCount()
@@ -145,14 +172,6 @@ void PhysicsWorld::handleCollisions()
 	}
 }
 
-void PhysicsWorld::addCollider( ICollider* collider )
-{
-	lock();
-	// add the rigid body and its collider
-	m_colliderList << collider;
-	unlock();
-}
-
 void PhysicsWorld::boarderCheck( RigidBody* rb )
 {
 	vec3 pos = rb->getPosition();
@@ -210,4 +229,12 @@ void PhysicsWorld::boarderCheck( RigidBody* rb )
 			rb->setLinearVelocity(vec3(v.x(), v.y(), 1.0f));
 		}
 	}
+}
+
+void PhysicsWorld::reset()
+{
+	lock();
+	m_entityList.clear();
+	m_colliderList.clear();
+	unlock();
 }

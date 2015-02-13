@@ -67,6 +67,12 @@ public:
 	virtual void update(const float dt);
 
 	//
+	// Motion Type
+	//
+	inline MotionType getMotionType() const { return m_MotionType; }
+	void setMotionType(MotionType type) { m_MotionType = type; }
+
+	//
 	// Collider
 	//
 	void attachCollider(ColliderPtr col);
@@ -262,6 +268,10 @@ public:
 	inline void setGravityFactor(float gravityFactor) { m_gravityFactor = gravityFactor; }
 
 protected:
+
+	/// overload function from component
+	virtual void syncTransform(const Transform& transform);
+
 
 	//
 	// Members

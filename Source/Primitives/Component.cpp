@@ -27,10 +27,14 @@ void Component::dislinkGameObject()
 	m_actor = NULL;
 }
 
-
 int Component::renderLayer() const
 {
 	return m_renderLayer;
+}
+
+void Component::setRenderLayer( const int layerID )
+{
+	m_renderLayer = layerID;
 }
 
 const Transform& Component::getTransform() const
