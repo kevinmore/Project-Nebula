@@ -75,7 +75,7 @@ void IModel::hideBoundingBox()
 void IModel::setConvexHullCollider( const ConvexHullCollider& ch )
 {
 	ConvexShape shape = ch.getGeometryShape();
- 	m_convexHull = ConvexHullColliderPtr(new ConvexHullCollider(ch.getCenter(), shape.getVertices(), shape.getFaces(), ch.getScene()));
+ 	m_convexHull = ConvexHullColliderPtr(new ConvexHullCollider(ch.getCenter(), shape.getVertices(), ch.getScene()));
 }
 
 ConvexHullColliderPtr IModel::getConvexHullCollider() const

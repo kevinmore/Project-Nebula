@@ -62,7 +62,7 @@ RiggedModel::RiggedModel( const RiggedModel* orignal )
 	// copy the convexhull collider
 	ConvexHullColliderPtr otherCH = orignal->getConvexHullCollider();
 	ConvexShape shape = otherCH->getGeometryShape();
-	m_convexHull = ConvexHullColliderPtr(new ConvexHullCollider(otherCH->getCenter(), shape.getVertices(), shape.getFaces(), m_scene));
+	m_convexHull = ConvexHullColliderPtr(new ConvexHullCollider(otherCH->getCenter(), shape.getVertices(), m_scene));
 	m_convexHull->getGeometryShape().setScale(scale);
 }
 

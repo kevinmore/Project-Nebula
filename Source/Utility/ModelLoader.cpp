@@ -547,5 +547,5 @@ ConvexHullCollider ModelLoader::getConvexHullCollider()
 	vec3 center((m_maxX + m_minX) * 0.5f, (m_maxY + m_minY) * 0.5f, (m_maxZ + m_minZ) * 0.5f);
 
 	// generate a convex hull collider
-	return ConvexHullCollider(center, m_positions, m_faces, m_scene);
+	return ConvexHullCollider(center, m_positions, m_scene);
 }

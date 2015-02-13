@@ -6,8 +6,7 @@ class Scene;
 class ConvexHullCollider : public ICollider
 {
 public:
-	ConvexHullCollider(const vec3& center, const QVector<vec3>& vertices, 
-		const QVector<vec3>& faces, Scene* scene);
+	ConvexHullCollider(const vec3& center, const QVector<vec3>& vertices, Scene* scene);
 
 	ConvexShape getGeometryShape() const;
 
