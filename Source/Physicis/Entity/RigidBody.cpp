@@ -7,18 +7,12 @@
 RigidBody::RigidBody(const vec3& position, const quat& rotation, QObject* parent)
 	: PhysicsWorldObject(parent)
 {
-	m_position = position;
-	m_rotation = rotation;
-	m_transformMatrix.translate(position);
-	m_transformMatrix.rotate(m_rotation);
-
 	m_linearVelocity = Math::Vector3::ZERO;
 	m_angularVelocity = Math::Vector3::ZERO;
 
 	m_centerOfMass = Math::Vector3::ZERO;
 	m_mass = 1.0f;
 	m_massInv = 1.0f;
-	m_forceAccum = Math::Vector3::ZERO;
 
 	m_linearDamping = 0.0f;
 	m_angularDamping = 0.05f;
@@ -29,9 +23,6 @@ RigidBody::RigidBody(const vec3& position, const quat& rotation, QObject* parent
 	m_maxAngularVelocity = 200.0f;
 	m_timeFactor = 1.0f;
 
-	m_eulerAngles = Math::Vector3::ZERO;
-	m_objectRadius = 1.0f;
-	m_rotationMatrix.setToIdentity();
 	m_inertiaTensor.setToIdentity();
 	m_inertiaTensorInv.setToIdentity();
 	Math::Matrix3::setInverse(m_inertiaTensorInv);
@@ -52,16 +43,12 @@ void RigidBody::setMassProperties( const MassProperties& mp )
 
 void RigidBody::setPosition( const vec3& pos )
 {
-	m_position = pos;
-	m_transformMatrix.setToIdentity();
-	m_transformMatrix.translate(pos);
+	m_transform.setPosition(pos);
 }
 
 void RigidBody::setRotation( const quat& rot )
 {
-	m_rotation = rot;
-	m_transformMatrix.setToIdentity();
-	m_transformMatrix.rotate(rot);
+	m_transform.setRotation(rot);
 }
 
 
@@ -88,8 +75,8 @@ void RigidBody::setCenterOfMassLocal(const vec3& centerOfMass)
 
 void RigidBody::setPositionAndRotation( const vec3& position, const quat& rotation )
 {
-	m_position = position;
-	m_rotation = rotation;
+	m_transform.setPosition(position);
+	m_transform.setRotation(rotation);
 }
 
 void RigidBody::setRestitution( float newRestitution )
@@ -107,11 +94,10 @@ void RigidBody::update( const float dt )
 	// only update the linear properties as an abstract rigid body
 	m_linearVelocity += m_gravityFactor * getWorld()->getConfig().m_gravity * dt;
 	m_deltaPosition = m_linearVelocity * dt;
-	m_position += m_deltaPosition;
-	m_transformMatrix.translate(m_position);
+	m_transform.setPosition(m_transform.getPosition() + m_deltaPosition);
 
 	// sync the center position for the collider
-	m_collider->setCenter(m_position);
+	m_collider->setCenter(m_transform.getPosition());
 }
 
 void RigidBody::attachCollider( ColliderPtr col )

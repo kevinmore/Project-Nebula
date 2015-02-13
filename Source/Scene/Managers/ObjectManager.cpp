@@ -55,10 +55,6 @@ void ObjectManager::renderAll(const float currentTime)
 			//rb->applyPointImpulse(vec3(0.1, 0, 0), vec3(0.2, 0, 0.2));
 			go->setPosition(rb->getPosition());
 			go->setRotation(rb->getEulerAngles());
-
-// 			mat4 temp = rb->getTransformMatrix();
-// 			temp.scale(go->scale());
-// 			go->setTransformMatrix(temp);
 		}
 	}
 

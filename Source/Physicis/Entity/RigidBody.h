@@ -121,14 +121,17 @@ public:
 	inline const vec3& getCenterOfMassLocal() const { return m_centerOfMass; }
 
 	/// Gets the center of mass of the rigid body in world space.
-	inline const vec3 getCenterOfMassInWorld() const {	return m_position + m_centerOfMass; }
+	inline const vec3 getCenterOfMassInWorld() const {	return m_transform.getPosition() + m_centerOfMass; }
 
 	//
 	// POSITION ACCESS.
 	//
 
+	/// Returns the transform for this rigid body, in world space.
+	inline const Transform& getTransform() const { return m_transform; }
+
 	/// Returns the position (the local space origin) for this rigid body, in world space.
-	inline const vec3& getPosition() const { return m_position; }
+	inline const vec3& getPosition() const { return m_transform.getPosition(); }
 
 	// Returns the position changed (the local space origin) for this rigid body, in world space.
 	inline const vec3& getDeltaPosition() const { return m_deltaPosition; }
@@ -137,13 +140,15 @@ public:
 	void setPosition(const vec3& position);
 
 	/// Returns the rotation from local to world space for this rigid body.
-	inline const quat& getRotation() const { return m_rotation; }
+	inline const quat& getRotation() const { return m_transform.getRotation(); }
 
 	/// Returns the rotation changed from local to world space for this rigid body.
 	inline const quat& getDeltaRotation() const { return m_deltaRotation;	}
-	inline const vec3& getEulerAngles() const { return m_eulerAngles;}
-	inline const mat3& getRotationMatrix() const { return m_rotationMatrix; }
-	inline const mat4& getTransformMatrix() const { return m_transformMatrix; }
+
+
+	inline vec3 getEulerAngles() const { return m_transform.getEulerAngles();}
+	inline mat3 getRotationMatrix() const { return m_transform.getRotationMatrix(); }
+	inline mat4 getTransformMatrix() const { return m_transform.getTransformMatrix(); }
 
 	/// Sets the rotation from local to world Space for this rigid body.
 	/// This activates the body and its simulation island if it is inactive.
@@ -194,17 +199,6 @@ public:
 	//
 	// FORCE AND TORQUE APPLICATION
 	//
-
-	/// Applies a constant force (in world space) to the rigid body. The force is applied to the
-	/// center of mass.
-	void applyConstantForce(const vec3& force) { m_forceAccum = force; }
-
-	/// increase a delta force (in world space) to the rigid body. The force is applied to the
-	/// center of mass.
-	void increaseForce(const vec3& deltaForce) { m_forceAccum += deltaForce; }
-
-	// Reset the force on the rigid body.
-	void resetForce() { m_forceAccum.setX(0.0f); m_forceAccum.setY(0.0f); m_forceAccum.setZ(0.0f); }
 
 	/// Applies a force (in world space) to the rigid body. The force is applied to the
 	/// center of mass.
@@ -285,35 +279,18 @@ protected:
 	float m_massInv;
 
 	/// Transform of the body
-	/// The initial position of the body.
-	/// This defaults to 0,0,0.
-	/// The initial rotation of the body.
-	/// This defaults to the Identity quaternion.
+	/// The initial position of the body defaults to (0, 0, 0)
+	/// The initial rotation of the body defaults to the Identity quaternion
 	Transform m_transform;
 
-	/// The initial position of the body.
-	/// This defaults to 0,0,0.
-	vec3 m_position;
 
 	/// The position changed of the body after each update.
 	/// This defaults to 0,0,0.
 	vec3 m_deltaPosition;
 
-	/// The initial rotation of the body.
-	/// This defaults to the Identity quaternion.
-	quat m_rotation;
-
 	/// The rotation changed of the body after each update.
 	/// This defaults to the Identity quaternion.
 	quat m_deltaRotation;
-
-	// The rotation matrix of the body
-	// This defaults to the identity matrix
-	mat3 m_rotationMatrix;
-
-	// The transform matrix of the body(scaling not included)
-	// This defaults to the identity matrix
-	mat4 m_transformMatrix;
 
 	/// The initial linear velocity of the body.
 	/// This defaults to 0,0,0.
@@ -368,17 +345,7 @@ protected:
 	/// This defaults to 1.
 	float m_timeFactor;
 
-	/// The angular velocity * dt which was used in the last integration step.
-	vec3 m_eulerAngles; 
-
-	/// A sphere around the center of mass which completely encapsulates the object
-	float m_objectRadius;
-
-	/// The net force (gravity not included) applied on the center of the mass
-	vec3 m_forceAccum;
-
-	vec3 m_torqueAccum;
-
+	/// The pointer to the collider that is attached to the rigid body
 	ColliderPtr m_collider;
 };
 

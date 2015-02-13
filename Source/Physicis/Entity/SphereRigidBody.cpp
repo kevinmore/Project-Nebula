@@ -1,8 +1,6 @@
 #include "SphereRigidBody.h"
-#include <Utility/Math.h>
 #include <Physicis/World/PhysicsWorld.h>
 #include <Physicis/World/PhysicsWorldObject.inl>
-#include <Physicis/Geometry/SphereShape.h>
 
 SphereRigidBody::SphereRigidBody(const vec3& position, const quat& rotation)
 	: RigidBody(position, rotation),
@@ -93,7 +91,7 @@ void SphereRigidBody::applyPointImpulse( const vec3& imp, const vec3& p )
 	m_linearVelocity += m_massInv * imp;
 	vec3 angularMoment = vec3::crossProduct(p - m_centerOfMass, imp);
 
-	vec3 dv = Math::Vector3::setMul(angularMoment, m_inertiaTensorInvWorld);
+	vec3 dv = Vector3::setMul(angularMoment, m_inertiaTensorInvWorld);
 
 	m_angularVelocity += dv;
 }
@@ -101,8 +99,8 @@ void SphereRigidBody::applyPointImpulse( const vec3& imp, const vec3& p )
 void SphereRigidBody::applyAngularImpulse( const vec3& imp )
 {
 	// PSEUDOCODE IS m_angularVelocity += m_worldInertiaInv * imp;
-	vec3 dv = Math::Vector3::setMul(imp, m_inertiaTensorInvWorld);
-
+	vec3 dv = Vector3::setMul(imp, m_inertiaTensorInvWorld);
+	
 	m_angularVelocity += dv;
 }
 
@@ -123,17 +121,12 @@ void SphereRigidBody::applyTorque( const float deltaTime, const vec3& torque )
 
 void SphereRigidBody::update( const float dt )
 {
-	m_transformMatrix.setToIdentity();
-
 	// update the linear properties in the parent first
 	RigidBody::update(dt);
 
 	// update the angular properties
-	m_eulerAngles += m_angularVelocity * dt;
+	m_transform.setRotation(m_transform.getEulerAngles() + m_angularVelocity * dt);
 
-	m_rotation = Math::Quaternion::computeQuaternion(m_eulerAngles);
-	m_transformMatrix.rotate(m_rotation);
-
-	m_rotationMatrix = Math::Matrix3::computeRotationMatrix(m_eulerAngles);
-	m_inertiaTensorInvWorld =  m_rotationMatrix * m_inertiaTensorInv * m_rotationMatrix.transposed();
+	mat3 rotationMatrix = m_transform.getRotationMatrix();
+	m_inertiaTensorInvWorld =  rotationMatrix * m_inertiaTensorInv * rotationMatrix.transposed();
 }
