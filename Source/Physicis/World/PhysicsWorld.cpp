@@ -159,10 +159,23 @@ void PhysicsWorld::handleCollisions()
 
 				if (solver.checkCollision(ch1.data(), ch2.data(), n, true))
 				{
-					//qDebug() << "contact point A =" << n.witnessPntA;
-					//qDebug() << "contact point B =" << n.witnessPntB;
-					
-					
+					//qDebug() << "normal vector =" << n.impulseDirectionOnALocal;
+// 					qDebug() << "contact point" << ch1->gameObject()->objectName() << n.contactPntALocal;
+// 					qDebug() << "contact point" << ch2->gameObject()->objectName() << n.contactPntBLocal;
+
+					qDebug() << "contact point" << ch1->gameObject()->objectName() << n.contactPntAWorld;
+					qDebug() << "contact point" << ch2->gameObject()->objectName() << n.contactPntBWorld;
+					qDebug() << "contact normal" << (n.contactPntAWorld - n.contactPntBWorld).normalized();
+					RigidBody* rb1 = c1->getRigidBody();
+					RigidBody* rb2 = c2->getRigidBody();
+					if (rb1->getMotionType() != RigidBody::MOTION_FIXED)
+					{
+						rb1->applyPointImpulse(-(n.contactPntAWorld - n.contactPntBWorld).normalized(), n.contactPntAWorld);
+					}
+					if (rb2->getMotionType() != RigidBody::MOTION_FIXED)
+					{
+						rb2->applyPointImpulse(-(n.contactPntBWorld - n.contactPntAWorld).normalized(), n.contactPntBWorld);
+					}
 				}
 			}
 // 			boarderCheck(c1->getRigidBody());

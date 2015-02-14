@@ -5,10 +5,11 @@
 Triangle::Triangle()
 	: m_bObsolete(false)
 {
-	for ( int i = 0; i < 3; i++ )
+	for ( int i = 0; i < 3; ++i )
 		m_edges[i] = NULL;
 }
 
+// vertex 0, 1 and 2 should be formed in counter clockwise
 Triangle::Triangle( int indexVertex0, int indexVertex1, int indexVertex2 )
 	: m_bObsolete(false)
 {
@@ -16,14 +17,14 @@ Triangle::Triangle( int indexVertex0, int indexVertex1, int indexVertex2 )
 	m_indicesVertex[1] = indexVertex1;
 	m_indicesVertex[2] = indexVertex2;
 
-	for ( unsigned int i = 0; i < 3; i++ )
+	for ( unsigned int i = 0; i < 3; ++i )
 		m_edges[i] = new Edge(this, i, m_indicesVertex[i], m_indicesVertex[(i+1) % 3]);
 }
 
 
 Triangle::~Triangle()
 {
-	for ( int i = 0; i < 3; i++ )
+	for ( int i = 0; i < 3; ++i )
 		SAFE_DELETE(m_edges[i]);
 }
 
@@ -71,10 +72,10 @@ vec3 Triangle::getClosestPointToOriginInSupportPntSpace( const QVector<vec3>& su
 {
 	const vec3* sp[3];
 
-	for (int i = 0; i < 3; i++ )
+	for (int i = 0; i < 3; ++i )
 		sp[i] = &supportPoints[m_indicesVertex[i]];
 
-	return (*sp[0]) + (1.0f/m_det) * (m_lambda1 * ((*sp[1]) - (*sp[0])) + m_lambda2 * ((*sp[2]) - (*sp[0])));
+	return m_det == 0 ? vec3(0, 0, 0) : (*sp[0]) + (1.0f/m_det) * (m_lambda1 * ((*sp[1]) - (*sp[0])) + m_lambda2 * ((*sp[2]) - (*sp[0])));
 }
 
 // Please note that edge doesn't belong to this triangle. It is from the neighbor triangle.

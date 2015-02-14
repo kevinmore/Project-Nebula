@@ -523,7 +523,7 @@ namespace Math
 
 	namespace Quaternion
 	{
-		const quat ZERO = quat(1, 0, 0, 0);
+		const quat IDENTITY = quat(1, 0, 0, 0);
 
 		/**
          * compute a quaternion from the given euler angles

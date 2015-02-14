@@ -60,6 +60,7 @@ void Scene::initialize()
 	// setup a basic physics world
 	// setup a demo room
 	GameObjectPtr go = createEmptyGameObject("Cube1");
+	go->setRotation(45, 45, 0);
 	LoaderThread loader(this, "../Resource/Models/Common/woodenbox.obj", go, m_sceneRootNode, false);
 	BoxRigidBodyPtr rb(new BoxRigidBody());
 	rb->setPosition(vec3(-1, 1, 0));
@@ -243,8 +244,6 @@ void Scene::showOpenSceneDialog()
 
 	if (!fileName.isEmpty())
 		loadScene(fileName);
-
-	play();
 }
 
 void Scene::showSaveSceneDialog()
@@ -259,8 +258,6 @@ void Scene::showSaveSceneDialog()
 
 	if (!fileName.isEmpty())
 		saveScene(fileName);
-
-	play();
 }
 
 void Scene::loadScene( QString& fileName )

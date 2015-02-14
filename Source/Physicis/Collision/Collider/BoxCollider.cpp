@@ -53,8 +53,8 @@ BroadPhaseCollisionFeedback BoxCollider::onBroadPhase( ICollider* other )
 
 
 	// Compute rotation matrix expressing b in a¡¯s coordinate frame
-	for (int i = 0; i < 3; i++)
-		for (int j = 0; j < 3; j++)
+	for (int i = 0; i < 3; ++i)
+		for (int j = 0; j < 3; ++j)
 			R.m[i][j] = vec3::dotProduct(Matrix3::getRow(rotaionA, i), Matrix3::getRow(rotaionB, j));
 
 	// Compute translation vector t
@@ -68,12 +68,12 @@ BroadPhaseCollisionFeedback BoxCollider::onBroadPhase( ICollider* other )
 	// Compute common subexpressions. Add in an epsilon term to
 	// counteract arithmetic errors when two edges are parallel and
 	// their cross product is (near) null
-	for (int i = 0; i < 3; i++)
-		for (int j = 0; j < 3; j++)
+	for (int i = 0; i < 3; ++i)
+		for (int j = 0; j < 3; ++j)
 			AbsR.m[i][j] = qAbs(R.m[i][j]) + 0.001;
 
 	// Test axes L = A0, L = A1, L = A2
-	for (int i = 0; i < 3; i++) {
+	for (int i = 0; i < 3; ++i) {
 		ra = ea[i];
 		rb = eb[0] * AbsR.m[i][0] + eb[1] * AbsR.m[i][1] + eb[2] * AbsR.m[i][2];
 		if (qAbs(t[i]) > ra + rb)
@@ -81,7 +81,7 @@ BroadPhaseCollisionFeedback BoxCollider::onBroadPhase( ICollider* other )
 	}
 
 	// Test axes L = B0, L = B1, L = B2
-	for (int i = 0; i < 3; i++) {
+	for (int i = 0; i < 3; ++i) {
 		ra = ea[0] * AbsR.m[0][i] + ea[1] * AbsR.m[1][i] + ea[2] * AbsR.m[2][i];
 		rb = eb[i];
 		if (qAbs(t[0] * R.m[0][i] + t[1] * R.m[1][i] + t[2] * R.m[2][i]) > ra + rb)

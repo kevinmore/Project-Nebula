@@ -3,7 +3,7 @@
 
 Transform::Transform()
 	: m_position(Vector3::ZERO),
-	  m_rotation(Vector3::ZERO),
+	  m_rotation(Quaternion::IDENTITY),
 	  m_scale(Vector3::UNIT_SCALE)
 {}
 

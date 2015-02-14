@@ -30,8 +30,18 @@ bool GJKSolver::generateCollisionInfo( const ICollider* objA, const ICollider* o
 	float penetrationDepth = margin - dist;
 
 	pCollisionInfo.penetrationDepth = penetrationDepth;
-	pCollisionInfo.witnessPntA = closestPntA;
-	pCollisionInfo.witnessPntB = closestPntB;
+	pCollisionInfo.contactPntALocal = closestPntA;
+	pCollisionInfo.contactPntBLocal = closestPntB;
+	pCollisionInfo.contactPntAWorld = objA->getTransform() * closestPntA;
+	pCollisionInfo.contactPntBWorld = objB->getTransform() * closestPntB;
+
+	vec3 impulseDirectionAWorld = pCollisionInfo.contactPntAWorld - pCollisionInfo.contactPntBWorld;
+	vec3 impulseDirectionBWorld = - impulseDirectionAWorld;
+
+	pCollisionInfo.impulseDirectionOnALocal = objA->getTransform().inversed() * impulseDirectionAWorld;
+	pCollisionInfo.impulseDirectionOnBLocal = objB->getTransform().inversed() * impulseDirectionBWorld;
+	pCollisionInfo.impulseDirectionOnALocal.normalize();
+	pCollisionInfo.impulseDirectionOnBLocal.normalize();
 
 	if ( penetrationDepth <= 0 )
 		pCollisionInfo.bIntersect = false;
@@ -58,7 +68,7 @@ bool GJKSolver::checkCollision( ICollider* objA, ICollider* objB, NarrowPhaseCol
 	Transform transB = objB->getTransform();
 	Transform transB2A = transA.inversed() * transB;
 
-	// rotate matrix which transform a local vector in objA space to local vector in objB space
+	// rotation which transforms a local vector in objA space to local vector in objB space
 	quat rotA = objA->getTransform().getRotation();
 	quat rotB = objB->getTransform().getRotation();
 	quat rotA2B = rotB.conjugate() * rotA;
@@ -68,8 +78,6 @@ bool GJKSolver::checkCollision( ICollider* objA, ICollider* objB, NarrowPhaseCol
 
 	float distSqrd = FLT_MAX;
 	float distSqrdPrev = distSqrd;
-
-	//int numIter = 0;
 
 	while (true) 
 	{
@@ -99,10 +107,10 @@ bool GJKSolver::checkCollision( ICollider* objA, ICollider* objB, NarrowPhaseCol
 		// objects are disjoint. 
 		// If dist^2 - v*w <= dist^2 * tolerance, v is close enough to the closest point to origin in Minkowski differnce and 
 		// ||v|| is a proximity distance. In this case, objects are disjoint because v * w > 0 and it means
-		// v is a separting axis. 
+		// v is a separating axis. 
 		// 
 		// TODO: Techinically, the scond condidion(dist^2 - v*w <= dist^2 * tolerance) will cover the first condition(w is a part of simplex already).
-		//       A litle bit redundancy. 
+		//       A little bit redundancy. 
 		bool isDegenerate = simplex.isDegenerate(w);
 		if ( simplex.isDegenerate(w) || distSqrd - vw <= distSqrd * 1e-6 )
 		{
@@ -155,7 +163,6 @@ bool GJKSolver::checkCollision( ICollider* objA, ICollider* objB, NarrowPhaseCol
 		if ( distSqrd <= 1e-6 ) 
 			return false; // TODO:break or return false?
 
-		//++numIter;
 	} 
 
 	// TODO: Need to invesgate hybrid method metioned in Geno's book.

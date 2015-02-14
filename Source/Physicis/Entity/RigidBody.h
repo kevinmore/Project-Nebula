@@ -57,7 +57,7 @@ public:
 
 	/// Construct a default rigid body
 	RigidBody(const vec3& position = Math::Vector3::ZERO, 
-		      const quat& rotation = Math::Quaternion::ZERO, 
+		      const quat& rotation = Math::Quaternion::IDENTITY, 
 			  QObject* parent = 0);
 
 	/// Inherited from Component

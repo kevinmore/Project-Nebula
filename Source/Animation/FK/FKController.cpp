@@ -53,7 +53,7 @@ void FKController::getBoneTransforms( float TimeInSeconds, QVector<mat4>& Transf
 
 	Transforms.resize(m_NumBones);
 
-	for (uint i = 0 ; i < m_NumBones ; i++)
+	for (uint i = 0 ; i < m_NumBones ; ++i)
 	{
 		// only update the bones that are enabled
 		// that is, the bone is not in the disabled bones list
@@ -114,7 +114,7 @@ void FKController::calcFinalTransforms( float AnimationTime, const aiNode* pNode
 
 	 }
 
-	for (uint i = 0 ; i < pNode->mNumChildren ; i++) 
+	for (uint i = 0 ; i < pNode->mNumChildren ; ++i) 
 	{
 		calcFinalTransforms(AnimationTime, pNode->mChildren[i], GlobalTransformation);
 	}
@@ -181,7 +181,7 @@ void FKController::interpolateScaling(aiVector3D& Out, float AnimationTime, cons
 
 uint FKController::findPosition(float AnimationTime, const aiNodeAnim* pNodeAnim)
 {    
-	for (uint i = 0 ; i < pNodeAnim->mNumPositionKeys - 1 ; i++) {
+	for (uint i = 0 ; i < pNodeAnim->mNumPositionKeys - 1 ; ++i) {
 		if (AnimationTime < (float)pNodeAnim->mPositionKeys[i + 1].mTime) {
 			return i;
 		}
@@ -196,7 +196,7 @@ uint FKController::findRotation(float AnimationTime, const aiNodeAnim* pNodeAnim
 {
 	assert(pNodeAnim->mNumRotationKeys > 0);
 
-	for (uint i = 0 ; i < pNodeAnim->mNumRotationKeys - 1 ; i++) {
+	for (uint i = 0 ; i < pNodeAnim->mNumRotationKeys - 1 ; ++i) {
 		if (AnimationTime < (float)pNodeAnim->mRotationKeys[i + 1].mTime) {
 			return i;
 		}
@@ -211,7 +211,7 @@ uint FKController::findScaling(float AnimationTime, const aiNodeAnim* pNodeAnim)
 {
 	assert(pNodeAnim->mNumScalingKeys > 0);
 
-	for (uint i = 0 ; i < pNodeAnim->mNumScalingKeys - 1 ; i++) {
+	for (uint i = 0 ; i < pNodeAnim->mNumScalingKeys - 1 ; ++i) {
 		if (AnimationTime < (float)pNodeAnim->mScalingKeys[i + 1].mTime) {
 			return i;
 		}
@@ -224,7 +224,7 @@ uint FKController::findScaling(float AnimationTime, const aiNodeAnim* pNodeAnim)
 
 const aiNodeAnim* FKController::findNodeAnim(const aiAnimation* pAnimation, const QString NodeName)
 {
-	for (uint i = 0 ; i < pAnimation->mNumChannels ; i++) {
+	for (uint i = 0 ; i < pAnimation->mNumChannels ; ++i) {
 		const aiNodeAnim* pNodeAnim = pAnimation->mChannels[i];
 
 		if (QString(pNodeAnim->mNodeName.data) == NodeName) {

@@ -19,7 +19,7 @@ bool CCDIKSolver::solve( const QVector<IkConstraint>& constraints, Skeleton* ske
 	const int numConstraintSets = constraints.size();
 
 	// solve for each constraint chain set
-	for( int i = 0; i < numConstraintSets; i++ )
+	for( int i = 0; i < numConstraintSets; ++i )
 	{
 		const CCDIKSolver::IkConstraint& constraint = constraints[i];
 

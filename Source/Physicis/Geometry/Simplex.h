@@ -6,9 +6,15 @@ class Simplex
 public:
 	Simplex();
 
-	inline bool isFull() const;
-	inline bool isEmpty() const;
-	inline float maxLengthSqrd() const;
+	// Return true if the simplex contains 4 points
+	inline bool isFull() const { return (m_curBits == 0xf); }
+
+	// Return true if the simplex is empty
+	inline bool isEmpty() const { return (m_curBits == 0x0); }
+
+	// Return the maximum squared length of a point
+	inline float maxLengthSqrd() const { return m_maxLengthSqrd; }
+
 	int getPoints(QVector<vec3>& suppPointsA, QVector<vec3>& suppPointsB, QVector<vec3>& points) const;
 	void addPoint(const vec3& point, const vec3& suppPointA, const vec3& suppPointB);
 	bool isDegenerate(const vec3& point) const;
@@ -17,11 +23,12 @@ public:
 	bool runJohnsonAlgorithm(vec3& v);
 
 private:
-	inline bool isSubset(uint a, uint b) const;
+	// Return true if the bits of "b" is a subset of the bits of "a"
+	inline bool isSubset(uint containerSet, uint subSet) const { return ((containerSet & subSet) == subSet); }
+
 	bool isValidSubset(uint subset) const;
 	void updateDiffLengths();
 	void calcDeterminants();
-	//vec3 computeClosestPointForSubset(uint subset);
 
 	vec3 m_Points[4];
 	float m_lengthSqrd[4]; // m_LengthSqrd[i] = m_Points[i].LengthSqrd()
@@ -37,27 +44,3 @@ private:
 	uint m_lastBit;   // m_LastBit = 1 << m_LastFound
 	uint m_allBits;   // m_AllBits = m_CurBits | m_LastBit
 };
-
-// Return true if the bits of "b" is a subset of the bits of "a"
-inline bool Simplex::isSubset(uint containerSet, uint subSet) const 
-{
-	return ((containerSet & subSet) == subSet);
-}
-
-// Return true if the simplex contains 4 points
-inline bool Simplex::isFull() const 
-{
-	return (m_curBits == 0xf);
-}
-
-// Return true if the simplex is empty
-inline bool Simplex::isEmpty() const 
-{
-	return (m_curBits == 0x0);
-}
-
-// Return the maximum squared length of a point
-inline float Simplex::maxLengthSqrd() const 
-{
-	return m_maxLengthSqrd;
-}

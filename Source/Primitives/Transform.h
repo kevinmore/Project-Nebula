@@ -83,6 +83,13 @@ public:
 		setScale(Vector3::UNIT_SCALE);
 	}
 
+	inline void toIdentity()
+	{
+		m_position = Vector3::ZERO;
+		m_eulerAngles = Vector3::ZERO;
+		m_scale = Vector3::UNIT_SCALE;
+		m_rotation = Quaternion::IDENTITY;
+	}
 
 	void inverse();
 	Transform inversed() const;

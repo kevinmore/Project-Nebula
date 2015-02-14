@@ -19,7 +19,7 @@ Polytope::~Polytope()
 
 void Polytope::clear()
 {
-	for (int i = 0; i < m_triangles.size(); i++ )
+	for (int i = 0; i < m_triangles.size(); ++i )
 		SAFE_DELETE(m_triangles[i]);
 
 	m_count = 0;
@@ -42,7 +42,7 @@ Triangle* Polytope::popAClosestTriangleToOriginFromHeap()
 
 	float minDistSqrd = FLT_MAX;
 
-	for ( int i = 0; i < m_triangles.size(); i++ )
+	for ( int i = 0; i < m_triangles.size(); ++i )
 	{
 		Triangle* pTri = m_triangles[i];
 		if ( !pTri->isObsolete() && pTri->isClosestPointInternal() && pTri->getDistSqrd() < minDistSqrd )
@@ -130,7 +130,7 @@ bool Polytope::addTetrahedron( const vec3& p0, const vec3& p1, const vec3& p2, c
 
 	EPATriangleComparison compare;
 
-	for ( int i = 0; i < 4; i++ )
+	for ( int i = 0; i < 4; ++i )
 	{
 		pTri[i]->computeClosestPointToOrigin(*this);
 
@@ -231,11 +231,11 @@ bool Polytope::addHexahedron( const vec3& p0, const vec3& p1, const vec3& p2, co
 
 	EPATriangleComparison compare;
 
-	for ( int i = 0; i < 6; i++ )
+	for ( int i = 0; i < 6; ++i )
 	{
 		pTri[i]->computeClosestPointToOrigin(*this);
 
-		for ( int j = 0; j < 3; j++ )
+		for ( int j = 0; j < 3; ++j )
 		{
 			if ( !(pTri[i]->m_adjacentTriangles[j] == pTri[i]->m_edges[j]->m_pPairEdge->getTriangle()) )
 				return false;
@@ -265,7 +265,7 @@ bool Polytope::expandPolytopeWithNewPoint( const vec3& w, Triangle* pTriangleUse
 	pTriangleUsedToObtainW->setObsolete(true);
 
 	// 'Flood Fill Silhouette' algorithm to detect visible triangles and silhouette loop of edges from w.
-	for ( int i = 0; i < 3; i++ )
+	for ( int i = 0; i < 3; ++i )
 	{
 		Triangle* pTri = pTriangleUsedToObtainW->m_edges[i]->m_pPairEdge->m_pTriangle;
 		//Triangle* pTri = pTriangleUsedToObtainW->m_adjacentTriangles[i];
@@ -278,7 +278,7 @@ bool Polytope::expandPolytopeWithNewPoint( const vec3& w, Triangle* pTriangleUse
 	// Now, we create new triangles to patch the silhouette loop 
 	int silhouetteSize = m_silhouetteVertices.size();
 
-	for ( int i = 0; i < silhouetteSize; i++ )
+	for ( int i = 0; i < silhouetteSize; ++i )
 	{
 		if ( m_silhouetteTriangles[i]->isVisibleFromPoint(w) != false )
 			return false;
@@ -289,7 +289,7 @@ bool Polytope::expandPolytopeWithNewPoint( const vec3& w, Triangle* pTriangleUse
 
 	EPATriangleComparison compare;
 
-	for ( int i = 0; i < silhouetteSize; i++ )
+	for ( int i = 0; i < silhouetteSize; ++i )
 	{
 		int j = i+1 < silhouetteSize ? i+1 : 0;
 
@@ -298,7 +298,7 @@ bool Polytope::expandPolytopeWithNewPoint( const vec3& w, Triangle* pTriangleUse
 		pTri->computeClosestPointToOrigin(*this);
 	}
 
-	for ( int i = 0; i < silhouetteSize; i++ )
+	for ( int i = 0; i < silhouetteSize; ++i )
 	{
 		int j = (i+1 < silhouetteSize)? i+1 : 0;
 		int k = (i-1 < 0)? silhouetteSize-1 : i-1;
@@ -315,7 +315,7 @@ bool Polytope::expandPolytopeWithNewPoint( const vec3& w, Triangle* pTriangleUse
 		m_silhouetteTriangles[i]->m_adjacentTriangles[m_silhouetteEdges[i]->m_indexLocal] = newTriangles[i];
 	}
 
-	for ( int i = 0; i < silhouetteSize; i++ )
+	for ( int i = 0; i < silhouetteSize; ++i )
 	{	
 		m_triangles.push_back(newTriangles[i]);
 		std::push_heap(m_triangles.begin(), m_triangles.end(), compare);

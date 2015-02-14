@@ -49,7 +49,7 @@ private:
 	float m_lambda2;
 
 	// squared distance to origin
-	float m_distSqrd; // = m_ClosestPointToOrigin.LenghSqr()
+	float m_distSqrd; // = m_closestPointToOrigin.LenghSqr()
 };
 
 class EPATriangleComparison 

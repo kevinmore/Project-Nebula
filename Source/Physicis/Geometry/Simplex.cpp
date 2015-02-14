@@ -1,11 +1,9 @@
 #include "Simplex.h"
 
-
 Simplex::Simplex()
 	: m_curBits(0x0),
 	  m_allBits(0x0)
-{
-}
+{}
 
 int Simplex::getPoints( QVector<vec3>& suppPointsA, QVector<vec3>& suppPointsB, QVector<vec3>& points ) const
 {
@@ -17,14 +15,14 @@ int Simplex::getPoints( QVector<vec3>& suppPointsA, QVector<vec3>& suppPointsB, 
 	int i;
 	uint bit;
 
-	for ( i = 0, bit = 0x1; i < 4; i++, bit <<= 1 ) 
+	for ( i = 0, bit = 0x1; i < 4; ++i, bit <<= 1 ) 
 	{
 		if ( (m_curBits & bit) != 0 )
 		{
 			suppPointsA.push_back(m_suppPointsA[count]);
 			suppPointsB.push_back(m_suppPointsB[count]);
 			points.push_back(m_Points[count]);
-			count++;
+			++count;
 		}
 	}
 
@@ -42,7 +40,7 @@ void Simplex::addPoint( const vec3& point, const vec3& suppPointA, const vec3& s
 	// the current simplex
 	while ( (m_curBits & m_lastBit) != 0 )
 	{
-		m_lastFound++;
+		++m_lastFound;
 		m_lastBit <<= 1;
 	}
 
@@ -63,7 +61,7 @@ void Simplex::addPoint( const vec3& point, const vec3& suppPointA, const vec3& s
 
 bool Simplex::isDegenerate( const vec3& point ) const
 {
-	for ( int i = 0, bit = 0x1; i < 4; i++, bit <<= 1 ) 
+	for ( int i = 0, bit = 0x1; i < 4; ++i, bit <<= 1 ) 
 	{
 		if ( ( (m_allBits & bit) != 0 ) && point == m_Points[i] ) 
 			return true;
@@ -78,7 +76,7 @@ bool Simplex::isAffinelyIndependent() const
 	int i;
 	uint bit;
 
-	for ( i=0, bit = 0x1; i < 4; i++, bit <<= 1 ) 
+	for ( i=0, bit = 0x1; i < 4; ++i, bit <<= 1 ) 
 	{
 		if ( (m_allBits & bit) != 0 )
 		{
@@ -97,7 +95,7 @@ void Simplex::closestPointAandB( vec3& pA, vec3& pB ) const
 	int i;
 	uint bit;
 
-	for ( i=0, bit=0x1; i<4; i++, bit <<= 1 ) 
+	for ( i=0, bit=0x1; i<4; ++i, bit <<= 1 ) 
 	{
 		if ( (m_curBits & bit) != 0 )
 		{
@@ -130,7 +128,7 @@ bool Simplex::runJohnsonAlgorithm( vec3& v )
 			m_maxLengthSqrd = 0.0;
 			float sum = 0.0;
 
-			for ( int i=0, bit = 0x1; i < 4; i++, bit <<= 1 ) 
+			for ( int i=0, bit = 0x1; i < 4; ++i, bit <<= 1 ) 
 			{
 				if ( (m_curBits & bit) != 0 )
 				{
@@ -169,7 +167,7 @@ bool Simplex::isValidSubset( uint subset ) const
 	int i;
 	uint bit;
 
-	for ( i = 0, bit = 0x1; i < 4; i++, bit <<= 1 ) 
+	for ( i = 0, bit = 0x1; i < 4; ++i, bit <<= 1 ) 
 	{
 		if ( (m_allBits & bit) != 0 )		
 		{
@@ -193,7 +191,7 @@ void Simplex::updateDiffLengths()
 	int i;
 	uint bit;
 
-	for ( i=0, bit = 0x1; i < 4; i++, bit <<= 1 ) 
+	for ( i=0, bit = 0x1; i < 4; ++i, bit <<= 1 ) 
 	{
 		if ( (m_curBits & bit) != 0 )
 		{
@@ -211,7 +209,7 @@ void Simplex::calcDeterminants()
 	if ( isEmpty() )
 		return;
 
-	for ( int i = 0, bitI = 0x1; i < 4; i++, bitI <<= 1 ) 
+	for ( int i = 0, bitI = 0x1; i < 4; ++i, bitI <<= 1 ) 
 	{
 		if ( (m_curBits & bitI) != 0 )
 		{
@@ -220,7 +218,7 @@ void Simplex::calcDeterminants()
 			m_det[bit2][i] = vec3::dotProduct(m_diffLength[m_lastFound][i], m_Points[m_lastFound]);
 			m_det[bit2][m_lastFound] = vec3::dotProduct(m_diffLength[i][m_lastFound], m_Points[i]);
 
-			for ( int j=0, bitJ = 0x1; j<i; j++, bitJ <<= 1 ) 
+			for ( int j=0, bitJ = 0x1; j<i; ++j, bitJ <<= 1 ) 
 			{
 				if ( (m_curBits & bitJ) != 0 )
 				{
