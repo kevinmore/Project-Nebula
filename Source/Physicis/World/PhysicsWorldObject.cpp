@@ -2,7 +2,8 @@
 #include "PhysicsWorld.h"
 
 PhysicsWorldObject::PhysicsWorldObject(QObject* parent)
-	: Component()
+	: Component(),
+	  m_world(NULL)
 {
 }
 

@@ -15,6 +15,7 @@ Scene::Scene(QObject* parent)
 	  m_relativeTime(0.0f),
 	  m_delayedTime(0.0f),
 	  m_bShowSkybox(false),
+	  m_bPhysicsPaused(true),
 	  m_bStepPhysics(false),
 	  m_physicsWorld(0)
 {
@@ -62,7 +63,7 @@ void Scene::initialize()
 	LoaderThread loader(this, "../Resource/Models/Common/woodenbox.obj", go, m_sceneRootNode, false);
 	BoxRigidBodyPtr rb(new BoxRigidBody());
 	rb->setPosition(vec3(-1, 1, 0));
-	rb->setGravityFactor(0.0f);
+	//rb->setGravityFactor(0.0f);
 	rb->setLinearVelocity(vec3(1, 0, 0));
 	ModelPtr model = m_objectManager->getGameObject("Cube1")->getComponent("Model").dynamicCast<IModel>();
 	rb->attachCollider(model->getBoundingBox());
@@ -73,7 +74,7 @@ void Scene::initialize()
 	LoaderThread loader2(this, "../Resource/Models/Common/woodenbox.obj", go2, m_sceneRootNode, false);
 	BoxRigidBodyPtr rb2(new BoxRigidBody());
 	rb2->setPosition(vec3(1, 1, 0));
-	rb2->setGravityFactor(0.0f);
+	//rb2->setGravityFactor(0.0f);
 	rb2->setLinearVelocity(vec3(-1, 0, 0));
 	rb2->setAngularVelocity(vec3(0, 100, 100));
 	ModelPtr model2 = m_objectManager->getGameObject("Cube2")->getComponent("Model").dynamicCast<IModel>();
@@ -116,7 +117,6 @@ void Scene::initialize()
 // 	BoxColliderPtr collider(new BoxCollider(vec3(0, 1, 0), vec3(0.5, 0.5, 0.5), this));
 // 	go->attachComponent(collider);
 
-	m_physicsWorld->lock();
 }
 
 
@@ -142,7 +142,7 @@ void Scene::update(float currentTime)
 	m_relativeTime = m_absoluteTime - m_delayedTime;
 
 	// do nothing when the physics world is paused
-	if (!m_physicsWorld->isLocked() || m_bStepPhysics)
+	if (!m_bPhysicsPaused || m_bStepPhysics)
 	{
 		// update the physics world
 		m_physicsWorld->simulate(dt);
@@ -213,11 +213,13 @@ void Scene::resetToDefaultScene()
 	// load the floor
 	GameObjectPtr floorRef(new GameObject(this));
 	LoaderThread loader(this, "../Resource/Models/Common/DemoRoom/WoodenFloor.obj", floorRef, m_sceneRootNode);
-	ModelPtr floor = m_objectManager->getGameObject("WoodenFloor")->getComponent("Model").dynamicCast<IModel>();
-	//m_physicsWorld->addCollider(floor->getBoundingBox().data());
-
-	// lock the physics world
-	m_physicsWorld->lock();
+	GameObjectPtr go = m_objectManager->getGameObject("WoodenFloor");
+	ModelPtr floor = go ->getComponent("Model").dynamicCast<IModel>();
+	BoxRigidBodyPtr rb = BoxRigidBodyPtr(new BoxRigidBody());
+	rb->setMotionType(RigidBody::MOTION_FIXED);
+	rb->attachCollider(floor->getBoundingBox());
+	go->attachComponent(rb);
+	m_physicsWorld->addEntity(rb.data());
 }
 
 void Scene::showLoadModelDialog()
@@ -451,12 +453,14 @@ void Scene::resize(int width, int height)
 void Scene::pause()
 {
 	// pause the physics world
+	m_bPhysicsPaused = true;
 	m_physicsWorld->lock();
 }
 
 void Scene::play()
 {
 	// un-pause the physics world and set the delayed time
+	m_bPhysicsPaused = false;
 	m_physicsWorld->unlock();
 	m_delayedTime += m_absoluteTime - m_relativeTime;
 }

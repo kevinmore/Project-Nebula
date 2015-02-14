@@ -159,8 +159,8 @@ void PhysicsWorld::handleCollisions()
 
 				if (solver.checkCollision(ch1.data(), ch2.data(), n, true))
 				{
-					qDebug() << "contact point A =" << n.witnessPntA;
-					qDebug() << "contact point B =" << n.witnessPntB;
+					//qDebug() << "contact point A =" << n.witnessPntA;
+					//qDebug() << "contact point B =" << n.witnessPntB;
 					
 					
 				}
@@ -236,5 +236,4 @@ void PhysicsWorld::reset()
 	lock();
 	m_entityList.clear();
 	m_colliderList.clear();
-	unlock();
 }

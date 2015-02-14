@@ -31,7 +31,10 @@ RigidBody::RigidBody(const vec3& position, const quat& rotation, QObject* parent
 RigidBody::~RigidBody()
 {
 	 // remove it from the world
-	 m_world->removeEntity(this);
+	if (m_world)
+	{
+		m_world->removeEntity(this);
+	}
 }
 
 void RigidBody::setMassProperties( const MassProperties& mp )
