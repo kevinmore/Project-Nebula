@@ -31,12 +31,12 @@ public:
 	ShadingTechniquePtr renderingEffect() const { return m_renderingEffect; }
 	QVector<MaterialPtr> getMaterials() const { return m_materials; }
 
-	void setBoundingBox(const BoxCollider& box);
+	void setBoundingBox(BoxCollider* box);
 	BoxColliderPtr getBoundingBox() const;
 	void showBoundingBox();
 	void hideBoundingBox();
 
-	void setConvexHullCollider(const ConvexHullCollider& ch);
+	void setConvexHullCollider(ConvexHullCollider* ch);
 	ConvexHullColliderPtr getConvexHullCollider() const;
 
 

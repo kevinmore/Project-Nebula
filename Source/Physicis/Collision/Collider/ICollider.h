@@ -71,8 +71,9 @@ protected:
 	* For rendering
 	*/
 	virtual void init();
-	void drawElements(uint index);
+	virtual void drawElements(uint index);
 	GLuint m_vao;
+	GLuint m_vbo;
 	ShadingTechniquePtr m_renderingEffect;
 	QVector<MeshPtr> m_meshes;
 	Scene* m_scene;

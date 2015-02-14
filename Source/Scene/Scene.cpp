@@ -37,9 +37,10 @@ void Scene::initialize()
 
 	glClearDepth( 1.0 );
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_PROGRAM_POINT_SIZE);
+	glEnable(GL_CULL_FACE);
 	glDepthFunc(GL_LEQUAL);
 
-	glEnable(GL_CULL_FACE);
 
 	m_objectManager = new ObjectManager(this, this);
 	m_materialManager = new MaterialManager(this);

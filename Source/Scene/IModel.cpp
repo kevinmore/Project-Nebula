@@ -52,9 +52,9 @@ void IModel::setPolygonMode( PolygonMode mode )
 	m_polygonMode = mode;
 }
 
-void IModel::setBoundingBox( const BoxCollider& box )
+void IModel::setBoundingBox( BoxCollider* box )
 {
-	m_boundingBox = BoxColliderPtr(new BoxCollider(box.getCenter(), box.getGeometryShape().getHalfExtents(), box.getScene()));
+	m_boundingBox.reset(box);
 }
 
 BoxColliderPtr IModel::getBoundingBox() const
@@ -72,10 +72,9 @@ void IModel::hideBoundingBox()
 	gameObject()->detachComponent(m_boundingBox);
 }
 
-void IModel::setConvexHullCollider( const ConvexHullCollider& ch )
+void IModel::setConvexHullCollider( ConvexHullCollider* ch )
 {
-	ConvexShape shape = ch.getGeometryShape();
- 	m_convexHull = ConvexHullColliderPtr(new ConvexHullCollider(ch.getCenter(), shape.getVertices(), ch.getScene()));
+ 	m_convexHull.reset(ch);
 }
 
 ConvexHullColliderPtr IModel::getConvexHullCollider() const

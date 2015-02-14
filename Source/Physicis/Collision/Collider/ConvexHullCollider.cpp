@@ -1,8 +1,8 @@
 #include "ConvexHullCollider.h"
 
-ConvexHullCollider::ConvexHullCollider( const vec3& center, const QVector<vec3>& vertices, Scene* scene )
+ConvexHullCollider::ConvexHullCollider( const vec3& center, const ConvexShape& shape, Scene* scene )
 	: ICollider(center, scene),
-	  m_convexShape(vertices)
+	  m_convexShape(shape)
 {
 	m_colliderType = ICollider::COLLIDER_CONVEXHULL;
 }

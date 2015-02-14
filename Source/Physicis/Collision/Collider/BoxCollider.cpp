@@ -26,6 +26,24 @@ BoxShape BoxCollider::getGeometryShape() const
 	return m_boxShape;
 }
 
+void BoxCollider::init()
+{
+	ICollider::init();
+
+	ModelLoader loader;
+	QVector<ModelDataPtr> modelDataVector = loader.loadModel("../Resource/Models/Common/cube.obj", m_renderingEffect->getShaderProgram()->programId());
+	m_vao = loader.getVAO();
+
+	// traverse modelData vector
+	for (int i = 0; i < modelDataVector.size(); ++i)
+	{
+		ModelDataPtr data = modelDataVector[i];
+		// deal with the mesh
+		MeshPtr mesh(new Mesh(data->meshData.name, data->meshData.numIndices, data->meshData.baseVertex, data->meshData.baseIndex));
+		m_meshes.push_back(mesh);
+	}
+}
+
 BroadPhaseCollisionFeedback BoxCollider::onBroadPhase( ICollider* other )
 {
 	if (other->getColliderType() != ICollider::COLLIDER_BOX)
@@ -144,24 +162,6 @@ BroadPhaseCollisionFeedback BoxCollider::onBroadPhase( ICollider* other )
 
 	// Since no separating axis is found, the OBBs must be intersecting
 	return isIntersecting;
-}
-
-void BoxCollider::init()
-{
-	ICollider::init();
-
-	ModelLoader loader;
-	QVector<ModelDataPtr> modelDataVector = loader.loadModel("../Resource/Models/Common/cube.obj", m_renderingEffect->getShaderProgram()->programId());
-	m_vao = loader.getVAO();
-
-	// traverse modelData vector
-	for (int i = 0; i < modelDataVector.size(); ++i)
-	{
-		ModelDataPtr data = modelDataVector[i];
-		// deal with the mesh
-		MeshPtr mesh(new Mesh(data->meshData.name, data->meshData.numIndices, data->meshData.baseVertex, data->meshData.baseIndex));
-		m_meshes.push_back(mesh);
-	}
 }
 
 void BoxCollider::setHalfExtents( const vec3& halfExtents )

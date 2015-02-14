@@ -91,8 +91,8 @@ public:
 	Skeleton* getSkeletom() const { return m_skeleton; }
 	ShadingTechniquePtr getRenderingEffect() const { return m_effect; }
 	MODEL_TYPE getModelType() const { return m_modelType; }
-	BoxCollider getBoundingBox();
-	ConvexHullCollider getConvexHullCollider();
+	BoxCollider* getBoundingBox();
+	ConvexHullCollider* getConvexHullCollider();
 
 private:
 	/*
