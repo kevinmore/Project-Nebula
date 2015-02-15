@@ -73,7 +73,7 @@ void PhysicsWorld::addEntity( PhysicsWorldObject* entity )
 	lock();
 	// add the rigid body and its collider
 	m_entityList << entity;
-	m_colliderList << dynamic_cast<RigidBody*>(entity)->getCollider().data();
+	addCollider(dynamic_cast<RigidBody*>(entity)->getCollider().data());
 	entity->setWorld(this);
 
 	// if the world is not locked before the operation
@@ -103,9 +103,21 @@ void PhysicsWorld::addCollider( ICollider* collider )
 	// add the rigid body and its collider
 	m_colliderList << collider;
 	
+	// generate the collision pairs
+	generateCollisionPairs();
+
 	// if the world is not locked before the operation
 	// unlock it
 	if(!lockState) unlock();
+}
+
+void PhysicsWorld::generateCollisionPairs()
+{
+	m_collisionPairs.clear();
+
+	for (int i = 0; i < m_colliderList.size() - 1; ++i)
+		for (int j = i + 1; j < m_colliderList.size(); ++j)
+			m_collisionPairs << CollisionPairPtr(new CollisionPair(m_colliderList[i], m_colliderList[j]));
 }
 
 int PhysicsWorld::entitiesCount()
@@ -115,86 +127,92 @@ int PhysicsWorld::entitiesCount()
 
 void PhysicsWorld::handleCollisions()
 {
-	// pair to pair
-	for (int i = 0; i < m_colliderList.size() - 1; ++i)
+	foreach(CollisionPairPtr pair, m_collisionPairs)
 	{
-		for (int j = i + 1; j < m_colliderList.size(); ++j)
+		ICollider* cA = pair->pColliderA;
+		ICollider* cB = pair->pColliderB;
+
+		// mark the bounding volume as green
+		cA->setColor(Qt::green);
+		cB->setColor(Qt::green);
+
+		// collision detection on broad phase
+		BroadPhaseCollisionFeedback broadPhaseResult = cA->onBroadPhase(cB);
+
+		// if not colliding on broad phase
+		if (!broadPhaseResult.isColliding())
 		{
-			ICollider* cA = m_colliderList[i];
-			ICollider* cB = m_colliderList[j];
-			
-			// mark the bounding volume as green
-			cA->setColor(Qt::green);
-			cB->setColor(Qt::green);
+			// mark the pair as un-checked
+			pair->bChecked = false;
+			continue;
+		}
 
-			BroadPhaseCollisionFeedback result = cA->onBroadPhase(cB);
+		// if colliding on broad phase and the pair is not checked before
+		if (broadPhaseResult.isColliding() && !pair->bChecked)
+		{
+			// mark the bounding volume as red
+			cA->setColor(Qt::red);
+			cB->setColor(Qt::red);
 
-			if (result.isColliding())
+			// go to narrow phase
+			NarrowPhaseCollisionFeedback collisionInfo;
+			GJKSolver solver;
+			ModelPtr model = cA->getRigidBody()->gameObject()->getComponent("Model").dynamicCast<IModel>();
+			ConvexHullColliderPtr chA = model->getConvexHullCollider();
+
+			model = cB->getRigidBody()->gameObject()->getComponent("Model").dynamicCast<IModel>();
+			ConvexHullColliderPtr chB = model->getConvexHullCollider();
+
+			if (solver.checkCollision(chA.data(), chB.data(), collisionInfo, true))
 			{
-				// mark the bounding volume as red
-				cA->setColor(Qt::red);
-				cB->setColor(Qt::red);
+				RigidBody* bodyA = cA->getRigidBody();
+				RigidBody* bodyB = cB->getRigidBody();
+				vec3 A2B = (bodyB->getPosition() - bodyA->getPosition()).normalized();
+				vec3 n = collisionInfo.contactNormalWorld;
 
-// 				RigidBody* rb1 = c1->getRigidBody();
-// 				RigidBody* rb2 = c2->getRigidBody();
-// 
-// 				float m1 = rb1->getMass();
-// 				float m2 = rb2->getMass();
-// 				vec3 v1 = rb1->getLinearVelocity();
-// 				vec3 v2 = rb2->getLinearVelocity();
-// 
-// 				// Momentum Conservation Principle
-// 				// in this case, the system does not lose kinematics energy
-// 				vec3 v1Prime = v1*(m1-m2)/(m1+m2) + v2*(2*m2)/(m1+m2);
-// 				vec3 v2Prime = v1*(2*m1)/(m1+m2) - v2*(m1-m2)/(m1+m2);
-// 
-// 				rb1->setLinearVelocity(v1Prime);
-// 				rb2->setLinearVelocity(v2Prime);
-
-				// go to narrow phase
-				NarrowPhaseCollisionFeedback collisionInfo;
-				GJKSolver solver;
-				ModelPtr model = cA->getRigidBody()->gameObject()->getComponent("Model").dynamicCast<IModel>();
-				ConvexHullColliderPtr chA = model->getConvexHullCollider();
-
-				model = cB->getRigidBody()->gameObject()->getComponent("Model").dynamicCast<IModel>();
-				ConvexHullColliderPtr chB = model->getConvexHullCollider();
-
-				if (solver.checkCollision(chA.data(), chB.data(), collisionInfo, true))
+				// separate the two objects by the penetration depth
+				if (collisionInfo.penetrationDepth > 0.0f)
 				{
-// 					qDebug() << cA->gameObject()->objectName() << "Point A" << collisionInfo.closestPntAWorld;
-// 					qDebug() << cB->gameObject()->objectName() << "Point B" << collisionInfo.closestPntBWorld;
-// 					qDebug() << "distance" << (collisionInfo.closestPntAWorld - collisionInfo.closestPntBWorld).length();
-// 					qDebug() << "depth=" << collisionInfo.penetrationDepth;
-
-					RigidBody* bodyA = cA->getRigidBody();
-					RigidBody* bodyB = cB->getRigidBody();
-
-					// separate the two objects by the penetration depth
-					if (collisionInfo.penetrationDepth > 0.0f)
-					{
-						vec3 A2B = (bodyB->getPosition() - bodyA->getPosition()).normalized();
-						float offset = 0.5 * collisionInfo.penetrationDepth;
-						bodyA->moveBy(-offset * A2B);
-						bodyB->moveBy(offset * A2B);
-					}
-					
-
-					float impuseMagnitude = computeContactImpulseMagnitude(&collisionInfo);
-					qDebug() << impuseMagnitude;
-					if (bodyA->getMotionType() != RigidBody::MOTION_FIXED)
-					{
-						bodyA->applyPointImpulse(-impuseMagnitude * collisionInfo.contactNormalWorld, collisionInfo.closestPntAWorld);
-					}
-					if (bodyB->getMotionType() != RigidBody::MOTION_FIXED)
-					{
-						bodyB->applyPointImpulse(impuseMagnitude * collisionInfo.contactNormalWorld, collisionInfo.closestPntBWorld);
-					}
+					float offset = 0.5 * collisionInfo.penetrationDepth;
+					bodyA->moveBy(-offset * A2B);
+					bodyB->moveBy(offset * A2B);
 				}
-			}
-// 			boarderCheck(c1->getRigidBody());
-// 			boarderCheck(c2->getRigidBody());
 
+				float impuseMagnitude = computeContactImpulseMagnitude(&collisionInfo);
+				qDebug() << cA->getRigidBody()->gameObject()->objectName() <<
+					     cB->getRigidBody()->gameObject()->objectName() << impuseMagnitude;
+
+				// apply impulse based on the direction
+				if (vec3::dotProduct(A2B, n) > 0)
+				{
+					bodyA->applyPointImpulse(-impuseMagnitude * n, collisionInfo.closestPntAWorld);
+					bodyB->applyPointImpulse(impuseMagnitude * n, collisionInfo.closestPntBWorld);
+				}
+				else
+				{
+					bodyA->applyPointImpulse(impuseMagnitude * n, collisionInfo.closestPntAWorld);
+					bodyB->applyPointImpulse(-impuseMagnitude * n, collisionInfo.closestPntBWorld);
+				}
+
+				// mark the pair as checked
+				pair->bChecked = true;
+
+				// 				RigidBody* rb1 = c1->getRigidBody();
+				// 				RigidBody* rb2 = c2->getRigidBody();
+				// 
+				// 				float m1 = rb1->getMass();
+				// 				float m2 = rb2->getMass();
+				// 				vec3 v1 = rb1->getLinearVelocity();
+				// 				vec3 v2 = rb2->getLinearVelocity();
+				// 
+				// 				// Momentum Conservation Principle
+				// 				// in this case, the system does not lose kinematics energy
+				// 				vec3 v1Prime = v1*(m1-m2)/(m1+m2) + v2*(2*m2)/(m1+m2);
+				// 				vec3 v2Prime = v1*(2*m1)/(m1+m2) - v2*(m1-m2)/(m1+m2);
+				// 
+				// 				rb1->setLinearVelocity(v1Prime);
+				// 				rb2->setLinearVelocity(v2Prime);
+			}
 		}
 	}
 }
@@ -287,7 +305,8 @@ float PhysicsWorld::computeContactImpulseMagnitude( const NarrowPhaseCollisionFe
 	vec3 pointVelocityA = A->getPointVelocityWorld(pCollisionInfo->closestPntAWorld);
 	vec3 pointVelocityB = B->getPointVelocityWorld(pCollisionInfo->closestPntBWorld);
 	float Vrel = vec3::dotProduct(n, pointVelocityA - pointVelocityB);
-
+	qDebug() << "point A =" << pCollisionInfo->closestPntAWorld;
+	qDebug() << "point B =" << pCollisionInfo->closestPntBWorld;
 	// check if Vrel == 0
 	if (Vrel == 0.0f) return 0.0f;
 
@@ -303,5 +322,5 @@ float PhysicsWorld::computeContactImpulseMagnitude( const NarrowPhaseCollisionFe
 	float denominator = massInvSum + componentA + componentB;
 	
 	
-	return k * Vrel / denominator;
+	return qAbs(k * Vrel / denominator);
 }

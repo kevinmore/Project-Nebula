@@ -3,6 +3,22 @@
 #include "PhysicsWorldObject.h"
 #include "Physicis/Collision/Collider/ICollider.h"
 
+struct CollisionPair
+{
+	ICollider* pColliderA;
+	ICollider* pColliderB;
+	bool bChecked;
+
+	CollisionPair(ICollider* a, ICollider* b)
+	{
+		pColliderA = a;
+		pColliderB = b;
+		bChecked = false;
+	}
+};
+
+typedef QSharedPointer<CollisionPair> CollisionPairPtr;
+
 class NarrowPhaseCollisionFeedback;
 class PhysicsWorld
 {
@@ -24,6 +40,8 @@ public:
 	void removeEntity(PhysicsWorldObject* entity);
 	void addCollider(ICollider* collider);
 
+	void generateCollisionPairs();
+
 	int entitiesCount();
 
 	void reset();
@@ -37,6 +55,8 @@ private:
 	bool m_locked;
 	QList<PhysicsWorldObject*> m_entityList;
 	QVector<ICollider*> m_colliderList;
+	QList<CollisionPairPtr> m_collisionPairs;
+
 	void boarderCheck(RigidBody* rb);
 };
 
