@@ -101,20 +101,14 @@ bool EPASolver::computePenetrationDepthAndContactPoints( const Simplex& simplex,
 		if ( upperBound - lowerBound < 1e-4 || numIter == maxIteration - 1 )
 		{
 			pCollisionInfo.bIntersect = true;
+			pCollisionInfo.contactNormalWorld = v.normalized();
 			pCollisionInfo.penetrationDepth = 0.5f * (upperBound + lowerBound);
-			pCollisionInfo.contactPntALocal = pClosestTriangle->getClosestPointToOriginInSupportPntSpace(suppPointsA);
-			pCollisionInfo.contactPntBLocal = transA2B * pClosestTriangle->getClosestPointToOriginInSupportPntSpace(suppPointsB);
 
-			pCollisionInfo.contactPntAWorld = objA->getTransform() * pCollisionInfo.contactPntALocal;
-			pCollisionInfo.contactPntBWorld = objB->getTransform() * pCollisionInfo.contactPntBLocal;
+			pCollisionInfo.closestPntALocal = pClosestTriangle->getClosestPointToOriginInSupportPntSpace(suppPointsA);
+			pCollisionInfo.closestPntBLocal = transA2B * pClosestTriangle->getClosestPointToOriginInSupportPntSpace(suppPointsB);
 
-			vec3 impulseDirectionAWorld = pCollisionInfo.contactPntAWorld - pCollisionInfo.contactPntBWorld;
-			vec3 impulseDirectionBWorld = - impulseDirectionAWorld;
-
-			pCollisionInfo.impulseDirectionOnALocal = objA->getTransform().inversed() * impulseDirectionAWorld;
-			pCollisionInfo.impulseDirectionOnBLocal = objB->getTransform().inversed() * impulseDirectionBWorld;
-			pCollisionInfo.impulseDirectionOnALocal.normalize();
-			pCollisionInfo.impulseDirectionOnBLocal.normalize();
+			pCollisionInfo.closestPntAWorld = objA->getTransform() * pCollisionInfo.closestPntALocal;
+			pCollisionInfo.closestPntBWorld = objB->getTransform() * pCollisionInfo.closestPntBLocal;
 
 			pCollisionInfo.proximityDistance = 0;
 			pCollisionInfo.pObjA = objA;

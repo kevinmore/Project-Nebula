@@ -60,29 +60,7 @@ void Scene::initialize()
 
 	// setup a basic physics world
 	// setup a demo room
-	GameObjectPtr go = createEmptyGameObject("Cube1");
-	go->setRotation(45, 45, 0);
-	LoaderThread loader(this, "../Resource/Models/Common/woodenbox.obj", go, m_sceneRootNode, false);
-	BoxRigidBodyPtr rb(new BoxRigidBody());
-	rb->setPosition(vec3(-1, 1, 0));
-	//rb->setGravityFactor(0.0f);
-	rb->setLinearVelocity(vec3(1, 0, 0));
-	ModelPtr model = m_objectManager->getGameObject("Cube1")->getComponent("Model").dynamicCast<IModel>();
-	rb->attachCollider(model->getBoundingBox());
-	go->attachComponent(rb);
-	m_physicsWorld->addEntity(rb.data());
 
-	GameObjectPtr go2 = createEmptyGameObject("Cube2");
-	LoaderThread loader2(this, "../Resource/Models/Common/woodenbox.obj", go2, m_sceneRootNode, false);
-	BoxRigidBodyPtr rb2(new BoxRigidBody());
-	rb2->setPosition(vec3(1, 1, 0));
-	//rb2->setGravityFactor(0.0f);
-	rb2->setLinearVelocity(vec3(-1, 0, 0));
-	rb2->setAngularVelocity(vec3(0, 100, 100));
-	ModelPtr model2 = m_objectManager->getGameObject("Cube2")->getComponent("Model").dynamicCast<IModel>();
-	rb2->attachCollider(model2->getBoundingBox());
-	go2->attachComponent(rb2);
-	m_physicsWorld->addEntity(rb2.data());
 
 	// broad phase demo
 // 	{
@@ -214,14 +192,43 @@ void Scene::resetToDefaultScene()
 
 	// load the floor
 	GameObjectPtr floorRef(new GameObject(this));
-	LoaderThread loader(this, "../Resource/Models/Common/DemoRoom/WoodenFloor.obj", floorRef, m_sceneRootNode);
-	GameObjectPtr go = m_objectManager->getGameObject("WoodenFloor");
-	ModelPtr floor = go ->getComponent("Model").dynamicCast<IModel>();
-	BoxRigidBodyPtr rb = BoxRigidBodyPtr(new BoxRigidBody());
-	rb->setMotionType(RigidBody::MOTION_FIXED);
-	rb->attachCollider(floor->getBoundingBox());
+	LoaderThread floorLoader(this, "../Resource/Models/Common/DemoRoom/WoodenFloor.obj", floorRef, m_sceneRootNode);
+	GameObjectPtr floorObject = m_objectManager->getGameObject("WoodenFloor");
+	ModelPtr floor = floorObject ->getComponent("Model").dynamicCast<IModel>();
+	BoxRigidBodyPtr floorBody = BoxRigidBodyPtr(new BoxRigidBody());
+	floor->getConvexHullCollider()->setRigidBody(floorBody.data());
+	floorBody->setMotionType(RigidBody::MOTION_FIXED);
+	floorBody->attachCollider(floor->getBoundingBox());
+	floorObject->attachComponent(floorBody);
+	m_physicsWorld->addEntity(floorBody.data());
+
+
+
+	GameObjectPtr go = createEmptyGameObject("Cube1");
+	go->setRotation(45, 45, 0);
+	LoaderThread loader(this, "../Resource/Models/Common/woodenbox.obj", go, m_sceneRootNode, false);
+	BoxRigidBodyPtr rb(new BoxRigidBody());
+	rb->setPosition(vec3(-1, 1, 0));
+	rb->setGravityFactor(0.0f);
+	rb->setLinearVelocity(vec3(1, 0, 0));
+	ModelPtr model = m_objectManager->getGameObject("Cube1")->getComponent("Model").dynamicCast<IModel>();
+	rb->attachCollider(model->getBoundingBox());
+	model->getConvexHullCollider()->setRigidBody(rb.data());
 	go->attachComponent(rb);
 	m_physicsWorld->addEntity(rb.data());
+
+	GameObjectPtr go2 = createEmptyGameObject("Cube2");
+	LoaderThread loader2(this, "../Resource/Models/Common/woodenbox.obj", go2, m_sceneRootNode, false);
+	BoxRigidBodyPtr rb2(new BoxRigidBody());
+	rb2->setPosition(vec3(1, 1, 0));
+	rb2->setGravityFactor(0.0f);
+	rb2->setLinearVelocity(vec3(-1, 0, 0));
+	rb2->setAngularVelocity(vec3(0, 100, 100));
+	ModelPtr model2 = m_objectManager->getGameObject("Cube2")->getComponent("Model").dynamicCast<IModel>();
+	rb2->attachCollider(model2->getBoundingBox());
+	model2->getConvexHullCollider()->setRigidBody(rb2.data());
+	go2->attachComponent(rb2);
+	m_physicsWorld->addEntity(rb2.data());
 }
 
 void Scene::showLoadModelDialog()

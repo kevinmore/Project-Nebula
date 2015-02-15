@@ -60,3 +60,8 @@ Transform& Transform::operator=( const Transform& other )
 
 	return (*this);
 }
+
+vec3 Transform::computeLocalPosition( const vec3& worldPos, const Transform& transform )
+{
+	return transform.inversed() * worldPos;
+}

@@ -30,18 +30,10 @@ bool GJKSolver::generateCollisionInfo( const ICollider* objA, const ICollider* o
 	float penetrationDepth = margin - dist;
 
 	pCollisionInfo.penetrationDepth = penetrationDepth;
-	pCollisionInfo.contactPntALocal = closestPntA;
-	pCollisionInfo.contactPntBLocal = closestPntB;
-	pCollisionInfo.contactPntAWorld = objA->getTransform() * closestPntA;
-	pCollisionInfo.contactPntBWorld = objB->getTransform() * closestPntB;
-
-	vec3 impulseDirectionAWorld = pCollisionInfo.contactPntAWorld - pCollisionInfo.contactPntBWorld;
-	vec3 impulseDirectionBWorld = - impulseDirectionAWorld;
-
-	pCollisionInfo.impulseDirectionOnALocal = objA->getTransform().inversed() * impulseDirectionAWorld;
-	pCollisionInfo.impulseDirectionOnBLocal = objB->getTransform().inversed() * impulseDirectionBWorld;
-	pCollisionInfo.impulseDirectionOnALocal.normalize();
-	pCollisionInfo.impulseDirectionOnBLocal.normalize();
+	pCollisionInfo.closestPntALocal = closestPntA;
+	pCollisionInfo.closestPntBLocal = closestPntB;
+	pCollisionInfo.closestPntAWorld = objA->getTransform() * closestPntA;
+	pCollisionInfo.closestPntBWorld = objB->getTransform() * closestPntB;
 
 	if ( penetrationDepth <= 0 )
 		pCollisionInfo.bIntersect = false;

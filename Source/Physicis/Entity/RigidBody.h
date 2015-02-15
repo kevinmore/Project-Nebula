@@ -163,6 +163,9 @@ public:
 	/// Sets the position and rotation of the rigid body, in world space.
 	void setPositionAndRotation(const vec3& position, const quat& rotation);
 
+	/// Move the rigid body by a certain offset
+	inline void moveBy(const vec3& offset) { setPosition(getPosition() + offset); }
+
 	//
 	// VELOCITY ACCESS.
 	//
@@ -182,8 +185,11 @@ public:
 	/// This activates the body and its simulation island if it is inactive.
 	inline void	setAngularVelocity(const vec3& newVel) { m_angularVelocity = newVel; }
 
+	/// Gets the velocity of point p on the rigid body in local space.
+	inline vec3 getPointVelocityLocal(const vec3& p) const { return m_linearVelocity + vec3::crossProduct(m_angularVelocity, p - m_centerOfMass); }
+
 	/// Gets the velocity of point p on the rigid body in world space.
-	inline vec3 getPointVelocity(const vec3& p) const {	return m_linearVelocity + vec3::crossProduct(m_angularVelocity, p - m_centerOfMass); }
+	inline vec3 getPointVelocityWorld(const vec3& p) const { return m_linearVelocity + vec3::crossProduct(m_angularVelocity, p - getCenterOfMassInWorld()); }
 
 	//
 	// IMPULSE APPLICATION.

@@ -9,6 +9,9 @@ public:
 	Transform(const Transform& other);
 	Transform(const vec3& translation, const quat& rotation, const vec3& scale = Vector3::UNIT_SCALE);
 
+	/// Static utility functions
+	static vec3 computeLocalPosition(const vec3& worldPos, const Transform& transform);
+
 	/// Position Access
 	inline const vec3& getPosition() const { return m_position; }
 	inline void setPosition(const vec3& pos) { m_position = pos; } 

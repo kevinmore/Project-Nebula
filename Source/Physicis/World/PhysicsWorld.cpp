@@ -9,6 +9,9 @@
 #include <Physicis/Entity/RigidBody.h>
 #include <Primitives/GameObject.h>
 #include <Scene/IModel.h>
+#include <Utility/Math.h>
+
+using namespace Math;
 
 PhysicsWorld::PhysicsWorld(const PhysicsWorldConfig& config)
 	: m_config(config),
@@ -117,20 +120,20 @@ void PhysicsWorld::handleCollisions()
 	{
 		for (int j = i + 1; j < m_colliderList.size(); ++j)
 		{
-			ICollider* c1 = m_colliderList[i];
-			ICollider* c2 = m_colliderList[j];
+			ICollider* cA = m_colliderList[i];
+			ICollider* cB = m_colliderList[j];
 			
 			// mark the bounding volume as green
-			c1->setColor(Qt::green);
-			c2->setColor(Qt::green);
+			cA->setColor(Qt::green);
+			cB->setColor(Qt::green);
 
-			BroadPhaseCollisionFeedback result = c1->onBroadPhase(c2);
+			BroadPhaseCollisionFeedback result = cA->onBroadPhase(cB);
 
 			if (result.isColliding())
 			{
 				// mark the bounding volume as red
-				c1->setColor(Qt::red);
-				c2->setColor(Qt::red);
+				cA->setColor(Qt::red);
+				cB->setColor(Qt::red);
 
 // 				RigidBody* rb1 = c1->getRigidBody();
 // 				RigidBody* rb2 = c2->getRigidBody();
@@ -149,32 +152,43 @@ void PhysicsWorld::handleCollisions()
 // 				rb2->setLinearVelocity(v2Prime);
 
 				// go to narrow phase
-				NarrowPhaseCollisionFeedback n;
+				NarrowPhaseCollisionFeedback collisionInfo;
 				GJKSolver solver;
-				ModelPtr model = c1->getRigidBody()->gameObject()->getComponent("Model").dynamicCast<IModel>();
-				ConvexHullColliderPtr ch1 = model->getConvexHullCollider();
+				ModelPtr model = cA->getRigidBody()->gameObject()->getComponent("Model").dynamicCast<IModel>();
+				ConvexHullColliderPtr chA = model->getConvexHullCollider();
 
-				model = c2->getRigidBody()->gameObject()->getComponent("Model").dynamicCast<IModel>();
-				ConvexHullColliderPtr ch2 = model->getConvexHullCollider();
+				model = cB->getRigidBody()->gameObject()->getComponent("Model").dynamicCast<IModel>();
+				ConvexHullColliderPtr chB = model->getConvexHullCollider();
 
-				if (solver.checkCollision(ch1.data(), ch2.data(), n, true))
+				if (solver.checkCollision(chA.data(), chB.data(), collisionInfo, true))
 				{
-					//qDebug() << "normal vector =" << n.impulseDirectionOnALocal;
-// 					qDebug() << "contact point" << ch1->gameObject()->objectName() << n.contactPntALocal;
-// 					qDebug() << "contact point" << ch2->gameObject()->objectName() << n.contactPntBLocal;
+// 					qDebug() << cA->gameObject()->objectName() << "Point A" << collisionInfo.closestPntAWorld;
+// 					qDebug() << cB->gameObject()->objectName() << "Point B" << collisionInfo.closestPntBWorld;
+// 					qDebug() << "distance" << (collisionInfo.closestPntAWorld - collisionInfo.closestPntBWorld).length();
+// 					qDebug() << "depth=" << collisionInfo.penetrationDepth;
 
-					qDebug() << "contact point" << ch1->gameObject()->objectName() << n.contactPntAWorld;
-					qDebug() << "contact point" << ch2->gameObject()->objectName() << n.contactPntBWorld;
-					qDebug() << "contact normal" << (n.contactPntAWorld - n.contactPntBWorld).normalized();
-					RigidBody* rb1 = c1->getRigidBody();
-					RigidBody* rb2 = c2->getRigidBody();
-					if (rb1->getMotionType() != RigidBody::MOTION_FIXED)
+					RigidBody* bodyA = cA->getRigidBody();
+					RigidBody* bodyB = cB->getRigidBody();
+
+					// separate the two objects by the penetration depth
+					if (collisionInfo.penetrationDepth > 0.0f)
 					{
-						rb1->applyPointImpulse(-(n.contactPntAWorld - n.contactPntBWorld).normalized(), n.contactPntAWorld);
+						vec3 A2B = (bodyB->getPosition() - bodyA->getPosition()).normalized();
+						float offset = 0.5 * collisionInfo.penetrationDepth;
+						bodyA->moveBy(-offset * A2B);
+						bodyB->moveBy(offset * A2B);
 					}
-					if (rb2->getMotionType() != RigidBody::MOTION_FIXED)
+					
+
+					float impuseMagnitude = computeContactImpulseMagnitude(&collisionInfo);
+					qDebug() << impuseMagnitude;
+					if (bodyA->getMotionType() != RigidBody::MOTION_FIXED)
 					{
-						rb2->applyPointImpulse(-(n.contactPntBWorld - n.contactPntAWorld).normalized(), n.contactPntBWorld);
+						bodyA->applyPointImpulse(-impuseMagnitude * collisionInfo.contactNormalWorld, collisionInfo.closestPntAWorld);
+					}
+					if (bodyB->getMotionType() != RigidBody::MOTION_FIXED)
+					{
+						bodyB->applyPointImpulse(impuseMagnitude * collisionInfo.contactNormalWorld, collisionInfo.closestPntBWorld);
 					}
 				}
 			}
@@ -249,4 +263,45 @@ void PhysicsWorld::reset()
 	lock();
 	m_entityList.clear();
 	m_colliderList.clear();
+}
+
+float PhysicsWorld::computeContactImpulseMagnitude( const NarrowPhaseCollisionFeedback* pCollisionInfo )
+{
+	RigidBody* A = pCollisionInfo->pObjA->getRigidBody();
+	RigidBody* B = pCollisionInfo->pObjB->getRigidBody();
+
+	vec3 n = pCollisionInfo->contactNormalWorld;
+
+// 	vec3 linearA = A->getLinearVelocity();
+// 	vec3 angularA = A->getAngularVelocity();
+// 	vec3 comA = A->getCenterOfMassInWorld();
+// 	vec3 offsetA = pCollisionInfo->closestPntAWorld - comA;
+// 	vec3 crossA = vec3::crossProduct(angularA, offsetA);
+// 
+// 	vec3 linearB = B->getLinearVelocity();
+// 	vec3 angularB = B->getAngularVelocity();
+// 	vec3 comB = B->getCenterOfMassInWorld();
+// 	vec3 offsetB = pCollisionInfo->closestPntBWorld - comB;
+// 	vec3 crossB = vec3::crossProduct(angularB, offsetB);
+
+	vec3 pointVelocityA = A->getPointVelocityWorld(pCollisionInfo->closestPntAWorld);
+	vec3 pointVelocityB = B->getPointVelocityWorld(pCollisionInfo->closestPntBWorld);
+	float Vrel = vec3::dotProduct(n, pointVelocityA - pointVelocityB);
+
+	// check if Vrel == 0
+	if (Vrel == 0.0f) return 0.0f;
+
+	float k = -(1 + 0.5*(A->getRestitution() + B->getRestitution()));
+
+	float massInvSum = A->getMassInv() + B->getMassInv();
+	vec3 rA = pCollisionInfo->closestPntAWorld - A->getCenterOfMassInWorld();
+	vec3 rB = pCollisionInfo->closestPntBWorld - B->getCenterOfMassInWorld();
+
+	float componentA = vec3::dotProduct(n, vec3::crossProduct(Math::Vector3::setMul(vec3::crossProduct(rA, n), A->getInertiaInvWorld()), rA));
+	float componentB = vec3::dotProduct(n, vec3::crossProduct(Math::Vector3::setMul(vec3::crossProduct(rB, n), B->getInertiaInvWorld()), rB));
+		
+	float denominator = massInvSum + componentA + componentB;
+	
+	
+	return k * Vrel / denominator;
 }

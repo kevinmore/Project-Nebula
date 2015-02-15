@@ -3,6 +3,7 @@
 #include "PhysicsWorldObject.h"
 #include "Physicis/Collision/Collider/ICollider.h"
 
+class NarrowPhaseCollisionFeedback;
 class PhysicsWorld
 {
 public:
@@ -26,6 +27,9 @@ public:
 	int entitiesCount();
 
 	void reset();
+
+	float computeContactImpulseMagnitude(const NarrowPhaseCollisionFeedback* pCollisionInfo);
+
 
 private:
 	PhysicsWorldConfig m_config;
