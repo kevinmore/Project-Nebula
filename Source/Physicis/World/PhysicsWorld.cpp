@@ -171,16 +171,14 @@ void PhysicsWorld::handleCollisions()
 				vec3 n = collisionInfo.contactNormalWorld;
 
 				// separate the two objects by the penetration depth
-				if (collisionInfo.penetrationDepth > 0.0f)
-				{
-					float offset = 0.5 * collisionInfo.penetrationDepth;
-					bodyA->moveBy(-offset * A2B);
-					bodyB->moveBy(offset * A2B);
-				}
+// 				float offset = 0.5 * collisionInfo.penetrationDepth;
+// 				bodyA->moveBy(-offset * A2B);
+// 				bodyB->moveBy(offset * A2B);
 
 				float impuseMagnitude = computeContactImpulseMagnitude(&collisionInfo);
 				qDebug() << cA->getRigidBody()->gameObject()->objectName() <<
 					     cB->getRigidBody()->gameObject()->objectName() << impuseMagnitude;
+				
 
 				// apply impulse based on the direction
 				if (vec3::dotProduct(A2B, n) > 0)
@@ -304,23 +302,33 @@ float PhysicsWorld::computeContactImpulseMagnitude( const NarrowPhaseCollisionFe
 
 	vec3 pointVelocityA = A->getPointVelocityWorld(pCollisionInfo->closestPntAWorld);
 	vec3 pointVelocityB = B->getPointVelocityWorld(pCollisionInfo->closestPntBWorld);
-	float Vrel = vec3::dotProduct(n, pointVelocityA - pointVelocityB);
-	qDebug() << "point A =" << pCollisionInfo->closestPntAWorld;
-	qDebug() << "point B =" << pCollisionInfo->closestPntBWorld;
+	float Vrel = vec3::dotProduct(n, pointVelocityA + pointVelocityB);
+
 	// check if Vrel == 0
-	if (Vrel == 0.0f) return 0.0f;
+	if (qFuzzyIsNull(Vrel)) return 0.0f;
 
 	float k = -(1 + 0.5*(A->getRestitution() + B->getRestitution()));
+	float massInvA = A->getMotionType() == RigidBody::MOTION_FIXED ?
+		             0.0f : A->getMassInv();
+	float massInvB = B->getMotionType() == RigidBody::MOTION_FIXED ?
+					 0.0f : B->getMassInv();
 
-	float massInvSum = A->getMassInv() + B->getMassInv();
+	float massInvSum = massInvA + massInvB;
 	vec3 rA = pCollisionInfo->closestPntAWorld - A->getCenterOfMassInWorld();
 	vec3 rB = pCollisionInfo->closestPntBWorld - B->getCenterOfMassInWorld();
-
-	float componentA = vec3::dotProduct(n, vec3::crossProduct(Math::Vector3::setMul(vec3::crossProduct(rA, n), A->getInertiaInvWorld()), rA));
-	float componentB = vec3::dotProduct(n, vec3::crossProduct(Math::Vector3::setMul(vec3::crossProduct(rB, n), B->getInertiaInvWorld()), rB));
-		
-	float denominator = massInvSum + componentA + componentB;
 	
+	mat3 IAInv = A->getInertiaInvWorld();
+	mat3 IBInv = B->getInertiaInvWorld();
+	vec3 rACrossN = vec3::crossProduct(rA, n);
+	vec3 rBCrossN = vec3::crossProduct(rB, n);
+
+	float termA = A->getMotionType() == RigidBody::MOTION_FIXED ? 0.0f :
+		          vec3::dotProduct(n, vec3::crossProduct(Math::Vector3::setMul(rACrossN, IAInv), rA));
+
+	float termB = B->getMotionType() == RigidBody::MOTION_FIXED ? 0.0f :
+		          vec3::dotProduct(n, vec3::crossProduct(Math::Vector3::setMul(rBCrossN, IBInv), rB));
+
+	float denominator = massInvSum + termA + termB;
 	
 	return qAbs(k * Vrel / denominator);
 }

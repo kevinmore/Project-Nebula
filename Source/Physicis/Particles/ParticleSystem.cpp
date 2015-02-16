@@ -18,7 +18,7 @@ ParticleSystem::~ParticleSystem()
 
 void ParticleSystem::initParticleSystem()
 {
-	Q_ASSERT(initializeOpenGLFunctions());	
+	assert(initializeOpenGLFunctions());	
 
 	installShaders();
 

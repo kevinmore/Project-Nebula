@@ -1,6 +1,7 @@
 #include "SphereRigidBody.h"
 #include <Physicis/World/PhysicsWorld.h>
 #include <Physicis/World/PhysicsWorldObject.inl>
+using namespace Math;
 
 SphereRigidBody::SphereRigidBody(const vec3& position, const quat& rotation)
 	: RigidBody(position, rotation),
@@ -8,9 +9,8 @@ SphereRigidBody::SphereRigidBody(const vec3& position, const quat& rotation)
 {
 	m_MotionType = RigidBody::MOTION_SPHERE_INERTIA;
 
-	Math::Matrix3::setSphereInertiaTensor(m_inertiaTensor, m_radius, m_mass);
-	m_inertiaTensorInv = m_inertiaTensor;
-	Math::Matrix3::setInverse(m_inertiaTensorInv);
+	Matrix3::setSphereInertiaTensor(m_inertiaTensor, m_radius, m_mass);
+	m_inertiaTensorInv = Matrix3::inversed(m_inertiaTensor);
 }
 
 
@@ -30,10 +30,10 @@ void SphereRigidBody::setMass( float m )
 void SphereRigidBody::setMassInv( float mInv )
 {
 	m_massInv = mInv;
+	m_mass = 1.0f / mInv;
 
-	Math::Matrix3::setSphereInertiaTensor(m_inertiaTensor, m_radius, m_mass);
-	m_inertiaTensorInv = m_inertiaTensor;
-	Math::Matrix3::setInverse(m_inertiaTensorInv);
+	Matrix3::setSphereInertiaTensor(m_inertiaTensor, m_radius, m_mass);
+	m_inertiaTensorInv = Matrix3::inversed(m_inertiaTensor);
 }
 
 
@@ -41,9 +41,8 @@ void SphereRigidBody::setSphereRadius( float newRadius )
 {
 	// re compute the inertia tensor
 	m_radius = newRadius;
-	Math::Matrix3::setSphereInertiaTensor(m_inertiaTensor, newRadius, m_mass);
-	m_inertiaTensorInv = m_inertiaTensor;
-	Math::Matrix3::setInverse(m_inertiaTensorInv);
+	Matrix3::setSphereInertiaTensor(m_inertiaTensor, m_radius, m_mass);
+	m_inertiaTensorInv = Matrix3::inversed(m_inertiaTensor);
 }
 
 mat3 SphereRigidBody::getInertiaLocal() const
@@ -55,8 +54,7 @@ void SphereRigidBody::setInertiaLocal( const mat3& inertia )
 {
 	m_inertiaTensor = inertia;
 
-	m_inertiaTensorInv = inertia;
-	Math::Matrix3::setInverse(m_inertiaTensorInv);
+	m_inertiaTensorInv = Matrix3::inversed(m_inertiaTensor);
 }
 
 mat3 SphereRigidBody::getInertiaInvLocal() const
@@ -67,15 +65,13 @@ mat3 SphereRigidBody::getInertiaInvLocal() const
 void SphereRigidBody::setInertiaInvLocal( const mat3& inertiaInv )
 {
 	m_inertiaTensorInv = inertiaInv;
+	m_inertiaTensor = Matrix3::inversed(m_inertiaTensorInv);
 }
 
 
 mat3 SphereRigidBody::getInertiaWorld() const
 {
-	mat3 temp = m_inertiaTensorInvWorld;
-	Math::Matrix3::setInverse(temp);
-
-	return temp;
+	return Matrix3::inversed(m_inertiaTensorInvWorld);
 }
 
 mat3 SphereRigidBody::getInertiaInvWorld() const
@@ -91,17 +87,17 @@ void SphereRigidBody::applyPointImpulse( const vec3& imp, const vec3& p )
 	m_linearVelocity += m_massInv * imp;
 	vec3 angularMoment = vec3::crossProduct(p - m_centerOfMass, imp);
 
-	vec3 dv = Vector3::setMul(angularMoment, m_inertiaTensorInvWorld);
+	vec3 dw = Vector3::setMul(angularMoment, m_inertiaTensorInvWorld);
 
-	m_angularVelocity += dv;
+	m_angularVelocity += dw;
 }
 
 void SphereRigidBody::applyAngularImpulse( const vec3& imp )
 {
 	// PSEUDOCODE IS m_angularVelocity += m_worldInertiaInv * imp;
-	vec3 dv = Vector3::setMul(imp, m_inertiaTensorInvWorld);
+	vec3 dw = Vector3::setMul(imp, m_inertiaTensorInvWorld);
 	
-	m_angularVelocity += dv;
+	m_angularVelocity += dw;
 }
 
 void SphereRigidBody::applyForce( const float deltaTime, const vec3& force )
@@ -125,7 +121,8 @@ void SphereRigidBody::update( const float dt )
 	RigidBody::update(dt);
 
 	// update the angular properties
-	m_transform.setRotation(m_transform.getEulerAngles() + m_angularVelocity * dt);
+	vec3 angularVelocityInDegrees(qRadiansToDegrees(m_angularVelocity.x()), qRadiansToDegrees(m_angularVelocity.y()), qRadiansToDegrees(m_angularVelocity.z()));
+	m_transform.setRotation(m_transform.getEulerAngles() + angularVelocityInDegrees * dt);
 
 	mat3 rotationMatrix = m_transform.getRotationMatrix();
 	m_inertiaTensorInvWorld =  rotationMatrix * m_inertiaTensorInv * rotationMatrix.transposed();

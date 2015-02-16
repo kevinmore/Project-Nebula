@@ -14,7 +14,7 @@ bool GJKSolver::generateCollisionInfo( const ICollider* objA, const ICollider* o
 	float dist = sqrt(distSqrd);
 	pCollisionInfo.proximityDistance = dist;
 
-	Q_ASSERT(dist > 0.0);
+	assert(dist > 0.0);
 
 	vec3 n = v.normalized();
 
@@ -45,6 +45,8 @@ bool GJKSolver::generateCollisionInfo( const ICollider* objA, const ICollider* o
 
 bool GJKSolver::checkCollision( ICollider* objA, ICollider* objB, NarrowPhaseCollisionFeedback& pCollisionInfo, bool bProximity /*= false*/ )
 {
+	pCollisionInfo.pObjA = objA;
+	pCollisionInfo.pObjB = objB;
 	vec3 suppPntA; // support point from object A
 	vec3 suppPntB; // support point from object B
 	vec3 closestPntA;
@@ -160,5 +162,5 @@ bool GJKSolver::checkCollision( ICollider* objA, ICollider* objB, NarrowPhaseCol
 	// TODO: Need to invesgate hybrid method metioned in Geno's book.
 	// TODO: Need to use GJK to compute the shallow penetration depth.
 
-	return m_EPASolver.computePenetrationDepthAndContactPoints(simplex, objA, objB, v, pCollisionInfo);
+	return m_EPASolver.computePenetrationDepthAndContactPoints(simplex, pCollisionInfo);
 }

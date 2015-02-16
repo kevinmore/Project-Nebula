@@ -13,13 +13,13 @@ public:
 
 	int getIndexVertex(int i) const 
 	{ 
-		Q_ASSERT(0 <= i && i < 3);
+		assert(0 <= i && i < 3);
 		return m_indicesVertex[i]; 
 	}
 
 	Edge* getEdge(int i)
 	{
-		Q_ASSERT(0 <= i && i < 3);
+		assert(0 <= i && i < 3);
 		return m_edges[i];
 	}
 
@@ -52,7 +52,7 @@ private:
 	float m_distSqrd; // = m_closestPointToOrigin.LenghSqr()
 };
 
-class EPATriangleComparison 
+class TriangleComparison 
 {
 public:
 	bool operator() (const Triangle* pTriA, const Triangle* pTriB) 

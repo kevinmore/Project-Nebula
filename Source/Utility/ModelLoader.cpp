@@ -8,7 +8,7 @@ ModelLoader::ModelLoader(Scene* scene)
 {
 	m_scene = scene;
 	m_effect = ShadingTechniquePtr();
-	Q_ASSERT(initializeOpenGLFunctions());
+	assert(initializeOpenGLFunctions());
 }
 
 
@@ -385,7 +385,7 @@ MeshData ModelLoader::loadMesh(unsigned int index, unsigned int numVertices, uns
 
 MaterialData ModelLoader::loadMaterial(unsigned int index, const aiMaterial* material)
 {
-	Q_ASSERT(material != nullptr);
+	assert(material != nullptr);
 
 	MaterialData data;
 	data.name = m_fileName + "/material_" + QString::number(index);
@@ -485,7 +485,7 @@ MaterialData ModelLoader::loadMaterial(unsigned int index, const aiMaterial* mat
 
 TextureData ModelLoader::loadTexture(const aiMaterial* material)
 {
-	Q_ASSERT(material);
+	assert(material);
 
 	// Extract the directory part from the file name
 	QString absPath = QFileInfo(m_fileName).absolutePath();

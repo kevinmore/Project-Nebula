@@ -17,10 +17,9 @@ Triangle::Triangle( int indexVertex0, int indexVertex1, int indexVertex2 )
 	m_indicesVertex[1] = indexVertex1;
 	m_indicesVertex[2] = indexVertex2;
 
-	for ( unsigned int i = 0; i < 3; ++i )
+	for ( uint i = 0; i < 3; ++i )
 		m_edges[i] = new Edge(this, i, m_indicesVertex[i], m_indicesVertex[(i+1) % 3]);
 }
-
 
 Triangle::~Triangle()
 {
@@ -83,9 +82,9 @@ vec3 Triangle::getClosestPointToOriginInSupportPntSpace( const QVector<vec3>& su
 // edge->m_pPairEdge belongs to this triangle. 
 bool Triangle::doSilhouette(const vec3& w, Edge* edge, Polytope& Polytope)
 {
-	Q_ASSERT(edge != NULL);
-	Q_ASSERT(edge->m_pPairEdge != NULL);
-	Q_ASSERT(edge->m_pTriangle != NULL);
+	assert(edge != NULL);
+	assert(edge->m_pPairEdge != NULL);
+	assert(edge->m_pTriangle != NULL);
 
 	if ( m_bObsolete )
 		return true;
@@ -103,14 +102,14 @@ bool Triangle::doSilhouette(const vec3& w, Edge* edge, Polytope& Polytope)
 		m_bObsolete = true;
 		Edge* myEdge = edge->m_pPairEdge;
 
-		Q_ASSERT(m_edges[myEdge->m_indexLocal] == myEdge);
+		assert(m_edges[myEdge->m_indexLocal] == myEdge);
 
 		int indexNextEdgeCCW = (myEdge->m_indexLocal + 1) % 3;
-		Q_ASSERT(0 <= indexNextEdgeCCW && indexNextEdgeCCW < 3);
+		assert(0 <= indexNextEdgeCCW && indexNextEdgeCCW < 3);
 		m_edges[indexNextEdgeCCW]->m_pPairEdge->m_pTriangle->doSilhouette(w, m_edges[indexNextEdgeCCW], Polytope);
 
 		indexNextEdgeCCW = (indexNextEdgeCCW + 1) % 3;
-		Q_ASSERT(0 <= indexNextEdgeCCW && indexNextEdgeCCW < 3);
+		assert(0 <= indexNextEdgeCCW && indexNextEdgeCCW < 3);
 		m_edges[indexNextEdgeCCW]->m_pPairEdge->m_pTriangle->doSilhouette(w, m_edges[indexNextEdgeCCW], Polytope);
 	}
 

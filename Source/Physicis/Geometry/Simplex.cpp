@@ -7,9 +7,9 @@ Simplex::Simplex()
 
 int Simplex::getPoints( QVector<vec3>& suppPointsA, QVector<vec3>& suppPointsB, QVector<vec3>& points ) const
 {
-	Q_ASSERT(suppPointsA.size() == 0 );
-	Q_ASSERT(suppPointsB.size() == 0 );
-	Q_ASSERT(points.size() == 0 );
+	assert(suppPointsA.size() == 0 );
+	assert(suppPointsB.size() == 0 );
+	assert(points.size() == 0 );
 
 	int count = 0;
 	int i;
@@ -31,7 +31,7 @@ int Simplex::getPoints( QVector<vec3>& suppPointsA, QVector<vec3>& suppPointsB, 
 
 void Simplex::addPoint( const vec3& point, const vec3& suppPointA, const vec3& suppPointB )
 {
-	Q_ASSERT(!isFull());
+	assert(!isFull());
 
 	m_lastFound = 0;
 	m_lastBit = 0x1;
@@ -44,7 +44,7 @@ void Simplex::addPoint( const vec3& point, const vec3& suppPointA, const vec3& s
 		m_lastBit <<= 1;
 	}
 
-	Q_ASSERT(m_lastFound >= 0 && m_lastFound < 4);
+	assert(m_lastFound >= 0 && m_lastFound < 4);
 
 	// Add the point into the simplex
 	m_Points[m_lastFound] = point;
@@ -105,7 +105,7 @@ void Simplex::closestPointAandB( vec3& pA, vec3& pB ) const
 		}
 	}
 
-	Q_ASSERT(sum > 0.0);
+	assert(sum > 0.0);
 	float factor = 1.0f / sum;
 	pA *= factor;
 	pB *= factor;
@@ -140,7 +140,7 @@ bool Simplex::runJohnsonAlgorithm( vec3& v )
 				}
 			}
 
-			Q_ASSERT(sum > 0.0);
+			assert(sum > 0.0);
 
 			v = v / sum;
 			return true;

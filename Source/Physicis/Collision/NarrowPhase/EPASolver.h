@@ -10,10 +10,9 @@ public:
 	EPASolver(){}
 	~EPASolver(){}
 
-	bool computePenetrationDepthAndContactPoints(const Simplex& simplex, ICollider* objA, ICollider* objB, 
-		vec3& v, NarrowPhaseCollisionFeedback& pCollisionInfo, int maxIteration = 30);
+	bool computePenetrationDepthAndContactPoints(const Simplex& simplex, NarrowPhaseCollisionFeedback& pCollisionInfo, int maxIteration = 30);
 
 private:
-	Polytope m_Polytope;
+	Polytope m_polytope;
 };
 

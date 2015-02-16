@@ -9,7 +9,7 @@
 
 using namespace Math;
 
-bool EPASolver::computePenetrationDepthAndContactPoints( const Simplex& simplex, ICollider* objA, ICollider* objB, vec3& v, NarrowPhaseCollisionFeedback& pCollisionInfo, int maxIteration /*= 30*/ )
+bool EPASolver::computePenetrationDepthAndContactPoints( const Simplex& simplex, NarrowPhaseCollisionFeedback& pCollisionInfo, int maxIteration /*= 30*/ )
 {
 	QVector<vec3> suppPointsA;       
 	QVector<vec3> suppPointsB;    
@@ -23,8 +23,9 @@ bool EPASolver::computePenetrationDepthAndContactPoints( const Simplex& simplex,
 	pCollisionInfo.bIntersect = false;
 	pCollisionInfo.penetrationDepth = 0;
 	pCollisionInfo.proximityDistance = 0;
-	pCollisionInfo.pObjA = objA;
-	pCollisionInfo.pObjB = objB;
+
+	ICollider* objA = pCollisionInfo.pObjA;
+	ICollider* objB = pCollisionInfo.pObjB;
 
 	// transform a local position in objB space to local position in objA space
 	Transform transB2A = objA->getTransform().inversed() * objB->getTransform();
@@ -38,10 +39,10 @@ bool EPASolver::computePenetrationDepthAndContactPoints( const Simplex& simplex,
 	mat3 rotA2B = rotB.transposed() * rotA;
 
 	int numVertices = simplex.getPoints(suppPointsA, suppPointsB, points);
-	m_Polytope.clear();
+	m_polytope.clear();
 
-	Q_ASSERT(numVertices == points.size());
-	Q_ASSERT(m_Polytope.getTriangles().size() == 0);
+	assert(numVertices == points.size());
+	assert(m_polytope.getTriangles().size() == 0);
 
 	switch ( numVertices )
 	{
@@ -62,7 +63,7 @@ bool EPASolver::computePenetrationDepthAndContactPoints( const Simplex& simplex,
 			vec3 w0 =  objA->getLocalSupportPoint(n) - transB2A * objB->getLocalSupportPoint(Vector3::setMul(-n, rotA2B));
 			vec3 w1 =  objA->getLocalSupportPoint(-n) - transB2A * objB->getLocalSupportPoint(Vector3::setMul(n, rotA2B));
 
-			if ( !m_Polytope.addHexahedron(points[0], points[1], points[2], w0, w1) )
+			if ( !m_polytope.addHexahedron(points[0], points[1], points[2], w0, w1) )
 				return false;
 		}
 		break;
@@ -70,13 +71,13 @@ bool EPASolver::computePenetrationDepthAndContactPoints( const Simplex& simplex,
 	case 4:
 		{
 			// In this case, simplex computed from GJK is a tetrahedron. 
-			if ( !m_Polytope.addTetrahedron(points[0], points[1], points[2], points[3]) )
+			if ( !m_polytope.addTetrahedron(points[0], points[1], points[2], points[3]) )
 				return false;
 		}
 		break;
 	}
 
-	Q_ASSERT(m_Polytope.getVertices().size() > 0);
+	assert(m_polytope.getVertices().size() > 0);
 
 	// Now we can expand the polytope which contains the origin to get the penetration depth and contact points. 
 	float upperBound = FLT_MAX;
@@ -85,23 +86,22 @@ bool EPASolver::computePenetrationDepthAndContactPoints( const Simplex& simplex,
 	int numIter = 0;
 	while ( numIter < maxIteration )
 	{
-		Triangle* pClosestTriangle = m_Polytope.popAClosestTriangleToOriginFromHeap();
-		Q_ASSERT(pClosestTriangle != NULL);
-
-		v = pClosestTriangle->getClosestPoint();
+		Triangle* pClosestTriangle = m_polytope.popAClosestTriangleToOriginFromHeap();
+		vec3 v = pClosestTriangle->getClosestPoint().normalized();
 
 		vec3 supportPointA = objA->getLocalSupportPoint(v, objA->getMargin());
 		vec3 supportPointB = transB2A * objB->getLocalSupportPoint(Vector3::setMul(-v, rotA2B), objB->getMargin());
 
 		vec3 w = supportPointA - supportPointB;
 		// Compute upper and lower bounds
-		upperBound = qMin(upperBound, vec3::dotProduct(w, v.normalized()));
-		lowerBound = qMax(lowerBound, v.length());
+		upperBound = qMin(upperBound, vec3::dotProduct(w, v));
+		lowerBound = qMax(lowerBound, 1.0f); // 1 == v.length()
 
 		if ( upperBound - lowerBound < 1e-4 || numIter == maxIteration - 1 )
+		//if ( qFuzzyIsNull(upperBound - lowerBound) || numIter == maxIteration - 1 )
 		{
 			pCollisionInfo.bIntersect = true;
-			pCollisionInfo.contactNormalWorld = v.normalized();
+			pCollisionInfo.contactNormalWorld = v;
 			pCollisionInfo.penetrationDepth = 0.5f * (upperBound + lowerBound);
 
 			pCollisionInfo.closestPntALocal = pClosestTriangle->getClosestPointToOriginInSupportPntSpace(suppPointsA);
@@ -117,7 +117,7 @@ bool EPASolver::computePenetrationDepthAndContactPoints( const Simplex& simplex,
 			break;
 		}
 
-		if ( !m_Polytope.expandPolytopeWithNewPoint(w, pClosestTriangle) )
+		if ( !m_polytope.expandPolytopeWithNewPoint(w, pClosestTriangle) )
 		{
 			pCollisionInfo.bIntersect = false;
 			return false;

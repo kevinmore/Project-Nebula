@@ -27,7 +27,7 @@ bool Skybox::init(const QString& PosXFilename,
 				  const QString& PosZFilename,
 				  const QString& NegZFilename)
 {
-	Q_ASSERT(initializeOpenGLFunctions());
+	assert(initializeOpenGLFunctions());
 
 	m_skyboxTechnique = SkyboxTechniquePtr(new SkyboxTechnique());
 	if (!m_skyboxTechnique->init()) 

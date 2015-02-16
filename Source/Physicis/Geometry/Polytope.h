@@ -25,7 +25,7 @@ public:
 
 private:
 	QVector<vec3> m_vertices; // array of vertices constructing this polytope. 	
-	QVector<Triangle*> m_triangles; // array of EPATriangle constructing this polytope. 
+	QVector<Triangle*> m_triangles; // array of Triangle constructing this polytope. 
 
 	QVector<int> m_silhouetteVertices;
 	QVector<Triangle*> m_silhouetteTriangles;

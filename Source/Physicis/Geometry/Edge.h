@@ -12,7 +12,7 @@ public:
 		: m_pTriangle(pTriangle),
 		  m_indexLocal(indexLocal)
 	{
-		Q_ASSERT(indexLocal >= 0 && indexLocal < 3);
+		assert(indexLocal >= 0 && indexLocal < 3);
 		m_indexVertex[0] = indexVertex0;
 		m_indexVertex[1] = indexVertex1;
 	}
@@ -26,7 +26,7 @@ public:
 
 	int getIndexVertex(int i)
 	{
-		Q_ASSERT( i == 0 || i == 1);
+		assert( i == 0 || i == 1);
 		return m_indexVertex[i];
 	}
 

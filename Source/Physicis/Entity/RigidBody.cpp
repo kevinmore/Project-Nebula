@@ -22,10 +22,6 @@ RigidBody::RigidBody(const vec3& position, const quat& rotation, QObject* parent
 	m_maxLinearVelocity = 200.0f;
 	m_maxAngularVelocity = 200.0f;
 	m_timeFactor = 1.0f;
-
-	m_inertiaTensor.setToIdentity();
-	m_inertiaTensorInv.setToIdentity();
-	Math::Matrix3::setInverse(m_inertiaTensorInv);
 }
 
 RigidBody::~RigidBody()

@@ -31,7 +31,7 @@ Scene::~Scene()
 
 void Scene::initialize()
 {
-	Q_ASSERT(initializeOpenGLFunctions());
+	assert(initializeOpenGLFunctions());
 
 	initPhysicsModule();
 
@@ -202,15 +202,13 @@ void Scene::resetToDefaultScene()
 	floorObject->attachComponent(floorBody);
 	m_physicsWorld->addEntity(floorBody.data());
 
-
-
 	GameObjectPtr go = createEmptyGameObject("Cube1");
 	go->setRotation(45, 45, 0);
 	LoaderThread loader(this, "../Resource/Models/Common/woodenbox.obj", go, m_sceneRootNode, false);
 	BoxRigidBodyPtr rb(new BoxRigidBody());
 	rb->setPosition(vec3(-1, 1, 0));
-	rb->setGravityFactor(0.0f);
-	rb->setLinearVelocity(vec3(1, 0, 0));
+	//rb->setGravityFactor(0.0f);
+	//rb->setLinearVelocity(vec3(1, 0, 0));
 	ModelPtr model = m_objectManager->getGameObject("Cube1")->getComponent("Model").dynamicCast<IModel>();
 	rb->attachCollider(model->getBoundingBox());
 	model->getConvexHullCollider()->setRigidBody(rb.data());
@@ -221,14 +219,26 @@ void Scene::resetToDefaultScene()
 	LoaderThread loader2(this, "../Resource/Models/Common/woodenbox.obj", go2, m_sceneRootNode, false);
 	BoxRigidBodyPtr rb2(new BoxRigidBody());
 	rb2->setPosition(vec3(1, 1, 0));
-	rb2->setGravityFactor(0.0f);
-	rb2->setLinearVelocity(vec3(-1, 0, 0));
-	rb2->setAngularVelocity(vec3(0, 100, 100));
+	//rb2->setGravityFactor(0.0f);
+	//rb2->setLinearVelocity(vec3(-1, 0, 0));
+	rb2->setAngularVelocity(vec3(0, 2, 0));
 	ModelPtr model2 = m_objectManager->getGameObject("Cube2")->getComponent("Model").dynamicCast<IModel>();
 	rb2->attachCollider(model2->getBoundingBox());
 	model2->getConvexHullCollider()->setRigidBody(rb2.data());
 	go2->attachComponent(rb2);
 	m_physicsWorld->addEntity(rb2.data());
+
+// 	GameObjectPtr go2 = createEmptyGameObject("Cube2");
+// 	LoaderThread loader2(this, "../Resource/Models/Common/woodenbox.obj", go2, m_sceneRootNode, false);
+// 	BoxRigidBodyPtr rb2(new BoxRigidBody());
+// 	rb2->setPosition(vec3(0, 1, 0));
+// 	rb2->setGravityFactor(0.0f);
+// 	rb2->applyPointImpulse(vec3(0, 0, -1), vec3(0.5, 1, 0.5));
+// 	ModelPtr model2 = m_objectManager->getGameObject("Cube2")->getComponent("Model").dynamicCast<IModel>();
+// 	rb2->attachCollider(model2->getBoundingBox());
+// 	model2->getConvexHullCollider()->setRigidBody(rb2.data());
+// 	go2->attachComponent(rb2);
+// 	m_physicsWorld->addEntity(rb2.data());
 }
 
 void Scene::showLoadModelDialog()

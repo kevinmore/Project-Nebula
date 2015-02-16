@@ -1,11 +1,12 @@
 #include "ShadowMapFBO.h"
+#include <assert.h>
 
 
 ShadowMapFBO::ShadowMapFBO()
 	: m_fbo(0),
 	  m_shadowMap(0)
 {
-	Q_ASSERT(initializeOpenGLFunctions());
+	assert(initializeOpenGLFunctions());
 }
 
 ShadowMapFBO::~ShadowMapFBO()

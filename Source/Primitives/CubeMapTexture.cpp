@@ -1,6 +1,7 @@
 #include "CubeMapTexture.h"
 #include <QDebug>
 #include <QPixmap>
+#include <assert.h>
 
 static const GLenum types[6] = 
 {  GL_TEXTURE_CUBE_MAP_POSITIVE_X,
@@ -33,7 +34,7 @@ CubemapTexture::~CubemapTexture()
 
 void CubemapTexture::init()
 {
-	Q_ASSERT(initializeOpenGLFunctions());
+	assert(initializeOpenGLFunctions());
 
 }
 

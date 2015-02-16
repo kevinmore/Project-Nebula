@@ -54,7 +54,7 @@ Material::~Material() {}
 
 void Material::init()
 {
-	Q_ASSERT(initializeOpenGLFunctions());
+	assert(initializeOpenGLFunctions());
 }
 
 void Material::bind()

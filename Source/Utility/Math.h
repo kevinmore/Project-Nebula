@@ -18,7 +18,7 @@ namespace Math
 			if (i > 2) 
 				return vec3(0, 0, 0);
 			else
-				return vec3(m.m[0][i], m.m[1][i], m.m[2][i]);
+				return vec3(m(0, i), m(1, i), m(2, i));
 		}
 
 		static vec3 getRow(const mat3& m, uint i)
@@ -26,7 +26,7 @@ namespace Math
 			if (i > 2) 
 				return vec3(0, 0, 0);
 			else
-				return vec3(m.m[i][0], m.m[i][1], m.m[i][2]);
+				return vec3(m(i, 0), m(i, 1), m(i, 2));
 		}
 
 		/**
@@ -35,22 +35,29 @@ namespace Math
 		static mat3 computeRotationMatrix(const vec3& eulerAngles)
 		{
 			mat3 rotX, rotY, rotZ;
-			rotX.m[1][1] =  qCos(eulerAngles.x());
-			rotX.m[1][2] = -qSin(eulerAngles.x());
-			rotX.m[2][1] =  qSin(eulerAngles.x());
-			rotX.m[2][2] =  qCos(eulerAngles.x());
+			rotX.fill(0.0f);
+			rotY.fill(0.0f);
+			rotZ.fill(0.0f);
 
-			rotY.m[0][0] =  qCos(eulerAngles.y());
-			rotY.m[0][2] =  qSin(eulerAngles.y());
-			rotY.m[2][0] = -qSin(eulerAngles.y());
-			rotY.m[2][2] =  qCos(eulerAngles.y());
+			rotX(0, 0) = 1.0f;
+			rotX(1, 1) =  qCos(eulerAngles.x());
+			rotX(1, 2) = -qSin(eulerAngles.x());
+			rotX(2, 1) =  qSin(eulerAngles.x());
+			rotX(2, 2) =  qCos(eulerAngles.x());
 
-			rotZ.m[0][0] =  qCos(eulerAngles.z());
-			rotZ.m[0][1] = -qSin(eulerAngles.z());
-			rotZ.m[1][0] =  qSin(eulerAngles.z());
-			rotZ.m[1][1] =  qCos(eulerAngles.z());
+			rotY(1, 1) = 1.0f;
+			rotY(0, 0) =  qCos(eulerAngles.y());
+			rotY(0, 2) =  qSin(eulerAngles.y());
+			rotY(2, 0) = -qSin(eulerAngles.y());
+			rotY(2, 2) =  qCos(eulerAngles.y());
 
-			return rotX * rotY * rotZ;
+			rotZ(2, 2) = 1.0f;
+			rotZ(0, 0) =  qCos(eulerAngles.z());
+			rotZ(0, 1) = -qSin(eulerAngles.z());
+			rotZ(1, 0) =  qSin(eulerAngles.z());
+			rotZ(1, 1) =  qCos(eulerAngles.z());
+
+			return rotZ * rotY * rotX;
 		}
 
 		/**
@@ -59,16 +66,30 @@ namespace Math
         static mat3 computeRotationMatrix(const quat &q)
         {
 			vec4 v = q.toVector4D();
+			float q0 = v.w();
+			float q1 = v.x();
+			float q2 = v.y();
+			float q3 = v.z();
 			mat3 m;
-			m.m[0][0] = 1 - (2*v.y()*v.y() + 2*v.z()*v.z());
-			m.m[0][1] = 2*v.x()*v.y() + 2*v.z()*v.w();
-			m.m[0][2] = 2*v.x()*v.z() - 2*v.y()*v.w();
-			m.m[1][0] = 2*v.x()*v.y() - 2*v.z()*v.w();
-			m.m[1][1] = 1 - (2*v.x()*v.x()  + 2*v.z()*v.z());
-			m.m[1][2] = 2*v.y()*v.z() + 2*v.x()*v.w();
-			m.m[2][0] = 2*v.x()*v.z() + 2*v.y()*v.w();
-			m.m[2][1] = 2*v.y()*v.z() - 2*v.x()*v.w();
-			m.m[2][2] = 1 - (2*v.x()*v.x()  + 2*v.y()*v.y());
+// 			m(0, 0) = 1 - (2*v.y()*v.y() + 2*v.z()*v.z());
+// 			m(0, 1) = 2*v.x()*v.y() + 2*v.z()*v.w();
+// 			m(0, 2) = 2*v.x()*v.z() - 2*v.y()*v.w();
+// 			m(1, 0) = 2*v.x()*v.y() - 2*v.z()*v.w();
+// 			m(1, 1) = 1 - (2*v.x()*v.x()  + 2*v.z()*v.z());
+// 			m(1, 2) = 2*v.y()*v.z() + 2*v.x()*v.w();
+// 			m(2, 0) = 2*v.x()*v.z() + 2*v.y()*v.w();
+// 			m(2, 1) = 2*v.y()*v.z() - 2*v.x()*v.w();
+// 			m(2, 2) = 1 - (2*v.x()*v.x()  + 2*v.y()*v.y());
+
+			m(0, 0) = 1 - 2*(q2*q2+q3*q3);
+			m(0, 1) = 2*(q1*q2 - q0*q3);
+			m(0, 2) = 2*(q0*q2+q1*q3);
+			m(1, 0) = 2*(q1*q2+q0*q3);
+			m(1, 1) = 1-2*(q1*q1+q3*q3);
+			m(1, 2) = 2*(q2*q3-q0*q1);
+			m(2, 0) = 2*(q1*q3-q0*q2);
+			m(2, 1) = 2*(q0*q1+q2*q3);
+			m(2, 2) = 1-2*(q1*q1+q2*q2);
 
 			return m;
         }
@@ -79,13 +100,16 @@ namespace Math
         static void setInertiaTensorCoeffs(mat3& matIn, float ix, float iy, float iz,
             float ixy=0, float ixz=0, float iyz=0)
         {
-			matIn.m[0][0] = ix;
-			matIn.m[1][1] = iy;
-			matIn.m[2][2] = iz;
+			matIn(0, 0) = ix;
+			matIn(1, 1) = iy;
+			matIn(2, 2) = iz;
 
-			matIn.m[0][1] = matIn.m[1][0] = -ixy;
-			matIn.m[0][2] = matIn.m[2][0] = -ixz;
-			matIn.m[0][3] = matIn.m[3][0] = -iyz;
+			matIn(0, 1) = -ixy;
+			matIn(1, 0) = -ixy;
+			matIn(0, 2) = -ixz;
+		    matIn(2, 0) = -ixz;
+			matIn(1, 2) = -iyz;
+			matIn(2, 1) = -iyz;
         }
 
 		/**
@@ -123,39 +147,51 @@ namespace Math
 										  0.4f * mass * square);
         }
 
-		 /**
+		/**
          * Sets the matrix to be the inverse of the given matrix.
          *
          * @param m The matrix to invert and use to set this.
          */
-        static void setInverse(mat3 &m)
+        static mat3 inversed(const mat3 &m)
         {
-            float t4 = m.m[0][0]*m.m[1][1];
-            float t6 = m.m[0][0]*m.m[1][2];
-            float t8 = m.m[0][1]*m.m[1][0];
-            float t10 = m.m[0][2]*m.m[1][0];
-            float t12 = m.m[0][1]*m.m[2][0];
-            float t14 = m.m[0][2]*m.m[2][0];
+			float t4  = m(0, 0) * m(1, 1);
+			float t6  = m(0, 0) * m(1, 2);
+			float t8  = m(0, 1) * m(1, 0);
+			float t10 = m(0, 2) * m(1, 0);
+			float t12 = m(0, 1) * m(2, 0);
+			float t14 = m(0, 2) * m(2, 0);
 
             // Calculate the determinant
-            float t16 = (t4*m.m[2][2] - t6*m.m[2][1] - t8*m.m[2][2]+
-                        t10*m.m[2][1] + t12*m.m[1][2] - t14*m.m[1][1]);
+            float t16 = (t4*m(2, 2) - t6* m(2, 1) - t8 *m(2, 2)+
+                        t10*m(2, 1) + t12*m(1, 2) - t14*m(1, 1));
 
             // Make sure the determinant is non-zero.
-            if (t16 == (float)0.0f) return;
-            float t17 = 1/t16;
+            if (t16 == 0.0f) return m;
+            float t17 = 1.0f/t16;
 
-			mat3 temp = m;
+			mat3 temp;
 
-            m.m[0][0] = (temp.m[1][1]*temp.m[2][2]-temp.m[1][2]*temp.m[2][1])*t17;
-            m.m[0][1] = -(temp.m[0][1]*temp.m[2][2]-temp.m[0][2]*temp.m[2][1])*t17;
-            m.m[0][2] = (temp.m[0][1]*temp.m[1][2]-temp.m[0][2]*temp.m[1][1])*t17;
-            m.m[1][0] = -(temp.m[1][0]*temp.m[2][2]-temp.m[1][2]*temp.m[2][0])*t17;
-            m.m[1][1] = (temp.m[0][0]*temp.m[2][2]-t14)*t17;
-            m.m[1][2] = -(t6-t10)*t17;
-            m.m[2][0] = (temp.m[1][0]*temp.m[2][1]-temp.m[1][1]*temp.m[2][0])*t17;
-            m.m[2][1] = -(temp.m[0][0]*temp.m[2][1]-t12)*t17;
-            m.m[2][2] = (t4-t8)*t17;
+// 			temp(0, 0) = (m(1, 1)*m(2, 2)-m(1, 2)*m(2, 0))*t17;
+// 			temp(0, 1) = -(m(0, 1)*m(2, 2)-m(0, 2)*m(2, 0))*t17;
+// 			temp(0, 2) = (m(0, 1)*m(1, 2)-m(0, 2)*m(1, 1))*t17;
+// 			temp(1, 0) = -(m(1, 0)*m(2, 2)-m(1, 2)*m(2, 0))*t17;
+// 			temp(1, 1) = (m(0, 0)*m(2, 2)-t14)*t17;
+// 			temp(1, 2) = -(t6-t10)*t17;
+// 			temp(2, 0) = (m(1, 0)*m(2, 0)-m(1, 1)*m(2, 0))*t17;
+// 			temp(2, 1) = -(m(0, 0)*m(2, 0)-t12)*t17;
+// 			temp(2, 2) = (t4-t8)*t17;
+
+			temp(0, 0) = (m(1, 1)*m(2, 2)-m(2, 1)*m(0, 2))*t17;
+			temp(1, 0) = -(m(1, 0)*m(2, 2)-m(0, 2)*m(2, 0))*t17;
+			temp(2, 0) = (m(1, 0)*m(2, 1)-m(2, 0)*m(1, 1))*t17;
+			temp(0, 1) = -(m(0, 1)*m(2, 2)-m(2, 1)*m(0, 2))*t17;
+			temp(1, 1) = (m(0, 0)*m(2, 2)-t14)*t17;
+			temp(2, 1) = -(t6-t10)*t17;
+			temp(0, 2) = (m(0, 1)*m(0, 2)-m(1, 1)*m(0, 2))*t17;
+			temp(1, 2) = -(m(0, 0)*m(0, 2)-t12)*t17;
+			temp(2, 2) = (t4-t8)*t17;
+
+			return temp;
         }
 
 	}
@@ -502,9 +538,9 @@ namespace Math
 		// multiply a vector3 with a mat3 
 		static vec3 setMul(const vec3& v, const mat3& m)
 		{
-			vec3 result( m.m[0][0] * v.x() + m.m[0][1] * v.y() + m.m[0][2] * v.z(),
-						 m.m[1][0] * v.x() + m.m[1][1] * v.y() + m.m[1][2] * v.z(),
-						 m.m[2][0] * v.x() + m.m[2][1] * v.y() + m.m[2][2] * v.z());
+			vec3 result( m(0, 0) * v.x() + m(0, 1) * v.y() + m(0, 2) * v.z(),
+						 m(1, 0) * v.x() + m(1, 1) * v.y() + m(1, 2) * v.z(),
+						 m(2, 0) * v.x() + m(2, 1) * v.y() + m(2, 2) * v.z());
 
 			return result;
 		}
@@ -530,9 +566,9 @@ namespace Math
          */
 		static quat computeQuaternion(const vec3& eulerAngles)
 		{
-			return quat::fromAxisAndAngle(Math::Vector3::UNIT_X, eulerAngles.x())
+			return quat::fromAxisAndAngle(Math::Vector3::UNIT_Z, eulerAngles.z())
 				 * quat::fromAxisAndAngle(Math::Vector3::UNIT_Y, eulerAngles.y())
-				 * quat::fromAxisAndAngle(Math::Vector3::UNIT_Z, eulerAngles.z());
+				 * quat::fromAxisAndAngle(Math::Vector3::UNIT_X, eulerAngles.x());
 		}
 
 		/**

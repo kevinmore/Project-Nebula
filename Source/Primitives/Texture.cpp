@@ -1,6 +1,7 @@
 #include <Primitives/Texture.h>
 #include <QDebug>
 #include <QGLWidget>
+#include <assert.h>
 
 Texture::Texture(const QString& fileName, TextureType type, TextureUsage usage)
 	: m_qimage(),
@@ -35,7 +36,7 @@ Texture::~Texture()
 
 void Texture::init()
 {
-	Q_ASSERT(initializeOpenGLFunctions());
+	assert(initializeOpenGLFunctions());
 }
 
 bool Texture::load()
