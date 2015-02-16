@@ -82,11 +82,9 @@ void BoxRigidBody::applyPointImpulse( const vec3& imp, const vec3& p )
 {
 	// PSEUDOCODE IS m_linearVelocity += m_massInv * imp;
 	// PSEUDOCODE IS m_angularVelocity += getWorldInertiaInv() * (p - centerOfMassWorld).cross(imp);
-	m_linearVelocity += m_massInv * imp;
-	vec3 angularMoment = vec3::crossProduct(p - getCenterOfMassInWorld(), imp);
-	vec3 dw =  Vector3::setMul(angularMoment, m_inertiaTensorInvWorld);
-	
-	m_angularVelocity += dw;
+
+	applyLinearImpulse(imp);
+	applyAngularImpulse(vec3::crossProduct(p - getCenterOfMassInWorld(), imp));
 }
 
 void BoxRigidBody::applyAngularImpulse( const vec3& imp )
@@ -114,6 +112,9 @@ void BoxRigidBody::applyTorque( const float deltaTime, const vec3& torque )
 
 void BoxRigidBody::update( const float dt )
 {
+	// if the body is sleeping, skip
+	if(m_bSleep) return;
+
 	// update the linear properties in the parent first
 	RigidBody::update(dt);
 
@@ -123,5 +124,9 @@ void BoxRigidBody::update( const float dt )
 
 	mat3 rotationMatrix = m_transform.getRotationMatrix();
 	m_inertiaTensorInvWorld =  rotationMatrix * m_inertiaTensorInv * rotationMatrix.transposed();
+
+	// check the status to decide sleep
+	if(m_linearVelocity.lengthSquared() < 3e-4 && m_angularVelocity.lengthSquared() < 3e-4)
+		m_bSleep = true;
 }
 

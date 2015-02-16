@@ -7,13 +7,15 @@ struct CollisionPair
 {
 	ICollider* pColliderA;
 	ICollider* pColliderB;
-	bool bChecked;
+	vec3 contactPoint;
+	uint contactCount;
 
 	CollisionPair(ICollider* a, ICollider* b)
 	{
 		pColliderA = a;
 		pColliderB = b;
-		bChecked = false;
+		contactPoint = vec3(1000, 1000, 1000);
+		contactCount = 0;
 	}
 };
 

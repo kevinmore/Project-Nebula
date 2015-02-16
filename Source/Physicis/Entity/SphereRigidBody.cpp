@@ -84,12 +84,8 @@ void SphereRigidBody::applyPointImpulse( const vec3& imp, const vec3& p )
 {
 	// PSEUDOCODE IS m_linearVelocity += m_massInv * imp;
 	// PSEUDOCODE IS m_angularVelocity += getWorldInertiaInv() * (p - centerOfMassWorld).cross(imp);
-	m_linearVelocity += m_massInv * imp;
-	vec3 angularMoment = vec3::crossProduct(p - m_centerOfMass, imp);
-
-	vec3 dw = Vector3::setMul(angularMoment, m_inertiaTensorInvWorld);
-
-	m_angularVelocity += dw;
+	applyLinearImpulse(imp);
+	applyAngularImpulse(vec3::crossProduct(p - getCenterOfMassInWorld(), imp));
 }
 
 void SphereRigidBody::applyAngularImpulse( const vec3& imp )

@@ -10,6 +10,8 @@
 #include <Primitives/GameObject.h>
 #include <Scene/IModel.h>
 #include <Utility/Math.h>
+#include <Utility/LoaderThread.h>
+#include <Scene/Scene.h>
 
 using namespace Math;
 
@@ -139,16 +141,8 @@ void PhysicsWorld::handleCollisions()
 		// collision detection on broad phase
 		BroadPhaseCollisionFeedback broadPhaseResult = cA->onBroadPhase(cB);
 
-		// if not colliding on broad phase
-		if (!broadPhaseResult.isColliding())
-		{
-			// mark the pair as un-checked
-			pair->bChecked = false;
-			continue;
-		}
-
-		// if colliding on broad phase and the pair is not checked before
-		if (broadPhaseResult.isColliding() && !pair->bChecked)
+		// if colliding on broad phase
+		if (broadPhaseResult.isColliding())
 		{
 			// mark the bounding volume as red
 			cA->setColor(Qt::red);
@@ -163,53 +157,104 @@ void PhysicsWorld::handleCollisions()
 			model = cB->getRigidBody()->gameObject()->getComponent("Model").dynamicCast<IModel>();
 			ConvexHullColliderPtr chB = model->getConvexHullCollider();
 
+			// if colliding on narrow phase
 			if (solver.checkCollision(chA.data(), chB.data(), collisionInfo, true))
 			{
-				RigidBody* bodyA = cA->getRigidBody();
-				RigidBody* bodyB = cB->getRigidBody();
-				vec3 A2B = (bodyB->getPosition() - bodyA->getPosition()).normalized();
-				vec3 n = collisionInfo.contactNormalWorld;
+				// check whether the contact point is the same as the last one
+				vec3 currentContactPoint = 0.5f * (collisionInfo.closestPntAWorld + collisionInfo.closestPntBWorld);
+				float difference = (currentContactPoint - pair->contactPoint).lengthSquared();
 
-				// separate the two objects by the penetration depth
-// 				float offset = 0.5 * collisionInfo.penetrationDepth;
-// 				bodyA->moveBy(-offset * A2B);
-// 				bodyB->moveBy(offset * A2B);
-
-				float impuseMagnitude = computeContactImpulseMagnitude(&collisionInfo);
-				qDebug() << cA->getRigidBody()->gameObject()->objectName() <<
-					     cB->getRigidBody()->gameObject()->objectName() << impuseMagnitude;
-				
-
-				// apply impulse based on the direction
-				if (vec3::dotProduct(A2B, n) > 0)
+				// if the difference is too small, means the contact point is the same, ignore it
+				// only deal with the case when the contact point is not the same
+				if (difference > 1e-2)
 				{
-					bodyA->applyPointImpulse(-impuseMagnitude * n, collisionInfo.closestPntAWorld);
-					bodyB->applyPointImpulse(impuseMagnitude * n, collisionInfo.closestPntBWorld);
-				}
-				else
-				{
-					bodyA->applyPointImpulse(impuseMagnitude * n, collisionInfo.closestPntAWorld);
-					bodyB->applyPointImpulse(-impuseMagnitude * n, collisionInfo.closestPntBWorld);
-				}
+					// get the two rigid bodies
+					RigidBody* bodyA = cA->getRigidBody();
+					RigidBody* bodyB = cB->getRigidBody();
 
-				// mark the pair as checked
-				pair->bChecked = true;
+					// update the contact point in the pair
+					pair->contactPoint = currentContactPoint;
+					++pair->contactCount;
 
-				// 				RigidBody* rb1 = c1->getRigidBody();
-				// 				RigidBody* rb2 = c2->getRigidBody();
-				// 
-				// 				float m1 = rb1->getMass();
-				// 				float m2 = rb2->getMass();
-				// 				vec3 v1 = rb1->getLinearVelocity();
-				// 				vec3 v2 = rb2->getLinearVelocity();
-				// 
-				// 				// Momentum Conservation Principle
-				// 				// in this case, the system does not lose kinematics energy
-				// 				vec3 v1Prime = v1*(m1-m2)/(m1+m2) + v2*(2*m2)/(m1+m2);
-				// 				vec3 v2Prime = v1*(2*m1)/(m1+m2) - v2*(m1-m2)/(m1+m2);
-				// 
-				// 				rb1->setLinearVelocity(v1Prime);
-				// 				rb2->setLinearVelocity(v2Prime);
+// 					if (pair->contactCount > 4)
+// 					{
+// 						bodyA->setSleep(true);
+// 						bodyB->setSleep(true);
+// 						continue;
+// 					}
+
+					// render the contact point
+					Scene* scene = bodyA->gameObject()->getScene();
+					GameObjectPtr go = scene->createEmptyGameObject("Contact Point");
+					go->setPosition(currentContactPoint);
+					go->setScale(0.05);
+					LoaderThread loader(scene, "../Resource/Models/Common/sphere.obj", go, scene->sceneRoot(), false);
+					ModelPtr model = go->getComponent("Model").dynamicCast<IModel>();
+					ShadingTechniquePtr tech = model->renderingEffect();
+ 					tech->enable();
+					tech->setMatEmissiveColor(Qt::red);
+
+					vec3 A2B = (bodyB->getPosition() - bodyA->getPosition()).normalized();
+					vec3 n = collisionInfo.contactNormalWorld;
+
+					// separate the two objects by the penetration depth
+					float offset = (collisionInfo.closestPntAWorld - collisionInfo.closestPntBWorld).length()
+						         + chA->getMargin() + chB->getMargin();
+					if (bodyA->getMotionType() == RigidBody::MOTION_FIXED)
+					{
+						bodyB->moveBy(offset * A2B);
+					}
+					if (bodyB->getMotionType() == RigidBody::MOTION_FIXED)
+					{
+						bodyA->moveBy(-offset * A2B);
+					}
+					if (bodyA->getMotionType() != RigidBody::MOTION_FIXED &&
+						bodyB->getMotionType() != RigidBody::MOTION_FIXED)
+					{
+						bodyA->moveBy(-0.5f * offset * A2B);
+						bodyB->moveBy(0.5f * offset * A2B);
+					}
+
+					float impuseMagnitude = computeContactImpulseMagnitude(&collisionInfo);
+					// 				qDebug() << bodyA->gameObject()->objectName() <<
+					// 					     bodyB->gameObject()->objectName() << impuseMagnitude;
+
+// 					qDebug() << bodyA->gameObject()->objectName() << bodyA->getLinearVelocity().lengthSquared() << bodyA->getAngularVelocity().lengthSquared();
+// 					qDebug() << bodyB->gameObject()->objectName() << bodyB->getLinearVelocity().lengthSquared() << bodyB->getAngularVelocity().lengthSquared();
+ 					// apply impulse based on the direction
+					if (vec3::dotProduct(A2B, n) > 0)
+					{
+						if (bodyA->getMotionType() != RigidBody::MOTION_FIXED)
+							bodyA->applyPointImpulse(-impuseMagnitude * n, collisionInfo.closestPntAWorld);
+
+						if (bodyB->getMotionType() != RigidBody::MOTION_FIXED)
+							bodyB->applyPointImpulse(impuseMagnitude * n, collisionInfo.closestPntBWorld);
+					}
+					else
+					{
+						if (bodyA->getMotionType() != RigidBody::MOTION_FIXED)
+							bodyA->applyPointImpulse(impuseMagnitude * n, collisionInfo.closestPntAWorld);
+
+						if (bodyB->getMotionType() != RigidBody::MOTION_FIXED)
+							bodyB->applyPointImpulse(-impuseMagnitude * n, collisionInfo.closestPntBWorld);
+					}
+
+					// 				RigidBody* rb1 = c1->getRigidBody();
+					// 				RigidBody* rb2 = c2->getRigidBody();
+					// 
+					// 				float m1 = rb1->getMass();
+					// 				float m2 = rb2->getMass();
+					// 				vec3 v1 = rb1->getLinearVelocity();
+					// 				vec3 v2 = rb2->getLinearVelocity();
+					// 
+					// 				// Momentum Conservation Principle
+					// 				// in this case, the system does not lose kinematics energy
+					// 				vec3 v1Prime = v1*(m1-m2)/(m1+m2) + v2*(2*m2)/(m1+m2);
+					// 				vec3 v2Prime = v1*(2*m1)/(m1+m2) - v2*(m1-m2)/(m1+m2);
+					// 
+					// 				rb1->setLinearVelocity(v1Prime);
+					// 				rb2->setLinearVelocity(v2Prime);
+				}
 			}
 		}
 	}
@@ -288,21 +333,9 @@ float PhysicsWorld::computeContactImpulseMagnitude( const NarrowPhaseCollisionFe
 
 	vec3 n = pCollisionInfo->contactNormalWorld;
 
-// 	vec3 linearA = A->getLinearVelocity();
-// 	vec3 angularA = A->getAngularVelocity();
-// 	vec3 comA = A->getCenterOfMassInWorld();
-// 	vec3 offsetA = pCollisionInfo->closestPntAWorld - comA;
-// 	vec3 crossA = vec3::crossProduct(angularA, offsetA);
-// 
-// 	vec3 linearB = B->getLinearVelocity();
-// 	vec3 angularB = B->getAngularVelocity();
-// 	vec3 comB = B->getCenterOfMassInWorld();
-// 	vec3 offsetB = pCollisionInfo->closestPntBWorld - comB;
-// 	vec3 crossB = vec3::crossProduct(angularB, offsetB);
-
 	vec3 pointVelocityA = A->getPointVelocityWorld(pCollisionInfo->closestPntAWorld);
 	vec3 pointVelocityB = B->getPointVelocityWorld(pCollisionInfo->closestPntBWorld);
-	float Vrel = vec3::dotProduct(n, pointVelocityA + pointVelocityB);
+	float Vrel = vec3::dotProduct(n, pointVelocityA - pointVelocityB);
 
 	// check if Vrel == 0
 	if (qFuzzyIsNull(Vrel)) return 0.0f;

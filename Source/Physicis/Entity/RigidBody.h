@@ -197,7 +197,11 @@ public:
 
 	/// Applies an impulse (in world space) to the center of mass.
 	/// This activates the body and its simulation island if it is inactive.
-	inline void applyLinearImpulse(const vec3& imp) { m_linearVelocity += m_massInv * imp; }
+	inline void applyLinearImpulse(const vec3& imp) 
+	{ 
+		m_bSleep = false;
+		m_linearVelocity += m_massInv * imp; 
+	}
 
 	/// Applies an impulse (in world space) at the point p in world space.
 	/// This activates the body and its simulation island if it is inactive.
@@ -272,6 +276,9 @@ public:
 
 	/// Set the gravity factor.
 	inline void setGravityFactor(float gravityFactor) { m_gravityFactor = gravityFactor; }
+
+	inline void setSleep(bool state) { m_bSleep = state; }
+	inline bool isSleeping() const { return m_bSleep; }
 
 protected:
 
@@ -363,6 +370,10 @@ protected:
 
 	/// The pointer to the collider that is attached to the rigid body
 	ColliderPtr m_collider;
+
+	/// The initial state of the body, which decides if this body will be updated
+	// This defaults to false.
+	bool m_bSleep;
 };
 
 typedef QSharedPointer<RigidBody> RigidBodyPtr;

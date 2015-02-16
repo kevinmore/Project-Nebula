@@ -56,7 +56,8 @@ public:
 
 private:
 
-	/// Half extents of the box, used for compute the inertia tensor, default to (0.5, 0.5, 0.5)
+	/// Half extents of the box, used for compute the inertia tensor
+	/// This defaults to (0.5, 0.5, 0.5)
 	vec3 m_halfExtents;
 };
 
