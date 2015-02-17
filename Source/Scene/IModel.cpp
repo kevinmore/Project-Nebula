@@ -18,7 +18,7 @@ IModel::~IModel() {}
 
 void IModel::init()
 {
-	assert(initializeOpenGLFunctions());
+	Q_ASSERT(initializeOpenGLFunctions());
 }
 void IModel::drawElements( unsigned int index)
 {

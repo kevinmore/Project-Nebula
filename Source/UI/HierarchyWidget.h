@@ -25,7 +25,7 @@ private:
 	Light* m_currentLight;
 
 	QAction* m_deleteAction;
-	QWidget *m_renderingTab, *m_particleSystemTab, *m_lightTab;
+	QWidget *m_renderingTab, *m_particleSystemTab, *m_lightTab, *m_rigidBodyTab;
 
 	void readHierarchy(GameObject* go, QTreeWidgetItem* parentItem); // go through the game objects
 	void resetHierarchy(GameObject* go); // reset every game object from the given one
@@ -34,6 +34,7 @@ private:
 	void readLightSourceProperties(LightPtr light);
 	void connectParticleSystemTab(ParticleSystemPtr ps);
 	void readParticleSystemConfig(ParticleSystemPtr ps);
+	void readRigidBodyProperties(RigidBodyPtr rb);
 	void searchShaders();
 	void connectSliderBarAndDoubleSpinBox(QSlider* slider, QDoubleSpinBox* box);
 

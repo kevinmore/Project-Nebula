@@ -6,7 +6,7 @@ ShadowMapFBO::ShadowMapFBO()
 	: m_fbo(0),
 	  m_shadowMap(0)
 {
-	assert(initializeOpenGLFunctions());
+	Q_ASSERT(initializeOpenGLFunctions());
 }
 
 ShadowMapFBO::~ShadowMapFBO()

@@ -36,7 +36,7 @@ Texture::~Texture()
 
 void Texture::init()
 {
-	assert(initializeOpenGLFunctions());
+	Q_ASSERT(initializeOpenGLFunctions());
 }
 
 bool Texture::load()

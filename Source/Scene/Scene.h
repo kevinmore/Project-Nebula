@@ -17,6 +17,8 @@
 
 #include <Physicis/Particles/ParticleSystem.h>
 #include <Physicis/World/PhysicsWorld.h>
+#include <Physicis/Entity/BoxRigidBody.h>
+#include <Physicis/Entity/SphereRigidBody.h>
 
 typedef QSharedPointer<QOpenGLShaderProgram> ShadersProgramPtr;
 

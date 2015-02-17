@@ -14,7 +14,7 @@ ICollider::ICollider( const vec3& center, Scene* scene )
 
 void ICollider::init()
 {
-	assert(initializeOpenGLFunctions());
+	Q_ASSERT(initializeOpenGLFunctions());
 
 	m_renderingEffect = ShadingTechniquePtr(new ShadingTechnique("bounding_volume"));
 	// the initial color is green, when it collides, it goes to red

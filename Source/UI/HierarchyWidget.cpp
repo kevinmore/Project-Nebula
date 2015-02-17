@@ -47,6 +47,7 @@ HierarchyWidget::HierarchyWidget(Scene* scene, Canvas* canvas, QWidget *parent)
 	m_renderingTab = ui->tabWidget->widget(2);
 	m_particleSystemTab = ui->tabWidget->widget(3);
 	m_lightTab = ui->tabWidget->widget(4);
+	m_rigidBodyTab = ui->tabWidget->widget(5);
 
 	// remove the unnecessary tabs
 	for (int i = 0; i < tabCount - 2; ++i)
@@ -188,6 +189,7 @@ void HierarchyWidget::readGameObject(QTreeWidgetItem* current, QTreeWidgetItem* 
 	ui->tabWidget->removeTab(ui->tabWidget->indexOf(m_renderingTab));
 	ui->tabWidget->removeTab(ui->tabWidget->indexOf(m_particleSystemTab));
 	ui->tabWidget->removeTab(ui->tabWidget->indexOf(m_lightTab));
+	ui->tabWidget->removeTab(ui->tabWidget->indexOf(m_rigidBodyTab));
 
 	if (!current) return;
 
@@ -226,7 +228,7 @@ void HierarchyWidget::readGameObject(QTreeWidgetItem* current, QTreeWidgetItem* 
 		
 		if (type == "Model")
 		{
-			ui->tabWidget->addTab(m_renderingTab, "Rendering");
+			ui->tabWidget->addTab(m_renderingTab, "Mesh");
 
 			// show the bounding box
 			ModelPtr model = comp.dynamicCast<IModel>();
@@ -254,6 +256,11 @@ void HierarchyWidget::readGameObject(QTreeWidgetItem* current, QTreeWidgetItem* 
 		{
 			ui->tabWidget->addTab(m_lightTab, "Light");
 			readLightSourceProperties(comp.dynamicCast<Light>());
+		}
+		else if (type == "RigidBody")
+		{
+			ui->tabWidget->addTab(m_rigidBodyTab, "Rigid Body");
+			readRigidBodyProperties(comp.dynamicCast<RigidBody>());
 		}
 	}
 
@@ -1029,4 +1036,23 @@ void HierarchyWidget::onScale10Pushed()
 void HierarchyWidget::onScale100Pushed()
 {
 	ui->doubleSpinBox_ScaleFactor->setValue(100);
+}
+
+void HierarchyWidget::readRigidBodyProperties( RigidBodyPtr rb )
+{
+	RigidBody::MotionType motionType = rb->getMotionType();
+	switch(motionType)
+	{
+	case RigidBody::MOTION_BOX_INERTIA:
+		ui->comboBox_RigidBodyMotionType->setCurrentText("Box");
+		break;
+
+	case RigidBody::MOTION_SPHERE_INERTIA:
+		ui->comboBox_RigidBodyMotionType->setCurrentText("Sphere");
+		break;
+
+	case RigidBody::MOTION_FIXED:
+		ui->comboBox_RigidBodyMotionType->setCurrentText("Fixed");
+		break;
+	}
 }

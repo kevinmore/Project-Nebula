@@ -34,7 +34,7 @@ CubemapTexture::~CubemapTexture()
 
 void CubemapTexture::init()
 {
-	assert(initializeOpenGLFunctions());
+	Q_ASSERT(initializeOpenGLFunctions());
 
 }
 

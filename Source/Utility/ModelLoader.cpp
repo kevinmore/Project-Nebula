@@ -8,7 +8,7 @@ ModelLoader::ModelLoader(Scene* scene)
 {
 	m_scene = scene;
 	m_effect = ShadingTechniquePtr();
-	assert(initializeOpenGLFunctions());
+	Q_ASSERT(initializeOpenGLFunctions());
 }
 
 

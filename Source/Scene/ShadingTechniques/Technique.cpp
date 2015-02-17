@@ -12,7 +12,7 @@ bool Technique::init()
 {
 	m_shaderProgram = QOpenGLShaderProgramPtr(new QOpenGLShaderProgram);
 
-	assert(initializeOpenGLFunctions());	
+	Q_ASSERT(initializeOpenGLFunctions());	
 
     return true;
 }
