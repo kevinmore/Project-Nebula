@@ -10,12 +10,12 @@
 * Material
 */
 // Order: Name -> AmbientColor -> DiffuseColor -> SpecularColor -> Shininess -> Shininess Strength
-//     -> Roughness -> Fresnel Reflectance -> Two Sided -> BlendMode -> AlphaBlending
+//     -> Roughness -> Fresnel Reflectance -> Reflect Factor -> Refractive Index -> Two Sided -> BlendMode -> AlphaBlending
 QDataStream& operator << (QDataStream& out, MaterialPtr object)
 {
 	out << object->m_name << object->m_ambientColor << object->m_diffuseColor << object->m_specularColor << object->m_emissiveColor
 		<< object->m_shininess << object->m_shininessStrength << object->m_roughness << object->m_fresnelReflectance
-		<< object->m_twoSided << object->m_blendMode << object->m_alphaBlending;
+		<< object->m_reflectFactor << object->m_refractiveIndex << object->m_twoSided << object->m_blendMode << object->m_alphaBlending;
 
 	return out;
 }
@@ -33,6 +33,8 @@ QDataStream& operator >> (QDataStream& in, MaterialPtr object)
 	float shininessStrength;
 	float roughness;
 	float fresnelReflectance;
+	float reflectFactor;
+	float refractiveIndex;
 
 	int  twoSided;
 	int  blendMode;
@@ -40,7 +42,7 @@ QDataStream& operator >> (QDataStream& in, MaterialPtr object)
 
 	in >> name >> ambientColor >> diffuseColor >> specularColor >> emissiveColor
 	   >> shininess >> shininessStrength >> roughness >> fresnelReflectance
-	   >> twoSided >> blendMode >> alphaBlending;
+	   >> reflectFactor >> refractiveIndex >> twoSided >> blendMode >> alphaBlending;
 
 	object->m_name = name;
 	object->m_ambientColor = ambientColor;
@@ -51,6 +53,8 @@ QDataStream& operator >> (QDataStream& in, MaterialPtr object)
 	object->m_shininessStrength = shininessStrength;
 	object->m_roughness = roughness;
 	object->m_fresnelReflectance = fresnelReflectance;
+	object->m_reflectFactor = reflectFactor;
+	object->m_refractiveIndex = refractiveIndex;
 	object->m_twoSided = twoSided;
 	object->m_blendMode = blendMode;
 	object->m_alphaBlending = alphaBlending;
@@ -425,17 +429,20 @@ QDataStream& operator >> (QDataStream& in, Camera* object)
 /*
 * Scene
 */
-// Order: Model Manager -> Camera
+// Order: Model Manager -> Camera -> SkyBox
 QDataStream& operator << (QDataStream& out, Scene* object)
 {
-	out << object->objectManager() << object->getCamera();
+	out << object->objectManager() << object->getCamera() << object->isSkyBoxEnabled();
 
 	return out;
 }
 
 QDataStream& operator >> (QDataStream& in, Scene* object)
 {
-	in >> object->objectManager() >> object->getCamera();
+	bool skyboxEnabled;
+	in >> object->objectManager() >> object->getCamera() >> skyboxEnabled;
+
+	object->toggleSkybox(skyboxEnabled);
 
 	return in;
 }

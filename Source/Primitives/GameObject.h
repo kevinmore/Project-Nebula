@@ -105,17 +105,17 @@ signals:
 
 public slots:
 	/// the 9 functions below will reset the model matrix
-	void fixedTranslateX(double x);
-	void fixedTranslateY(double y);
-	void fixedTranslateZ(double z);
+	void setFixedPositionX(double x);
+	void setFixedPositionY(double y);
+	void setFixedPositionZ(double z);
 
-	void fixedRotateX(double x);
-	void fixedRotateY(double y);
-	void fixedRotateZ(double z);
+	void setFixedRotationX(double x);
+	void setFixedRotationY(double y);
+	void setFixedRotationZ(double z);
 
-	void fixedScaleX(double x);
-	void fixedScaleY(double y);
-	void fixedScaleZ(double z);
+	void setFixedScaleX(double x);
+	void setFixedScaleY(double y);
+	void setFixedScaleZ(double z);
 
 	/// the 12 functions below will NOT reset the model matrix
 	void translateX(float x);

@@ -10,6 +10,8 @@ Material::Material( const QString& name )
 	m_shininessStrength(1.0f),
 	m_roughness(0.5f), // cook torrance
 	m_fresnelReflectance(0.5f), // cook torrance
+	m_reflectFactor(0.0f),
+	m_refractiveIndex(1.0f),
 	m_twoSided(1),
 	m_blendMode(Default),
 	m_alphaBlending(false),
@@ -39,6 +41,8 @@ Material::Material(const QString& name,
 	  m_shininessStrength(shininessStrength),
 	  m_roughness(0.5f), // cook torrance
 	  m_fresnelReflectance(0.5f), // cook torrance
+	  m_reflectFactor(0.0f),
+	  m_refractiveIndex(1.0f),
 	  m_twoSided(twoSided),
 	  m_blendMode(blendMode),
 	  m_alphaBlending(alphaBlending),

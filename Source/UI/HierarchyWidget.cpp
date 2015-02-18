@@ -94,6 +94,11 @@ HierarchyWidget::HierarchyWidget(Scene* scene, Canvas* canvas, QWidget *parent)
 	connect(ui->horizontalSlider_fresnelReflectance, SIGNAL(valueChanged(int)), this, SLOT(onFresnelReflectanceSliderChange(int)));
 	connect(ui->doubleSpinBox_fresnelReflectance, SIGNAL(valueChanged(double)), this, SLOT(onFresnelReflectanceDoubleBoxChange(double)));
 
+	connect(ui->horizontalSlider_reflectFactor, SIGNAL(valueChanged(int)), this, SLOT(onReflectFactorSliderChange(int)));
+	connect(ui->doubleSpinBox_reflectFactor, SIGNAL(valueChanged(double)), this, SLOT(onReflectFactorDoubleBoxChange(double)));
+
+	connect(ui->doubleSpinBox_refractiveIndex, SIGNAL(valueChanged(double)), this, SLOT(onRefractiveIndexDoubleBoxChange(double)));
+
 	connect(ui->horizontalSlider_LightAttConst, SIGNAL(valueChanged(int)), this, SLOT(onConstantAttenuationSliderChange(int)));
 	connect(ui->doubleSpinBox_LightAttConst, SIGNAL(valueChanged(double)), this, SLOT(onConstantAttenuationDoubleBoxChange(double)));
 
@@ -609,7 +614,6 @@ void HierarchyWidget::searchShaders()
 	connect(ui->comboBox_SahderFiles, SIGNAL(currentTextChanged(const QString&)), this, SLOT(changeShader(const QString&)));
 }
 
-
 void HierarchyWidget::changeShader( const QString& shaderFile )
 {
 	if (!m_currentShadingTech || m_currentShadingTech->shaderFileName() == shaderFile) return;
@@ -618,7 +622,6 @@ void HierarchyWidget::changeShader( const QString& shaderFile )
 	// re assign the material properties
 	assignMaterial();
 }
-
 
 void HierarchyWidget::assignMaterial()
 {
@@ -703,6 +706,36 @@ void HierarchyWidget::onFresnelReflectanceDoubleBoxChange( double value )
 	emit materialChanged();
 }
 
+void HierarchyWidget::onReflectFactorSliderChange( int value )
+{
+	ui->doubleSpinBox_reflectFactor->setValue(value/(double)100);
+}
+
+void HierarchyWidget::onReflectFactorDoubleBoxChange( double value )
+{
+	ui->horizontalSlider_reflectFactor->setValue(value * 100);
+
+	// change the material of the model
+	if(m_currentMaterials.size() == 0) return;
+	foreach(Material* mat, m_currentMaterials)
+	{
+		mat->m_reflectFactor = value;
+	}
+
+	emit materialChanged();
+}
+
+void HierarchyWidget::onRefractiveIndexDoubleBoxChange( double value )
+{
+	// change the material of the model
+	if(m_currentMaterials.size() == 0) return;
+	foreach(Material* mat, m_currentMaterials)
+	{
+		mat->m_refractiveIndex = value;
+	}
+
+	emit materialChanged();
+}
 void HierarchyWidget::onConstantAttenuationSliderChange( int value )
 {
 	ui->doubleSpinBox_LightAttConst->setValue(value/(double)100);
@@ -780,6 +813,8 @@ void HierarchyWidget::readShadingProperties()
 	ui->doubleSpinBox_ShininessStrength->setValue(mat->m_shininessStrength);
 	ui->doubleSpinBox_Roughness->setValue(mat->m_roughness);
 	ui->doubleSpinBox_fresnelReflectance->setValue(mat->m_fresnelReflectance);
+	ui->doubleSpinBox_reflectFactor->setValue(mat->m_reflectFactor);
+	ui->doubleSpinBox_refractiveIndex->setValue(mat->m_refractiveIndex);
 	// map the textures
 	
 }
@@ -865,15 +900,15 @@ void HierarchyWidget::disconnectTransformTab()
 void HierarchyWidget::connectTransformTab()
 {
 
-	connect(ui->doubleSpinBox_PositionX, SIGNAL(valueChanged(double)), m_currentObject, SLOT(fixedTranslateX(double)));
-	connect(ui->doubleSpinBox_PositionY, SIGNAL(valueChanged(double)), m_currentObject, SLOT(fixedTranslateY(double)));
-	connect(ui->doubleSpinBox_PositionZ, SIGNAL(valueChanged(double)), m_currentObject, SLOT(fixedTranslateZ(double)));
-	connect(ui->doubleSpinBox_RotationX, SIGNAL(valueChanged(double)), m_currentObject, SLOT(fixedRotateX(double)));
-	connect(ui->doubleSpinBox_RotationY, SIGNAL(valueChanged(double)), m_currentObject, SLOT(fixedRotateY(double)));
-	connect(ui->doubleSpinBox_RotationZ, SIGNAL(valueChanged(double)), m_currentObject, SLOT(fixedRotateZ(double)));
-	connect(ui->doubleSpinBox_ScaleX,	 SIGNAL(valueChanged(double)), m_currentObject, SLOT(fixedScaleX(double)));
-	connect(ui->doubleSpinBox_ScaleY,	 SIGNAL(valueChanged(double)), m_currentObject, SLOT(fixedScaleY(double)));
-	connect(ui->doubleSpinBox_ScaleZ,	 SIGNAL(valueChanged(double)), m_currentObject, SLOT(fixedScaleZ(double)));
+	connect(ui->doubleSpinBox_PositionX, SIGNAL(valueChanged(double)), m_currentObject, SLOT(setFixedPositionX(double)));
+	connect(ui->doubleSpinBox_PositionY, SIGNAL(valueChanged(double)), m_currentObject, SLOT(setFixedPositionY(double)));
+	connect(ui->doubleSpinBox_PositionZ, SIGNAL(valueChanged(double)), m_currentObject, SLOT(setFixedPositionZ(double)));
+	connect(ui->doubleSpinBox_RotationX, SIGNAL(valueChanged(double)), m_currentObject, SLOT(setFixedRotationX(double)));
+	connect(ui->doubleSpinBox_RotationY, SIGNAL(valueChanged(double)), m_currentObject, SLOT(setFixedRotationY(double)));
+	connect(ui->doubleSpinBox_RotationZ, SIGNAL(valueChanged(double)), m_currentObject, SLOT(setFixedRotationZ(double)));
+	connect(ui->doubleSpinBox_ScaleX,	 SIGNAL(valueChanged(double)), m_currentObject, SLOT(setFixedScaleX(double)));
+	connect(ui->doubleSpinBox_ScaleY,	 SIGNAL(valueChanged(double)), m_currentObject, SLOT(setFixedScaleY(double)));
+	connect(ui->doubleSpinBox_ScaleZ,	 SIGNAL(valueChanged(double)), m_currentObject, SLOT(setFixedScaleZ(double)));
 	connect(ui->doubleSpinBox_RotationX, SIGNAL(valueChanged(double)), this, SLOT(onRotationXSpinChange(double)));
 	connect(ui->doubleSpinBox_RotationY, SIGNAL(valueChanged(double)), this, SLOT(onRotationYSpinChange(double)));
 	connect(ui->doubleSpinBox_RotationZ, SIGNAL(valueChanged(double)), this, SLOT(onRotationZSpinChange(double)));
@@ -1008,9 +1043,9 @@ void HierarchyWidget::onScaleFactorDoubleBoxChange( double value )
 	ui->doubleSpinBox_ScaleX->setValue(value);
 	ui->doubleSpinBox_ScaleY->setValue(value);
 	ui->doubleSpinBox_ScaleZ->setValue(value);
-	connect(ui->doubleSpinBox_ScaleX,	 SIGNAL(valueChanged(double)), m_currentObject, SLOT(fixedScaleX(double)));
-	connect(ui->doubleSpinBox_ScaleY,	 SIGNAL(valueChanged(double)), m_currentObject, SLOT(fixedScaleX(double)));
-	connect(ui->doubleSpinBox_ScaleZ,	 SIGNAL(valueChanged(double)), m_currentObject, SLOT(fixedScaleX(double)));
+	connect(ui->doubleSpinBox_ScaleX,	 SIGNAL(valueChanged(double)), m_currentObject, SLOT(setFixedScaleX(double)));
+	connect(ui->doubleSpinBox_ScaleY,	 SIGNAL(valueChanged(double)), m_currentObject, SLOT(setFixedScaleX(double)));
+	connect(ui->doubleSpinBox_ScaleZ,	 SIGNAL(valueChanged(double)), m_currentObject, SLOT(setFixedScaleX(double)));
 }
 
 void HierarchyWidget::onScale001Pushed()

@@ -80,63 +80,63 @@ void GameObject::setScale(double scaleFactor)
 	emit transformChanged(m_transform);
 }
 
-void GameObject::fixedTranslateX(double x)
+void GameObject::setFixedPositionX(double x)
 {
 	m_transform.setPositionX(x);
 	m_modelMatrixDirty = true;
 	emit transformChanged(m_transform);
 }
 
-void GameObject::fixedTranslateY(double y)
+void GameObject::setFixedPositionY(double y)
 {
 	m_transform.setPositionY(y);
 	m_modelMatrixDirty = true;
 	emit transformChanged(m_transform);
 }
 
-void GameObject::fixedTranslateZ(double z)
+void GameObject::setFixedPositionZ(double z)
 {
 	m_transform.setPositionZ(z);
 	m_modelMatrixDirty = true;
 	emit transformChanged(m_transform);
 }
 
-void GameObject::fixedRotateX(double x)
+void GameObject::setFixedRotationX(double x)
 {
 	m_transform.setEulerAngleX(x);
 	m_modelMatrixDirty = true;
 	emit transformChanged(m_transform);
 }
 
-void GameObject::fixedRotateY(double y)
+void GameObject::setFixedRotationY(double y)
 {
 	m_transform.setEulerAngleY(y);
 	m_modelMatrixDirty = true;
 	emit transformChanged(m_transform);
 }
 
-void GameObject::fixedRotateZ(double z)
+void GameObject::setFixedRotationZ(double z)
 {
 	m_transform.setEulerAngleZ(z);
 	m_modelMatrixDirty = true;
 	emit transformChanged(m_transform);
 }
 
-void GameObject::fixedScaleX(double x)
+void GameObject::setFixedScaleX(double x)
 {
 	m_transform.setScaleX(x);
 	m_modelMatrixDirty = true;
 	emit transformChanged(m_transform);
 }
 
-void GameObject::fixedScaleY(double y)
+void GameObject::setFixedScaleY(double y)
 {
 	m_transform.setScaleY(y);
 	m_modelMatrixDirty = true;
 	emit transformChanged(m_transform);
 }
 
-void GameObject::fixedScaleZ(double z)
+void GameObject::setFixedScaleZ(double z)
 {
 	m_transform.setScaleZ(z);
 	m_modelMatrixDirty = true;

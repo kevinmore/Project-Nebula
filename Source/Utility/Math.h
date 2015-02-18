@@ -71,15 +71,6 @@ namespace Math
 			float q2 = v.y();
 			float q3 = v.z();
 			mat3 m;
-// 			m(0, 0) = 1 - (2*v.y()*v.y() + 2*v.z()*v.z());
-// 			m(0, 1) = 2*v.x()*v.y() + 2*v.z()*v.w();
-// 			m(0, 2) = 2*v.x()*v.z() - 2*v.y()*v.w();
-// 			m(1, 0) = 2*v.x()*v.y() - 2*v.z()*v.w();
-// 			m(1, 1) = 1 - (2*v.x()*v.x()  + 2*v.z()*v.z());
-// 			m(1, 2) = 2*v.y()*v.z() + 2*v.x()*v.w();
-// 			m(2, 0) = 2*v.x()*v.z() + 2*v.y()*v.w();
-// 			m(2, 1) = 2*v.y()*v.z() - 2*v.x()*v.w();
-// 			m(2, 2) = 1 - (2*v.x()*v.x()  + 2*v.y()*v.y());
 
 			m(0, 0) = 1 - 2*(q2*q2+q3*q3);
 			m(0, 1) = 2*(q1*q2 - q0*q3);
@@ -170,16 +161,6 @@ namespace Math
             float t17 = 1.0f/t16;
 
 			mat3 temp;
-
-// 			temp(0, 0) = (m(1, 1)*m(2, 2)-m(1, 2)*m(2, 0))*t17;
-// 			temp(0, 1) = -(m(0, 1)*m(2, 2)-m(0, 2)*m(2, 0))*t17;
-// 			temp(0, 2) = (m(0, 1)*m(1, 2)-m(0, 2)*m(1, 1))*t17;
-// 			temp(1, 0) = -(m(1, 0)*m(2, 2)-m(1, 2)*m(2, 0))*t17;
-// 			temp(1, 1) = (m(0, 0)*m(2, 2)-t14)*t17;
-// 			temp(1, 2) = -(t6-t10)*t17;
-// 			temp(2, 0) = (m(1, 0)*m(2, 0)-m(1, 1)*m(2, 0))*t17;
-// 			temp(2, 1) = -(m(0, 0)*m(2, 0)-t12)*t17;
-// 			temp(2, 2) = (t4-t8)*t17;
 
 			temp(0, 0) = (m(1, 1)*m(2, 2)-m(2, 1)*m(0, 2))*t17;
 			temp(1, 0) = -(m(1, 0)*m(2, 2)-m(0, 2)*m(2, 0))*t17;
@@ -566,9 +547,23 @@ namespace Math
          */
 		static quat computeQuaternion(const vec3& eulerAngles)
 		{
-			return quat::fromAxisAndAngle(Math::Vector3::UNIT_Z, eulerAngles.z())
-				 * quat::fromAxisAndAngle(Math::Vector3::UNIT_Y, eulerAngles.y())
-				 * quat::fromAxisAndAngle(Math::Vector3::UNIT_X, eulerAngles.x());
+ 			return quat::fromAxisAndAngle(Math::Vector3::UNIT_X, eulerAngles.x())
+ 				 * quat::fromAxisAndAngle(Math::Vector3::UNIT_Y, eulerAngles.y())
+ 				 * quat::fromAxisAndAngle(Math::Vector3::UNIT_Z, eulerAngles.z());
+			
+// 			float c1 = qCos(qDegreesToRadians(eulerAngles.z()*0.5f));
+// 			float c2 = qCos(qDegreesToRadians(eulerAngles.y()*0.5f));
+// 			float c3 = qCos(qDegreesToRadians(eulerAngles.x()*0.5f));
+// 			float s1 = qSin(qDegreesToRadians(eulerAngles.z()*0.5f));
+// 			float s2 = qSin(qDegreesToRadians(eulerAngles.y()*0.5f));
+// 			float s3 = qSin(qDegreesToRadians(eulerAngles.x()*0.5f));
+// 
+// 			float w = c1*c2*c3 - s1*s2*s3;
+// 			float x = s1*s2*c3 + c1*c2*s3;
+// 			float y = s1*c2*c3 + c1*s2*s3;
+// 			float z = c1*s2*c3 - s1*c2*s3;
+// 
+// 			return quat(w, x, y, z);
 		}
 
 		/**

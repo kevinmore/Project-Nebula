@@ -59,6 +59,7 @@ public:
 	QList<LightPtr> getLights() const { return m_lights; }
 	void removeLight(Light* l);
 	void addLight(LightPtr l);
+	bool isSkyBoxEnabled() const { return m_bShowSkybox; }
 
 public slots:
 	void toggleFill(bool state);

@@ -66,6 +66,11 @@ private slots:
 	void onFresnelReflectanceSliderChange(int value);
 	void onFresnelReflectanceDoubleBoxChange(double value);
 
+	void onReflectFactorSliderChange(int value);
+	void onReflectFactorDoubleBoxChange(double value);
+
+	void onRefractiveIndexDoubleBoxChange(double value);
+
 	void onConstantAttenuationSliderChange(int value);
 	void onConstantAttenuationDoubleBoxChange(double value);
 

@@ -46,6 +46,8 @@ public:
 	void setMatSpecularPower(float power);
 	void setMatRoughnessValue(float val);
 	void setMatFresnelReflectance(float val);
+	void setMatReflectFactor(float val);
+	void setMatRefractiveIndex(float val);
 
 public slots:
 	void updateLights();

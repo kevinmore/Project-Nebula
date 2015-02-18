@@ -20,7 +20,7 @@
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_GameObject_t {
     QByteArrayData data[51];
-    char stringdata[528];
+    char stringdata[558];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -39,63 +39,63 @@ QT_MOC_LITERAL(6, 61, 17),
 QT_MOC_LITERAL(7, 79, 16),
 QT_MOC_LITERAL(8, 96, 9),
 QT_MOC_LITERAL(9, 106, 9),
-QT_MOC_LITERAL(10, 116, 15),
-QT_MOC_LITERAL(11, 132, 1),
-QT_MOC_LITERAL(12, 134, 15),
-QT_MOC_LITERAL(13, 150, 1),
-QT_MOC_LITERAL(14, 152, 15),
-QT_MOC_LITERAL(15, 168, 1),
-QT_MOC_LITERAL(16, 170, 12),
-QT_MOC_LITERAL(17, 183, 12),
-QT_MOC_LITERAL(18, 196, 12),
-QT_MOC_LITERAL(19, 209, 11),
-QT_MOC_LITERAL(20, 221, 11),
-QT_MOC_LITERAL(21, 233, 11),
-QT_MOC_LITERAL(22, 245, 10),
-QT_MOC_LITERAL(23, 256, 10),
-QT_MOC_LITERAL(24, 267, 10),
-QT_MOC_LITERAL(25, 278, 9),
-QT_MOC_LITERAL(26, 288, 4),
-QT_MOC_LITERAL(27, 293, 5),
-QT_MOC_LITERAL(28, 299, 7),
-QT_MOC_LITERAL(29, 307, 7),
-QT_MOC_LITERAL(30, 315, 7),
-QT_MOC_LITERAL(31, 323, 6),
-QT_MOC_LITERAL(32, 330, 4),
-QT_MOC_LITERAL(33, 335, 6),
-QT_MOC_LITERAL(34, 342, 6),
-QT_MOC_LITERAL(35, 349, 6),
-QT_MOC_LITERAL(36, 356, 5),
-QT_MOC_LITERAL(37, 362, 16),
-QT_MOC_LITERAL(38, 379, 11),
-QT_MOC_LITERAL(39, 391, 13),
-QT_MOC_LITERAL(40, 405, 13),
-QT_MOC_LITERAL(41, 419, 10),
-QT_MOC_LITERAL(42, 430, 14),
-QT_MOC_LITERAL(43, 445, 12),
-QT_MOC_LITERAL(44, 458, 5),
-QT_MOC_LITERAL(45, 464, 10),
-QT_MOC_LITERAL(46, 475, 5),
-QT_MOC_LITERAL(47, 481, 15),
-QT_MOC_LITERAL(48, 497, 12),
-QT_MOC_LITERAL(49, 510, 6),
-QT_MOC_LITERAL(50, 517, 10)
+QT_MOC_LITERAL(10, 116, 17),
+QT_MOC_LITERAL(11, 134, 1),
+QT_MOC_LITERAL(12, 136, 17),
+QT_MOC_LITERAL(13, 154, 1),
+QT_MOC_LITERAL(14, 156, 17),
+QT_MOC_LITERAL(15, 174, 1),
+QT_MOC_LITERAL(16, 176, 17),
+QT_MOC_LITERAL(17, 194, 17),
+QT_MOC_LITERAL(18, 212, 17),
+QT_MOC_LITERAL(19, 230, 14),
+QT_MOC_LITERAL(20, 245, 14),
+QT_MOC_LITERAL(21, 260, 14),
+QT_MOC_LITERAL(22, 275, 10),
+QT_MOC_LITERAL(23, 286, 10),
+QT_MOC_LITERAL(24, 297, 10),
+QT_MOC_LITERAL(25, 308, 9),
+QT_MOC_LITERAL(26, 318, 4),
+QT_MOC_LITERAL(27, 323, 5),
+QT_MOC_LITERAL(28, 329, 7),
+QT_MOC_LITERAL(29, 337, 7),
+QT_MOC_LITERAL(30, 345, 7),
+QT_MOC_LITERAL(31, 353, 6),
+QT_MOC_LITERAL(32, 360, 4),
+QT_MOC_LITERAL(33, 365, 6),
+QT_MOC_LITERAL(34, 372, 6),
+QT_MOC_LITERAL(35, 379, 6),
+QT_MOC_LITERAL(36, 386, 5),
+QT_MOC_LITERAL(37, 392, 16),
+QT_MOC_LITERAL(38, 409, 11),
+QT_MOC_LITERAL(39, 421, 13),
+QT_MOC_LITERAL(40, 435, 13),
+QT_MOC_LITERAL(41, 449, 10),
+QT_MOC_LITERAL(42, 460, 14),
+QT_MOC_LITERAL(43, 475, 12),
+QT_MOC_LITERAL(44, 488, 5),
+QT_MOC_LITERAL(45, 494, 10),
+QT_MOC_LITERAL(46, 505, 5),
+QT_MOC_LITERAL(47, 511, 15),
+QT_MOC_LITERAL(48, 527, 12),
+QT_MOC_LITERAL(49, 540, 6),
+QT_MOC_LITERAL(50, 547, 10)
     },
     "GameObject\0synchronized\0\0componentAttached\0"
     "ComponentPtr\0comp\0componentDetached\0"
     "transformChanged\0Transform\0transform\0"
-    "fixedTranslateX\0x\0fixedTranslateY\0y\0"
-    "fixedTranslateZ\0z\0fixedRotateX\0"
-    "fixedRotateY\0fixedRotateZ\0fixedScaleX\0"
-    "fixedScaleY\0fixedScaleZ\0translateX\0"
-    "translateY\0translateZ\0translate\0vec3\0"
-    "delta\0rotateX\0rotateY\0rotateZ\0rotate\0"
-    "quat\0scaleX\0scaleY\0scaleZ\0scale\0"
-    "translateInWorld\0paramString\0rotateInWorld\0"
-    "setLocalSpeed\0resetSpeed\0calculateSpeed\0"
-    "clearPuppets\0reset\0toggleFill\0state\0"
-    "toggleWireframe\0togglePoints\0moving\0"
-    "localSpeed"
+    "setFixedPositionX\0x\0setFixedPositionY\0"
+    "y\0setFixedPositionZ\0z\0setFixedRotationX\0"
+    "setFixedRotationY\0setFixedRotationZ\0"
+    "setFixedScaleX\0setFixedScaleY\0"
+    "setFixedScaleZ\0translateX\0translateY\0"
+    "translateZ\0translate\0vec3\0delta\0rotateX\0"
+    "rotateY\0rotateZ\0rotate\0quat\0scaleX\0"
+    "scaleY\0scaleZ\0scale\0translateInWorld\0"
+    "paramString\0rotateInWorld\0setLocalSpeed\0"
+    "resetSpeed\0calculateSpeed\0clearPuppets\0"
+    "reset\0toggleFill\0state\0toggleWireframe\0"
+    "togglePoints\0moving\0localSpeed"
 };
 #undef QT_MOC_LITERAL
 
@@ -208,15 +208,15 @@ void GameObject::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 1: _t->componentAttached((*reinterpret_cast< ComponentPtr(*)>(_a[1]))); break;
         case 2: _t->componentDetached((*reinterpret_cast< ComponentPtr(*)>(_a[1]))); break;
         case 3: _t->transformChanged((*reinterpret_cast< const Transform(*)>(_a[1]))); break;
-        case 4: _t->fixedTranslateX((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 5: _t->fixedTranslateY((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 6: _t->fixedTranslateZ((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 7: _t->fixedRotateX((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 8: _t->fixedRotateY((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 9: _t->fixedRotateZ((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 10: _t->fixedScaleX((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 11: _t->fixedScaleY((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 12: _t->fixedScaleZ((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 4: _t->setFixedPositionX((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 5: _t->setFixedPositionY((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 6: _t->setFixedPositionZ((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 7: _t->setFixedRotationX((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 8: _t->setFixedRotationY((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 9: _t->setFixedRotationZ((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 10: _t->setFixedScaleX((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 11: _t->setFixedScaleY((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 12: _t->setFixedScaleZ((*reinterpret_cast< double(*)>(_a[1]))); break;
         case 13: _t->translateX((*reinterpret_cast< float(*)>(_a[1]))); break;
         case 14: _t->translateY((*reinterpret_cast< float(*)>(_a[1]))); break;
         case 15: _t->translateZ((*reinterpret_cast< float(*)>(_a[1]))); break;

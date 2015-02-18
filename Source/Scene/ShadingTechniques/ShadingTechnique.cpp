@@ -25,6 +25,11 @@ void ShadingTechnique::enable()
 		if(!skybox) return;
 		CubemapTexturePtr cubeMap = skybox->getCubemapTexture();
 		cubeMap->bind(GL_TEXTURE0);
+		m_shaderProgram->setUniformValue("drawSkyBox", true);
+	}
+	else
+	{
+		m_shaderProgram->setUniformValue("drawSkyBox", false);
 	}
 }
 
@@ -198,6 +203,8 @@ void ShadingTechnique::setMaterial( const Material* mat )
 	m_shaderProgram->setUniformValue("material.shininess", mat->m_shininess);
 	m_shaderProgram->setUniformValue("material.roughnessValue", mat->m_roughness);
 	m_shaderProgram->setUniformValue("material.fresnelReflectance", mat->m_fresnelReflectance);
+	m_shaderProgram->setUniformValue("material.reflectFactor", mat->m_reflectFactor);
+	m_shaderProgram->setUniformValue("material.refractiveIndex", mat->m_refractiveIndex);
 }
 
 void ShadingTechnique::setMatAmbientColor( const QColor& col )
@@ -238,4 +245,14 @@ void ShadingTechnique::setMatRoughnessValue( float val )
 void ShadingTechnique::setMatFresnelReflectance( float val )
 {
 	m_shaderProgram->setUniformValue("material.fresnelReflectance", val);
+}
+
+void ShadingTechnique::setMatReflectFactor( float val )
+{
+	m_shaderProgram->setUniformValue("material.reflectFactor", val);
+}
+
+void ShadingTechnique::setMatRefractiveIndex( float val )
+{
+	m_shaderProgram->setUniformValue("material.refractiveIndex", val);
 }
