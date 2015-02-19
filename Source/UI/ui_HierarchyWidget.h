@@ -166,13 +166,13 @@ public:
     QVBoxLayout *verticalLayout_15;
     QGridLayout *gridLayout_4;
     QGraphicsView *graphicsView_SpecularMapPicker;
-    QLabel *label_53;
-    QLabel *label_52;
     QGraphicsView *graphicsView_EmissiveMapPicker;
     QGraphicsView *graphicsView_NormalMapPicker;
     QGraphicsView *graphicsView_DiffuseMapPicker;
-    QLabel *label_50;
-    QLabel *label_49;
+    QCheckBox *checkBox_DiffuseMap;
+    QCheckBox *checkBox_NormalMap;
+    QCheckBox *checkBox_SpecularMap;
+    QCheckBox *checkBox_EmissiveMap;
     QWidget *ParticleTab;
     QVBoxLayout *verticalLayout_7;
     QScrollArea *scrollArea_2;
@@ -666,7 +666,7 @@ public:
         scrollArea_3->setWidgetResizable(true);
         scrollAreaWidgetContents_3 = new QWidget();
         scrollAreaWidgetContents_3->setObjectName(QStringLiteral("scrollAreaWidgetContents_3"));
-        scrollAreaWidgetContents_3->setGeometry(QRect(0, 0, 336, 214));
+        scrollAreaWidgetContents_3->setGeometry(QRect(0, 0, 336, 411));
         verticalLayout_3 = new QVBoxLayout(scrollAreaWidgetContents_3);
         verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
         horizontalLayout_36 = new QHBoxLayout();
@@ -787,7 +787,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, -74, 307, 1186));
+        scrollAreaWidgetContents->setGeometry(QRect(0, -775, 330, 1186));
         verticalLayout_4 = new QVBoxLayout(scrollAreaWidgetContents);
         verticalLayout_4->setObjectName(QStringLiteral("verticalLayout_4"));
         groupBox_7 = new QGroupBox(scrollAreaWidgetContents);
@@ -1099,22 +1099,6 @@ public:
 
         gridLayout_4->addWidget(graphicsView_SpecularMapPicker, 2, 1, 1, 1);
 
-        label_53 = new QLabel(groupBox_2);
-        label_53->setObjectName(QStringLiteral("label_53"));
-        sizePolicy5.setHeightForWidth(label_53->sizePolicy().hasHeightForWidth());
-        label_53->setSizePolicy(sizePolicy5);
-        label_53->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
-
-        gridLayout_4->addWidget(label_53, 2, 0, 1, 1);
-
-        label_52 = new QLabel(groupBox_2);
-        label_52->setObjectName(QStringLiteral("label_52"));
-        sizePolicy5.setHeightForWidth(label_52->sizePolicy().hasHeightForWidth());
-        label_52->setSizePolicy(sizePolicy5);
-        label_52->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
-
-        gridLayout_4->addWidget(label_52, 3, 0, 1, 1);
-
         graphicsView_EmissiveMapPicker = new QGraphicsView(groupBox_2);
         graphicsView_EmissiveMapPicker->setObjectName(QStringLiteral("graphicsView_EmissiveMapPicker"));
         sizePolicy4.setHeightForWidth(graphicsView_EmissiveMapPicker->sizePolicy().hasHeightForWidth());
@@ -1142,21 +1126,30 @@ public:
 
         gridLayout_4->addWidget(graphicsView_DiffuseMapPicker, 0, 1, 1, 1);
 
-        label_50 = new QLabel(groupBox_2);
-        label_50->setObjectName(QStringLiteral("label_50"));
-        sizePolicy5.setHeightForWidth(label_50->sizePolicy().hasHeightForWidth());
-        label_50->setSizePolicy(sizePolicy5);
-        label_50->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
+        checkBox_DiffuseMap = new QCheckBox(groupBox_2);
+        checkBox_DiffuseMap->setObjectName(QStringLiteral("checkBox_DiffuseMap"));
 
-        gridLayout_4->addWidget(label_50, 1, 0, 1, 1);
+        gridLayout_4->addWidget(checkBox_DiffuseMap, 0, 0, 1, 1);
 
-        label_49 = new QLabel(groupBox_2);
-        label_49->setObjectName(QStringLiteral("label_49"));
-        sizePolicy5.setHeightForWidth(label_49->sizePolicy().hasHeightForWidth());
-        label_49->setSizePolicy(sizePolicy5);
-        label_49->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
+        checkBox_NormalMap = new QCheckBox(groupBox_2);
+        checkBox_NormalMap->setObjectName(QStringLiteral("checkBox_NormalMap"));
+        QSizePolicy sizePolicy7(QSizePolicy::Minimum, QSizePolicy::Fixed);
+        sizePolicy7.setHorizontalStretch(0);
+        sizePolicy7.setVerticalStretch(0);
+        sizePolicy7.setHeightForWidth(checkBox_NormalMap->sizePolicy().hasHeightForWidth());
+        checkBox_NormalMap->setSizePolicy(sizePolicy7);
 
-        gridLayout_4->addWidget(label_49, 0, 0, 1, 1);
+        gridLayout_4->addWidget(checkBox_NormalMap, 1, 0, 1, 1);
+
+        checkBox_SpecularMap = new QCheckBox(groupBox_2);
+        checkBox_SpecularMap->setObjectName(QStringLiteral("checkBox_SpecularMap"));
+
+        gridLayout_4->addWidget(checkBox_SpecularMap, 2, 0, 1, 1);
+
+        checkBox_EmissiveMap = new QCheckBox(groupBox_2);
+        checkBox_EmissiveMap->setObjectName(QStringLiteral("checkBox_EmissiveMap"));
+
+        gridLayout_4->addWidget(checkBox_EmissiveMap, 3, 0, 1, 1);
 
 
         verticalLayout_15->addLayout(gridLayout_4);
@@ -1621,7 +1614,7 @@ public:
         scrollArea_4->setWidgetResizable(true);
         scrollAreaWidgetContents_4 = new QWidget();
         scrollAreaWidgetContents_4->setObjectName(QStringLiteral("scrollAreaWidgetContents_4"));
-        scrollAreaWidgetContents_4->setGeometry(QRect(0, 0, 197, 232));
+        scrollAreaWidgetContents_4->setGeometry(QRect(0, 0, 316, 428));
         verticalLayout_16 = new QVBoxLayout(scrollAreaWidgetContents_4);
         verticalLayout_16->setObjectName(QStringLiteral("verticalLayout_16"));
         gridLayout_2 = new QGridLayout();
@@ -1822,7 +1815,7 @@ public:
         scrollArea_5->setWidgetResizable(true);
         scrollAreaWidgetContents_5 = new QWidget();
         scrollAreaWidgetContents_5->setObjectName(QStringLiteral("scrollAreaWidgetContents_5"));
-        scrollAreaWidgetContents_5->setGeometry(QRect(0, 0, 234, 231));
+        scrollAreaWidgetContents_5->setGeometry(QRect(0, 0, 316, 428));
         verticalLayout_19 = new QVBoxLayout(scrollAreaWidgetContents_5);
         verticalLayout_19->setObjectName(QStringLiteral("verticalLayout_19"));
         gridLayout_7 = new QGridLayout();
@@ -2064,10 +2057,10 @@ public:
         label_55->setText(QApplication::translate("HierarchyViewer", "Roughness", 0));
         label_67->setText(QApplication::translate("HierarchyViewer", "Refractive Index", 0));
         groupBox_2->setTitle(QApplication::translate("HierarchyViewer", "Texture", 0));
-        label_53->setText(QApplication::translate("HierarchyViewer", "Specular Map", 0));
-        label_52->setText(QApplication::translate("HierarchyViewer", "Emissive Map", 0));
-        label_50->setText(QApplication::translate("HierarchyViewer", "Normal Map", 0));
-        label_49->setText(QApplication::translate("HierarchyViewer", "Diffuse Map", 0));
+        checkBox_DiffuseMap->setText(QApplication::translate("HierarchyViewer", "Diffuse Map", 0));
+        checkBox_NormalMap->setText(QApplication::translate("HierarchyViewer", "Normal Map", 0));
+        checkBox_SpecularMap->setText(QApplication::translate("HierarchyViewer", "Specular Map", 0));
+        checkBox_EmissiveMap->setText(QApplication::translate("HierarchyViewer", "Emissive Map", 0));
         tabWidget->setTabText(tabWidget->indexOf(RenderingTab), QApplication::translate("HierarchyViewer", "Mesh", 0));
         label_13->setText(QApplication::translate("HierarchyViewer", "Mass", 0));
         label_32->setText(QApplication::translate("HierarchyViewer", "Gravity Factor", 0));

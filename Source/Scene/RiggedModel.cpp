@@ -240,7 +240,7 @@ void RiggedModel::render( const float currentTime )
 	m_renderingEffect->enable();
 
 	m_transformMatrix = m_actor->getTransformMatrix();
-	m_transformMatrix.rotate(90, Math::Vector3::UNIT_X); // this is for dae files
+	//m_transformMatrix.rotate(90, Math::Vector3::UNIT_X); // this is for dae files
 	//QMatrix3x3 normalMatrix = modelViewMatrix.normalMatrix();
 
 	m_renderingEffect->setCameraPosition(m_scene->getCamera()->position());

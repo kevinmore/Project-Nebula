@@ -111,6 +111,9 @@ HierarchyWidget::HierarchyWidget(Scene* scene, Canvas* canvas, QWidget *parent)
 	connect(ui->checkBox_RandomColor, SIGNAL(toggled(bool)), this, SLOT(setColorPickerEnabled(bool)));
 	connect(ui->checkBox_EnableCollision, SIGNAL(toggled(bool)), ui->doubleSpinBox_Restitution, SLOT(setEnabled(bool)));
 
+	connect(ui->checkBox_DiffuseMap, SIGNAL(toggled(bool)), this, SLOT(toggleDiffuseMap(bool)));
+	connect(ui->checkBox_NormalMap, SIGNAL(toggled(bool)), this, SLOT(toggleNormalMap(bool)));
+
 	setMaximumWidth(360);
 	updateObjectTree();
 }
@@ -566,8 +569,11 @@ bool HierarchyWidget::eventFilter( QObject *obj, QEvent *ev )
 			if (!m_currentShadingTech) return true;
 			ComponentPtr comp = m_currentObject->getComponent("Model");
 			ModelPtr model = comp.dynamicCast<IModel>();
+// 			QString fileName = QFileDialog::getOpenFileName(0, tr("Select a normal map texture"),
+// 				QFileInfo(model->fileName()).absolutePath(),
+// 				tr("Normal Map(*.*)"));
 			QString fileName = QFileDialog::getOpenFileName(0, tr("Select a normal map texture"),
-				QFileInfo(model->fileName()).absolutePath(),
+				"../Resource/Textures",
 				tr("Normal Map(*.*)"));
 			if (!fileName.isEmpty())
 			{
@@ -798,6 +804,8 @@ void HierarchyWidget::readShadingProperties()
 {
 	ui->graphicsView_DiffuseMapPicker->scene()->clear();
 	ui->graphicsView_NormalMapPicker->scene()->clear();
+	ui->checkBox_DiffuseMap->setChecked(false);
+	ui->checkBox_NormalMap->setChecked(false);
 	ComponentPtr comp = m_currentObject->getComponent("Model");
 	ModelPtr model = comp.dynamicCast<IModel>();
 	if (!model) return;
@@ -830,6 +838,7 @@ void HierarchyWidget::readShadingProperties()
 
 	if (mat->m_hasDiffuseMap)
 	{
+		ui->checkBox_DiffuseMap->setChecked(true);
 		QPixmap tex = mat->getTexture(Texture::DiffuseMap)->generateQPixmap();
 		QGraphicsPixmapItem* item = new QGraphicsPixmapItem(tex);
 		ui->graphicsView_DiffuseMapPicker->scene()->addItem(item);
@@ -837,6 +846,7 @@ void HierarchyWidget::readShadingProperties()
 	}
 	if (mat->m_hasNormalMap)
 	{
+		ui->checkBox_NormalMap->setChecked(true);
 		QPixmap tex = mat->getTexture(Texture::NormalMap)->generateQPixmap();
 		QGraphicsPixmapItem* item = new QGraphicsPixmapItem(tex);
 		ui->graphicsView_NormalMapPicker->scene()->addItem(item);
@@ -1116,4 +1126,26 @@ void HierarchyWidget::readRigidBodyProperties( RigidBodyPtr rb )
 		ui->comboBox_RigidBodyMotionType->setCurrentText("Fixed");
 		break;
 	}
+}
+
+void HierarchyWidget::toggleDiffuseMap( bool state )
+{
+	// enable or disable the diffuse map
+	foreach(Material* mat, m_currentMaterials)
+	{
+		mat->m_hasDiffuseMap = state;
+	}
+
+	emit materialChanged();
+}
+
+void HierarchyWidget::toggleNormalMap( bool state )
+{
+	// enable or disable the diffuse map
+	foreach(Material* mat, m_currentMaterials)
+	{
+		mat->m_hasNormalMap = state;
+	}
+
+	emit materialChanged();
 }

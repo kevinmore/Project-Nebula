@@ -584,7 +584,7 @@
             <x>0</x>
             <y>0</y>
             <width>336</width>
-            <height>214</height>
+            <height>411</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -762,8 +762,8 @@
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>-74</y>
-            <width>307</width>
+            <y>-775</y>
+            <width>330</width>
             <height>1186</height>
            </rect>
           </property>
@@ -1335,38 +1335,6 @@
                   </property>
                  </widget>
                 </item>
-                <item row="2" column="0">
-                 <widget class="QLabel" name="label_53">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="text">
-                   <string>Specular Map</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item row="3" column="0">
-                 <widget class="QLabel" name="label_52">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="text">
-                   <string>Emissive Map</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                </item>
                 <item row="3" column="1">
                  <widget class="QGraphicsView" name="graphicsView_EmissiveMapPicker">
                   <property name="sizePolicy">
@@ -1433,10 +1401,17 @@
                   </property>
                  </widget>
                 </item>
+                <item row="0" column="0">
+                 <widget class="QCheckBox" name="checkBox_DiffuseMap">
+                  <property name="text">
+                   <string>Diffuse Map</string>
+                  </property>
+                 </widget>
+                </item>
                 <item row="1" column="0">
-                 <widget class="QLabel" name="label_50">
+                 <widget class="QCheckBox" name="checkBox_NormalMap">
                   <property name="sizePolicy">
-                   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                   <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                     <horstretch>0</horstretch>
                     <verstretch>0</verstretch>
                    </sizepolicy>
@@ -1444,24 +1419,19 @@
                   <property name="text">
                    <string>Normal Map</string>
                   </property>
-                  <property name="alignment">
-                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                 </widget>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QCheckBox" name="checkBox_SpecularMap">
+                  <property name="text">
+                   <string>Specular Map</string>
                   </property>
                  </widget>
                 </item>
-                <item row="0" column="0">
-                 <widget class="QLabel" name="label_49">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
+                <item row="3" column="0">
+                 <widget class="QCheckBox" name="checkBox_EmissiveMap">
                   <property name="text">
-                   <string>Diffuse Map</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                   <string>Emissive Map</string>
                   </property>
                  </widget>
                 </item>
@@ -2200,8 +2170,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>197</width>
-            <height>232</height>
+            <width>316</width>
+            <height>428</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_16">
@@ -2606,8 +2576,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>234</width>
-            <height>231</height>
+            <width>316</width>
+            <height>428</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_19">

@@ -230,16 +230,34 @@ vec4 CalcSpotLight(SpotLight l, VSOutput In)
         return vec4(0,0,0,0);                                                               
     }                                                                                       
 }                                                                                           
-                             
+
+vec3 CalcBumpedNormal()                                                                     
+{                                                                                           
+    vec3 Normal = normalize(Normal0);                                                       
+    vec3 Tangent = normalize(Tangent0);                                                     
+    Tangent = normalize(Tangent - dot(Tangent, Normal) * Normal);                           
+    vec3 Bitangent = cross(Tangent, Normal);                                                
+    vec3 BumpMapNormal = texture(gNormalMap, TexCoord0).xyz;                                
+    BumpMapNormal = 2.0 * BumpMapNormal - vec3(1.0, 1.0, 1.0);                              
+    vec3 NewNormal;                                                                         
+    mat3 TBN = mat3(Tangent, Bitangent, Normal);                                            
+    NewNormal = TBN * BumpMapNormal;                                                        
+    NewNormal = normalize(NewNormal);                                                       
+    return NewNormal;                                                                       
+}                             
                                                                 
 void main()
 {                                    
     VSOutput In;
 	In.Color = Color0;
     In.TexCoord = TexCoord0;
-	In.Normal   = normalize(Normal0);
     In.WorldPos = WorldPos0;
 	In.Tangent = Tangent0;
+
+	if(material.hasNormalMap)
+		In.Normal   = CalcBumpedNormal();
+	else
+		In.Normal   = normalize(Normal0);
 
     vec4 TotalLight;
 	
@@ -261,6 +279,14 @@ void main()
   
 	// Access the cube map texture
 	vec4 cubeMapColor = texture(gCubemapTexture, reflectDir);
+
+	vec4 baseColor;
+	if(material.hasDiffuseMap)
+		baseColor = texture(gColorMap, In.TexCoord.xy);
+	else
+		baseColor = Color0;
+
+	vec4 modelColor = baseColor * TotalLight;
 
 	FragColor = mix(TotalLight, cubeMapColor, material.fresnelReflectance);
 }

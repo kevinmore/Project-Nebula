@@ -4,6 +4,7 @@
 FKController::FKController(ModelLoaderPtr loader, Skeleton* skeleton)
 {
 	m_GlobalInverseTransform = loader->getGlobalInverseTransform();
+	m_GlobalInverseTransform.rotate(180, vec3(1, 0, 0));
 	m_BoneMapping = loader->getBoneMap();
 	m_NumBones = loader->getNumBones();
 	m_Animations = loader->getAnimations();

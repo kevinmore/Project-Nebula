@@ -95,6 +95,8 @@ private slots:
 	void onScale100Pushed();
 	void assignPuppet();
 
+	void toggleDiffuseMap(bool state);
+	void toggleNormalMap(bool state);
 
 public slots:
 	void deleteGameObject();

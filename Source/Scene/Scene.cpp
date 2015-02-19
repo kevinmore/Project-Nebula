@@ -385,12 +385,12 @@ void Scene::toggleSkybox( bool state )
 	{
 		m_skybox = SkyboxPtr(new Skybox(this));
 		m_skybox->init(
-			"../Resource/Textures/skybox/interstellar_ft.tga",
-			"../Resource/Textures/skybox/interstellar_bk.tga",
-			"../Resource/Textures/skybox/interstellar_up.tga",
-			"../Resource/Textures/skybox/interstellar_dn.tga",
-			"../Resource/Textures/skybox/interstellar_rt.tga",
-			"../Resource/Textures/skybox/interstellar_lf.tga");
+			"../Resource/Textures/skybox/Vasa/posx.jpg",
+			"../Resource/Textures/skybox/Vasa/negx.jpg",
+			"../Resource/Textures/skybox/Vasa/posy.jpg",
+			"../Resource/Textures/skybox/Vasa/negy.jpg",
+			"../Resource/Textures/skybox/Vasa/posz.jpg",
+			"../Resource/Textures/skybox/Vasa/negz.jpg");
 	}
 	else
 	{
