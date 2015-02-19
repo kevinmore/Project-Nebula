@@ -30,12 +30,12 @@ public:
     void setMVPMatrix(const mat4& mvp);
     void setModelMatrix(const mat4& model);
 	void setViewMatrix(const mat4& view);
-    void setColorTextureUnit(uint TextureUnit);
-	void setShadowMapTextureUnit(uint TextureUnit);
-	void setNormalMapTextureUnit(uint TextureUnit);
-    void setEyeWorldPos(const vec3& EyeWorldPos);
+    void setColorTextureUnit(uint textureUnit);
+	void setShadowMapTextureUnit(uint textureUnit);
+	void setNormalMapTextureUnit(uint textureUnit);
+    void setCameraPosition(const vec3& cameraPos);
     
-    void setBoneTransform(uint Index, const mat4& Transform);
+    void setBoneTransform(uint tndex, const mat4& transform);
 
 	void setMaterial(const Material* mat);
 	void setMatAmbientColor(const QColor& col);
@@ -46,7 +46,6 @@ public:
 	void setMatSpecularPower(float power);
 	void setMatRoughnessValue(float val);
 	void setMatFresnelReflectance(float val);
-	void setMatReflectFactor(float val);
 	void setMatRefractiveIndex(float val);
 
 public slots:

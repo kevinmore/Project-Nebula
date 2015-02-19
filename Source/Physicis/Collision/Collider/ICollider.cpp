@@ -28,7 +28,7 @@ void ICollider::render( const float currentTime )
 	m_renderingEffect->enable();
 
 	mat4 modelMatrix = m_actor->getTransformMatrix() * m_transformMatrix;
-	m_renderingEffect->setEyeWorldPos(m_scene->getCamera()->position());
+	m_renderingEffect->setCameraPosition(m_scene->getCamera()->position());
 	m_renderingEffect->setMVPMatrix(m_scene->getCamera()->viewProjectionMatrix() * modelMatrix);
 	m_renderingEffect->setModelMatrix(modelMatrix); 
 	m_renderingEffect->setViewMatrix(m_scene->getCamera()->viewMatrix());

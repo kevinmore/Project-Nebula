@@ -584,7 +584,7 @@
             <x>0</x>
             <y>0</y>
             <width>336</width>
-            <height>411</height>
+            <height>214</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -762,9 +762,9 @@
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>-31</y>
+            <y>-74</y>
             <width>307</width>
-            <height>1217</height>
+            <height>1186</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -1248,73 +1248,6 @@
                  </layout>
                 </item>
                 <item row="8" column="0">
-                 <widget class="QLabel" name="label_66">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="text">
-                   <string>Reflect Factor</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item row="8" column="1">
-                 <layout class="QHBoxLayout" name="horizontalLayout_52">
-                  <item>
-                   <widget class="QSlider" name="horizontalSlider_reflectFactor">
-                    <property name="maximum">
-                     <number>100</number>
-                    </property>
-                    <property name="value">
-                     <number>100</number>
-                    </property>
-                    <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QDoubleSpinBox" name="doubleSpinBox_reflectFactor">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="minimumSize">
-                     <size>
-                      <width>60</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="maximumSize">
-                     <size>
-                      <width>60</width>
-                      <height>16777215</height>
-                     </size>
-                    </property>
-                    <property name="decimals">
-                     <number>4</number>
-                    </property>
-                    <property name="maximum">
-                     <double>1.000000000000000</double>
-                    </property>
-                    <property name="singleStep">
-                     <double>0.100000000000000</double>
-                    </property>
-                    <property name="value">
-                     <double>1.000000000000000</double>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-                <item row="9" column="0">
                  <widget class="QLabel" name="label_67">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -1330,7 +1263,7 @@
                   </property>
                  </widget>
                 </item>
-                <item row="9" column="1">
+                <item row="8" column="1">
                  <widget class="QDoubleSpinBox" name="doubleSpinBox_refractiveIndex">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -2267,8 +2200,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>316</width>
-            <height>428</height>
+            <width>197</width>
+            <height>232</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_16">
@@ -2673,8 +2606,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>316</width>
-            <height>428</height>
+            <width>234</width>
+            <height>231</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_19">

@@ -41,7 +41,6 @@ struct MaterialInfo
 	float fresnelReflectance; // fresnel reflectance at normal incidence
 
 	// below is used for transmittance
-	float reflectFactor;
 	float refractiveIndex;
 };
 
@@ -263,5 +262,5 @@ void main()
 	// Access the cube map texture
 	vec4 cubeMapColor = texture(gCubemapTexture, reflectDir);
 
-	FragColor = mix(TotalLight, cubeMapColor, material.reflectFactor);
+	FragColor = mix(TotalLight, cubeMapColor, material.fresnelReflectance);
 }

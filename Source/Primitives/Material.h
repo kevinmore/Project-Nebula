@@ -26,6 +26,7 @@ public:
 	bool isTranslucent() const { return m_alphaBlending; }
 
 	void addTexture(TexturePtr tex);
+	TexturePtr getTexture(Texture::TextureUsage usage) const;
 
 	void bind();
 
@@ -42,7 +43,6 @@ public:
 	float m_shininessStrength;
 	float m_roughness;
 	float m_fresnelReflectance;
-	float m_reflectFactor;
 	float m_refractiveIndex;
 
 	int  m_twoSided;

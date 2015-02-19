@@ -160,10 +160,6 @@ public:
     QHBoxLayout *horizontalLayout_38;
     QSlider *horizontalSlider_fresnelReflectance;
     QDoubleSpinBox *doubleSpinBox_fresnelReflectance;
-    QLabel *label_66;
-    QHBoxLayout *horizontalLayout_52;
-    QSlider *horizontalSlider_reflectFactor;
-    QDoubleSpinBox *doubleSpinBox_reflectFactor;
     QLabel *label_67;
     QDoubleSpinBox *doubleSpinBox_refractiveIndex;
     QGroupBox *groupBox_2;
@@ -670,7 +666,7 @@ public:
         scrollArea_3->setWidgetResizable(true);
         scrollAreaWidgetContents_3 = new QWidget();
         scrollAreaWidgetContents_3->setObjectName(QStringLiteral("scrollAreaWidgetContents_3"));
-        scrollAreaWidgetContents_3->setGeometry(QRect(0, 0, 336, 411));
+        scrollAreaWidgetContents_3->setGeometry(QRect(0, 0, 336, 214));
         verticalLayout_3 = new QVBoxLayout(scrollAreaWidgetContents_3);
         verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
         horizontalLayout_36 = new QHBoxLayout();
@@ -791,7 +787,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, -31, 307, 1217));
+        scrollAreaWidgetContents->setGeometry(QRect(0, -74, 307, 1186));
         verticalLayout_4 = new QVBoxLayout(scrollAreaWidgetContents);
         verticalLayout_4->setObjectName(QStringLiteral("verticalLayout_4"));
         groupBox_7 = new QGroupBox(scrollAreaWidgetContents);
@@ -1060,47 +1056,13 @@ public:
 
         gridLayout_3->addLayout(horizontalLayout_38, 7, 1, 1, 1);
 
-        label_66 = new QLabel(groupBox);
-        label_66->setObjectName(QStringLiteral("label_66"));
-        sizePolicy5.setHeightForWidth(label_66->sizePolicy().hasHeightForWidth());
-        label_66->setSizePolicy(sizePolicy5);
-        label_66->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
-
-        gridLayout_3->addWidget(label_66, 8, 0, 1, 1);
-
-        horizontalLayout_52 = new QHBoxLayout();
-        horizontalLayout_52->setObjectName(QStringLiteral("horizontalLayout_52"));
-        horizontalSlider_reflectFactor = new QSlider(groupBox);
-        horizontalSlider_reflectFactor->setObjectName(QStringLiteral("horizontalSlider_reflectFactor"));
-        horizontalSlider_reflectFactor->setMaximum(100);
-        horizontalSlider_reflectFactor->setValue(100);
-        horizontalSlider_reflectFactor->setOrientation(Qt::Horizontal);
-
-        horizontalLayout_52->addWidget(horizontalSlider_reflectFactor);
-
-        doubleSpinBox_reflectFactor = new QDoubleSpinBox(groupBox);
-        doubleSpinBox_reflectFactor->setObjectName(QStringLiteral("doubleSpinBox_reflectFactor"));
-        sizePolicy4.setHeightForWidth(doubleSpinBox_reflectFactor->sizePolicy().hasHeightForWidth());
-        doubleSpinBox_reflectFactor->setSizePolicy(sizePolicy4);
-        doubleSpinBox_reflectFactor->setMinimumSize(QSize(60, 0));
-        doubleSpinBox_reflectFactor->setMaximumSize(QSize(60, 16777215));
-        doubleSpinBox_reflectFactor->setDecimals(4);
-        doubleSpinBox_reflectFactor->setMaximum(1);
-        doubleSpinBox_reflectFactor->setSingleStep(0.1);
-        doubleSpinBox_reflectFactor->setValue(1);
-
-        horizontalLayout_52->addWidget(doubleSpinBox_reflectFactor);
-
-
-        gridLayout_3->addLayout(horizontalLayout_52, 8, 1, 1, 1);
-
         label_67 = new QLabel(groupBox);
         label_67->setObjectName(QStringLiteral("label_67"));
         sizePolicy5.setHeightForWidth(label_67->sizePolicy().hasHeightForWidth());
         label_67->setSizePolicy(sizePolicy5);
         label_67->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
 
-        gridLayout_3->addWidget(label_67, 9, 0, 1, 1);
+        gridLayout_3->addWidget(label_67, 8, 0, 1, 1);
 
         doubleSpinBox_refractiveIndex = new QDoubleSpinBox(groupBox);
         doubleSpinBox_refractiveIndex->setObjectName(QStringLiteral("doubleSpinBox_refractiveIndex"));
@@ -1114,7 +1076,7 @@ public:
         doubleSpinBox_refractiveIndex->setSingleStep(0.1);
         doubleSpinBox_refractiveIndex->setValue(1);
 
-        gridLayout_3->addWidget(doubleSpinBox_refractiveIndex, 9, 1, 1, 1);
+        gridLayout_3->addWidget(doubleSpinBox_refractiveIndex, 8, 1, 1, 1);
 
 
         verticalLayout_12->addLayout(gridLayout_3);
@@ -1659,7 +1621,7 @@ public:
         scrollArea_4->setWidgetResizable(true);
         scrollAreaWidgetContents_4 = new QWidget();
         scrollAreaWidgetContents_4->setObjectName(QStringLiteral("scrollAreaWidgetContents_4"));
-        scrollAreaWidgetContents_4->setGeometry(QRect(0, 0, 316, 428));
+        scrollAreaWidgetContents_4->setGeometry(QRect(0, 0, 197, 232));
         verticalLayout_16 = new QVBoxLayout(scrollAreaWidgetContents_4);
         verticalLayout_16->setObjectName(QStringLiteral("verticalLayout_16"));
         gridLayout_2 = new QGridLayout();
@@ -1860,7 +1822,7 @@ public:
         scrollArea_5->setWidgetResizable(true);
         scrollAreaWidgetContents_5 = new QWidget();
         scrollAreaWidgetContents_5->setObjectName(QStringLiteral("scrollAreaWidgetContents_5"));
-        scrollAreaWidgetContents_5->setGeometry(QRect(0, 0, 316, 428));
+        scrollAreaWidgetContents_5->setGeometry(QRect(0, 0, 234, 231));
         verticalLayout_19 = new QVBoxLayout(scrollAreaWidgetContents_5);
         verticalLayout_19->setObjectName(QStringLiteral("verticalLayout_19"));
         gridLayout_7 = new QGridLayout();
@@ -2100,7 +2062,6 @@ public:
         label_56->setText(QApplication::translate("HierarchyViewer", "Fresnel Reflectance", 0));
         label_47->setText(QApplication::translate("HierarchyViewer", "Specular Intensity", 0));
         label_55->setText(QApplication::translate("HierarchyViewer", "Roughness", 0));
-        label_66->setText(QApplication::translate("HierarchyViewer", "Reflect Factor", 0));
         label_67->setText(QApplication::translate("HierarchyViewer", "Refractive Index", 0));
         groupBox_2->setTitle(QApplication::translate("HierarchyViewer", "Texture", 0));
         label_53->setText(QApplication::translate("HierarchyViewer", "Specular Map", 0));

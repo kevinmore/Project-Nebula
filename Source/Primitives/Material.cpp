@@ -10,7 +10,6 @@ Material::Material( const QString& name )
 	m_shininessStrength(1.0f),
 	m_roughness(0.5f), // cook torrance
 	m_fresnelReflectance(0.5f), // cook torrance
-	m_reflectFactor(0.0f),
 	m_refractiveIndex(1.0f),
 	m_twoSided(1),
 	m_blendMode(Default),
@@ -41,7 +40,6 @@ Material::Material(const QString& name,
 	  m_shininessStrength(shininessStrength),
 	  m_roughness(0.5f), // cook torrance
 	  m_fresnelReflectance(0.5f), // cook torrance
-	  m_reflectFactor(0.0f),
 	  m_refractiveIndex(1.0f),
 	  m_twoSided(twoSided),
 	  m_blendMode(blendMode),
@@ -87,8 +85,8 @@ void Material::bind()
 		if (tex->usage() == Texture::DiffuseMap)
 			tex->bind(DIFFUSE_TEXTURE_UNIT);
 
-		else if (tex->usage() == Texture::NormalMap)
-			tex->bind(NORMAL_TEXTURE_UNIT);
+		//else if (tex->usage() == Texture::NormalMap)
+			//tex->bind(NORMAL_TEXTURE_UNIT);
 	}
 }
 
@@ -101,4 +99,19 @@ void Material::addTexture( TexturePtr tex )
 		m_hasDiffuseMap = true;
 	else if (tex->usage() == Texture::NormalMap)
 		m_hasNormalMap = true;
+}
+
+TexturePtr Material::getTexture( Texture::TextureUsage usage ) const
+{
+	TexturePtr ret;
+	foreach(TexturePtr tex, m_textures)
+	{
+		if (tex->usage() == usage)
+		{
+			ret = tex;
+			break;
+		}
+	}
+
+	return ret;
 }

@@ -12,7 +12,7 @@ uniform vec3 gEyeWorldPos;
 struct MaterialInfo
 {
 	// below is used for transmittance
-	float reflectFactor;
+	float fresnelReflectance; // fresnel reflectance at normal incidence
 	float refractiveIndex;
 };
                                                                
@@ -31,5 +31,5 @@ void main()
 	vec4 refractColor = texture(gCubemapTexture, refractDir);
 
 
-	FragColor = mix(refractColor, reflectColor, material.reflectFactor);
+	FragColor = mix(refractColor, reflectColor, material.fresnelReflectance);
 }

@@ -94,9 +94,6 @@ HierarchyWidget::HierarchyWidget(Scene* scene, Canvas* canvas, QWidget *parent)
 	connect(ui->horizontalSlider_fresnelReflectance, SIGNAL(valueChanged(int)), this, SLOT(onFresnelReflectanceSliderChange(int)));
 	connect(ui->doubleSpinBox_fresnelReflectance, SIGNAL(valueChanged(double)), this, SLOT(onFresnelReflectanceDoubleBoxChange(double)));
 
-	connect(ui->horizontalSlider_reflectFactor, SIGNAL(valueChanged(int)), this, SLOT(onReflectFactorSliderChange(int)));
-	connect(ui->doubleSpinBox_reflectFactor, SIGNAL(valueChanged(double)), this, SLOT(onReflectFactorDoubleBoxChange(double)));
-
 	connect(ui->doubleSpinBox_refractiveIndex, SIGNAL(valueChanged(double)), this, SLOT(onRefractiveIndexDoubleBoxChange(double)));
 
 	connect(ui->horizontalSlider_LightAttConst, SIGNAL(valueChanged(int)), this, SLOT(onConstantAttenuationSliderChange(int)));
@@ -555,11 +552,23 @@ bool HierarchyWidget::eventFilter( QObject *obj, QEvent *ev )
 			ModelPtr model = comp.dynamicCast<IModel>();
 			QString fileName = QFileDialog::getOpenFileName(0, tr("Select a normal map texture"),
 				QFileInfo(model->fileName()).absolutePath(),
-				tr("Texture File(*.*)"));
+				tr("Normal Map(*.*)"));
 			if (!fileName.isEmpty())
 			{
-				// apply the texture to the particle system and color picker both
-				qDebug() << "normal mapping insertion hasn't been implemented yet!";
+				// apply the texture to the material and color picker both
+				TexturePtr texture_normalMap = m_scene->textureManager()->getTexture(fileName);
+				if(!texture_normalMap)
+				{
+					texture_normalMap = m_scene->textureManager()->addTexture(fileName, fileName, Texture::Texture2D, Texture::NormalMap);
+				}
+				m_currentMaterials[0]->addTexture(texture_normalMap);
+				emit materialChanged();
+
+				ui->graphicsView_NormalMapPicker->scene()->clear();
+				QPixmap tex = texture_normalMap->generateQPixmap();
+				QGraphicsPixmapItem* item = new QGraphicsPixmapItem(tex);
+				ui->graphicsView_NormalMapPicker->scene()->addItem(item);
+				ui->graphicsView_NormalMapPicker->fitInView(item);
 			}
 
 			return true;
@@ -706,25 +715,6 @@ void HierarchyWidget::onFresnelReflectanceDoubleBoxChange( double value )
 	emit materialChanged();
 }
 
-void HierarchyWidget::onReflectFactorSliderChange( int value )
-{
-	ui->doubleSpinBox_reflectFactor->setValue(value/(double)100);
-}
-
-void HierarchyWidget::onReflectFactorDoubleBoxChange( double value )
-{
-	ui->horizontalSlider_reflectFactor->setValue(value * 100);
-
-	// change the material of the model
-	if(m_currentMaterials.size() == 0) return;
-	foreach(Material* mat, m_currentMaterials)
-	{
-		mat->m_reflectFactor = value;
-	}
-
-	emit materialChanged();
-}
-
 void HierarchyWidget::onRefractiveIndexDoubleBoxChange( double value )
 {
 	// change the material of the model
@@ -813,9 +803,29 @@ void HierarchyWidget::readShadingProperties()
 	ui->doubleSpinBox_ShininessStrength->setValue(mat->m_shininessStrength);
 	ui->doubleSpinBox_Roughness->setValue(mat->m_roughness);
 	ui->doubleSpinBox_fresnelReflectance->setValue(mat->m_fresnelReflectance);
-	ui->doubleSpinBox_reflectFactor->setValue(mat->m_reflectFactor);
 	ui->doubleSpinBox_refractiveIndex->setValue(mat->m_refractiveIndex);
 	// map the textures
+
+	// normal map
+	ui->graphicsView_DiffuseMapPicker->scene()->clear();
+	ui->graphicsView_NormalMapPicker->scene()->clear();
+	ui->graphicsView_SpecularMapPicker->scene()->clear();
+	ui->graphicsView_EmissiveMapPicker->scene()->clear();
+
+	if (mat->m_hasDiffuseMap)
+	{
+		QPixmap tex = mat->getTexture(Texture::DiffuseMap)->generateQPixmap();
+		QGraphicsPixmapItem* item = new QGraphicsPixmapItem(tex);
+		ui->graphicsView_DiffuseMapPicker->scene()->addItem(item);
+		ui->graphicsView_DiffuseMapPicker->fitInView(item);
+	}
+	if (mat->m_hasNormalMap)
+	{
+		QPixmap tex = mat->getTexture(Texture::NormalMap)->generateQPixmap();
+		QGraphicsPixmapItem* item = new QGraphicsPixmapItem(tex);
+		ui->graphicsView_NormalMapPicker->scene()->addItem(item);
+		ui->graphicsView_NormalMapPicker->fitInView(item);
+	}
 	
 }
 

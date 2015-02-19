@@ -164,31 +164,31 @@ void ShadingTechnique::setViewMatrix( const mat4& view )
 	m_shaderProgram->setUniformValue("viewMatrix", view);
 }
 
-void ShadingTechnique::setColorTextureUnit(unsigned int TextureUnit)
+void ShadingTechnique::setColorTextureUnit(unsigned int textureUnit)
 {
-	m_shaderProgram->setUniformValue("gColorMap", TextureUnit);
+	m_shaderProgram->setUniformValue("gColorMap", textureUnit);
 }
 
-void ShadingTechnique::setShadowMapTextureUnit(unsigned int TextureUnit)
+void ShadingTechnique::setShadowMapTextureUnit(unsigned int textureUnit)
 {
-	m_shaderProgram->setUniformValue("gShadowMap", TextureUnit);
+	m_shaderProgram->setUniformValue("gShadowMap", textureUnit);
 }
 
-void ShadingTechnique::setNormalMapTextureUnit(unsigned int TextureUnit)
+void ShadingTechnique::setNormalMapTextureUnit(unsigned int textureUnit)
 {
-	m_shaderProgram->setUniformValue("gNormalMap", TextureUnit);
+	m_shaderProgram->setUniformValue("gNormalMap", textureUnit);
 }
 
-void ShadingTechnique::setEyeWorldPos(const vec3& EyeWorldPos)
+void ShadingTechnique::setCameraPosition(const vec3& cameraPos)
 {
-	m_shaderProgram->setUniformValue("gEyeWorldPos", EyeWorldPos);
+	m_shaderProgram->setUniformValue("gEyeWorldPos", cameraPos);
 }
 
-void ShadingTechnique::setBoneTransform(uint Index, const mat4& Transform)
+void ShadingTechnique::setBoneTransform(uint index, const mat4& transform)
 {
-    assert(Index < MAX_BONES);
-	QString boneString = "gBones["+ QString::number(Index) + "]";
-	m_shaderProgram->setUniformValue(boneString.toStdString().c_str(), Transform);
+    assert(index < MAX_BONES);
+	QString boneString = "gBones["+ QString::number(index) + "]";
+	m_shaderProgram->setUniformValue(boneString.toStdString().c_str(), transform);
 }
 
 void ShadingTechnique::setMaterial( const Material* mat )
@@ -203,7 +203,6 @@ void ShadingTechnique::setMaterial( const Material* mat )
 	m_shaderProgram->setUniformValue("material.shininess", mat->m_shininess);
 	m_shaderProgram->setUniformValue("material.roughnessValue", mat->m_roughness);
 	m_shaderProgram->setUniformValue("material.fresnelReflectance", mat->m_fresnelReflectance);
-	m_shaderProgram->setUniformValue("material.reflectFactor", mat->m_reflectFactor);
 	m_shaderProgram->setUniformValue("material.refractiveIndex", mat->m_refractiveIndex);
 }
 
@@ -245,11 +244,6 @@ void ShadingTechnique::setMatRoughnessValue( float val )
 void ShadingTechnique::setMatFresnelReflectance( float val )
 {
 	m_shaderProgram->setUniformValue("material.fresnelReflectance", val);
-}
-
-void ShadingTechnique::setMatReflectFactor( float val )
-{
-	m_shaderProgram->setUniformValue("material.reflectFactor", val);
 }
 
 void ShadingTechnique::setMatRefractiveIndex( float val )
