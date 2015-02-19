@@ -109,6 +109,7 @@
     <ClInclude Include="Primitives\Puppet.h" />
     <ClInclude Include="Physicis\Collision\Collider\SphereCollider.h" />
     <ClInclude Include="Primitives\Transform.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Utility\AssimpThread.h" />
     <ClInclude Include="UI\Canvas.h" />
     <ClInclude Include="UI\HierarchyWidget.h" />
@@ -156,9 +157,13 @@
     <ClInclude Include="Utility\EngineCommon.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Resource\Logo\nebula.ico" />
     <None Include="Physicis\World\PhysicsWorldObject.inl" />
     <None Include="UI\HierarchyWidget.ui" />
     <None Include="UI\SkyboxWidget.ui" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Project Nebula.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{89A9A61D-5047-460C-91C1-C99FC990ABD7}</ProjectGuid>

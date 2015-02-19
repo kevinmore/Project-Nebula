@@ -144,10 +144,15 @@
     <ClInclude Include="Primitives\Component.h" />
     <ClInclude Include="Primitives\GameObject.h" />
     <ClInclude Include="UI\HierarchyWidget.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="UI\HierarchyWidget.ui" />
     <None Include="UI\SkyboxWidget.ui" />
     <None Include="Physicis\World\PhysicsWorldObject.inl" />
+    <None Include="..\Resource\Logo\nebula.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Project Nebula.rc" />
   </ItemGroup>
 </Project>

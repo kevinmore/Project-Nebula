@@ -12,6 +12,8 @@ int main(int argc, char* argv[])
 		app.setStyleSheet(file.readAll());
 		file.close();
 	}
+
+	app.setWindowIcon(QIcon("../Resource/Logo/nebula.png"));
 	
 	MainWindow window;
 	window.show();
