@@ -60,9 +60,17 @@ bool ShadingTechnique::compileShader()
 		usingCubeMap = true;
 	else
 		usingCubeMap = false;
+	
+	// bind the shader program for initializing
+	m_shaderProgram->bind();
 
 	// process the lights in the scene
 	updateLights();
+
+	// assign texture units
+	setColorTextureUnit(0);
+	setShadowMapTextureUnit(1);
+	setNormalMapTextureUnit(2);
 
 	return true;
 }
@@ -76,8 +84,6 @@ void ShadingTechnique::updateLights()
 	// process each light
 	uint dircLightsCount, pointLightsCount, spotLightsCount;
 	dircLightsCount = pointLightsCount = spotLightsCount = 0;
-
-	m_shaderProgram->bind();
 
 	foreach(LightPtr light, lights)
 	{

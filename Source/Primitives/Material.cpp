@@ -85,13 +85,24 @@ void Material::bind()
 		if (tex->usage() == Texture::DiffuseMap)
 			tex->bind(DIFFUSE_TEXTURE_UNIT);
 
-		//else if (tex->usage() == Texture::NormalMap)
-			//tex->bind(NORMAL_TEXTURE_UNIT);
+		else if (tex->usage() == Texture::NormalMap)
+			tex->bind(NORMAL_TEXTURE_UNIT);
 	}
 }
 
 void Material::addTexture( TexturePtr tex )
 {
+	// one material can only have one type of texture
+	// delete the duplicated texture
+	foreach(TexturePtr t, m_textures)
+	{
+		if (t->usage() == tex->usage())
+		{
+			m_textures.removeAt(m_textures.indexOf(t));
+			break;
+		}
+	}
+
 	m_textures << tex;
 
 	// check which texture type it is

@@ -495,7 +495,11 @@ bool HierarchyWidget::eventFilter( QObject *obj, QEvent *ev )
 				ui->graphicsView_AmbientColorPicker->setBackgroundBrush(QBrush(col, Qt::DiagCrossPattern));
 				
 				// change the material of the model
-				m_currentMaterials[0]->m_ambientColor = col;
+				foreach(Material* mat, m_currentMaterials)
+				{
+					mat->m_ambientColor = col;
+				}
+
 				emit materialChanged();
 			}
 			return true;
@@ -510,7 +514,11 @@ bool HierarchyWidget::eventFilter( QObject *obj, QEvent *ev )
 				ui->graphicsView_DiffuseColorPicker->setBackgroundBrush(QBrush(col, Qt::DiagCrossPattern));
 				
 				// change the material of the model
-				m_currentMaterials[0]->m_diffuseColor = col;
+				foreach(Material* mat, m_currentMaterials)
+				{
+					mat->m_diffuseColor = col;
+				}
+
 				emit materialChanged();
 			}
 			return true;
@@ -525,7 +533,11 @@ bool HierarchyWidget::eventFilter( QObject *obj, QEvent *ev )
 				ui->graphicsView_SpecularColorPicker->setBackgroundBrush(QBrush(col, Qt::DiagCrossPattern));
 				
 				// change the material of the model
-				m_currentMaterials[0]->m_specularColor = col;
+				foreach(Material* mat, m_currentMaterials)
+				{
+					mat->m_specularColor = col;
+				}
+
 				emit materialChanged();
 			}
 			return true;
@@ -540,7 +552,11 @@ bool HierarchyWidget::eventFilter( QObject *obj, QEvent *ev )
 				ui->graphicsView_EmissiveColorPicker->setBackgroundBrush(QBrush(col, Qt::DiagCrossPattern));
 				
 				// change the material of the model
-				m_currentMaterials[0]->m_emissiveColor = col;
+				foreach(Material* mat, m_currentMaterials)
+				{
+					mat->m_emissiveColor = col;
+				}
+
 				emit materialChanged();
 			}
 			return true;
