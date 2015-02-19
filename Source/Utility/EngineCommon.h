@@ -1,5 +1,6 @@
 #pragma once
 #include <assert.h>
+#include <glm/glm.hpp>
 #include <QMap>
 #include <QLinkedList>
 #include <QVector>
