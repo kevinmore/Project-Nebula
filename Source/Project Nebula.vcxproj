@@ -205,7 +205,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\ThirdParty\Qt\include;$(ProjectDir)..\ThirdParty\Qt\include\QtCore;$(ProjectDir)..\ThirdParty\Qt\include\QtGui;$(ProjectDir)..\ThirdParty\Qt\include\QtWidgets;$(ProjectDir)..\ThirdParty\Qt\include\QtOpenGL;$(ProjectDir)..\ThirdParty\assimp\include;$(ProjectDir)..\ThirdParty\ImageMagick\include;$(ProjectDir)..\ThirdParty\statemachineviewer\include;$(ProjectDir)..\ThirdParty\QHull\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\ThirdParty\Qt\include;$(ProjectDir)..\ThirdParty\Qt\include\QtCore;$(ProjectDir)..\ThirdParty\Qt\include\QtGui;$(ProjectDir)..\ThirdParty\Qt\include\QtWidgets;$(ProjectDir)..\ThirdParty\Qt\include\QtOpenGL;$(ProjectDir)..\ThirdParty\assimp\include;$(ProjectDir)..\ThirdParty\ImageMagick\include;$(ProjectDir)..\ThirdParty\statemachineviewer\include;$(ProjectDir)..\ThirdParty\QHull\include;$(ProjectDir)..\ThirdParty\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
@@ -227,7 +227,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\ThirdParty\Qt\include;$(ProjectDir)..\ThirdParty\Qt\include\QtCore;$(ProjectDir)..\ThirdParty\Qt\include\QtGui;$(ProjectDir)..\ThirdParty\Qt\include\QtWidgets;$(ProjectDir)..\ThirdParty\Qt\include\QtOpenGL;$(ProjectDir)..\ThirdParty\assimp\include;$(ProjectDir)..\ThirdParty\ImageMagick\include;$(ProjectDir)..\ThirdParty\statemachineviewer\include;$(ProjectDir)..\ThirdParty\QHull\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\ThirdParty\Qt\include;$(ProjectDir)..\ThirdParty\Qt\include\QtCore;$(ProjectDir)..\ThirdParty\Qt\include\QtGui;$(ProjectDir)..\ThirdParty\Qt\include\QtWidgets;$(ProjectDir)..\ThirdParty\Qt\include\QtOpenGL;$(ProjectDir)..\ThirdParty\assimp\include;$(ProjectDir)..\ThirdParty\ImageMagick\include;$(ProjectDir)..\ThirdParty\statemachineviewer\include;$(ProjectDir)..\ThirdParty\QHull\include;$(ProjectDir)..\ThirdParty\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
