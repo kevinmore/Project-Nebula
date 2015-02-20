@@ -11,6 +11,33 @@ namespace Math
 		return d != d;
 	}
 
+	namespace Converter
+	{
+		/************************************************************************/
+		/*  Convert From GLM to Qt                                              */
+		/************************************************************************/
+		static vec2 toQtVec2(const glm::vec2& v)
+		{
+			return vec2(v.x, v.y);
+		}
+
+		static vec3 toQtVec3(const glm::vec3& v)
+		{
+			return vec3(v.x, v.y, v.z);
+		}
+
+		static vec4 toQtVec4(const glm::vec4& v)
+		{
+			return vec4(v.x, v.y, v.z, v.w);
+		}
+
+		static quat toQtQuat(const glm::quat& q)
+		{
+			return quat(q.w, q.x, q.y, q.z);
+			
+		}
+	}
+
 	namespace Matrix3
 	{
 		static vec3 getColumn(const mat3& m, uint i)
