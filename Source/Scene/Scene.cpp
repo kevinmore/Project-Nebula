@@ -4,7 +4,7 @@
 #include <Primitives/Puppet.h>
 #include <Physicis/Collision/Collider/SphereCollider.h>
 #include <Physicis/Collision/Collider/BoxCollider.h>
-
+#include <iostream>
 Scene::Scene(QObject* parent)
 	: IScene(parent),
 	  m_camera(new Camera(NULL,this)),
@@ -52,7 +52,14 @@ void Scene::initialize()
 	m_sceneRootNode->setObjectName("Scene Root");
 
 	resetToDefaultScene();
+	mat3 a;
+	a(1,1) = 2;
+	a(0,2) = 3;
+	qDebug() << a;
+	glm::mat3 b = Math::Converter::toGLMMat3(a);
 	
+	std::cout << glm::to_string(b);
+
 	// show sky box for demo purpose
 	//toggleSkybox(true);
 

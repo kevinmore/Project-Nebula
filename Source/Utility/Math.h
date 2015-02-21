@@ -34,7 +34,111 @@ namespace Math
 		static quat toQtQuat(const glm::quat& q)
 		{
 			return quat(q.w, q.x, q.y, q.z);
+		}
+
+		static mat3 toQtMat3(const glm::mat3& m)
+		{
+			mat3 qtMat;
 			
+			qtMat(0, 0) = m[0][0];
+			qtMat(0, 1) = m[0][1];
+			qtMat(0, 2) = m[0][2];
+			qtMat(1, 0) = m[1][0];
+			qtMat(1, 1) = m[1][1];
+			qtMat(1, 2) = m[1][2];
+			qtMat(2, 0) = m[2][0];
+			qtMat(2, 1) = m[2][1];
+			qtMat(2, 2) = m[2][2];
+
+			return qtMat;
+		}
+
+		static mat4 toQtMat4(const glm::mat4& m)
+		{
+			mat4 qtMat;
+
+			qtMat(0, 0) = m[0][0];
+			qtMat(0, 1) = m[0][1];
+			qtMat(0, 2) = m[0][2];
+			qtMat(0, 3) = m[0][3];
+			qtMat(1, 0) = m[1][0];
+			qtMat(1, 1) = m[1][1];
+			qtMat(1, 2) = m[1][2];
+			qtMat(1, 3) = m[1][3];
+			qtMat(2, 0) = m[2][0];
+			qtMat(2, 1) = m[2][1];
+			qtMat(2, 2) = m[2][2];
+			qtMat(2, 3) = m[2][3];
+			qtMat(3, 0) = m[3][0];
+			qtMat(3, 1) = m[3][1];
+			qtMat(3, 2) = m[3][2];
+			qtMat(3, 3) = m[3][3];
+
+			return qtMat;
+		}
+
+		/************************************************************************/
+		/*  Convert From Qt to GLM                                              */
+		/************************************************************************/
+		static glm::vec2 toGLMVec2(const vec2& v)
+		{
+			return glm::vec2(v.x(), v.y());
+		}
+
+		static glm::vec3 toGLMVec3(const vec3& v)
+		{
+			return glm::vec3(v.x(), v.y(), v.z());
+		}
+
+		static glm::vec4 toGLMVec4(const vec4& v)
+		{
+			return glm::vec4(v.x(), v.y(), v.z(), v.w());
+		}
+
+		static glm::quat toGLMQuat(const quat& q)
+		{
+			return glm::quat(q.scalar(), q.x(), q.y(), q.z());
+		}
+
+		static glm::mat3 toGLMMat3(const mat3& m)
+		{
+			glm::mat3 mat;
+
+			mat[0][0] = m(0, 0);
+			mat[0][1] = m(0, 1);
+			mat[0][2] = m(0, 2);
+			mat[1][0] = m(1, 0);
+			mat[1][1] = m(1, 1);
+			mat[1][2] = m(1, 2);
+			mat[2][0] = m(2, 0);
+			mat[2][1] = m(2, 1);
+			mat[2][2] = m(2, 2);
+
+			return mat;
+		}
+
+		static glm::mat4 toGLMMat4(const mat4& m)
+		{
+			glm::mat4 mat;
+
+			mat[0][0] = m(0, 0);
+			mat[0][1] = m(0, 1);
+			mat[0][2] = m(0, 2);
+			mat[0][3] = m(0, 3);
+			mat[1][0] = m(1, 0);
+			mat[1][1] = m(1, 1);
+			mat[1][2] = m(1, 2);
+			mat[1][3] = m(1, 3);
+			mat[2][0] = m(2, 0);
+			mat[2][1] = m(2, 1);
+			mat[2][2] = m(2, 2);
+			mat[2][3] = m(2, 3);
+			mat[3][0] = m(3, 0);
+			mat[3][1] = m(3, 1);
+			mat[3][2] = m(3, 2);
+			mat[3][3] = m(3, 3);
+
+			return mat;
 		}
 	}
 
