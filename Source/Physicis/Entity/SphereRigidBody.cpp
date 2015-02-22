@@ -78,16 +78,3 @@ void SphereRigidBody::applyTorque( const float deltaTime, const vec3& torque )
 {
 	applyAngularImpulse(torque * deltaTime);
 }
-
-void SphereRigidBody::update( const float dt )
-{
-	// if the body is sleeping, skip
-	if(m_bSleep) return;
-
-	// update the linear properties in the parent first
-	RigidBody::update(dt);
-
-	// update the angular properties
-	vec3 angularVelocityInDegrees(qRadiansToDegrees(m_angularVelocity.x()), qRadiansToDegrees(m_angularVelocity.y()), qRadiansToDegrees(m_angularVelocity.z()));
-	m_transform.setRotation(m_transform.getEulerAngles() + angularVelocityInDegrees * dt);
-}

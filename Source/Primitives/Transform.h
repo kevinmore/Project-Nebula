@@ -19,6 +19,7 @@ public:
 	inline void setPositionX(float x) { m_position.setX(x); }
 	inline void setPositionY(float y) { m_position.setY(y); }
 	inline void setPositionZ(float z) { m_position.setZ(z); }
+	inline void translate(const vec3& delta) { m_position += delta; }
 
 	/// Rotation Access
 	inline const quat& getRotation() const { return m_rotation; }
@@ -29,11 +30,12 @@ public:
 	}
 
 	// sets the rotation with a given quaternion
+	// this will not update the euler angles
 	inline void setRotation(const quat& rot) 
 	{ 
 		m_rotation = rot;
-		glm::vec3 eulerAnglesInRadians = glm::eulerAngles(Converter::toGLMQuat(m_rotation));
-		m_eulerAngles = Converter::toQtVec3(glm::degrees(eulerAnglesInRadians));
+// 		glm::vec3 eulerAnglesInRadians = glm::eulerAngles(Converter::toGLMQuat(m_rotation));
+// 		m_eulerAngles = Converter::toQtVec3(glm::degrees(eulerAnglesInRadians));
 	}
 
 	// sets the rotation with a given euler angles in degrees
@@ -62,6 +64,8 @@ public:
 		m_eulerAngles.setZ(z); 
 		m_rotation = Converter::toQtQuat(glm::quat(glm::radians(Converter::toGLMVec3(m_eulerAngles)))); 
 	}
+
+	inline void rotate(const quat& delta) { m_rotation = delta * m_rotation; }
 
 	/// Scale Access
 	inline const vec3& getScale() const { return m_scale; }

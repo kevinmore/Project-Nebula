@@ -87,6 +87,7 @@ bool EPASolver::computePenetrationDepthAndContactPoints( const Simplex& simplex,
 	while ( numIter < maxIteration )
 	{
 		Triangle* pClosestTriangle = m_polytope.popAClosestTriangleToOriginFromHeap();
+		if(!pClosestTriangle)  return false;
 		vec3 v = pClosestTriangle->getClosestPoint().normalized();
 
 		vec3 supportPointA = objA->getLocalSupportPoint(v, objA->getMargin());

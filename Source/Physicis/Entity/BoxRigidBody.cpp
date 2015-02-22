@@ -38,7 +38,6 @@ void BoxRigidBody::setMassInv( float mInv )
 	m_inertiaTensorInv = glm::inverse(Converter::toGLMMat3(tensor));
 }
 
-
 void BoxRigidBody::setBoxHalfExtents( const vec3& halfExtents )
 {
 	// re compute the inertia tensor
@@ -78,18 +77,5 @@ void BoxRigidBody::applyForce( const float deltaTime, const vec3& force, const v
 void BoxRigidBody::applyTorque( const float deltaTime, const vec3& torque )
 {
 	applyAngularImpulse(torque * deltaTime);
-}
-
-void BoxRigidBody::update( const float dt )
-{
-	// if the body is sleeping, skip
-	if(m_bSleep) return;
-
-	// update the linear properties in the parent first
-	RigidBody::update(dt);
-
-	// update the angular properties
-	quat rotation = quat::fromAxisAndAngle(m_angularVelocity, qRadiansToDegrees(m_angularVelocity.length() * dt));
-	m_transform.setRotation(rotation * m_transform.getRotation());
 }
 

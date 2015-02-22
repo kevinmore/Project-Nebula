@@ -64,7 +64,7 @@ public:
 	virtual QString className() { return "RigidBody"; }
 
 	virtual ~RigidBody();
-	virtual void update(const float dt);
+	void update(const float dt);
 
 	//
 	// Motion Type
@@ -75,8 +75,11 @@ public:
 	//
 	// Collider
 	//
-	void attachCollider(ColliderPtr col);
-	inline ColliderPtr getCollider() const { return m_collider; };
+	void attachBroadPhaseCollider(ColliderPtr col);
+	inline ColliderPtr getBroadPhaseCollider() const { return m_BroadPhaseCollider; };
+
+	void attachNarrowPhaseCollider(ColliderPtr col);
+	inline ColliderPtr getNarrowPhaseCollider() const { return m_NarrowPhaseCollider; };
 
 	//
 	// MASS, INERTIA AND DENSITY PROPERTIES.
@@ -266,21 +269,17 @@ public:
 	/// Set the gravity factor.
 	inline void setGravityFactor(float gravityFactor) { m_gravityFactor = gravityFactor; }
 
-	inline void setSleep(bool state) { m_bSleep = state; }
-	inline bool isSleeping() const { return m_bSleep; }
-
     ///Returns true if the body is awake and responding to integration.
     inline bool getAwake() const { return m_isAwake; }
 
 	/// Sets the awake state of the body. If the body is set to be
-	/// not awake, then its velocities are also cancelled, since
+	/// not awake, then its velocities are also canceled, since
 	/// a moving body that is not awake can cause problems in the
 	/// simulation.
 	void setAwake(const bool awake = true);
 
     /// Returns true if the body is allowed to go to sleep at any time.
     inline bool getCanSleep() const { return m_canSleep; }
-
 
     /// Sets whether the body is ever allowed to go to sleep. Bodies
     /// under the player's control, or for which the set of
@@ -313,7 +312,6 @@ protected:
 	/// The initial position of the body defaults to (0, 0, 0)
 	/// The initial rotation of the body defaults to the Identity quaternion
 	Transform m_transform;
-
 
 	/// The position changed of the body after each update.
 	/// This defaults to 0,0,0.
@@ -372,13 +370,11 @@ protected:
 	/// This defaults to 1.
 	float m_timeFactor;
 
-	/// The pointer to the collider that is attached to the rigid body
-	ColliderPtr m_collider;
+	/// The pointer to the broad phase collider that is attached to the rigid body
+	ColliderPtr m_BroadPhaseCollider;
 
-	/// The initial state of the body, which decides if this body will be updated
-	// This defaults to false.
-	bool m_bSleep;
-
+	/// The pointer to the narrow phase collider that is attached to the rigid body
+	ColliderPtr m_NarrowPhaseCollider;
 
 	/// A body can be put to sleep to avoid it being updated
 	/// by the integration functions or affected by collisions
@@ -392,7 +388,7 @@ protected:
 
     /// Holds the amount of motion of the body. This is a recency
     /// weighted mean that can be used to put a body to sleep.
-    float m_motion;
+    float m_motionEnergy;
 };
 
 typedef QSharedPointer<RigidBody> RigidBodyPtr;

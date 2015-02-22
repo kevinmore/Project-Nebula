@@ -77,10 +77,10 @@ bool Polytope::addTetrahedron( const vec3& p0, const vec3& p1, const vec3& p2, c
 		if ( vec3::dotProduct(vec3::crossProduct(p1-p0, p2-p0), p3) >= 0 )
 			return false;
 
-		pTri[0] = new Triangle(index[0], index[1], index[2]); assert(checkWinding(p0, p1, p2));
-		pTri[1] = new Triangle(index[0], index[3], index[1]); assert(checkWinding(p0, p3, p1));
-		pTri[2] = new Triangle(index[0], index[2], index[3]); assert(checkWinding(p0, p2, p3));
-		pTri[3] = new Triangle(index[1], index[3], index[2]); assert(checkWinding(p1, p3, p2));
+		pTri[0] = new Triangle(index[0], index[1], index[2]); //assert(checkWinding(p0, p1, p2));
+		pTri[1] = new Triangle(index[0], index[3], index[1]); //assert(checkWinding(p0, p3, p1));
+		pTri[2] = new Triangle(index[0], index[2], index[3]); //assert(checkWinding(p0, p2, p3));
+		pTri[3] = new Triangle(index[1], index[3], index[2]); //assert(checkWinding(p1, p3, p2));
 	}
 	else // p0, p2, p1 winding in counter-clockwise
 	{
@@ -88,10 +88,10 @@ bool Polytope::addTetrahedron( const vec3& p0, const vec3& p1, const vec3& p2, c
 		if ( vec3::dotProduct(vec3::crossProduct(p2-p0, p1-p0), p3) >= 0 )
 			return false;
 
-		pTri[0] = new Triangle(index[0], index[2], index[1]); assert(checkWinding(p0, p2, p1));
-		pTri[1] = new Triangle(index[0], index[3], index[2]); assert(checkWinding(p0, p3, p2));
-		pTri[2] = new Triangle(index[0], index[1], index[3]); assert(checkWinding(p0, p1, p3));
-		pTri[3] = new Triangle(index[2], index[3], index[1]); assert(checkWinding(p2, p3, p1));		
+		pTri[0] = new Triangle(index[0], index[2], index[1]); //assert(checkWinding(p0, p2, p1));
+		pTri[1] = new Triangle(index[0], index[3], index[2]); //assert(checkWinding(p0, p3, p2));
+		pTri[2] = new Triangle(index[0], index[1], index[3]); //assert(checkWinding(p0, p1, p3));
+		pTri[3] = new Triangle(index[2], index[3], index[1]); //assert(checkWinding(p2, p3, p1));		
 	}
 
 	// construct adjacency

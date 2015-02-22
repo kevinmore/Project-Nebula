@@ -187,10 +187,10 @@ void Scene::resetToDefaultScene()
 	lightObject->setFixedPositionY(2);
 
 	// back up
-	GameObjectPtr temp(new GameObject(this));
-	temp->setPosition(0, -1000, 0);
-	temp->setScale(0.001);
-	LoaderThread backup(this, "../Resource/Models/Common/sphere.obj", temp, m_sceneRootNode);
+// 	GameObjectPtr temp(new GameObject(this));
+// 	temp->setPosition(0, -1000, 0);
+// 	temp->setScale(0.001);
+// 	LoaderThread backup(this, "../Resource/Models/Common/sphere.obj", temp, m_sceneRootNode);
 
 	// load the floor
 	GameObjectPtr floorRef(new GameObject(this));
@@ -198,9 +198,9 @@ void Scene::resetToDefaultScene()
 	GameObjectPtr floorObject = m_objectManager->getGameObject("WoodenFloor");
 	ModelPtr floor = floorObject ->getComponent("Model").dynamicCast<IModel>();
 	BoxRigidBodyPtr floorBody = BoxRigidBodyPtr(new BoxRigidBody());
-	floor->getConvexHullCollider()->setRigidBody(floorBody.data());
 	floorBody->setMotionType(RigidBody::MOTION_FIXED);
-	floorBody->attachCollider(floor->getBoundingBox());
+	floorBody->attachBroadPhaseCollider(floor->getBoundingBox());
+	floorBody->attachNarrowPhaseCollider(floor->getConvexHullCollider());
 	floorObject->attachComponent(floorBody);
 	m_physicsWorld->addEntity(floorBody.data());
 // 
@@ -241,8 +241,8 @@ void Scene::resetToDefaultScene()
 	//rb2->applyAngularImpulse(vec3(0, 1 ,0));
 	//rb2->applyPointImpulse(vec3(0, 0, -1), vec3(0.5, 1.5, 0.5));
 	ModelPtr model2 = m_objectManager->getGameObject("Cube2")->getComponent("Model").dynamicCast<IModel>();
-	rb2->attachCollider(model2->getBoundingBox());
-	model2->getConvexHullCollider()->setRigidBody(rb2.data());
+	rb2->attachBroadPhaseCollider(model2->getBoundingBox());
+	rb2->attachNarrowPhaseCollider(model2->getConvexHullCollider());
 	go2->attachComponent(rb2);
 	m_physicsWorld->addEntity(rb2.data());
 }

@@ -32,7 +32,8 @@ public:
 	void setPosition(double x, double y, double z);
 	void translateInWorld(const vec3& delta);
 
-	void setRotation(const vec3& rotationVector);
+	void setRotation(const quat& rotationQuaternion);
+	void setRotation(const vec3& eulerAngles);
 	void setRotation(double x, double y, double z);
 
 	void setScale(const vec3& scale);

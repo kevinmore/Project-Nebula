@@ -8,9 +8,6 @@ public:
 	SphereRigidBody(const vec3& position = Math::Vector3::ZERO,
 				    const quat& rotation = Math::Quaternion::IDENTITY);
 
-	/// Updates the properties of the rigid body
-	virtual void update(const float dt);
-
 	/// Sets the mass of the rigid body.
 	void setMass(float m);
 

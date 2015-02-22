@@ -45,9 +45,16 @@ void GameObject::setPosition(double x, double y, double z)
 	emit transformChanged(m_transform);
 }
 
-void GameObject::setRotation(const vec3& rotationVector)
+void GameObject::setRotation(const quat& rotationQuaternion)
 {
-	m_transform.setRotation(rotationVector);
+	m_transform.setRotation(rotationQuaternion);
+	m_modelMatrixDirty = true;
+	emit transformChanged(m_transform);
+}
+
+void GameObject::setRotation(const vec3& eulerAngles)
+{
+	m_transform.setRotation(eulerAngles);
 	m_modelMatrixDirty = true;
 	emit transformChanged(m_transform);
 }

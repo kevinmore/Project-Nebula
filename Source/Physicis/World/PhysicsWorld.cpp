@@ -75,7 +75,7 @@ void PhysicsWorld::addEntity( PhysicsWorldObject* entity )
 	lock();
 	// add the rigid body and its collider
 	m_entityList << entity;
-	addCollider(dynamic_cast<RigidBody*>(entity)->getCollider().data());
+	addCollider(dynamic_cast<RigidBody*>(entity)->getBroadPhaseCollider().data());
 	entity->setWorld(this);
 
 	// if the world is not locked before the operation
@@ -90,7 +90,7 @@ void PhysicsWorld::removeEntity( PhysicsWorldObject* entity )
 	lock();
 	// remove the rigid body and its collider
 	m_entityList.removeOne(entity);
-	m_colliderList.removeAt(m_colliderList.indexOf(dynamic_cast<RigidBody*>(entity)->getCollider().data()));
+	m_colliderList.removeAt(m_colliderList.indexOf(dynamic_cast<RigidBody*>(entity)->getBroadPhaseCollider().data()));
 
 	// if the world is not locked before the operation
 	// unlock it

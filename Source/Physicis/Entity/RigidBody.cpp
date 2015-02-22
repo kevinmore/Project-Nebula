@@ -22,7 +22,8 @@ RigidBody::RigidBody(const vec3& position, const quat& rotation, QObject* parent
 	m_maxLinearVelocity = 200.0f;
 	m_maxAngularVelocity = 200.0f;
 	m_timeFactor = 1.0f;
-	m_bSleep = false;
+	m_canSleep = false;
+	m_isAwake = true;
 }
 
 RigidBody::~RigidBody()
@@ -31,6 +32,36 @@ RigidBody::~RigidBody()
 	if (m_world)
 	{
 		m_world->removeEntity(this);
+	}
+}
+
+void RigidBody::update( const float dt )
+{
+	if (!m_isAwake) return;
+
+	// only update the linear properties as an abstract rigid body
+	m_linearVelocity += m_gravityFactor * getWorld()->getConfig().m_gravity * dt;
+	m_deltaPosition = m_linearVelocity * dt;
+	m_transform.translate(m_deltaPosition);
+
+	// update the angular properties
+	quat rotation = quat::fromAxisAndAngle(m_angularVelocity, qRadiansToDegrees(m_angularVelocity.length() * dt));
+	m_transform.rotate(rotation);
+
+	// sync the center position for the collider
+	m_BroadPhaseCollider->setCenter(m_transform.getPosition());
+	m_NarrowPhaseCollider->setCenter(m_transform.getPosition());
+
+	// Update the kinetic energy store, and possibly put the body to sleep.
+	if (m_canSleep) 
+	{
+		float currentMotion = m_linearVelocity.lengthSquared() + m_angularVelocity.lengthSquared();
+
+		float bias = pow(0.5f, dt);
+		m_motionEnergy = bias * m_motionEnergy + (1 - bias) * currentMotion;
+
+		if (m_motionEnergy < 0.3f) setAwake(false);
+		else if (m_motionEnergy > 10 * 0.3f) m_motionEnergy = 10 * 0.3f;
 	}
 }
 
@@ -88,35 +119,15 @@ void RigidBody::setFriction( float newFriction )
 	m_friction = newFriction;
 }
 
-void RigidBody::update( const float dt )
+void RigidBody::attachBroadPhaseCollider( ColliderPtr col )
 {
-	if (!m_isAwake) return;
-
-	// only update the linear properties as an abstract rigid body
-	m_linearVelocity += m_gravityFactor * getWorld()->getConfig().m_gravity * dt;
-	m_deltaPosition = m_linearVelocity * dt;
-	m_transform.setPosition(m_transform.getPosition() + m_deltaPosition);
-
-	// sync the center position for the collider
-	m_collider->setCenter(m_transform.getPosition());
-
-	// Update the kinetic energy store, and possibly put the body to
-	// sleep.
-	if (m_canSleep) 
-	{
-		float currentMotion = m_linearVelocity.lengthSquared() + m_angularVelocity.lengthSquared();
-
-		float bias = pow(0.5f, dt);
-		m_motion = bias * m_motion + (1 - bias) * currentMotion;
-
-		if (m_motion < 0.3f) setAwake(false);
-		else if (m_motion > 10 * 0.3f) m_motion = 10 * 0.3f;
-	}
+	m_BroadPhaseCollider = col;
+	col->setRigidBody(this);
 }
 
-void RigidBody::attachCollider( ColliderPtr col )
+void RigidBody::attachNarrowPhaseCollider( ColliderPtr col )
 {
-	m_collider = col;
+	m_NarrowPhaseCollider = col;
 	col->setRigidBody(this);
 }
 
@@ -132,5 +143,23 @@ void RigidBody::syncTransform( const Transform& transform )
 
 void RigidBody::setAwake( const bool awake /*= true*/ )
 {
+	if (awake) 
+	{
+		m_isAwake= true;
 
+		// Add a bit of motion to avoid it falling asleep immediately.
+		m_motionEnergy = 0.3f * 2.0f;
+	} 
+	else 
+	{
+		m_isAwake = false;
+		m_linearVelocity = Vector3::ZERO;
+		m_angularVelocity = Vector3::ZERO;
+	}
+}
+
+void RigidBody::setCanSleep( const bool canSleep /*= true*/ )
+{
+	m_canSleep = canSleep;
+	if (!m_canSleep && !m_isAwake) setAwake();
 }
