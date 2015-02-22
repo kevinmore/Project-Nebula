@@ -50,6 +50,7 @@ public:
 
 	float computeContactImpulseMagnitude(const NarrowPhaseCollisionFeedback* pCollisionInfo);
 
+	void elasticCollisionResponse(RigidBody* rb1, RigidBody* rb2);
 
 private:
 	PhysicsWorldConfig m_config;

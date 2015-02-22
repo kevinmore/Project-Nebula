@@ -95,10 +95,10 @@ public:
 	inline float getMassInv() const { return m_massInv; }
 
 	/// Sets the mass of the rigid body.
-	void setMass(float m);
+	virtual void setMass(float m) = 0;
 
 	/// Sets the inverse mass of the rigid body.
-	void setMassInv(float mInv);
+	virtual void setMassInv(float mInv) = 0;
 
 	/// Gets the inverse inertia tensor in local space.
 	inline glm::mat3 getInertiaInvLocal() { return m_inertiaTensorInv; }
@@ -197,12 +197,12 @@ public:
 
 	/// Applies an impulse (in world space) at the point p in world space.
 	/// This activates the body and its simulation island if it is inactive.
-	virtual void applyPointImpulse(const vec3& imp, const vec3& p) = 0;
+	void applyPointImpulse(const vec3& imp, const vec3& p);
 
 	/// Applies an instantaneous change in angular velocity (in world space) around
 	/// the center of mass.
 	/// This activates the body and its simulation island if it is inactive.
-	virtual void applyAngularImpulse(const vec3& imp) = 0;
+	void applyAngularImpulse(const vec3& imp);
 
 	//
 	// FORCE AND TORQUE APPLICATION
@@ -210,14 +210,14 @@ public:
 
 	/// Applies a force (in world space) to the rigid body. The force is applied to the
 	/// center of mass.
-	virtual void applyForce(const float deltaTime, const vec3& force) = 0;
+	void applyForce(const float deltaTime, const vec3& force);
 
 	/// Applies a force (in world space) to the rigid body at the point p in world space.
-	virtual void applyForce(const float deltaTime, const vec3& force, const vec3& p) = 0;
+	void applyForce(const float deltaTime, const vec3& force, const vec3& p);
 
 	/// Applies the specified torque (in world space) to the rigid body. (Note: the inline
 	/// is for internal use only).
-	virtual void applyTorque(const float deltaTime, const vec3& torque) = 0;
+	void applyTorque(const float deltaTime, const vec3& torque);
 
 	//
 	// DAMPING
@@ -269,8 +269,13 @@ public:
 	/// Set the gravity factor.
 	inline void setGravityFactor(float gravityFactor) { m_gravityFactor = gravityFactor; }
 
-    ///Returns true if the body is awake and responding to integration.
+    /// Returns true if the body is awake and responding to integration.
     inline bool getAwake() const { return m_isAwake; }
+
+
+	//
+	// SLEEP STATUS
+	//
 
 	/// Sets the awake state of the body. If the body is set to be
 	/// not awake, then its velocities are also canceled, since
@@ -285,7 +290,26 @@ public:
     /// under the player's control, or for which the set of
     /// transient forces applied each frame are not predictable,
     /// should be kept awake.
-    void setCanSleep(const bool canSleep = true);       
+    void setCanSleep(const bool canSleep = true);
+
+	//
+	// BACKTRACKING
+	//
+
+	/// Back tracks all the properties for a given time duration
+	void backTrack(const float duration);
+
+	/// Back tracks the world position for a given time duration
+	void backTrackPosition(const float duration);
+
+	/// Back tracks the world rotation for a given time duration
+	void backTrackRotation(const float duration);
+
+	/// Back tracks the linear velocity for a given time duration
+	void backTrackLinearVelocity(const float duration);
+
+	/// Back tracks the angular velocity for a given time duration
+	void backTrackAngularVelocity(const float duration);
 
 protected:
 
@@ -321,13 +345,22 @@ protected:
 	/// This defaults to the Identity quaternion.
 	quat m_deltaRotation;
 
+	/// The time duration from the last frame
+	float m_timeStep;
+
 	/// The initial linear velocity of the body.
 	/// This defaults to 0,0,0.
 	vec3 m_linearVelocity;
 
+	/// The linear velocity of the body in the last frame.
+	vec3 m_lastLinerVelocity;
+
 	/// The initial angular velocity of the body in world space.
 	/// This defaults to 0,0,0.
 	vec3 m_angularVelocity;
+
+	/// The angular velocity of the body in the last frame.
+	vec3 m_lastAngularVelocity;
 
 	/// The inverse of inertia tensor of the rigid body.
 	glm::mat3 m_inertiaTensorInv;

@@ -395,12 +395,18 @@ namespace Math
 		// When fraction = 0 returns from. When fraction = 1 return to. When fraction = 0.5 returns the average of from and to.
 		static float lerp(float from, float to, float fraction)
 		{
-			return from + ((to-from) * fraction);
+			if (fraction <= 0.0f) return from;
+			else if(fraction >= 1.0f) return to;
+			else
+				return from + ((to-from) * fraction);
 		}
 
 		static vec3 lerp(vec3& from, vec3& to, float fraction)
 		{
-			return from + ((to-from) * fraction);
+			if (fraction <= 0.0f) return from;
+			else if(fraction >= 1.0f) return to;
+			else
+				return from + ((to-from) * fraction);
 		}
 
 		static mat4 lerp(mat4& from, mat4& to, float fraction)

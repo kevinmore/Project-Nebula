@@ -47,35 +47,3 @@ void BoxRigidBody::setBoxHalfExtents( const vec3& halfExtents )
 	Matrix3::setBoxInertiaTensor(tensor, m_halfExtents, m_mass);
 	m_inertiaTensorInv = glm::inverse(Converter::toGLMMat3(tensor));
 }
-
-void BoxRigidBody::applyPointImpulse( const vec3& imp, const vec3& p )
-{
-	// PSEUDOCODE IS m_linearVelocity += m_massInv * imp;
-	// PSEUDOCODE IS m_angularVelocity += getWorldInertiaInv() * (p - centerOfMassWorld).cross(imp);
-
-	applyLinearImpulse(imp);
-	applyAngularImpulse(vec3::crossProduct(p - getCenterOfMassInWorld(), imp));
-}
-
-void BoxRigidBody::applyAngularImpulse( const vec3& imp )
-{
-	// PSEUDOCODE IS m_angularVelocity += m_worldInertiaInv * imp;
-	vec3 dw = Converter::toQtVec3(getInertiaInvWorld() * Converter::toGLMVec3(imp));
-	m_angularVelocity += dw;
-}
-
-void BoxRigidBody::applyForce( const float deltaTime, const vec3& force )
-{
-	applyLinearImpulse(force * deltaTime);
-}
-
-void BoxRigidBody::applyForce( const float deltaTime, const vec3& force, const vec3& p )
-{
-	applyPointImpulse(force * deltaTime, p);
-}
-
-void BoxRigidBody::applyTorque( const float deltaTime, const vec3& torque )
-{
-	applyAngularImpulse(torque * deltaTime);
-}
-

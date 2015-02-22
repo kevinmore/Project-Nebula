@@ -123,7 +123,7 @@
     <ClInclude Include="Primitives\CubeMapTexture.h" />
     <ClInclude Include="Physicis\Entity\RigidBody.h" />
     <ClInclude Include="Scene\ShadingTechniques\ParticleTechnique.h" />
-    <ClInclude Include="Physicis\Particles\ParticleSystem.h" />
+    <QtMOC Include="Physicis\Particles\ParticleSystem.h" />
     <ClInclude Include="Primitives\Component.h" />
     <ClInclude Include="Scene\ShadingTechniques\SkyboxTechnique.h" />
     <ClInclude Include="Scene\Skybox.h" />

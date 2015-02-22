@@ -39,14 +39,18 @@ void RigidBody::update( const float dt )
 {
 	if (!m_isAwake) return;
 
-	// only update the linear properties as an abstract rigid body
+	m_timeStep = dt;
+
+	// update the linear properties
+	m_lastLinerVelocity = m_linearVelocity;
 	m_linearVelocity += m_gravityFactor * getWorld()->getConfig().m_gravity * dt;
 	m_deltaPosition = m_linearVelocity * dt;
 	m_transform.translate(m_deltaPosition);
 
 	// update the angular properties
-	quat rotation = quat::fromAxisAndAngle(m_angularVelocity, qRadiansToDegrees(m_angularVelocity.length() * dt));
-	m_transform.rotate(rotation);
+	m_lastAngularVelocity = m_angularVelocity;
+	m_deltaRotation = quat::fromAxisAndAngle(m_angularVelocity, qRadiansToDegrees(m_angularVelocity.length() * dt));
+	m_transform.rotate(m_deltaRotation);
 
 	// sync the center position for the collider
 	m_BroadPhaseCollider->setCenter(m_transform.getPosition());
@@ -65,6 +69,36 @@ void RigidBody::update( const float dt )
 	}
 }
 
+void RigidBody::applyPointImpulse( const vec3& imp, const vec3& p )
+{
+	// PSEUDOCODE IS m_linearVelocity += m_massInv * imp;
+	// PSEUDOCODE IS m_angularVelocity += getWorldInertiaInv() * (p - centerOfMassWorld).cross(imp);
+	applyLinearImpulse(imp);
+	applyAngularImpulse(vec3::crossProduct(p - getCenterOfMassInWorld(), imp));
+}
+
+void RigidBody::applyAngularImpulse( const vec3& imp )
+{
+	// PSEUDOCODE IS m_angularVelocity += m_worldInertiaInv * imp;
+	vec3 dw = Converter::toQtVec3(getInertiaInvWorld() * Converter::toGLMVec3(imp));
+	m_angularVelocity += dw;
+}
+
+void RigidBody::applyForce( const float deltaTime, const vec3& force )
+{
+	applyLinearImpulse(force * deltaTime);
+}
+
+void RigidBody::applyForce( const float deltaTime, const vec3& force, const vec3& p )
+{
+	applyPointImpulse(force * deltaTime, p);
+}
+
+void RigidBody::applyTorque( const float deltaTime, const vec3& torque )
+{
+	applyAngularImpulse(torque * deltaTime);
+}
+
 void RigidBody::setMassProperties( const MassProperties& mp )
 {
 	m_mass = mp.m_mass;
@@ -79,22 +113,6 @@ void RigidBody::setPosition( const vec3& pos )
 void RigidBody::setRotation( const quat& rot )
 {
 	m_transform.setRotation(rot);
-}
-
-
-void RigidBody::setMass( float m )
-{
-	float massInv;
-	if (m == 0.0f)
-		massInv = 0.0f;
-	else
-		massInv = 1.0f / m;
-	setMassInv(massInv);
-}
-
-void RigidBody::setMassInv( float mInv )
-{
-	m_mass = mInv;
 }
 
 // Explicit center of mass in local space.
@@ -162,4 +180,40 @@ void RigidBody::setCanSleep( const bool canSleep /*= true*/ )
 {
 	m_canSleep = canSleep;
 	if (!m_canSleep && !m_isAwake) setAwake();
+}
+
+void RigidBody::backTrack( const float duration )
+{
+	backTrackPosition(duration);
+	backTrackRotation(duration);
+	backTrackLinearVelocity(duration);
+	backTrackAngularVelocity(duration);
+}
+
+void RigidBody::backTrackPosition( const float duration )
+{
+	vec3 amount = -m_deltaPosition * duration / m_timeStep;
+	m_transform.translate(amount);
+
+	// sync the center position for the collider
+	m_BroadPhaseCollider->setCenter(m_transform.getPosition());
+	m_NarrowPhaseCollider->setCenter(m_transform.getPosition());
+}
+
+void RigidBody::backTrackRotation( const float duration )
+{
+	quat curRotation = m_transform.getRotation();
+	quat lastRotation = m_deltaRotation.conjugate() * curRotation;
+	quat amount = quat::slerp(lastRotation, curRotation, duration / m_timeStep);
+	m_transform.rotate(amount.conjugate());
+}
+
+void RigidBody::backTrackLinearVelocity( const float duration )
+{
+	m_linearVelocity = Spline::lerp(m_linearVelocity, m_lastLinerVelocity, duration / m_timeStep);
+}
+
+void RigidBody::backTrackAngularVelocity( const float duration )
+{
+	m_angularVelocity = Spline::lerp(m_angularVelocity, m_lastAngularVelocity, duration / m_timeStep);
 }

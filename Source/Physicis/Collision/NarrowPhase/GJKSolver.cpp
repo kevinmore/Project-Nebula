@@ -14,7 +14,7 @@ bool GJKSolver::generateCollisionInfo( const ICollider* objA, const ICollider* o
 	float dist = sqrt(distSqrd);
 	pCollisionInfo.proximityDistance = dist;
 
-	assert(dist > 0.0);
+	if (dist <= 0.0f) return false;
 
 	vec3 n = v.normalized();
 

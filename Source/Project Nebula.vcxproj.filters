@@ -110,7 +110,6 @@
     <ClInclude Include="UI\SkyboxDialog.h" />
     <ClInclude Include="Scene\Camera.h" />
     <ClInclude Include="Utility\LogCenter.h" />
-    <ClInclude Include="Physicis\Particles\ParticleSystem.h" />
     <ClInclude Include="Physicis\Entity\RigidBody.h" />
     <ClInclude Include="UI\MainWindow.h" />
     <ClInclude Include="Primitives\Puppet.h" />
@@ -154,5 +153,8 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Project Nebula.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMOC Include="Physicis\Particles\ParticleSystem.h" />
   </ItemGroup>
 </Project>

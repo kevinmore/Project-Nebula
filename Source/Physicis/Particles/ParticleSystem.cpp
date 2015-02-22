@@ -6,12 +6,12 @@ ParticleSystem::ParticleSystem(Scene* scene)
 	: Component(1),// get rendered last
 	  m_curReadBufferIndex(0),
 	  m_aliveParticlesCount(0),
-	  fElapsedTime(0.0f),
-	  fNextEmitTime(0.0f),
+	  m_elapsedTime(0.0f),
+	  m_nextEmitTime(0.0f),
 	  m_scene(scene),
-	  bInitialized(false)
-{
-}
+	  m_initialized(false),
+	  m_generateImpulse(false)
+{}
 
 ParticleSystem::~ParticleSystem()
 {}
@@ -50,15 +50,15 @@ void ParticleSystem::installShaders()
 		return;
 	}
 
-	bInitialized = true;
+	m_initialized = true;
 }
 
 void ParticleSystem::prepareTransformFeedback()
 {
-	if(!bInitialized) return;
+	if(!m_initialized) return;
 
 	glGenTransformFeedbacks(1, &m_transformFeedbackBuffer);
-	glGenQueries(1, &uiQuery);
+	glGenQueries(1, &m_query);
 
 	glGenVertexArrays(2, m_VAO);
 	glGenBuffers(2, m_particleBuffer);
@@ -99,17 +99,17 @@ void ParticleSystem::updateParticles( float fTimePassed )
 
 	QQuaternion rotation;
 	vec3 scale;
-	Math::decomposeMat4(m_actor->getTransformMatrix(), scale, rotation, vGenPosition);
+	Math::decomposeMat4(m_actor->getTransformMatrix(), scale, rotation, m_position);
 
 	particleUpdater->getShaderProgram()->setUniformValue("fTimePassed", fTimePassed);
-	particleUpdater->getShaderProgram()->setUniformValue("fParticleMass", m_fParticleMass);
-	particleUpdater->getShaderProgram()->setUniformValue("fGravityFactor", m_fGravityFactor);
-	particleUpdater->getShaderProgram()->setUniformValue("vGenPosition", vGenPosition);
+	particleUpdater->getShaderProgram()->setUniformValue("fParticleMass", m_particleMass);
+	particleUpdater->getShaderProgram()->setUniformValue("fGravityFactor", m_gravityFactor);
+	particleUpdater->getShaderProgram()->setUniformValue("vGenPosition", m_position);
 	particleUpdater->getShaderProgram()->setUniformValue("vGenVelocityMin", rotation.rotatedVector(m_minVelocity));
-	particleUpdater->getShaderProgram()->setUniformValue("vGenVelocityRange", rotation.rotatedVector(vGenVelocityRange));
+	particleUpdater->getShaderProgram()->setUniformValue("vGenVelocityRange", rotation.rotatedVector(m_velocityRange));
 	particleUpdater->getShaderProgram()->setUniformValue("vForce", m_force);
 
-	if (bCollisionEnabled)
+	if (m_isCollisionEnabled)
 	{
 		particleUpdater->getShaderProgram()->setUniformValue("iCollisionEnabled", 1);
 		if(m_collider)
@@ -119,37 +119,37 @@ void ParticleSystem::updateParticles( float fTimePassed )
 				* QQuaternion::fromAxisAndAngle(Math::Vector3::UNIT_Y, rot.y())
 				* QQuaternion::fromAxisAndAngle(Math::Vector3::UNIT_Z, rot.z());
 
-			vPlaneNormal = rotation.rotatedVector(Math::Vector3::UNIT_Y);
-			vPlanePoint = m_collider->position();
+			m_planeNormal = rotation.rotatedVector(Math::Vector3::UNIT_Y);
+			m_planePoint = m_collider->position();
 		}
-		particleUpdater->getShaderProgram()->setUniformValue("vPlaneNormal", vPlaneNormal);
-		particleUpdater->getShaderProgram()->setUniformValue("vPlanePoint", vPlanePoint);
-		particleUpdater->getShaderProgram()->setUniformValue("fRestitution", fRestitution);
+		particleUpdater->getShaderProgram()->setUniformValue("vPlaneNormal", m_planeNormal);
+		particleUpdater->getShaderProgram()->setUniformValue("vPlanePoint", m_planePoint);
+		particleUpdater->getShaderProgram()->setUniformValue("fRestitution", m_restitution);
 	}
 	else
 		particleUpdater->getShaderProgram()->setUniformValue("iCollisionEnabled", 0);
 
-	if (bRandomColor)
+	if (m_isColorRandomed)
 		particleUpdater->getShaderProgram()->setUniformValue("vGenColor", Math::Random::randUnitVec3());
 	else
-		particleUpdater->getShaderProgram()->setUniformValue("vGenColor", vGenColor);
+		particleUpdater->getShaderProgram()->setUniformValue("vGenColor", m_color);
 
-	particleUpdater->getShaderProgram()->setUniformValue("fGenLifeMin", m_fMinLife);
-	particleUpdater->getShaderProgram()->setUniformValue("fGenLifeRange", fGenLifeRange);
+	particleUpdater->getShaderProgram()->setUniformValue("fGenLifeMin", m_minLife);
+	particleUpdater->getShaderProgram()->setUniformValue("fGenLifeRange", m_lifeRange);
 
-	particleUpdater->getShaderProgram()->setUniformValue("fGenLifeMin", m_fMinLife);
-	particleUpdater->getShaderProgram()->setUniformValue("fGenLifeRange", fGenLifeRange);
+	particleUpdater->getShaderProgram()->setUniformValue("fGenLifeMin", m_minLife);
+	particleUpdater->getShaderProgram()->setUniformValue("fGenLifeRange", m_lifeRange);
 
-	particleUpdater->getShaderProgram()->setUniformValue("fGenSize", m_fGenSize);
+	particleUpdater->getShaderProgram()->setUniformValue("fGenSize", m_size);
 	particleUpdater->getShaderProgram()->setUniformValue("iNumToGenerate", 0);
 
-	if (fElapsedTime > fNextEmitTime)
+	if (m_elapsedTime > m_nextEmitTime)
 	{
-		particleUpdater->getShaderProgram()->setUniformValue("iNumToGenerate", m_EmitAmount);
+		particleUpdater->getShaderProgram()->setUniformValue("iNumToGenerate", m_emitAmount);
 
 		vec3 vRandomSeed =  Math::Random::randUnitVec3();
 		particleUpdater->getShaderProgram()->setUniformValue("vRandomSeed", vRandomSeed);
-		fNextEmitTime = fElapsedTime + m_fEmitRate;
+		m_nextEmitTime = m_elapsedTime + m_emitRate;
 	}
 
 	glEnable(GL_RASTERIZER_DISCARD);
@@ -161,7 +161,7 @@ void ParticleSystem::updateParticles( float fTimePassed )
 	// store the results of transform feedback
 	glBindBufferBase(GL_TRANSFORM_FEEDBACK_BUFFER, 0, m_particleBuffer[1-m_curReadBufferIndex]);
 
-	glBeginQuery(GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN, uiQuery);
+	glBeginQuery(GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN, m_query);
 	glBeginTransformFeedback(GL_POINTS);
 
 	glDrawArrays(GL_POINTS, 0, m_aliveParticlesCount);
@@ -169,24 +169,27 @@ void ParticleSystem::updateParticles( float fTimePassed )
 	glEndTransformFeedback();
 
 	glEndQuery(GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN);
-	glGetQueryObjectiv(uiQuery, GL_QUERY_RESULT, &m_aliveParticlesCount);
+	glGetQueryObjectiv(m_query, GL_QUERY_RESULT, &m_aliveParticlesCount);
 
 	m_curReadBufferIndex = 1-m_curReadBufferIndex;
 
 	glBindTransformFeedback(GL_TRANSFORM_FEEDBACK, 0);
 	
-	// calculate the linear impulse this particle system generated
-	float totalMass = m_fParticleMass * m_EmitAmount;
-	//vec3 avgVel = Math::Random::random(m_minVelocity, m_maxVelocity);
-	vec3 avgVel = -(rotation.rotatedVector(m_minVelocity) + rotation.rotatedVector(m_maxVelocity)) * 0.5f;
-	m_vLinearImpulse = totalMass * avgVel * 0.01f;
+	if(m_generateImpulse)
+	{
+		// calculate the linear impulse this particle system generated
+		float totalMass = m_particleMass * m_emitAmount;
+		//vec3 avgVel = Math::Random::random(m_minVelocity, m_maxVelocity);
+		vec3 avgVel = -(rotation.rotatedVector(m_minVelocity) + rotation.rotatedVector(m_maxVelocity)) * 0.5f;
+		m_vLinearImpulse = totalMass * avgVel * 0.01f;
+	}
 }
 
 void ParticleSystem::render(const float currentTime)
 {
-	if(!bInitialized) return;
-	float dt = currentTime - fElapsedTime;
-	fElapsedTime = currentTime;
+	if(!m_initialized) return;
+	float dt = currentTime - m_elapsedTime;
+	m_elapsedTime = currentTime;
 
 
 	updateParticles(dt);
@@ -218,43 +221,18 @@ void ParticleSystem::render(const float currentTime)
 	glDisable(GL_BLEND);
 }
 
-
-// void ParticleSystem::setEmitterProperties( float particleMass, vec3 a_vGenVelocityMin, vec3 a_vGenVelocityMax, vec3 a_vGenGravityVector, vec3 a_vGenColor, float a_fGenLifeMin, float a_fGenLifeMax, float a_fGenSize, float emitRate, int a_iNumToGenerate )
-// {
-// 	m_fParticleMass = particleMass;
-// 	m_fGravityFactor = 1.0f;
-// 
-// 	m_minVelocity = a_vGenVelocityMin;
-// 	m_maxVelocity = a_vGenVelocityMax;
-// 	vGenVelocityRange = m_maxVelocity - m_minVelocity;
-// 
-// 	m_force = a_vGenGravityVector;
-// 	bRandomColor = false;
-// 	vGenColor = a_vGenColor;
-// 	m_fGenSize = a_fGenSize;
-// 
-// 	m_fMinLife = a_fGenLifeMin;
-// 	m_fMaxLife = a_fGenLifeMax;
-// 	fGenLifeRange = m_fMaxLife - m_fMinLife;
-// 
-// 	m_fEmitRate = emitRate;
-// 
-// 	m_EmitAmount = a_iNumToGenerate;
-// }
-
-
 QColor ParticleSystem::getParticleColor() const
 {
 	QColor col;
-	col.setRgbF(vGenColor.x(), vGenColor.y(), vGenColor.z());
+	col.setRgbF(m_color.x(), m_color.y(), m_color.z());
 	return col;
 }
 
 void ParticleSystem::setParticleColor( const QColor& col )
 {
-	vGenColor.setX(col.redF()); 
-	vGenColor.setY(col.greenF()); 
-	vGenColor.setZ(col.blueF());
+	m_color.setX(col.redF()); 
+	m_color.setY(col.greenF()); 
+	m_color.setZ(col.blueF());
 }
 
 void ParticleSystem::loadTexture( const QString& fileName )
@@ -275,30 +253,30 @@ QString ParticleSystem::getTextureFileName()
 
 void ParticleSystem::resetEmitter()
 {
-	m_fParticleMass = 0.015f;
-	m_fGravityFactor = 0.01f;
+	m_particleMass = 0.015f;
+	m_gravityFactor = 0.01f;
 	
 	m_minVelocity = vec3(-0.2f, 0.2f, -0.2f);
 	m_maxVelocity = vec3(0.2f, 0.3f, 0.2f);
-	vGenVelocityRange = m_maxVelocity - m_minVelocity;
+	m_velocityRange = m_maxVelocity - m_minVelocity;
 	
 	m_force = Math::Vector3::ZERO;
-	bCollisionEnabled = false;
-	vPlanePoint = Math::Vector3::ZERO;
-	vPlaneNormal = Math::Vector3::UNIT_Y;
-	fRestitution = 1.0f;
+	m_isCollisionEnabled = false;
+	m_planePoint = Math::Vector3::ZERO;
+	m_planeNormal = Math::Vector3::UNIT_Y;
+	m_restitution = 1.0f;
 
-	bRandomColor = false;
-	vGenColor = vec3(0, 0.5, 1);
-	m_fGenSize = 0.02f;
+	m_isColorRandomed = false;
+	m_color = vec3(0, 0.5, 1);
+	m_size = 0.02f;
 	
-	m_fMinLife = 8.0f;
-	m_fMaxLife = 10.0f;
-	fGenLifeRange = m_fMaxLife - m_fMinLife;
+	m_minLife = 8.0f;
+	m_maxLife = 10.0f;
+	m_lifeRange = m_maxLife - m_minLife;
 	
-	m_fEmitRate = 0.02f;
+	m_emitRate = 0.02f;
 	
-	m_EmitAmount = 30;
+	m_emitAmount = 30;
 }
 
 void ParticleSystem::assingCollisionObject( GameObjectPtr collider )
