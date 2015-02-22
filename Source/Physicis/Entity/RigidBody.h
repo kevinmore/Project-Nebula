@@ -97,23 +97,16 @@ public:
 	/// Sets the inverse mass of the rigid body.
 	void setMassInv(float mInv);
 
-	/// Gets the inertia tensor (around the center of mass) in local space.
-	virtual mat3 getInertiaLocal() const = 0;
-
-	/// Sets the inertia tensor of the rigid body in local space. Advanced use only.
-	virtual void setInertiaLocal(const mat3& inertia) = 0;
-
-	/// Gets the inertia tensor (around the center of mass) in world space.
-	virtual mat3 getInertiaWorld() const = 0;
+	/// Gets the inverse inertia tensor in local space.
+	inline glm::mat3 getInertiaInvLocal() { return m_inertiaTensorInv; }
 	
 	/// Gets the inverse inertia tensor in world space.
-	virtual mat3 getInertiaInvWorld() const = 0;
-	
-	/// Gets the inverse inertia tensor in local space.
-	virtual mat3 getInertiaInvLocal() const = 0;
-
-	/// Sets the inertia tensor of the rigid body by supplying its inverse. Advanced use only.
-	virtual void setInertiaInvLocal(const mat3& inertiaInv) = 0;
+	inline glm::mat3 getInertiaInvWorld()
+	{
+		glm::mat3 rotationMatrix = m_transform.getRotationMatrix();
+		m_inertiaTensorInvWorld = rotationMatrix * m_inertiaTensorInv * glm::transpose(rotationMatrix);
+		return m_inertiaTensorInvWorld;
+	}
 
 
 	//
@@ -153,7 +146,7 @@ public:
 
 
 	inline vec3 getEulerAngles() const { return m_transform.getEulerAngles();}
-	inline mat3 getRotationMatrix() const { return m_transform.getRotationMatrix(); }
+	inline glm::mat3 getRotationMatrix() const { return m_transform.getRotationMatrix(); }
 	inline mat4 getTransformMatrix() const { return m_transform.getTransformMatrix(); }
 
 	/// Sets the rotation from local to world Space for this rigid body.
@@ -323,15 +316,11 @@ protected:
 	/// This defaults to 0,0,0.
 	vec3 m_angularVelocity;
 
-	/// The inertia tensor of the rigid body. 
-	/// This defaults to the identity matrix.
-	mat3 m_inertiaTensor;
-
 	/// The inverse of inertia tensor of the rigid body.
-	mat3 m_inertiaTensorInv;
+	glm::mat3 m_inertiaTensorInv;
 
 	/// The inverse of inertia tensor of the rigid body in world space.
-	mat3 m_inertiaTensorInvWorld;
+	glm::mat3 m_inertiaTensorInvWorld;
 
 	/// The center of mass in the local space of the rigid body.
 	/// This defaults to 0,0,0.

@@ -98,6 +98,8 @@ private slots:
 	void toggleDiffuseMap(bool state);
 	void toggleNormalMap(bool state);
 
+	void clearReference();
+
 public slots:
 	void deleteGameObject();
 	void updateObjectTree();

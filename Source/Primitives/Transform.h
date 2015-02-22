@@ -23,39 +23,44 @@ public:
 	/// Rotation Access
 	inline const quat& getRotation() const { return m_rotation; }
 	inline const vec3& getEulerAngles() const { return m_eulerAngles; }
-	inline mat3 getRotationMatrix() const
+	inline glm::mat3 getRotationMatrix() const
 	{
-		return Matrix3::computeRotationMatrix(m_rotation);
+		return glm::mat3_cast(Converter::toGLMQuat(m_rotation));
 	}
+
+	// sets the rotation with a given quaternion
 	inline void setRotation(const quat& rot) 
 	{ 
-		m_rotation = rot; 
-		m_eulerAngles = Quaternion::computeEularAngles(m_rotation);
+		m_rotation = rot;
+		glm::vec3 eulerAnglesInRadians = glm::eulerAngles(Converter::toGLMQuat(m_rotation));
+		m_eulerAngles = Converter::toQtVec3(glm::degrees(eulerAnglesInRadians));
 	}
+
+	// sets the rotation with a given euler angles in degrees
 	inline void setRotation(const vec3& eulerAngles) 
 	{ 
 		m_eulerAngles = eulerAngles;
-		m_rotation = Quaternion::computeQuaternion(m_eulerAngles); 
+		m_rotation = Converter::toQtQuat(glm::quat(glm::radians(Converter::toGLMVec3(m_eulerAngles)))); 
 	}
 	inline void setRotation(float x, float y, float z) 
 	{ 
 		m_eulerAngles = vec3(x, y, z);
-		m_rotation = Quaternion::computeQuaternion(m_eulerAngles); 
+		m_rotation = Converter::toQtQuat(glm::quat(glm::radians(Converter::toGLMVec3(m_eulerAngles)))); 
 	}
 	inline void setEulerAngleX(float x) 
 	{ 
 		m_eulerAngles.setX(x); 
-		m_rotation = Quaternion::computeQuaternion(m_eulerAngles); 
+		m_rotation = Converter::toQtQuat(glm::quat(glm::radians(Converter::toGLMVec3(m_eulerAngles)))); 
 	}
 	inline void setEulerAngleY(float y) 
 	{ 
 		m_eulerAngles.setY(y); 
-		m_rotation = Quaternion::computeQuaternion(m_eulerAngles); 
+		m_rotation = Converter::toQtQuat(glm::quat(glm::radians(Converter::toGLMVec3(m_eulerAngles)))); 
 	}
 	inline void setEulerAngleZ(float z) 
 	{ 
 		m_eulerAngles.setZ(z); 
-		m_rotation = Quaternion::computeQuaternion(m_eulerAngles); 
+		m_rotation = Converter::toQtQuat(glm::quat(glm::radians(Converter::toGLMVec3(m_eulerAngles)))); 
 	}
 
 	/// Scale Access

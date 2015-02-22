@@ -184,17 +184,16 @@ void PhysicsWorld::handleCollisions()
 // 					}
 
 					// render the contact point
-					Scene* scene = bodyA->gameObject()->getScene();
-					GameObjectPtr go = scene->createEmptyGameObject("Contact Point");
-					go->setPosition(currentContactPoint);
-					go->setScale(0.05);
-					LoaderThread loader(scene, "../Resource/Models/Common/sphere.obj", go, scene->sceneRoot(), false);
-					ModelPtr model = go->getComponent("Model").dynamicCast<IModel>();
-					ShadingTechniquePtr tech = model->renderingEffect();
- 					tech->enable();
-					tech->setMatEmissiveColor(Qt::red);
+// 					Scene* scene = bodyA->gameObject()->getScene();
+// 					GameObjectPtr go = scene->createEmptyGameObject("Contact Point");
+// 					go->setPosition(currentContactPoint);
+// 					go->setScale(0.05);
+// 					LoaderThread loader(scene, "../Resource/Models/Common/sphere.obj", go, scene->sceneRoot(), false);
+// 					ModelPtr model = go->getComponent("Model").dynamicCast<IModel>();
+// 					ShadingTechniquePtr tech = model->renderingEffect();
+//  					tech->enable();
+// 					tech->setMatEmissiveColor(Qt::red);
 
-					vec3 A2B = (bodyB->getPosition() - bodyA->getPosition()).normalized();
 					vec3 n = collisionInfo.contactNormalWorld;
 
 					// separate the two objects by the penetration depth
@@ -202,42 +201,28 @@ void PhysicsWorld::handleCollisions()
 						         + chA->getMargin() + chB->getMargin();
 					if (bodyA->getMotionType() == RigidBody::MOTION_FIXED)
 					{
-						bodyB->moveBy(offset * A2B);
+						bodyB->moveBy(offset * n);
 					}
 					if (bodyB->getMotionType() == RigidBody::MOTION_FIXED)
 					{
-						bodyA->moveBy(-offset * A2B);
+						bodyA->moveBy(-offset * n);
 					}
 					if (bodyA->getMotionType() != RigidBody::MOTION_FIXED &&
 						bodyB->getMotionType() != RigidBody::MOTION_FIXED)
 					{
-						bodyA->moveBy(-0.5f * offset * A2B);
-						bodyB->moveBy(0.5f * offset * A2B);
+						bodyA->moveBy(-0.5f * offset * n);
+						bodyB->moveBy(0.5f * offset * n);
 					}
 
 					float impuseMagnitude = computeContactImpulseMagnitude(&collisionInfo);
-					// 				qDebug() << bodyA->gameObject()->objectName() <<
-					// 					     bodyB->gameObject()->objectName() << impuseMagnitude;
 
-// 					qDebug() << bodyA->gameObject()->objectName() << bodyA->getLinearVelocity().lengthSquared() << bodyA->getAngularVelocity().lengthSquared();
-// 					qDebug() << bodyB->gameObject()->objectName() << bodyB->getLinearVelocity().lengthSquared() << bodyB->getAngularVelocity().lengthSquared();
  					// apply impulse based on the direction
-					if (vec3::dotProduct(A2B, n) > 0)
-					{
-						if (bodyA->getMotionType() != RigidBody::MOTION_FIXED)
-							bodyA->applyPointImpulse(-impuseMagnitude * n, collisionInfo.closestPntAWorld);
+					if (bodyA->getMotionType() != RigidBody::MOTION_FIXED)
+						bodyA->applyPointImpulse(-impuseMagnitude * n, collisionInfo.closestPntAWorld);
 
-						if (bodyB->getMotionType() != RigidBody::MOTION_FIXED)
-							bodyB->applyPointImpulse(impuseMagnitude * n, collisionInfo.closestPntBWorld);
-					}
-					else
-					{
-						if (bodyA->getMotionType() != RigidBody::MOTION_FIXED)
-							bodyA->applyPointImpulse(impuseMagnitude * n, collisionInfo.closestPntAWorld);
+					if (bodyB->getMotionType() != RigidBody::MOTION_FIXED)
+						bodyB->applyPointImpulse(impuseMagnitude * n, collisionInfo.closestPntBWorld);
 
-						if (bodyB->getMotionType() != RigidBody::MOTION_FIXED)
-							bodyB->applyPointImpulse(-impuseMagnitude * n, collisionInfo.closestPntBWorld);
-					}
 
 					// 				RigidBody* rb1 = c1->getRigidBody();
 					// 				RigidBody* rb2 = c2->getRigidBody();
@@ -350,16 +335,16 @@ float PhysicsWorld::computeContactImpulseMagnitude( const NarrowPhaseCollisionFe
 	vec3 rA = pCollisionInfo->closestPntAWorld - A->getCenterOfMassInWorld();
 	vec3 rB = pCollisionInfo->closestPntBWorld - B->getCenterOfMassInWorld();
 	
-	mat3 IAInv = A->getInertiaInvWorld();
-	mat3 IBInv = B->getInertiaInvWorld();
+	glm::mat3 IAInv = A->getInertiaInvWorld();
+	glm::mat3 IBInv = B->getInertiaInvWorld();
 	vec3 rACrossN = vec3::crossProduct(rA, n);
 	vec3 rBCrossN = vec3::crossProduct(rB, n);
 
 	float termA = A->getMotionType() == RigidBody::MOTION_FIXED ? 0.0f :
-		          vec3::dotProduct(n, vec3::crossProduct(Math::Vector3::setMul(rACrossN, IAInv), rA));
+		          vec3::dotProduct(n, vec3::crossProduct(Converter::toQtVec3(IAInv * Converter::toGLMVec3(rACrossN)), rA));
 
 	float termB = B->getMotionType() == RigidBody::MOTION_FIXED ? 0.0f :
-		          vec3::dotProduct(n, vec3::crossProduct(Math::Vector3::setMul(rBCrossN, IBInv), rB));
+				  vec3::dotProduct(n, vec3::crossProduct(Converter::toQtVec3(IBInv * Converter::toGLMVec3(rBCrossN)), rB));
 
 	float denominator = massInvSum + termA + termB;
 	

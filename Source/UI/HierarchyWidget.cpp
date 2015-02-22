@@ -14,6 +14,8 @@ HierarchyWidget::HierarchyWidget(Scene* scene, Canvas* canvas, QWidget *parent)
 	// connection to a ray casting function in the scene
 	connect(m_canvas, SIGNAL(objectPicked(GameObjectPtr)), this, SLOT(onObjectPicked(GameObjectPtr)));
 	
+	connect(m_scene, SIGNAL(cleared()), this, SLOT(clearReference()));
+
 	// connection from canvas to delete object
 	connect(m_canvas, SIGNAL(deleteObject()), this, SLOT(deleteGameObject()));
 
@@ -111,9 +113,6 @@ HierarchyWidget::HierarchyWidget(Scene* scene, Canvas* canvas, QWidget *parent)
 	connect(ui->checkBox_RandomColor, SIGNAL(toggled(bool)), this, SLOT(setColorPickerEnabled(bool)));
 	connect(ui->checkBox_EnableCollision, SIGNAL(toggled(bool)), ui->doubleSpinBox_Restitution, SLOT(setEnabled(bool)));
 
-	connect(ui->checkBox_DiffuseMap, SIGNAL(toggled(bool)), this, SLOT(toggleDiffuseMap(bool)));
-	connect(ui->checkBox_NormalMap, SIGNAL(toggled(bool)), this, SLOT(toggleNormalMap(bool)));
-
 	setMaximumWidth(360);
 	updateObjectTree();
 }
@@ -210,9 +209,7 @@ void HierarchyWidget::readGameObject(QTreeWidgetItem* current, QTreeWidgetItem* 
 	if(current == ui->treeWidget->topLevelItem(0)) 
 	{
 		clearTransformationArea();
-		m_currentObject = NULL;
-		m_currentShadingTech = NULL;
-		m_currentLight = NULL;
+		clearReference();
 
 		return;
 	}
@@ -308,6 +305,8 @@ void HierarchyWidget::connectCurrentObject()
 	connect(ui->radioButton_Fill,  SIGNAL(toggled(bool)), m_currentObject, SLOT(toggleFill(bool)));
 	connect(ui->radioButton_Line,  SIGNAL(toggled(bool)), m_currentObject, SLOT(toggleWireframe(bool)));
 	connect(ui->radioButton_Point, SIGNAL(toggled(bool)), m_currentObject, SLOT(togglePoints(bool)));
+	connect(ui->checkBox_DiffuseMap, SIGNAL(toggled(bool)), this, SLOT(toggleDiffuseMap(bool)));
+	connect(ui->checkBox_NormalMap, SIGNAL(toggled(bool)), this, SLOT(toggleNormalMap(bool)));
 }
 
 void HierarchyWidget::disconnectPreviousObject()
@@ -324,6 +323,8 @@ void HierarchyWidget::disconnectPreviousObject()
 	disconnect(ui->radioButton_Line,  SIGNAL(toggled(bool)), 0, 0);
 	disconnect(ui->radioButton_Point, SIGNAL(toggled(bool)), 0, 0);
 	disconnect(ui->comboBox_SahderFiles, 0, 0, 0);
+	disconnect(ui->checkBox_DiffuseMap, 0, 0, 0);
+	disconnect(ui->checkBox_NormalMap, 0, 0, 0);
 
 	// particle system tab related
 	disconnect(ui->doubleSpinBox_Mass,			SIGNAL(valueChanged(double)), 0, 0);
@@ -987,10 +988,7 @@ void HierarchyWidget::onObjectPicked( GameObjectPtr selected )
 		ui->tabWidget->removeTab(ui->tabWidget->indexOf(m_renderingTab));
 		ui->tabWidget->removeTab(ui->tabWidget->indexOf(m_particleSystemTab));
 		disconnectPreviousObject();
-		m_currentObject = NULL;
-		m_currentShadingTech = NULL;
-		m_currentLight = NULL;
-		m_currentMaterials.clear();
+		clearReference();
 		return;
 	}
 
@@ -1148,4 +1146,12 @@ void HierarchyWidget::toggleNormalMap( bool state )
 	}
 
 	emit materialChanged();
+}
+
+void HierarchyWidget::clearReference()
+{
+	m_currentObject = NULL;
+	m_currentShadingTech = NULL;
+	m_currentLight = NULL;
+	m_currentMaterials.clear();
 }

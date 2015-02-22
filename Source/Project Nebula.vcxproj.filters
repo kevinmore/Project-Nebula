@@ -123,7 +123,6 @@
     <ClInclude Include="Scene\ShadingTechniques\ParticleTechnique.h" />
     <ClInclude Include="Scene\ShadingTechniques\ShadingTechnique.h" />
     <ClInclude Include="Physicis\Geometry\ConvexShape.h" />
-    <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Physicis\Collision\BroadPhase\BroadPhaseCollisionFeedback.h" />
     <ClInclude Include="Physicis\Collision\Collider\BoxCollider.h" />
     <ClInclude Include="Physicis\Collision\Collider\SphereCollider.h" />
@@ -143,8 +142,9 @@
     <ClInclude Include="Scene\Light.h" />
     <ClInclude Include="Primitives\Component.h" />
     <ClInclude Include="Primitives\GameObject.h" />
-    <ClInclude Include="UI\HierarchyWidget.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="UI\HierarchyWidget.h" />
+    <ClInclude Include="Scene\Scene.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="UI\HierarchyWidget.ui" />

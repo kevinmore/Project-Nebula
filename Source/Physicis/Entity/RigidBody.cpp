@@ -37,7 +37,6 @@ RigidBody::~RigidBody()
 void RigidBody::setMassProperties( const MassProperties& mp )
 {
 	m_mass = mp.m_mass;
-	m_inertiaTensor = mp.m_inertiaTensor;
 	m_centerOfMass = mp.m_centerOfMass;
 }
 

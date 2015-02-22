@@ -60,104 +60,103 @@ BroadPhaseCollisionFeedback BoxCollider::onBroadPhase( ICollider* other )
 
 	/// begin the separating axis tests
 	float ra, rb;
-	mat3 R, AbsR;
+	glm::mat3 R, AbsR;
 
 	// get the size
-	vec3 ea = m_boxShape.getHalfExtents();
-	vec3 eb = b->getGeometryShape().getHalfExtents();
+	glm::vec3 ea = Converter::toGLMVec3(m_boxShape.getHalfExtents());
+	glm::vec3 eb = Converter::toGLMVec3(b->getGeometryShape().getHalfExtents());
 
-	mat3 rotaionA = m_rigidBody->getRotationMatrix();
-	mat3 rotaionB = b->getRigidBody()->getRotationMatrix();
-
+	glm::mat3 rotaionA = m_rigidBody->getRotationMatrix();
+	glm::mat3 rotaionB = b->getRigidBody()->getRotationMatrix();
 
 	// Compute rotation matrix expressing b in a¡¯s coordinate frame
 	for (int i = 0; i < 3; ++i)
 		for (int j = 0; j < 3; ++j)
-			R.m[i][j] = vec3::dotProduct(Matrix3::getRow(rotaionA, i), Matrix3::getRow(rotaionB, j));
+			R[i][j] = glm::dot(glm::row(rotaionA, i), glm::row(rotaionB, j));
 
 	// Compute translation vector t
-	vec3 t = other->getCenter() - m_center;
+	glm::vec3 t = Converter::toGLMVec3(other->getCenter() - m_center);
 	// Bring translation into a¡¯s coordinate frame
-	float tx = vec3::dotProduct(t, Matrix3::getRow(rotaionA, 0));
-	float ty = vec3::dotProduct(t, Matrix3::getRow(rotaionA, 1));
-	float tz = vec3::dotProduct(t, Matrix3::getRow(rotaionA, 2));
-	t = vec3(tx, ty, tz);
+	float tx = glm::dot(t, glm::row(rotaionA, 0));
+	float ty = glm::dot(t, glm::row(rotaionA, 1));
+	float tz = glm::dot(t, glm::row(rotaionA, 2));
+	t = glm::vec3(tx, ty, tz);
 
 	// Compute common subexpressions. Add in an epsilon term to
 	// counteract arithmetic errors when two edges are parallel and
 	// their cross product is (near) null
 	for (int i = 0; i < 3; ++i)
 		for (int j = 0; j < 3; ++j)
-			AbsR.m[i][j] = qAbs(R.m[i][j]) + 0.001;
+			AbsR[i][j] = glm::abs(R[i][j]) + 0.001;
 
 	// Test axes L = A0, L = A1, L = A2
 	for (int i = 0; i < 3; ++i) {
 		ra = ea[i];
-		rb = eb[0] * AbsR.m[i][0] + eb[1] * AbsR.m[i][1] + eb[2] * AbsR.m[i][2];
-		if (qAbs(t[i]) > ra + rb)
+		rb = eb[0] * AbsR[i][0] + eb[1] * AbsR[i][1] + eb[2] * AbsR[i][2];
+		if (glm::abs(t[i]) > ra + rb)
 			return notIntersecting;
 	}
 
 	// Test axes L = B0, L = B1, L = B2
 	for (int i = 0; i < 3; ++i) {
-		ra = ea[0] * AbsR.m[0][i] + ea[1] * AbsR.m[1][i] + ea[2] * AbsR.m[2][i];
+		ra = ea[0] * AbsR[0][i] + ea[1] * AbsR[1][i] + ea[2] * AbsR[2][i];
 		rb = eb[i];
-		if (qAbs(t[0] * R.m[0][i] + t[1] * R.m[1][i] + t[2] * R.m[2][i]) > ra + rb)
+		if (glm::abs(t[0] * R[0][i] + t[1] * R[1][i] + t[2] * R[2][i]) > ra + rb)
 			return notIntersecting;
 	}
 
 	// Test axis L = A0 x B0
-	ra = ea[1] * AbsR.m[2][0] + ea[2] * AbsR.m[1][0];
-	rb = eb[1] * AbsR.m[0][2] + eb[2] * AbsR.m[0][1];
-	if (qAbs(t[2] * R.m[1][0] - t[1] * R.m[2][0]) > ra + rb) 
+	ra = ea[1] * AbsR[2][0] + ea[2] * AbsR[1][0];
+	rb = eb[1] * AbsR[0][2] + eb[2] * AbsR[0][1];
+	if (glm::abs(t[2] * R[1][0] - t[1] * R[2][0]) > ra + rb) 
 		return notIntersecting;
 
 	// Test axis L = A0 x B1
-	ra = ea[1] * AbsR.m[2][1] + ea[2] * AbsR.m[1][1];
-	rb = eb[0] * AbsR.m[0][2] + eb[2] * AbsR.m[0][0];
-	if (qAbs(t[2] * R.m[1][1] - t[1] * R.m[2][1]) > ra + rb)
+	ra = ea[1] * AbsR[2][1] + ea[2] * AbsR[1][1];
+	rb = eb[0] * AbsR[0][2] + eb[2] * AbsR[0][0];
+	if (glm::abs(t[2] * R[1][1] - t[1] * R[2][1]) > ra + rb)
 		return notIntersecting;
 
 	// Test axis L = A0 x B2
-	ra = ea[1] * AbsR.m[2][2] + ea[2] * AbsR.m[1][2];
-	rb = eb[0] * AbsR.m[0][1] + eb[1] * AbsR.m[0][0];
-	if (qAbs(t[2] * R.m[1][2] - t[1] * R.m[2][2]) > ra + rb)
+	ra = ea[1] * AbsR[2][2] + ea[2] * AbsR[1][2];
+	rb = eb[0] * AbsR[0][1] + eb[1] * AbsR[0][0];
+	if (glm::abs(t[2] * R[1][2] - t[1] * R[2][2]) > ra + rb)
 		return notIntersecting;
 
 	// Test axis L = A1 x B0
-	ra = ea[0] * AbsR.m[2][0] + ea[2] * AbsR.m[0][0];
-	rb = eb[1] * AbsR.m[1][2] + eb[2] * AbsR.m[1][1];
-	if (qAbs(t[0] * R.m[2][0] - t[2] * R.m[0][0]) > ra + rb)
+	ra = ea[0] * AbsR[2][0] + ea[2] * AbsR[0][0];
+	rb = eb[1] * AbsR[1][2] + eb[2] * AbsR[1][1];
+	if (glm::abs(t[0] * R[2][0] - t[2] * R[0][0]) > ra + rb)
 		return notIntersecting;
 
 	// Test axis L = A1 x B1
-	ra = ea[0] * AbsR.m[2][1] + ea[2] * AbsR.m[0][1];
-	rb = eb[0] * AbsR.m[1][2] + eb[2] * AbsR.m[1][0];
-	if (qAbs(t[0] * R.m[2][1] - t[2] * R.m[0][1]) > ra + rb)
+	ra = ea[0] * AbsR[2][1] + ea[2] * AbsR[0][1];
+	rb = eb[0] * AbsR[1][2] + eb[2] * AbsR[1][0];
+	if (glm::abs(t[0] * R[2][1] - t[2] * R[0][1]) > ra + rb)
 		return notIntersecting;
 
 	// Test axis L = A1 x B2
-	ra = ea[0] * AbsR.m[2][2] + ea[2] * AbsR.m[0][2];
-	rb = eb[0] * AbsR.m[1][1] + eb[1] * AbsR.m[1][0];
-	if (qAbs(t[0] * R.m[2][2] - t[2] * R.m[0][2]) > ra + rb)
+	ra = ea[0] * AbsR[2][2] + ea[2] * AbsR[0][2];
+	rb = eb[0] * AbsR[1][1] + eb[1] * AbsR[1][0];
+	if (glm::abs(t[0] * R[2][2] - t[2] * R[0][2]) > ra + rb)
 		return notIntersecting;
 
 	// Test axis L = A2 x B0
-	ra = ea[0] * AbsR.m[1][0] + ea[1] * AbsR.m[0][0];
-	rb = eb[1] * AbsR.m[2][2] + eb[2] * AbsR.m[2][1];
-	if (qAbs(t[1] * R.m[0][0] - t[0] * R.m[1][0]) > ra + rb)
+	ra = ea[0] * AbsR[1][0] + ea[1] * AbsR[0][0];
+	rb = eb[1] * AbsR[2][2] + eb[2] * AbsR[2][1];
+	if (glm::abs(t[1] * R[0][0] - t[0] * R[1][0]) > ra + rb)
 		return notIntersecting;
 
 	// Test axis L = A2 x B1
-	ra = ea[0] * AbsR.m[1][1] + ea[1] * AbsR.m[0][1];
-	rb = eb[0] * AbsR.m[2][2] + eb[2] * AbsR.m[2][0];
-	if (qAbs(t[1] * R.m[0][1] - t[0] * R.m[1][1]) > ra + rb)
+	ra = ea[0] * AbsR[1][1] + ea[1] * AbsR[0][1];
+	rb = eb[0] * AbsR[2][2] + eb[2] * AbsR[2][0];
+	if (glm::abs(t[1] * R[0][1] - t[0] * R[1][1]) > ra + rb)
 		return notIntersecting;
 
 	// Test axis L = A2 x B2
-	ra = ea[0] * AbsR.m[1][2] + ea[1] * AbsR.m[0][2];
-	rb = eb[0] * AbsR.m[2][1] + eb[1] * AbsR.m[2][0];
-	if (qAbs(t[1] * R.m[0][2] - t[0] * R.m[1][2]) > ra + rb)
+	ra = ea[0] * AbsR[1][2] + ea[1] * AbsR[0][2];
+	rb = eb[0] * AbsR[2][1] + eb[1] * AbsR[2][0];
+	if (glm::abs(t[1] * R[0][2] - t[0] * R[1][2]) > ra + rb)
 		return notIntersecting;
 
 	// Since no separating axis is found, the OBBs must be intersecting

@@ -34,9 +34,9 @@ bool EPASolver::computePenetrationDepthAndContactPoints( const Simplex& simplex,
 	Transform transA2B = objB->getTransform().inversed() * objA->getTransform();
 
 	// rotate matrix which transform a local vector in objA space to local vector in objB space
-	mat3 rotB = objB->getTransform().getRotationMatrix();
-	mat3 rotA = objA->getTransform().getRotationMatrix();
-	mat3 rotA2B = rotB.transposed() * rotA;
+	glm::mat3 rotB = objB->getTransform().getRotationMatrix();
+	glm::mat3 rotA = objA->getTransform().getRotationMatrix();
+	glm::mat3 rotA2B = glm::transpose(rotB) * rotA;
 
 	int numVertices = simplex.getPoints(suppPointsA, suppPointsB, points);
 	m_polytope.clear();
@@ -60,8 +60,8 @@ bool EPASolver::computePenetrationDepthAndContactPoints( const Simplex& simplex,
 			// The origin lies in a triangle. 
 			// Add two new vertices to create a hexahedron. It is explained in Geno's book. 
 			vec3 n = vec3::crossProduct(points[1] - points[0], points[2] - points[0]);
-			vec3 w0 =  objA->getLocalSupportPoint(n) - transB2A * objB->getLocalSupportPoint(Vector3::setMul(-n, rotA2B));
-			vec3 w1 =  objA->getLocalSupportPoint(-n) - transB2A * objB->getLocalSupportPoint(Vector3::setMul(n, rotA2B));
+			vec3 w0 =  objA->getLocalSupportPoint(n)  - transB2A * objB->getLocalSupportPoint(Converter::toQtVec3(rotA2B * Converter::toGLMVec3(-n)));
+			vec3 w1 =  objA->getLocalSupportPoint(-n) - transB2A * objB->getLocalSupportPoint(Converter::toQtVec3(rotA2B * Converter::toGLMVec3(n)));
 
 			if ( !m_polytope.addHexahedron(points[0], points[1], points[2], w0, w1) )
 				return false;
@@ -90,7 +90,7 @@ bool EPASolver::computePenetrationDepthAndContactPoints( const Simplex& simplex,
 		vec3 v = pClosestTriangle->getClosestPoint().normalized();
 
 		vec3 supportPointA = objA->getLocalSupportPoint(v, objA->getMargin());
-		vec3 supportPointB = transB2A * objB->getLocalSupportPoint(Vector3::setMul(-v, rotA2B), objB->getMargin());
+		vec3 supportPointB = transB2A * objB->getLocalSupportPoint(Converter::toQtVec3(rotA2B * Converter::toGLMVec3(-v)), objB->getMargin());
 
 		vec3 w = supportPointA - supportPointB;
 		// Compute upper and lower bounds

@@ -21,24 +21,6 @@ public:
 	/// Sets the half extents, this will update the inertia tensor
 	void setBoxHalfExtents(const vec3& halfExtents);
 
-	/// Gets the inertia tensor of the rigid body in local space.
-	virtual mat3 getInertiaLocal() const;
-
-	/// Sets the inertia tensor of the rigid body in local space. Advanced use only.
-	virtual void setInertiaLocal(const mat3& inertia);
-
-	/// Gets the inverse inertia tensor in local space.
-	virtual mat3 getInertiaInvLocal() const;
-
-	/// Sets the inertia tensor of the rigid body by supplying its inverse. Advanced use only.
-	virtual void setInertiaInvLocal(const mat3& inertiaInv);
-
-	/// Get the inertia tensor of the rigid body in world space
-	virtual mat3 getInertiaWorld() const;
-
-	/// Get the inverse inertia tensor in local space
-	virtual mat3 getInertiaInvWorld() const;
-
 	/// Applies an impulse (in world space) at the point p in world space.
 	virtual void applyPointImpulse(const vec3& imp, const vec3& p);
 

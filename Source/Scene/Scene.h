@@ -93,6 +93,7 @@ public slots:
 signals:
 	void updateHierarchy();
 	void ligthsChanged();
+	void cleared();
 
 private:
 	void loadScene(QString& fileName);

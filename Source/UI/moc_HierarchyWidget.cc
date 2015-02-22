@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_HierarchyWidget_t {
-    QByteArrayData data[67];
-    char stringdata[1262];
+    QByteArrayData data[68];
+    char stringdata[1277];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -90,12 +90,13 @@ QT_MOC_LITERAL(57, 1123, 12),
 QT_MOC_LITERAL(58, 1136, 16),
 QT_MOC_LITERAL(59, 1153, 5),
 QT_MOC_LITERAL(60, 1159, 15),
-QT_MOC_LITERAL(61, 1175, 16),
-QT_MOC_LITERAL(62, 1192, 16),
-QT_MOC_LITERAL(63, 1209, 14),
-QT_MOC_LITERAL(64, 1224, 13),
-QT_MOC_LITERAL(65, 1238, 8),
-QT_MOC_LITERAL(66, 1247, 14)
+QT_MOC_LITERAL(61, 1175, 14),
+QT_MOC_LITERAL(62, 1190, 16),
+QT_MOC_LITERAL(63, 1207, 16),
+QT_MOC_LITERAL(64, 1224, 14),
+QT_MOC_LITERAL(65, 1239, 13),
+QT_MOC_LITERAL(66, 1253, 8),
+QT_MOC_LITERAL(67, 1262, 14)
     },
     "HierarchyWidget\0materialChanged\0\0"
     "connectCurrentObject\0disconnectPreviousObject\0"
@@ -132,9 +133,9 @@ QT_MOC_LITERAL(66, 1247, 14)
     "onScale1Pushed\0onScale10Pushed\0"
     "onScale100Pushed\0assignPuppet\0"
     "toggleDiffuseMap\0state\0toggleNormalMap\0"
-    "deleteGameObject\0updateObjectTree\0"
-    "onObjectPicked\0GameObjectPtr\0selected\0"
-    "assignMaterial"
+    "clearReference\0deleteGameObject\0"
+    "updateObjectTree\0onObjectPicked\0"
+    "GameObjectPtr\0selected\0assignMaterial"
 };
 #undef QT_MOC_LITERAL
 
@@ -144,7 +145,7 @@ static const uint qt_meta_data_HierarchyWidget[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      47,   14, // methods
+      48,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -152,55 +153,56 @@ static const uint qt_meta_data_HierarchyWidget[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,  249,    2, 0x06 /* Public */,
+       1,    0,  254,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       3,    0,  250,    2, 0x08 /* Private */,
-       4,    0,  251,    2, 0x08 /* Private */,
-       5,    2,  252,    2, 0x08 /* Private */,
-       9,    0,  257,    2, 0x08 /* Private */,
-      10,    2,  258,    2, 0x08 /* Private */,
-      13,    3,  263,    2, 0x08 /* Private */,
-      18,    1,  270,    2, 0x08 /* Private */,
-      20,    1,  273,    2, 0x08 /* Private */,
-      22,    1,  276,    2, 0x08 /* Private */,
-      24,    1,  279,    2, 0x08 /* Private */,
-      26,    1,  282,    2, 0x08 /* Private */,
-      28,    1,  285,    2, 0x08 /* Private */,
-      29,    1,  288,    2, 0x08 /* Private */,
-      30,    1,  291,    2, 0x08 /* Private */,
-      31,    1,  294,    2, 0x08 /* Private */,
-      32,    1,  297,    2, 0x08 /* Private */,
-      33,    1,  300,    2, 0x08 /* Private */,
-      34,    1,  303,    2, 0x08 /* Private */,
-      35,    1,  306,    2, 0x08 /* Private */,
-      36,    1,  309,    2, 0x08 /* Private */,
-      37,    1,  312,    2, 0x08 /* Private */,
-      38,    1,  315,    2, 0x08 /* Private */,
-      39,    1,  318,    2, 0x08 /* Private */,
-      40,    1,  321,    2, 0x08 /* Private */,
-      41,    1,  324,    2, 0x08 /* Private */,
-      42,    1,  327,    2, 0x08 /* Private */,
-      43,    1,  330,    2, 0x08 /* Private */,
-      44,    1,  333,    2, 0x08 /* Private */,
-      46,    1,  336,    2, 0x08 /* Private */,
-      47,    1,  339,    2, 0x08 /* Private */,
-      48,    1,  342,    2, 0x08 /* Private */,
-      49,    1,  345,    2, 0x08 /* Private */,
-      50,    1,  348,    2, 0x08 /* Private */,
-      51,    1,  351,    2, 0x08 /* Private */,
-      52,    0,  354,    2, 0x08 /* Private */,
-      53,    0,  355,    2, 0x08 /* Private */,
-      54,    0,  356,    2, 0x08 /* Private */,
-      55,    0,  357,    2, 0x08 /* Private */,
-      56,    0,  358,    2, 0x08 /* Private */,
-      57,    0,  359,    2, 0x08 /* Private */,
-      58,    1,  360,    2, 0x08 /* Private */,
-      60,    1,  363,    2, 0x08 /* Private */,
-      61,    0,  366,    2, 0x0a /* Public */,
-      62,    0,  367,    2, 0x0a /* Public */,
-      63,    1,  368,    2, 0x0a /* Public */,
-      66,    0,  371,    2, 0x0a /* Public */,
+       3,    0,  255,    2, 0x08 /* Private */,
+       4,    0,  256,    2, 0x08 /* Private */,
+       5,    2,  257,    2, 0x08 /* Private */,
+       9,    0,  262,    2, 0x08 /* Private */,
+      10,    2,  263,    2, 0x08 /* Private */,
+      13,    3,  268,    2, 0x08 /* Private */,
+      18,    1,  275,    2, 0x08 /* Private */,
+      20,    1,  278,    2, 0x08 /* Private */,
+      22,    1,  281,    2, 0x08 /* Private */,
+      24,    1,  284,    2, 0x08 /* Private */,
+      26,    1,  287,    2, 0x08 /* Private */,
+      28,    1,  290,    2, 0x08 /* Private */,
+      29,    1,  293,    2, 0x08 /* Private */,
+      30,    1,  296,    2, 0x08 /* Private */,
+      31,    1,  299,    2, 0x08 /* Private */,
+      32,    1,  302,    2, 0x08 /* Private */,
+      33,    1,  305,    2, 0x08 /* Private */,
+      34,    1,  308,    2, 0x08 /* Private */,
+      35,    1,  311,    2, 0x08 /* Private */,
+      36,    1,  314,    2, 0x08 /* Private */,
+      37,    1,  317,    2, 0x08 /* Private */,
+      38,    1,  320,    2, 0x08 /* Private */,
+      39,    1,  323,    2, 0x08 /* Private */,
+      40,    1,  326,    2, 0x08 /* Private */,
+      41,    1,  329,    2, 0x08 /* Private */,
+      42,    1,  332,    2, 0x08 /* Private */,
+      43,    1,  335,    2, 0x08 /* Private */,
+      44,    1,  338,    2, 0x08 /* Private */,
+      46,    1,  341,    2, 0x08 /* Private */,
+      47,    1,  344,    2, 0x08 /* Private */,
+      48,    1,  347,    2, 0x08 /* Private */,
+      49,    1,  350,    2, 0x08 /* Private */,
+      50,    1,  353,    2, 0x08 /* Private */,
+      51,    1,  356,    2, 0x08 /* Private */,
+      52,    0,  359,    2, 0x08 /* Private */,
+      53,    0,  360,    2, 0x08 /* Private */,
+      54,    0,  361,    2, 0x08 /* Private */,
+      55,    0,  362,    2, 0x08 /* Private */,
+      56,    0,  363,    2, 0x08 /* Private */,
+      57,    0,  364,    2, 0x08 /* Private */,
+      58,    1,  365,    2, 0x08 /* Private */,
+      60,    1,  368,    2, 0x08 /* Private */,
+      61,    0,  371,    2, 0x08 /* Private */,
+      62,    0,  372,    2, 0x0a /* Public */,
+      63,    0,  373,    2, 0x0a /* Public */,
+      64,    1,  374,    2, 0x0a /* Public */,
+      67,    0,  377,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -250,7 +252,8 @@ static const uint qt_meta_data_HierarchyWidget[] = {
     QMetaType::Void, QMetaType::Bool,   59,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 64,   65,
+    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 65,   66,
     QMetaType::Void,
 
        0        // eod
@@ -304,10 +307,11 @@ void HierarchyWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         case 40: _t->assignPuppet(); break;
         case 41: _t->toggleDiffuseMap((*reinterpret_cast< bool(*)>(_a[1]))); break;
         case 42: _t->toggleNormalMap((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 43: _t->deleteGameObject(); break;
-        case 44: _t->updateObjectTree(); break;
-        case 45: _t->onObjectPicked((*reinterpret_cast< GameObjectPtr(*)>(_a[1]))); break;
-        case 46: _t->assignMaterial(); break;
+        case 43: _t->clearReference(); break;
+        case 44: _t->deleteGameObject(); break;
+        case 45: _t->updateObjectTree(); break;
+        case 46: _t->onObjectPicked((*reinterpret_cast< GameObjectPtr(*)>(_a[1]))); break;
+        case 47: _t->assignMaterial(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -347,13 +351,13 @@ int HierarchyWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 47)
+        if (_id < 48)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 47;
+        _id -= 48;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 47)
+        if (_id < 48)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 47;
+        _id -= 48;
     }
     return _id;
 }
