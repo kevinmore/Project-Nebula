@@ -190,11 +190,7 @@ public:
 
 	/// Applies an impulse (in world space) to the center of mass.
 	/// This activates the body and its simulation island if it is inactive.
-	inline void applyLinearImpulse(const vec3& imp) 
-	{ 
-		m_bSleep = false;
-		m_linearVelocity += m_massInv * imp; 
-	}
+	inline void applyLinearImpulse(const vec3& imp) { m_linearVelocity += m_massInv * imp; }
 
 	/// Applies an impulse (in world space) at the point p in world space.
 	/// This activates the body and its simulation island if it is inactive.
@@ -272,6 +268,25 @@ public:
 
 	inline void setSleep(bool state) { m_bSleep = state; }
 	inline bool isSleeping() const { return m_bSleep; }
+
+    ///Returns true if the body is awake and responding to integration.
+    inline bool getAwake() const { return m_isAwake; }
+
+	/// Sets the awake state of the body. If the body is set to be
+	/// not awake, then its velocities are also cancelled, since
+	/// a moving body that is not awake can cause problems in the
+	/// simulation.
+	void setAwake(const bool awake = true);
+
+    /// Returns true if the body is allowed to go to sleep at any time.
+    inline bool getCanSleep() const { return m_canSleep; }
+
+
+    /// Sets whether the body is ever allowed to go to sleep. Bodies
+    /// under the player's control, or for which the set of
+    /// transient forces applied each frame are not predictable,
+    /// should be kept awake.
+    void setCanSleep(const bool canSleep = true);       
 
 protected:
 
@@ -363,6 +378,21 @@ protected:
 	/// The initial state of the body, which decides if this body will be updated
 	// This defaults to false.
 	bool m_bSleep;
+
+
+	/// A body can be put to sleep to avoid it being updated
+	/// by the integration functions or affected by collisions
+	/// with the world.
+    bool m_isAwake;
+
+    /// Some bodies may never be allowed to fall asleep.
+    /// User controlled bodies, for example, should be
+    /// always awake.
+    bool m_canSleep;
+
+    /// Holds the amount of motion of the body. This is a recency
+    /// weighted mean that can be used to put a body to sleep.
+    float m_motion;
 };
 
 typedef QSharedPointer<RigidBody> RigidBodyPtr;

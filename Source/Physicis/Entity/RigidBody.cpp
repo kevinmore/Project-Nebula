@@ -90,6 +90,8 @@ void RigidBody::setFriction( float newFriction )
 
 void RigidBody::update( const float dt )
 {
+	if (!m_isAwake) return;
+
 	// only update the linear properties as an abstract rigid body
 	m_linearVelocity += m_gravityFactor * getWorld()->getConfig().m_gravity * dt;
 	m_deltaPosition = m_linearVelocity * dt;
@@ -97,6 +99,19 @@ void RigidBody::update( const float dt )
 
 	// sync the center position for the collider
 	m_collider->setCenter(m_transform.getPosition());
+
+	// Update the kinetic energy store, and possibly put the body to
+	// sleep.
+	if (m_canSleep) 
+	{
+		float currentMotion = m_linearVelocity.lengthSquared() + m_angularVelocity.lengthSquared();
+
+		float bias = pow(0.5f, dt);
+		m_motion = bias * m_motion + (1 - bias) * currentMotion;
+
+		if (m_motion < 0.3f) setAwake(false);
+		else if (m_motion > 10 * 0.3f) m_motion = 10 * 0.3f;
+	}
 }
 
 void RigidBody::attachCollider( ColliderPtr col )
@@ -113,4 +128,9 @@ void RigidBody::syncTransform( const Transform& transform )
 	{
 		m_transform = transform;
 	}
+}
+
+void RigidBody::setAwake( const bool awake /*= true*/ )
+{
+
 }
