@@ -190,14 +190,14 @@ void PhysicsWorld::handleCollisions()
 					//backToTimeOfImpact(bodyA, bodyB);
 // 					bodyA->backTrack(m_timeStep * 0.5f);
 // 					bodyB->backTrack(m_timeStep * 0.5f);
-					float impuseMagnitude = computeContactImpulseMagnitude(&collisionInfo);
+					ImpulsePair impuseMagnitudePair = computeContactImpulseMagnitude(&collisionInfo);
 
  					// apply impulse based on the direction
 					if (bodyA->getMotionType() != RigidBody::MOTION_FIXED)
-						bodyA->applyPointImpulse(-impuseMagnitude * n, collisionInfo.closestPntAWorld);
+						bodyA->applyPointImpulse(-impuseMagnitudePair.magnitudeA * n, collisionInfo.closestPntAWorld);
 
 					if (bodyB->getMotionType() != RigidBody::MOTION_FIXED)
-						bodyB->applyPointImpulse(impuseMagnitude * n, collisionInfo.closestPntBWorld);
+						bodyB->applyPointImpulse(impuseMagnitudePair.magnitudeB * n, collisionInfo.closestPntBWorld);
 				}
 			}
 		}
@@ -341,7 +341,7 @@ void PhysicsWorld::backToTimeOfImpact( RigidBody* rb1, RigidBody* rb2 )
 	}
 }
 
-float PhysicsWorld::computeContactImpulseMagnitude( const NarrowPhaseCollisionFeedback* pCollisionInfo )
+ImpulsePair PhysicsWorld::computeContactImpulseMagnitude( const NarrowPhaseCollisionFeedback* pCollisionInfo )
 {
 	RigidBody* A = pCollisionInfo->pObjA->getRigidBody();
 	RigidBody* B = pCollisionInfo->pObjB->getRigidBody();
@@ -353,9 +353,11 @@ float PhysicsWorld::computeContactImpulseMagnitude( const NarrowPhaseCollisionFe
 	float Vrel = vec3::dotProduct(n, pointVelocityA - pointVelocityB);
 
 	// check if Vrel == 0
-	if (qFuzzyIsNull(Vrel)) return 0.0f;
+	if (qFuzzyIsNull(Vrel)) return ImpulsePair();
 
-	float k = -(1 + 0.5*(A->getRestitution() + B->getRestitution()));
+	float kA = -(1 + A->getRestitution());
+	float kB = -(1 + B->getRestitution());
+
 	float massInvA = A->getMotionType() == RigidBody::MOTION_FIXED ?
 		             0.0f : A->getMassInv();
 	float massInvB = B->getMotionType() == RigidBody::MOTION_FIXED ?
@@ -378,7 +380,11 @@ float PhysicsWorld::computeContactImpulseMagnitude( const NarrowPhaseCollisionFe
 
 	float denominator = massInvSum + termA + termB;
 	
-	return qAbs(k * Vrel / denominator);
+	ImpulsePair pair;
+	pair.magnitudeA = qAbs(kA * Vrel / denominator);
+	pair.magnitudeB = qAbs(kB * Vrel / denominator);
+
+	return pair;
 }
 
 void PhysicsWorld::elasticCollisionResponse( RigidBody* rb1, RigidBody* rb2 )

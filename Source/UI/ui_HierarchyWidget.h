@@ -562,6 +562,7 @@ public:
         doubleSpinBox_ScaleFactor->setObjectName(QStringLiteral("doubleSpinBox_ScaleFactor"));
         sizePolicy1.setHeightForWidth(doubleSpinBox_ScaleFactor->sizePolicy().hasHeightForWidth());
         doubleSpinBox_ScaleFactor->setSizePolicy(sizePolicy1);
+        doubleSpinBox_ScaleFactor->setDecimals(4);
         doubleSpinBox_ScaleFactor->setMinimum(0);
         doubleSpinBox_ScaleFactor->setMaximum(100000);
         doubleSpinBox_ScaleFactor->setSingleStep(0.1);
@@ -585,6 +586,7 @@ public:
         doubleSpinBox_ScaleX->setObjectName(QStringLiteral("doubleSpinBox_ScaleX"));
         sizePolicy1.setHeightForWidth(doubleSpinBox_ScaleX->sizePolicy().hasHeightForWidth());
         doubleSpinBox_ScaleX->setSizePolicy(sizePolicy1);
+        doubleSpinBox_ScaleX->setDecimals(4);
         doubleSpinBox_ScaleX->setMinimum(0);
         doubleSpinBox_ScaleX->setMaximum(100000);
         doubleSpinBox_ScaleX->setSingleStep(0.1);
@@ -606,6 +608,7 @@ public:
         doubleSpinBox_ScaleY->setObjectName(QStringLiteral("doubleSpinBox_ScaleY"));
         sizePolicy1.setHeightForWidth(doubleSpinBox_ScaleY->sizePolicy().hasHeightForWidth());
         doubleSpinBox_ScaleY->setSizePolicy(sizePolicy1);
+        doubleSpinBox_ScaleY->setDecimals(4);
         doubleSpinBox_ScaleY->setMinimum(0);
         doubleSpinBox_ScaleY->setMaximum(100000);
         doubleSpinBox_ScaleY->setSingleStep(0.1);
@@ -627,6 +630,7 @@ public:
         doubleSpinBox_ScaleZ->setObjectName(QStringLiteral("doubleSpinBox_ScaleZ"));
         sizePolicy1.setHeightForWidth(doubleSpinBox_ScaleZ->sizePolicy().hasHeightForWidth());
         doubleSpinBox_ScaleZ->setSizePolicy(sizePolicy1);
+        doubleSpinBox_ScaleZ->setDecimals(4);
         doubleSpinBox_ScaleZ->setMinimum(0);
         doubleSpinBox_ScaleZ->setMaximum(100000);
         doubleSpinBox_ScaleZ->setSingleStep(0.1);

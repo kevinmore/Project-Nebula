@@ -18,6 +18,18 @@ struct CollisionPair
 	}
 };
 
+struct ImpulsePair 
+{
+	float magnitudeA;
+	float magnitudeB;
+
+	ImpulsePair()
+	{
+		magnitudeA = 0.0f;
+		magnitudeB = 0.0f;
+	}
+};
+
 typedef QSharedPointer<CollisionPair> CollisionPairPtr;
 
 class NarrowPhaseCollisionFeedback;
@@ -48,7 +60,7 @@ public:
 	void reset();
 
 
-	float computeContactImpulseMagnitude(const NarrowPhaseCollisionFeedback* pCollisionInfo);
+	ImpulsePair computeContactImpulseMagnitude(const NarrowPhaseCollisionFeedback* pCollisionInfo);
 
 	void backToTimeOfImpact(RigidBody* rb1, RigidBody* rb2);
 	void elasticCollisionResponse(RigidBody* rb1, RigidBody* rb2);

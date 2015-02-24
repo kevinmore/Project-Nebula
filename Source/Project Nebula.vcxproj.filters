@@ -48,14 +48,12 @@
     <ClCompile Include="Physicis\World\PhysicsWorldConfig.cpp" />
     <ClCompile Include="Physicis\World\PhysicsWorld.cpp" />
     <ClCompile Include="Physicis\Entity\RigidBody.cpp" />
-    <ClCompile Include="Physicis\Entity\BoxRigidBody.cpp" />
     <ClCompile Include="Primitives\Puppet.cpp" />
     <ClCompile Include="Primitives\GameObject.cpp" />
     <ClCompile Include="Primitives\moc_GameObject.cc" />
     <ClCompile Include="Primitives\moc_Puppet.cc" />
     <ClCompile Include="Utility\AssimpThread.cpp" />
     <ClCompile Include="Utility\moc_AssimpThread.cc" />
-    <ClCompile Include="Physicis\Entity\SphereRigidBody.cpp" />
     <ClCompile Include="Physicis\World\PhysicsWorldObject.cpp" />
     <ClCompile Include="Scene\ShadingTechniques\moc_ShadingTechnique.cc" />
     <ClCompile Include="Scene\moc_Light.cc" />
@@ -106,7 +104,6 @@
     <ClInclude Include="Physicis\World\PhysicsWorld.h" />
     <ClInclude Include="Physicis\Geometry\BoxShape.h" />
     <ClInclude Include="Physicis\World\PhysicsWorldObject.h" />
-    <ClInclude Include="Physicis\Entity\BoxRigidBody.h" />
     <ClInclude Include="Utility\LoaderThread.h" />
     <ClInclude Include="UI\SkyboxDialog.h" />
     <ClInclude Include="Scene\Camera.h" />
@@ -116,7 +113,6 @@
     <ClInclude Include="Utility\ModelLoader.h" />
     <ClInclude Include="Utility\AssimpThread.h" />
     <ClInclude Include="Physicis\Geometry\SphereShape.h" />
-    <ClInclude Include="Physicis\Entity\SphereRigidBody.h" />
     <ClInclude Include="UI\Canvas.h" />
     <ClInclude Include="Scene\Managers\ObjectManager.h" />
     <ClInclude Include="Scene\ShadingTechniques\ParticleTechnique.h" />

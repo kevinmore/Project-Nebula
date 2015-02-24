@@ -2,8 +2,7 @@
 #include <Scene/Scene.h>
 #include <Animation/FK/FKController.h>
 #include <Animation/IK/FABRIKSolver.h>
-#include <Physicis/Entity/BoxRigidBody.h>
-#include <Physicis/Entity/SphereRigidBody.h>
+#include <Physicis/Entity/RigidBody.h>
 
 ObjectManager::ObjectManager(Scene* scene, QObject* parent)
 	: QObject(parent),

@@ -196,6 +196,68 @@ QDataStream& operator >> (QDataStream& in, LightPtr object)
 }
 
 /*
+* Rigid Body
+*/
+// Order: Mass -> Gravity Factor -> Restitution -> Linear Velocity
+//     -> AngularVelocity -> Motion Type -> Size(radius or half extents, depends on the motion type)
+QDataStream& operator << (QDataStream& out, RigidBodyPtr object)
+{
+	RigidBody::MotionType type = object->getMotionType();
+	out << object->getMass() << object->getGravityFactor() << object->getRestitution() 
+		<< object->getLinearVelocity() << object->getAngularVelocity() << type;
+
+	if (type == RigidBody::MOTION_BOX_INERTIA)
+	{
+		out << object->getHalfExtents();
+	}
+	else if (type == RigidBody::MOTION_SPHERE_INERTIA)
+	{
+		out << object->getRadius();
+	}
+
+
+	return out;
+}
+
+QDataStream& operator >> (QDataStream& in, RigidBodyPtr object)
+{
+	int motionType;
+	RigidBody::MotionType type;
+
+	float mass, gravityFactor, restitution, radius;
+	vec3 linearVelocity, angularVelocity, halfExtents;
+
+	in >> mass >> gravityFactor >> restitution >> linearVelocity >> angularVelocity >> motionType;
+
+	switch(motionType)
+	{
+	case 0:
+		type = RigidBody::MOTION_SPHERE_INERTIA;
+		in >> radius;
+		object->setSize(radius);
+		break;
+	case 1:
+		type = RigidBody::MOTION_BOX_INERTIA;
+		in >> halfExtents;
+		object->setSize(halfExtents);
+		break;
+	case 2:
+		type = RigidBody::MOTION_FIXED;
+		break;
+	}
+
+	object->setMass(mass);
+	object->setGravityFactor(gravityFactor);
+	object->setRestitution(restitution);
+	object->setLinearVelocity(linearVelocity);
+	object->setAngularVelocity(angularVelocity);
+	object->setMotionType(type);
+
+	return in;
+}
+
+
+/*
 * Components (Only need Out stream)
 */
 QDataStream& operator << (QDataStream& out, ComponentPtr object)
@@ -215,6 +277,12 @@ QDataStream& operator << (QDataStream& out, ComponentPtr object)
 		LightPtr light = object.dynamicCast<Light>();
 		out << light;
 	}
+	else if (object->className() == "RigidBody")
+	{
+		RigidBodyPtr rb = object.dynamicCast<RigidBody>();
+		out << rb;
+	}
+	
 	return out;
 }
 
@@ -320,6 +388,12 @@ QDataStream& operator >> (QDataStream& in, GameObjectPtr object)
 			object->getScene()->addLight(light);
 			object->attachComponent(light);
 			in >> light;
+		}
+		else if (className == "RigidBody")
+		{
+			// create a rigid body and attach to this object
+			RigidBodyPtr rb = object->getScene()->createRigidBody(object.data());
+			in >> rb;
 		}
 
 	}

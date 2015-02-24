@@ -9,6 +9,7 @@
 #include <QSharedPointer>
 #include <Scene/ShadingTechniques/ShadingTechnique.h>
 #include <Physicis/Collision/Collider/BoxCollider.h>
+#include <Physicis/Collision/Collider/SphereCollider.h>
 #include <Physicis/Collision/Collider/ConvexHullCollider.h>
 
 struct MeshData
@@ -91,6 +92,7 @@ public:
 	Skeleton* getSkeletom() const { return m_skeleton; }
 	ShadingTechniquePtr getRenderingEffect() const { return m_effect; }
 	MODEL_TYPE getModelType() const { return m_modelType; }
+	SphereCollider* getBoundingSphere();
 	BoxCollider* getBoundingBox();
 	ConvexHullCollider* getConvexHullCollider();
 

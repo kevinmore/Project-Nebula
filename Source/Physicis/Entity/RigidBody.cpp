@@ -7,6 +7,9 @@
 RigidBody::RigidBody(const vec3& position, const quat& rotation, QObject* parent)
 	: PhysicsWorldObject(parent)
 {
+
+	m_motionType = RigidBody::MOTION_BOX_INERTIA;
+
 	m_linearVelocity = Math::Vector3::ZERO;
 	m_angularVelocity = Math::Vector3::ZERO;
 
@@ -24,6 +27,12 @@ RigidBody::RigidBody(const vec3& position, const quat& rotation, QObject* parent
 	m_timeFactor = 1.0f;
 	m_canSleep = false;
 	m_isAwake = true;
+
+	m_halfExtents = vec3(0.5f, 0.5f, 0.5f);
+	m_radius = 0.5f;
+
+	// compute the default inertia tensor as a box
+	computeInertiaTensor();
 }
 
 RigidBody::~RigidBody()
@@ -32,6 +41,28 @@ RigidBody::~RigidBody()
 	if (m_world)
 	{
 		m_world->removeEntity(this);
+	}
+}
+
+void RigidBody::computeInertiaTensor()
+{
+	mat3 tensor;
+	switch(m_motionType)
+	{
+	case MOTION_BOX_INERTIA:
+		Matrix3::setBoxInertiaTensor(tensor, m_halfExtents, m_mass);
+		m_inertiaTensorInv = glm::inverse(Converter::toGLMMat3(tensor));
+		break;
+
+	case MOTION_SPHERE_INERTIA:
+		Matrix3::setSphereInertiaTensor(tensor, m_radius, m_mass);
+		m_inertiaTensorInv = glm::inverse(Converter::toGLMMat3(tensor));
+		break;
+
+	case MOTION_FIXED:
+		tensor.fill(0.0f);
+		m_inertiaTensorInv = Converter::toGLMMat3(tensor);
+		break;
 	}
 }
 
@@ -104,6 +135,52 @@ void RigidBody::setMassProperties( const MassProperties& mp )
 	m_mass = mp.m_mass;
 	m_centerOfMass = mp.m_centerOfMass;
 }
+
+void RigidBody::setMass( float m )
+{
+	float massInv;
+	if (m == 0.0f)
+		massInv = 0.0f;
+	else
+	{
+		m_mass = m;
+		massInv = 1.0f / m;
+	}
+	setMassInv(massInv);
+}
+
+void RigidBody::setMotionType( MotionType type )
+{
+	m_motionType = type;
+	computeInertiaTensor();
+}
+
+void RigidBody::setMassInv( float mInv )
+{
+	m_massInv = mInv;
+	m_mass = 1.0f / mInv;
+
+	computeInertiaTensor();
+}
+
+void RigidBody::setSize( float radius )
+{
+	if (m_motionType == MOTION_SPHERE_INERTIA)
+	{
+		m_radius = radius;
+		computeInertiaTensor();
+	}
+}
+
+void RigidBody::setSize( const vec3& halfExtents )
+{
+	if (m_motionType == MOTION_BOX_INERTIA)
+	{
+		m_halfExtents = halfExtents;
+		computeInertiaTensor();
+	}
+}
+
 
 void RigidBody::setPosition( const vec3& pos )
 {
@@ -225,12 +302,19 @@ void RigidBody::backTrackAngularVelocity( const float duration )
 void RigidBody::setMotionType_SLOT( const QString& type )
 {
 	if (type == "Box")
-		m_motionType = MOTION_BOX_INERTIA;
+		setMotionType(MOTION_BOX_INERTIA);
 	else if (type == "Sphere")
-		m_motionType = MOTION_SPHERE_INERTIA;
+		setMotionType(MOTION_SPHERE_INERTIA);
 	else if (type == "Fixed")
-		m_motionType = MOTION_FIXED;
+		setMotionType(MOTION_FIXED);
 }
+
+
+void RigidBody::setMass_SLOT( double val )
+{
+	setMass(val);
+}
+
 
 void RigidBody::setGravityFactor_SLOT( double val )
 {
@@ -270,4 +354,27 @@ void RigidBody::setAngularVelocityY_SLOT( double val )
 void RigidBody::setAngularVelocityZ_SLOT( double val )
 {
 	m_angularVelocity.setZ(val);
+}
+
+void RigidBody::setRadius_SLOT( double val )
+{
+	setSize(val);
+}
+
+void RigidBody::setExtentsX_SLOT( double val )
+{
+	vec3 halfExtents(val * 0.5f, m_halfExtents.y(), m_halfExtents.z());
+	setSize(halfExtents);
+}
+
+void RigidBody::setExtentsY_SLOT( double val )
+{
+	vec3 halfExtents(m_halfExtents.x(), val * 0.5f, m_halfExtents.z());
+	setSize(halfExtents);
+}
+
+void RigidBody::setExtentsZ_SLOT( double val )
+{
+	vec3 halfExtents(m_halfExtents.x(), m_halfExtents.y(), val * 0.5f);
+	setSize(halfExtents);
 }

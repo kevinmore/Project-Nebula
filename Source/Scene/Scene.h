@@ -17,8 +17,7 @@
 
 #include <Physicis/Particles/ParticleSystem.h>
 #include <Physicis/World/PhysicsWorld.h>
-#include <Physicis/Entity/BoxRigidBody.h>
-#include <Physicis/Entity/SphereRigidBody.h>
+#include <Physicis/Entity/RigidBody.h>
 
 typedef QSharedPointer<QOpenGLShaderProgram> ShadersProgramPtr;
 
@@ -65,8 +64,7 @@ public slots:
 	GameObjectPtr createEmptyGameObject(const QString& name = "Game Object");
 	GameObjectPtr createParticleSystem(const QString& parentName = "Scene Root");
 	GameObjectPtr createLight(GameObject* parent = 0);
-	RigidBodyPtr createRigidBody();
-	void attachRigidBodyToGameObject(GameObject* objectToAttach);
+	RigidBodyPtr createRigidBody(GameObject* objectToAttach);
 
 	void toggleSkybox(bool state);
 

@@ -77,6 +77,9 @@ bool ShadingTechnique::compileShader()
 
 void ShadingTechnique::updateLights()
 {
+	// bind the shader program for initializing
+	m_shaderProgram->bind();
+
 	// get the lights from the scene
 	if (!m_scene) return;
 	QList<LightPtr> lights = m_scene->getLights();

@@ -184,7 +184,7 @@ void Scene::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void 
             if (_a[0]) *reinterpret_cast< GameObjectPtr*>(_a[0]) = _r; }  break;
         case 18: { GameObjectPtr _r = _t->createLight();
             if (_a[0]) *reinterpret_cast< GameObjectPtr*>(_a[0]) = _r; }  break;
-        case 19: _t->attachRigidBodyToGameObject((*reinterpret_cast< GameObject*(*)>(_a[1]))); break;
+        case 19: _t->createRigidBody((*reinterpret_cast< GameObject*(*)>(_a[1]))); break;
         case 20: _t->toggleSkybox((*reinterpret_cast< bool(*)>(_a[1]))); break;
         case 21: _t->toggleDebugMode((*reinterpret_cast< bool(*)>(_a[1]))); break;
         case 22: _t->pause(); break;

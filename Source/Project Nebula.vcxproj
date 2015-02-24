@@ -28,7 +28,6 @@
     <ClCompile Include="Physicis\Collision\Collider\BoxCollider.cpp" />
     <ClCompile Include="Physicis\Collision\Collider\ICollider.cpp" />
     <ClCompile Include="Physicis\Collision\BroadPhase\BroadPhaseCollisionFeedback..cpp" />
-    <ClCompile Include="Physicis\Entity\SphereRigidBody.cpp" />
     <ClCompile Include="Physicis\Collision\Collider\SphereCollider.cpp" />
     <ClCompile Include="Physicis\World\PhysicsWorldObject.cpp" />
     <ClCompile Include="Primitives\moc_Component.cc" />
@@ -36,7 +35,6 @@
     <ClCompile Include="Scene\ShadingTechniques\moc_ShadingTechnique.cc" />
     <ClCompile Include="Primitives\Transform.cpp" />
     <ClCompile Include="Utility\AssimpThread.cpp" />
-    <ClCompile Include="Physicis\Entity\BoxRigidBody.cpp" />
     <ClCompile Include="Physicis\World\PhysicsWorldConfig.cpp" />
     <ClCompile Include="Physicis\World\PhysicsWorld.cpp" />
     <ClCompile Include="Primitives\CubeMapTexture.cpp" />
@@ -105,7 +103,6 @@
     <ClInclude Include="Animation\IK\CCDIKSolver.h" />
     <ClInclude Include="Animation\Rig\Pose.h" />
     <ClInclude Include="Physicis\Collision\BroadPhase\BroadPhaseCollisionFeedback.h" />
-    <ClInclude Include="Physicis\Entity\SphereRigidBody.h" />
     <ClInclude Include="Physicis\Geometry\SphereShape.h" />
     <ClInclude Include="Primitives\Puppet.h" />
     <ClInclude Include="Physicis\Collision\Collider\SphereCollider.h" />
@@ -116,7 +113,6 @@
     <QtMOC Include="UI\HierarchyWidget.h" />
     <ClInclude Include="UI\MainWindow.h" />
     <ClInclude Include="Utility\LogCenter.h" />
-    <ClInclude Include="Physicis\Entity\BoxRigidBody.h" />
     <ClInclude Include="Physicis\Geometry\BoxShape.h" />
     <ClInclude Include="Physicis\World\PhysicsWorldConfig.h" />
     <ClInclude Include="Physicis\World\PhysicsWorld.h" />

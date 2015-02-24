@@ -1155,8 +1155,6 @@ void HierarchyWidget::onScale100Pushed()
 void HierarchyWidget::readRigidBodyProperties( RigidBodyPtr rb )
 {
 	RigidBody::MotionType motionType = rb->getMotionType();
-	BoxColliderPtr box = rb->getBroadPhaseCollider().dynamicCast<BoxCollider>();
-	SphereColliderPtr sphere = rb->getBroadPhaseCollider().dynamicCast<SphereCollider>();
 	vec3 linearVelocity =  rb->getLinearVelocity();
 	vec3 angularVelocity = rb->getAngularVelocity();
 
@@ -1164,14 +1162,14 @@ void HierarchyWidget::readRigidBodyProperties( RigidBodyPtr rb )
 	{
 	case RigidBody::MOTION_BOX_INERTIA:
 		ui->comboBox_RigidBodyMotionType->setCurrentText("Box");
-		ui->doubleSpinBox_RigidBoxSizeX->setValue(box->getGeometryShape().getHalfExtents().x() * 2);
-		ui->doubleSpinBox_RigidBoxSizeY->setValue(box->getGeometryShape().getHalfExtents().y() * 2);
-		ui->doubleSpinBox_RigidBoxSizeZ->setValue(box->getGeometryShape().getHalfExtents().z() * 2);
+		ui->doubleSpinBox_RigidBoxSizeX->setValue(rb->getHalfExtents().x() * 2);
+		ui->doubleSpinBox_RigidBoxSizeY->setValue(rb->getHalfExtents().y() * 2);
+		ui->doubleSpinBox_RigidBoxSizeZ->setValue(rb->getHalfExtents().z() * 2);
 		break;
 
 	case RigidBody::MOTION_SPHERE_INERTIA:
 		ui->comboBox_RigidBodyMotionType->setCurrentText("Sphere");
-		ui->doubleSpinBox_RigidBodyRadius->setValue(sphere->getGeometryShape().getRadius());
+		ui->doubleSpinBox_RigidBodyRadius->setValue(rb->getRadius());
 		break;
 
 	case RigidBody::MOTION_FIXED:
@@ -1225,7 +1223,7 @@ void HierarchyWidget::createRigidBody()
 {
 	if (!m_currentObject) return;
 
-	m_scene->attachRigidBodyToGameObject(m_currentObject);
+	m_scene->createRigidBody(m_currentObject);
 }
 
 void HierarchyWidget::connectRigidBodyTab( RigidBodyPtr rb )
@@ -1233,11 +1231,11 @@ void HierarchyWidget::connectRigidBodyTab( RigidBodyPtr rb )
 	connect(ui->comboBox_RigidBodyMotionType, SIGNAL(currentTextChanged(const QString&)), rb.data(), SLOT(setMotionType_SLOT(const QString&)));
 	connect(ui->doubleSpinBox_RigidBodyGravityFactor, SIGNAL(valueChanged(double)), rb.data(), SLOT(setGravityFactor_SLOT(double)));
 	connect(ui->doubleSpinBox_RigidBodyRestitution, SIGNAL(valueChanged(double)), rb.data(), SLOT(setRestitution_SLOT(double)));
-//	connect(ui->doubleSpinBox_RigidBodyMass, 0, 0, 0);
-// 	connect(ui->doubleSpinBox_RigidBoxSizeX, SIGNAL(valueChanged(double)), rb.data(), SLOT(setGravityFactor_SLOT(double)));
-// 	connect(ui->doubleSpinBox_RigidBoxSizeY, SIGNAL(valueChanged(double)), rb.data(), SLOT(setGravityFactor_SLOT(double)));
-// 	connect(ui->doubleSpinBox_RigidBoxSizeZ, SIGNAL(valueChanged(double)), rb.data(), SLOT(setGravityFactor_SLOT(double)));
-// 	connect(ui->doubleSpinBox_RigidBodyRadius, SIGNAL(valueChanged(double)), rb.data(), SLOT(setGravityFactor_SLOT(double)));
+	connect(ui->doubleSpinBox_RigidBodyMass, SIGNAL(valueChanged(double)), rb.data(), SLOT(setMass_SLOT(double)));
+	connect(ui->doubleSpinBox_RigidBoxSizeX, SIGNAL(valueChanged(double)), rb.data(), SLOT(setExtentsX_SLOT(double)));
+	connect(ui->doubleSpinBox_RigidBoxSizeY, SIGNAL(valueChanged(double)), rb.data(), SLOT(setExtentsY_SLOT(double)));
+	connect(ui->doubleSpinBox_RigidBoxSizeZ, SIGNAL(valueChanged(double)), rb.data(), SLOT(setExtentsZ_SLOT(double)));
+	connect(ui->doubleSpinBox_RigidBodyRadius, SIGNAL(valueChanged(double)), rb.data(), SLOT(setRadius_SLOT(double)));
 	connect(ui->doubleSpinBox_RigidBoxLinearVelocityX,  SIGNAL(valueChanged(double)), rb.data(), SLOT(setLinearVelocityX_SLOT(double)));
 	connect(ui->doubleSpinBox_RigidBoxLinearVelocityY,  SIGNAL(valueChanged(double)), rb.data(), SLOT(setLinearVelocityY_SLOT(double)));
 	connect(ui->doubleSpinBox_RigidBoxLinearVelocityZ,  SIGNAL(valueChanged(double)), rb.data(), SLOT(setLinearVelocityZ_SLOT(double)));

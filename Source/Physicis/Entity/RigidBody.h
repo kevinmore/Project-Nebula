@@ -69,6 +69,7 @@ public:
 
 public slots:
 	void setMotionType_SLOT(const QString& type);
+	void setMass_SLOT(double val);
 	void setGravityFactor_SLOT(double val);
 	void setRestitution_SLOT(double val) ;
 	void setLinearVelocityX_SLOT(double val);
@@ -77,13 +78,17 @@ public slots:
 	void setAngularVelocityX_SLOT(double val);
 	void setAngularVelocityY_SLOT(double val);
 	void setAngularVelocityZ_SLOT(double val);
+	void setRadius_SLOT(double val);
+	void setExtentsX_SLOT(double val);
+	void setExtentsY_SLOT(double val);
+	void setExtentsZ_SLOT(double val);
 
 public:
 	//
 	// Motion Type
 	//
 	inline MotionType getMotionType() const { return m_motionType; }
-	void setMotionType(MotionType type) { m_motionType = type; }
+	void setMotionType(MotionType type);
 
 	//
 	// Collider
@@ -108,10 +113,10 @@ public:
 	inline float getMassInv() const { return m_massInv; }
 
 	/// Sets the mass of the rigid body.
-	virtual void setMass(float m) {}
+	virtual void setMass(float m);
 
 	/// Sets the inverse mass of the rigid body.
-	virtual void setMassInv(float mInv) {}
+	virtual void setMassInv(float mInv);
 
 	/// Gets the inverse inertia tensor in local space.
 	inline glm::mat3 getInertiaInvLocal() { return m_inertiaTensorInv; }
@@ -124,6 +129,13 @@ public:
 		return m_inertiaTensorInvWorld;
 	}
 
+	/// Sets the radius or half extents of the shape, this will update the inertia tensor
+	void setSize(float radius);
+	void setSize(const vec3& halfExtents);
+
+	/// Gets the size of the body
+	float getRadius() const { return m_radius; }
+	vec3 getHalfExtents() const { return m_halfExtents; }
 
 	//
 	// CENTER OF MASS.
@@ -332,6 +344,7 @@ protected:
 	/// overload function from component
 	virtual void syncTransform(const Transform& transform);
 
+	void computeInertiaTensor();
 
 	//
 	// Members
@@ -438,6 +451,16 @@ protected:
     /// Holds the amount of motion of the body. This is a recency
     /// weighted mean that can be used to put a body to sleep.
     float m_motionEnergy;
+
+	/// Used for box shape. 
+	/// Half extents of the box, used for compute the inertia tensor
+	/// This defaults to (0.5, 0.5, 0.5)
+	vec3 m_halfExtents;
+
+	/// Used for box shape. 
+	/// Radius of the sphere, used for compute the inertia tensor
+	/// This defaults to 0.5
+	float m_radius;
 };
 
 typedef QSharedPointer<RigidBody> RigidBodyPtr;
