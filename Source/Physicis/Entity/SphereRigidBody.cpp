@@ -7,7 +7,7 @@ SphereRigidBody::SphereRigidBody(const vec3& position, const quat& rotation)
 	: RigidBody(position, rotation),
 	  m_radius(0.5f)
 {
-	m_MotionType = RigidBody::MOTION_SPHERE_INERTIA;
+	m_motionType = RigidBody::MOTION_SPHERE_INERTIA;
 
 	// fill the tensor with the default size
 	mat3 tensor;

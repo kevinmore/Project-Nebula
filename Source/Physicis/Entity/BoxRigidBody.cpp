@@ -7,7 +7,7 @@ BoxRigidBody::BoxRigidBody( const vec3& position, const quat& rotation )
 	: RigidBody(position, rotation),
 	  m_halfExtents(vec3(0.5f, 0.5f, 0.5f))
 {
-	m_MotionType = RigidBody::MOTION_BOX_INERTIA;
+	m_motionType = RigidBody::MOTION_BOX_INERTIA;
 
 	// fill the tensor with the default size
 	mat3 tensor;

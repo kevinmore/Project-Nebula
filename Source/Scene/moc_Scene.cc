@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_Scene_t {
-    QByteArrayData data[35];
-    char stringdata[423];
+    QByteArrayData data[34];
+    char stringdata[407];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -38,43 +38,41 @@ QT_MOC_LITERAL(5, 45, 10),
 QT_MOC_LITERAL(6, 56, 5),
 QT_MOC_LITERAL(7, 62, 15),
 QT_MOC_LITERAL(8, 78, 12),
-QT_MOC_LITERAL(9, 91, 11),
-QT_MOC_LITERAL(10, 103, 16),
-QT_MOC_LITERAL(11, 120, 17),
-QT_MOC_LITERAL(12, 138, 8),
-QT_MOC_LITERAL(13, 147, 19),
-QT_MOC_LITERAL(14, 167, 19),
-QT_MOC_LITERAL(15, 187, 10),
-QT_MOC_LITERAL(16, 198, 19),
-QT_MOC_LITERAL(17, 218, 19),
-QT_MOC_LITERAL(18, 238, 11),
-QT_MOC_LITERAL(19, 250, 21),
-QT_MOC_LITERAL(20, 272, 13),
-QT_MOC_LITERAL(21, 286, 4),
-QT_MOC_LITERAL(22, 291, 20),
-QT_MOC_LITERAL(23, 312, 10),
-QT_MOC_LITERAL(24, 323, 11),
-QT_MOC_LITERAL(25, 335, 11),
-QT_MOC_LITERAL(26, 347, 6),
-QT_MOC_LITERAL(27, 354, 12),
-QT_MOC_LITERAL(28, 367, 15),
-QT_MOC_LITERAL(29, 383, 5),
-QT_MOC_LITERAL(30, 389, 4),
-QT_MOC_LITERAL(31, 394, 4),
-QT_MOC_LITERAL(32, 399, 14),
-QT_MOC_LITERAL(33, 414, 6),
-QT_MOC_LITERAL(34, 421, 1)
+QT_MOC_LITERAL(9, 91, 8),
+QT_MOC_LITERAL(10, 100, 19),
+QT_MOC_LITERAL(11, 120, 19),
+QT_MOC_LITERAL(12, 140, 10),
+QT_MOC_LITERAL(13, 151, 19),
+QT_MOC_LITERAL(14, 171, 19),
+QT_MOC_LITERAL(15, 191, 11),
+QT_MOC_LITERAL(16, 203, 21),
+QT_MOC_LITERAL(17, 225, 13),
+QT_MOC_LITERAL(18, 239, 4),
+QT_MOC_LITERAL(19, 244, 20),
+QT_MOC_LITERAL(20, 265, 10),
+QT_MOC_LITERAL(21, 276, 11),
+QT_MOC_LITERAL(22, 288, 11),
+QT_MOC_LITERAL(23, 300, 6),
+QT_MOC_LITERAL(24, 307, 15),
+QT_MOC_LITERAL(25, 323, 14),
+QT_MOC_LITERAL(26, 338, 12),
+QT_MOC_LITERAL(27, 351, 15),
+QT_MOC_LITERAL(28, 367, 5),
+QT_MOC_LITERAL(29, 373, 4),
+QT_MOC_LITERAL(30, 378, 4),
+QT_MOC_LITERAL(31, 383, 14),
+QT_MOC_LITERAL(32, 398, 6),
+QT_MOC_LITERAL(33, 405, 1)
     },
     "Scene\0updateHierarchy\0\0ligthsChanged\0"
     "cleared\0toggleFill\0state\0toggleWireframe\0"
-    "togglePoints\0togglePhong\0toggleBlinnPhong\0"
-    "toggleRimLighting\0toggleAA\0"
-    "showLoadModelDialog\0resetToDefaultScene\0"
-    "clearScene\0showOpenSceneDialog\0"
-    "showSaveSceneDialog\0modelLoaded\0"
-    "createEmptyGameObject\0GameObjectPtr\0"
-    "name\0createParticleSystem\0parentName\0"
-    "createLight\0GameObject*\0parent\0"
+    "togglePoints\0toggleAA\0showLoadModelDialog\0"
+    "resetToDefaultScene\0clearScene\0"
+    "showOpenSceneDialog\0showSaveSceneDialog\0"
+    "modelLoaded\0createEmptyGameObject\0"
+    "GameObjectPtr\0name\0createParticleSystem\0"
+    "parentName\0createLight\0GameObject*\0"
+    "parent\0createRigidBody\0objectToAttach\0"
     "toggleSkybox\0toggleDebugMode\0pause\0"
     "play\0step\0onLightChanged\0Light*\0l"
 };
@@ -86,7 +84,7 @@ static const uint qt_meta_data_Scene[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      28,   14, // methods
+      26,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -94,36 +92,34 @@ static const uint qt_meta_data_Scene[] = {
        3,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,  154,    2, 0x06 /* Public */,
-       3,    0,  155,    2, 0x06 /* Public */,
-       4,    0,  156,    2, 0x06 /* Public */,
+       1,    0,  144,    2, 0x06 /* Public */,
+       3,    0,  145,    2, 0x06 /* Public */,
+       4,    0,  146,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       5,    1,  157,    2, 0x0a /* Public */,
-       7,    1,  160,    2, 0x0a /* Public */,
-       8,    1,  163,    2, 0x0a /* Public */,
-       9,    1,  166,    2, 0x0a /* Public */,
-      10,    1,  169,    2, 0x0a /* Public */,
-      11,    1,  172,    2, 0x0a /* Public */,
-      12,    1,  175,    2, 0x0a /* Public */,
-      13,    0,  178,    2, 0x0a /* Public */,
-      14,    0,  179,    2, 0x0a /* Public */,
-      15,    0,  180,    2, 0x0a /* Public */,
-      16,    0,  181,    2, 0x0a /* Public */,
-      17,    0,  182,    2, 0x0a /* Public */,
-      18,    0,  183,    2, 0x0a /* Public */,
-      19,    1,  184,    2, 0x0a /* Public */,
-      19,    0,  187,    2, 0x2a /* Public | MethodCloned */,
-      22,    1,  188,    2, 0x0a /* Public */,
-      22,    0,  191,    2, 0x2a /* Public | MethodCloned */,
-      24,    1,  192,    2, 0x0a /* Public */,
-      24,    0,  195,    2, 0x2a /* Public | MethodCloned */,
-      27,    1,  196,    2, 0x0a /* Public */,
-      28,    1,  199,    2, 0x0a /* Public */,
-      29,    0,  202,    2, 0x0a /* Public */,
-      30,    0,  203,    2, 0x0a /* Public */,
-      31,    0,  204,    2, 0x0a /* Public */,
-      32,    1,  205,    2, 0x0a /* Public */,
+       5,    1,  147,    2, 0x0a /* Public */,
+       7,    1,  150,    2, 0x0a /* Public */,
+       8,    1,  153,    2, 0x0a /* Public */,
+       9,    1,  156,    2, 0x0a /* Public */,
+      10,    0,  159,    2, 0x0a /* Public */,
+      11,    0,  160,    2, 0x0a /* Public */,
+      12,    0,  161,    2, 0x0a /* Public */,
+      13,    0,  162,    2, 0x0a /* Public */,
+      14,    0,  163,    2, 0x0a /* Public */,
+      15,    0,  164,    2, 0x0a /* Public */,
+      16,    1,  165,    2, 0x0a /* Public */,
+      16,    0,  168,    2, 0x2a /* Public | MethodCloned */,
+      19,    1,  169,    2, 0x0a /* Public */,
+      19,    0,  172,    2, 0x2a /* Public | MethodCloned */,
+      21,    1,  173,    2, 0x0a /* Public */,
+      21,    0,  176,    2, 0x2a /* Public | MethodCloned */,
+      24,    1,  177,    2, 0x0a /* Public */,
+      26,    1,  180,    2, 0x0a /* Public */,
+      27,    1,  183,    2, 0x0a /* Public */,
+      28,    0,  186,    2, 0x0a /* Public */,
+      29,    0,  187,    2, 0x0a /* Public */,
+      30,    0,  188,    2, 0x0a /* Public */,
+      31,    1,  189,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -135,27 +131,25 @@ static const uint qt_meta_data_Scene[] = {
     QMetaType::Void, QMetaType::Bool,    6,
     QMetaType::Void, QMetaType::Bool,    6,
     QMetaType::Void, QMetaType::Bool,    6,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    0x80000000 | 17, QMetaType::QString,   18,
+    0x80000000 | 17,
+    0x80000000 | 17, QMetaType::QString,   20,
+    0x80000000 | 17,
+    0x80000000 | 17, 0x80000000 | 22,   23,
+    0x80000000 | 17,
+    QMetaType::Void, 0x80000000 | 22,   25,
     QMetaType::Void, QMetaType::Bool,    6,
     QMetaType::Void, QMetaType::Bool,    6,
-    QMetaType::Void, QMetaType::Bool,    6,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void,
-    0x80000000 | 20, QMetaType::QString,   21,
-    0x80000000 | 20,
-    0x80000000 | 20, QMetaType::QString,   23,
-    0x80000000 | 20,
-    0x80000000 | 20, 0x80000000 | 25,   26,
-    0x80000000 | 20,
-    QMetaType::Void, QMetaType::Bool,    6,
-    QMetaType::Void, QMetaType::Bool,    6,
-    QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 33,   34,
+    QMetaType::Void, 0x80000000 | 32,   33,
 
        0        // eod
 };
@@ -171,34 +165,32 @@ void Scene::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void 
         case 3: _t->toggleFill((*reinterpret_cast< bool(*)>(_a[1]))); break;
         case 4: _t->toggleWireframe((*reinterpret_cast< bool(*)>(_a[1]))); break;
         case 5: _t->togglePoints((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 6: _t->togglePhong((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 7: _t->toggleBlinnPhong((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 8: _t->toggleRimLighting((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 9: _t->toggleAA((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 10: _t->showLoadModelDialog(); break;
-        case 11: _t->resetToDefaultScene(); break;
-        case 12: _t->clearScene(); break;
-        case 13: _t->showOpenSceneDialog(); break;
-        case 14: _t->showSaveSceneDialog(); break;
-        case 15: _t->modelLoaded(); break;
-        case 16: { GameObjectPtr _r = _t->createEmptyGameObject((*reinterpret_cast< const QString(*)>(_a[1])));
+        case 6: _t->toggleAA((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 7: _t->showLoadModelDialog(); break;
+        case 8: _t->resetToDefaultScene(); break;
+        case 9: _t->clearScene(); break;
+        case 10: _t->showOpenSceneDialog(); break;
+        case 11: _t->showSaveSceneDialog(); break;
+        case 12: _t->modelLoaded(); break;
+        case 13: { GameObjectPtr _r = _t->createEmptyGameObject((*reinterpret_cast< const QString(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< GameObjectPtr*>(_a[0]) = _r; }  break;
-        case 17: { GameObjectPtr _r = _t->createEmptyGameObject();
+        case 14: { GameObjectPtr _r = _t->createEmptyGameObject();
             if (_a[0]) *reinterpret_cast< GameObjectPtr*>(_a[0]) = _r; }  break;
-        case 18: { GameObjectPtr _r = _t->createParticleSystem((*reinterpret_cast< const QString(*)>(_a[1])));
+        case 15: { GameObjectPtr _r = _t->createParticleSystem((*reinterpret_cast< const QString(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< GameObjectPtr*>(_a[0]) = _r; }  break;
-        case 19: { GameObjectPtr _r = _t->createParticleSystem();
+        case 16: { GameObjectPtr _r = _t->createParticleSystem();
             if (_a[0]) *reinterpret_cast< GameObjectPtr*>(_a[0]) = _r; }  break;
-        case 20: { GameObjectPtr _r = _t->createLight((*reinterpret_cast< GameObject*(*)>(_a[1])));
+        case 17: { GameObjectPtr _r = _t->createLight((*reinterpret_cast< GameObject*(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< GameObjectPtr*>(_a[0]) = _r; }  break;
-        case 21: { GameObjectPtr _r = _t->createLight();
+        case 18: { GameObjectPtr _r = _t->createLight();
             if (_a[0]) *reinterpret_cast< GameObjectPtr*>(_a[0]) = _r; }  break;
-        case 22: _t->toggleSkybox((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 23: _t->toggleDebugMode((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 24: _t->pause(); break;
-        case 25: _t->play(); break;
-        case 26: _t->step(); break;
-        case 27: _t->onLightChanged((*reinterpret_cast< Light*(*)>(_a[1]))); break;
+        case 19: _t->attachRigidBodyToGameObject((*reinterpret_cast< GameObject*(*)>(_a[1]))); break;
+        case 20: _t->toggleSkybox((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 21: _t->toggleDebugMode((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 22: _t->pause(); break;
+        case 23: _t->play(); break;
+        case 24: _t->step(); break;
+        case 25: _t->onLightChanged((*reinterpret_cast< Light*(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -252,13 +244,13 @@ int Scene::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 28)
+        if (_id < 26)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 28;
+        _id -= 26;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 28)
+        if (_id < 26)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 28;
+        _id -= 26;
     }
     return _id;
 }

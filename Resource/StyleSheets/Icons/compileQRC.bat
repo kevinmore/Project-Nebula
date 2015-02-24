@@ -1,0 +1,1 @@
+rcc -binary icons.qrc -o icons.rcc

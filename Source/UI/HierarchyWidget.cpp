@@ -1,6 +1,8 @@
 ﻿#include "HierarchyWidget.h"
 #include "ui_HierarchyWidget.h"
 #include <Primitives/Puppet.h>
+#include <Physicis/Collision/Collider/BoxCollider.h>
+#include <Physicis/Collision/Collider/SphereCollider.h>
 
 HierarchyWidget::HierarchyWidget(Scene* scene, Canvas* canvas, QWidget *parent)
 	: QWidget(parent),
@@ -10,6 +12,8 @@ HierarchyWidget::HierarchyWidget(Scene* scene, Canvas* canvas, QWidget *parent)
 	  ui(new Ui::HierarchyViewer)
 
 {
+	setMaximumWidth(380);
+
 	ui->setupUi(this);
 	// connection to a ray casting function in the scene
 	connect(m_canvas, SIGNAL(objectPicked(GameObjectPtr)), this, SLOT(onObjectPicked(GameObjectPtr)));
@@ -18,7 +22,6 @@ HierarchyWidget::HierarchyWidget(Scene* scene, Canvas* canvas, QWidget *parent)
 
 	// connection from canvas to delete object
 	connect(m_canvas, SIGNAL(deleteObject()), this, SLOT(deleteGameObject()));
-
 
 	// material change behaviour
 	connect(this, SIGNAL(materialChanged()), this, SLOT(assignMaterial()));
@@ -40,9 +43,12 @@ HierarchyWidget::HierarchyWidget(Scene* scene, Canvas* canvas, QWidget *parent)
 
 	// popup menu
 	m_deleteAction = new QAction("Delete", this);
+	m_addRigidBodyAction = new QAction("Rigid Body", this);
+
 	ui->treeWidget->setContextMenuPolicy(Qt::CustomContextMenu);
 	connect(ui->treeWidget, SIGNAL(customContextMenuRequested(const QPoint)), this, SLOT(showMouseRightButton(const QPoint)));
 	connect(m_deleteAction, SIGNAL(triggered()), this, SLOT(deleteGameObject()));
+	connect(m_addRigidBodyAction, SIGNAL(triggered()), this, SLOT(createRigidBody()));
 
 	// tab widget
 	int tabCount = ui->tabWidget->count();
@@ -110,10 +116,12 @@ HierarchyWidget::HierarchyWidget(Scene* scene, Canvas* canvas, QWidget *parent)
 	connect(ui->horizontalSlider_LightIntensity, SIGNAL(valueChanged(int)), this, SLOT(onLightIntensitySliderChange(int)));
 	connect(ui->doubleSpinBox_LightIntensity, SIGNAL(valueChanged(double)), this, SLOT(onLightIntensityDoubleBoxChange(double)));
 
+	connect(ui->horizontalSlider_RigidBodyRestitution, SIGNAL(valueChanged(int)), this, SLOT(onRigidBodyRestitutionSliderChange(int)));
+	connect(ui->doubleSpinBox_RigidBodyRestitution, SIGNAL(valueChanged(double)), this, SLOT(onRigidBodyRestitutionDoubleBoxChange(double)));
+
 	connect(ui->checkBox_RandomColor, SIGNAL(toggled(bool)), this, SLOT(setColorPickerEnabled(bool)));
 	connect(ui->checkBox_EnableCollision, SIGNAL(toggled(bool)), ui->doubleSpinBox_Restitution, SLOT(setEnabled(bool)));
 
-	setMaximumWidth(360);
 	updateObjectTree();
 }
 
@@ -230,7 +238,7 @@ void HierarchyWidget::readGameObject(QTreeWidgetItem* current, QTreeWidgetItem* 
 		
 		if (type == "Model")
 		{
-			ui->tabWidget->addTab(m_renderingTab, "Mesh");
+			ui->tabWidget->addTab(m_renderingTab, QIcon("../Resource/StyleSheets/Icons/circle-icons/full-color/flower.png"), "Mesh");
 
 			// show the bounding box
 			ModelPtr model = comp.dynamicCast<IModel>();
@@ -248,7 +256,7 @@ void HierarchyWidget::readGameObject(QTreeWidgetItem* current, QTreeWidgetItem* 
 		}
 		else if (type == "ParticleSystem")
 		{
-			ui->tabWidget->addTab(m_particleSystemTab, "Particle System");
+			ui->tabWidget->addTab(m_particleSystemTab, QIcon("../Resource/StyleSheets/Icons/circle-icons/full-color/colorwheel.png"), "Particle System");
 			ui->tabWidget->setCurrentWidget(m_particleSystemTab);
 			ParticleSystemPtr ps = comp.dynamicCast<ParticleSystem>();
 			readParticleSystemConfig(ps);
@@ -256,13 +264,15 @@ void HierarchyWidget::readGameObject(QTreeWidgetItem* current, QTreeWidgetItem* 
 		}
 		else if (type == "Light")
 		{
-			ui->tabWidget->addTab(m_lightTab, "Light");
+			ui->tabWidget->addTab(m_lightTab, QIcon("../Resource/StyleSheets/Icons/circle-icons/full-color/lightbulb.png"), "Light");
 			readLightSourceProperties(comp.dynamicCast<Light>());
 		}
 		else if (type == "RigidBody")
 		{
-			ui->tabWidget->addTab(m_rigidBodyTab, "Rigid Body");
-			readRigidBodyProperties(comp.dynamicCast<RigidBody>());
+			ui->tabWidget->addTab(m_rigidBodyTab, QIcon("../Resource/StyleSheets/Icons/circle-icons/full-color/die.png"), "Rigid Body");
+			RigidBodyPtr rb = comp.dynamicCast<RigidBody>();
+			readRigidBodyProperties(rb);
+			connectRigidBodyTab(rb);
 		}
 	}
 
@@ -350,6 +360,22 @@ void HierarchyWidget::disconnectPreviousObject()
 
 	// light tab related
 	disconnect(ui->comboBox_LightType, 0, 0, 0);
+
+	// rigid body tab related
+	disconnect(ui->comboBox_RigidBodyMotionType, 0, 0, 0);
+	disconnect(ui->doubleSpinBox_RigidBodyMass, 0, 0, 0);
+	disconnect(ui->doubleSpinBox_RigidBodyGravityFactor, 0, 0, 0);
+	disconnect(ui->doubleSpinBox_RigidBodyRestitution, 0, 0, 0);
+	disconnect(ui->doubleSpinBox_RigidBoxSizeX, 0, 0, 0);
+	disconnect(ui->doubleSpinBox_RigidBoxSizeY, 0, 0, 0);
+	disconnect(ui->doubleSpinBox_RigidBoxSizeZ, 0, 0, 0);
+	disconnect(ui->doubleSpinBox_RigidBodyRadius, 0, 0, 0);
+	disconnect(ui->doubleSpinBox_RigidBoxLinearVelocityX, 0, 0, 0);
+	disconnect(ui->doubleSpinBox_RigidBoxLinearVelocityY, 0, 0, 0);
+	disconnect(ui->doubleSpinBox_RigidBoxLinearVelocityZ, 0, 0, 0);
+	disconnect(ui->doubleSpinBox_RigidBoxAngularVelocityZ, 0, 0, 0);
+	disconnect(ui->doubleSpinBox_RigidBoxAngularVelocityZ, 0, 0, 0);
+	disconnect(ui->doubleSpinBox_RigidBoxAngularVelocityZ, 0, 0, 0);
 }
 
 void HierarchyWidget::renameGameObject( QTreeWidgetItem * item, int column )
@@ -370,8 +396,13 @@ void HierarchyWidget::showMouseRightButton( const QPoint& point )
 	QTreeWidgetItem* selected = ui->treeWidget->itemAt(point);
 	if(!selected || selected == ui->treeWidget->topLevelItem(0)) return;
 
+	// construct the popup menu
 	QMenu* popMenu = new QMenu(ui->treeWidget);
 	popMenu->addAction(m_deleteAction);
+	QMenu* addMenu = popMenu->addMenu("Add");
+	addMenu->addAction(m_addRigidBodyAction);
+
+	// show the menu
 	popMenu->exec(QCursor::pos());
 }
 
@@ -662,6 +693,19 @@ void HierarchyWidget::assignMaterial()
 	m_currentShadingTech->setMaterial(m_currentMaterials[0]);
 }
 
+void HierarchyWidget::onRigidBodyRestitutionSliderChange( int value )
+{
+	ui->doubleSpinBox_RigidBodyRestitution->setValue(value/(double)100);
+}
+
+void HierarchyWidget::onRigidBodyRestitutionDoubleBoxChange( double value )
+{
+	ui->horizontalSlider_RigidBodyRestitution->setValue(value * 100);
+
+	// change the restitution of the rigid body
+
+}
+
 void HierarchyWidget::onShininessSliderChange( int value )
 {
 	ui->doubleSpinBox_Shininess->setValue(value);
@@ -749,6 +793,7 @@ void HierarchyWidget::onRefractiveIndexDoubleBoxChange( double value )
 
 	emit materialChanged();
 }
+
 void HierarchyWidget::onConstantAttenuationSliderChange( int value )
 {
 	ui->doubleSpinBox_LightAttConst->setValue(value/(double)100);
@@ -1110,20 +1155,40 @@ void HierarchyWidget::onScale100Pushed()
 void HierarchyWidget::readRigidBodyProperties( RigidBodyPtr rb )
 {
 	RigidBody::MotionType motionType = rb->getMotionType();
+	BoxColliderPtr box = rb->getBroadPhaseCollider().dynamicCast<BoxCollider>();
+	SphereColliderPtr sphere = rb->getBroadPhaseCollider().dynamicCast<SphereCollider>();
+	vec3 linearVelocity =  rb->getLinearVelocity();
+	vec3 angularVelocity = rb->getAngularVelocity();
+
 	switch(motionType)
 	{
 	case RigidBody::MOTION_BOX_INERTIA:
 		ui->comboBox_RigidBodyMotionType->setCurrentText("Box");
+		ui->doubleSpinBox_RigidBoxSizeX->setValue(box->getGeometryShape().getHalfExtents().x() * 2);
+		ui->doubleSpinBox_RigidBoxSizeY->setValue(box->getGeometryShape().getHalfExtents().y() * 2);
+		ui->doubleSpinBox_RigidBoxSizeZ->setValue(box->getGeometryShape().getHalfExtents().z() * 2);
 		break;
 
 	case RigidBody::MOTION_SPHERE_INERTIA:
 		ui->comboBox_RigidBodyMotionType->setCurrentText("Sphere");
+		ui->doubleSpinBox_RigidBodyRadius->setValue(sphere->getGeometryShape().getRadius());
 		break;
 
 	case RigidBody::MOTION_FIXED:
 		ui->comboBox_RigidBodyMotionType->setCurrentText("Fixed");
 		break;
 	}
+
+	ui->doubleSpinBox_RigidBodyMass->setValue(rb->getMass());
+	ui->doubleSpinBox_RigidBodyGravityFactor->setValue(rb->getGravityFactor());
+	ui->doubleSpinBox_RigidBodyRestitution->setValue(rb->getRestitution());
+	ui->horizontalSlider_RigidBodyRestitution->setValue(rb->getRestitution() * 100);
+	ui->doubleSpinBox_RigidBoxLinearVelocityX->setValue(linearVelocity.x());
+	ui->doubleSpinBox_RigidBoxLinearVelocityY->setValue(linearVelocity.y());
+	ui->doubleSpinBox_RigidBoxLinearVelocityZ->setValue(linearVelocity.z());
+	ui->doubleSpinBox_RigidBoxAngularVelocityX->setValue(angularVelocity.x());
+	ui->doubleSpinBox_RigidBoxAngularVelocityY->setValue(angularVelocity.y());
+	ui->doubleSpinBox_RigidBoxAngularVelocityZ->setValue(angularVelocity.z());
 }
 
 void HierarchyWidget::toggleDiffuseMap( bool state )
@@ -1154,4 +1219,29 @@ void HierarchyWidget::clearReference()
 	m_currentShadingTech = NULL;
 	m_currentLight = NULL;
 	m_currentMaterials.clear();
+}
+
+void HierarchyWidget::createRigidBody()
+{
+	if (!m_currentObject) return;
+
+	m_scene->attachRigidBodyToGameObject(m_currentObject);
+}
+
+void HierarchyWidget::connectRigidBodyTab( RigidBodyPtr rb )
+{
+	connect(ui->comboBox_RigidBodyMotionType, SIGNAL(currentTextChanged(const QString&)), rb.data(), SLOT(setMotionType_SLOT(const QString&)));
+	connect(ui->doubleSpinBox_RigidBodyGravityFactor, SIGNAL(valueChanged(double)), rb.data(), SLOT(setGravityFactor_SLOT(double)));
+	connect(ui->doubleSpinBox_RigidBodyRestitution, SIGNAL(valueChanged(double)), rb.data(), SLOT(setRestitution_SLOT(double)));
+//	connect(ui->doubleSpinBox_RigidBodyMass, 0, 0, 0);
+// 	connect(ui->doubleSpinBox_RigidBoxSizeX, SIGNAL(valueChanged(double)), rb.data(), SLOT(setGravityFactor_SLOT(double)));
+// 	connect(ui->doubleSpinBox_RigidBoxSizeY, SIGNAL(valueChanged(double)), rb.data(), SLOT(setGravityFactor_SLOT(double)));
+// 	connect(ui->doubleSpinBox_RigidBoxSizeZ, SIGNAL(valueChanged(double)), rb.data(), SLOT(setGravityFactor_SLOT(double)));
+// 	connect(ui->doubleSpinBox_RigidBodyRadius, SIGNAL(valueChanged(double)), rb.data(), SLOT(setGravityFactor_SLOT(double)));
+	connect(ui->doubleSpinBox_RigidBoxLinearVelocityX,  SIGNAL(valueChanged(double)), rb.data(), SLOT(setLinearVelocityX_SLOT(double)));
+	connect(ui->doubleSpinBox_RigidBoxLinearVelocityY,  SIGNAL(valueChanged(double)), rb.data(), SLOT(setLinearVelocityY_SLOT(double)));
+	connect(ui->doubleSpinBox_RigidBoxLinearVelocityZ,  SIGNAL(valueChanged(double)), rb.data(), SLOT(setLinearVelocityZ_SLOT(double)));
+	connect(ui->doubleSpinBox_RigidBoxAngularVelocityX, SIGNAL(valueChanged(double)), rb.data(), SLOT(setAngularVelocityX_SLOT(double)));
+	connect(ui->doubleSpinBox_RigidBoxAngularVelocityY, SIGNAL(valueChanged(double)), rb.data(), SLOT(setAngularVelocityY_SLOT(double)));
+	connect(ui->doubleSpinBox_RigidBoxAngularVelocityZ, SIGNAL(valueChanged(double)), rb.data(), SLOT(setAngularVelocityZ_SLOT(double)));
 }

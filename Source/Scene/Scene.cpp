@@ -8,7 +8,6 @@
 Scene::Scene(QObject* parent)
 	: IScene(parent),
 	  m_camera(new Camera(NULL,this)),
-	  m_lightMode(PerFragmentPhong),
 	  m_absoluteTime(0.0f),
 	  m_relativeTime(0.0f),
 	  m_delayedTime(0.0f),
@@ -374,6 +373,29 @@ GameObjectPtr Scene::createLight( GameObject* parent )
 	return ref;
 }
 
+RigidBodyPtr Scene::createRigidBody()
+{
+	return RigidBodyPtr (new RigidBody());
+}
+
+void Scene::attachRigidBodyToGameObject( GameObject* objectToAttach )
+{
+	// check if the object already has a rigid body
+	if (objectToAttach->getComponent("RigidBody"))
+	{
+		qWarning() << "This game object already has a Rigid Body Component. Operation ignored.";
+		return;
+	}
+
+	RigidBodyPtr rb(new RigidBody());
+	rb->setPosition(objectToAttach->position());
+	ModelPtr model = objectToAttach->getComponent("Model").dynamicCast<IModel>();
+	rb->attachBroadPhaseCollider(model->getBoundingBox());
+	rb->attachNarrowPhaseCollider(model->getConvexHullCollider());
+	objectToAttach->attachComponent(rb);
+	m_physicsWorld->addEntity(rb.data());
+}
+
 void Scene::setBackGroundColor( const QColor& col )
 {
 	glClearColor(col.redF(), col.greenF(), col.blueF(), 0.0f);
@@ -403,21 +425,6 @@ void Scene::toggleSkybox( bool state )
 void Scene::toggleAA(bool state)
 {
 	(state) ? glEnable(GL_MULTISAMPLE) : glDisable(GL_MULTISAMPLE);
-}
-
-void Scene::toggleRimLighting(bool state)
-{
-	if(state) m_lightMode = RimLighting;
-}
-
-void Scene::toggleBlinnPhong(bool state)
-{
-	if(state) m_lightMode = PerFragmentBlinnPhong;
-}
-
-void Scene::togglePhong(bool state)
-{
-	if(state) m_lightMode = PerFragmentPhong;
 }
 
 void Scene::togglePoints(bool state)

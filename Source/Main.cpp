@@ -6,6 +6,7 @@ int main(int argc, char* argv[])
 
 	// setup resource and load the stylesheet
 	QResource::registerResource("../Resource/StyleSheets/Dark/style.rcc");
+	QResource::registerResource("../Resource/StyleSheets/Icons/icons.rcc");
 	QFile file("../Resource/StyleSheets/Dark/style.qss");
 	if(file.open(QIODevice::ReadOnly | QIODevice::Text))
 	{

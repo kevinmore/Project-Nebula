@@ -273,7 +273,7 @@ public:
     QVBoxLayout *verticalLayout_18;
     QScrollArea *scrollArea_5;
     QWidget *scrollAreaWidgetContents_5;
-    QVBoxLayout *verticalLayout_19;
+    QVBoxLayout *verticalLayout_21;
     QGridLayout *gridLayout_7;
     QLabel *label_39;
     QDoubleSpinBox *doubleSpinBox_RigidBodyGravityFactor;
@@ -285,11 +285,10 @@ public:
     QHBoxLayout *horizontalLayout_50;
     QSlider *horizontalSlider_RigidBodyRestitution;
     QDoubleSpinBox *doubleSpinBox_RigidBodyRestitution;
-    QHBoxLayout *horizontalLayout_51;
-    QLabel *label_60;
-    QDoubleSpinBox *doubleSpinBox_RigidBodyRadius;
     QGroupBox *groupBox_9;
-    QHBoxLayout *horizontalLayout_46;
+    QVBoxLayout *verticalLayout_19;
+    QHBoxLayout *horizontalLayout_RigidBody_BoxSize;
+    QLabel *label_60;
     QHBoxLayout *horizontalLayout_47;
     QLabel *label_61;
     QDoubleSpinBox *doubleSpinBox_RigidBoxSizeX;
@@ -299,13 +298,40 @@ public:
     QHBoxLayout *horizontalLayout_49;
     QLabel *label_63;
     QDoubleSpinBox *doubleSpinBox_RigidBoxSizeZ;
+    QHBoxLayout *horizontalLayout_RigidBody_SphereSize;
+    QLabel *label_66;
+    QDoubleSpinBox *doubleSpinBox_RigidBodyRadius;
+    QGroupBox *groupBox_10;
+    QVBoxLayout *verticalLayout_20;
+    QHBoxLayout *horizontalLayout_52;
+    QLabel *label_68;
+    QHBoxLayout *horizontalLayout_53;
+    QLabel *label_69;
+    QDoubleSpinBox *doubleSpinBox_RigidBoxLinearVelocityX;
+    QHBoxLayout *horizontalLayout_54;
+    QLabel *label_70;
+    QDoubleSpinBox *doubleSpinBox_RigidBoxLinearVelocityY;
+    QHBoxLayout *horizontalLayout_55;
+    QLabel *label_71;
+    QDoubleSpinBox *doubleSpinBox_RigidBoxLinearVelocityZ;
+    QHBoxLayout *horizontalLayout_56;
+    QLabel *label_72;
+    QHBoxLayout *horizontalLayout_57;
+    QLabel *label_73;
+    QDoubleSpinBox *doubleSpinBox_RigidBoxAngularVelocityX;
+    QHBoxLayout *horizontalLayout_58;
+    QLabel *label_74;
+    QDoubleSpinBox *doubleSpinBox_RigidBoxAngularVelocityY;
+    QHBoxLayout *horizontalLayout_59;
+    QLabel *label_75;
+    QDoubleSpinBox *doubleSpinBox_RigidBoxAngularVelocityZ;
 
     void setupUi(QWidget *HierarchyViewer)
     {
         if (HierarchyViewer->objectName().isEmpty())
             HierarchyViewer->setObjectName(QStringLiteral("HierarchyViewer"));
         HierarchyViewer->setEnabled(true);
-        HierarchyViewer->resize(360, 841);
+        HierarchyViewer->resize(332, 841);
         QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Preferred);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -656,7 +682,9 @@ public:
 
         verticalLayout_2->addWidget(pushButton_Reset);
 
-        tabWidget->addTab(TransformTab, QString());
+        QIcon icon;
+        icon.addFile(QStringLiteral(":/circle-icons/full-color/rocket.png"), QSize(), QIcon::Normal, QIcon::Off);
+        tabWidget->addTab(TransformTab, icon, QString());
         PupetTab = new QWidget();
         PupetTab->setObjectName(QStringLiteral("PupetTab"));
         verticalLayout_13 = new QVBoxLayout(PupetTab);
@@ -777,7 +805,9 @@ public:
 
         verticalLayout_13->addWidget(scrollArea_3);
 
-        tabWidget->addTab(PupetTab, QString());
+        QIcon icon1;
+        icon1.addFile(QStringLiteral(":/circle-icons/full-color/running.png"), QSize(), QIcon::Normal, QIcon::Off);
+        tabWidget->addTab(PupetTab, icon1, QString());
         RenderingTab = new QWidget();
         RenderingTab->setObjectName(QStringLiteral("RenderingTab"));
         verticalLayout_6 = new QVBoxLayout(RenderingTab);
@@ -787,7 +817,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, -775, 330, 1186));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 330, 1186));
         verticalLayout_4 = new QVBoxLayout(scrollAreaWidgetContents);
         verticalLayout_4->setObjectName(QStringLiteral("verticalLayout_4"));
         groupBox_7 = new QGroupBox(scrollAreaWidgetContents);
@@ -1614,7 +1644,7 @@ public:
         scrollArea_4->setWidgetResizable(true);
         scrollAreaWidgetContents_4 = new QWidget();
         scrollAreaWidgetContents_4->setObjectName(QStringLiteral("scrollAreaWidgetContents_4"));
-        scrollAreaWidgetContents_4->setGeometry(QRect(0, 0, 316, 428));
+        scrollAreaWidgetContents_4->setGeometry(QRect(0, 0, 288, 428));
         verticalLayout_16 = new QVBoxLayout(scrollAreaWidgetContents_4);
         verticalLayout_16->setObjectName(QStringLiteral("verticalLayout_16"));
         gridLayout_2 = new QGridLayout();
@@ -1815,13 +1845,18 @@ public:
         scrollArea_5->setWidgetResizable(true);
         scrollAreaWidgetContents_5 = new QWidget();
         scrollAreaWidgetContents_5->setObjectName(QStringLiteral("scrollAreaWidgetContents_5"));
-        scrollAreaWidgetContents_5->setGeometry(QRect(0, 0, 316, 428));
-        verticalLayout_19 = new QVBoxLayout(scrollAreaWidgetContents_5);
-        verticalLayout_19->setObjectName(QStringLiteral("verticalLayout_19"));
+        scrollAreaWidgetContents_5->setGeometry(QRect(0, 0, 288, 428));
+        verticalLayout_21 = new QVBoxLayout(scrollAreaWidgetContents_5);
+        verticalLayout_21->setObjectName(QStringLiteral("verticalLayout_21"));
         gridLayout_7 = new QGridLayout();
         gridLayout_7->setObjectName(QStringLiteral("gridLayout_7"));
         label_39 = new QLabel(scrollAreaWidgetContents_5);
         label_39->setObjectName(QStringLiteral("label_39"));
+        QSizePolicy sizePolicy8(QSizePolicy::Fixed, QSizePolicy::Preferred);
+        sizePolicy8.setHorizontalStretch(0);
+        sizePolicy8.setVerticalStretch(0);
+        sizePolicy8.setHeightForWidth(label_39->sizePolicy().hasHeightForWidth());
+        label_39->setSizePolicy(sizePolicy8);
 
         gridLayout_7->addWidget(label_39, 0, 0, 1, 1);
 
@@ -1853,6 +1888,7 @@ public:
 
         doubleSpinBox_RigidBodyMass = new QDoubleSpinBox(scrollAreaWidgetContents_5);
         doubleSpinBox_RigidBodyMass->setObjectName(QStringLiteral("doubleSpinBox_RigidBodyMass"));
+        doubleSpinBox_RigidBodyMass->setDecimals(2);
         doubleSpinBox_RigidBodyMass->setMaximum(100000);
 
         gridLayout_7->addWidget(doubleSpinBox_RigidBodyMass, 1, 1, 1, 1);
@@ -1891,28 +1927,19 @@ public:
         gridLayout_7->addLayout(horizontalLayout_50, 3, 1, 1, 1);
 
 
-        verticalLayout_19->addLayout(gridLayout_7);
-
-        horizontalLayout_51 = new QHBoxLayout();
-        horizontalLayout_51->setObjectName(QStringLiteral("horizontalLayout_51"));
-        label_60 = new QLabel(scrollAreaWidgetContents_5);
-        label_60->setObjectName(QStringLiteral("label_60"));
-
-        horizontalLayout_51->addWidget(label_60);
-
-        doubleSpinBox_RigidBodyRadius = new QDoubleSpinBox(scrollAreaWidgetContents_5);
-        doubleSpinBox_RigidBodyRadius->setObjectName(QStringLiteral("doubleSpinBox_RigidBodyRadius"));
-        doubleSpinBox_RigidBodyRadius->setMaximum(100000);
-
-        horizontalLayout_51->addWidget(doubleSpinBox_RigidBodyRadius);
-
-
-        verticalLayout_19->addLayout(horizontalLayout_51);
+        verticalLayout_21->addLayout(gridLayout_7);
 
         groupBox_9 = new QGroupBox(scrollAreaWidgetContents_5);
         groupBox_9->setObjectName(QStringLiteral("groupBox_9"));
-        horizontalLayout_46 = new QHBoxLayout(groupBox_9);
-        horizontalLayout_46->setObjectName(QStringLiteral("horizontalLayout_46"));
+        verticalLayout_19 = new QVBoxLayout(groupBox_9);
+        verticalLayout_19->setObjectName(QStringLiteral("verticalLayout_19"));
+        horizontalLayout_RigidBody_BoxSize = new QHBoxLayout();
+        horizontalLayout_RigidBody_BoxSize->setObjectName(QStringLiteral("horizontalLayout_RigidBody_BoxSize"));
+        label_60 = new QLabel(groupBox_9);
+        label_60->setObjectName(QStringLiteral("label_60"));
+
+        horizontalLayout_RigidBody_BoxSize->addWidget(label_60);
+
         horizontalLayout_47 = new QHBoxLayout();
         horizontalLayout_47->setObjectName(QStringLiteral("horizontalLayout_47"));
         label_61 = new QLabel(groupBox_9);
@@ -1925,14 +1952,16 @@ public:
         sizePolicy1.setHeightForWidth(doubleSpinBox_RigidBoxSizeX->sizePolicy().hasHeightForWidth());
         doubleSpinBox_RigidBoxSizeX->setSizePolicy(sizePolicy1);
         doubleSpinBox_RigidBoxSizeX->setMinimumSize(QSize(0, 0));
-        doubleSpinBox_RigidBoxSizeX->setMinimum(-100000);
+        doubleSpinBox_RigidBoxSizeX->setDecimals(2);
+        doubleSpinBox_RigidBoxSizeX->setMinimum(0);
         doubleSpinBox_RigidBoxSizeX->setMaximum(100000);
         doubleSpinBox_RigidBoxSizeX->setSingleStep(0.1);
+        doubleSpinBox_RigidBoxSizeX->setValue(1);
 
         horizontalLayout_47->addWidget(doubleSpinBox_RigidBoxSizeX);
 
 
-        horizontalLayout_46->addLayout(horizontalLayout_47);
+        horizontalLayout_RigidBody_BoxSize->addLayout(horizontalLayout_47);
 
         horizontalLayout_48 = new QHBoxLayout();
         horizontalLayout_48->setObjectName(QStringLiteral("horizontalLayout_48"));
@@ -1945,14 +1974,16 @@ public:
         doubleSpinBox_RigidBoxSizeY->setObjectName(QStringLiteral("doubleSpinBox_RigidBoxSizeY"));
         sizePolicy1.setHeightForWidth(doubleSpinBox_RigidBoxSizeY->sizePolicy().hasHeightForWidth());
         doubleSpinBox_RigidBoxSizeY->setSizePolicy(sizePolicy1);
-        doubleSpinBox_RigidBoxSizeY->setMinimum(-100000);
+        doubleSpinBox_RigidBoxSizeY->setDecimals(2);
+        doubleSpinBox_RigidBoxSizeY->setMinimum(0);
         doubleSpinBox_RigidBoxSizeY->setMaximum(100000);
         doubleSpinBox_RigidBoxSizeY->setSingleStep(0.1);
+        doubleSpinBox_RigidBoxSizeY->setValue(1);
 
         horizontalLayout_48->addWidget(doubleSpinBox_RigidBoxSizeY);
 
 
-        horizontalLayout_46->addLayout(horizontalLayout_48);
+        horizontalLayout_RigidBody_BoxSize->addLayout(horizontalLayout_48);
 
         horizontalLayout_49 = new QHBoxLayout();
         horizontalLayout_49->setObjectName(QStringLiteral("horizontalLayout_49"));
@@ -1965,18 +1996,212 @@ public:
         doubleSpinBox_RigidBoxSizeZ->setObjectName(QStringLiteral("doubleSpinBox_RigidBoxSizeZ"));
         sizePolicy1.setHeightForWidth(doubleSpinBox_RigidBoxSizeZ->sizePolicy().hasHeightForWidth());
         doubleSpinBox_RigidBoxSizeZ->setSizePolicy(sizePolicy1);
-        doubleSpinBox_RigidBoxSizeZ->setMinimum(-100000);
+        doubleSpinBox_RigidBoxSizeZ->setDecimals(2);
+        doubleSpinBox_RigidBoxSizeZ->setMinimum(0);
         doubleSpinBox_RigidBoxSizeZ->setMaximum(100000);
         doubleSpinBox_RigidBoxSizeZ->setSingleStep(0.1);
-        doubleSpinBox_RigidBoxSizeZ->setValue(0);
+        doubleSpinBox_RigidBoxSizeZ->setValue(1);
 
         horizontalLayout_49->addWidget(doubleSpinBox_RigidBoxSizeZ);
 
 
-        horizontalLayout_46->addLayout(horizontalLayout_49);
+        horizontalLayout_RigidBody_BoxSize->addLayout(horizontalLayout_49);
 
 
-        verticalLayout_19->addWidget(groupBox_9);
+        verticalLayout_19->addLayout(horizontalLayout_RigidBody_BoxSize);
+
+        horizontalLayout_RigidBody_SphereSize = new QHBoxLayout();
+        horizontalLayout_RigidBody_SphereSize->setObjectName(QStringLiteral("horizontalLayout_RigidBody_SphereSize"));
+        label_66 = new QLabel(groupBox_9);
+        label_66->setObjectName(QStringLiteral("label_66"));
+        sizePolicy8.setHeightForWidth(label_66->sizePolicy().hasHeightForWidth());
+        label_66->setSizePolicy(sizePolicy8);
+
+        horizontalLayout_RigidBody_SphereSize->addWidget(label_66);
+
+        doubleSpinBox_RigidBodyRadius = new QDoubleSpinBox(groupBox_9);
+        doubleSpinBox_RigidBodyRadius->setObjectName(QStringLiteral("doubleSpinBox_RigidBodyRadius"));
+        doubleSpinBox_RigidBodyRadius->setDecimals(2);
+        doubleSpinBox_RigidBodyRadius->setMinimum(0);
+        doubleSpinBox_RigidBodyRadius->setMaximum(100000);
+        doubleSpinBox_RigidBodyRadius->setValue(1);
+
+        horizontalLayout_RigidBody_SphereSize->addWidget(doubleSpinBox_RigidBodyRadius);
+
+
+        verticalLayout_19->addLayout(horizontalLayout_RigidBody_SphereSize);
+
+
+        verticalLayout_21->addWidget(groupBox_9);
+
+        groupBox_10 = new QGroupBox(scrollAreaWidgetContents_5);
+        groupBox_10->setObjectName(QStringLiteral("groupBox_10"));
+        verticalLayout_20 = new QVBoxLayout(groupBox_10);
+        verticalLayout_20->setObjectName(QStringLiteral("verticalLayout_20"));
+        horizontalLayout_52 = new QHBoxLayout();
+        horizontalLayout_52->setObjectName(QStringLiteral("horizontalLayout_52"));
+        label_68 = new QLabel(groupBox_10);
+        label_68->setObjectName(QStringLiteral("label_68"));
+        sizePolicy8.setHeightForWidth(label_68->sizePolicy().hasHeightForWidth());
+        label_68->setSizePolicy(sizePolicy8);
+        label_68->setMinimumSize(QSize(45, 0));
+        label_68->setMaximumSize(QSize(45, 16777215));
+
+        horizontalLayout_52->addWidget(label_68);
+
+        horizontalLayout_53 = new QHBoxLayout();
+        horizontalLayout_53->setObjectName(QStringLiteral("horizontalLayout_53"));
+        label_69 = new QLabel(groupBox_10);
+        label_69->setObjectName(QStringLiteral("label_69"));
+
+        horizontalLayout_53->addWidget(label_69);
+
+        doubleSpinBox_RigidBoxLinearVelocityX = new QDoubleSpinBox(groupBox_10);
+        doubleSpinBox_RigidBoxLinearVelocityX->setObjectName(QStringLiteral("doubleSpinBox_RigidBoxLinearVelocityX"));
+        sizePolicy1.setHeightForWidth(doubleSpinBox_RigidBoxLinearVelocityX->sizePolicy().hasHeightForWidth());
+        doubleSpinBox_RigidBoxLinearVelocityX->setSizePolicy(sizePolicy1);
+        doubleSpinBox_RigidBoxLinearVelocityX->setMinimumSize(QSize(0, 0));
+        doubleSpinBox_RigidBoxLinearVelocityX->setDecimals(2);
+        doubleSpinBox_RigidBoxLinearVelocityX->setMinimum(-100000);
+        doubleSpinBox_RigidBoxLinearVelocityX->setMaximum(100000);
+        doubleSpinBox_RigidBoxLinearVelocityX->setSingleStep(0.1);
+        doubleSpinBox_RigidBoxLinearVelocityX->setValue(0);
+
+        horizontalLayout_53->addWidget(doubleSpinBox_RigidBoxLinearVelocityX);
+
+
+        horizontalLayout_52->addLayout(horizontalLayout_53);
+
+        horizontalLayout_54 = new QHBoxLayout();
+        horizontalLayout_54->setObjectName(QStringLiteral("horizontalLayout_54"));
+        label_70 = new QLabel(groupBox_10);
+        label_70->setObjectName(QStringLiteral("label_70"));
+
+        horizontalLayout_54->addWidget(label_70);
+
+        doubleSpinBox_RigidBoxLinearVelocityY = new QDoubleSpinBox(groupBox_10);
+        doubleSpinBox_RigidBoxLinearVelocityY->setObjectName(QStringLiteral("doubleSpinBox_RigidBoxLinearVelocityY"));
+        sizePolicy1.setHeightForWidth(doubleSpinBox_RigidBoxLinearVelocityY->sizePolicy().hasHeightForWidth());
+        doubleSpinBox_RigidBoxLinearVelocityY->setSizePolicy(sizePolicy1);
+        doubleSpinBox_RigidBoxLinearVelocityY->setDecimals(2);
+        doubleSpinBox_RigidBoxLinearVelocityY->setMinimum(-100000);
+        doubleSpinBox_RigidBoxLinearVelocityY->setMaximum(100000);
+        doubleSpinBox_RigidBoxLinearVelocityY->setSingleStep(0.1);
+        doubleSpinBox_RigidBoxLinearVelocityY->setValue(0);
+
+        horizontalLayout_54->addWidget(doubleSpinBox_RigidBoxLinearVelocityY);
+
+
+        horizontalLayout_52->addLayout(horizontalLayout_54);
+
+        horizontalLayout_55 = new QHBoxLayout();
+        horizontalLayout_55->setObjectName(QStringLiteral("horizontalLayout_55"));
+        label_71 = new QLabel(groupBox_10);
+        label_71->setObjectName(QStringLiteral("label_71"));
+
+        horizontalLayout_55->addWidget(label_71);
+
+        doubleSpinBox_RigidBoxLinearVelocityZ = new QDoubleSpinBox(groupBox_10);
+        doubleSpinBox_RigidBoxLinearVelocityZ->setObjectName(QStringLiteral("doubleSpinBox_RigidBoxLinearVelocityZ"));
+        sizePolicy1.setHeightForWidth(doubleSpinBox_RigidBoxLinearVelocityZ->sizePolicy().hasHeightForWidth());
+        doubleSpinBox_RigidBoxLinearVelocityZ->setSizePolicy(sizePolicy1);
+        doubleSpinBox_RigidBoxLinearVelocityZ->setDecimals(2);
+        doubleSpinBox_RigidBoxLinearVelocityZ->setMinimum(-100000);
+        doubleSpinBox_RigidBoxLinearVelocityZ->setMaximum(100000);
+        doubleSpinBox_RigidBoxLinearVelocityZ->setSingleStep(0.1);
+        doubleSpinBox_RigidBoxLinearVelocityZ->setValue(0);
+
+        horizontalLayout_55->addWidget(doubleSpinBox_RigidBoxLinearVelocityZ);
+
+
+        horizontalLayout_52->addLayout(horizontalLayout_55);
+
+
+        verticalLayout_20->addLayout(horizontalLayout_52);
+
+        horizontalLayout_56 = new QHBoxLayout();
+        horizontalLayout_56->setObjectName(QStringLiteral("horizontalLayout_56"));
+        label_72 = new QLabel(groupBox_10);
+        label_72->setObjectName(QStringLiteral("label_72"));
+        sizePolicy8.setHeightForWidth(label_72->sizePolicy().hasHeightForWidth());
+        label_72->setSizePolicy(sizePolicy8);
+        label_72->setMinimumSize(QSize(45, 0));
+        label_72->setMaximumSize(QSize(45, 16777215));
+
+        horizontalLayout_56->addWidget(label_72);
+
+        horizontalLayout_57 = new QHBoxLayout();
+        horizontalLayout_57->setObjectName(QStringLiteral("horizontalLayout_57"));
+        label_73 = new QLabel(groupBox_10);
+        label_73->setObjectName(QStringLiteral("label_73"));
+
+        horizontalLayout_57->addWidget(label_73);
+
+        doubleSpinBox_RigidBoxAngularVelocityX = new QDoubleSpinBox(groupBox_10);
+        doubleSpinBox_RigidBoxAngularVelocityX->setObjectName(QStringLiteral("doubleSpinBox_RigidBoxAngularVelocityX"));
+        sizePolicy1.setHeightForWidth(doubleSpinBox_RigidBoxAngularVelocityX->sizePolicy().hasHeightForWidth());
+        doubleSpinBox_RigidBoxAngularVelocityX->setSizePolicy(sizePolicy1);
+        doubleSpinBox_RigidBoxAngularVelocityX->setMinimumSize(QSize(0, 0));
+        doubleSpinBox_RigidBoxAngularVelocityX->setDecimals(2);
+        doubleSpinBox_RigidBoxAngularVelocityX->setMinimum(-100000);
+        doubleSpinBox_RigidBoxAngularVelocityX->setMaximum(100000);
+        doubleSpinBox_RigidBoxAngularVelocityX->setSingleStep(0.1);
+        doubleSpinBox_RigidBoxAngularVelocityX->setValue(0);
+
+        horizontalLayout_57->addWidget(doubleSpinBox_RigidBoxAngularVelocityX);
+
+
+        horizontalLayout_56->addLayout(horizontalLayout_57);
+
+        horizontalLayout_58 = new QHBoxLayout();
+        horizontalLayout_58->setObjectName(QStringLiteral("horizontalLayout_58"));
+        label_74 = new QLabel(groupBox_10);
+        label_74->setObjectName(QStringLiteral("label_74"));
+
+        horizontalLayout_58->addWidget(label_74);
+
+        doubleSpinBox_RigidBoxAngularVelocityY = new QDoubleSpinBox(groupBox_10);
+        doubleSpinBox_RigidBoxAngularVelocityY->setObjectName(QStringLiteral("doubleSpinBox_RigidBoxAngularVelocityY"));
+        sizePolicy1.setHeightForWidth(doubleSpinBox_RigidBoxAngularVelocityY->sizePolicy().hasHeightForWidth());
+        doubleSpinBox_RigidBoxAngularVelocityY->setSizePolicy(sizePolicy1);
+        doubleSpinBox_RigidBoxAngularVelocityY->setDecimals(2);
+        doubleSpinBox_RigidBoxAngularVelocityY->setMinimum(-100000);
+        doubleSpinBox_RigidBoxAngularVelocityY->setMaximum(100000);
+        doubleSpinBox_RigidBoxAngularVelocityY->setSingleStep(0.1);
+        doubleSpinBox_RigidBoxAngularVelocityY->setValue(0);
+
+        horizontalLayout_58->addWidget(doubleSpinBox_RigidBoxAngularVelocityY);
+
+
+        horizontalLayout_56->addLayout(horizontalLayout_58);
+
+        horizontalLayout_59 = new QHBoxLayout();
+        horizontalLayout_59->setObjectName(QStringLiteral("horizontalLayout_59"));
+        label_75 = new QLabel(groupBox_10);
+        label_75->setObjectName(QStringLiteral("label_75"));
+
+        horizontalLayout_59->addWidget(label_75);
+
+        doubleSpinBox_RigidBoxAngularVelocityZ = new QDoubleSpinBox(groupBox_10);
+        doubleSpinBox_RigidBoxAngularVelocityZ->setObjectName(QStringLiteral("doubleSpinBox_RigidBoxAngularVelocityZ"));
+        sizePolicy1.setHeightForWidth(doubleSpinBox_RigidBoxAngularVelocityZ->sizePolicy().hasHeightForWidth());
+        doubleSpinBox_RigidBoxAngularVelocityZ->setSizePolicy(sizePolicy1);
+        doubleSpinBox_RigidBoxAngularVelocityZ->setDecimals(2);
+        doubleSpinBox_RigidBoxAngularVelocityZ->setMinimum(-100000);
+        doubleSpinBox_RigidBoxAngularVelocityZ->setMaximum(100000);
+        doubleSpinBox_RigidBoxAngularVelocityZ->setSingleStep(0.1);
+        doubleSpinBox_RigidBoxAngularVelocityZ->setValue(0);
+
+        horizontalLayout_59->addWidget(doubleSpinBox_RigidBoxAngularVelocityZ);
+
+
+        horizontalLayout_56->addLayout(horizontalLayout_59);
+
+
+        verticalLayout_20->addLayout(horizontalLayout_56);
+
+
+        verticalLayout_21->addWidget(groupBox_10);
 
         scrollArea_5->setWidget(scrollAreaWidgetContents_5);
 
@@ -1992,7 +2217,7 @@ public:
         QObject::connect(spinBox_EmitAmount, SIGNAL(valueChanged(int)), horizontalSlider_EmitAmount, SLOT(setValue(int)));
         QObject::connect(checkBox_EnableCollision, SIGNAL(toggled(bool)), doubleSpinBox_Restitution, SLOT(setEnabled(bool)));
 
-        tabWidget->setCurrentIndex(2);
+        tabWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(HierarchyViewer);
@@ -2113,12 +2338,55 @@ public:
          << QApplication::translate("HierarchyViewer", "Sphere", 0)
          << QApplication::translate("HierarchyViewer", "Fixed", 0)
         );
+#ifndef QT_NO_TOOLTIP
+        doubleSpinBox_RigidBodyMass->setToolTip(QApplication::translate("HierarchyViewer", "Mass of the Rigid Body, Unit: kg", 0));
+#endif // QT_NO_TOOLTIP
         label_64->setText(QApplication::translate("HierarchyViewer", "Restitution", 0));
-        label_60->setText(QApplication::translate("HierarchyViewer", "Radius", 0));
         groupBox_9->setTitle(QApplication::translate("HierarchyViewer", "Size", 0));
+        label_60->setText(QApplication::translate("HierarchyViewer", "Extents", 0));
         label_61->setText(QApplication::translate("HierarchyViewer", "X", 0));
+#ifndef QT_NO_TOOLTIP
+        doubleSpinBox_RigidBoxSizeX->setToolTip(QApplication::translate("HierarchyViewer", "Extents of the box on X axis, Unit: Meter", 0));
+#endif // QT_NO_TOOLTIP
         label_62->setText(QApplication::translate("HierarchyViewer", "Y", 0));
+#ifndef QT_NO_TOOLTIP
+        doubleSpinBox_RigidBoxSizeY->setToolTip(QApplication::translate("HierarchyViewer", "Extents of the box on Y axis, Unit: Meter", 0));
+#endif // QT_NO_TOOLTIP
         label_63->setText(QApplication::translate("HierarchyViewer", "Z", 0));
+#ifndef QT_NO_TOOLTIP
+        doubleSpinBox_RigidBoxSizeZ->setToolTip(QApplication::translate("HierarchyViewer", "Extents of the box on Z axis, Unit: Meter", 0));
+#endif // QT_NO_TOOLTIP
+        label_66->setText(QApplication::translate("HierarchyViewer", "Radius", 0));
+#ifndef QT_NO_TOOLTIP
+        doubleSpinBox_RigidBodyRadius->setToolTip(QApplication::translate("HierarchyViewer", "Radius of the sphere, Unit: Meter", 0));
+#endif // QT_NO_TOOLTIP
+        groupBox_10->setTitle(QApplication::translate("HierarchyViewer", "Velocity", 0));
+        label_68->setText(QApplication::translate("HierarchyViewer", "Linear", 0));
+        label_69->setText(QApplication::translate("HierarchyViewer", "X", 0));
+#ifndef QT_NO_TOOLTIP
+        doubleSpinBox_RigidBoxLinearVelocityX->setToolTip(QApplication::translate("HierarchyViewer", "Linear Velocity on X axis, Unit: Meter/Second", 0));
+#endif // QT_NO_TOOLTIP
+        label_70->setText(QApplication::translate("HierarchyViewer", "Y", 0));
+#ifndef QT_NO_TOOLTIP
+        doubleSpinBox_RigidBoxLinearVelocityY->setToolTip(QApplication::translate("HierarchyViewer", "Linear Velocity on Y axis, Unit: Meter/Second", 0));
+#endif // QT_NO_TOOLTIP
+        label_71->setText(QApplication::translate("HierarchyViewer", "Z", 0));
+#ifndef QT_NO_TOOLTIP
+        doubleSpinBox_RigidBoxLinearVelocityZ->setToolTip(QApplication::translate("HierarchyViewer", "Linear Velocity on Z axis, Unit: Meter/Second", 0));
+#endif // QT_NO_TOOLTIP
+        label_72->setText(QApplication::translate("HierarchyViewer", "Angular", 0));
+        label_73->setText(QApplication::translate("HierarchyViewer", "X", 0));
+#ifndef QT_NO_TOOLTIP
+        doubleSpinBox_RigidBoxAngularVelocityX->setToolTip(QApplication::translate("HierarchyViewer", "Angular Velocity on X axis, Unit: Radians/Second", 0));
+#endif // QT_NO_TOOLTIP
+        label_74->setText(QApplication::translate("HierarchyViewer", "Y", 0));
+#ifndef QT_NO_TOOLTIP
+        doubleSpinBox_RigidBoxAngularVelocityY->setToolTip(QApplication::translate("HierarchyViewer", "Angular Velocity on Y axis, Unit: Radians/Second", 0));
+#endif // QT_NO_TOOLTIP
+        label_75->setText(QApplication::translate("HierarchyViewer", "Z", 0));
+#ifndef QT_NO_TOOLTIP
+        doubleSpinBox_RigidBoxAngularVelocityZ->setToolTip(QApplication::translate("HierarchyViewer", "Angular Velocity on Z axis, Unit: Radians/Second", 0));
+#endif // QT_NO_TOOLTIP
         tabWidget->setTabText(tabWidget->indexOf(RigidBodyTab), QApplication::translate("HierarchyViewer", "Rigid Body", 0));
     } // retranslateUi
 

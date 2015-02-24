@@ -15,7 +15,6 @@ struct CollisionPair
 		pColliderA = a;
 		pColliderB = b;
 		contactPoint = vec3(1000, 1000, 1000);
-		contactCount = 0;
 	}
 };
 
@@ -48,13 +47,15 @@ public:
 
 	void reset();
 
+
 	float computeContactImpulseMagnitude(const NarrowPhaseCollisionFeedback* pCollisionInfo);
 
+	void backToTimeOfImpact(RigidBody* rb1, RigidBody* rb2);
 	void elasticCollisionResponse(RigidBody* rb1, RigidBody* rb2);
 
 private:
 	PhysicsWorldConfig m_config;
-	float m_time;
+	float m_timeStep;
 	bool m_locked;
 	QList<PhysicsWorldObject*> m_entityList;
 	QVector<ICollider*> m_colliderList;

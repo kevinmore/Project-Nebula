@@ -68,40 +68,27 @@ void MainWindow::initializeToolBar()
 	QToolBar* toolBar = new QToolBar("Nebula", this);
 
 	QAction* playAction = toolBar->addAction(QIcon("../Resource/StyleSheets/Icons/play.png"), "Play", m_scene, SLOT(play()));
-	playAction->setToolTip("Click to Update the Physics World");
-
 	QAction* pauseAction = toolBar->addAction(QIcon("../Resource/StyleSheets/Icons/pause.png"), "Pause", m_scene, SLOT(pause()));
-	pauseAction->setToolTip("Click to Pause the Physics World");
-
 	QAction* stepAction = toolBar->addAction(QIcon("../Resource/StyleSheets/Icons/forwardtoend.png"), "Step", m_scene, SLOT(step()));
-	stepAction->setToolTip("Click to Step the Physics World");
 	
 	toolBar->addSeparator();
 
 	QAction* loadModelAction = toolBar->addAction(QIcon("../Resource/StyleSheets/Icons/model.png"), "Load Model", m_scene, SLOT(showLoadModelDialog()));
-	loadModelAction->setToolTip("Click to Load Model");
 
 	toolBar->addSeparator();
 
 	QAction* openSceneAction = toolBar->addAction(QIcon("../Resource/StyleSheets/Icons/folder.png"), "Open Scene", m_scene, SLOT(showOpenSceneDialog()));
-	openSceneAction->setToolTip("Click to Open a Scene");
-
 	QAction* saveSceneAction = toolBar->addAction(QIcon("../Resource/StyleSheets/Icons/disk.png"), "Save Scene", m_scene, SLOT(showSaveSceneDialog()));
-	saveSceneAction->setToolTip("Click to Save the current Scene");
 
 	toolBar->addSeparator();
 
 	QAction* resetCameraAction = toolBar->addAction(QIcon("../Resource/StyleSheets/Icons/camera.png"), "Reset Camera", m_camera, SLOT(resetCamera()));
-	resetCameraAction->setToolTip("Click to Reset Camera");
-
 	QAction* resetSceneAction = toolBar->addAction(QIcon("../Resource/StyleSheets/Icons/reload.png"), "Reset Scene", m_scene, SLOT(resetToDefaultScene()));
-	resetSceneAction->setToolTip("Click to Reset the Scene to default");
 
 	toolBar->addSeparator();
 
 	QAction* debugSceneAction = toolBar->addAction(QIcon("../Resource/StyleSheets/Icons/magnifyingglass.png"), "Toggle Debug Mode", m_scene, SLOT(toggleDebugMode(bool)));
 	debugSceneAction->setCheckable(true);
-	debugSceneAction->setToolTip("Click to Toggle the Debug Mode");
 
 	
 	addToolBar(Qt::LeftToolBarArea, toolBar);
@@ -290,7 +277,6 @@ void MainWindow::initializeParamsArea()
 	QWidget* optionsTab = new QWidget;
 
 	tab->addTab(optionsTab, "Options");
-	tab->addTab(lightTab, "Light");
 
 	QVBoxLayout* paramsLayout = new QVBoxLayout;
 	paramsLayout->addWidget(fpsCounter);
@@ -457,23 +443,6 @@ void MainWindow::initializeParamsArea()
 	QGroupBox* cameraGroupBox = new QGroupBox("Camera");
 	cameraGroupBox->setLayout(cameraLayout);
 
-
-	// ############ LIGHT TAB - LIGHT EFFECT GROUPBOX ############
-
-	QRadioButton* PVPhong      = new QRadioButton("Per-fragment Phong");
-	QRadioButton* PVBlinnPhong = new QRadioButton("Per-fragment Blinn-Phong");
-	QRadioButton* RimLighting  = new QRadioButton("Phong + Rim lighting");
-
-	PVPhong->setChecked(true);
-
-	QVBoxLayout* lightEffectLayout = new QVBoxLayout;
-	lightEffectLayout->addWidget(PVPhong);
-	lightEffectLayout->addWidget(PVBlinnPhong);
-	lightEffectLayout->addWidget(RimLighting);
-
-	QGroupBox* lightEffectGroupBox = new QGroupBox("Light effect");
-	lightEffectGroupBox->setLayout(lightEffectLayout);
-
 	// ###########################################################
 
 	QVBoxLayout* optionsTabLayout = new QVBoxLayout;
@@ -484,13 +453,6 @@ void MainWindow::initializeParamsArea()
 	optionsTabLayout->addStretch();
 
 	optionsTab->setLayout(optionsTabLayout);
-
-
-	QVBoxLayout* lightTabLayout = new QVBoxLayout;
-	lightTabLayout->addWidget(lightEffectGroupBox);
-	lightTabLayout->addStretch();
-
-	lightTab->setLayout(lightTabLayout);
 
 	// ############ SIGNALS/SLOTS ############
 
@@ -518,11 +480,6 @@ void MainWindow::initializeParamsArea()
 	connect(resetCamera,            SIGNAL(clicked()),            m_camera,            SLOT(resetCamera()));
 	connect(firstPerson,            SIGNAL(toggled(bool)),        m_camera,            SLOT(switchToFirstPersonCamera(bool)));
 	connect(thirdPerson,            SIGNAL(toggled(bool)),        m_camera,            SLOT(switchToThirdPersonCamera(bool)));
-
-	// Light Effect
-	connect(PVPhong,      SIGNAL(toggled(bool)), m_scene, SLOT(togglePhong(bool)));
-	connect(PVBlinnPhong, SIGNAL(toggled(bool)), m_scene, SLOT(toggleBlinnPhong(bool)));
-	connect(RimLighting,  SIGNAL(toggled(bool)), m_scene, SLOT(toggleRimLighting(bool)));
 
 	// Update frame rate
 	connect(m_canvas.data(), SIGNAL(updateFramerate()), this, SLOT(setFramerate()));

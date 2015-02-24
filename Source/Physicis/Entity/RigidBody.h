@@ -44,13 +44,14 @@ typedef QSharedPointer<ICollider> ColliderPtr;
 
 class RigidBody : public PhysicsWorldObject
 {
+	Q_OBJECT
+
 public:
 
 	enum MotionType
 	{
 		MOTION_SPHERE_INERTIA,
 		MOTION_BOX_INERTIA,
-		MOTION_KEYFRAMED,
 		MOTION_FIXED,
 		MOTION_MAX_ID
 	};
@@ -66,11 +67,23 @@ public:
 	virtual ~RigidBody();
 	void update(const float dt);
 
+public slots:
+	void setMotionType_SLOT(const QString& type);
+	void setGravityFactor_SLOT(double val);
+	void setRestitution_SLOT(double val) ;
+	void setLinearVelocityX_SLOT(double val);
+	void setLinearVelocityY_SLOT(double val);
+	void setLinearVelocityZ_SLOT(double val);
+	void setAngularVelocityX_SLOT(double val);
+	void setAngularVelocityY_SLOT(double val);
+	void setAngularVelocityZ_SLOT(double val);
+
+public:
 	//
 	// Motion Type
 	//
-	inline MotionType getMotionType() const { return m_MotionType; }
-	void setMotionType(MotionType type) { m_MotionType = type; }
+	inline MotionType getMotionType() const { return m_motionType; }
+	void setMotionType(MotionType type) { m_motionType = type; }
 
 	//
 	// Collider
@@ -95,10 +108,10 @@ public:
 	inline float getMassInv() const { return m_massInv; }
 
 	/// Sets the mass of the rigid body.
-	virtual void setMass(float m) = 0;
+	virtual void setMass(float m) {}
 
 	/// Sets the inverse mass of the rigid body.
-	virtual void setMassInv(float mInv) = 0;
+	virtual void setMassInv(float mInv) {}
 
 	/// Gets the inverse inertia tensor in local space.
 	inline glm::mat3 getInertiaInvLocal() { return m_inertiaTensorInv; }
@@ -131,6 +144,9 @@ public:
 
 	/// Returns the transform for this rigid body, in world space.
 	inline const Transform& getTransform() const { return m_transform; }
+
+	/// Sets the transform for this rigid body, in world space.
+	inline void setTransform(const Transform& trans) { m_transform = trans; }
 
 	/// Returns the position (the local space origin) for this rigid body, in world space.
 	inline const vec3& getPosition() const { return m_transform.getPosition(); }
@@ -322,7 +338,7 @@ protected:
 	//
 
 	/// The motion type of the rigid body.
-	MotionType	m_MotionType;
+	MotionType	m_motionType;
 
 	/// The mass of the body.
 	/// This defaults to 1.

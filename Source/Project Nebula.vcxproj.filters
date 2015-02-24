@@ -75,6 +75,7 @@
     <ClCompile Include="Physicis\Geometry\Triangle.cpp" />
     <ClCompile Include="Physicis\Collision\Collider\ConvexHullCollider.cpp" />
     <ClCompile Include="Primitives\moc_Component.cc" />
+    <ClCompile Include="Physicis\Entity\moc_RigidBody.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Primitives\Texture.h" />
@@ -110,7 +111,6 @@
     <ClInclude Include="UI\SkyboxDialog.h" />
     <ClInclude Include="Scene\Camera.h" />
     <ClInclude Include="Utility\LogCenter.h" />
-    <ClInclude Include="Physicis\Entity\RigidBody.h" />
     <ClInclude Include="UI\MainWindow.h" />
     <ClInclude Include="Primitives\Puppet.h" />
     <ClInclude Include="Utility\ModelLoader.h" />
@@ -142,7 +142,7 @@
     <ClInclude Include="Primitives\Component.h" />
     <ClInclude Include="Primitives\GameObject.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="UI\HierarchyWidget.h" />
+    <ClInclude Include="Physicis\Particles\ParticleSystem.h" />
     <ClInclude Include="Scene\Scene.h" />
   </ItemGroup>
   <ItemGroup>
@@ -155,6 +155,7 @@
     <ResourceCompile Include="Project Nebula.rc" />
   </ItemGroup>
   <ItemGroup>
-    <QtMOC Include="Physicis\Particles\ParticleSystem.h" />
+    <QtMOC Include="UI\HierarchyWidget.h" />
+    <QtMOC Include="Physicis\Entity\RigidBody.h" />
   </ItemGroup>
 </Project>

@@ -23,8 +23,9 @@ private:
 	ShadingTechnique* m_currentShadingTech;
 	QVector<Material*> m_currentMaterials;
 	Light* m_currentLight;
+	RigidBody* m_currentRigidBody;
 
-	QAction* m_deleteAction;
+	QAction *m_deleteAction, *m_addRigidBodyAction;
 	QWidget *m_renderingTab, *m_particleSystemTab, *m_lightTab, *m_rigidBodyTab;
 
 	void readHierarchy(GameObject* go, QTreeWidgetItem* parentItem); // go through the game objects
@@ -33,6 +34,7 @@ private:
 	void readShadingProperties();
 	void readLightSourceProperties(LightPtr light);
 	void connectParticleSystemTab(ParticleSystemPtr ps);
+	void connectRigidBodyTab(RigidBodyPtr rb);
 	void readParticleSystemConfig(ParticleSystemPtr ps);
 	void readRigidBodyProperties(RigidBodyPtr rb);
 	void searchShaders();
@@ -53,6 +55,7 @@ private slots:
 	void setColorPickerEnabled(bool status);
 	void changeShader(const QString& shaderFile);
 	void changeLightType(const QString& type);
+	void createRigidBody();
 
 	void onShininessSliderChange(int value);
 	void onShininessDoubleBoxChange(double value);
@@ -79,6 +82,9 @@ private slots:
 
 	void onLightIntensitySliderChange(int value);
 	void onLightIntensityDoubleBoxChange(double value);
+
+	void onRigidBodyRestitutionSliderChange(int value);
+	void onRigidBodyRestitutionDoubleBoxChange(double value);
 
 	void onRotationXDialChange(int val);
 	void onRotationYDialChange(int val);

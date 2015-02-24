@@ -34,17 +34,6 @@ public:
 	virtual void update(float currentTime);
 	virtual void resize(int width, int height);
 
-	enum LightMode
-	{
-		PerFragmentBlinnPhong = 1,
-		PerFragmentPhong,
-		RimLighting,
-		LightModeCount
-	};
-
-	void setLightMode(LightMode lightMode) { m_lightMode = lightMode; }
-	LightMode lightMode() const { return m_lightMode; }
-
 	Camera* getCamera();
 	
 	MeshManager*     meshManager();
@@ -66,10 +55,6 @@ public slots:
 	void toggleWireframe(bool state);
 	void togglePoints(bool state);
 
-	void togglePhong(bool state);
-	void toggleBlinnPhong(bool state);
-	void toggleRimLighting(bool state);
-
 	void toggleAA(bool state);
 	void showLoadModelDialog();
 	void resetToDefaultScene();
@@ -80,6 +65,8 @@ public slots:
 	GameObjectPtr createEmptyGameObject(const QString& name = "Game Object");
 	GameObjectPtr createParticleSystem(const QString& parentName = "Scene Root");
 	GameObjectPtr createLight(GameObject* parent = 0);
+	RigidBodyPtr createRigidBody();
+	void attachRigidBodyToGameObject(GameObject* objectToAttach);
 
 	void toggleSkybox(bool state);
 
@@ -121,8 +108,6 @@ private:
 	float m_relativeTime; // relative time excluding paused duration 
 	float m_delayedTime; // the time delayed between pauses
 
-	LightMode       m_lightMode;
-	
 	QVector<vec3> m_path;
 
 	QStateMachine* m_stateMachine;

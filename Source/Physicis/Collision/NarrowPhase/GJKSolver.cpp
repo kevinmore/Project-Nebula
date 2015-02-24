@@ -4,6 +4,7 @@
 #include <Physicis/Collision/Collider/ICollider.h>
 #include <Physicis/Geometry/Edge.h>
 #include <Physicis/Geometry/Simplex.h>
+#include <Physicis/Entity/RigidBody.h>
 
 bool GJKSolver::generateCollisionInfo( const ICollider* objA, const ICollider* objB, const Transform &transB2A, const Simplex& simplex, vec3 v, float distSqrd, NarrowPhaseCollisionFeedback& pCollisionInfo ) const
 {
@@ -14,8 +15,7 @@ bool GJKSolver::generateCollisionInfo( const ICollider* objA, const ICollider* o
 	float dist = sqrt(distSqrd);
 	pCollisionInfo.proximityDistance = dist;
 
-	if (dist <= 0.0f) return false;
-
+	if (dist == 0.0f) return false;
 	vec3 n = v.normalized();
 
 	closestPntA = closestPntA + (objA->getMargin() * (-n));
@@ -34,11 +34,7 @@ bool GJKSolver::generateCollisionInfo( const ICollider* objA, const ICollider* o
 	pCollisionInfo.closestPntBLocal = closestPntB;
 	pCollisionInfo.closestPntAWorld = objA->getTransform() * closestPntA;
 	pCollisionInfo.closestPntBWorld = objB->getTransform() * closestPntB;
-
-	if ( penetrationDepth <= 0 )
-		pCollisionInfo.bIntersect = false;
-	else
-		pCollisionInfo.bIntersect = true;
+	pCollisionInfo.bIntersect = penetrationDepth > 0.0f ? true : false;
 
 	return pCollisionInfo.bIntersect;
 }
@@ -58,8 +54,8 @@ bool GJKSolver::checkCollision( ICollider* objA, ICollider* objB, NarrowPhaseCol
 	Simplex simplex;
 
 	// transform a local position in objB space to local position in objA space
-	Transform transA = objA->getTransform();
-	Transform transB = objB->getTransform();
+	Transform transA = objA->getRigidBody()->getTransform();
+	Transform transB = objB->getRigidBody()->getTransform();
 	Transform transB2A = transA.inversed() * transB;
 
 	// rotation which transforms a local vector in objA space to local vector in objB space

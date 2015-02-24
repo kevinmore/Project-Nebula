@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_HierarchyWidget_t {
-    QByteArrayData data[68];
-    char stringdata[1277];
+    QByteArrayData data[71];
+    char stringdata[1366];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -55,48 +55,51 @@ QT_MOC_LITERAL(22, 283, 12),
 QT_MOC_LITERAL(23, 296, 10),
 QT_MOC_LITERAL(24, 307, 15),
 QT_MOC_LITERAL(25, 323, 4),
-QT_MOC_LITERAL(26, 328, 23),
-QT_MOC_LITERAL(27, 352, 5),
-QT_MOC_LITERAL(28, 358, 26),
-QT_MOC_LITERAL(29, 385, 31),
-QT_MOC_LITERAL(30, 417, 34),
-QT_MOC_LITERAL(31, 452, 23),
-QT_MOC_LITERAL(32, 476, 26),
-QT_MOC_LITERAL(33, 503, 32),
-QT_MOC_LITERAL(34, 536, 35),
-QT_MOC_LITERAL(35, 572, 32),
-QT_MOC_LITERAL(36, 605, 33),
-QT_MOC_LITERAL(37, 639, 36),
-QT_MOC_LITERAL(38, 676, 31),
-QT_MOC_LITERAL(39, 708, 34),
-QT_MOC_LITERAL(40, 743, 34),
-QT_MOC_LITERAL(41, 778, 37),
-QT_MOC_LITERAL(42, 816, 28),
-QT_MOC_LITERAL(43, 845, 31),
-QT_MOC_LITERAL(44, 877, 21),
-QT_MOC_LITERAL(45, 899, 3),
-QT_MOC_LITERAL(46, 903, 21),
-QT_MOC_LITERAL(47, 925, 21),
-QT_MOC_LITERAL(48, 947, 21),
-QT_MOC_LITERAL(49, 969, 21),
-QT_MOC_LITERAL(50, 991, 21),
-QT_MOC_LITERAL(51, 1013, 28),
-QT_MOC_LITERAL(52, 1042, 16),
-QT_MOC_LITERAL(53, 1059, 15),
-QT_MOC_LITERAL(54, 1075, 14),
-QT_MOC_LITERAL(55, 1090, 15),
-QT_MOC_LITERAL(56, 1106, 16),
-QT_MOC_LITERAL(57, 1123, 12),
-QT_MOC_LITERAL(58, 1136, 16),
-QT_MOC_LITERAL(59, 1153, 5),
-QT_MOC_LITERAL(60, 1159, 15),
-QT_MOC_LITERAL(61, 1175, 14),
-QT_MOC_LITERAL(62, 1190, 16),
-QT_MOC_LITERAL(63, 1207, 16),
-QT_MOC_LITERAL(64, 1224, 14),
-QT_MOC_LITERAL(65, 1239, 13),
-QT_MOC_LITERAL(66, 1253, 8),
-QT_MOC_LITERAL(67, 1262, 14)
+QT_MOC_LITERAL(26, 328, 15),
+QT_MOC_LITERAL(27, 344, 23),
+QT_MOC_LITERAL(28, 368, 5),
+QT_MOC_LITERAL(29, 374, 26),
+QT_MOC_LITERAL(30, 401, 31),
+QT_MOC_LITERAL(31, 433, 34),
+QT_MOC_LITERAL(32, 468, 23),
+QT_MOC_LITERAL(33, 492, 26),
+QT_MOC_LITERAL(34, 519, 32),
+QT_MOC_LITERAL(35, 552, 35),
+QT_MOC_LITERAL(36, 588, 32),
+QT_MOC_LITERAL(37, 621, 33),
+QT_MOC_LITERAL(38, 655, 36),
+QT_MOC_LITERAL(39, 692, 31),
+QT_MOC_LITERAL(40, 724, 34),
+QT_MOC_LITERAL(41, 759, 34),
+QT_MOC_LITERAL(42, 794, 37),
+QT_MOC_LITERAL(43, 832, 28),
+QT_MOC_LITERAL(44, 861, 31),
+QT_MOC_LITERAL(45, 893, 34),
+QT_MOC_LITERAL(46, 928, 37),
+QT_MOC_LITERAL(47, 966, 21),
+QT_MOC_LITERAL(48, 988, 3),
+QT_MOC_LITERAL(49, 992, 21),
+QT_MOC_LITERAL(50, 1014, 21),
+QT_MOC_LITERAL(51, 1036, 21),
+QT_MOC_LITERAL(52, 1058, 21),
+QT_MOC_LITERAL(53, 1080, 21),
+QT_MOC_LITERAL(54, 1102, 28),
+QT_MOC_LITERAL(55, 1131, 16),
+QT_MOC_LITERAL(56, 1148, 15),
+QT_MOC_LITERAL(57, 1164, 14),
+QT_MOC_LITERAL(58, 1179, 15),
+QT_MOC_LITERAL(59, 1195, 16),
+QT_MOC_LITERAL(60, 1212, 12),
+QT_MOC_LITERAL(61, 1225, 16),
+QT_MOC_LITERAL(62, 1242, 5),
+QT_MOC_LITERAL(63, 1248, 15),
+QT_MOC_LITERAL(64, 1264, 14),
+QT_MOC_LITERAL(65, 1279, 16),
+QT_MOC_LITERAL(66, 1296, 16),
+QT_MOC_LITERAL(67, 1313, 14),
+QT_MOC_LITERAL(68, 1328, 13),
+QT_MOC_LITERAL(69, 1342, 8),
+QT_MOC_LITERAL(70, 1351, 14)
     },
     "HierarchyWidget\0materialChanged\0\0"
     "connectCurrentObject\0disconnectPreviousObject\0"
@@ -107,8 +110,8 @@ QT_MOC_LITERAL(67, 1262, 14)
     "pos\0rot\0scale\0showMouseRightButton\0"
     "point\0setColorPickerEnabled\0status\0"
     "changeShader\0shaderFile\0changeLightType\0"
-    "type\0onShininessSliderChange\0value\0"
-    "onShininessDoubleBoxChange\0"
+    "type\0createRigidBody\0onShininessSliderChange\0"
+    "value\0onShininessDoubleBoxChange\0"
     "onShininessStrengthSliderChange\0"
     "onShininessStrengthDoubleBoxChange\0"
     "onRoughnessSliderChange\0"
@@ -124,6 +127,8 @@ QT_MOC_LITERAL(67, 1262, 14)
     "onQuadraticAttenuationDoubleBoxChange\0"
     "onLightIntensitySliderChange\0"
     "onLightIntensityDoubleBoxChange\0"
+    "onRigidBodyRestitutionSliderChange\0"
+    "onRigidBodyRestitutionDoubleBoxChange\0"
     "onRotationXDialChange\0val\0"
     "onRotationYDialChange\0onRotationZDialChange\0"
     "onRotationXSpinChange\0onRotationYSpinChange\0"
@@ -145,7 +150,7 @@ static const uint qt_meta_data_HierarchyWidget[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      48,   14, // methods
+      51,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -153,56 +158,59 @@ static const uint qt_meta_data_HierarchyWidget[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,  254,    2, 0x06 /* Public */,
+       1,    0,  269,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       3,    0,  255,    2, 0x08 /* Private */,
-       4,    0,  256,    2, 0x08 /* Private */,
-       5,    2,  257,    2, 0x08 /* Private */,
-       9,    0,  262,    2, 0x08 /* Private */,
-      10,    2,  263,    2, 0x08 /* Private */,
-      13,    3,  268,    2, 0x08 /* Private */,
-      18,    1,  275,    2, 0x08 /* Private */,
-      20,    1,  278,    2, 0x08 /* Private */,
-      22,    1,  281,    2, 0x08 /* Private */,
-      24,    1,  284,    2, 0x08 /* Private */,
-      26,    1,  287,    2, 0x08 /* Private */,
-      28,    1,  290,    2, 0x08 /* Private */,
-      29,    1,  293,    2, 0x08 /* Private */,
-      30,    1,  296,    2, 0x08 /* Private */,
-      31,    1,  299,    2, 0x08 /* Private */,
-      32,    1,  302,    2, 0x08 /* Private */,
-      33,    1,  305,    2, 0x08 /* Private */,
-      34,    1,  308,    2, 0x08 /* Private */,
-      35,    1,  311,    2, 0x08 /* Private */,
-      36,    1,  314,    2, 0x08 /* Private */,
-      37,    1,  317,    2, 0x08 /* Private */,
-      38,    1,  320,    2, 0x08 /* Private */,
-      39,    1,  323,    2, 0x08 /* Private */,
-      40,    1,  326,    2, 0x08 /* Private */,
-      41,    1,  329,    2, 0x08 /* Private */,
-      42,    1,  332,    2, 0x08 /* Private */,
-      43,    1,  335,    2, 0x08 /* Private */,
-      44,    1,  338,    2, 0x08 /* Private */,
-      46,    1,  341,    2, 0x08 /* Private */,
-      47,    1,  344,    2, 0x08 /* Private */,
-      48,    1,  347,    2, 0x08 /* Private */,
-      49,    1,  350,    2, 0x08 /* Private */,
-      50,    1,  353,    2, 0x08 /* Private */,
-      51,    1,  356,    2, 0x08 /* Private */,
-      52,    0,  359,    2, 0x08 /* Private */,
-      53,    0,  360,    2, 0x08 /* Private */,
-      54,    0,  361,    2, 0x08 /* Private */,
-      55,    0,  362,    2, 0x08 /* Private */,
-      56,    0,  363,    2, 0x08 /* Private */,
-      57,    0,  364,    2, 0x08 /* Private */,
-      58,    1,  365,    2, 0x08 /* Private */,
-      60,    1,  368,    2, 0x08 /* Private */,
-      61,    0,  371,    2, 0x08 /* Private */,
-      62,    0,  372,    2, 0x0a /* Public */,
-      63,    0,  373,    2, 0x0a /* Public */,
-      64,    1,  374,    2, 0x0a /* Public */,
-      67,    0,  377,    2, 0x0a /* Public */,
+       3,    0,  270,    2, 0x08 /* Private */,
+       4,    0,  271,    2, 0x08 /* Private */,
+       5,    2,  272,    2, 0x08 /* Private */,
+       9,    0,  277,    2, 0x08 /* Private */,
+      10,    2,  278,    2, 0x08 /* Private */,
+      13,    3,  283,    2, 0x08 /* Private */,
+      18,    1,  290,    2, 0x08 /* Private */,
+      20,    1,  293,    2, 0x08 /* Private */,
+      22,    1,  296,    2, 0x08 /* Private */,
+      24,    1,  299,    2, 0x08 /* Private */,
+      26,    0,  302,    2, 0x08 /* Private */,
+      27,    1,  303,    2, 0x08 /* Private */,
+      29,    1,  306,    2, 0x08 /* Private */,
+      30,    1,  309,    2, 0x08 /* Private */,
+      31,    1,  312,    2, 0x08 /* Private */,
+      32,    1,  315,    2, 0x08 /* Private */,
+      33,    1,  318,    2, 0x08 /* Private */,
+      34,    1,  321,    2, 0x08 /* Private */,
+      35,    1,  324,    2, 0x08 /* Private */,
+      36,    1,  327,    2, 0x08 /* Private */,
+      37,    1,  330,    2, 0x08 /* Private */,
+      38,    1,  333,    2, 0x08 /* Private */,
+      39,    1,  336,    2, 0x08 /* Private */,
+      40,    1,  339,    2, 0x08 /* Private */,
+      41,    1,  342,    2, 0x08 /* Private */,
+      42,    1,  345,    2, 0x08 /* Private */,
+      43,    1,  348,    2, 0x08 /* Private */,
+      44,    1,  351,    2, 0x08 /* Private */,
+      45,    1,  354,    2, 0x08 /* Private */,
+      46,    1,  357,    2, 0x08 /* Private */,
+      47,    1,  360,    2, 0x08 /* Private */,
+      49,    1,  363,    2, 0x08 /* Private */,
+      50,    1,  366,    2, 0x08 /* Private */,
+      51,    1,  369,    2, 0x08 /* Private */,
+      52,    1,  372,    2, 0x08 /* Private */,
+      53,    1,  375,    2, 0x08 /* Private */,
+      54,    1,  378,    2, 0x08 /* Private */,
+      55,    0,  381,    2, 0x08 /* Private */,
+      56,    0,  382,    2, 0x08 /* Private */,
+      57,    0,  383,    2, 0x08 /* Private */,
+      58,    0,  384,    2, 0x08 /* Private */,
+      59,    0,  385,    2, 0x08 /* Private */,
+      60,    0,  386,    2, 0x08 /* Private */,
+      61,    1,  387,    2, 0x08 /* Private */,
+      63,    1,  390,    2, 0x08 /* Private */,
+      64,    0,  393,    2, 0x08 /* Private */,
+      65,    0,  394,    2, 0x0a /* Public */,
+      66,    0,  395,    2, 0x0a /* Public */,
+      67,    1,  396,    2, 0x0a /* Public */,
+      70,    0,  399,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -218,42 +226,45 @@ static const uint qt_meta_data_HierarchyWidget[] = {
     QMetaType::Void, QMetaType::Bool,   21,
     QMetaType::Void, QMetaType::QString,   23,
     QMetaType::Void, QMetaType::QString,   25,
-    QMetaType::Void, QMetaType::Int,   27,
-    QMetaType::Void, QMetaType::Double,   27,
-    QMetaType::Void, QMetaType::Int,   27,
-    QMetaType::Void, QMetaType::Double,   27,
-    QMetaType::Void, QMetaType::Int,   27,
-    QMetaType::Void, QMetaType::Double,   27,
-    QMetaType::Void, QMetaType::Int,   27,
-    QMetaType::Void, QMetaType::Double,   27,
-    QMetaType::Void, QMetaType::Double,   27,
-    QMetaType::Void, QMetaType::Int,   27,
-    QMetaType::Void, QMetaType::Double,   27,
-    QMetaType::Void, QMetaType::Int,   27,
-    QMetaType::Void, QMetaType::Double,   27,
-    QMetaType::Void, QMetaType::Int,   27,
-    QMetaType::Void, QMetaType::Double,   27,
-    QMetaType::Void, QMetaType::Int,   27,
-    QMetaType::Void, QMetaType::Double,   27,
-    QMetaType::Void, QMetaType::Int,   45,
-    QMetaType::Void, QMetaType::Int,   45,
-    QMetaType::Void, QMetaType::Int,   45,
-    QMetaType::Void, QMetaType::Double,   45,
-    QMetaType::Void, QMetaType::Double,   45,
-    QMetaType::Void, QMetaType::Double,   45,
-    QMetaType::Void, QMetaType::Double,   27,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::Int,   28,
+    QMetaType::Void, QMetaType::Double,   28,
+    QMetaType::Void, QMetaType::Int,   28,
+    QMetaType::Void, QMetaType::Double,   28,
+    QMetaType::Void, QMetaType::Int,   28,
+    QMetaType::Void, QMetaType::Double,   28,
+    QMetaType::Void, QMetaType::Int,   28,
+    QMetaType::Void, QMetaType::Double,   28,
+    QMetaType::Void, QMetaType::Double,   28,
+    QMetaType::Void, QMetaType::Int,   28,
+    QMetaType::Void, QMetaType::Double,   28,
+    QMetaType::Void, QMetaType::Int,   28,
+    QMetaType::Void, QMetaType::Double,   28,
+    QMetaType::Void, QMetaType::Int,   28,
+    QMetaType::Void, QMetaType::Double,   28,
+    QMetaType::Void, QMetaType::Int,   28,
+    QMetaType::Void, QMetaType::Double,   28,
+    QMetaType::Void, QMetaType::Int,   28,
+    QMetaType::Void, QMetaType::Double,   28,
+    QMetaType::Void, QMetaType::Int,   48,
+    QMetaType::Void, QMetaType::Int,   48,
+    QMetaType::Void, QMetaType::Int,   48,
+    QMetaType::Void, QMetaType::Double,   48,
+    QMetaType::Void, QMetaType::Double,   48,
+    QMetaType::Void, QMetaType::Double,   48,
+    QMetaType::Void, QMetaType::Double,   28,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Bool,   59,
-    QMetaType::Void, QMetaType::Bool,   59,
+    QMetaType::Void, QMetaType::Bool,   62,
+    QMetaType::Void, QMetaType::Bool,   62,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 65,   66,
+    QMetaType::Void, 0x80000000 | 68,   69,
     QMetaType::Void,
 
        0        // eod
@@ -275,43 +286,46 @@ void HierarchyWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         case 8: _t->setColorPickerEnabled((*reinterpret_cast< bool(*)>(_a[1]))); break;
         case 9: _t->changeShader((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         case 10: _t->changeLightType((*reinterpret_cast< const QString(*)>(_a[1]))); break;
-        case 11: _t->onShininessSliderChange((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 12: _t->onShininessDoubleBoxChange((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 13: _t->onShininessStrengthSliderChange((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 14: _t->onShininessStrengthDoubleBoxChange((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 15: _t->onRoughnessSliderChange((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 16: _t->onRoughnessDoubleBoxChange((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 17: _t->onFresnelReflectanceSliderChange((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 18: _t->onFresnelReflectanceDoubleBoxChange((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 19: _t->onRefractiveIndexDoubleBoxChange((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 20: _t->onConstantAttenuationSliderChange((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 21: _t->onConstantAttenuationDoubleBoxChange((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 22: _t->onLinearAttenuationSliderChange((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 23: _t->onLinearAttenuationDoubleBoxChange((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 24: _t->onQuadraticAttenuationSliderChange((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 25: _t->onQuadraticAttenuationDoubleBoxChange((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 26: _t->onLightIntensitySliderChange((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 27: _t->onLightIntensityDoubleBoxChange((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 28: _t->onRotationXDialChange((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 29: _t->onRotationYDialChange((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 30: _t->onRotationZDialChange((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 31: _t->onRotationXSpinChange((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 32: _t->onRotationYSpinChange((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 33: _t->onRotationZSpinChange((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 34: _t->onScaleFactorDoubleBoxChange((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 35: _t->onScale001Pushed(); break;
-        case 36: _t->onScale01Pushed(); break;
-        case 37: _t->onScale1Pushed(); break;
-        case 38: _t->onScale10Pushed(); break;
-        case 39: _t->onScale100Pushed(); break;
-        case 40: _t->assignPuppet(); break;
-        case 41: _t->toggleDiffuseMap((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 42: _t->toggleNormalMap((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 43: _t->clearReference(); break;
-        case 44: _t->deleteGameObject(); break;
-        case 45: _t->updateObjectTree(); break;
-        case 46: _t->onObjectPicked((*reinterpret_cast< GameObjectPtr(*)>(_a[1]))); break;
-        case 47: _t->assignMaterial(); break;
+        case 11: _t->createRigidBody(); break;
+        case 12: _t->onShininessSliderChange((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 13: _t->onShininessDoubleBoxChange((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 14: _t->onShininessStrengthSliderChange((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 15: _t->onShininessStrengthDoubleBoxChange((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 16: _t->onRoughnessSliderChange((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 17: _t->onRoughnessDoubleBoxChange((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 18: _t->onFresnelReflectanceSliderChange((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 19: _t->onFresnelReflectanceDoubleBoxChange((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 20: _t->onRefractiveIndexDoubleBoxChange((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 21: _t->onConstantAttenuationSliderChange((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 22: _t->onConstantAttenuationDoubleBoxChange((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 23: _t->onLinearAttenuationSliderChange((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 24: _t->onLinearAttenuationDoubleBoxChange((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 25: _t->onQuadraticAttenuationSliderChange((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 26: _t->onQuadraticAttenuationDoubleBoxChange((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 27: _t->onLightIntensitySliderChange((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 28: _t->onLightIntensityDoubleBoxChange((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 29: _t->onRigidBodyRestitutionSliderChange((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 30: _t->onRigidBodyRestitutionDoubleBoxChange((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 31: _t->onRotationXDialChange((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 32: _t->onRotationYDialChange((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 33: _t->onRotationZDialChange((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 34: _t->onRotationXSpinChange((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 35: _t->onRotationYSpinChange((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 36: _t->onRotationZSpinChange((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 37: _t->onScaleFactorDoubleBoxChange((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 38: _t->onScale001Pushed(); break;
+        case 39: _t->onScale01Pushed(); break;
+        case 40: _t->onScale1Pushed(); break;
+        case 41: _t->onScale10Pushed(); break;
+        case 42: _t->onScale100Pushed(); break;
+        case 43: _t->assignPuppet(); break;
+        case 44: _t->toggleDiffuseMap((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 45: _t->toggleNormalMap((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 46: _t->clearReference(); break;
+        case 47: _t->deleteGameObject(); break;
+        case 48: _t->updateObjectTree(); break;
+        case 49: _t->onObjectPicked((*reinterpret_cast< GameObjectPtr(*)>(_a[1]))); break;
+        case 50: _t->assignMaterial(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -351,13 +365,13 @@ int HierarchyWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 48)
+        if (_id < 51)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 48;
+        _id -= 51;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 48)
+        if (_id < 51)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 48;
+        _id -= 51;
     }
     return _id;
 }

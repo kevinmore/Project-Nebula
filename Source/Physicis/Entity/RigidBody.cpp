@@ -204,8 +204,8 @@ void RigidBody::backTrackRotation( const float duration )
 {
 	quat curRotation = m_transform.getRotation();
 	quat lastRotation = m_deltaRotation.conjugate() * curRotation;
-	quat amount = quat::slerp(lastRotation, curRotation, duration / m_timeStep);
-	m_transform.rotate(amount.conjugate());
+	quat amount = quat::slerp(curRotation, lastRotation, duration / m_timeStep);
+	m_transform.rotate(amount);
 }
 
 void RigidBody::backTrackLinearVelocity( const float duration )
@@ -216,4 +216,58 @@ void RigidBody::backTrackLinearVelocity( const float duration )
 void RigidBody::backTrackAngularVelocity( const float duration )
 {
 	m_angularVelocity = Spline::lerp(m_angularVelocity, m_lastAngularVelocity, duration / m_timeStep);
+}
+
+
+/************************************************************************/
+/*          SLOTS                                                       */
+/************************************************************************/
+void RigidBody::setMotionType_SLOT( const QString& type )
+{
+	if (type == "Box")
+		m_motionType = MOTION_BOX_INERTIA;
+	else if (type == "Sphere")
+		m_motionType = MOTION_SPHERE_INERTIA;
+	else if (type == "Fixed")
+		m_motionType = MOTION_FIXED;
+}
+
+void RigidBody::setGravityFactor_SLOT( double val )
+{
+	m_gravityFactor = val;
+}
+
+void RigidBody::setRestitution_SLOT( double val )
+{
+	m_restitution = val;
+}
+
+void RigidBody::setLinearVelocityX_SLOT( double val )
+{
+	m_linearVelocity.setX(val);
+}
+
+void RigidBody::setLinearVelocityY_SLOT( double val )
+{
+	m_linearVelocity.setY(val);
+}
+
+void RigidBody::setLinearVelocityZ_SLOT( double val )
+{
+	m_linearVelocity.setZ(val);
+}
+
+void RigidBody::setAngularVelocityX_SLOT( double val )
+{
+	m_angularVelocity.setX(val);
+}
+
+void RigidBody::setAngularVelocityY_SLOT( double val )
+{
+	m_angularVelocity.setY(val);
+}
+
+void RigidBody::setAngularVelocityZ_SLOT( double val )
+{
+	m_angularVelocity.setZ(val);
 }

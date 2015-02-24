@@ -103,13 +103,14 @@ bool EPASolver::computePenetrationDepthAndContactPoints( const Simplex& simplex,
 		{
 			pCollisionInfo.bIntersect = true;
 			pCollisionInfo.contactNormalWorld = v;
-			pCollisionInfo.penetrationDepth = 0.5f * (upperBound + lowerBound);
+			//pCollisionInfo.penetrationDepth = 0.5f * (upperBound + lowerBound);
 
 			pCollisionInfo.closestPntALocal = pClosestTriangle->getClosestPointToOriginInSupportPntSpace(suppPointsA);
 			pCollisionInfo.closestPntBLocal = transA2B * pClosestTriangle->getClosestPointToOriginInSupportPntSpace(suppPointsB);
 
 			pCollisionInfo.closestPntAWorld = objA->getTransform() * pCollisionInfo.closestPntALocal;
 			pCollisionInfo.closestPntBWorld = objB->getTransform() * pCollisionInfo.closestPntBLocal;
+		    pCollisionInfo.penetrationDepth = (pCollisionInfo.closestPntAWorld - pCollisionInfo.closestPntBWorld).length();
 
 			pCollisionInfo.proximityDistance = 0;
 			pCollisionInfo.pObjA = objA;
