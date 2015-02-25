@@ -308,6 +308,8 @@ void Scene::loadScene( QString& fileName )
 
 	file.close();
 
+	toggleDebugMode(false);
+
 	qDebug() << "Opened scene from" << fileName;
 }
 

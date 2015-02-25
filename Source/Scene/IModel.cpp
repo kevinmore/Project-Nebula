@@ -101,7 +101,7 @@ void IModel::setCurrentBoundingVolume( ColliderPtr col )
 
 	// assign the given collider as the current bouding volume
 	m_currentBoundingVolume = col;
-	
+
 	showBoundingVolume();
 }
 

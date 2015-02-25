@@ -223,36 +223,32 @@ QDataStream& operator << (QDataStream& out, RigidBodyPtr object)
 QDataStream& operator >> (QDataStream& in, RigidBodyPtr object)
 {
 	int motionType;
-	RigidBody::MotionType type;
 
 	float mass, gravityFactor, restitution, radius;
 	vec3 linearVelocity, angularVelocity, halfExtents;
 
 	in >> mass >> gravityFactor >> restitution >> linearVelocity >> angularVelocity >> motionType;
 
-	SphereColliderPtr sphere = object->getBroadPhaseCollider().dynamicCast<SphereCollider>();
-	BoxColliderPtr box = object->getBroadPhaseCollider().dynamicCast<BoxCollider>();
+	SphereColliderPtr sphere; 
+	BoxColliderPtr box;
 
 	switch(motionType)
 	{
 	case 0:
-		type = RigidBody::MOTION_SPHERE_INERTIA;
 		in >> radius;
-		if (sphere)
-		{
-			sphere->setRadius(radius);
-		}
+		object->setMotionType_SLOT("Sphere");
+		sphere = object->getBroadPhaseCollider().dynamicCast<SphereCollider>();
+		sphere->setRadius(radius);
+
 		break;
 	case 1:
-		type = RigidBody::MOTION_BOX_INERTIA;
 		in >> halfExtents;
-		if (box)
-		{
-			box->setHalfExtents(halfExtents);
-		}
+		object->setMotionType_SLOT("Box");
+		box = object->getBroadPhaseCollider().dynamicCast<BoxCollider>();
+		box->setHalfExtents(halfExtents);
 		break;
 	case 2:
-		type = RigidBody::MOTION_FIXED;
+		object->setMotionType_SLOT("Fixed");
 		break;
 	}
 
@@ -261,7 +257,6 @@ QDataStream& operator >> (QDataStream& in, RigidBodyPtr object)
 	object->setRestitution(restitution);
 	object->setLinearVelocity(linearVelocity);
 	object->setAngularVelocity(angularVelocity);
-	object->setMotionType(type);
 
 	return in;
 }

@@ -36,16 +36,16 @@ StaticModel::StaticModel( const StaticModel* orignal )
 	// copy the bounding box
 	BoxColliderPtr otherBox = orignal->getBoundingBox();
 	vec3 halfExtents = otherBox->getHalfExtents();
-
-	// copy the bounding sphere
-	SphereColliderPtr otherSphere = orignal->getBoundingSphere();
-	float radius = otherSphere->getRadius();
-
 	// reset the scale of the bounding box
 	halfExtents.setX(halfExtents.x() / scale.x());
 	halfExtents.setY(halfExtents.y() / scale.y());
 	halfExtents.setZ(halfExtents.z() / scale.z());
 	m_boundingBox  = BoxColliderPtr(new BoxCollider(otherBox->getPosition(), halfExtents, m_scene));
+	m_currentBoundingVolume = m_boundingBox;
+
+	// copy the bounding sphere
+	SphereColliderPtr otherSphere = orignal->getBoundingSphere();
+	float radius = otherSphere->getRadius() / scale.x();
 	m_boundingSpehre = SphereColliderPtr(new SphereCollider(otherSphere->getPosition(), radius, m_scene));
 
 	// copy the convexhull collider
