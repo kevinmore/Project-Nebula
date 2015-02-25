@@ -123,8 +123,9 @@ ModelPtr LoaderThread::loadModel( const QString& customName, const QString& file
 		}
 		m_objectManager->m_modelLoaders.push_back(modelLoader);
 
-		// assign the bounding box
+		// assign the bounding volumes
 		pModel->setBoundingBox(modelLoader->getBoundingBox());
+		pModel->setBoundingSphere(modelLoader->getBoundingSphere());
 		pModel->setConvexHullCollider(modelLoader->getConvexHullCollider());
 	}
 

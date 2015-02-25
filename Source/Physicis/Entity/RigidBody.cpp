@@ -1,7 +1,8 @@
 #include "RigidBody.h"
 #include <Physicis/World/PhysicsWorld.h>
 #include <Physicis/World/PhysicsWorldObject.inl>
-#include <Physicis/Collision/Collider/ICollider.h>
+#include <Physicis/Collision/Collider/SphereCollider.h>
+#include <Physicis/Collision/Collider/BoxCollider.h>
 #include <Primitives/GameObject.h>
 
 RigidBody::RigidBody(const vec3& position, const quat& rotation, QObject* parent)
@@ -30,9 +31,6 @@ RigidBody::RigidBody(const vec3& position, const quat& rotation, QObject* parent
 
 	m_halfExtents = vec3(0.5f, 0.5f, 0.5f);
 	m_radius = 0.5f;
-
-	// compute the default inertia tensor as a box
-	computeInertiaTensor();
 }
 
 RigidBody::~RigidBody()
@@ -46,17 +44,21 @@ RigidBody::~RigidBody()
 
 void RigidBody::computeInertiaTensor()
 {
+	// prepare variables
 	mat3 tensor;
+	SphereColliderPtr sphere = m_BroadPhaseCollider.dynamicCast<SphereCollider>();
+	BoxColliderPtr box = m_BroadPhaseCollider.dynamicCast<BoxCollider>();
+
 	switch(m_motionType)
 	{
 	case MOTION_BOX_INERTIA:
-		Matrix3::setBoxInertiaTensor(tensor, m_halfExtents, m_mass);
-		m_inertiaTensorInv = glm::inverse(Converter::toGLMMat3(tensor));
+			Matrix3::setBoxInertiaTensor(tensor, box->getHalfExtents(), m_mass);
+			m_inertiaTensorInv = glm::inverse(Converter::toGLMMat3(tensor));
 		break;
 
 	case MOTION_SPHERE_INERTIA:
-		Matrix3::setSphereInertiaTensor(tensor, m_radius, m_mass);
-		m_inertiaTensorInv = glm::inverse(Converter::toGLMMat3(tensor));
+			Matrix3::setSphereInertiaTensor(tensor, sphere->getRadius(), m_mass);
+			m_inertiaTensorInv = glm::inverse(Converter::toGLMMat3(tensor));
 		break;
 
 	case MOTION_FIXED:
@@ -163,24 +165,6 @@ void RigidBody::setMassInv( float mInv )
 	computeInertiaTensor();
 }
 
-void RigidBody::setSize( float radius )
-{
-	if (m_motionType == MOTION_SPHERE_INERTIA)
-	{
-		m_radius = radius;
-		computeInertiaTensor();
-	}
-}
-
-void RigidBody::setSize( const vec3& halfExtents )
-{
-	if (m_motionType == MOTION_BOX_INERTIA)
-	{
-		m_halfExtents = halfExtents;
-		computeInertiaTensor();
-	}
-}
-
 
 void RigidBody::setPosition( const vec3& pos )
 {
@@ -218,6 +202,7 @@ void RigidBody::attachBroadPhaseCollider( ColliderPtr col )
 {
 	m_BroadPhaseCollider = col;
 	col->setRigidBody(this);
+	computeInertiaTensor();
 }
 
 void RigidBody::attachNarrowPhaseCollider( ColliderPtr col )
@@ -309,12 +294,10 @@ void RigidBody::setMotionType_SLOT( const QString& type )
 		setMotionType(MOTION_FIXED);
 }
 
-
 void RigidBody::setMass_SLOT( double val )
 {
 	setMass(val);
 }
-
 
 void RigidBody::setGravityFactor_SLOT( double val )
 {
@@ -358,23 +341,46 @@ void RigidBody::setAngularVelocityZ_SLOT( double val )
 
 void RigidBody::setRadius_SLOT( double val )
 {
-	setSize(val);
+	SphereColliderPtr sphere = m_BroadPhaseCollider.dynamicCast<SphereCollider>();
+	if (sphere)
+	{
+		sphere->setRadius(val);
+		computeInertiaTensor();
+	}
 }
 
 void RigidBody::setExtentsX_SLOT( double val )
 {
-	vec3 halfExtents(val * 0.5f, m_halfExtents.y(), m_halfExtents.z());
-	setSize(halfExtents);
+	BoxColliderPtr box = m_BroadPhaseCollider.dynamicCast<BoxCollider>();
+	if (box)
+	{
+		vec3 halfExtents = box->getHalfExtents();
+		halfExtents.setX(0.5 * val);
+		box->setHalfExtents(halfExtents);
+		computeInertiaTensor();
+	}
 }
 
 void RigidBody::setExtentsY_SLOT( double val )
 {
-	vec3 halfExtents(m_halfExtents.x(), val * 0.5f, m_halfExtents.z());
-	setSize(halfExtents);
+	BoxColliderPtr box = m_BroadPhaseCollider.dynamicCast<BoxCollider>();
+	if (box)
+	{
+		vec3 halfExtents = box->getHalfExtents();
+		halfExtents.setY(0.5 * val);
+		box->setHalfExtents(halfExtents);
+		computeInertiaTensor();
+	}
 }
 
 void RigidBody::setExtentsZ_SLOT( double val )
 {
-	vec3 halfExtents(m_halfExtents.x(), m_halfExtents.y(), val * 0.5f);
-	setSize(halfExtents);
+	BoxColliderPtr box = m_BroadPhaseCollider.dynamicCast<BoxCollider>();
+	if (box)
+	{
+		vec3 halfExtents = box->getHalfExtents();
+		halfExtents.setZ(0.5 * val);
+		box->setHalfExtents(halfExtents);
+		computeInertiaTensor();
+	}
 }

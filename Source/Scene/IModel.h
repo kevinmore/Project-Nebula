@@ -12,6 +12,7 @@
 #include <Primitives/Material.h>
 #include <Scene/ShadingTechniques/ShadingTechnique.h>
 
+#include <Physicis/Collision/Collider/SphereCollider.h>
 #include <Physicis/Collision/Collider/BoxCollider.h>
 #include <Physicis/Collision/Collider/ConvexHullCollider.h>
 
@@ -33,12 +34,13 @@ public:
 
 	void setBoundingBox(BoxCollider* box);
 	BoxColliderPtr getBoundingBox() const;
-	void showBoundingBox();
-	void hideBoundingBox();
-
+	void setBoundingSphere(SphereCollider* sphere);
+	SphereColliderPtr getBoundingSphere() const;
 	void setConvexHullCollider(ConvexHullCollider* ch);
 	ConvexHullColliderPtr getConvexHullCollider() const;
 
+	void showBoundingVolume();
+	void hideBoundingVolume();
 
 	inline const mat4& getTransformMatrix() const { return m_transformMatrix; }
 
@@ -64,6 +66,9 @@ protected:
 	QVector<MaterialPtr> m_materials;
 	GLuint m_vao;
 	PolygonMode m_polygonMode;
+
+	ColliderPtr m_currentBoundingVolume;
+	SphereColliderPtr m_boundingSpehre;
 	BoxColliderPtr m_boundingBox;
 	ConvexHullColliderPtr m_convexHull;
 

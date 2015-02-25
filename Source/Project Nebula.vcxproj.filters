@@ -108,7 +108,6 @@
     <ClInclude Include="UI\SkyboxDialog.h" />
     <ClInclude Include="Scene\Camera.h" />
     <ClInclude Include="Utility\LogCenter.h" />
-    <ClInclude Include="UI\MainWindow.h" />
     <ClInclude Include="Primitives\Puppet.h" />
     <ClInclude Include="Utility\ModelLoader.h" />
     <ClInclude Include="Utility\AssimpThread.h" />
@@ -140,6 +139,9 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="Physicis\Particles\ParticleSystem.h" />
     <ClInclude Include="Scene\Scene.h" />
+    <ClInclude Include="UI\MainWindow.h" />
+    <ClInclude Include="UI\HierarchyWidget.h" />
+    <ClInclude Include="Physicis\Entity\RigidBody.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="UI\HierarchyWidget.ui" />
@@ -149,9 +151,5 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Project Nebula.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtMOC Include="UI\HierarchyWidget.h" />
-    <QtMOC Include="Physicis\Entity\RigidBody.h" />
   </ItemGroup>
 </Project>

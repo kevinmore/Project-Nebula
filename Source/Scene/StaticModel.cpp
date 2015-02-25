@@ -35,7 +35,7 @@ StaticModel::StaticModel( const StaticModel* orignal )
 
 	// copy the bounding box
 	BoxColliderPtr otherBox = orignal->getBoundingBox();
-	vec3 halfExtents = otherBox->getGeometryShape().getHalfExtents();
+	vec3 halfExtents = otherBox->getHalfExtents();
 
 	// reset the scale of the bounding box
 	halfExtents.setX(halfExtents.x() / scale.x());

@@ -42,7 +42,7 @@ private:
 	QScopedPointer<Canvas> m_canvas;
 
 	QWidget      * m_params,         * m_coordinate,     * m_mvpMatrix;
-	QDockWidget  * m_dockSettingsArea, * m_dockMatrixArea, * m_stateMachineViewer, * m_heirarchyViewer;
+	QDockWidget  * m_dockCanvas, * m_dockSettingsArea, * m_stateMachineViewer, * m_heirarchyViewer;
 	Scene        * m_scene;
 	Camera  * m_camera;
 

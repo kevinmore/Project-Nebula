@@ -129,14 +129,6 @@ public:
 		return m_inertiaTensorInvWorld;
 	}
 
-	/// Sets the radius or half extents of the shape, this will update the inertia tensor
-	void setSize(float radius);
-	void setSize(const vec3& halfExtents);
-
-	/// Gets the size of the body
-	float getRadius() const { return m_radius; }
-	vec3 getHalfExtents() const { return m_halfExtents; }
-
 	//
 	// CENTER OF MASS.
 	//

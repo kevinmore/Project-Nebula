@@ -21,10 +21,10 @@ BoxCollider::BoxCollider( const vec3& center, const vec3& halfExtents, Scene* sc
 	init();
 }
 
-BoxShape BoxCollider::getGeometryShape() const
-{
-	return m_boxShape;
-}
+// BoxShape BoxCollider::getGeometryShape() const
+// {
+// 	return m_boxShape;
+// }
 
 void BoxCollider::init()
 {
@@ -64,7 +64,7 @@ BroadPhaseCollisionFeedback BoxCollider::onBroadPhase( ICollider* other )
 
 	// get the size
 	glm::vec3 ea = Converter::toGLMVec3(m_boxShape.getHalfExtents());
-	glm::vec3 eb = Converter::toGLMVec3(b->getGeometryShape().getHalfExtents());
+	glm::vec3 eb = Converter::toGLMVec3(b->getHalfExtents());
 
 	glm::mat3 rotaionA = m_rigidBody->getRotationMatrix();
 	glm::mat3 rotaionB = b->getRigidBody()->getRotationMatrix();
@@ -168,6 +168,11 @@ void BoxCollider::setHalfExtents( const vec3& halfExtents )
 	m_boxShape.setHalfExtents(halfExtents);
 }
 
+vec3 BoxCollider::getHalfExtents() const
+{
+	return m_boxShape.getHalfExtents();
+}
+
 vec3 BoxCollider::getLocalSupportPoint( const vec3& dir, float margin /*= 0*/ ) const
 {
 	vec3 supportPoint;
@@ -180,3 +185,4 @@ vec3 BoxCollider::getLocalSupportPoint( const vec3& dir, float margin /*= 0*/ ) 
 
 	return supportPoint;
 }
+

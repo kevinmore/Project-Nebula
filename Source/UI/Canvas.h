@@ -6,6 +6,7 @@
 #include <QMouseEvent>
 #include <QKeyEvent>
 #include <QWheelEvent>
+#include <QDockWidget>
 
 /************************************************************************/
 /*This class is used to initialize the OpenGL context 
@@ -22,6 +23,8 @@ public:
 	~Canvas();
 
 	Scene* getScene();
+	void setContainerWidget(QDockWidget* widget) { m_container = widget; }
+	QDockWidget* getContainerWidget() const { return m_container; }
 
 protected:
 	void keyPressEvent(QKeyEvent* e);
@@ -59,6 +62,7 @@ signals:
 private:
 	QScopedPointer<QOpenGLContext> m_context;
 	IScene* m_scene;
+	QDockWidget* m_container;
 
 	QElapsedTimer m_updateTimer;
 

@@ -55,11 +55,12 @@ void MainWindow::initializeCanvas()
 	}
 
 	QWidget* canvas = QWidget::createWindowContainer(m_canvas.data());
-	QDockWidget* dock_canvas = new QDockWidget("Scene", this);
-	dock_canvas->setWidget(canvas);
-	dock_canvas->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
-	addDockWidget(Qt::LeftDockWidgetArea, dock_canvas);
-	setCentralWidget(dock_canvas);
+	QDockWidget* m_dockCanvas = new QDockWidget("Scene", this);
+	m_canvas->setContainerWidget(m_dockCanvas);
+	m_dockCanvas->setWidget(canvas);
+	m_dockCanvas->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
+	addDockWidget(Qt::LeftDockWidgetArea, m_dockCanvas);
+	setCentralWidget(m_dockCanvas);
 }
 
 

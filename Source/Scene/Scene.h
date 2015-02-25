@@ -88,7 +88,6 @@ private:
 
 	mutable bool m_bPhysicsPaused, m_bStepPhysics;
 	
-
 	GameObject* m_sceneRootNode;
 
 	Camera* m_camera;

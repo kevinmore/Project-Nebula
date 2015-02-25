@@ -7,9 +7,10 @@ class BoxCollider : public ICollider
 {
 public:
 	BoxCollider(const vec3& center, const vec3& halfExtents, Scene* scene);
-	BoxShape getGeometryShape() const;
+	//BoxShape getGeometryShape() const;
 
 	void setHalfExtents(const vec3& halfExtents);
+	vec3 getHalfExtents() const;
 
 	virtual BroadPhaseCollisionFeedback onBroadPhase(ICollider* other);
 	/// Get the extreme vertex in the given direction

@@ -242,7 +242,7 @@ void HierarchyWidget::readGameObject(QTreeWidgetItem* current, QTreeWidgetItem* 
 
 			// show the bounding box
 			ModelPtr model = comp.dynamicCast<IModel>();
-			if(model && model->getBoundingBox()) model->showBoundingBox();
+			if(model && model->getBoundingBox()) model->showBoundingVolume();
 
 			// get the materials of the model
 			QVector<MaterialPtr> mats = model->getMaterials();
@@ -1157,19 +1157,21 @@ void HierarchyWidget::readRigidBodyProperties( RigidBodyPtr rb )
 	RigidBody::MotionType motionType = rb->getMotionType();
 	vec3 linearVelocity =  rb->getLinearVelocity();
 	vec3 angularVelocity = rb->getAngularVelocity();
+	SphereColliderPtr sphere = rb->getBroadPhaseCollider().dynamicCast<SphereCollider>();
+	BoxColliderPtr box = rb->getBroadPhaseCollider().dynamicCast<BoxCollider>();
 
 	switch(motionType)
 	{
 	case RigidBody::MOTION_BOX_INERTIA:
 		ui->comboBox_RigidBodyMotionType->setCurrentText("Box");
-		ui->doubleSpinBox_RigidBoxSizeX->setValue(rb->getHalfExtents().x() * 2);
-		ui->doubleSpinBox_RigidBoxSizeY->setValue(rb->getHalfExtents().y() * 2);
-		ui->doubleSpinBox_RigidBoxSizeZ->setValue(rb->getHalfExtents().z() * 2);
+		ui->doubleSpinBox_RigidBoxSizeX->setValue(box->getHalfExtents().x() * 2);
+		ui->doubleSpinBox_RigidBoxSizeY->setValue(box->getHalfExtents().y() * 2);
+		ui->doubleSpinBox_RigidBoxSizeZ->setValue(box->getHalfExtents().z() * 2);
 		break;
 
 	case RigidBody::MOTION_SPHERE_INERTIA:
 		ui->comboBox_RigidBodyMotionType->setCurrentText("Sphere");
-		ui->doubleSpinBox_RigidBodyRadius->setValue(rb->getRadius());
+		ui->doubleSpinBox_RigidBodyRadius->setValue(sphere->getRadius());
 		break;
 
 	case RigidBody::MOTION_FIXED:

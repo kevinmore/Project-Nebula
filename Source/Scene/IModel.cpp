@@ -55,6 +55,7 @@ void IModel::setPolygonMode( PolygonMode mode )
 void IModel::setBoundingBox( BoxCollider* box )
 {
 	m_boundingBox.reset(box);
+	m_currentBoundingVolume = m_boundingBox;
 }
 
 BoxColliderPtr IModel::getBoundingBox() const
@@ -62,14 +63,25 @@ BoxColliderPtr IModel::getBoundingBox() const
 	return m_boundingBox;
 }
 
-void IModel::showBoundingBox()
+void IModel::setBoundingSphere( SphereCollider* sphere )
 {
-	gameObject()->attachComponent(m_boundingBox);
+	m_boundingSpehre.reset(sphere);
+	m_currentBoundingVolume = m_boundingSpehre;
 }
 
-void IModel::hideBoundingBox()
+SphereColliderPtr IModel::getBoundingSphere() const
 {
-	gameObject()->detachComponent(m_boundingBox);
+	return m_boundingSpehre;
+}
+
+void IModel::showBoundingVolume()
+{
+	gameObject()->attachComponent(m_currentBoundingVolume);
+}
+
+void IModel::hideBoundingVolume()
+{
+	gameObject()->detachComponent(m_currentBoundingVolume);
 }
 
 void IModel::setConvexHullCollider( ConvexHullCollider* ch )
@@ -86,8 +98,7 @@ void IModel::syncTransform( const Transform& transform )
 {
 	// sync the size of the box collider
 	if(transform.getScale() == m_scale) return;
- 	vec3 halfExtents = m_boundingBox->getGeometryShape().getHalfExtents();
-	vec3 center = m_boundingBox->getGeometryShape().getPosition();
+ 	vec3 halfExtents = m_boundingBox->getHalfExtents();
 	m_boundingBox->setHalfExtents(vec3(halfExtents.x() * transform.getScale().x() / m_scale.x(), 
 									   halfExtents.y() * transform.getScale().y() / m_scale.y(), 
 									   halfExtents.z() * transform.getScale().z() / m_scale.z()));
@@ -97,4 +108,3 @@ void IModel::syncTransform( const Transform& transform )
 
 	m_scale = transform.getScale();
 }
-

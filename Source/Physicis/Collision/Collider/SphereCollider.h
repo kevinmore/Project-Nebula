@@ -7,9 +7,10 @@ class SphereCollider : public ICollider
 {
 public:
 	SphereCollider(const vec3& center, const float radius, Scene* scene);
-	SphereShape getGeometryShape() const;
+	//SphereShape getGeometryShape() const;
 
 	void setRadius(const float radius);
+	float getRadius() const;
 
 	virtual BroadPhaseCollisionFeedback onBroadPhase(ICollider* other);
 	/// Get the extreme vertex in the given direction

@@ -1,4 +1,5 @@
 #include "Scene.h"
+#include <UI/Canvas.h>
 #include <Utility/LoaderThread.h>
 #include <Utility/Serialization.h>
 #include <Primitives/Puppet.h>
@@ -51,7 +52,7 @@ void Scene::initialize()
 	m_sceneRootNode->setObjectName("Scene Root");
 
 	resetToDefaultScene();
-
+	
 	// show sky box for demo purpose
 	//toggleSkybox(true);
 
@@ -248,6 +249,8 @@ void Scene::resetToDefaultScene()
 
 void Scene::showLoadModelDialog()
 {
+	pause();
+
 	QString fileName = QFileDialog::getOpenFileName(0, tr("Load Model"),
 		"../Resource/Models",
 		tr("3D Model File (*.dae *.obj *.3ds)"));
@@ -384,6 +387,13 @@ RigidBodyPtr Scene::createRigidBody( GameObject* objectToAttach )
 		return rb;
 	}
 
+	// check if the object has a mesh reference
+	if (!objectToAttach->getComponent("Model"))
+	{
+		qWarning() << "A Rigid Body should have a mesh representation. Please load a model first.";
+		return rb;
+	}
+	
 	rb.reset(new RigidBody());
 	Transform trans = objectToAttach->getTransform();
 	rb->setTransform(trans);
@@ -407,14 +417,21 @@ void Scene::toggleSkybox( bool state )
 	
 	if (state)
 	{
-		m_skybox = SkyboxPtr(new Skybox(this));
+		m_skybox.reset(new Skybox(this));
+// 		m_skybox->init(
+// 			"../Resource/Textures/skybox/Vasa/posx.jpg",
+// 			"../Resource/Textures/skybox/Vasa/negx.jpg",
+// 			"../Resource/Textures/skybox/Vasa/posy.jpg",
+// 			"../Resource/Textures/skybox/Vasa/negy.jpg",
+// 			"../Resource/Textures/skybox/Vasa/posz.jpg",
+// 			"../Resource/Textures/skybox/Vasa/negz.jpg");
 		m_skybox->init(
-			"../Resource/Textures/skybox/Vasa/posx.jpg",
-			"../Resource/Textures/skybox/Vasa/negx.jpg",
-			"../Resource/Textures/skybox/Vasa/posy.jpg",
-			"../Resource/Textures/skybox/Vasa/negy.jpg",
-			"../Resource/Textures/skybox/Vasa/posz.jpg",
-			"../Resource/Textures/skybox/Vasa/negz.jpg");
+			"../Resource/Textures/skybox/Nebula/PurpleNebula2048_left.tif",
+			"../Resource/Textures/skybox/Nebula/PurpleNebula2048_right.tif",
+			"../Resource/Textures/skybox/Nebula/PurpleNebula2048_top.tif",
+			"../Resource/Textures/skybox/Nebula/PurpleNebula2048_bottom.tif",
+			"../Resource/Textures/skybox/Nebula/PurpleNebula2048_front.tif",
+			"../Resource/Textures/skybox/Nebula/PurpleNebula2048_back.tif");
 	}
 	else
 	{
@@ -483,6 +500,8 @@ void Scene::pause()
 	// pause the physics world
 	m_bPhysicsPaused = true;
 	m_physicsWorld->lock();
+
+	m_canvas->getContainerWidget()->setWindowTitle("Scene - Physics Simulation: Off");
 }
 
 void Scene::play()
@@ -491,6 +510,8 @@ void Scene::play()
 	m_bPhysicsPaused = false;
 	m_physicsWorld->unlock();
 	m_delayedTime += m_absoluteTime - m_relativeTime;
+
+	m_canvas->getContainerWidget()->setWindowTitle("Scene - Physics Simulation: On");
 }
 
 void Scene::step()
@@ -499,6 +520,8 @@ void Scene::step()
 	m_bPhysicsPaused = true;
 	m_physicsWorld->unlock();
 	m_bStepPhysics = true;
+
+	m_canvas->getContainerWidget()->setWindowTitle("Scene - Physics Simulation: Step");
 }
 
 void Scene::toggleDebugMode( bool state )
@@ -510,7 +533,7 @@ void Scene::toggleDebugMode( bool state )
 		{
 			ModelPtr model = comp.dynamicCast<IModel>();
 			if (model && !model->getBoundingBox()->gameObject())
-				model->showBoundingBox();
+				model->showBoundingVolume();
 		}
 	}
 	else
@@ -520,7 +543,7 @@ void Scene::toggleDebugMode( bool state )
 		{
 			ModelPtr model = comp.dynamicCast<IModel>();
 			if (model && model->getBoundingBox()->gameObject())
-				model->hideBoundingBox();
+				model->hideBoundingVolume();
 		}
 	}
 }

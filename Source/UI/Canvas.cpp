@@ -253,7 +253,7 @@ void Canvas::mouseReleaseEvent(QMouseEvent* e)
 		{
 			// show the bounding box
 			ModelPtr model = selectedObject->getComponent("Model").dynamicCast<IModel>();
-			model->showBoundingBox();
+			model->showBoundingVolume();
 		}
 		// emit the signal
 		emit objectPicked(selectedObject);
@@ -363,7 +363,7 @@ bool Canvas::testRayOBBIntersection( const vec3& rayDirection, const GameObjectP
 	if(!model) return false;
 	BoxColliderPtr box = model->getBoundingBox();
 	vec3 center = box->getCenter();
-	vec3 halfExtents = box->getGeometryShape().getHalfExtents();
+	vec3 halfExtents = box->getHalfExtents();
 
 	// model space aabb boundaries
 	vec3 aabbMin = center - halfExtents;

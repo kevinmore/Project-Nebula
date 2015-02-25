@@ -208,13 +208,14 @@ QDataStream& operator << (QDataStream& out, RigidBodyPtr object)
 
 	if (type == RigidBody::MOTION_BOX_INERTIA)
 	{
-		out << object->getHalfExtents();
+		BoxColliderPtr box = object->getBroadPhaseCollider().dynamicCast<BoxCollider>();
+		out << box->getHalfExtents();
 	}
 	else if (type == RigidBody::MOTION_SPHERE_INERTIA)
 	{
-		out << object->getRadius();
+		SphereColliderPtr sphere = object->getBroadPhaseCollider().dynamicCast<SphereCollider>();
+		out << sphere->getRadius();
 	}
-
 
 	return out;
 }
@@ -229,17 +230,20 @@ QDataStream& operator >> (QDataStream& in, RigidBodyPtr object)
 
 	in >> mass >> gravityFactor >> restitution >> linearVelocity >> angularVelocity >> motionType;
 
+	SphereColliderPtr sphere = object->getBroadPhaseCollider().dynamicCast<SphereCollider>();
+	BoxColliderPtr box = object->getBroadPhaseCollider().dynamicCast<BoxCollider>();
+
 	switch(motionType)
 	{
 	case 0:
 		type = RigidBody::MOTION_SPHERE_INERTIA;
 		in >> radius;
-		object->setSize(radius);
+		sphere->setRadius(radius);
 		break;
 	case 1:
 		type = RigidBody::MOTION_BOX_INERTIA;
 		in >> halfExtents;
-		object->setSize(halfExtents);
+		box->setHalfExtents(halfExtents);
 		break;
 	case 2:
 		type = RigidBody::MOTION_FIXED;

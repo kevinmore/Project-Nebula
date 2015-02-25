@@ -13,13 +13,17 @@ SphereCollider::SphereCollider( const vec3& center, const float radius, Scene* s
 	m_transformMatrix.translate(m_center);
 	m_transformMatrix.scale(radius / 0.5f);
 
+	// make the bounding box look slightly bigger than the actual one
+	// this is for a better visual result
+	m_transformMatrix.scale(1.05f);
+
 	init();
 }
 
-SphereShape SphereCollider::getGeometryShape() const
-{
-	return m_sphereShape;
-}
+// SphereShape SphereCollider::getGeometryShape() const
+// {
+// 	return m_sphereShape;
+// }
 
 BroadPhaseCollisionFeedback SphereCollider::onBroadPhase( ICollider* other )
 {
@@ -29,7 +33,7 @@ BroadPhaseCollisionFeedback SphereCollider::onBroadPhase( ICollider* other )
 		return BroadPhaseCollisionFeedback();
 	}
 	SphereCollider* sp = dynamic_cast<SphereCollider*>(other);
-	float radiusSum = m_sphereShape.getRadius() + sp->getGeometryShape().getRadius();
+	float radiusSum = m_sphereShape.getRadius() + sp->getRadius();
 	float centerDisSqaure = (m_center - sp->getCenter()).lengthSquared();
 
 	return BroadPhaseCollisionFeedback(centerDisSqaure < radiusSum, centerDisSqaure - radiusSum * radiusSum);
@@ -51,6 +55,11 @@ void SphereCollider::init()
 		MeshPtr mesh(new Mesh(data->meshData.name, data->meshData.numIndices, data->meshData.baseVertex, data->meshData.baseIndex));
 		m_meshes.push_back(mesh);
 	}
+}
+
+float SphereCollider::getRadius() const
+{
+	return m_sphereShape.getRadius();
 }
 
 void SphereCollider::setRadius( const float radius )

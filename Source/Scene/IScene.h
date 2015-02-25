@@ -2,7 +2,7 @@
 #include <QObject>
 #include <QOpenGLContext>
 #include <QElapsedTimer>
-
+class Canvas;
 class IScene : public QObject
 {
 public:
@@ -32,9 +32,9 @@ public:
 	/**
      * Associate with the canvas widget
      */
-	void setCanvas(QObject* widget) { m_canvas = widget; }
+	void setCanvas(Canvas* widget) { m_canvas = widget; }
 
 protected:
     QOpenGLContext* m_context;
-	QObject* m_canvas;
+	Canvas* m_canvas;
 };
