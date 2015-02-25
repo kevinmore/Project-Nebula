@@ -362,21 +362,10 @@ bool Canvas::testRayOBBIntersection( const vec3& rayDirection, const GameObjectP
 	ModelPtr model = target->getComponent("Model").dynamicCast<IModel>();
 	if(!model) return false;
 	BoxColliderPtr box = model->getBoundingBox();
-	vec3 center = box->getCenter();
-	vec3 halfExtents = box->getHalfExtents();
 
 	// model space aabb boundaries
-	vec3 aabbMin = center - halfExtents;
-	vec3 aabbMax = center + halfExtents;
-
-	// apply a necessary scale to the extents
-// 	vec3 scale = target->scale();
-// 	aabbMin.setX(aabbMin.x() * scale.x());
-// 	aabbMin.setY(aabbMin.y() * scale.y());
-// 	aabbMin.setZ(aabbMin.z() * scale.z());
-// 	aabbMax.setX(aabbMax.x() * scale.x());
-// 	aabbMax.setY(aabbMax.y() * scale.y());
-// 	aabbMax.setZ(aabbMax.z() * scale.z());
+	vec3 aabbMin = box->getAABBMin();
+	vec3 aabbMax = box->getAABBMax();
 
 	mat4 modelMatrix = target->getTransformMatrix();
 

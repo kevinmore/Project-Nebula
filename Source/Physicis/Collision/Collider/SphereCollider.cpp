@@ -10,7 +10,7 @@ SphereCollider::SphereCollider( const vec3& center, const float radius, Scene* s
 
 	// the default model loaded here is a sphere with radius = 0.5, and the center is 0
 	// we need to translate and scale it
-	m_transformMatrix.translate(m_center);
+	m_transformMatrix.translate(m_position);
 	m_transformMatrix.scale(radius / 0.5f);
 
 	// make the bounding box look slightly bigger than the actual one
@@ -34,7 +34,7 @@ BroadPhaseCollisionFeedback SphereCollider::onBroadPhase( ICollider* other )
 	}
 	SphereCollider* sp = dynamic_cast<SphereCollider*>(other);
 	float radiusSum = m_sphereShape.getRadius() + sp->getRadius();
-	float centerDisSqaure = (m_center - sp->getCenter()).lengthSquared();
+	float centerDisSqaure = (m_position - sp->getPosition()).lengthSquared();
 
 	return BroadPhaseCollisionFeedback(centerDisSqaure < radiusSum, centerDisSqaure - radiusSum * radiusSum);
 }
@@ -71,4 +71,16 @@ vec3 SphereCollider::getLocalSupportPoint( const vec3& dir, float margin /*= 0*/
 {
 	float radius = m_sphereShape.getRadius();
 	return (radius + margin) * dir.normalized();
+}
+
+void SphereCollider::setScale( const vec3& scale )
+{
+	// change the radius and the center
+	float final = qMax(scale.x(), qMax(scale.y(), scale.z()));
+	m_sphereShape.setRadius(m_sphereShape.getRadius() * final);
+
+	vec3 center = m_sphereShape.getCenter();
+	m_sphereShape.setCenter(vec3(center.x() * scale.x(), 
+							  center.y() * scale.y(), 
+							  center.z() * scale.z()));
 }

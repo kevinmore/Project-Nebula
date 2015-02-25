@@ -116,13 +116,12 @@ void IModel::syncTransform( const Transform& transform )
 	vec3 newScale = transform.getScale();
 	if(newScale == m_scale) return;
 
- 	vec3 halfExtents = m_boundingBox->getHalfExtents();
-	m_boundingBox->setHalfExtents(vec3(halfExtents.x() * newScale.x() / m_scale.x(), 
-									   halfExtents.y() * newScale.y() / m_scale.y(), 
-									   halfExtents.z() * newScale.z() / m_scale.z()));
+	vec3 ratio(newScale.x() / m_scale.x(), newScale.y() / m_scale.y(), newScale.z() / m_scale.z());
+
+	m_boundingBox->setScale(ratio);
+	m_boundingSpehre->setScale(ratio);
 
 	// sync the size of the convex hull collider
-	m_convexHull->getGeometryShape().setScale(vec3(newScale.x()/m_scale.x(),newScale.y()/m_scale.y(),newScale.z()/m_scale.z()));
-
+	m_convexHull->getGeometryShape().setScale(ratio);
 	m_scale = newScale;
 }

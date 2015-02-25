@@ -28,8 +28,8 @@ public:
 
 	ICollider(const vec3& center, Scene* scene);
 
-	inline vec3 getCenter() const { return m_center; }
-	inline void setCenter(const vec3& pos) { m_center = pos; }
+	inline vec3 getPosition() const { return m_position; }
+	inline void setPosition(const vec3& pos) { m_position = pos; }
 
 	inline RigidBody* getRigidBody() const { return m_rigidBody; }
 	void setRigidBody(RigidBody* rb) { m_rigidBody = rb; }
@@ -62,7 +62,7 @@ protected:
 	* For physics
 	*/
 	RigidBody* m_rigidBody;
-	vec3 m_center;
+	vec3 m_position;
 	mat4 m_transformMatrix;
 	float m_margin;
 	ColliderType m_colliderType;

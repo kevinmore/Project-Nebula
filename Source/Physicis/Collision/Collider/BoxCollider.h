@@ -11,6 +11,10 @@ public:
 
 	void setHalfExtents(const vec3& halfExtents);
 	vec3 getHalfExtents() const;
+	vec3 getAABBMin() const;
+	vec3 getAABBMax() const;
+	
+	void setScale(const vec3& scale);
 
 	virtual BroadPhaseCollisionFeedback onBroadPhase(ICollider* other);
 	/// Get the extreme vertex in the given direction

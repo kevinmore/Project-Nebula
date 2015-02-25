@@ -18,16 +18,16 @@ public:
 	IShape(ShapeType shapeType, const vec3& pt) 
 	{ 
 		m_type = shapeType; 
-		m_pos = pt;
+		m_center = pt;
 	}
 	~IShape() {}
 
-	inline const vec3& getPosition() const { return m_pos; } 
-	inline void setPosition(const vec3& newPos) { m_pos = newPos; }
+	inline const vec3& getCenter() const { return m_center; } 
+	inline void setCenter(const vec3& newCenter) { m_center = newCenter; }
 
 	ShapeType m_type;
 
 protected:
-	vec3 m_pos;
+	vec3 m_center;
 };
 

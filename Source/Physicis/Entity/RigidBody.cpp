@@ -82,8 +82,8 @@ void RigidBody::update( const float dt )
 	m_transform.rotate(m_deltaRotation);
 
 	// sync the center position for the collider
-	m_BroadPhaseCollider->setCenter(m_transform.getPosition());
-	m_NarrowPhaseCollider->setCenter(m_transform.getPosition());
+	m_BroadPhaseCollider->setPosition(m_transform.getPosition());
+	m_NarrowPhaseCollider->setPosition(m_transform.getPosition());
 
 	// Update the kinetic energy store, and possibly put the body to sleep.
 	if (m_canSleep) 
@@ -260,8 +260,8 @@ void RigidBody::backTrackPosition( const float duration )
 	m_transform.translate(amount);
 
 	// sync the center position for the collider
-	m_BroadPhaseCollider->setCenter(m_transform.getPosition());
-	m_NarrowPhaseCollider->setCenter(m_transform.getPosition());
+	m_BroadPhaseCollider->setPosition(m_transform.getPosition());
+	m_NarrowPhaseCollider->setPosition(m_transform.getPosition());
 }
 
 void RigidBody::backTrackRotation( const float duration )

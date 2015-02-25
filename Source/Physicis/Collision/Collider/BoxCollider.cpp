@@ -11,7 +11,7 @@ BoxCollider::BoxCollider( const vec3& center, const vec3& halfExtents, Scene* sc
 
 	// the default model loaded here is a cube with half extent = 0.5, and the center is 0
 	// we need to translate and scale it
-	m_transformMatrix.translate(m_center);
+	m_transformMatrix.translate(m_position);
 	m_transformMatrix.scale(halfExtents.x() / 0.5f, halfExtents.y() / 0.5f, halfExtents.z() / 0.5f);
 
 	// make the bounding box look slightly bigger than the actual one
@@ -54,7 +54,7 @@ BroadPhaseCollisionFeedback BoxCollider::onBroadPhase( ICollider* other )
 	BoxCollider* b = dynamic_cast<BoxCollider*>(other);
 	
 	// prepare feed back
-	float distanceSquared = (getCenter() - b->getCenter()).lengthSquared();
+	float distanceSquared = (getPosition() - b->getPosition()).lengthSquared();
 	BroadPhaseCollisionFeedback notIntersecting(false, distanceSquared);
 	BroadPhaseCollisionFeedback isIntersecting(true, distanceSquared);
 
@@ -75,7 +75,7 @@ BroadPhaseCollisionFeedback BoxCollider::onBroadPhase( ICollider* other )
 			R[i][j] = glm::dot(glm::row(rotaionA, i), glm::row(rotaionB, j));
 
 	// Compute translation vector t
-	glm::vec3 t = Converter::toGLMVec3(other->getCenter() - m_center);
+	glm::vec3 t = Converter::toGLMVec3(other->getPosition() - m_position);
 	// Bring translation into a¡¯s coordinate frame
 	float tx = glm::dot(t, glm::row(rotaionA, 0));
 	float ty = glm::dot(t, glm::row(rotaionA, 1));
@@ -184,5 +184,29 @@ vec3 BoxCollider::getLocalSupportPoint( const vec3& dir, float margin /*= 0*/ ) 
 	supportPoint.setZ(dir.z() < 0 ? -halfExtents.z() - margin : halfExtents.z() + margin);
 
 	return supportPoint;
+}
+
+void BoxCollider::setScale( const vec3& scale )
+{
+	// change the half extents and the center
+	vec3 halfExtents = m_boxShape.getHalfExtents();
+	setHalfExtents(vec3(halfExtents.x() * scale.x(), 
+						halfExtents.y() * scale.y(), 
+						halfExtents.z() * scale.z()));
+
+	vec3 center = m_boxShape.getCenter();
+	m_boxShape.setCenter(vec3(center.x() * scale.x(), 
+							  center.y() * scale.y(), 
+							  center.z() * scale.z()));
+}
+
+vec3 BoxCollider::getAABBMin() const
+{
+	return m_boxShape.getCenter() - m_boxShape.getHalfExtents();
+}
+
+vec3 BoxCollider::getAABBMax() const
+{
+	return m_boxShape.getCenter() + m_boxShape.getHalfExtents();
 }
 

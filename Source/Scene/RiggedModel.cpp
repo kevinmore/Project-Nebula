@@ -57,12 +57,12 @@ RiggedModel::RiggedModel( const RiggedModel* orignal )
 	halfExtents.setX(halfExtents.x() / scale.x());
 	halfExtents.setY(halfExtents.y() / scale.y());
 	halfExtents.setZ(halfExtents.z() / scale.z());
-	m_boundingBox  = BoxColliderPtr(new BoxCollider(otherBox->getCenter(), halfExtents, m_scene));
+	m_boundingBox  = BoxColliderPtr(new BoxCollider(otherBox->getPosition(), halfExtents, m_scene));
 
 	// copy the convexhull collider
 	ConvexHullColliderPtr otherCH = orignal->getConvexHullCollider();
 	ConvexShape shape = otherCH->getGeometryShape();
-	m_convexHull = ConvexHullColliderPtr(new ConvexHullCollider(otherCH->getCenter(), shape, m_scene));
+	m_convexHull = ConvexHullColliderPtr(new ConvexHullCollider(otherCH->getPosition(), shape, m_scene));
 	m_convexHull->getGeometryShape().setScale(scale);
 }
 
