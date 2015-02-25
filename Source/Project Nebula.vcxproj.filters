@@ -140,7 +140,6 @@
     <ClInclude Include="Physicis\Particles\ParticleSystem.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="UI\MainWindow.h" />
-    <ClInclude Include="UI\HierarchyWidget.h" />
     <ClInclude Include="Physicis\Entity\RigidBody.h" />
   </ItemGroup>
   <ItemGroup>
@@ -151,5 +150,8 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Project Nebula.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMOC Include="UI\HierarchyWidget.h" />
   </ItemGroup>
 </Project>

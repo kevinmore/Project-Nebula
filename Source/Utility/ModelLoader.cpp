@@ -537,13 +537,13 @@ SphereCollider* ModelLoader::getBoundingSphere()
 {
 	vec3 center((m_maxX + m_minX) * 0.5f, (m_maxY + m_minY) * 0.5f, (m_maxZ + m_minZ) * 0.5f);
 	// brute force to find the radius
-	float minDistSquared = -FLT_MAX;
+	float radiusSquared = -FLT_MAX;
 	foreach(vec3 pos, m_positions)
 	{
-		minDistSquared = qMax(minDistSquared, (pos - center).lengthSquared());
+		radiusSquared = qMax(radiusSquared, (pos - center).lengthSquared());
 	}
 	// generate a sphere collider
-	return new SphereCollider(center, qSqrt(minDistSquared), m_scene);
+	return new SphereCollider(center, qSqrt(radiusSquared), m_scene);
 }
 
 BoxCollider* ModelLoader::getBoundingBox()

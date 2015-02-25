@@ -20,7 +20,7 @@
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_HierarchyWidget_t {
     QByteArrayData data[71];
-    char stringdata[1366];
+    char stringdata[1379];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -34,80 +34,80 @@ QT_MOC_LITERAL(1, 16, 15),
 QT_MOC_LITERAL(2, 32, 0),
 QT_MOC_LITERAL(3, 33, 20),
 QT_MOC_LITERAL(4, 54, 24),
-QT_MOC_LITERAL(5, 79, 14),
-QT_MOC_LITERAL(6, 94, 16),
-QT_MOC_LITERAL(7, 111, 7),
-QT_MOC_LITERAL(8, 119, 8),
-QT_MOC_LITERAL(9, 128, 19),
-QT_MOC_LITERAL(10, 148, 16),
-QT_MOC_LITERAL(11, 165, 4),
-QT_MOC_LITERAL(12, 170, 6),
-QT_MOC_LITERAL(13, 177, 30),
-QT_MOC_LITERAL(14, 208, 4),
-QT_MOC_LITERAL(15, 213, 3),
-QT_MOC_LITERAL(16, 217, 3),
-QT_MOC_LITERAL(17, 221, 5),
-QT_MOC_LITERAL(18, 227, 20),
-QT_MOC_LITERAL(19, 248, 5),
-QT_MOC_LITERAL(20, 254, 21),
-QT_MOC_LITERAL(21, 276, 6),
-QT_MOC_LITERAL(22, 283, 12),
-QT_MOC_LITERAL(23, 296, 10),
-QT_MOC_LITERAL(24, 307, 15),
-QT_MOC_LITERAL(25, 323, 4),
-QT_MOC_LITERAL(26, 328, 15),
-QT_MOC_LITERAL(27, 344, 23),
-QT_MOC_LITERAL(28, 368, 5),
-QT_MOC_LITERAL(29, 374, 26),
-QT_MOC_LITERAL(30, 401, 31),
-QT_MOC_LITERAL(31, 433, 34),
-QT_MOC_LITERAL(32, 468, 23),
-QT_MOC_LITERAL(33, 492, 26),
-QT_MOC_LITERAL(34, 519, 32),
-QT_MOC_LITERAL(35, 552, 35),
-QT_MOC_LITERAL(36, 588, 32),
-QT_MOC_LITERAL(37, 621, 33),
-QT_MOC_LITERAL(38, 655, 36),
-QT_MOC_LITERAL(39, 692, 31),
-QT_MOC_LITERAL(40, 724, 34),
-QT_MOC_LITERAL(41, 759, 34),
-QT_MOC_LITERAL(42, 794, 37),
-QT_MOC_LITERAL(43, 832, 28),
-QT_MOC_LITERAL(44, 861, 31),
-QT_MOC_LITERAL(45, 893, 34),
-QT_MOC_LITERAL(46, 928, 37),
-QT_MOC_LITERAL(47, 966, 21),
-QT_MOC_LITERAL(48, 988, 3),
-QT_MOC_LITERAL(49, 992, 21),
-QT_MOC_LITERAL(50, 1014, 21),
-QT_MOC_LITERAL(51, 1036, 21),
-QT_MOC_LITERAL(52, 1058, 21),
-QT_MOC_LITERAL(53, 1080, 21),
-QT_MOC_LITERAL(54, 1102, 28),
-QT_MOC_LITERAL(55, 1131, 16),
-QT_MOC_LITERAL(56, 1148, 15),
-QT_MOC_LITERAL(57, 1164, 14),
-QT_MOC_LITERAL(58, 1179, 15),
-QT_MOC_LITERAL(59, 1195, 16),
-QT_MOC_LITERAL(60, 1212, 12),
-QT_MOC_LITERAL(61, 1225, 16),
-QT_MOC_LITERAL(62, 1242, 5),
-QT_MOC_LITERAL(63, 1248, 15),
-QT_MOC_LITERAL(64, 1264, 14),
-QT_MOC_LITERAL(65, 1279, 16),
-QT_MOC_LITERAL(66, 1296, 16),
-QT_MOC_LITERAL(67, 1313, 14),
-QT_MOC_LITERAL(68, 1328, 13),
-QT_MOC_LITERAL(69, 1342, 8),
-QT_MOC_LITERAL(70, 1351, 14)
+QT_MOC_LITERAL(5, 79, 27),
+QT_MOC_LITERAL(6, 107, 16),
+QT_MOC_LITERAL(7, 124, 7),
+QT_MOC_LITERAL(8, 132, 8),
+QT_MOC_LITERAL(9, 141, 19),
+QT_MOC_LITERAL(10, 161, 16),
+QT_MOC_LITERAL(11, 178, 4),
+QT_MOC_LITERAL(12, 183, 6),
+QT_MOC_LITERAL(13, 190, 30),
+QT_MOC_LITERAL(14, 221, 4),
+QT_MOC_LITERAL(15, 226, 3),
+QT_MOC_LITERAL(16, 230, 3),
+QT_MOC_LITERAL(17, 234, 5),
+QT_MOC_LITERAL(18, 240, 20),
+QT_MOC_LITERAL(19, 261, 5),
+QT_MOC_LITERAL(20, 267, 21),
+QT_MOC_LITERAL(21, 289, 6),
+QT_MOC_LITERAL(22, 296, 12),
+QT_MOC_LITERAL(23, 309, 10),
+QT_MOC_LITERAL(24, 320, 15),
+QT_MOC_LITERAL(25, 336, 4),
+QT_MOC_LITERAL(26, 341, 15),
+QT_MOC_LITERAL(27, 357, 23),
+QT_MOC_LITERAL(28, 381, 5),
+QT_MOC_LITERAL(29, 387, 26),
+QT_MOC_LITERAL(30, 414, 31),
+QT_MOC_LITERAL(31, 446, 34),
+QT_MOC_LITERAL(32, 481, 23),
+QT_MOC_LITERAL(33, 505, 26),
+QT_MOC_LITERAL(34, 532, 32),
+QT_MOC_LITERAL(35, 565, 35),
+QT_MOC_LITERAL(36, 601, 32),
+QT_MOC_LITERAL(37, 634, 33),
+QT_MOC_LITERAL(38, 668, 36),
+QT_MOC_LITERAL(39, 705, 31),
+QT_MOC_LITERAL(40, 737, 34),
+QT_MOC_LITERAL(41, 772, 34),
+QT_MOC_LITERAL(42, 807, 37),
+QT_MOC_LITERAL(43, 845, 28),
+QT_MOC_LITERAL(44, 874, 31),
+QT_MOC_LITERAL(45, 906, 34),
+QT_MOC_LITERAL(46, 941, 37),
+QT_MOC_LITERAL(47, 979, 21),
+QT_MOC_LITERAL(48, 1001, 3),
+QT_MOC_LITERAL(49, 1005, 21),
+QT_MOC_LITERAL(50, 1027, 21),
+QT_MOC_LITERAL(51, 1049, 21),
+QT_MOC_LITERAL(52, 1071, 21),
+QT_MOC_LITERAL(53, 1093, 21),
+QT_MOC_LITERAL(54, 1115, 28),
+QT_MOC_LITERAL(55, 1144, 16),
+QT_MOC_LITERAL(56, 1161, 15),
+QT_MOC_LITERAL(57, 1177, 14),
+QT_MOC_LITERAL(58, 1192, 15),
+QT_MOC_LITERAL(59, 1208, 16),
+QT_MOC_LITERAL(60, 1225, 12),
+QT_MOC_LITERAL(61, 1238, 16),
+QT_MOC_LITERAL(62, 1255, 5),
+QT_MOC_LITERAL(63, 1261, 15),
+QT_MOC_LITERAL(64, 1277, 14),
+QT_MOC_LITERAL(65, 1292, 16),
+QT_MOC_LITERAL(66, 1309, 16),
+QT_MOC_LITERAL(67, 1326, 14),
+QT_MOC_LITERAL(68, 1341, 13),
+QT_MOC_LITERAL(69, 1355, 8),
+QT_MOC_LITERAL(70, 1364, 14)
     },
     "HierarchyWidget\0materialChanged\0\0"
     "connectCurrentObject\0disconnectPreviousObject\0"
-    "readGameObject\0QTreeWidgetItem*\0current\0"
-    "previous\0resetSelectedObject\0"
-    "renameGameObject\0item\0column\0"
-    "handleGameObjectTransformation\0vec3\0"
-    "pos\0rot\0scale\0showMouseRightButton\0"
+    "onSelectedGameObjectChanged\0"
+    "QTreeWidgetItem*\0current\0previous\0"
+    "resetSelectedObject\0renameGameObject\0"
+    "item\0column\0handleGameObjectTransformation\0"
+    "vec3\0pos\0rot\0scale\0showMouseRightButton\0"
     "point\0setColorPickerEnabled\0status\0"
     "changeShader\0shaderFile\0changeLightType\0"
     "type\0createRigidBody\0onShininessSliderChange\0"
@@ -278,7 +278,7 @@ void HierarchyWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         case 0: _t->materialChanged(); break;
         case 1: _t->connectCurrentObject(); break;
         case 2: _t->disconnectPreviousObject(); break;
-        case 3: _t->readGameObject((*reinterpret_cast< QTreeWidgetItem*(*)>(_a[1])),(*reinterpret_cast< QTreeWidgetItem*(*)>(_a[2]))); break;
+        case 3: _t->onSelectedGameObjectChanged((*reinterpret_cast< QTreeWidgetItem*(*)>(_a[1])),(*reinterpret_cast< QTreeWidgetItem*(*)>(_a[2]))); break;
         case 4: _t->resetSelectedObject(); break;
         case 5: _t->renameGameObject((*reinterpret_cast< QTreeWidgetItem*(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         case 6: _t->handleGameObjectTransformation((*reinterpret_cast< const vec3(*)>(_a[1])),(*reinterpret_cast< const vec3(*)>(_a[2])),(*reinterpret_cast< const vec3(*)>(_a[3]))); break;

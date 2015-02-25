@@ -30,6 +30,7 @@ private:
 
 	void readHierarchy(GameObject* go, QTreeWidgetItem* parentItem); // go through the game objects
 	void resetHierarchy(GameObject* go); // reset every game object from the given one
+	void readCurrentGameObject();
 	void clearTransformationArea();
 	void readShadingProperties();
 	void readLightSourceProperties(LightPtr light);
@@ -47,7 +48,7 @@ private:
 private slots:
 	void connectCurrentObject();
 	void disconnectPreviousObject();
-	void readGameObject(QTreeWidgetItem* current, QTreeWidgetItem* previous);
+	void onSelectedGameObjectChanged(QTreeWidgetItem* current, QTreeWidgetItem* previous);
 	void resetSelectedObject();
 	void renameGameObject(QTreeWidgetItem * item, int column);
 	void handleGameObjectTransformation(const vec3& pos, const vec3& rot, const vec3& scale);

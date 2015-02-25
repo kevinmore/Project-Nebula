@@ -28,9 +28,6 @@ RigidBody::RigidBody(const vec3& position, const quat& rotation, QObject* parent
 	m_timeFactor = 1.0f;
 	m_canSleep = false;
 	m_isAwake = true;
-
-	m_halfExtents = vec3(0.5f, 0.5f, 0.5f);
-	m_radius = 0.5f;
 }
 
 RigidBody::~RigidBody()
@@ -45,25 +42,31 @@ RigidBody::~RigidBody()
 void RigidBody::computeInertiaTensor()
 {
 	// prepare variables
-	mat3 tensor;
 	SphereColliderPtr sphere = m_BroadPhaseCollider.dynamicCast<SphereCollider>();
 	BoxColliderPtr box = m_BroadPhaseCollider.dynamicCast<BoxCollider>();
 
 	switch(m_motionType)
 	{
 	case MOTION_BOX_INERTIA:
-			Matrix3::setBoxInertiaTensor(tensor, box->getHalfExtents(), m_mass);
-			m_inertiaTensorInv = glm::inverse(Converter::toGLMMat3(tensor));
+		if (box)
+		{
+			Matrix3::setBoxInertiaTensor(m_inertiaTensorInv, box->getHalfExtents(), m_mass);
+			m_inertiaTensorInv = glm::inverse(m_inertiaTensorInv);
+		}
 		break;
 
 	case MOTION_SPHERE_INERTIA:
-			Matrix3::setSphereInertiaTensor(tensor, sphere->getRadius(), m_mass);
-			m_inertiaTensorInv = glm::inverse(Converter::toGLMMat3(tensor));
+		if (sphere)
+		{
+			Matrix3::setSphereInertiaTensor(m_inertiaTensorInv, sphere->getRadius(), m_mass);
+			m_inertiaTensorInv = glm::inverse(m_inertiaTensorInv);
+		}
 		break;
 
 	case MOTION_FIXED:
-		tensor.fill(0.0f);
-		m_inertiaTensorInv = Converter::toGLMMat3(tensor);
+		for (int i = 0; i < 3; ++i)
+			for (int j = 0; j < 3; ++j)
+				m_inertiaTensorInv[i][j] = 0;
 		break;
 	}
 }

@@ -443,16 +443,6 @@ protected:
     /// Holds the amount of motion of the body. This is a recency
     /// weighted mean that can be used to put a body to sleep.
     float m_motionEnergy;
-
-	/// Used for box shape. 
-	/// Half extents of the box, used for compute the inertia tensor
-	/// This defaults to (0.5, 0.5, 0.5)
-	vec3 m_halfExtents;
-
-	/// Used for box shape. 
-	/// Radius of the sphere, used for compute the inertia tensor
-	/// This defaults to 0.5
-	float m_radius;
 };
 
 typedef QSharedPointer<RigidBody> RigidBodyPtr;

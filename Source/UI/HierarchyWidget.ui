@@ -49,7 +49,7 @@
       <bool>true</bool>
      </property>
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -57,7 +57,13 @@
      <property name="minimumSize">
       <size>
        <width>220</width>
-       <height>0</height>
+       <height>450</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>450</height>
       </size>
      </property>
      <property name="tabShape">
@@ -604,7 +610,7 @@
             <x>0</x>
             <y>0</y>
             <width>336</width>
-            <height>411</height>
+            <height>433</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -2191,7 +2197,7 @@
             <x>0</x>
             <y>0</y>
             <width>288</width>
-            <height>428</height>
+            <height>450</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_16">
@@ -2597,7 +2603,7 @@
             <x>0</x>
             <y>0</y>
             <width>288</width>
-            <height>428</height>
+            <height>450</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_21">

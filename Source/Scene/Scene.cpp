@@ -398,7 +398,9 @@ RigidBodyPtr Scene::createRigidBody( GameObject* objectToAttach )
 	Transform trans = objectToAttach->getTransform();
 	rb->setTransform(trans);
 	ModelPtr model = objectToAttach->getComponent("Model").dynamicCast<IModel>();
-	rb->attachBroadPhaseCollider(model->getBoundingBox());
+	
+	// attach the current bounding volume (sphere or box) by system settings
+	rb->attachBroadPhaseCollider(model->getCurrentBoundingVolume());
 	rb->attachNarrowPhaseCollider(model->getConvexHullCollider());
 	objectToAttach->attachComponent(rb);
 	m_physicsWorld->addEntity(rb.data());
@@ -528,21 +530,21 @@ void Scene::toggleDebugMode( bool state )
 {
 	if (state)
 	{
-		// attach all the bounding boxes
+		// attach all the bounding volumes
 		foreach(ComponentPtr comp, m_objectManager->m_renderQueue)
 		{
 			ModelPtr model = comp.dynamicCast<IModel>();
-			if (model && !model->getBoundingBox()->gameObject())
+			if (model && !model->getCurrentBoundingVolume()->gameObject())
 				model->showBoundingVolume();
 		}
 	}
 	else
 	{
-		// detach all the bounding boxes
+		// detach all the bounding volumes
 		foreach(ComponentPtr comp, m_objectManager->m_renderQueue)
 		{
 			ModelPtr model = comp.dynamicCast<IModel>();
-			if (model && model->getBoundingBox()->gameObject())
+			if (model && model->getCurrentBoundingVolume()->gameObject())
 				model->hideBoundingVolume();
 		}
 	}

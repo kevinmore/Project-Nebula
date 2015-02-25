@@ -298,7 +298,6 @@ vec3 GameObject::predictedPosition()  const
 
 void GameObject::attachComponent( ComponentPtr pComponent )
 {
-
 	m_components.push_back(pComponent);
 	pComponent->linkGameObject(this);
 

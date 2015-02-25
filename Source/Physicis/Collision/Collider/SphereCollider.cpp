@@ -15,7 +15,7 @@ SphereCollider::SphereCollider( const vec3& center, const float radius, Scene* s
 
 	// make the bounding box look slightly bigger than the actual one
 	// this is for a better visual result
-	m_transformMatrix.scale(1.05f);
+	m_transformMatrix.scale(1.02f);
 
 	init();
 }

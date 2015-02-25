@@ -30,7 +30,7 @@ HierarchyWidget::HierarchyWidget(Scene* scene, Canvas* canvas, QWidget *parent)
 	connect(m_scene, SIGNAL(updateHierarchy()), this, SLOT(updateObjectTree()));
 
 	connect(ui->treeWidget, SIGNAL(currentItemChanged(QTreeWidgetItem*, QTreeWidgetItem*)), 
-		    this, SLOT(readGameObject(QTreeWidgetItem*, QTreeWidgetItem*)));
+		    this, SLOT(onSelectedGameObjectChanged(QTreeWidgetItem*, QTreeWidgetItem*)));
 
 	connect(ui->treeWidget, SIGNAL(itemChanged(QTreeWidgetItem*, int)), 
 		    this, SLOT(renameGameObject(QTreeWidgetItem*, int)));
@@ -195,7 +195,7 @@ void HierarchyWidget::resetSelectedObject()
 	resetHierarchy(m_currentObject);
 }
 
-void HierarchyWidget::readGameObject(QTreeWidgetItem* current, QTreeWidgetItem* previous)
+void HierarchyWidget::readCurrentGameObject()
 {
 	// reset the tab widget
 	ui->tabWidget->removeTab(ui->tabWidget->indexOf(m_renderingTab));
@@ -203,28 +203,12 @@ void HierarchyWidget::readGameObject(QTreeWidgetItem* current, QTreeWidgetItem* 
 	ui->tabWidget->removeTab(ui->tabWidget->indexOf(m_lightTab));
 	ui->tabWidget->removeTab(ui->tabWidget->indexOf(m_rigidBodyTab));
 
-	if (!current) return;
-
 	// disconnect previous connections
 	disconnectPreviousObject();
-	//disconnect(0, 0, this, SLOT(handleGameObjectTransformation(const vec3&, const vec3&, const vec3&)));
-	
-	// hide all bounding boxes
+
+	// hide all bounding volumes
 	m_scene->toggleDebugMode(false);
 	m_currentMaterials.clear();
-
-	// if the current item is the scene node (root), ignore
-	if(current == ui->treeWidget->topLevelItem(0)) 
-	{
-		clearTransformationArea();
-		clearReference();
-
-		return;
-	}
-
-	// get the selected game object
-	m_currentObject = m_scene->objectManager()->getGameObject(current->text(0)).data();
-	if(!m_currentObject) return;
 
 	// map the transformation into the transform tab
 	fillInTransformTab();
@@ -235,7 +219,7 @@ void HierarchyWidget::readGameObject(QTreeWidgetItem* current, QTreeWidgetItem* 
 	foreach(QString type, componentTypes)
 	{
 		ComponentPtr comp = m_currentObject->getComponent(type);
-		
+
 		if (type == "Model")
 		{
 			ui->tabWidget->addTab(m_renderingTab, QIcon("../Resource/StyleSheets/Icons/circle-icons/full-color/flower.png"), "Mesh");
@@ -276,11 +260,30 @@ void HierarchyWidget::readGameObject(QTreeWidgetItem* current, QTreeWidgetItem* 
 		}
 	}
 
-// 	connect(m_currentObject, SIGNAL(transformChanged(const vec3&, const vec3&, const vec3&)),
-// 		this, SLOT(handleGameObjectTransformation(const vec3&, const vec3&, const vec3&)));
-	
 	// set connections
 	connectCurrentObject();
+}
+
+
+void HierarchyWidget::onSelectedGameObjectChanged(QTreeWidgetItem* current, QTreeWidgetItem* previous)
+{
+	if (!current) return;
+
+	// if the current item is the scene node (root), ignore
+	if(current == ui->treeWidget->topLevelItem(0)) 
+	{
+		clearTransformationArea();
+		clearReference();
+
+		return;
+	}
+	
+	// get the selected game object
+	m_currentObject = m_scene->objectManager()->getGameObject(current->text(0)).data();
+	if(!m_currentObject) return;
+
+	// read this game object
+	readCurrentGameObject();
 }
 
 void HierarchyWidget::clearTransformationArea()
@@ -1226,6 +1229,7 @@ void HierarchyWidget::createRigidBody()
 	if (!m_currentObject) return;
 
 	m_scene->createRigidBody(m_currentObject);
+	readCurrentGameObject();
 }
 
 void HierarchyWidget::connectRigidBodyTab( RigidBodyPtr rb )

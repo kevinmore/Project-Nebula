@@ -94,17 +94,24 @@ ConvexHullColliderPtr IModel::getConvexHullCollider() const
 	return m_convexHull;
 }
 
+ColliderPtr IModel::getCurrentBoundingVolume() const
+{
+	return m_currentBoundingVolume;
+}
+
 void IModel::syncTransform( const Transform& transform )
 {
 	// sync the size of the box collider
-	if(transform.getScale() == m_scale) return;
+	vec3 newScale = transform.getScale();
+	if(newScale == m_scale) return;
+
  	vec3 halfExtents = m_boundingBox->getHalfExtents();
-	m_boundingBox->setHalfExtents(vec3(halfExtents.x() * transform.getScale().x() / m_scale.x(), 
-									   halfExtents.y() * transform.getScale().y() / m_scale.y(), 
-									   halfExtents.z() * transform.getScale().z() / m_scale.z()));
+	m_boundingBox->setHalfExtents(vec3(halfExtents.x() * newScale.x() / m_scale.x(), 
+									   halfExtents.y() * newScale.y() / m_scale.y(), 
+									   halfExtents.z() * newScale.z() / m_scale.z()));
 
 	// sync the size of the convex hull collider
-	m_convexHull->getGeometryShape().setScale(vec3(transform.getScale().x()/m_scale.x(),transform.getScale().y()/m_scale.y(),transform.getScale().z()/m_scale.z()));
+	m_convexHull->getGeometryShape().setScale(vec3(newScale.x()/m_scale.x(),newScale.y()/m_scale.y(),newScale.z()/m_scale.z()));
 
-	m_scale = transform.getScale();
+	m_scale = newScale;
 }
