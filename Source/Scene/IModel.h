@@ -38,6 +38,7 @@ public:
 	SphereColliderPtr getBoundingSphere() const;
 	void setConvexHullCollider(ConvexHullCollider* ch);
 	ConvexHullColliderPtr getConvexHullCollider() const;
+	void setCurrentBoundingVolume(ColliderPtr col);
 	ColliderPtr getCurrentBoundingVolume() const;
 
 	void showBoundingVolume();

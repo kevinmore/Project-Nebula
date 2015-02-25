@@ -238,12 +238,18 @@ QDataStream& operator >> (QDataStream& in, RigidBodyPtr object)
 	case 0:
 		type = RigidBody::MOTION_SPHERE_INERTIA;
 		in >> radius;
-		sphere->setRadius(radius);
+		if (sphere)
+		{
+			sphere->setRadius(radius);
+		}
 		break;
 	case 1:
 		type = RigidBody::MOTION_BOX_INERTIA;
 		in >> halfExtents;
-		box->setHalfExtents(halfExtents);
+		if (box)
+		{
+			box->setHalfExtents(halfExtents);
+		}
 		break;
 	case 2:
 		type = RigidBody::MOTION_FIXED;

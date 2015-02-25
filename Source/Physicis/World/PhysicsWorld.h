@@ -51,7 +51,8 @@ public:
 
 	void addEntity(PhysicsWorldObject* entity);
 	void removeEntity(PhysicsWorldObject* entity);
-	void addCollider(ICollider* collider);
+	void addBroadPhaseCollider(ICollider* collider);
+	void removeBroadPhaseCollider(ICollider* collider);
 
 	void generateCollisionPairs();
 
@@ -70,7 +71,7 @@ private:
 	float m_timeStep;
 	bool m_locked;
 	QList<PhysicsWorldObject*> m_entityList;
-	QVector<ICollider*> m_colliderList;
+	QVector<ICollider*> m_broadPhaseColliderList;
 	QList<CollisionPairPtr> m_collisionPairs;
 
 	void boarderCheck(RigidBody* rb);

@@ -94,6 +94,17 @@ ConvexHullColliderPtr IModel::getConvexHullCollider() const
 	return m_convexHull;
 }
 
+void IModel::setCurrentBoundingVolume( ColliderPtr col )
+{
+	// update the visual representation
+	hideBoundingVolume();
+
+	// assign the given collider as the current bouding volume
+	m_currentBoundingVolume = col;
+	
+	showBoundingVolume();
+}
+
 ColliderPtr IModel::getCurrentBoundingVolume() const
 {
 	return m_currentBoundingVolume;

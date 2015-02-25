@@ -172,6 +172,9 @@ void Scene::clearScene()
 	emit cleared();
 
 	// reset the physics world
+	// put this line in the last, because
+	// the destructor of a rigid body will automatically remove itself from the physics world
+	// and the line below will also remove the rigid body list in the world
 	m_physicsWorld->reset();
 }
 

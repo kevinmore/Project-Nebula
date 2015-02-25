@@ -4,6 +4,7 @@
 #include <Physicis/Collision/Collider/SphereCollider.h>
 #include <Physicis/Collision/Collider/BoxCollider.h>
 #include <Primitives/GameObject.h>
+#include <Scene/IModel.h>
 
 RigidBody::RigidBody(const vec3& position, const quat& rotation, QObject* parent)
 	: PhysicsWorldObject(parent)
@@ -45,29 +46,21 @@ void RigidBody::computeInertiaTensor()
 	SphereColliderPtr sphere = m_BroadPhaseCollider.dynamicCast<SphereCollider>();
 	BoxColliderPtr box = m_BroadPhaseCollider.dynamicCast<BoxCollider>();
 
-	switch(m_motionType)
+	if (box && m_motionType == MOTION_BOX_INERTIA)
 	{
-	case MOTION_BOX_INERTIA:
-		if (box)
-		{
-			Matrix3::setBoxInertiaTensor(m_inertiaTensorInv, box->getHalfExtents(), m_mass);
-			m_inertiaTensorInv = glm::inverse(m_inertiaTensorInv);
-		}
-		break;
-
-	case MOTION_SPHERE_INERTIA:
-		if (sphere)
-		{
-			Matrix3::setSphereInertiaTensor(m_inertiaTensorInv, sphere->getRadius(), m_mass);
-			m_inertiaTensorInv = glm::inverse(m_inertiaTensorInv);
-		}
-		break;
-
-	case MOTION_FIXED:
+		Matrix3::setBoxInertiaTensor(m_inertiaTensorInv, box->getHalfExtents(), m_mass);
+		m_inertiaTensorInv = glm::inverse(m_inertiaTensorInv);
+	}
+	else if (sphere && m_motionType == MOTION_SPHERE_INERTIA)
+	{
+		Matrix3::setSphereInertiaTensor(m_inertiaTensorInv, sphere->getRadius(), m_mass);
+		m_inertiaTensorInv = glm::inverse(m_inertiaTensorInv);
+	}
+	else if (m_motionType == MOTION_FIXED)
+	{
 		for (int i = 0; i < 3; ++i)
 			for (int j = 0; j < 3; ++j)
 				m_inertiaTensorInv[i][j] = 0;
-		break;
 	}
 }
 
@@ -157,6 +150,7 @@ void RigidBody::setMass( float m )
 void RigidBody::setMotionType( MotionType type )
 {
 	m_motionType = type;
+	// re-compute the inertia tensor
 	computeInertiaTensor();
 }
 
@@ -167,7 +161,6 @@ void RigidBody::setMassInv( float mInv )
 
 	computeInertiaTensor();
 }
-
 
 void RigidBody::setPosition( const vec3& pos )
 {
@@ -203,9 +196,15 @@ void RigidBody::setFriction( float newFriction )
 
 void RigidBody::attachBroadPhaseCollider( ColliderPtr col )
 {
+	// clear the previous reference
+	if (m_BroadPhaseCollider)
+	{
+		m_BroadPhaseCollider->setRigidBody(NULL);
+		m_world->removeBroadPhaseCollider(m_BroadPhaseCollider.data());
+	}
+
 	m_BroadPhaseCollider = col;
-	col->setRigidBody(this);
-	computeInertiaTensor();
+	m_BroadPhaseCollider->setRigidBody(this);
 }
 
 void RigidBody::attachNarrowPhaseCollider( ColliderPtr col )
@@ -289,12 +288,30 @@ void RigidBody::backTrackAngularVelocity( const float duration )
 /************************************************************************/
 void RigidBody::setMotionType_SLOT( const QString& type )
 {
+	// update the visual representation
+	ModelPtr model = gameObject()->getComponent("Model").dynamicCast<IModel>();
+
 	if (type == "Box")
+	{
+		model->setCurrentBoundingVolume(model->getBoundingBox());
+		attachBroadPhaseCollider(model->getCurrentBoundingVolume());
 		setMotionType(MOTION_BOX_INERTIA);
+	}
 	else if (type == "Sphere")
+	{
+		model->setCurrentBoundingVolume(model->getBoundingSphere());
+		attachBroadPhaseCollider(model->getCurrentBoundingVolume());
 		setMotionType(MOTION_SPHERE_INERTIA);
+	}
 	else if (type == "Fixed")
-		setMotionType(MOTION_FIXED);
+	{
+		model->setCurrentBoundingVolume(model->getBoundingBox());
+		attachBroadPhaseCollider(model->getCurrentBoundingVolume());
+		setMotionType(MOTION_FIXED); // specify the motion type here
+	}
+
+	// add the new collider to the physics world
+	m_world->addBroadPhaseCollider(m_BroadPhaseCollider.data());
 }
 
 void RigidBody::setMass_SLOT( double val )

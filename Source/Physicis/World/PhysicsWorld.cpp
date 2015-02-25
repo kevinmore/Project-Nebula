@@ -76,7 +76,7 @@ void PhysicsWorld::addEntity( PhysicsWorldObject* entity )
 	lock();
 	// add the rigid body and its collider
 	m_entityList << entity;
-	addCollider(dynamic_cast<RigidBody*>(entity)->getBroadPhaseCollider().data());
+	addBroadPhaseCollider(dynamic_cast<RigidBody*>(entity)->getBroadPhaseCollider().data());
 	entity->setWorld(this);
 
 	// if the world is not locked before the operation
@@ -91,20 +91,28 @@ void PhysicsWorld::removeEntity( PhysicsWorldObject* entity )
 	lock();
 	// remove the rigid body and its collider
 	m_entityList.removeOne(entity);
-	m_colliderList.removeAt(m_colliderList.indexOf(dynamic_cast<RigidBody*>(entity)->getBroadPhaseCollider().data()));
+	removeBroadPhaseCollider(dynamic_cast<RigidBody*>(entity)->getBroadPhaseCollider().data());
 
 	// if the world is not locked before the operation
 	// unlock it
 	if(!lockState) unlock();
 }
 
-void PhysicsWorld::addCollider( ICollider* collider )
+void PhysicsWorld::addBroadPhaseCollider( ICollider* collider )
 {
 	bool lockState = m_locked;
 
 	lock();
-	// add the rigid body and its collider
-	m_colliderList << collider;
+	// add the rigid body and its collider, make sure it's unique
+	foreach(ICollider* col, m_broadPhaseColliderList)
+	{
+		if (col == collider)
+		{
+			if(!lockState) unlock();
+			return;
+		}
+	}
+	m_broadPhaseColliderList << collider;
 	
 	// generate the collision pairs
 	generateCollisionPairs();
@@ -114,13 +122,24 @@ void PhysicsWorld::addCollider( ICollider* collider )
 	if(!lockState) unlock();
 }
 
+void PhysicsWorld::removeBroadPhaseCollider( ICollider* collider )
+{
+	// remove it
+	int idx = m_broadPhaseColliderList.indexOf(collider);
+	if (idx > -1)
+		m_broadPhaseColliderList.removeAt(idx);
+
+	// generate the collision pairs again
+	generateCollisionPairs();
+}
+
 void PhysicsWorld::generateCollisionPairs()
 {
 	m_collisionPairs.clear();
 
-	for (int i = 0; i < m_colliderList.size() - 1; ++i)
-		for (int j = i + 1; j < m_colliderList.size(); ++j)
-			m_collisionPairs << CollisionPairPtr(new CollisionPair(m_colliderList[i], m_colliderList[j]));
+	for (int i = 0; i < m_broadPhaseColliderList.size() - 1; ++i)
+		for (int j = i + 1; j < m_broadPhaseColliderList.size(); ++j)
+			m_collisionPairs << CollisionPairPtr(new CollisionPair(m_broadPhaseColliderList[i], m_broadPhaseColliderList[j]));
 }
 
 int PhysicsWorld::entitiesCount()
@@ -267,7 +286,8 @@ void PhysicsWorld::reset()
 {
 	lock();
 	m_entityList.clear();
-	m_colliderList.clear();
+	m_broadPhaseColliderList.clear();
+	m_collisionPairs.clear();
 }
 
 void PhysicsWorld::backToTimeOfImpact( RigidBody* rb1, RigidBody* rb2 )

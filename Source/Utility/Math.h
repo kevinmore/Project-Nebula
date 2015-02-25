@@ -234,6 +234,21 @@ namespace Math
 			matIn(2, 1) = -iyz;
         }
 
+		static void setInertiaTensorCoeffs(glm::mat3& matIn, float ix, float iy, float iz,
+			float ixy=0, float ixz=0, float iyz=0)
+		{
+			matIn[0][0] = ix;
+			matIn[1][1] = iy;
+			matIn[2][2] = iz;
+
+			matIn[0][1] = -ixy;
+			matIn[1][0] = -ixy;
+			matIn[0][2] = -ixz;
+			matIn[2][0] = -ixz;
+			matIn[1][2] = -iyz;
+			matIn[2][1] = -iyz;
+		}
+
 		/**
          * Sets the matrix to be a diagonal matrix with the given
          * values along the leading diagonal.
@@ -256,6 +271,14 @@ namespace Math
 										  0.3333f * mass * (squares.x() + squares.y()));
         }
 
+		static void setBoxInertiaTensor(glm::mat3& matIn, const vec3& halfSizes, float mass)
+		{
+			vec3 squares(halfSizes.x() * halfSizes.x(), halfSizes.y() * halfSizes.y(), halfSizes.z() * halfSizes.z());
+			setInertiaTensorCoeffs(matIn, 0.3333f * mass * (squares.y() + squares.z()),
+				0.3333f * mass * (squares.x() + squares.z()),
+				0.3333f * mass * (squares.x() + squares.y()));
+		}
+
 		/**
          * Sets the value of the matrix as an inertia tensor of
          * a sphere aligned with the body's coordinate
@@ -268,6 +291,14 @@ namespace Math
 										  0.4f * mass * square,
 										  0.4f * mass * square);
         }
+
+		static void setSphereInertiaTensor(glm::mat3& matIn, float radius, float mass)
+		{
+			float square = radius * radius;
+			setInertiaTensorCoeffs(matIn, 0.4f * mass * square,
+				0.4f * mass * square,
+				0.4f * mass * square);
+		}
 
 		/**
          * Sets the matrix to be the inverse of the given matrix.
