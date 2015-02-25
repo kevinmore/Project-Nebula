@@ -27,7 +27,9 @@ void ICollider::render( const float currentTime )
 {
 	m_renderingEffect->enable();
 
-	mat4 modelMatrix = m_actor->getTransformMatrix() * m_transformMatrix;
+	// do not sync the scale of the game object
+	// the collider itself should be responsible for the scale
+	mat4 modelMatrix = m_actor->getTransform().getTransformMatrixWithoutScale() * m_transformMatrix;
 	m_renderingEffect->setCameraPosition(m_scene->getCamera()->position());
 	m_renderingEffect->setMVPMatrix(m_scene->getCamera()->viewProjectionMatrix() * modelMatrix);
 	m_renderingEffect->setModelMatrix(modelMatrix); 

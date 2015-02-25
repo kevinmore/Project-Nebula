@@ -359,6 +359,7 @@ public:
         tabWidget->setMinimumSize(QSize(220, 450));
         tabWidget->setMaximumSize(QSize(16777215, 450));
         tabWidget->setTabShape(QTabWidget::Rounded);
+        tabWidget->setIconSize(QSize(20, 20));
         tabWidget->setElideMode(Qt::ElideNone);
         tabWidget->setDocumentMode(false);
         tabWidget->setTabsClosable(false);
@@ -567,7 +568,7 @@ public:
         sizePolicy2.setHeightForWidth(doubleSpinBox_ScaleFactor->sizePolicy().hasHeightForWidth());
         doubleSpinBox_ScaleFactor->setSizePolicy(sizePolicy2);
         doubleSpinBox_ScaleFactor->setDecimals(4);
-        doubleSpinBox_ScaleFactor->setMinimum(0);
+        doubleSpinBox_ScaleFactor->setMinimum(0.0001);
         doubleSpinBox_ScaleFactor->setMaximum(100000);
         doubleSpinBox_ScaleFactor->setSingleStep(0.1);
         doubleSpinBox_ScaleFactor->setValue(1);
@@ -591,7 +592,7 @@ public:
         sizePolicy2.setHeightForWidth(doubleSpinBox_ScaleX->sizePolicy().hasHeightForWidth());
         doubleSpinBox_ScaleX->setSizePolicy(sizePolicy2);
         doubleSpinBox_ScaleX->setDecimals(4);
-        doubleSpinBox_ScaleX->setMinimum(0);
+        doubleSpinBox_ScaleX->setMinimum(0.0001);
         doubleSpinBox_ScaleX->setMaximum(100000);
         doubleSpinBox_ScaleX->setSingleStep(0.1);
         doubleSpinBox_ScaleX->setValue(1);
@@ -613,7 +614,7 @@ public:
         sizePolicy2.setHeightForWidth(doubleSpinBox_ScaleY->sizePolicy().hasHeightForWidth());
         doubleSpinBox_ScaleY->setSizePolicy(sizePolicy2);
         doubleSpinBox_ScaleY->setDecimals(4);
-        doubleSpinBox_ScaleY->setMinimum(0);
+        doubleSpinBox_ScaleY->setMinimum(0.0001);
         doubleSpinBox_ScaleY->setMaximum(100000);
         doubleSpinBox_ScaleY->setSingleStep(0.1);
         doubleSpinBox_ScaleY->setValue(1);
@@ -635,7 +636,7 @@ public:
         sizePolicy2.setHeightForWidth(doubleSpinBox_ScaleZ->sizePolicy().hasHeightForWidth());
         doubleSpinBox_ScaleZ->setSizePolicy(sizePolicy2);
         doubleSpinBox_ScaleZ->setDecimals(4);
-        doubleSpinBox_ScaleZ->setMinimum(0);
+        doubleSpinBox_ScaleZ->setMinimum(0.0001);
         doubleSpinBox_ScaleZ->setMaximum(100000);
         doubleSpinBox_ScaleZ->setSingleStep(0.1);
         doubleSpinBox_ScaleZ->setValue(1);
@@ -702,7 +703,7 @@ public:
         scrollArea_3->setWidgetResizable(true);
         scrollAreaWidgetContents_3 = new QWidget();
         scrollAreaWidgetContents_3->setObjectName(QStringLiteral("scrollAreaWidgetContents_3"));
-        scrollAreaWidgetContents_3->setGeometry(QRect(0, 0, 336, 433));
+        scrollAreaWidgetContents_3->setGeometry(QRect(0, 0, 336, 380));
         verticalLayout_3 = new QVBoxLayout(scrollAreaWidgetContents_3);
         verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
         horizontalLayout_36 = new QHBoxLayout();
@@ -1649,7 +1650,7 @@ public:
         scrollArea_4->setWidgetResizable(true);
         scrollAreaWidgetContents_4 = new QWidget();
         scrollAreaWidgetContents_4->setObjectName(QStringLiteral("scrollAreaWidgetContents_4"));
-        scrollAreaWidgetContents_4->setGeometry(QRect(0, 0, 288, 450));
+        scrollAreaWidgetContents_4->setGeometry(QRect(0, 0, 288, 397));
         verticalLayout_16 = new QVBoxLayout(scrollAreaWidgetContents_4);
         verticalLayout_16->setObjectName(QStringLiteral("verticalLayout_16"));
         gridLayout_2 = new QGridLayout();
@@ -1850,7 +1851,7 @@ public:
         scrollArea_5->setWidgetResizable(true);
         scrollAreaWidgetContents_5 = new QWidget();
         scrollAreaWidgetContents_5->setObjectName(QStringLiteral("scrollAreaWidgetContents_5"));
-        scrollAreaWidgetContents_5->setGeometry(QRect(0, 0, 288, 450));
+        scrollAreaWidgetContents_5->setGeometry(QRect(0, 0, 288, 397));
         verticalLayout_21 = new QVBoxLayout(scrollAreaWidgetContents_5);
         verticalLayout_21->setObjectName(QStringLiteral("verticalLayout_21"));
         gridLayout_7 = new QGridLayout();
@@ -2029,6 +2030,7 @@ public:
         doubleSpinBox_RigidBodyRadius->setDecimals(2);
         doubleSpinBox_RigidBodyRadius->setMinimum(0);
         doubleSpinBox_RigidBodyRadius->setMaximum(100000);
+        doubleSpinBox_RigidBodyRadius->setSingleStep(0.1);
         doubleSpinBox_RigidBodyRadius->setValue(1);
 
         horizontalLayout_RigidBody_SphereSize->addWidget(doubleSpinBox_RigidBodyRadius);
@@ -2069,7 +2071,7 @@ public:
         doubleSpinBox_RigidBoxLinearVelocityX->setDecimals(2);
         doubleSpinBox_RigidBoxLinearVelocityX->setMinimum(-100000);
         doubleSpinBox_RigidBoxLinearVelocityX->setMaximum(100000);
-        doubleSpinBox_RigidBoxLinearVelocityX->setSingleStep(0.1);
+        doubleSpinBox_RigidBoxLinearVelocityX->setSingleStep(1);
         doubleSpinBox_RigidBoxLinearVelocityX->setValue(0);
 
         horizontalLayout_53->addWidget(doubleSpinBox_RigidBoxLinearVelocityX);
@@ -2091,7 +2093,7 @@ public:
         doubleSpinBox_RigidBoxLinearVelocityY->setDecimals(2);
         doubleSpinBox_RigidBoxLinearVelocityY->setMinimum(-100000);
         doubleSpinBox_RigidBoxLinearVelocityY->setMaximum(100000);
-        doubleSpinBox_RigidBoxLinearVelocityY->setSingleStep(0.1);
+        doubleSpinBox_RigidBoxLinearVelocityY->setSingleStep(1);
         doubleSpinBox_RigidBoxLinearVelocityY->setValue(0);
 
         horizontalLayout_54->addWidget(doubleSpinBox_RigidBoxLinearVelocityY);
@@ -2113,7 +2115,7 @@ public:
         doubleSpinBox_RigidBoxLinearVelocityZ->setDecimals(2);
         doubleSpinBox_RigidBoxLinearVelocityZ->setMinimum(-100000);
         doubleSpinBox_RigidBoxLinearVelocityZ->setMaximum(100000);
-        doubleSpinBox_RigidBoxLinearVelocityZ->setSingleStep(0.1);
+        doubleSpinBox_RigidBoxLinearVelocityZ->setSingleStep(1);
         doubleSpinBox_RigidBoxLinearVelocityZ->setValue(0);
 
         horizontalLayout_55->addWidget(doubleSpinBox_RigidBoxLinearVelocityZ);
@@ -2150,7 +2152,7 @@ public:
         doubleSpinBox_RigidBoxAngularVelocityX->setDecimals(2);
         doubleSpinBox_RigidBoxAngularVelocityX->setMinimum(-100000);
         doubleSpinBox_RigidBoxAngularVelocityX->setMaximum(100000);
-        doubleSpinBox_RigidBoxAngularVelocityX->setSingleStep(0.1);
+        doubleSpinBox_RigidBoxAngularVelocityX->setSingleStep(1);
         doubleSpinBox_RigidBoxAngularVelocityX->setValue(0);
 
         horizontalLayout_57->addWidget(doubleSpinBox_RigidBoxAngularVelocityX);
@@ -2172,7 +2174,7 @@ public:
         doubleSpinBox_RigidBoxAngularVelocityY->setDecimals(2);
         doubleSpinBox_RigidBoxAngularVelocityY->setMinimum(-100000);
         doubleSpinBox_RigidBoxAngularVelocityY->setMaximum(100000);
-        doubleSpinBox_RigidBoxAngularVelocityY->setSingleStep(0.1);
+        doubleSpinBox_RigidBoxAngularVelocityY->setSingleStep(1);
         doubleSpinBox_RigidBoxAngularVelocityY->setValue(0);
 
         horizontalLayout_58->addWidget(doubleSpinBox_RigidBoxAngularVelocityY);
@@ -2194,7 +2196,7 @@ public:
         doubleSpinBox_RigidBoxAngularVelocityZ->setDecimals(2);
         doubleSpinBox_RigidBoxAngularVelocityZ->setMinimum(-100000);
         doubleSpinBox_RigidBoxAngularVelocityZ->setMaximum(100000);
-        doubleSpinBox_RigidBoxAngularVelocityZ->setSingleStep(0.1);
+        doubleSpinBox_RigidBoxAngularVelocityZ->setSingleStep(1);
         doubleSpinBox_RigidBoxAngularVelocityZ->setValue(0);
 
         horizontalLayout_59->addWidget(doubleSpinBox_RigidBoxAngularVelocityZ);

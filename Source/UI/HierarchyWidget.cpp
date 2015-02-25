@@ -253,7 +253,7 @@ void HierarchyWidget::readCurrentGameObject()
 		}
 		else if (type == "RigidBody")
 		{
-			ui->tabWidget->addTab(m_rigidBodyTab, QIcon("../Resource/StyleSheets/Icons/circle-icons/full-color/die.png"), "Rigid Body");
+			ui->tabWidget->addTab(m_rigidBodyTab, QIcon("../Resource/StyleSheets/Icons/circle-icons/full-color/trends.png"), "Rigid Body");
 			RigidBodyPtr rb = comp.dynamicCast<RigidBody>();
 			readRigidBodyProperties(rb);
 			connectRigidBodyTab(rb);
@@ -1179,6 +1179,9 @@ void HierarchyWidget::readRigidBodyProperties( RigidBodyPtr rb )
 
 	case RigidBody::MOTION_FIXED:
 		ui->comboBox_RigidBodyMotionType->setCurrentText("Fixed");
+		ui->doubleSpinBox_RigidBoxSizeX->setValue(box->getHalfExtents().x() * 2);
+		ui->doubleSpinBox_RigidBoxSizeY->setValue(box->getHalfExtents().y() * 2);
+		ui->doubleSpinBox_RigidBoxSizeZ->setValue(box->getHalfExtents().z() * 2);
 		break;
 	}
 

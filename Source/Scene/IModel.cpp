@@ -119,7 +119,16 @@ void IModel::syncTransform( const Transform& transform )
 	vec3 ratio(newScale.x() / m_scale.x(), newScale.y() / m_scale.y(), newScale.z() / m_scale.z());
 
 	m_boundingBox->setScale(ratio);
-	m_boundingSpehre->setScale(ratio);
+
+	// find out which component effects the sphere
+	for (int i = 0; i < 3; ++i)
+	{
+		if (newScale[i] != m_scale[i])
+		{
+			m_boundingSpehre->setScale(newScale[i]/m_scale[i]);
+			break;
+		}
+	}
 
 	// sync the size of the convex hull collider
 	m_convexHull->getGeometryShape().setScale(ratio);

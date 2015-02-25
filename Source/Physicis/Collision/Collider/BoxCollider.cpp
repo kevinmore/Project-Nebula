@@ -11,7 +11,7 @@ BoxCollider::BoxCollider( const vec3& center, const vec3& halfExtents, Scene* sc
 
 	// the default model loaded here is a cube with half extent = 0.5, and the center is 0
 	// we need to translate and scale it
-	m_transformMatrix.translate(m_position);
+	m_transformMatrix.translate(center);
 	m_transformMatrix.scale(halfExtents.x() / 0.5f, halfExtents.y() / 0.5f, halfExtents.z() / 0.5f);
 
 	// make the bounding box look slightly bigger than the actual one
@@ -21,10 +21,10 @@ BoxCollider::BoxCollider( const vec3& center, const vec3& halfExtents, Scene* sc
 	init();
 }
 
-// BoxShape BoxCollider::getGeometryShape() const
-// {
-// 	return m_boxShape;
-// }
+BoxShape BoxCollider::getGeometryShape() const
+{
+	return m_boxShape;
+}
 
 void BoxCollider::init()
 {
@@ -165,6 +165,11 @@ BroadPhaseCollisionFeedback BoxCollider::onBroadPhase( ICollider* other )
 
 void BoxCollider::setHalfExtents( const vec3& halfExtents )
 {
+	// scale the shape compared to the current halfExtents
+	vec3 oldHalfExtents = m_boxShape.getHalfExtents();
+	vec3 scale(halfExtents.x() / oldHalfExtents.x(), halfExtents.y() / oldHalfExtents.y(), halfExtents.z() / oldHalfExtents.z());
+	m_transformMatrix.scale(scale);
+
 	m_boxShape.setHalfExtents(halfExtents);
 }
 
@@ -188,24 +193,36 @@ vec3 BoxCollider::getLocalSupportPoint( const vec3& dir, float margin /*= 0*/ ) 
 
 void BoxCollider::setScale( const vec3& scale )
 {
-	// change the half extents and the center
-	vec3 halfExtents = m_boxShape.getHalfExtents();
-	setHalfExtents(vec3(halfExtents.x() * scale.x(), 
-						halfExtents.y() * scale.y(), 
-						halfExtents.z() * scale.z()));
+	// reset the transform matrix
+	m_transformMatrix.setToIdentity();
 
+	// change the half extents and the center
 	vec3 center = m_boxShape.getCenter();
 	m_boxShape.setCenter(vec3(center.x() * scale.x(), 
 							  center.y() * scale.y(), 
 							  center.z() * scale.z()));
+
+	m_transformMatrix.translate(m_boxShape.getCenter());
+	
+	vec3 halfExtents = m_boxShape.getHalfExtents();
+	// temporary set the half extents to default
+	// because this function (setScale()) is only called when the scale of the game object is changed
+	// in this way, we set the transform matrix to identity, and the size of the box to default (0.5)
+	m_boxShape.setHalfExtents(vec3(0.5f, 0.5f, 0.5f));
+	setHalfExtents(vec3(halfExtents.x() * scale.x(), 
+						halfExtents.y() * scale.y(), 
+						halfExtents.z() * scale.z()));
+
+	// finally scale the transform matrix a bit larger to make sure it can be seen
+	m_transformMatrix.scale(1.02f);
 }
 
-vec3 BoxCollider::getAABBMin() const
+vec3 BoxCollider::getAABBMinLocal() const
 {
 	return m_boxShape.getCenter() - m_boxShape.getHalfExtents();
 }
 
-vec3 BoxCollider::getAABBMax() const
+vec3 BoxCollider::getAABBMaxLocal() const
 {
 	return m_boxShape.getCenter() + m_boxShape.getHalfExtents();
 }

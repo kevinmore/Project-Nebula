@@ -87,6 +87,15 @@ public:
 		return m;
 	}
 
+	inline mat4 getTransformMatrixWithoutScale() const
+	{
+		mat4 m;
+		m.translate(m_position);
+		m.rotate(m_rotation);
+
+		return m;
+	}
+
 	/// Reset
 	inline void reset()
 	{

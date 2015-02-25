@@ -72,6 +72,12 @@
      <property name="currentIndex">
       <number>0</number>
      </property>
+     <property name="iconSize">
+      <size>
+       <width>20</width>
+       <height>20</height>
+      </size>
+     </property>
      <property name="elideMode">
       <enum>Qt::ElideNone</enum>
      </property>
@@ -396,7 +402,7 @@
                <number>4</number>
               </property>
               <property name="minimum">
-               <double>0.000000000000000</double>
+               <double>0.000100000000000</double>
               </property>
               <property name="maximum">
                <double>99999.990000000005239</double>
@@ -434,7 +440,7 @@
                  <number>4</number>
                 </property>
                 <property name="minimum">
-                 <double>0.000000000000000</double>
+                 <double>0.000100000000000</double>
                 </property>
                 <property name="maximum">
                  <double>99999.990000000005239</double>
@@ -470,7 +476,7 @@
                  <number>4</number>
                 </property>
                 <property name="minimum">
-                 <double>0.000000000000000</double>
+                 <double>0.000100000000000</double>
                 </property>
                 <property name="maximum">
                  <double>99999.990000000005239</double>
@@ -506,7 +512,7 @@
                  <number>4</number>
                 </property>
                 <property name="minimum">
-                 <double>0.000000000000000</double>
+                 <double>0.000100000000000</double>
                 </property>
                 <property name="maximum">
                  <double>99999.990000000005239</double>
@@ -610,7 +616,7 @@
             <x>0</x>
             <y>0</y>
             <width>336</width>
-            <height>433</height>
+            <height>380</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -2197,7 +2203,7 @@
             <x>0</x>
             <y>0</y>
             <width>288</width>
-            <height>450</height>
+            <height>397</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_16">
@@ -2603,7 +2609,7 @@
             <x>0</x>
             <y>0</y>
             <width>288</width>
-            <height>450</height>
+            <height>397</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_21">
@@ -2925,6 +2931,9 @@
                   <property name="maximum">
                    <double>99999.990000000005239</double>
                   </property>
+                  <property name="singleStep">
+                   <double>0.100000000000000</double>
+                  </property>
                   <property name="value">
                    <double>1.000000000000000</double>
                   </property>
@@ -3004,7 +3013,7 @@
                      <double>99999.990000000005239</double>
                     </property>
                     <property name="singleStep">
-                     <double>0.100000000000000</double>
+                     <double>1.000000000000000</double>
                     </property>
                     <property name="value">
                      <double>0.000000000000000</double>
@@ -3043,7 +3052,7 @@
                      <double>99999.990000000005239</double>
                     </property>
                     <property name="singleStep">
-                     <double>0.100000000000000</double>
+                     <double>1.000000000000000</double>
                     </property>
                     <property name="value">
                      <double>0.000000000000000</double>
@@ -3082,7 +3091,7 @@
                      <double>99999.990000000005239</double>
                     </property>
                     <property name="singleStep">
-                     <double>0.100000000000000</double>
+                     <double>1.000000000000000</double>
                     </property>
                     <property name="value">
                      <double>0.000000000000000</double>
@@ -3156,7 +3165,7 @@
                      <double>99999.990000000005239</double>
                     </property>
                     <property name="singleStep">
-                     <double>0.100000000000000</double>
+                     <double>1.000000000000000</double>
                     </property>
                     <property name="value">
                      <double>0.000000000000000</double>
@@ -3195,7 +3204,7 @@
                      <double>99999.990000000005239</double>
                     </property>
                     <property name="singleStep">
-                     <double>0.100000000000000</double>
+                     <double>1.000000000000000</double>
                     </property>
                     <property name="value">
                      <double>0.000000000000000</double>
@@ -3234,7 +3243,7 @@
                      <double>99999.990000000005239</double>
                     </property>
                     <property name="singleStep">
-                     <double>0.100000000000000</double>
+                     <double>1.000000000000000</double>
                     </property>
                     <property name="value">
                      <double>0.000000000000000</double>

@@ -364,8 +364,8 @@ bool Canvas::testRayOBBIntersection( const vec3& rayDirection, const GameObjectP
 	BoxColliderPtr box = model->getBoundingBox();
 
 	// model space aabb boundaries
-	vec3 aabbMin = box->getAABBMin();
-	vec3 aabbMax = box->getAABBMax();
+	vec3 aabbMin = box->getAABBMinLocal();
+	vec3 aabbMax = box->getAABBMaxLocal();
 
 	mat4 modelMatrix = target->getTransformMatrix();
 

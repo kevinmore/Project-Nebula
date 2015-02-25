@@ -7,12 +7,12 @@ class BoxCollider : public ICollider
 {
 public:
 	BoxCollider(const vec3& center, const vec3& halfExtents, Scene* scene);
-	//BoxShape getGeometryShape() const;
+	BoxShape getGeometryShape() const;
 
 	void setHalfExtents(const vec3& halfExtents);
 	vec3 getHalfExtents() const;
-	vec3 getAABBMin() const;
-	vec3 getAABBMax() const;
+	vec3 getAABBMinLocal() const;
+	vec3 getAABBMaxLocal() const;
 	
 	void setScale(const vec3& scale);
 
