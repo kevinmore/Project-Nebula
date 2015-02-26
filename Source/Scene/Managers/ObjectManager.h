@@ -20,6 +20,9 @@ public:
 
 	GameObjectPtr getGameObject(const QString& name);
 
+	// returns a list containing all the game objects, from parent to child order
+	QList<GameObjectPtr> getGameObjectTreeList();
+
 	GameObjectPtr createGameObject(const QString& customName, GameObject* parent = 0);
 
 	void setLoadingFlag(const QString& flag);
@@ -34,12 +37,15 @@ public:
 	QVector<ModelLoaderPtr> m_modelLoaders;
 	QVector<ComponentPtr> m_renderQueue;
 	QString m_loadingFlag;
+	QList<GameObject*> m_gameObjectTreeList;
 
 public slots:
 	void addComponentToRenderQueue(ComponentPtr comp);
 	void removeComponentFromRenderQueue(ComponentPtr comp);
 
 private:
+	void readHierarchy(GameObject* root);
+
 	Scene* m_scene;
 };
 

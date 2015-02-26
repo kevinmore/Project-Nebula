@@ -168,3 +168,34 @@ void ObjectManager::setLoadingFlag( const QString& flag )
 {
 	m_loadingFlag = flag;
 }
+
+void ObjectManager::readHierarchy( GameObject* root )
+{
+	if (!root) return;
+	m_gameObjectTreeList << root;
+
+	foreach(QObject* obj, root->children())
+	{
+		readHierarchy((GameObject*)obj);
+	}
+}
+
+QList<GameObjectPtr> ObjectManager::getGameObjectTreeList()
+{
+	m_gameObjectTreeList.clear();
+	readHierarchy(m_scene->sceneRoot());
+
+	QList<GameObjectPtr> retList;
+	foreach(GameObject* go, m_gameObjectTreeList)
+	{
+		foreach(GameObjectPtr goptr, m_gameObjectMap)
+		{
+			if (go == goptr.data())
+			{
+				retList << goptr;
+			}
+		}
+	}
+
+	return retList;
+}
