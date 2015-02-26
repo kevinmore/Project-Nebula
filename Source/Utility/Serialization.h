@@ -443,14 +443,15 @@ QDataStream& operator >> (QDataStream& in, GameObjectPtr object)
 /*
 * Object Manager
 */
-// Order: Game Objects Count -> Each Game Object
+// Order: Game Objects Count -> Parent Name -> Each Game Object
 QDataStream& operator << (QDataStream& out, ObjectManager* object)
 {
-	out << object->m_gameObjectMap.count();
-	
-	foreach(GameObjectPtr go, object->m_gameObjectMap)
+	QList<GameObjectPtr> list = object->getGameObjectTreeList();
+	out << list.size();
+
+	foreach(GameObjectPtr go, list)
 	{
-		out << go;
+		out << go->parent()->objectName() << go;
 	}
 
 	return out;
@@ -464,8 +465,15 @@ QDataStream& operator >> (QDataStream& in, ObjectManager* object)
 	// create each game object
 	for (int i = 0; i < numGameObjects; ++i)
 	{
-		GameObjectPtr go = object->getScene()->createEmptyGameObject();
+		QString parentName;
+		in >> parentName;
+
+		// find the parent object
+		GameObjectPtr parent = object->getGameObject(parentName);
+
+		GameObjectPtr go = object->getScene()->createEmptyGameObject("Game Object", parent.data());
 		QString autoName = go->objectName();
+
 		in >> go;
 
 		// since the object is already defined in the scene file

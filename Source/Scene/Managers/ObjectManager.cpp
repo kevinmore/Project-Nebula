@@ -75,8 +75,14 @@ void ObjectManager::clear()
 	// there's no need to destroy each object individually,
 	// they get destroyed automatically
 	m_modelLoaders.clear();
-	m_gameObjectMap.clear();
 	m_renderQueue.clear();
+
+	foreach(QString name, m_gameObjectMap.keys())
+	{
+		deleteObject(name);
+	}
+
+	m_gameObjectMap.clear();
 }
 
 GameObjectPtr ObjectManager::createGameObject( const QString& customName, GameObject* parent /*= 0*/ )
@@ -104,6 +110,8 @@ GameObjectPtr ObjectManager::createGameObject( const QString& customName, GameOb
 void ObjectManager::deleteObject( const QString& name )
 {
 	GameObjectPtr go = m_gameObjectMap.take(name);
+	if(!go) return;
+
 	foreach(ComponentPtr comp, m_renderQueue)
 	{
 		if (comp->gameObject() == go.data())
@@ -112,6 +120,12 @@ void ObjectManager::deleteObject( const QString& name )
 			m_renderQueue.removeAt(idx);
 		}
 	}
+
+	foreach(QObject* obj, go->children())
+	{
+		deleteObject(obj->objectName());
+	}
+
 	go.clear();
 }
 
