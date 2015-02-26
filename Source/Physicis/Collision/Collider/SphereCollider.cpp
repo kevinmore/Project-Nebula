@@ -15,7 +15,7 @@ SphereCollider::SphereCollider( const vec3& center, const float radius, Scene* s
 
 	// make the bounding box look slightly bigger than the actual one
 	// this is for a better visual result
-	m_transformMatrix.scale(1.02f);
+	m_transformMatrix.scale(1.05f);
 
 	init();
 }
@@ -70,6 +70,12 @@ void SphereCollider::setRadius( const float radius )
 	m_transformMatrix.scale(scale);
 
 	m_sphereShape.setRadius(radius);
+
+	// re-compute the inertia tensor
+	if (m_rigidBody)
+	{
+		m_rigidBody->computeInertiaTensor();
+	}
 }
 
 vec3 SphereCollider::getLocalSupportPoint( const vec3& dir, float margin /*= 0*/ ) const
@@ -99,5 +105,5 @@ void SphereCollider::setScale( const float scale )
 	setRadius(radius * scale);
 
 	// finally scale the transform matrix a bit larger to make sure it can be seen
-	m_transformMatrix.scale(1.02f);
+	m_transformMatrix.scale(1.05f);
 }

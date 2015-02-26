@@ -169,8 +169,14 @@ void BoxCollider::setHalfExtents( const vec3& halfExtents )
 	vec3 oldHalfExtents = m_boxShape.getHalfExtents();
 	vec3 scale(halfExtents.x() / oldHalfExtents.x(), halfExtents.y() / oldHalfExtents.y(), halfExtents.z() / oldHalfExtents.z());
 	m_transformMatrix.scale(scale);
-
+	
 	m_boxShape.setHalfExtents(halfExtents);
+
+	// re-compute the inertia tensor
+	if (m_rigidBody)
+	{
+		m_rigidBody->computeInertiaTensor();
+	}
 }
 
 vec3 BoxCollider::getHalfExtents() const

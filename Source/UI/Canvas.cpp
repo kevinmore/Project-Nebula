@@ -182,6 +182,10 @@ void Canvas::keyReleaseEvent(QKeyEvent* e)
 		emit deleteObject();
 		break;
 
+	case Qt::Key_Space:
+		interactWithPhysicsWorld();
+		break;
+
 	default:
 		QWindow::keyReleaseEvent(e);
 	}
@@ -248,7 +252,8 @@ void Canvas::mouseReleaseEvent(QMouseEvent* e)
 		getScene()->toggleDebugMode(false);
 
 		// do a ray casting to pick game objects
-		GameObjectPtr selectedObject = pickObject(e->pos());
+		vec3 hitPoint;
+		GameObjectPtr selectedObject = pickObject(e->pos(), hitPoint);
 		if (selectedObject)
 		{
 			// show the bounding box
@@ -375,7 +380,7 @@ bool Canvas::testRayOBBIntersection( const vec3& rayDirection, const GameObjectP
 	vec3 rayOrigin = getScene()->getCamera()->position();
 	vec3 targetPos = target->position();
 	vec3 delta = targetPos - rayOrigin;
-	quat rotation = Math::Quaternion::computeQuaternion(target->rotation());
+	quat rotation = target->getTransform().getRotation();
 
 	// Test intersection with the 2 planes perpendicular to the OBB's X axis
 	{
@@ -498,7 +503,7 @@ vec3 Canvas::getRayFromMouse( const QPoint& mousePos)
 	return lRayDir_world.normalized();
 }
 
-GameObjectPtr Canvas::pickObject(const QPoint& mousePos)
+GameObjectPtr Canvas::pickObject(const QPoint& mousePos, vec3& hitPointOut)
 {
 	// get a ray from the mouse position
 	vec3 direction = getRayFromMouse(mousePos);
@@ -515,13 +520,14 @@ GameObjectPtr Canvas::pickObject(const QPoint& mousePos)
 	}
 
 	// get the nearest object
-	float minDist = 10000.0f;
+	float minDist = FLT_MAX;
 	foreach(float val, distanceMap.keys())
 	{
 		minDist = qMin(minDist, val);
 	}
 
 	// NOTE: the returned object can be NULL
+	hitPointOut = minDist * direction + getScene()->getCamera()->position();
 	return distanceMap[minDist];
 }
 
@@ -537,4 +543,15 @@ void Canvas::showGPUInfo()
 	info += reinterpret_cast<const char*>(glGetString(GL_RENDERER));
 
 	QMessageBox::about(0, tr("GPU Information"), info);
+}
+
+void Canvas::interactWithPhysicsWorld()
+{
+	QPoint mousePos = QWindow::mapFromGlobal(QCursor::pos());
+	vec3 impulsePoint;
+	GameObjectPtr go = pickObject(mousePos, impulsePoint);
+	if(!go) return;
+	RigidBodyPtr rb = go->getComponent("RigidBody").dynamicCast<RigidBody>();
+	if(!rb) return;
+	rb->applyPointImpulse(getRayFromMouse(mousePos), impulsePoint);
 }

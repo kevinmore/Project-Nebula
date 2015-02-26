@@ -7,6 +7,7 @@ ICollider::ICollider( const vec3& center, Scene* scene )
 	: Component(0),
 	  m_position(center),
 	  m_margin(0.0001f),
+	  m_rigidBody(NULL),
 	  m_scene(scene)
 {
 	init();

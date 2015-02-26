@@ -376,8 +376,8 @@ void HierarchyWidget::disconnectPreviousObject()
 	disconnect(ui->doubleSpinBox_RigidBodyLinearVelocityX, 0, 0, 0);
 	disconnect(ui->doubleSpinBox_RigidBodyLinearVelocityY, 0, 0, 0);
 	disconnect(ui->doubleSpinBox_RigidBodyLinearVelocityZ, 0, 0, 0);
-	disconnect(ui->doubleSpinBox_RigidBodyAngularVelocityZ, 0, 0, 0);
-	disconnect(ui->doubleSpinBox_RigidBodyAngularVelocityZ, 0, 0, 0);
+	disconnect(ui->doubleSpinBox_RigidBodyAngularVelocityX, 0, 0, 0);
+	disconnect(ui->doubleSpinBox_RigidBodyAngularVelocityY, 0, 0, 0);
 	disconnect(ui->doubleSpinBox_RigidBodyAngularVelocityZ, 0, 0, 0);
 	disconnect(ui->doubleSpinBox_RigidBodyImpulseX, 0, 0, 0);
 	disconnect(ui->doubleSpinBox_RigidBodyImpulseY, 0, 0, 0);

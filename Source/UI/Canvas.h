@@ -42,7 +42,8 @@ private:
 	bool testRaySpehreIntersection(const vec3& rayDirection, const float radius, 
 								const GameObjectPtr target, float& intersectionDistance);
 
-	GameObjectPtr pickObject(const QPoint& mousePos);
+	GameObjectPtr pickObject(const QPoint& mousePos, vec3& hitPointOut);
+	void interactWithPhysicsWorld();
 
 public slots:
 	void setCameraSpeed(double speed);

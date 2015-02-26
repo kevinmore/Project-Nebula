@@ -99,6 +99,8 @@ public:
 	inline MotionType getMotionType() const { return m_motionType; }
 	void setMotionType(MotionType type);
 
+	void computeInertiaTensor();
+
 	//
 	// Collider
 	//
@@ -347,8 +349,6 @@ protected:
 
 	/// overload function from component
 	virtual void syncTransform(const Transform& transform);
-
-	void computeInertiaTensor();
 
 	//
 	// Members

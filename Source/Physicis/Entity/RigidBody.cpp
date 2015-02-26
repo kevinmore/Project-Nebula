@@ -30,6 +30,7 @@ RigidBody::RigidBody(const vec3& position, const quat& rotation, QObject* parent
 	m_canSleep = false;
 	m_isAwake = true;
 	m_userInputeExecuted = false;
+	m_BroadPhaseCollider.clear();
 }
 
 RigidBody::~RigidBody()
@@ -376,7 +377,6 @@ void RigidBody::setRadius_SLOT( double val )
 	if (sphere)
 	{
 		sphere->setRadius(val);
-		computeInertiaTensor();
 	}
 }
 
@@ -388,7 +388,6 @@ void RigidBody::setExtentsX_SLOT( double val )
 		vec3 halfExtents = box->getHalfExtents();
 		halfExtents.setX(0.5 * val);
 		box->setHalfExtents(halfExtents);
-		computeInertiaTensor();
 	}
 }
 
@@ -400,7 +399,6 @@ void RigidBody::setExtentsY_SLOT( double val )
 		vec3 halfExtents = box->getHalfExtents();
 		halfExtents.setY(0.5 * val);
 		box->setHalfExtents(halfExtents);
-		computeInertiaTensor();
 	}
 }
 
@@ -412,51 +410,59 @@ void RigidBody::setExtentsZ_SLOT( double val )
 		vec3 halfExtents = box->getHalfExtents();
 		halfExtents.setZ(0.5 * val);
 		box->setHalfExtents(halfExtents);
-		computeInertiaTensor();
 	}
 }
 
 void RigidBody::setPointImpulseX_SLOT( double val )
 {
 	m_userPointImpulse.setX(val);
+	m_userInputeExecuted = false;
 }
 
 void RigidBody::setPointImpulseY_SLOT( double val )
 {
 	m_userPointImpulse.setY(val);
+	m_userInputeExecuted = false;
 }
 
 void RigidBody::setPointImpulseZ_SLOT( double val )
 {
 	m_userPointImpulse.setZ(val);
+	m_userInputeExecuted = false;
 }
 
 void RigidBody::setPointImpulsePositionX_SLOT( double val )
 {
 	m_userImpulsePosition.setX(val);
+	m_userInputeExecuted = false;
 }
 
 void RigidBody::setPointImpulsePositionY_SLOT( double val )
 {
 	m_userImpulsePosition.setY(val);
+	m_userInputeExecuted = false;
 }
 
 void RigidBody::setPointImpulsePositionZ_SLOT( double val )
 {
 	m_userImpulsePosition.setZ(val);
+	m_userInputeExecuted = false;
 }
 
 void RigidBody::setAngularImpulseX_SLOT( double val )
 {
 	m_userAngularImpulse.setX(val);
+	m_userInputeExecuted = false;
 }
 
 void RigidBody::setAngularImpulseY_SLOT( double val )
 {
 	m_userAngularImpulse.setY(val);
+	m_userInputeExecuted = false;
 }
 
 void RigidBody::setAngularImpulseZ_SLOT( double val )
 {
 	m_userAngularImpulse.setZ(val);
+	m_userInputeExecuted = false;
 }
