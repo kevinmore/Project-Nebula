@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_RigidBody_t {
-    QByteArrayData data[18];
-    char stringdata[307];
+    QByteArrayData data[27];
+    char stringdata[535];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -46,7 +46,16 @@ QT_MOC_LITERAL(13, 216, 24),
 QT_MOC_LITERAL(14, 241, 14),
 QT_MOC_LITERAL(15, 256, 16),
 QT_MOC_LITERAL(16, 273, 16),
-QT_MOC_LITERAL(17, 290, 16)
+QT_MOC_LITERAL(17, 290, 16),
+QT_MOC_LITERAL(18, 307, 21),
+QT_MOC_LITERAL(19, 329, 21),
+QT_MOC_LITERAL(20, 351, 21),
+QT_MOC_LITERAL(21, 373, 29),
+QT_MOC_LITERAL(22, 403, 29),
+QT_MOC_LITERAL(23, 433, 29),
+QT_MOC_LITERAL(24, 463, 23),
+QT_MOC_LITERAL(25, 487, 23),
+QT_MOC_LITERAL(26, 511, 23)
     },
     "RigidBody\0setMotionType_SLOT\0\0type\0"
     "setMass_SLOT\0val\0setGravityFactor_SLOT\0"
@@ -56,7 +65,13 @@ QT_MOC_LITERAL(17, 290, 16)
     "setAngularVelocityY_SLOT\0"
     "setAngularVelocityZ_SLOT\0setRadius_SLOT\0"
     "setExtentsX_SLOT\0setExtentsY_SLOT\0"
-    "setExtentsZ_SLOT"
+    "setExtentsZ_SLOT\0setPointImpulseX_SLOT\0"
+    "setPointImpulseY_SLOT\0setPointImpulseZ_SLOT\0"
+    "setPointImpulsePositionX_SLOT\0"
+    "setPointImpulsePositionY_SLOT\0"
+    "setPointImpulsePositionZ_SLOT\0"
+    "setAngularImpulseX_SLOT\0setAngularImpulseY_SLOT\0"
+    "setAngularImpulseZ_SLOT"
 };
 #undef QT_MOC_LITERAL
 
@@ -66,7 +81,7 @@ static const uint qt_meta_data_RigidBody[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      14,   14, // methods
+      23,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -74,23 +89,41 @@ static const uint qt_meta_data_RigidBody[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    1,   84,    2, 0x0a /* Public */,
-       4,    1,   87,    2, 0x0a /* Public */,
-       6,    1,   90,    2, 0x0a /* Public */,
-       7,    1,   93,    2, 0x0a /* Public */,
-       8,    1,   96,    2, 0x0a /* Public */,
-       9,    1,   99,    2, 0x0a /* Public */,
-      10,    1,  102,    2, 0x0a /* Public */,
-      11,    1,  105,    2, 0x0a /* Public */,
-      12,    1,  108,    2, 0x0a /* Public */,
-      13,    1,  111,    2, 0x0a /* Public */,
-      14,    1,  114,    2, 0x0a /* Public */,
-      15,    1,  117,    2, 0x0a /* Public */,
-      16,    1,  120,    2, 0x0a /* Public */,
-      17,    1,  123,    2, 0x0a /* Public */,
+       1,    1,  129,    2, 0x0a /* Public */,
+       4,    1,  132,    2, 0x0a /* Public */,
+       6,    1,  135,    2, 0x0a /* Public */,
+       7,    1,  138,    2, 0x0a /* Public */,
+       8,    1,  141,    2, 0x0a /* Public */,
+       9,    1,  144,    2, 0x0a /* Public */,
+      10,    1,  147,    2, 0x0a /* Public */,
+      11,    1,  150,    2, 0x0a /* Public */,
+      12,    1,  153,    2, 0x0a /* Public */,
+      13,    1,  156,    2, 0x0a /* Public */,
+      14,    1,  159,    2, 0x0a /* Public */,
+      15,    1,  162,    2, 0x0a /* Public */,
+      16,    1,  165,    2, 0x0a /* Public */,
+      17,    1,  168,    2, 0x0a /* Public */,
+      18,    1,  171,    2, 0x0a /* Public */,
+      19,    1,  174,    2, 0x0a /* Public */,
+      20,    1,  177,    2, 0x0a /* Public */,
+      21,    1,  180,    2, 0x0a /* Public */,
+      22,    1,  183,    2, 0x0a /* Public */,
+      23,    1,  186,    2, 0x0a /* Public */,
+      24,    1,  189,    2, 0x0a /* Public */,
+      25,    1,  192,    2, 0x0a /* Public */,
+      26,    1,  195,    2, 0x0a /* Public */,
 
  // slots: parameters
     QMetaType::Void, QMetaType::QString,    3,
+    QMetaType::Void, QMetaType::Double,    5,
+    QMetaType::Void, QMetaType::Double,    5,
+    QMetaType::Void, QMetaType::Double,    5,
+    QMetaType::Void, QMetaType::Double,    5,
+    QMetaType::Void, QMetaType::Double,    5,
+    QMetaType::Void, QMetaType::Double,    5,
+    QMetaType::Void, QMetaType::Double,    5,
+    QMetaType::Void, QMetaType::Double,    5,
+    QMetaType::Void, QMetaType::Double,    5,
     QMetaType::Void, QMetaType::Double,    5,
     QMetaType::Void, QMetaType::Double,    5,
     QMetaType::Void, QMetaType::Double,    5,
@@ -127,6 +160,15 @@ void RigidBody::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
         case 11: _t->setExtentsX_SLOT((*reinterpret_cast< double(*)>(_a[1]))); break;
         case 12: _t->setExtentsY_SLOT((*reinterpret_cast< double(*)>(_a[1]))); break;
         case 13: _t->setExtentsZ_SLOT((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 14: _t->setPointImpulseX_SLOT((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 15: _t->setPointImpulseY_SLOT((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 16: _t->setPointImpulseZ_SLOT((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 17: _t->setPointImpulsePositionX_SLOT((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 18: _t->setPointImpulsePositionY_SLOT((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 19: _t->setPointImpulsePositionZ_SLOT((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 20: _t->setAngularImpulseX_SLOT((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 21: _t->setAngularImpulseY_SLOT((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 22: _t->setAngularImpulseZ_SLOT((*reinterpret_cast< double(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -157,13 +199,13 @@ int RigidBody::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 14)
+        if (_id < 23)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 14;
+        _id -= 23;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 14)
+        if (_id < 23)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 14;
+        _id -= 23;
     }
     return _id;
 }

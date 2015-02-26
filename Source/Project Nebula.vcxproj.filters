@@ -140,7 +140,6 @@
     <ClInclude Include="Physicis\Particles\ParticleSystem.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="UI\MainWindow.h" />
-    <ClInclude Include="Physicis\Entity\RigidBody.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="UI\HierarchyWidget.ui" />
@@ -153,5 +152,6 @@
   </ItemGroup>
   <ItemGroup>
     <QtMOC Include="UI\HierarchyWidget.h" />
+    <QtMOC Include="Physicis\Entity\RigidBody.h" />
   </ItemGroup>
 </Project>

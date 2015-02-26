@@ -369,16 +369,25 @@ void HierarchyWidget::disconnectPreviousObject()
 	disconnect(ui->doubleSpinBox_RigidBodyMass, 0, 0, 0);
 	disconnect(ui->doubleSpinBox_RigidBodyGravityFactor, 0, 0, 0);
 	disconnect(ui->doubleSpinBox_RigidBodyRestitution, 0, 0, 0);
-	disconnect(ui->doubleSpinBox_RigidBoxSizeX, 0, 0, 0);
-	disconnect(ui->doubleSpinBox_RigidBoxSizeY, 0, 0, 0);
-	disconnect(ui->doubleSpinBox_RigidBoxSizeZ, 0, 0, 0);
+	disconnect(ui->doubleSpinBox_RigidBodySizeX, 0, 0, 0);
+	disconnect(ui->doubleSpinBox_RigidBodySizeY, 0, 0, 0);
+	disconnect(ui->doubleSpinBox_RigidBodySizeZ, 0, 0, 0);
 	disconnect(ui->doubleSpinBox_RigidBodyRadius, 0, 0, 0);
-	disconnect(ui->doubleSpinBox_RigidBoxLinearVelocityX, 0, 0, 0);
-	disconnect(ui->doubleSpinBox_RigidBoxLinearVelocityY, 0, 0, 0);
-	disconnect(ui->doubleSpinBox_RigidBoxLinearVelocityZ, 0, 0, 0);
-	disconnect(ui->doubleSpinBox_RigidBoxAngularVelocityZ, 0, 0, 0);
-	disconnect(ui->doubleSpinBox_RigidBoxAngularVelocityZ, 0, 0, 0);
-	disconnect(ui->doubleSpinBox_RigidBoxAngularVelocityZ, 0, 0, 0);
+	disconnect(ui->doubleSpinBox_RigidBodyLinearVelocityX, 0, 0, 0);
+	disconnect(ui->doubleSpinBox_RigidBodyLinearVelocityY, 0, 0, 0);
+	disconnect(ui->doubleSpinBox_RigidBodyLinearVelocityZ, 0, 0, 0);
+	disconnect(ui->doubleSpinBox_RigidBodyAngularVelocityZ, 0, 0, 0);
+	disconnect(ui->doubleSpinBox_RigidBodyAngularVelocityZ, 0, 0, 0);
+	disconnect(ui->doubleSpinBox_RigidBodyAngularVelocityZ, 0, 0, 0);
+	disconnect(ui->doubleSpinBox_RigidBodyImpulseX, 0, 0, 0);
+	disconnect(ui->doubleSpinBox_RigidBodyImpulseY, 0, 0, 0);
+	disconnect(ui->doubleSpinBox_RigidBodyImpulseZ, 0, 0, 0);
+	disconnect(ui->doubleSpinBox_RigidBodyImpulsePointX, 0, 0, 0);
+	disconnect(ui->doubleSpinBox_RigidBodyImpulsePointY, 0, 0, 0);
+	disconnect(ui->doubleSpinBox_RigidBodyImpulsePointZ, 0, 0, 0);
+	disconnect(ui->doubleSpinBox_RigidBodyAngularImpulseX, 0, 0, 0);
+	disconnect(ui->doubleSpinBox_RigidBodyAngularImpulseY, 0, 0, 0);
+	disconnect(ui->doubleSpinBox_RigidBodyAngularImpulseZ, 0, 0, 0);
 }
 
 void HierarchyWidget::renameGameObject( QTreeWidgetItem * item, int column )
@@ -1167,9 +1176,9 @@ void HierarchyWidget::readRigidBodyProperties( RigidBodyPtr rb )
 	{
 	case RigidBody::MOTION_BOX_INERTIA:
 		ui->comboBox_RigidBodyMotionType->setCurrentText("Box");
-		ui->doubleSpinBox_RigidBoxSizeX->setValue(box->getHalfExtents().x() * 2);
-		ui->doubleSpinBox_RigidBoxSizeY->setValue(box->getHalfExtents().y() * 2);
-		ui->doubleSpinBox_RigidBoxSizeZ->setValue(box->getHalfExtents().z() * 2);
+		ui->doubleSpinBox_RigidBodySizeX->setValue(box->getHalfExtents().x() * 2);
+		ui->doubleSpinBox_RigidBodySizeY->setValue(box->getHalfExtents().y() * 2);
+		ui->doubleSpinBox_RigidBodySizeZ->setValue(box->getHalfExtents().z() * 2);
 		break;
 
 	case RigidBody::MOTION_SPHERE_INERTIA:
@@ -1179,9 +1188,9 @@ void HierarchyWidget::readRigidBodyProperties( RigidBodyPtr rb )
 
 	case RigidBody::MOTION_FIXED:
 		ui->comboBox_RigidBodyMotionType->setCurrentText("Fixed");
-		ui->doubleSpinBox_RigidBoxSizeX->setValue(box->getHalfExtents().x() * 2);
-		ui->doubleSpinBox_RigidBoxSizeY->setValue(box->getHalfExtents().y() * 2);
-		ui->doubleSpinBox_RigidBoxSizeZ->setValue(box->getHalfExtents().z() * 2);
+		ui->doubleSpinBox_RigidBodySizeX->setValue(box->getHalfExtents().x() * 2);
+		ui->doubleSpinBox_RigidBodySizeY->setValue(box->getHalfExtents().y() * 2);
+		ui->doubleSpinBox_RigidBodySizeZ->setValue(box->getHalfExtents().z() * 2);
 		break;
 	}
 
@@ -1189,12 +1198,12 @@ void HierarchyWidget::readRigidBodyProperties( RigidBodyPtr rb )
 	ui->doubleSpinBox_RigidBodyGravityFactor->setValue(rb->getGravityFactor());
 	ui->doubleSpinBox_RigidBodyRestitution->setValue(rb->getRestitution());
 	ui->horizontalSlider_RigidBodyRestitution->setValue(rb->getRestitution() * 100);
-	ui->doubleSpinBox_RigidBoxLinearVelocityX->setValue(linearVelocity.x());
-	ui->doubleSpinBox_RigidBoxLinearVelocityY->setValue(linearVelocity.y());
-	ui->doubleSpinBox_RigidBoxLinearVelocityZ->setValue(linearVelocity.z());
-	ui->doubleSpinBox_RigidBoxAngularVelocityX->setValue(angularVelocity.x());
-	ui->doubleSpinBox_RigidBoxAngularVelocityY->setValue(angularVelocity.y());
-	ui->doubleSpinBox_RigidBoxAngularVelocityZ->setValue(angularVelocity.z());
+	ui->doubleSpinBox_RigidBodyLinearVelocityX->setValue(linearVelocity.x());
+	ui->doubleSpinBox_RigidBodyLinearVelocityY->setValue(linearVelocity.y());
+	ui->doubleSpinBox_RigidBodyLinearVelocityZ->setValue(linearVelocity.z());
+	ui->doubleSpinBox_RigidBodyAngularVelocityX->setValue(angularVelocity.x());
+	ui->doubleSpinBox_RigidBodyAngularVelocityY->setValue(angularVelocity.y());
+	ui->doubleSpinBox_RigidBodyAngularVelocityZ->setValue(angularVelocity.z());
 }
 
 void HierarchyWidget::toggleDiffuseMap( bool state )
@@ -1241,14 +1250,23 @@ void HierarchyWidget::connectRigidBodyTab( RigidBodyPtr rb )
 	connect(ui->doubleSpinBox_RigidBodyGravityFactor, SIGNAL(valueChanged(double)), rb.data(), SLOT(setGravityFactor_SLOT(double)));
 	connect(ui->doubleSpinBox_RigidBodyRestitution, SIGNAL(valueChanged(double)), rb.data(), SLOT(setRestitution_SLOT(double)));
 	connect(ui->doubleSpinBox_RigidBodyMass, SIGNAL(valueChanged(double)), rb.data(), SLOT(setMass_SLOT(double)));
-	connect(ui->doubleSpinBox_RigidBoxSizeX, SIGNAL(valueChanged(double)), rb.data(), SLOT(setExtentsX_SLOT(double)));
-	connect(ui->doubleSpinBox_RigidBoxSizeY, SIGNAL(valueChanged(double)), rb.data(), SLOT(setExtentsY_SLOT(double)));
-	connect(ui->doubleSpinBox_RigidBoxSizeZ, SIGNAL(valueChanged(double)), rb.data(), SLOT(setExtentsZ_SLOT(double)));
+	connect(ui->doubleSpinBox_RigidBodySizeX, SIGNAL(valueChanged(double)), rb.data(), SLOT(setExtentsX_SLOT(double)));
+	connect(ui->doubleSpinBox_RigidBodySizeY, SIGNAL(valueChanged(double)), rb.data(), SLOT(setExtentsY_SLOT(double)));
+	connect(ui->doubleSpinBox_RigidBodySizeZ, SIGNAL(valueChanged(double)), rb.data(), SLOT(setExtentsZ_SLOT(double)));
 	connect(ui->doubleSpinBox_RigidBodyRadius, SIGNAL(valueChanged(double)), rb.data(), SLOT(setRadius_SLOT(double)));
-	connect(ui->doubleSpinBox_RigidBoxLinearVelocityX,  SIGNAL(valueChanged(double)), rb.data(), SLOT(setLinearVelocityX_SLOT(double)));
-	connect(ui->doubleSpinBox_RigidBoxLinearVelocityY,  SIGNAL(valueChanged(double)), rb.data(), SLOT(setLinearVelocityY_SLOT(double)));
-	connect(ui->doubleSpinBox_RigidBoxLinearVelocityZ,  SIGNAL(valueChanged(double)), rb.data(), SLOT(setLinearVelocityZ_SLOT(double)));
-	connect(ui->doubleSpinBox_RigidBoxAngularVelocityX, SIGNAL(valueChanged(double)), rb.data(), SLOT(setAngularVelocityX_SLOT(double)));
-	connect(ui->doubleSpinBox_RigidBoxAngularVelocityY, SIGNAL(valueChanged(double)), rb.data(), SLOT(setAngularVelocityY_SLOT(double)));
-	connect(ui->doubleSpinBox_RigidBoxAngularVelocityZ, SIGNAL(valueChanged(double)), rb.data(), SLOT(setAngularVelocityZ_SLOT(double)));
+	connect(ui->doubleSpinBox_RigidBodyLinearVelocityX,  SIGNAL(valueChanged(double)), rb.data(), SLOT(setLinearVelocityX_SLOT(double)));
+	connect(ui->doubleSpinBox_RigidBodyLinearVelocityY,  SIGNAL(valueChanged(double)), rb.data(), SLOT(setLinearVelocityY_SLOT(double)));
+	connect(ui->doubleSpinBox_RigidBodyLinearVelocityZ,  SIGNAL(valueChanged(double)), rb.data(), SLOT(setLinearVelocityZ_SLOT(double)));
+	connect(ui->doubleSpinBox_RigidBodyAngularVelocityX, SIGNAL(valueChanged(double)), rb.data(), SLOT(setAngularVelocityX_SLOT(double)));
+	connect(ui->doubleSpinBox_RigidBodyAngularVelocityY, SIGNAL(valueChanged(double)), rb.data(), SLOT(setAngularVelocityY_SLOT(double)));
+	connect(ui->doubleSpinBox_RigidBodyAngularVelocityZ, SIGNAL(valueChanged(double)), rb.data(), SLOT(setAngularVelocityZ_SLOT(double)));
+	connect(ui->doubleSpinBox_RigidBodyImpulseX, SIGNAL(valueChanged(double)), rb.data(), SLOT(setPointImpulseX_SLOT(double)));
+	connect(ui->doubleSpinBox_RigidBodyImpulseY, SIGNAL(valueChanged(double)), rb.data(), SLOT(setPointImpulseY_SLOT(double)));
+	connect(ui->doubleSpinBox_RigidBodyImpulseZ, SIGNAL(valueChanged(double)), rb.data(), SLOT(setPointImpulseZ_SLOT(double)));
+	connect(ui->doubleSpinBox_RigidBodyImpulsePointX, SIGNAL(valueChanged(double)), rb.data(), SLOT(setPointImpulsePositionX_SLOT(double)));
+	connect(ui->doubleSpinBox_RigidBodyImpulsePointY, SIGNAL(valueChanged(double)), rb.data(), SLOT(setPointImpulsePositionY_SLOT(double)));
+	connect(ui->doubleSpinBox_RigidBodyImpulsePointZ, SIGNAL(valueChanged(double)), rb.data(), SLOT(setPointImpulsePositionZ_SLOT(double)));
+	connect(ui->doubleSpinBox_RigidBodyAngularImpulseX, SIGNAL(valueChanged(double)), rb.data(), SLOT(setAngularImpulseX_SLOT(double)));
+	connect(ui->doubleSpinBox_RigidBodyAngularImpulseY, SIGNAL(valueChanged(double)), rb.data(), SLOT(setAngularImpulseY_SLOT(double)));
+	connect(ui->doubleSpinBox_RigidBodyAngularImpulseZ, SIGNAL(valueChanged(double)), rb.data(), SLOT(setAngularImpulseZ_SLOT(double)));
 }

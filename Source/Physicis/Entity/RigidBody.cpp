@@ -29,6 +29,7 @@ RigidBody::RigidBody(const vec3& position, const quat& rotation, QObject* parent
 	m_timeFactor = 1.0f;
 	m_canSleep = false;
 	m_isAwake = true;
+	m_userInputeExecuted = false;
 }
 
 RigidBody::~RigidBody()
@@ -282,6 +283,16 @@ void RigidBody::backTrackAngularVelocity( const float duration )
 	m_angularVelocity = Spline::lerp(m_angularVelocity, m_lastAngularVelocity, duration / m_timeStep);
 }
 
+void RigidBody::executeUserInput()
+{
+	if (m_userInputeExecuted) return;
+	applyPointImpulse(m_userPointImpulse, m_userImpulsePosition);
+	applyAngularImpulse(m_userAngularImpulse);
+
+	m_userInputeExecuted = true;
+}
+
+
 
 /************************************************************************/
 /*          SLOTS                                                       */
@@ -403,4 +414,49 @@ void RigidBody::setExtentsZ_SLOT( double val )
 		box->setHalfExtents(halfExtents);
 		computeInertiaTensor();
 	}
+}
+
+void RigidBody::setPointImpulseX_SLOT( double val )
+{
+	m_userPointImpulse.setX(val);
+}
+
+void RigidBody::setPointImpulseY_SLOT( double val )
+{
+	m_userPointImpulse.setY(val);
+}
+
+void RigidBody::setPointImpulseZ_SLOT( double val )
+{
+	m_userPointImpulse.setZ(val);
+}
+
+void RigidBody::setPointImpulsePositionX_SLOT( double val )
+{
+	m_userImpulsePosition.setX(val);
+}
+
+void RigidBody::setPointImpulsePositionY_SLOT( double val )
+{
+	m_userImpulsePosition.setY(val);
+}
+
+void RigidBody::setPointImpulsePositionZ_SLOT( double val )
+{
+	m_userImpulsePosition.setZ(val);
+}
+
+void RigidBody::setAngularImpulseX_SLOT( double val )
+{
+	m_userAngularImpulse.setX(val);
+}
+
+void RigidBody::setAngularImpulseY_SLOT( double val )
+{
+	m_userAngularImpulse.setY(val);
+}
+
+void RigidBody::setAngularImpulseZ_SLOT( double val )
+{
+	m_userAngularImpulse.setZ(val);
 }

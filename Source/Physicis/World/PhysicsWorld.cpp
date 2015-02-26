@@ -30,6 +30,18 @@ PhysicsWorldConfig PhysicsWorld::getConfig() const
 	return m_config;
 }
 
+void PhysicsWorld::start()
+{
+	foreach(PhysicsWorldObject* entity, m_entityList)
+	{
+		RigidBody* rb = dynamic_cast<RigidBody*>(entity);
+		if(rb->getMotionType() != RigidBody::MOTION_FIXED)
+		{
+			rb->executeUserInput();
+		}
+	}
+}
+
 void PhysicsWorld::simulate(const float deltaTime)
 {
 	// don't update the physics world when it is locked

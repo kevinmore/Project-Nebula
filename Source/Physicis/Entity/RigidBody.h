@@ -82,6 +82,15 @@ public slots:
 	void setExtentsX_SLOT(double val);
 	void setExtentsY_SLOT(double val);
 	void setExtentsZ_SLOT(double val);
+	void setPointImpulseX_SLOT(double val);
+	void setPointImpulseY_SLOT(double val);
+	void setPointImpulseZ_SLOT(double val);
+	void setPointImpulsePositionX_SLOT(double val);
+	void setPointImpulsePositionY_SLOT(double val);
+	void setPointImpulsePositionZ_SLOT(double val);
+	void setAngularImpulseX_SLOT(double val);
+	void setAngularImpulseY_SLOT(double val);
+	void setAngularImpulseZ_SLOT(double val);
 
 public:
 	//
@@ -210,6 +219,9 @@ public:
 	//
 	// IMPULSE APPLICATION.
 	//
+
+	/// Run the user input at the first step of the simulation (impulse, force and torque)
+	void executeUserInput();
 
 	/// Applies an impulse (in world space) to the center of mass.
 	/// This activates the body and its simulation island if it is inactive.
@@ -443,6 +455,14 @@ protected:
     /// Holds the amount of motion of the body. This is a recency
     /// weighted mean that can be used to put a body to sleep.
     float m_motionEnergy;
+
+	//
+	// User defined variables
+	//
+	bool m_userInputeExecuted;
+	vec3 m_userPointImpulse;
+	vec3 m_userImpulsePosition;
+	vec3 m_userAngularImpulse;
 };
 
 typedef QSharedPointer<RigidBody> RigidBodyPtr;

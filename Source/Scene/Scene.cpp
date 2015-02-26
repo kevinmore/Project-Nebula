@@ -516,6 +516,7 @@ void Scene::play()
 	// un-pause the physics world and set the delayed time
 	m_bPhysicsPaused = false;
 	m_physicsWorld->unlock();
+	m_physicsWorld->start();
 	m_delayedTime += m_absoluteTime - m_relativeTime;
 
 	m_canvas->getContainerWidget()->setWindowTitle("Scene - Physics Simulation: On");

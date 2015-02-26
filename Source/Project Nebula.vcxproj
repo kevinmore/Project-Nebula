@@ -118,7 +118,7 @@
     <ClInclude Include="Physicis\World\PhysicsWorld.h" />
     <ClInclude Include="Physicis\World\PhysicsWorldObject.h" />
     <ClInclude Include="Primitives\CubeMapTexture.h" />
-    <ClInclude Include="Physicis\Entity\RigidBody.h" />
+    <QtMOC Include="Physicis\Entity\RigidBody.h" />
     <ClInclude Include="Scene\ShadingTechniques\ParticleTechnique.h" />
     <ClInclude Include="Physicis\Particles\ParticleSystem.h" />
     <ClInclude Include="Primitives\Component.h" />

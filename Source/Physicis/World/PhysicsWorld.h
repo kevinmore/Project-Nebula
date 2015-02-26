@@ -41,7 +41,13 @@ public:
 
 	PhysicsWorldConfig getConfig() const;
 
+	// Execute the start conditions, only once
+	void start();
+
+	// Step the physics world
 	void simulate(const float deltaTime);
+
+	// Handle collisions
 	void handleCollisions();
 
 
