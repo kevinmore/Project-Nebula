@@ -14,6 +14,7 @@ class HierarchyWidget : public QWidget
 public:
 	HierarchyWidget(Scene* scene, Canvas* canvas, QWidget *parent = 0);
 	~HierarchyWidget();
+	GameObject* getCurrentGameObject() { return m_currentObject; }
 
 private:
 	Ui::HierarchyViewer *ui;

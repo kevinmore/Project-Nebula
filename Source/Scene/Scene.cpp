@@ -338,22 +338,20 @@ void Scene::modelLoaded()
 	emit updateHierarchy();
 }
 
-GameObjectPtr Scene::createEmptyGameObject(const QString& name)
+GameObjectPtr Scene::createEmptyGameObject(const QString& name, GameObject* parent)
 {
-	GameObjectPtr go = m_objectManager->createGameObject(name, m_sceneRootNode);
+	GameObject* ref = parent ? parent : m_sceneRootNode;
+
+	GameObjectPtr go = m_objectManager->createGameObject(name, ref);
 
 	emit updateHierarchy();
 	return go;
 }
 
-GameObjectPtr Scene::createParticleSystem(const QString& parentName)
+GameObjectPtr Scene::createParticleSystem(GameObject* parent)
 {
-	GameObjectPtr parent = m_objectManager->getGameObject(parentName);
 	// check if the parent exist
-	GameObjectPtr ref = parent 
-						? m_objectManager->createGameObject("Particle System", parent.data())
-						: m_objectManager->createGameObject("Particle System", m_sceneRootNode);
-	emit updateHierarchy();
+	GameObjectPtr ref = createEmptyGameObject("Particle System", parent);
 
 	// particle system
 	ParticleSystemPtr ps(new ParticleSystem(this));
@@ -367,16 +365,12 @@ GameObjectPtr Scene::createParticleSystem(const QString& parentName)
 GameObjectPtr Scene::createLight( GameObject* parent )
 {
 	// check if the parent exist
-	GameObjectPtr ref = parent 
-		? m_objectManager->createGameObject("Light", parent)
-		: m_objectManager->createGameObject("Light", m_sceneRootNode);
+	GameObjectPtr ref = createEmptyGameObject("Light", parent);
 
 	// light
 	LightPtr l(new Light(this, ref.data()));
 	addLight(l);
 	ref->attachComponent(l);
-
-	emit updateHierarchy();
 
 	return ref;
 }

@@ -35,7 +35,16 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QTreeWidget" name="treeWidget">
+    <widget class="GameObjectTreeInspector" name="treeWidget">
+     <property name="dragEnabled">
+      <bool>true</bool>
+     </property>
+     <property name="dragDropMode">
+      <enum>QAbstractItemView::InternalMove</enum>
+     </property>
+     <property name="animated">
+      <bool>true</bool>
+     </property>
      <column>
       <property name="text">
        <string>Game Objects</string>
@@ -2607,7 +2616,7 @@
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>-112</y>
+            <y>0</y>
             <width>303</width>
             <height>509</height>
            </rect>
@@ -3741,6 +3750,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>GameObjectTreeInspector</class>
+   <extends>QTreeWidget</extends>
+   <header>GameObjectTreeInspector.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../../Resource/StyleSheets/Icons/icons.qrc"/>
  </resources>

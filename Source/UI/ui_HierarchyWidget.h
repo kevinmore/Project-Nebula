@@ -30,9 +30,9 @@
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QSpinBox>
 #include <QtWidgets/QTabWidget>
-#include <QtWidgets/QTreeWidget>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
+#include "GameObjectTreeInspector.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -40,7 +40,7 @@ class Ui_HierarchyViewer
 {
 public:
     QVBoxLayout *verticalLayout;
-    QTreeWidget *treeWidget;
+    GameObjectTreeInspector *treeWidget;
     QTabWidget *tabWidget;
     QWidget *TransformTab;
     QVBoxLayout *verticalLayout_2;
@@ -380,8 +380,11 @@ public:
         HierarchyViewer->setFont(font);
         verticalLayout = new QVBoxLayout(HierarchyViewer);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
-        treeWidget = new QTreeWidget(HierarchyViewer);
+        treeWidget = new GameObjectTreeInspector(HierarchyViewer);
         treeWidget->setObjectName(QStringLiteral("treeWidget"));
+        treeWidget->setDragEnabled(true);
+        treeWidget->setDragDropMode(QAbstractItemView::InternalMove);
+        treeWidget->setAnimated(true);
 
         verticalLayout->addWidget(treeWidget);
 
@@ -1888,7 +1891,7 @@ public:
         scrollArea_5->setWidgetResizable(true);
         scrollAreaWidgetContents_5 = new QWidget();
         scrollAreaWidgetContents_5->setObjectName(QStringLiteral("scrollAreaWidgetContents_5"));
-        scrollAreaWidgetContents_5->setGeometry(QRect(0, -112, 303, 509));
+        scrollAreaWidgetContents_5->setGeometry(QRect(0, 0, 303, 509));
         verticalLayout_24 = new QVBoxLayout(scrollAreaWidgetContents_5);
         verticalLayout_24->setObjectName(QStringLiteral("verticalLayout_24"));
         gridLayout_7 = new QGridLayout();

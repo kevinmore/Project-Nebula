@@ -63,7 +63,7 @@ void PhysicsWorld::simulate(const float deltaTime)
 	}
 
 	// handle the collision detection
-	handleCollisions();
+	//handleCollisions();
 }
 
 bool PhysicsWorld::isLocked()

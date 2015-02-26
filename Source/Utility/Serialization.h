@@ -311,7 +311,7 @@ QDataStream& operator << (QDataStream& out, PuppetPtr object)
 QDataStream& operator << (QDataStream& out, GameObjectPtr object)
 {
 	out << object->objectName() << object->position() << object->rotation() << object->scale();
-
+	
 	QVector<ComponentPtr> components = object->getComponents();
 	out << components.size();
 
@@ -447,7 +447,7 @@ QDataStream& operator >> (QDataStream& in, GameObjectPtr object)
 QDataStream& operator << (QDataStream& out, ObjectManager* object)
 {
 	out << object->m_gameObjectMap.count();
-
+	
 	foreach(GameObjectPtr go, object->m_gameObjectMap)
 	{
 		out << go;

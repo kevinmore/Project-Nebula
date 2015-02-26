@@ -74,6 +74,7 @@
     <ClCompile Include="Physicis\Collision\Collider\ConvexHullCollider.cpp" />
     <ClCompile Include="Primitives\moc_Component.cc" />
     <ClCompile Include="Physicis\Entity\moc_RigidBody.cc" />
+    <ClCompile Include="UI\GameObjectTreeInspector.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Primitives\Texture.h" />
@@ -138,8 +139,8 @@
     <ClInclude Include="Primitives\GameObject.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Physicis\Particles\ParticleSystem.h" />
-    <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="UI\MainWindow.h" />
+    <ClInclude Include="UI\GameObjectTreeInspector.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="UI\HierarchyWidget.ui" />
@@ -153,5 +154,6 @@
   <ItemGroup>
     <QtMOC Include="UI\HierarchyWidget.h" />
     <QtMOC Include="Physicis\Entity\RigidBody.h" />
+    <QtMOC Include="Scene\Scene.h" />
   </ItemGroup>
 </Project>

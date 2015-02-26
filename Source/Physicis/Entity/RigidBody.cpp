@@ -307,18 +307,21 @@ void RigidBody::setMotionType_SLOT( const QString& type )
 	{
 		model->setCurrentBoundingVolume(model->getBoundingBox());
 		attachBroadPhaseCollider(model->getCurrentBoundingVolume());
+		model->getCurrentBoundingVolume()->setColor(Qt::green);
 		setMotionType(MOTION_BOX_INERTIA);
 	}
 	else if (type == "Sphere")
 	{
 		model->setCurrentBoundingVolume(model->getBoundingSphere());
 		attachBroadPhaseCollider(model->getCurrentBoundingVolume());
+		model->getCurrentBoundingVolume()->setColor(Qt::green);
 		setMotionType(MOTION_SPHERE_INERTIA);
 	}
 	else if (type == "Fixed")
 	{
 		model->setCurrentBoundingVolume(model->getBoundingBox());
 		attachBroadPhaseCollider(model->getCurrentBoundingVolume());
+		model->getCurrentBoundingVolume()->setColor(Qt::darkMagenta);
 		setMotionType(MOTION_FIXED); // specify the motion type here
 	}
 

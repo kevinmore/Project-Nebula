@@ -15,6 +15,9 @@ HierarchyWidget::HierarchyWidget(Scene* scene, Canvas* canvas, QWidget *parent)
 	setMaximumWidth(380);
 
 	ui->setupUi(this);
+	ui->treeWidget->setScene(scene);
+	ui->treeWidget->setContainerWidget(this);
+
 	// connection to a ray casting function in the scene
 	connect(m_canvas, SIGNAL(objectPicked(GameObjectPtr)), this, SLOT(onObjectPicked(GameObjectPtr)));
 	

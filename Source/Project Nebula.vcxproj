@@ -34,6 +34,7 @@
     <ClCompile Include="Scene\moc_Light.cc" />
     <ClCompile Include="Scene\ShadingTechniques\moc_ShadingTechnique.cc" />
     <ClCompile Include="Primitives\Transform.cpp" />
+    <ClCompile Include="UI\GameObjectTreeInspector.cpp" />
     <ClCompile Include="Utility\AssimpThread.cpp" />
     <ClCompile Include="Physicis\World\PhysicsWorldConfig.cpp" />
     <ClCompile Include="Physicis\World\PhysicsWorld.cpp" />
@@ -108,6 +109,7 @@
     <ClInclude Include="Physicis\Collision\Collider\SphereCollider.h" />
     <ClInclude Include="Primitives\Transform.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="UI\GameObjectTreeInspector.h" />
     <ClInclude Include="Utility\AssimpThread.h" />
     <ClInclude Include="UI\Canvas.h" />
     <QtMOC Include="UI\HierarchyWidget.h" />
@@ -132,7 +134,7 @@
     <ClInclude Include="Utility\LoaderThread.h" />
     <ClInclude Include="Scene\Managers\ObjectManager.h" />
     <ClInclude Include="Scene\RiggedModel.h" />
-    <ClInclude Include="Scene\Scene.h" />
+    <QtMOC Include="Scene\Scene.h" />
     <ClInclude Include="Scene\ShadingTechniques\ShadingTechnique.h" />
     <ClInclude Include="Animation\Rig\Skeleton.h" />
     <ClInclude Include="Scene\ShadingTechniques\Technique.h" />

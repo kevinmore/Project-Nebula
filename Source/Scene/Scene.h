@@ -61,8 +61,8 @@ public slots:
 	void showOpenSceneDialog();
 	void showSaveSceneDialog();
 	void modelLoaded();
-	GameObjectPtr createEmptyGameObject(const QString& name = "Game Object");
-	GameObjectPtr createParticleSystem(const QString& parentName = "Scene Root");
+	GameObjectPtr createEmptyGameObject(const QString& name = "Game Object", GameObject* parent = 0);
+	GameObjectPtr createParticleSystem(GameObject* parent = 0);
 	GameObjectPtr createLight(GameObject* parent = 0);
 	RigidBodyPtr createRigidBody(GameObject* objectToAttach);
 
