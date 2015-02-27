@@ -743,7 +743,7 @@ public:
         scrollArea_3->setWidgetResizable(true);
         scrollAreaWidgetContents_3 = new QWidget();
         scrollAreaWidgetContents_3->setObjectName(QStringLiteral("scrollAreaWidgetContents_3"));
-        scrollAreaWidgetContents_3->setGeometry(QRect(0, 0, 336, 380));
+        scrollAreaWidgetContents_3->setGeometry(QRect(0, 0, 336, 214));
         verticalLayout_3 = new QVBoxLayout(scrollAreaWidgetContents_3);
         verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
         horizontalLayout_36 = new QHBoxLayout();
@@ -1690,7 +1690,7 @@ public:
         scrollArea_4->setWidgetResizable(true);
         scrollAreaWidgetContents_4 = new QWidget();
         scrollAreaWidgetContents_4->setObjectName(QStringLiteral("scrollAreaWidgetContents_4"));
-        scrollAreaWidgetContents_4->setGeometry(QRect(0, 0, 320, 397));
+        scrollAreaWidgetContents_4->setGeometry(QRect(0, 0, 197, 232));
         verticalLayout_16 = new QVBoxLayout(scrollAreaWidgetContents_4);
         verticalLayout_16->setObjectName(QStringLiteral("verticalLayout_16"));
         gridLayout_2 = new QGridLayout();
@@ -1999,7 +1999,7 @@ public:
         doubleSpinBox_RigidBodySizeX->setSizePolicy(sizePolicy2);
         doubleSpinBox_RigidBodySizeX->setMinimumSize(QSize(0, 0));
         doubleSpinBox_RigidBodySizeX->setDecimals(2);
-        doubleSpinBox_RigidBodySizeX->setMinimum(0);
+        doubleSpinBox_RigidBodySizeX->setMinimum(0.01);
         doubleSpinBox_RigidBodySizeX->setMaximum(100000);
         doubleSpinBox_RigidBodySizeX->setSingleStep(0.1);
         doubleSpinBox_RigidBodySizeX->setValue(1);
@@ -2021,7 +2021,7 @@ public:
         sizePolicy2.setHeightForWidth(doubleSpinBox_RigidBodySizeY->sizePolicy().hasHeightForWidth());
         doubleSpinBox_RigidBodySizeY->setSizePolicy(sizePolicy2);
         doubleSpinBox_RigidBodySizeY->setDecimals(2);
-        doubleSpinBox_RigidBodySizeY->setMinimum(0);
+        doubleSpinBox_RigidBodySizeY->setMinimum(0.01);
         doubleSpinBox_RigidBodySizeY->setMaximum(100000);
         doubleSpinBox_RigidBodySizeY->setSingleStep(0.1);
         doubleSpinBox_RigidBodySizeY->setValue(1);
@@ -2043,7 +2043,7 @@ public:
         sizePolicy2.setHeightForWidth(doubleSpinBox_RigidBodySizeZ->sizePolicy().hasHeightForWidth());
         doubleSpinBox_RigidBodySizeZ->setSizePolicy(sizePolicy2);
         doubleSpinBox_RigidBodySizeZ->setDecimals(2);
-        doubleSpinBox_RigidBodySizeZ->setMinimum(0);
+        doubleSpinBox_RigidBodySizeZ->setMinimum(0.01);
         doubleSpinBox_RigidBodySizeZ->setMaximum(100000);
         doubleSpinBox_RigidBodySizeZ->setSingleStep(0.1);
         doubleSpinBox_RigidBodySizeZ->setValue(1);
@@ -2068,7 +2068,7 @@ public:
         doubleSpinBox_RigidBodyRadius = new QDoubleSpinBox(groupBox_9);
         doubleSpinBox_RigidBodyRadius->setObjectName(QStringLiteral("doubleSpinBox_RigidBodyRadius"));
         doubleSpinBox_RigidBodyRadius->setDecimals(2);
-        doubleSpinBox_RigidBodyRadius->setMinimum(0);
+        doubleSpinBox_RigidBodyRadius->setMinimum(0.01);
         doubleSpinBox_RigidBodyRadius->setMaximum(100000);
         doubleSpinBox_RigidBodyRadius->setSingleStep(0.1);
         doubleSpinBox_RigidBodyRadius->setValue(1);

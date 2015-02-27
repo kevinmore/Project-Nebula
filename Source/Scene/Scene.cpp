@@ -195,17 +195,25 @@ void Scene::resetToDefaultScene()
 // 	temp->setScale(0.001);
 // 	LoaderThread backup(this, "../Resource/Models/Common/sphere.obj", temp, m_sceneRootNode);
 
-	// load the floor
-	GameObjectPtr floorRef(new GameObject(this));
-	LoaderThread floorLoader(this, "../Resource/Models/Common/DemoRoom/WoodenFloor.obj", floorRef, m_sceneRootNode);
-	GameObjectPtr floorObject = m_objectManager->getGameObject("WoodenFloor");
-	ModelPtr floor = floorObject ->getComponent("Model").dynamicCast<IModel>();
-	RigidBodyPtr floorBody = RigidBodyPtr(new RigidBody());
-	floorBody->setMotionType(RigidBody::MOTION_FIXED);
-	floorBody->attachBroadPhaseCollider(floor->getBoundingBox());
-	floorBody->attachNarrowPhaseCollider(floor->getConvexHullCollider());
-	floorObject->attachComponent(floorBody);
-	m_physicsWorld->addEntity(floorBody.data());
+	if (m_currentSceneFile.isEmpty())
+	{
+		// load the floor
+		GameObjectPtr floorRef(new GameObject(this));
+		LoaderThread floorLoader(this, "../Resource/Models/Common/DemoRoom/WoodenFloor.obj", floorRef, m_sceneRootNode);
+		GameObjectPtr floorObject = m_objectManager->getGameObject("WoodenFloor");
+		ModelPtr floor = floorObject ->getComponent("Model").dynamicCast<IModel>();
+		RigidBodyPtr floorBody = RigidBodyPtr(new RigidBody());
+		floorBody->setMotionType(RigidBody::MOTION_FIXED);
+		floorBody->attachBroadPhaseCollider(floor->getBoundingBox());
+		floorBody->attachNarrowPhaseCollider(floor->getBoundingBox());
+		floorObject->attachComponent(floorBody);
+		m_physicsWorld->addEntity(floorBody.data());
+	}
+	else
+	{
+		loadScene(m_currentSceneFile);
+	}
+	
 // 
 // 	GameObjectPtr go = createEmptyGameObject("Cube1");
 // 	go->setRotation(45, 45, 0);
@@ -272,7 +280,10 @@ void Scene::showOpenSceneDialog()
 		tr("Scene File (*.nebula)"));
 
 	if (!fileName.isEmpty())
+	{
+		m_currentSceneFile = fileName;
 		loadScene(fileName);
+	}
 }
 
 void Scene::showSaveSceneDialog()
@@ -388,16 +399,15 @@ RigidBodyPtr Scene::createRigidBody( GameObject* objectToAttach )
 	}
 
 	// check if the object has a mesh reference
-	if (!objectToAttach->getComponent("Model"))
+	ModelPtr model = objectToAttach->getComponent("Model").dynamicCast<IModel>();
+	if (!model)
 	{
 		qWarning() << "A Rigid Body should have a mesh representation. Please load a model first.";
 		return rb;
 	}
 	
 	rb.reset(new RigidBody());
-	Transform trans = objectToAttach->getTransform();
-	rb->setTransform(trans);
-	ModelPtr model = objectToAttach->getComponent("Model").dynamicCast<IModel>();
+	rb->setTransform(objectToAttach->getTransform());
 	
 	// attach the current bounding volume (sphere or box) by system settings
 	rb->attachBroadPhaseCollider(model->getCurrentBoundingVolume());

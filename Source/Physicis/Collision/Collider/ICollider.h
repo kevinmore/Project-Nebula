@@ -34,11 +34,16 @@ public:
 	inline RigidBody* getRigidBody() const { return m_rigidBody; }
 	void setRigidBody(RigidBody* rb) { m_rigidBody = rb; }
 
+	uint getCollisionCount() { return m_collisionCount; }
+	void resetCollisionCount() { m_collisionCount = 0; }
+	void increaseCollisionCount() { ++m_collisionCount; }
 
 	virtual QString className() { return "Collider"; }
 	virtual void render(const float currentTime);
 
+	void setMotionColor(const QColor& col);
 	void setColor(const QColor& col);
+	void resetColor();
 	Scene* getScene() const { return m_scene; }
 
 	inline const mat4& getTransformMatrix() { return m_transformMatrix; }
@@ -66,6 +71,7 @@ protected:
 	mat4 m_transformMatrix;
 	float m_margin;
 	ColliderType m_colliderType;
+	mutable uint m_collisionCount;
 
 	/*
 	* For rendering
@@ -77,6 +83,7 @@ protected:
 	ShadingTechniquePtr m_renderingEffect;
 	QVector<MeshPtr> m_meshes;
 	Scene* m_scene;
+	QColor m_motionColor;
 };
 
 typedef QSharedPointer<ICollider> ColliderPtr;

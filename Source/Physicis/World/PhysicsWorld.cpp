@@ -56,6 +56,7 @@ void PhysicsWorld::simulate(const float deltaTime)
 	foreach(PhysicsWorldObject* entity, m_entityList)
 	{
 		RigidBody* rb = dynamic_cast<RigidBody*>(entity);
+		//boarderCheck(rb);
 		if(rb->getMotionType() != RigidBody::MOTION_FIXED)
 		{
 			rb->update(deltaTime);
@@ -63,7 +64,7 @@ void PhysicsWorld::simulate(const float deltaTime)
 	}
 
 	// handle the collision detection
-	//handleCollisions();
+	handleCollisions();
 }
 
 bool PhysicsWorld::isLocked()
@@ -147,11 +148,11 @@ void PhysicsWorld::removeBroadPhaseCollider( ICollider* collider )
 
 void PhysicsWorld::generateCollisionPairs()
 {
-	m_collisionPairs.clear();
+	m_broadPhaseCollisionPairs.clear();
 
 	for (int i = 0; i < m_broadPhaseColliderList.size() - 1; ++i)
 		for (int j = i + 1; j < m_broadPhaseColliderList.size(); ++j)
-			m_collisionPairs << CollisionPairPtr(new CollisionPair(m_broadPhaseColliderList[i], m_broadPhaseColliderList[j]));
+			m_broadPhaseCollisionPairs << CollisionPairPtr(new CollisionPair(m_broadPhaseColliderList[i], m_broadPhaseColliderList[j]));
 }
 
 int PhysicsWorld::entitiesCount()
@@ -161,14 +162,10 @@ int PhysicsWorld::entitiesCount()
 
 void PhysicsWorld::handleCollisions()
 {
-	foreach(CollisionPairPtr pair, m_collisionPairs)
+	foreach(CollisionPairPtr pair, m_broadPhaseCollisionPairs)
 	{
 		ICollider* cA = pair->pColliderA;
 		ICollider* cB = pair->pColliderB;
-
-		// mark the bounding volume as green
-		cA->setColor(Qt::green);
-		cB->setColor(Qt::green);
 
 		// collision detection on broad phase
 		BroadPhaseCollisionFeedback broadPhaseResult = cA->onBroadPhase(cB);
@@ -177,60 +174,74 @@ void PhysicsWorld::handleCollisions()
 		if (broadPhaseResult.isColliding())
 		{
 			// mark the bounding volume as red
-			cA->setColor(Qt::red);
-			cB->setColor(Qt::red);
+			cA->increaseCollisionCount();
+			cB->increaseCollisionCount();
 
 			// go to narrow phase
-			NarrowPhaseCollisionFeedback collisionInfo;
-			GJKSolver solver;
-			ColliderPtr chA = cA->getRigidBody()->getNarrowPhaseCollider();
-			ColliderPtr chB = cB->getRigidBody()->getNarrowPhaseCollider();
+			//handleNarrowPhase(pair);
+		}
+	}
 
-			// if colliding on narrow phase
-			if (solver.checkCollision(chA.data(), chB.data(), collisionInfo, true))
-			{
-				// check whether the contact point is the same as the last one
-				vec3 currentContactPoint = 0.5f * (collisionInfo.closestPntAWorld + collisionInfo.closestPntBWorld);
-				float difference = (currentContactPoint - pair->contactPoint).lengthSquared();
+	// visual representation
+	foreach(ICollider* col, m_broadPhaseColliderList)
+	{
+		if (col->getCollisionCount() > 0)
+		{
+			col->setColor(Qt::red);
+		}
+		else col->resetColor();
 
-				// if the difference is too small, means the contact point is the same, ignore it
-				// only deal with the case when the contact point is not the same
-				if (difference > 1e-2)
-				{
-					// get the two rigid bodies
-					RigidBody* bodyA = cA->getRigidBody();
-					RigidBody* bodyB = cB->getRigidBody();
+		col->resetCollisionCount();
+	}
+}
 
-					// update the contact point in the pair
-					pair->contactPoint = currentContactPoint;
+void PhysicsWorld::handleNarrowPhase( CollisionPairPtr pair )
+{
+	NarrowPhaseCollisionFeedback collisionInfo;
+	GJKSolver solver;
+	// get the two rigid bodies
+	RigidBody* bodyA = pair->pColliderA->getRigidBody();
+	RigidBody* bodyB = pair->pColliderB->getRigidBody();
 
-					// render the contact point
-// 					Scene* scene = bodyA->gameObject()->getScene();
-// 					GameObjectPtr go = scene->createEmptyGameObject("Contact Point");
-// 					go->setPosition(currentContactPoint);
-// 					go->setScale(0.05);
-// 					LoaderThread loader(scene, "../Resource/Models/Common/sphere.obj", go, scene->sceneRoot(), false);
-// 					ModelPtr model = go->getComponent("Model").dynamicCast<IModel>();
-// 					ShadingTechniquePtr tech = model->renderingEffect();
-//  				tech->enable();
-// 					tech->setMatEmissiveColor(Qt::red);
+	// if colliding on narrow phase
+	if (solver.checkCollision(bodyA->getNarrowPhaseCollider().data(), bodyB->getNarrowPhaseCollider().data(), collisionInfo, true))
+	{
+		// check whether the contact point is the same as the last one
+		vec3 currentContactPoint = 0.5f * (collisionInfo.closestPntAWorld + collisionInfo.closestPntBWorld);
+		float difference = (currentContactPoint - pair->contactPoint).lengthSquared();
 
-					vec3 n = collisionInfo.contactNormalWorld;
+		// if the difference is too small, means the contact point is the same, ignore it
+		// only deal with the case when the contact point is not the same
+		if (difference > 1e-2)
+		{
+			// update the contact point in the pair
+			pair->contactPoint = currentContactPoint;
 
-					// find the exact Time of Impact (TOI) and back track each rigid body
-					//backToTimeOfImpact(bodyA, bodyB);
-// 					bodyA->backTrack(m_timeStep * 0.5f);
-// 					bodyB->backTrack(m_timeStep * 0.5f);
-					ImpulsePair impuseMagnitudePair = computeContactImpulseMagnitude(&collisionInfo);
+			// render the contact point
+			// 					Scene* scene = bodyA->gameObject()->getScene();
+			// 					GameObjectPtr go = scene->createEmptyGameObject("Contact Point");
+			// 					go->setPosition(currentContactPoint);
+			// 					go->setScale(0.05);
+			// 					LoaderThread loader(scene, "../Resource/Models/Common/sphere.obj", go, scene->sceneRoot(), false);
+			// 					ModelPtr model = go->getComponent("Model").dynamicCast<IModel>();
+			// 					ShadingTechniquePtr tech = model->renderingEffect();
+			//  				tech->enable();
+			// 					tech->setMatEmissiveColor(Qt::red);
 
- 					// apply impulse based on the direction
-					if (bodyA->getMotionType() != RigidBody::MOTION_FIXED)
-						bodyA->applyPointImpulse(-impuseMagnitudePair.magnitudeA * n, collisionInfo.closestPntAWorld);
+			vec3 n = collisionInfo.contactNormalWorld;
 
-					if (bodyB->getMotionType() != RigidBody::MOTION_FIXED)
-						bodyB->applyPointImpulse(impuseMagnitudePair.magnitudeB * n, collisionInfo.closestPntBWorld);
-				}
-			}
+			// find the exact Time of Impact (TOI) and back track each rigid body
+			//backToTimeOfImpact(bodyA, bodyB);
+			// 					bodyA->backTrack(m_timeStep * 0.5f);
+			// 					bodyB->backTrack(m_timeStep * 0.5f);
+			ImpulsePair impuseMagnitudePair = computeContactImpulseMagnitude(&collisionInfo);
+
+			// apply impulse based on the direction
+			if (bodyA->getMotionType() != RigidBody::MOTION_FIXED)
+				bodyA->applyPointImpulse(-impuseMagnitudePair.magnitudeA * n, collisionInfo.closestPntAWorld);
+
+			if (bodyB->getMotionType() != RigidBody::MOTION_FIXED)
+				bodyB->applyPointImpulse(impuseMagnitudePair.magnitudeB * n, collisionInfo.closestPntBWorld);
 		}
 	}
 }
@@ -299,7 +310,7 @@ void PhysicsWorld::reset()
 	lock();
 	m_entityList.clear();
 	m_broadPhaseColliderList.clear();
-	m_collisionPairs.clear();
+	m_broadPhaseCollisionPairs.clear();
 }
 
 void PhysicsWorld::backToTimeOfImpact( RigidBody* rb1, RigidBody* rb2 )

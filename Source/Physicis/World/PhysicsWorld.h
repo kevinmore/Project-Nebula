@@ -61,6 +61,7 @@ public:
 	void removeBroadPhaseCollider(ICollider* collider);
 
 	void generateCollisionPairs();
+	void handleNarrowPhase(CollisionPairPtr pair);
 
 	int entitiesCount();
 
@@ -78,7 +79,7 @@ private:
 	bool m_locked;
 	QList<PhysicsWorldObject*> m_entityList;
 	QVector<ICollider*> m_broadPhaseColliderList;
-	QList<CollisionPairPtr> m_collisionPairs;
+	QList<CollisionPairPtr> m_broadPhaseCollisionPairs;
 
 	void boarderCheck(RigidBody* rb);
 };

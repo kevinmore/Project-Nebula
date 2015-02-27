@@ -87,7 +87,7 @@ private:
 	void initPhysicsModule();
 
 	mutable bool m_bPhysicsPaused, m_bStepPhysics;
-	
+	QString m_currentSceneFile;
 	GameObject* m_sceneRootNode;
 
 	Camera* m_camera;

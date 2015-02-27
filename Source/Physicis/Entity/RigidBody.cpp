@@ -64,8 +64,6 @@ void RigidBody::computeInertiaTensor()
 			for (int j = 0; j < 3; ++j)
 				m_inertiaTensorInv[i][j] = 0;
 	}
-
-	qDebug() << Converter::toQtMat3(m_inertiaTensorInv);
 }
 
 void RigidBody::update( const float dt )
@@ -87,8 +85,7 @@ void RigidBody::update( const float dt )
 	float angle = m_angularVelocity.length();
 	if (angle != 0.0f)
 	{
-		vec3 axis = m_angularVelocity;
-		axis /= angle;
+		vec3 axis = m_angularVelocity / angle;
 		m_deltaRotation = Converter::toQtQuat(glm::angleAxis(angle * dt, Converter::toGLMVec3(axis)));
 		m_transform.rotate(m_deltaRotation);
 	}
@@ -208,6 +205,11 @@ void RigidBody::setFriction( float newFriction )
 
 void RigidBody::attachBroadPhaseCollider( ColliderPtr col )
 {
+	// if the collider is the same
+	if (col == m_BroadPhaseCollider)
+	{
+		return;
+	}
 	// clear the previous reference
 	if (m_BroadPhaseCollider)
 	{
@@ -217,6 +219,11 @@ void RigidBody::attachBroadPhaseCollider( ColliderPtr col )
 
 	m_BroadPhaseCollider = col;
 	m_BroadPhaseCollider->setRigidBody(this);
+
+	if (m_world)
+	{
+		m_world->addBroadPhaseCollider(m_BroadPhaseCollider.data());
+	}
 }
 
 void RigidBody::attachNarrowPhaseCollider( ColliderPtr col )
@@ -315,28 +322,28 @@ void RigidBody::setMotionType_SLOT( const QString& type )
 
 	if (type == "Box")
 	{
-		model->setCurrentBoundingVolume(model->getBoundingBox());
-		attachBroadPhaseCollider(model->getCurrentBoundingVolume());
-		model->getCurrentBoundingVolume()->setColor(Qt::green);
 		setMotionType(MOTION_BOX_INERTIA);
+		model->setCurrentBoundingVolume(model->getBoundingBox());
+		model->getCurrentBoundingVolume()->setMotionColor(Qt::green);
 	}
 	else if (type == "Sphere")
 	{
-		model->setCurrentBoundingVolume(model->getBoundingSphere());
-		attachBroadPhaseCollider(model->getCurrentBoundingVolume());
-		model->getCurrentBoundingVolume()->setColor(Qt::green);
 		setMotionType(MOTION_SPHERE_INERTIA);
+		model->setCurrentBoundingVolume(model->getBoundingSphere());
+		model->getCurrentBoundingVolume()->setMotionColor(Qt::green);
 	}
 	else if (type == "Fixed")
 	{
+		setMotionType(MOTION_FIXED);
 		model->setCurrentBoundingVolume(model->getBoundingBox());
-		attachBroadPhaseCollider(model->getCurrentBoundingVolume());
-		model->getCurrentBoundingVolume()->setColor(Qt::darkMagenta);
-		setMotionType(MOTION_FIXED); // specify the motion type here
+		model->getCurrentBoundingVolume()->setMotionColor(Qt::darkMagenta);
+
+		// set the position, beacuse we're not updating the collider in the rigid body update() function
+		model->getCurrentBoundingVolume()->setPosition(getPosition());
 	}
 
 	// add the new collider to the physics world
-	m_world->addBroadPhaseCollider(m_BroadPhaseCollider.data());
+	attachBroadPhaseCollider(model->getCurrentBoundingVolume());
 }
 
 void RigidBody::setMass_SLOT( double val )

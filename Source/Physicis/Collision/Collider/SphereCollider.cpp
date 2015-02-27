@@ -50,11 +50,13 @@ BroadPhaseCollisionFeedback SphereCollider::onBroadPhase( ICollider* other )
 		//qWarning() << "Collision detection between sphere and other colliders are not implemented yet.";
 		return BroadPhaseCollisionFeedback();
 	}
-	SphereCollider* sp = dynamic_cast<SphereCollider*>(other);
-	float radiusSum = m_sphereShape.getRadius() + sp->getRadius();
-	float centerDisSqaure = (m_position - sp->getPosition()).lengthSquared();
 
-	return BroadPhaseCollisionFeedback(centerDisSqaure < radiusSum, centerDisSqaure - radiusSum * radiusSum);
+	SphereCollider* sp = dynamic_cast<SphereCollider*>(other);
+	float radiusSumSqured = getRadius() + sp->getRadius();
+	radiusSumSqured *= radiusSumSqured;
+	float centerDisSqaure = (getPosition() - sp->getPosition()).lengthSquared();
+
+	return BroadPhaseCollisionFeedback(centerDisSqaure < radiusSumSqured, centerDisSqaure - radiusSumSqured);
 }
 
 float SphereCollider::getRadius() const

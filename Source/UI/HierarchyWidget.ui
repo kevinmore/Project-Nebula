@@ -625,7 +625,7 @@
             <x>0</x>
             <y>0</y>
             <width>336</width>
-            <height>380</height>
+            <height>214</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -2211,8 +2211,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>320</width>
-            <height>397</height>
+            <width>197</width>
+            <height>232</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_16">
@@ -2816,7 +2816,7 @@
                      <number>2</number>
                     </property>
                     <property name="minimum">
-                     <double>0.000000000000000</double>
+                     <double>0.010000000000000</double>
                     </property>
                     <property name="maximum">
                      <double>99999.990000000005239</double>
@@ -2855,7 +2855,7 @@
                      <number>2</number>
                     </property>
                     <property name="minimum">
-                     <double>0.000000000000000</double>
+                     <double>0.010000000000000</double>
                     </property>
                     <property name="maximum">
                      <double>99999.990000000005239</double>
@@ -2894,7 +2894,7 @@
                      <number>2</number>
                     </property>
                     <property name="minimum">
-                     <double>0.000000000000000</double>
+                     <double>0.010000000000000</double>
                     </property>
                     <property name="maximum">
                      <double>99999.990000000005239</double>
@@ -2935,7 +2935,7 @@
                    <number>2</number>
                   </property>
                   <property name="minimum">
-                   <double>0.000000000000000</double>
+                   <double>0.010000000000000</double>
                   </property>
                   <property name="maximum">
                    <double>99999.990000000005239</double>

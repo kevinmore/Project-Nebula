@@ -8,7 +8,9 @@ ICollider::ICollider( const vec3& center, Scene* scene )
 	  m_position(center),
 	  m_margin(0.0001f),
 	  m_rigidBody(NULL),
-	  m_scene(scene)
+	  m_scene(scene),
+	  m_motionColor(Qt::green),
+	  m_collisionCount(0)
 {
 	init();
 }
@@ -19,8 +21,7 @@ void ICollider::init()
 
 	m_renderingEffect = ShadingTechniquePtr(new ShadingTechnique("bounding_volume"));
 	// the initial color is green, when it collides, it goes to red
-	m_renderingEffect->enable();
-	m_renderingEffect->setMatEmissiveColor(Qt::green);
+	resetColor();
 }
 
 
@@ -73,4 +74,15 @@ void ICollider::setColor(const QColor& col)
 {
 	m_renderingEffect->enable();
 	m_renderingEffect->setMatEmissiveColor(col);
+}
+
+void ICollider::setMotionColor( const QColor& col )
+{
+	m_motionColor = col;
+	setColor(col);
+}
+
+void ICollider::resetColor()
+{
+	setColor(m_motionColor);
 }
