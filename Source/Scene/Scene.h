@@ -62,8 +62,8 @@ public slots:
 	void showSaveSceneDialog();
 	void modelLoaded();
 	GameObjectPtr createEmptyGameObject(const QString& name = "Game Object", GameObject* parent = 0);
-	GameObjectPtr createParticleSystem(GameObject* parent = 0);
-	GameObjectPtr createLight(GameObject* parent = 0);
+	ParticleSystemPtr createParticleSystem(GameObject* objectToAttach = 0);
+	LightPtr createLight(GameObject* objectToAttach = 0);
 	RigidBodyPtr createRigidBody(GameObject* objectToAttach);
 
 	void toggleSkybox(bool state);

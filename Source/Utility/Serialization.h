@@ -383,7 +383,6 @@ QDataStream& operator >> (QDataStream& in, GameObjectPtr object)
 			ParticleSystemPtr ps(new ParticleSystem(object->getScene()));
 			object->attachComponent(ps);
 			ps->initParticleSystem();
-
 			in >> ps;
 		}
 		else if (className == "Light")

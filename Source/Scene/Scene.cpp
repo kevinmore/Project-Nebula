@@ -186,8 +186,8 @@ void Scene::resetToDefaultScene()
 	m_camera->resetCamera();
 
 	// Initializing the lights
-	GameObjectPtr lightObject = createLight();
-	lightObject->setFixedPositionY(2);
+	LightPtr light = createLight();
+	light->gameObject()->setFixedPositionY(2);
 
 	// back up
 // 	GameObjectPtr temp(new GameObject(this));
@@ -311,6 +311,9 @@ void Scene::loadScene( QString& fileName )
 	toggleDebugMode(false);
 
 	qDebug() << "Opened scene from" << fileName;
+
+	// make sure to send out this signal
+	emit updateHierarchy();
 }
 
 void Scene::saveScene( QString& fileName )
@@ -348,31 +351,29 @@ GameObjectPtr Scene::createEmptyGameObject(const QString& name, GameObject* pare
 	return go;
 }
 
-GameObjectPtr Scene::createParticleSystem(GameObject* parent)
+ParticleSystemPtr Scene::createParticleSystem(GameObject* objectToAttach)
 {
-	// check if the parent exist
-	GameObjectPtr ref = createEmptyGameObject("Particle System", parent);
+	GameObjectPtr ref = createEmptyGameObject("Particle System", objectToAttach);
 
 	// particle system
 	ParticleSystemPtr ps(new ParticleSystem(this));
 	ref->attachComponent(ps);
 	ps->initParticleSystem();
-	ps->assingCollisionObject(m_objectManager->getGameObject("hexagonFloor"));
+	ps->assingCollisionObject(m_objectManager->getGameObject("Floor"));
 
-	return ref;
+	return ps;
 }
 
-GameObjectPtr Scene::createLight( GameObject* parent )
+LightPtr Scene::createLight( GameObject* objectToAttach )
 {
-	// check if the parent exist
-	GameObjectPtr ref = createEmptyGameObject("Light", parent);
+	GameObjectPtr ref = createEmptyGameObject("Light", objectToAttach);
 
 	// light
 	LightPtr l(new Light(this, ref.data()));
 	addLight(l);
 	ref->attachComponent(l);
 
-	return ref;
+	return l;
 }
 
 RigidBodyPtr Scene::createRigidBody( GameObject* objectToAttach )
