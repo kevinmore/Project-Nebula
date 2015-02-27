@@ -56,7 +56,7 @@ void PhysicsWorld::simulate(const float deltaTime)
 	foreach(PhysicsWorldObject* entity, m_entityList)
 	{
 		RigidBody* rb = dynamic_cast<RigidBody*>(entity);
-		//boarderCheck(rb);
+		boarderCheck(rb);
 		if(rb->getMotionType() != RigidBody::MOTION_FIXED)
 		{
 			rb->update(deltaTime);

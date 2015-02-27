@@ -48,7 +48,7 @@ BroadPhaseCollisionFeedback BoxCollider::onBroadPhase( ICollider* other )
 {
 	if (other->getColliderType() != ICollider::COLLIDER_BOX)
 	{
-		qWarning() << "Collision detection between OBB and other colliders are not implemented yet.";
+		//qWarning() << "Collision detection between OBB and other colliders are not implemented yet.";
 		return BroadPhaseCollisionFeedback();
 	}
 	BoxCollider* b = dynamic_cast<BoxCollider*>(other);
