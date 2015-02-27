@@ -80,7 +80,10 @@ void RigidBody::update( const float dt )
 
 	// update the angular properties
 	m_lastAngularVelocity = m_angularVelocity;
-	m_deltaRotation = quat::fromAxisAndAngle(m_angularVelocity, qRadiansToDegrees(m_angularVelocity.length() * dt));
+	float angle = m_angularVelocity.length();
+	m_angularVelocity /= angle;
+	m_deltaRotation = Converter::toQtQuat(glm::angleAxis(angle * dt, Converter::toGLMVec3(m_angularVelocity)));
+	//m_deltaRotation = quat::fromAxisAndAngle(m_angularVelocity, qRadiansToDegrees(m_angularVelocity.length() * dt));
 	m_transform.rotate(m_deltaRotation);
 
 	// sync the center position for the collider
