@@ -15,7 +15,7 @@ ConvexShape::ConvexShape( const QVector<vec3>& vertices )
 	// generate a convex hull using QHull
 	// use stdout and stderr as FILE pointer for debug
 	//FILE* p = fopen("convexhull.txt", "w");
-	qh_new_qhull(3, vertices.size(), inputBuffer.data(), 0, "qhull Ft", 0, 0);
+	qh_new_qhull(3, vertices.size(), inputBuffer.data(), 0, "qhull Ft", stdout, stdout);
 	//fclose(p);
 
 	// read the output to generate a vertex buffer and indices buffer for rendering
@@ -44,6 +44,11 @@ ConvexShape::ConvexShape( const QVector<vec3>& vertices )
 		m_vertices << vec3(list->point[0], list->point[1], list->point[2]);
 		list = list->next;
 	}
+
+	// Delaunay triangulation
+// 	QVector<double> convexBuffer;
+// 	foreach(vec3 v, m_vertices) convexBuffer << v.x() << v.y() << v.z();
+// 	qh_setdelaunay(3, m_vertices.size(), convexBuffer.data());
 
 	// free memory
 	qh_freeqhull(!qh_ALL);
