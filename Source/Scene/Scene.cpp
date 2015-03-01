@@ -174,48 +174,6 @@ void Scene::resetToDefaultScene()
 		loadScene(m_currentSceneFile);
 	}
 	
-// 
-// 	GameObjectPtr go = createEmptyGameObject("Cube1");
-// 	go->setRotation(45, 45, 0);
-// 	LoaderThread loader(this, "../Resource/Models/Common/woodenbox.obj", go, m_sceneRootNode, false);
-// 	RigidBodyPtr rb(new RigidBody());
-// 	rb->setPosition(vec3(-1, 1, 0));
-// 	rb->setGravityFactor(0.0f);
-// 	rb->setLinearVelocity(vec3(1, 0, 0));
-// 	ModelPtr model = m_objectManager->getGameObject("Cube1")->getComponent("Model").dynamicCast<IModel>();
-// 	rb->attachCollider(model->getBoundingBox());
-// 	model->getConvexHullCollider()->setRigidBody(rb.data());
-// 	go->attachComponent(rb);
-// 	m_physicsWorld->addEntity(rb.data());
-// 
-// 	GameObjectPtr go2 = createEmptyGameObject("Cube2");
-// 	LoaderThread loader2(this, "../Resource/Models/Common/woodenbox.obj", go2, m_sceneRootNode, false);
-// 	//LoaderThread loader2(this, "../Resource/Models/static/dragonTextured.obj", go2, m_sceneRootNode, false);
-// 	RigidBodyPtr rb2(new RigidBody());
-// 	rb2->setPosition(vec3(1, 1, 0));
-// 	rb2->setGravityFactor(0.0f);
-// 	rb2->setLinearVelocity(vec3(-1, 0, 0));
-// 	rb2->setAngularVelocity(vec3(0, 1, 0));
-// 	ModelPtr model2 = m_objectManager->getGameObject("Cube2")->getComponent("Model").dynamicCast<IModel>();
-// 	rb2->attachCollider(model2->getBoundingBox());
-// 	model2->getConvexHullCollider()->setRigidBody(rb2.data());
-// 	go2->attachComponent(rb2);
-// 	m_physicsWorld->addEntity(rb2.data());
-
-
-// 	GameObjectPtr go2 = createEmptyGameObject("Cube2");
-// 	LoaderThread loader2(this, "../Resource/Models/Common/woodenbox.obj", go2, m_sceneRootNode, false);
-// 	RigidBodyPtr rb2(new RigidBody());
-// 	rb2->setPosition(vec3(0, 1, 0));
-// 	//rb2->setGravityFactor(0.0f);
-// 	//rb2->setAngularVelocity(vec3(0, 1, 0));
-// 	//rb2->applyAngularImpulse(vec3(0, 1 ,0));
-// 	//rb2->applyPointImpulse(vec3(0, 0, -1), vec3(0.5, 1.5, 0.5));
-// 	ModelPtr model2 = m_objectManager->getGameObject("Cube2")->getComponent("Model").dynamicCast<IModel>();
-// 	rb2->attachBroadPhaseCollider(model2->getBoundingBox());
-// 	rb2->attachNarrowPhaseCollider(model2->getConvexHullCollider());
-// 	go2->attachComponent(rb2);
-// 	m_physicsWorld->addEntity(rb2.data());
 }
 
 void Scene::showLoadModelDialog()

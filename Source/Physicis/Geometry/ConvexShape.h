@@ -11,11 +11,14 @@ public:
 
 	void setVertices(const QVector<vec3> vertices) { m_vertices = vertices; }
 	QVector<vec3> getVertices() const { return m_vertices; }
+	void seFaces(const QVector<vec3> faces) { m_faces = faces; }
+	QVector<vec3> getFaces() const { return m_faces; }
 
 	void setScale(const vec3& scale);
 	
 
 private:
 	QVector<vec3> m_vertices;
+	QVector<vec3> m_faces;
 };
 

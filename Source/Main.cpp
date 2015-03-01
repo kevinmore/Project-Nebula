@@ -1,4 +1,5 @@
 #include <UI/MainWindow.h>
+
 int main(int argc, char* argv[])
 {
 	Magick::InitializeMagick(*argv);

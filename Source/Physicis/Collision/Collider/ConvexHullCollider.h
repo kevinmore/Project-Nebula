@@ -16,7 +16,7 @@ public:
 	virtual vec3 getLocalSupportPoint(const vec3& dir, float margin = 0) const;
 
 protected:
-	virtual void init(){}
+	virtual void init();
 
 private:
 	ConvexShape m_convexShape;

@@ -560,6 +560,24 @@ ConvexHullCollider* ModelLoader::getConvexHullCollider()
 	vec3 center((m_maxX + m_minX) * 0.5f, (m_maxY + m_minY) * 0.5f, (m_maxZ + m_minZ) * 0.5f);
 
 	// generate a convex hull collider
+// 	QVector<vec3> verticesList;
+// 
+// 	foreach(vec3 p, m_positions)
+// 	{
+// 		bool exists = false;
+// 		// check if the vertex is unique
+// 		foreach (vec3 v, verticesList)
+// 		{
+// 			if (p == v)
+// 			{
+// 				exists = true;
+// 				break;
+// 			}
+// 		}
+// 
+// 		if(!exists) verticesList << p;
+// 		exists = false;
+// 	}
 	ConvexShape shpe(m_positions);
 	return new ConvexHullCollider(center, shpe, m_scene);
 }

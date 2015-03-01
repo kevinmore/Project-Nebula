@@ -52,23 +52,29 @@ RiggedModel::RiggedModel( const RiggedModel* orignal )
 	// copy the bounding box
 	BoxColliderPtr otherBox = orignal->getBoundingBox();
 	vec3 halfExtents = otherBox->getHalfExtents();
+
 	// reset the scale of the bounding box
 	halfExtents.setX(halfExtents.x() / scale.x());
 	halfExtents.setY(halfExtents.y() / scale.y());
 	halfExtents.setZ(halfExtents.z() / scale.z());
 	m_boundingBox  = BoxColliderPtr(new BoxCollider(otherBox->getPosition(), halfExtents, m_scene));
-	m_currentBoundingVolume = m_boundingBox;
 
 	// copy the bounding sphere
 	SphereColliderPtr otherSphere = orignal->getBoundingSphere();
 	float radius = otherSphere->getRadius() / scale.x();
 	m_boundingSpehre = SphereColliderPtr(new SphereCollider(otherSphere->getPosition(), radius, m_scene));
 
-	// copy the convexhull collider
+	// copy the convex hull collider
 	ConvexHullColliderPtr otherCH = orignal->getConvexHullCollider();
 	ConvexShape shape = otherCH->getGeometryShape();
 	m_convexHull = ConvexHullColliderPtr(new ConvexHullCollider(otherCH->getPosition(), shape, m_scene));
 	m_convexHull->getGeometryShape().setScale(scale);
+
+	// assign the current bounding volume
+	ColliderPtr currentBV = orignal->getCurrentBoundingVolume();
+	if (currentBV.dynamicCast<BoxCollider>()) m_currentBoundingVolume = m_boundingBox;
+	else if (currentBV.dynamicCast<SphereCollider>()) m_currentBoundingVolume = m_boundingSpehre;
+	else if (currentBV.dynamicCast<ConvexHullCollider>()) m_currentBoundingVolume = m_convexHull;
 }
 
 

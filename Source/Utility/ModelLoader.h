@@ -135,7 +135,7 @@ private:
 	QVector<vec2> m_texCoords;
 	QVector<vec3> m_normals;
 	QVector<vec3> m_tangents;
-	QVector<unsigned int> m_indices;
+	QVector<uint> m_indices;
 
 	/*
 	 *	Face Container (for convex shape)

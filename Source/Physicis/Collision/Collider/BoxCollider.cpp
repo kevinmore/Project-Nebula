@@ -40,7 +40,6 @@ void BoxCollider::init()
 		ModelDataPtr data = modelDataVector[i];
 		// deal with the mesh
 		MeshPtr mesh(new Mesh(data->meshData.name, data->meshData.numIndices, data->meshData.baseVertex, data->meshData.baseIndex));
-		qDebug() << data->meshData.name << data->meshData.numIndices << data->meshData.baseVertex << data->meshData.baseIndex;
 		m_meshes.push_back(mesh);
 	}
 }

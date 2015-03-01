@@ -14,12 +14,14 @@ IModel::IModel(ShadingTechniquePtr tech, const QString& fileName)
 
 	setPolygonMode(Fill);
 }
+
 IModel::~IModel() {}
 
 void IModel::init()
 {
 	Q_ASSERT(initializeOpenGLFunctions());
 }
+
 void IModel::drawElements( unsigned int index)
 {
 
@@ -74,6 +76,17 @@ SphereColliderPtr IModel::getBoundingSphere() const
 	return m_boundingSpehre;
 }
 
+void IModel::setConvexHullCollider( ConvexHullCollider* ch )
+{
+ 	m_convexHull.reset(ch);
+	m_currentBoundingVolume = m_convexHull;
+}
+
+ConvexHullColliderPtr IModel::getConvexHullCollider() const
+{
+	return m_convexHull;
+}
+
 void IModel::showBoundingVolume()
 {
 	gameObject()->attachComponent(m_currentBoundingVolume);
@@ -82,16 +95,6 @@ void IModel::showBoundingVolume()
 void IModel::hideBoundingVolume()
 {
 	gameObject()->detachComponent(m_currentBoundingVolume);
-}
-
-void IModel::setConvexHullCollider( ConvexHullCollider* ch )
-{
- 	m_convexHull.reset(ch);
-}
-
-ConvexHullColliderPtr IModel::getConvexHullCollider() const
-{
-	return m_convexHull;
 }
 
 void IModel::setCurrentBoundingVolume( ColliderPtr col )

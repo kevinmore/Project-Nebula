@@ -136,9 +136,6 @@ ModelPtr LoaderThread::loadModel( const QString& customName, const QString& file
 		go->setObjectName(name);
 		go->attachComponent(pModel);
 
-		// attach the colliders to the new object
-		go->attachComponent(pModel->getConvexHullCollider());
-
 		// add the data into the maps
 		m_objectManager->registerGameObject(name, go);
 	}
