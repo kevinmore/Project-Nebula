@@ -57,6 +57,7 @@ public slots:
 	void toggleAA(bool state);
 	void showLoadModelDialog();
 	void resetToDefaultScene();
+	void reloadScene();
 	void clearScene();
 	void showOpenSceneDialog();
 	void showSaveSceneDialog();

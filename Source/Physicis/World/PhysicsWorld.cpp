@@ -56,7 +56,7 @@ void PhysicsWorld::simulate(const float deltaTime)
 	foreach(PhysicsWorldObject* entity, m_entityList)
 	{
 		RigidBody* rb = dynamic_cast<RigidBody*>(entity);
-		boarderCheck(rb);
+		//boarderCheck(rb);
 		if(rb->getMotionType() != RigidBody::MOTION_FIXED)
 		{
 			rb->update(deltaTime);
@@ -178,7 +178,7 @@ void PhysicsWorld::handleCollisions()
 			cB->increaseCollisionCount();
 
 			// go to narrow phase
-			//handleNarrowPhase(pair);
+			handleNarrowPhase(pair);
 		}
 	}
 
@@ -197,15 +197,31 @@ void PhysicsWorld::handleCollisions()
 
 void PhysicsWorld::handleNarrowPhase( CollisionPairPtr pair )
 {
-	NarrowPhaseCollisionFeedback collisionInfo;
-	GJKSolver solver;
 	// get the two rigid bodies
 	RigidBody* bodyA = pair->pColliderA->getRigidBody();
 	RigidBody* bodyB = pair->pColliderB->getRigidBody();
 
-	// if colliding on narrow phase
-	if (solver.checkCollision(bodyA->getNarrowPhaseCollider().data(), bodyB->getNarrowPhaseCollider().data(), collisionInfo, true))
+	// if both of them are fixed, ignore
+	if (bodyA->getMotionType() == RigidBody::MOTION_FIXED && bodyB->getMotionType() == RigidBody::MOTION_FIXED)
 	{
+		return;
+	}
+
+	NarrowPhaseCollisionFeedback collisionInfo;
+	GJKSolver solver;
+	
+	// if colliding on narrow phase
+	if (solver.checkCollision(bodyA->getNarrowPhaseCollider().data(), bodyB->getNarrowPhaseCollider().data(), collisionInfo, false))
+	{
+		// find the exact Time of Impact (TOI) and back track each rigid body
+		NarrowPhaseCollisionFeedback newInfo;
+// 		newInfo = backToTimeOfImpact(bodyA, bodyB);
+
+		bodyA->backTrack(1.5f * m_timeStep);
+		bodyB->backTrack(1.5f * m_timeStep);
+		solver.checkCollision(bodyA->getNarrowPhaseCollider().data(), bodyB->getNarrowPhaseCollider().data(), newInfo, false);
+		if (newInfo.bIntersect) collisionInfo = newInfo;
+
 		// check whether the contact point is the same as the last one
 		vec3 currentContactPoint = 0.5f * (collisionInfo.closestPntAWorld + collisionInfo.closestPntBWorld);
 		float difference = (currentContactPoint - pair->contactPoint).lengthSquared();
@@ -218,30 +234,35 @@ void PhysicsWorld::handleNarrowPhase( CollisionPairPtr pair )
 			pair->contactPoint = currentContactPoint;
 
 			// render the contact point
-			// 					Scene* scene = bodyA->gameObject()->getScene();
-			// 					GameObjectPtr go = scene->createEmptyGameObject("Contact Point");
-			// 					go->setPosition(currentContactPoint);
-			// 					go->setScale(0.05);
-			// 					LoaderThread loader(scene, "../Resource/Models/Common/sphere.obj", go, scene->sceneRoot(), false);
-			// 					ModelPtr model = go->getComponent("Model").dynamicCast<IModel>();
-			// 					ShadingTechniquePtr tech = model->renderingEffect();
-			//  				tech->enable();
-			// 					tech->setMatEmissiveColor(Qt::red);
+// 			Scene* scene = bodyA->gameObject()->getScene();
+// 			GameObjectPtr go = scene->createEmptyGameObject("Contact Point");
+// 			go->setPosition(currentContactPoint);
+// 			go->setScale(0.05);
+// 			LoaderThread loader(scene, "../Resource/Models/Common/sphere.obj", go, scene->sceneRoot(), false);
+// 			ModelPtr model = go->getComponent("Model").dynamicCast<IModel>();
+// 			ShadingTechniquePtr tech = model->renderingEffect();
+// 			tech->applyShader("gooch");
 
 			vec3 n = collisionInfo.contactNormalWorld;
-
-			// find the exact Time of Impact (TOI) and back track each rigid body
-			//backToTimeOfImpact(bodyA, bodyB);
-			// 					bodyA->backTrack(m_timeStep * 0.5f);
-			// 					bodyB->backTrack(m_timeStep * 0.5f);
+			
 			ImpulsePair impuseMagnitudePair = computeContactImpulseMagnitude(&collisionInfo);
+// 			qDebug() << "contact points:" << collisionInfo.closestPntAWorld << collisionInfo.closestPntBWorld;
+// 			qDebug() << "depth:" << collisionInfo.penetrationDepth;
 
 			// apply impulse based on the direction
 			if (bodyA->getMotionType() != RigidBody::MOTION_FIXED)
+			{
 				bodyA->applyPointImpulse(-impuseMagnitudePair.magnitudeA * n, collisionInfo.closestPntAWorld);
+				if (impuseMagnitudePair.magnitudeA < 0.1f/* && bodyA->getMotionEnergy() < 0.1f*/) 
+					bodyA->setCanSleep();
+			}
 
 			if (bodyB->getMotionType() != RigidBody::MOTION_FIXED)
+			{
 				bodyB->applyPointImpulse(impuseMagnitudePair.magnitudeB * n, collisionInfo.closestPntBWorld);
+				if (impuseMagnitudePair.magnitudeB < 0.1f/* && bodyB->getMotionEnergy() < 0.1f*/) 
+					bodyB->setCanSleep();
+			}
 		}
 	}
 }
@@ -313,8 +334,13 @@ void PhysicsWorld::reset()
 	m_broadPhaseCollisionPairs.clear();
 }
 
-void PhysicsWorld::backToTimeOfImpact( RigidBody* rb1, RigidBody* rb2 )
+NarrowPhaseCollisionFeedback PhysicsWorld::backToTimeOfImpact( RigidBody* rb1, RigidBody* rb2 )
 {
+	GJKSolver solver;
+	NarrowPhaseCollisionFeedback collisionInfo;
+	ColliderPtr collider1 = rb1->getNarrowPhaseCollider();
+	ColliderPtr collider2 = rb2->getNarrowPhaseCollider();
+
 	// store the current information of the rigid body
 	Transform trans1 = rb1->getTransform();
 	Transform trans2 = rb2->getTransform();
@@ -323,65 +349,63 @@ void PhysicsWorld::backToTimeOfImpact( RigidBody* rb1, RigidBody* rb2 )
 	vec3 av1 = rb1->getAngularVelocity();
 	vec3 av2 = rb2->getAngularVelocity();
 
+	// try to back track 2 and 1 time steps
+	uint trySteps = 2;
+	while(trySteps > 0)
+	{
+		rb1->backTrack(trySteps * m_timeStep);
+		rb2->backTrack(trySteps * m_timeStep);
+		if (solver.checkCollision(collider1.data(), collider1.data(), collisionInfo, false))
+		{
+			return collisionInfo;
+		}
+		else
+		{
+			// reset the rigid bodies
+			rb1->setTransform(trans1);
+			rb2->setTransform(trans2);
+			rb1->setLinearVelocity(lv1);
+			rb2->setLinearVelocity(lv2);
+			rb1->setAngularVelocity(av1);
+			rb2->setAngularVelocity(av2);
+		}
+
+		--trySteps;
+	}
+	
+
+	// otherwise, the time of impact must be within 1 ~ 0 time steps
+	// use a binary search
 	int loopCount = 0;
-	int operation = 1;
-	NarrowPhaseCollisionFeedback collisionInfo;
-	collisionInfo.penetrationDepth = FLT_MAX;
-	float epsilon = 0.01f;
 
 	// loop until the penetration depth is at a satisfied level
-	while(collisionInfo.penetrationDepth > epsilon)
+	while(!collisionInfo.bIntersect && loopCount < 10)
 	{
 		++loopCount;
-
-		float fraction = 0.0f;
-		for (int i = 1; i < loopCount + 1; ++i)
-		{
-			fraction += operation * pow(0.5f, i);
-		}
-
-		if (qFuzzyCompare(fraction, 1.0f))
-		{
-			break;
-		}
-
-		// reset the rigid bodies
-		rb1->setTransform(trans1);
-		rb2->setTransform(trans2);
-		rb1->setLinearVelocity(lv1);
-		rb2->setLinearVelocity(lv2);
-		rb1->setAngularVelocity(av1);
-		rb2->setAngularVelocity(av2);
+		float fraction = pow(0.5f, loopCount);
 
 		// back track the rigid bodies for a certain duration
-		// using binary search
+		// using the fraction
 		rb1->backTrack(fraction * m_timeStep);
 		rb2->backTrack(fraction * m_timeStep);
 
-		GJKSolver solver;
-		ColliderPtr collider1 = rb1->getNarrowPhaseCollider();
-		ColliderPtr collider2 = rb2->getNarrowPhaseCollider();
-
-		// if they are colliding
-		if (solver.checkCollision(collider1.data(), collider2.data(), collisionInfo, true))
+		if (solver.checkCollision(collider1.data(), collider1.data(), collisionInfo, false))
 		{
-			// if the penetration depth is under the threshold break the loop
-			if(collisionInfo.penetrationDepth <= epsilon) break;
-
-			// otherwise, it means that we have back tracked too near, go further
-			else
-			{
-				operation = 1;
-				continue;
-			}
+			return collisionInfo;
 		}
-		// if not, means that we have back tracked too far, go back by reducing the factor
 		else
 		{
-			operation = -1;
-			continue;
+			// reset the rigid bodies
+			rb1->setTransform(trans1);
+			rb2->setTransform(trans2);
+			rb1->setLinearVelocity(lv1);
+			rb2->setLinearVelocity(lv2);
+			rb1->setAngularVelocity(av1);
+			rb2->setAngularVelocity(av2);
 		}
 	}
+
+	return collisionInfo;
 }
 
 ImpulsePair PhysicsWorld::computeContactImpulseMagnitude( const NarrowPhaseCollisionFeedback* pCollisionInfo )

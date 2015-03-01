@@ -23,7 +23,7 @@ bool GJKSolver::generateCollisionInfo( const ICollider* objA, const ICollider* o
 	closestPntB = transB2A.inversed() * closestPntB;
 
 	// normal vector of collision
-	vec3 normalCollision = objA->getTransform().getRotation().rotatedVector(-n);
+	vec3 normalCollision = objA->getRigidBody()->getTransform().getRotation().rotatedVector(-n);
 			
 	// penetration depth
 	float margin = objA->getMargin() + objB->getMargin();
@@ -32,8 +32,8 @@ bool GJKSolver::generateCollisionInfo( const ICollider* objA, const ICollider* o
 	pCollisionInfo.penetrationDepth = penetrationDepth;
 	pCollisionInfo.closestPntALocal = closestPntA;
 	pCollisionInfo.closestPntBLocal = closestPntB;
-	pCollisionInfo.closestPntAWorld = objA->getTransform() * closestPntA;
-	pCollisionInfo.closestPntBWorld = objB->getTransform() * closestPntB;
+	pCollisionInfo.closestPntAWorld = objA->getRigidBody()->getTransform() * closestPntA;
+	pCollisionInfo.closestPntBWorld = objB->getRigidBody()->getTransform() * closestPntB;
 	pCollisionInfo.bIntersect = penetrationDepth > 0.0f ? true : false;
 
 	return pCollisionInfo.bIntersect;
@@ -59,8 +59,8 @@ bool GJKSolver::checkCollision( ICollider* objA, ICollider* objB, NarrowPhaseCol
 	Transform transB2A = transA.inversed() * transB;
 
 	// rotation which transforms a local vector in objA space to local vector in objB space
-	quat rotA = objA->getTransform().getRotation();
-	quat rotB = objB->getTransform().getRotation();
+	quat rotA = transA.getRotation();
+	quat rotB = transB.getRotation();
 	quat rotA2B = rotB.conjugate() * rotA;
 
 	// closest point to the origin

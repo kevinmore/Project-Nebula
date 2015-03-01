@@ -9,6 +9,7 @@ public:
 	ConvexHullCollider(const vec3& center, const ConvexShape& shape, Scene* scene);
 
 	ConvexShape getGeometryShape() const;
+	void setScale(const vec3& scale);
 
 	virtual BroadPhaseCollisionFeedback onBroadPhase(ICollider* other); 
 
@@ -20,6 +21,7 @@ protected:
 
 private:
 	ConvexShape m_convexShape;
+	vec3 m_scale;
 };
 
 typedef QSharedPointer<ConvexHullCollider> ConvexHullColliderPtr;

@@ -2,7 +2,8 @@
 
 ConvexHullCollider::ConvexHullCollider( const vec3& center, const ConvexShape& shape, Scene* scene )
 	: ICollider(center, scene),
-	  m_convexShape(shape)
+	  m_convexShape(shape),
+	  m_scale(Math::Vector3::UNIT_SCALE)
 {
 	m_colliderType = ICollider::COLLIDER_CONVEXHULL;
 
@@ -21,7 +22,7 @@ void ConvexHullCollider::init()
 	// generate the index buffer
 	QVector<uint> indices;
 	QVector<vec3> faces = m_convexShape.getFaces();
-	QVector<vec3> vertices = m_convexShape.getVertices();
+	QVector<vec3> vertices = m_convexShape.getRenderingVertices();
 
 	foreach(vec3 face, faces)
 	{
@@ -70,6 +71,11 @@ vec3 ConvexHullCollider::getLocalSupportPoint( const vec3& dir, float margin /*=
 		}
 	}
 
+	// apply the scale
+	supportPoint.setX(supportPoint.x() * m_scale.x());
+	supportPoint.setY(supportPoint.y() * m_scale.y());
+	supportPoint.setZ(supportPoint.z() * m_scale.z());
+
 	return supportPoint;
 }
 
@@ -77,4 +83,13 @@ BroadPhaseCollisionFeedback ConvexHullCollider::onBroadPhase( ICollider* other )
 {
 	/*do nothing, this collider is for narrow phase collision detection*/
 	return BroadPhaseCollisionFeedback();
+}
+
+void ConvexHullCollider::setScale( const vec3& scale )
+{
+	m_transformMatrix.scale(scale);
+
+	m_scale.setX(m_scale.x() * scale.x());
+	m_scale.setY(m_scale.y() * scale.y());
+	m_scale.setZ(m_scale.z() * scale.z());
 }

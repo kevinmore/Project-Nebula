@@ -326,6 +326,8 @@ public:
     /// should be kept awake.
     void setCanSleep(const bool canSleep = true);
 
+	inline float getMotionEnergy() const { return m_motionEnergy; }
+
 	//
 	// BACKTRACKING
 	//

@@ -54,7 +54,6 @@ void Scene::initialize()
 	resetToDefaultScene();
 }
 
-
 void Scene::initPhysicsModule()
 {
 	PhysicsWorldConfig config;
@@ -144,6 +143,7 @@ void Scene::resetToDefaultScene()
 	clearScene();
 	toggleDebugMode(false);
 	m_camera->resetCamera();
+	m_currentSceneFile.clear();
 
 	// Initializing the lights
 	LightPtr light = createLight();
@@ -155,25 +155,25 @@ void Scene::resetToDefaultScene()
 // 	temp->setScale(0.001);
 // 	LoaderThread backup(this, "../Resource/Models/Common/sphere.obj", temp, m_sceneRootNode);
 
-	if (m_currentSceneFile.isEmpty())
-	{
-		// load the floor
-		GameObjectPtr floorRef(new GameObject(this));
-		LoaderThread floorLoader(this, "../Resource/Models/Common/DemoRoom/WoodenFloor.obj", floorRef, m_sceneRootNode);
-		GameObjectPtr floorObject = m_objectManager->getGameObject("WoodenFloor");
-		ModelPtr floor = floorObject ->getComponent("Model").dynamicCast<IModel>();
-		RigidBodyPtr floorBody = RigidBodyPtr(new RigidBody());
-		floorBody->setMotionType(RigidBody::MOTION_FIXED);
-		floorBody->attachBroadPhaseCollider(floor->getBoundingBox());
-		floorBody->attachNarrowPhaseCollider(floor->getBoundingBox());
-		floorObject->attachComponent(floorBody);
-		m_physicsWorld->addEntity(floorBody.data());
-	}
-	else
-	{
+	// load the floor
+	GameObjectPtr floorRef(new GameObject(this));
+	LoaderThread floorLoader(this, "../Resource/Models/Common/DemoRoom/WoodenFloor.obj", floorRef, m_sceneRootNode);
+	GameObjectPtr floorObject = m_objectManager->getGameObject("WoodenFloor");
+	ModelPtr floor = floorObject ->getComponent("Model").dynamicCast<IModel>();
+	RigidBodyPtr floorBody = RigidBodyPtr(new RigidBody());
+	floorBody->setMotionType(RigidBody::MOTION_FIXED);
+	floorBody->attachBroadPhaseCollider(floor->getBoundingBox());
+	floorBody->attachNarrowPhaseCollider(floor->getConvexHullCollider());
+	floorObject->attachComponent(floorBody);
+	m_physicsWorld->addEntity(floorBody.data());
+}
+
+void Scene::reloadScene()
+{
+	if (!m_currentSceneFile.isEmpty())
 		loadScene(m_currentSceneFile);
-	}
-	
+	else
+		resetToDefaultScene();
 }
 
 void Scene::showLoadModelDialog()
@@ -287,6 +287,8 @@ void Scene::saveScene( QString& fileName )
 	file.close();
 
 	qDebug() << "Saved scene to" << fileName;
+
+	m_currentSceneFile = fileName;
 }
 
 void Scene::modelLoaded()
@@ -351,8 +353,8 @@ RigidBodyPtr Scene::createRigidBody( GameObject* objectToAttach )
 	rb.reset(new RigidBody());
 	rb->setTransform(objectToAttach->getTransform());
 	
-	// attach the current bounding volume (sphere or box) by system settings
-	rb->attachBroadPhaseCollider(model->getCurrentBoundingVolume());
+	// attach the broad and narrow phase collider(box and convex hull by default)
+	rb->attachBroadPhaseCollider(model->getBoundingBox());
 	rb->attachNarrowPhaseCollider(model->getConvexHullCollider());
 	objectToAttach->attachComponent(rb);
 	m_physicsWorld->addEntity(rb.data());

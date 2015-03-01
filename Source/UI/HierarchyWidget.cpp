@@ -1130,6 +1130,10 @@ void HierarchyWidget::changeLightType( const QString& type )
 
 void HierarchyWidget::onScaleFactorDoubleBoxChange( double value )
 {
+	if (!m_currentObject)
+	{
+		return;
+	}
 	m_currentObject->setScale(value);
 	disconnect(ui->doubleSpinBox_ScaleX, 0, 0, 0);
 	disconnect(ui->doubleSpinBox_ScaleY, 0, 0, 0);

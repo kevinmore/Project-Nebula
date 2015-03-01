@@ -70,7 +70,7 @@ public:
 
 	ImpulsePair computeContactImpulseMagnitude(const NarrowPhaseCollisionFeedback* pCollisionInfo);
 
-	void backToTimeOfImpact(RigidBody* rb1, RigidBody* rb2);
+	NarrowPhaseCollisionFeedback backToTimeOfImpact(RigidBody* rb1, RigidBody* rb2);
 	void elasticCollisionResponse(RigidBody* rb1, RigidBody* rb2);
 
 private:

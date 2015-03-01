@@ -6,6 +6,7 @@
 #include <Physicis/Geometry/Simplex.h>
 #include <Utility/Math.h>
 #include <Physicis/Collision/Collider/ICollider.h>
+#include <Physicis/Entity/RigidBody.h>
 
 using namespace Math;
 
@@ -27,15 +28,18 @@ bool EPASolver::computePenetrationDepthAndContactPoints( const Simplex& simplex,
 	ICollider* objA = pCollisionInfo.pObjA;
 	ICollider* objB = pCollisionInfo.pObjB;
 
+	Transform transA = objA->getRigidBody()->getTransform();
+	Transform transB = objB->getRigidBody()->getTransform();
+
 	// transform a local position in objB space to local position in objA space
-	Transform transB2A = objA->getTransform().inversed() * objB->getTransform();
+	Transform transB2A = transA.inversed() * transB;
 
 	// transform a local position in objA space to local position in objB space
-	Transform transA2B = objB->getTransform().inversed() * objA->getTransform();
+	Transform transA2B = transB.inversed() * transA;
 
 	// rotate matrix which transform a local vector in objA space to local vector in objB space
-	glm::mat3 rotB = objB->getTransform().getRotationMatrix();
-	glm::mat3 rotA = objA->getTransform().getRotationMatrix();
+	glm::mat3 rotA = transA.getRotationMatrix();
+	glm::mat3 rotB = transB.getRotationMatrix();
 	glm::mat3 rotA2B = glm::transpose(rotB) * rotA;
 
 	int numVertices = simplex.getPoints(suppPointsA, suppPointsB, points);
@@ -108,8 +112,9 @@ bool EPASolver::computePenetrationDepthAndContactPoints( const Simplex& simplex,
 			pCollisionInfo.closestPntALocal = pClosestTriangle->getClosestPointToOriginInSupportPntSpace(suppPointsA);
 			pCollisionInfo.closestPntBLocal = transA2B * pClosestTriangle->getClosestPointToOriginInSupportPntSpace(suppPointsB);
 
-			pCollisionInfo.closestPntAWorld = objA->getTransform() * pCollisionInfo.closestPntALocal;
-			pCollisionInfo.closestPntBWorld = objB->getTransform() * pCollisionInfo.closestPntBLocal;
+			pCollisionInfo.closestPntAWorld = transA * pCollisionInfo.closestPntALocal;
+			pCollisionInfo.closestPntBWorld = transB * pCollisionInfo.closestPntBLocal;
+			
 		    pCollisionInfo.penetrationDepth = (pCollisionInfo.closestPntAWorld - pCollisionInfo.closestPntBWorld).length();
 
 			pCollisionInfo.proximityDistance = 0;

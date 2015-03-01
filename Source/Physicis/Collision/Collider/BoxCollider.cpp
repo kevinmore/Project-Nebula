@@ -186,9 +186,27 @@ vec3 BoxCollider::getHalfExtents() const
 
 vec3 BoxCollider::getLocalSupportPoint( const vec3& dir, float margin /*= 0*/ ) const
 {
-	vec3 supportPoint;
 
 	vec3 halfExtents = m_boxShape.getHalfExtents();
+
+// 	// check direction from center to center points of 6 faces
+// 	if (vec3::dotProduct(dir, Math::Vector3::UNIT_X) > 0.9f)
+// 		return vec3(halfExtents.x() + margin, 0.0f, 0.0f);
+// 	if (vec3::dotProduct(dir, Math::Vector3::NEGATIVE_UNIT_X) > 0.9f)
+// 		return vec3(-halfExtents.x() - margin, 0.0f, 0.0f);
+// 
+// 	if (vec3::dotProduct(dir, Math::Vector3::UNIT_Y) > 0.9f)
+// 		return vec3(0.0f, halfExtents.y() + margin, 0.0f);
+// 	if (vec3::dotProduct(dir, Math::Vector3::NEGATIVE_UNIT_Y) > 0.9f)
+// 		return vec3(0.0f, -halfExtents.y() - margin, 0.0f);
+// 
+// 	if (vec3::dotProduct(dir, Math::Vector3::UNIT_Z) > 0.9f)
+// 		return vec3(0.0f, 0.0f, halfExtents.z() + margin);
+// 	if (vec3::dotProduct(dir, Math::Vector3::NEGATIVE_UNIT_Z) > 0.9f)
+// 		return vec3(0.0f, 0.0f, -halfExtents.z() - margin);
+
+
+	vec3 supportPoint;
 
 	supportPoint.setX(dir.x() < 0 ? -halfExtents.x() - margin : halfExtents.x() + margin);
 	supportPoint.setY(dir.y() < 0 ? -halfExtents.y() - margin : halfExtents.y() + margin);

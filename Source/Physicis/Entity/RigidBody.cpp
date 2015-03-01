@@ -98,7 +98,6 @@ void RigidBody::update( const float dt )
 	if (m_canSleep) 
 	{
 		float currentMotion = m_linearVelocity.lengthSquared() + m_angularVelocity.lengthSquared();
-
 		float bias = pow(0.5f, dt);
 		m_motionEnergy = bias * m_motionEnergy + (1 - bias) * currentMotion;
 
@@ -229,7 +228,7 @@ void RigidBody::attachBroadPhaseCollider( ColliderPtr col )
 void RigidBody::attachNarrowPhaseCollider( ColliderPtr col )
 {
 	m_NarrowPhaseCollider = col;
-	col->setRigidBody(this);
+	m_NarrowPhaseCollider->setRigidBody(this);
 }
 
 void RigidBody::syncTransform( const Transform& transform )
@@ -239,6 +238,7 @@ void RigidBody::syncTransform( const Transform& transform )
 	if (m_world->isLocked())
 	{
 		m_transform = transform;
+		setAwake();
 	}
 }
 
@@ -267,6 +267,8 @@ void RigidBody::setCanSleep( const bool canSleep /*= true*/ )
 
 void RigidBody::backTrack( const float duration )
 {
+	if(m_timeStep < 1e-4) return;
+
 	backTrackPosition(duration);
 	backTrackRotation(duration);
 	backTrackLinearVelocity(duration);
@@ -285,9 +287,7 @@ void RigidBody::backTrackPosition( const float duration )
 
 void RigidBody::backTrackRotation( const float duration )
 {
-	quat curRotation = m_transform.getRotation();
-	quat lastRotation = m_deltaRotation.conjugate() * curRotation;
-	quat amount = quat::slerp(curRotation, lastRotation, duration / m_timeStep);
+	quat amount = quat::slerp(Quaternion::IDENTITY, m_deltaRotation.conjugate(), duration / m_timeStep);
 	m_transform.rotate(amount);
 }
 

@@ -134,6 +134,6 @@ void IModel::syncTransform( const Transform& transform )
 	}
 
 	// sync the size of the convex hull collider
-	m_convexHull->getGeometryShape().setScale(ratio);
+	m_convexHull->setScale(ratio);
 	m_scale = newScale;
 }

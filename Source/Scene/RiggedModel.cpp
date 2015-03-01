@@ -68,7 +68,6 @@ RiggedModel::RiggedModel( const RiggedModel* orignal )
 	ConvexHullColliderPtr otherCH = orignal->getConvexHullCollider();
 	ConvexShape shape = otherCH->getGeometryShape();
 	m_convexHull = ConvexHullColliderPtr(new ConvexHullCollider(otherCH->getPosition(), shape, m_scene));
-	m_convexHull->getGeometryShape().setScale(scale);
 
 	// assign the current bounding volume
 	ColliderPtr currentBV = orignal->getCurrentBoundingVolume();

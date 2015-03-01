@@ -84,7 +84,7 @@ void MainWindow::initializeToolBar()
 	toolBar->addSeparator();
 
 	QAction* resetCameraAction = toolBar->addAction(QIcon("../Resource/StyleSheets/Icons/camera.png"), "Reset Camera", m_camera, SLOT(resetCamera()));
-	QAction* resetSceneAction = toolBar->addAction(QIcon("../Resource/StyleSheets/Icons/reload.png"), "Reset Scene", m_scene, SLOT(resetToDefaultScene()));
+	QAction* reloadSceneAction = toolBar->addAction(QIcon("../Resource/StyleSheets/Icons/reload.png"), "Reload Scene", m_scene, SLOT(reloadScene()));
 
 	toolBar->addSeparator();
 

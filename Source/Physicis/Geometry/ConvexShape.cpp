@@ -44,7 +44,7 @@ ConvexShape::ConvexShape( const QVector<vec3>& vertices )
 				QStringList list = line.split(" ", QString::SkipEmptyParts);
 				vertexCount = list[0].toInt();
 				facesCount  = list[1].toInt();
-				m_vertices.reserve(vertexCount);
+				m_verticesAndCentrums.reserve(vertexCount);
 				m_faces.reserve(facesCount);
 			}
 
@@ -52,7 +52,7 @@ ConvexShape::ConvexShape( const QVector<vec3>& vertices )
 			if (lineNumber > 2 && lineNumber < 3 + vertexCount)
 			{
 				QStringList list = line.split(" ", QString::SkipEmptyParts);
-				m_vertices << vec3(list[0].toFloat(), list[1].toFloat(), list[2].toFloat());
+				m_verticesAndCentrums << vec3(list[0].toFloat(), list[1].toFloat(), list[2].toFloat());
 			}
 
 			// reads the faces
@@ -68,13 +68,13 @@ ConvexShape::ConvexShape( const QVector<vec3>& vertices )
 	file.remove();
 
 	// retrieve all the vertices of the convex hull
-// 	vertexT* list = qh vertex_list;
-// 	m_vertices.reserve(qh num_vertices);
-// 	while(list && list->point)
-// 	{
-// 		m_vertices << vec3(list->point[0], list->point[1], list->point[2]);
-// 		list = list->next;
-// 	}
+	vertexT* list = qh vertex_list;
+	m_vertices.reserve(qh num_vertices);
+	while(list && list->point)
+	{
+		m_vertices << vec3(list->point[0], list->point[1], list->point[2]);
+		list = list->next;
+	}
 
 
 	// free memory
@@ -83,13 +83,3 @@ ConvexShape::ConvexShape( const QVector<vec3>& vertices )
 
 ConvexShape::~ConvexShape()
 {}
-
-void ConvexShape::setScale( const vec3& scale )
-{
-	foreach(vec3 vertex, m_vertices)
-	{
-		vertex.setX(vertex.x() * scale.x());
-		vertex.setY(vertex.y() * scale.y());
-		vertex.setZ(vertex.z() * scale.z());
-	}
-}
