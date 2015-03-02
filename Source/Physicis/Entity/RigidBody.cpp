@@ -27,7 +27,7 @@ RigidBody::RigidBody(const vec3& position, const quat& rotation, QObject* parent
 	m_maxLinearVelocity = 200.0f;
 	m_maxAngularVelocity = 200.0f;
 	m_timeFactor = 1.0f;
-	m_canSleep = false;
+	m_canSleep = true;
 	m_isAwake = true;
 	m_userInputeExecuted = false;
 	m_BroadPhaseCollider.clear();
@@ -93,16 +93,16 @@ void RigidBody::update( const float dt )
 	// sync the center position for the collider
 	m_BroadPhaseCollider->setPosition(m_transform.getPosition());
 	m_NarrowPhaseCollider->setPosition(m_transform.getPosition());
-
+	qDebug() << m_deltaRotation.vector().lengthSquared();
 	// Update the kinetic energy store, and possibly put the body to sleep.
+	float epsilon = 0.5f;
 	if (m_canSleep) 
 	{
 		float currentMotion = m_linearVelocity.lengthSquared() + m_angularVelocity.lengthSquared();
 		float bias = pow(0.5f, dt);
 		m_motionEnergy = bias * m_motionEnergy + (1 - bias) * currentMotion;
-
-		if (m_motionEnergy < 0.3f) setAwake(false);
-		else if (m_motionEnergy > 10 * 0.3f) m_motionEnergy = 10 * 0.3f;
+		if (m_motionEnergy < epsilon) setAwake(false);
+		else if (m_motionEnergy > 10 * epsilon) m_motionEnergy = 10 * epsilon;
 	}
 }
 
@@ -160,6 +160,11 @@ void RigidBody::setMotionType( MotionType type )
 	m_motionType = type;
 	// re-compute the inertia tensor
 	computeInertiaTensor();
+
+	if (type == MOTION_FIXED)
+	{
+		m_massInv = 0.0f;
+	}
 }
 
 void RigidBody::setMassInv( float mInv )

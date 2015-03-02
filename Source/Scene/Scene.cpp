@@ -81,7 +81,8 @@ void Scene::update(float currentTime)
 		// update the physics world
 		m_physicsWorld->simulate(dt);
 	}
-	
+	m_physicsWorld->setCurrentTime(m_relativeTime);
+
 	// render sky box
 	if (m_bShowSkybox) 
 		m_skybox->render(m_relativeTime);
