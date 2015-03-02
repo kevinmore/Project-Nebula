@@ -2640,6 +2640,7 @@ public:
         comboBox_RigidBodyMotionType->insertItems(0, QStringList()
          << QApplication::translate("HierarchyViewer", "Box", 0)
          << QApplication::translate("HierarchyViewer", "Sphere", 0)
+         << QApplication::translate("HierarchyViewer", "Convex Hull", 0)
          << QApplication::translate("HierarchyViewer", "Fixed", 0)
         );
 #ifndef QT_NO_TOOLTIP

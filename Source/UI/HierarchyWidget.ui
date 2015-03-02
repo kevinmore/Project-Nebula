@@ -2687,6 +2687,11 @@
                </item>
                <item>
                 <property name="text">
+                 <string>Convex Hull</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
                  <string>Fixed</string>
                 </property>
                </item>

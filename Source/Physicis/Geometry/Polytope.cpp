@@ -273,7 +273,10 @@ bool Polytope::expandPolytopeWithNewPoint( const vec3& w, Triangle* pTriangleUse
 
 // 	assert(m_silhouetteVertices.size() >= 3);
 // 	assert(m_silhouetteTriangles.size() >= 3);
-
+	if (m_silhouetteVertices.size() < 3 || m_silhouetteTriangles.size() < 3)
+	{
+		return false;
+	}
 	// Now, we create new triangles to patch the silhouette loop 
 	int silhouetteSize = m_silhouetteVertices.size();
 

@@ -213,13 +213,23 @@ void PhysicsWorld::handleNarrowPhase( CollisionPairPtr pair )
 	// if colliding on narrow phase
 	if (solver.checkCollision(bodyA->getNarrowPhaseCollider().data(), bodyB->getNarrowPhaseCollider().data(), collisionInfo, false))
 	{
+
+
 		// find the exact Time of Impact (TOI) and back track each rigid body
 		NarrowPhaseCollisionFeedback newInfo;
-// 		newInfo = backToTimeOfImpact(bodyA, bodyB);
+ 		newInfo = backToTimeOfImpact(bodyA, bodyB);
 
-		bodyA->backTrack(1.5f * m_timeStep);
-		bodyB->backTrack(1.5f * m_timeStep);
-		solver.checkCollision(bodyA->getNarrowPhaseCollider().data(), bodyB->getNarrowPhaseCollider().data(), newInfo, false);
+// 		bodyA->backTrack(0.02f * m_timeStep);
+// 		bodyB->backTrack(0.02f * m_timeStep);
+// 		solver.checkCollision(bodyA->getNarrowPhaseCollider().data(), bodyB->getNarrowPhaseCollider().data(), newInfo, false);
+
+// 		int count = 0;
+// 		while(solver.checkCollision(bodyA->getNarrowPhaseCollider().data(), bodyB->getNarrowPhaseCollider().data(), collisionInfo, false))
+// 		{
+// 			++count;
+// 			qDebug() << "Hit!" << count;
+// 		}
+
 		if (newInfo.bIntersect) collisionInfo = newInfo;
 
 		// check whether the contact point is the same as the last one
@@ -243,26 +253,7 @@ void PhysicsWorld::handleNarrowPhase( CollisionPairPtr pair )
 // 			ShadingTechniquePtr tech = model->renderingEffect();
 // 			tech->applyShader("gooch");
 
-			vec3 n = collisionInfo.contactNormalWorld;
-			
-			ImpulsePair impuseMagnitudePair = computeContactImpulseMagnitude(&collisionInfo);
-// 			qDebug() << "contact points:" << collisionInfo.closestPntAWorld << collisionInfo.closestPntBWorld;
-// 			qDebug() << "depth:" << collisionInfo.penetrationDepth;
-
-			// apply impulse based on the direction
-			if (bodyA->getMotionType() != RigidBody::MOTION_FIXED)
-			{
-				bodyA->applyPointImpulse(-impuseMagnitudePair.magnitudeA * n, collisionInfo.closestPntAWorld);
-				if (impuseMagnitudePair.magnitudeA < 0.1f/* && bodyA->getMotionEnergy() < 0.1f*/) 
-					bodyA->setCanSleep();
-			}
-
-			if (bodyB->getMotionType() != RigidBody::MOTION_FIXED)
-			{
-				bodyB->applyPointImpulse(impuseMagnitudePair.magnitudeB * n, collisionInfo.closestPntBWorld);
-				if (impuseMagnitudePair.magnitudeB < 0.1f/* && bodyB->getMotionEnergy() < 0.1f*/) 
-					bodyB->setCanSleep();
-			}
+			generalCollisionResponse(collisionInfo);
 		}
 	}
 }
@@ -383,7 +374,7 @@ NarrowPhaseCollisionFeedback PhysicsWorld::backToTimeOfImpact( RigidBody* rb1, R
 	{
 		++loopCount;
 		float fraction = pow(0.5f, loopCount);
-
+		qDebug() << fraction;
 		// back track the rigid bodies for a certain duration
 		// using the fraction
 		rb1->backTrack(fraction * m_timeStep);
@@ -408,15 +399,15 @@ NarrowPhaseCollisionFeedback PhysicsWorld::backToTimeOfImpact( RigidBody* rb1, R
 	return collisionInfo;
 }
 
-ImpulsePair PhysicsWorld::computeContactImpulseMagnitude( const NarrowPhaseCollisionFeedback* pCollisionInfo )
+ImpulsePair PhysicsWorld::computeContactImpulseMagnitude( const NarrowPhaseCollisionFeedback& collisionInfo )
 {
-	RigidBody* A = pCollisionInfo->pObjA->getRigidBody();
-	RigidBody* B = pCollisionInfo->pObjB->getRigidBody();
+	RigidBody* A = collisionInfo.pObjA->getRigidBody();
+	RigidBody* B = collisionInfo.pObjB->getRigidBody();
 
-	vec3 n = pCollisionInfo->contactNormalWorld;
+	vec3 n = collisionInfo.contactNormalWorld;
 
-	vec3 pointVelocityA = A->getPointVelocityWorld(pCollisionInfo->closestPntAWorld);
-	vec3 pointVelocityB = B->getPointVelocityWorld(pCollisionInfo->closestPntBWorld);
+	vec3 pointVelocityA = A->getPointVelocityWorld(collisionInfo.closestPntAWorld);
+	vec3 pointVelocityB = B->getPointVelocityWorld(collisionInfo.closestPntBWorld);
 	float Vrel = vec3::dotProduct(n, pointVelocityA - pointVelocityB);
 
 	// check if Vrel == 0
@@ -431,8 +422,8 @@ ImpulsePair PhysicsWorld::computeContactImpulseMagnitude( const NarrowPhaseColli
 					 0.0f : B->getMassInv();
 
 	float massInvSum = massInvA + massInvB;
-	vec3 rA = pCollisionInfo->closestPntAWorld - A->getCenterOfMassInWorld();
-	vec3 rB = pCollisionInfo->closestPntBWorld - B->getCenterOfMassInWorld();
+	vec3 rA = collisionInfo.closestPntAWorld - A->getCenterOfMassInWorld();
+	vec3 rB = collisionInfo.closestPntBWorld - B->getCenterOfMassInWorld();
 	
 	glm::mat3 IAInv = A->getInertiaInvWorld();
 	glm::mat3 IBInv = B->getInertiaInvWorld();
@@ -468,4 +459,30 @@ void PhysicsWorld::elasticCollisionResponse( RigidBody* rb1, RigidBody* rb2 )
 
 	rb1->setLinearVelocity(v1Prime);
 	rb2->setLinearVelocity(v2Prime);
+}
+
+void PhysicsWorld::generalCollisionResponse( const NarrowPhaseCollisionFeedback& collisionInfo )
+{
+	RigidBody* bodyA = collisionInfo.pObjA->getRigidBody();
+	RigidBody* bodyB = collisionInfo.pObjB->getRigidBody();
+	vec3 n = collisionInfo.contactNormalWorld;
+
+	ImpulsePair impuseMagnitudePair = computeContactImpulseMagnitude(collisionInfo);
+
+	// apply impulse based on the direction
+	if (bodyA->getMotionType() != RigidBody::MOTION_FIXED)
+	{
+		if (impuseMagnitudePair.magnitudeA < 0.2f/* && bodyA->getMotionEnergy() < 0.1f*/) 
+			bodyA->setCanSleep();
+		else
+			bodyA->applyPointImpulse(-impuseMagnitudePair.magnitudeA * n, collisionInfo.closestPntAWorld);
+	}
+
+	if (bodyB->getMotionType() != RigidBody::MOTION_FIXED)
+	{
+		if (impuseMagnitudePair.magnitudeB < 0.2f/* && bodyB->getMotionEnergy() < 0.1f*/) 
+			bodyB->setCanSleep();
+		else
+			bodyB->applyPointImpulse(impuseMagnitudePair.magnitudeB * n, collisionInfo.closestPntBWorld);
+	}
 }

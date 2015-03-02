@@ -124,9 +124,9 @@ ModelPtr LoaderThread::loadModel( const QString& customName, const QString& file
 		m_objectManager->m_modelLoaders.push_back(modelLoader);
 
 		// assign the bounding volumes
+		pModel->setConvexHullCollider(modelLoader->getConvexHullCollider());
 		pModel->setBoundingSphere(modelLoader->getBoundingSphere());
 		pModel->setBoundingBox(modelLoader->getBoundingBox());
-		pModel->setConvexHullCollider(modelLoader->getConvexHullCollider());
 	}
 
 	if (generateGameObject)
@@ -138,11 +138,6 @@ ModelPtr LoaderThread::loadModel( const QString& customName, const QString& file
 
 		// add the data into the maps
 		m_objectManager->registerGameObject(name, go);
-	}
-	else
-	{
-		// attach the colliders to the ref object
-		m_reference->attachComponent(pModel->getConvexHullCollider());
 	}
 
 	return pModel;

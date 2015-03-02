@@ -68,10 +68,11 @@ public:
 	void reset();
 
 
-	ImpulsePair computeContactImpulseMagnitude(const NarrowPhaseCollisionFeedback* pCollisionInfo);
+	ImpulsePair computeContactImpulseMagnitude(const NarrowPhaseCollisionFeedback& collisionInfo);
 
 	NarrowPhaseCollisionFeedback backToTimeOfImpact(RigidBody* rb1, RigidBody* rb2);
 	void elasticCollisionResponse(RigidBody* rb1, RigidBody* rb2);
+	void generalCollisionResponse(const NarrowPhaseCollisionFeedback& collisionInfo);
 
 private:
 	PhysicsWorldConfig m_config;

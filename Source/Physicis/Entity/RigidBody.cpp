@@ -325,25 +325,34 @@ void RigidBody::setMotionType_SLOT( const QString& type )
 		setMotionType(MOTION_BOX_INERTIA);
 		model->setCurrentBoundingVolume(model->getBoundingBox());
 		model->getCurrentBoundingVolume()->setMotionColor(Qt::green);
+		attachBroadPhaseCollider(model->getBoundingBox());
 	}
 	else if (type == "Sphere")
 	{
 		setMotionType(MOTION_SPHERE_INERTIA);
 		model->setCurrentBoundingVolume(model->getBoundingSphere());
 		model->getCurrentBoundingVolume()->setMotionColor(Qt::green);
+		attachBroadPhaseCollider(model->getBoundingSphere());
+	}
+	else if (type == "Convex Hull")
+	{
+		setMotionType(MOTION_BOX_INERTIA);
+		model->setCurrentBoundingVolume(model->getConvexHullCollider());
+		model->getCurrentBoundingVolume()->setMotionColor(Qt::green);
+		attachBroadPhaseCollider(model->getBoundingBox());
 	}
 	else if (type == "Fixed")
 	{
 		setMotionType(MOTION_FIXED);
 		model->setCurrentBoundingVolume(model->getBoundingBox());
 		model->getCurrentBoundingVolume()->setMotionColor(Qt::darkMagenta);
+		attachBroadPhaseCollider(model->getBoundingBox());
 
 		// set the position, beacuse we're not updating the collider in the rigid body update() function
 		model->getCurrentBoundingVolume()->setPosition(getPosition());
 	}
 
-	// add the new collider to the physics world
-	attachBroadPhaseCollider(model->getCurrentBoundingVolume());
+	
 }
 
 void RigidBody::setMass_SLOT( double val )
