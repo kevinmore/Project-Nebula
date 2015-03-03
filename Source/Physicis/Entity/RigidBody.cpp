@@ -27,7 +27,7 @@ RigidBody::RigidBody(const vec3& position, const quat& rotation, QObject* parent
 	m_maxLinearVelocity = 200.0f;
 	m_maxAngularVelocity = 200.0f;
 	m_timeFactor = 1.0f;
-	m_canSleep = true;
+	m_canSleep = false;
 	m_isAwake = true;
 	m_userInputeExecuted = false;
 	m_BroadPhaseCollider.clear();
@@ -93,9 +93,9 @@ void RigidBody::update( const float dt )
 	// sync the center position for the collider
 	m_BroadPhaseCollider->setPosition(m_transform.getPosition());
 	m_NarrowPhaseCollider->setPosition(m_transform.getPosition());
-	qDebug() << m_deltaRotation.vector().lengthSquared();
+	//qDebug() << m_deltaRotation.vector().lengthSquared();
 	// Update the kinetic energy store, and possibly put the body to sleep.
-	float epsilon = 0.5f;
+	float epsilon = 0.3f;
 	if (m_canSleep) 
 	{
 		float currentMotion = m_linearVelocity.lengthSquared() + m_angularVelocity.lengthSquared();
@@ -276,8 +276,8 @@ void RigidBody::backTrack( const float duration )
 
 	backTrackPosition(duration);
 	backTrackRotation(duration);
-	backTrackLinearVelocity(duration);
-	backTrackAngularVelocity(duration);
+// 	backTrackLinearVelocity(duration);
+// 	backTrackAngularVelocity(duration);
 }
 
 void RigidBody::backTrackPosition( const float duration )

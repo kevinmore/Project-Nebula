@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Container">
+        <UniqueIdentifier>58024B84-8024-4458-24B8-58024B845802</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Process">
+        <UniqueIdentifier>418C4568-18C4-4841-C456-418C4568418C</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Serialize">
+        <UniqueIdentifier>690CDF15-90CD-4569-CDF1-690CDF15690C</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Container\CommandStream\DebugCommands">
+        <UniqueIdentifier>2F425F08-F425-482F-25F0-2F425F082F42</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Shape">
+        <UniqueIdentifier>7C866D0E-C866-4E7C-66D0-7C866D0E7C86</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Classes">
+        <UniqueIdentifier>11230FAD-1230-4D11-30FA-11230FAD1123</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Type">
+        <UniqueIdentifier>11FDD641-FDD6-41FD-6411-DD6411FDD641</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Container\CommandStream">
+        <UniqueIdentifier>1AB947FD-AB94-4D1A-947F-1AB947FD1AB9</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="hkServerProcessHandler.h">
+        <Filter></Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\hkVisualizeTrackerClasses.cpp">
+        <Filter>Classes</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="hkDebugDisplay.h">
+        <Filter></Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Shape\hkDisplayPlane.h">
+        <Filter>Shape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="hkVirtualFramebufferServer.cpp">
+        <Filter></Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Serialize\hkDisplaySerializeIStream.h">
+        <Filter>Serialize</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="hkVisualDebugger.h">
+        <Filter></Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Shape\hkDisplayPlane.cpp">
+        <Filter>Shape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="hkProcessFactory.cpp">
+        <Filter></Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Serialize\hkDisplaySerializeOStream.cpp">
+        <Filter>Serialize</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Shape\hkDisplayAABB.h">
+        <Filter>Shape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Process\hkRemoteObjectProcess.cpp">
+        <Filter>Process</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Shape\hkDisplayMesh.cpp">
+        <Filter>Shape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="hkCommandRouter.h">
+        <Filter></Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Container\CommandStream\DebugCommands\hkDebugCommands.h">
+        <Filter>Container\CommandStream\DebugCommands</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="hkVersionReporter.cpp">
+        <Filter></Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Shape\hkDisplayGeometry.h">
+        <Filter>Shape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Shape\hkDisplayAABB.cpp">
+        <Filter>Shape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Process\hkRemoteObjectProcess.h">
+        <Filter>Process</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Shape\hkDisplaySphere.cpp">
+        <Filter>Shape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="hkCommandRouter.cpp">
+        <Filter></Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Shape\hkDisplayCylinder.cpp">
+        <Filter>Shape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Shape\hkDisplayWireframe.cpp">
+        <Filter>Shape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="hkDebugDisplayHandler.cpp">
+        <Filter></Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="hkServerDebugDisplayHandler.cpp">
+        <Filter></Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Shape\hkDisplayMesh.h">
+        <Filter>Shape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Process\hkInspectProcess.h">
+        <Filter>Process</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Shape\hkDisplaySphere.h">
+        <Filter>Shape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Process\hkDebugDisplayProcess.h">
+        <Filter>Process</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Process\hkInspectProcess.cpp">
+        <Filter>Process</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Serialize\hkDisplaySerializeOStream.h">
+        <Filter>Serialize</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Shape\hkDisplayConvex.cpp">
+        <Filter>Shape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Serialize\hkObjectSerializeRegistry.cpp">
+        <Filter>Serialize</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Shape\hkDisplayCapsule.h">
+        <Filter>Shape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="hkServerProcessHandler.cpp">
+        <Filter></Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Shape\hkDisplayBox.cpp">
+        <Filter>Shape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Process\hkDebugDisplayProcess.cpp">
+        <Filter>Process</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Shape\hkDisplayCapsule.cpp">
+        <Filter>Shape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="hkVisualize.cpp">
+        <Filter></Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="hkVirtualFramebufferProtocol.h">
+        <Filter></Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="hkVisualDebuggerProtocol.h">
+        <Filter></Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Shape\hkDisplaySemiCircle.h">
+        <Filter>Shape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="hkVisualize.h">
+        <Filter></Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Shape\hkDisplayWireframe.h">
+        <Filter>Shape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Shape\hkDisplayGeometryTypes.h">
+        <Filter>Shape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="hkProcessRegisterUtil.h">
+        <Filter></Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Shape\hkDisplayTaperedCapsule.cpp">
+        <Filter>Shape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="hkDrawUtil.h">
+        <Filter></Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="hkDebugDisplayHandler.h">
+        <Filter></Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="hkProcessRegisterUtil.cpp">
+        <Filter></Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Shape\hkDisplayGeometry.inl">
+        <Filter>Shape</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Serialize\hkObjectSerializationManager.h">
+        <Filter>Serialize</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Serialize\hkDisplaySerializeIStream.cpp">
+        <Filter>Serialize</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Container\CommandStream\DebugCommands\hkDebugCommands.cpp">
+        <Filter>Container\CommandStream\DebugCommands</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="hkDrawUtil.cpp">
+        <Filter></Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="hkProcess.h">
+        <Filter></Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Process\hkStatisticsProcess.cpp">
+        <Filter>Process</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Serialize\hkObjectSerialize.h">
+        <Filter>Serialize</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Serialize\hkObjectSerializationManager.cpp">
+        <Filter>Serialize</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="hkDebugDisplay.cpp">
+        <Filter></Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Process\hkMemorySnapshotProcess.cpp">
+        <Filter>Process</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Process\hkMemorySnapshotProcess.h">
+        <Filter>Process</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Shape\hkDisplaySemiCircle.cpp">
+        <Filter>Shape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="hkVersionReporter.h">
+        <Filter></Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Shape\hkDisplayBox.h">
+        <Filter>Shape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="hkVirtualFramebufferServer.h">
+        <Filter></Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="hkProcessContext.h">
+        <Filter></Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="hkProcessFactory.h">
+        <Filter></Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="hkProcessHandler.h">
+        <Filter></Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="hkServerDebugDisplayHandler.h">
+        <Filter></Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Shape\hkDisplayTaperedCapsule.h">
+        <Filter>Shape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Serialize\hkObjectSerialize.cpp">
+        <Filter>Serialize</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Shape\hkDisplayCone.h">
+        <Filter>Shape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Serialize\hkObjectSerializeRegistry.h">
+        <Filter>Serialize</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Shape\hkDisplayConvex.h">
+        <Filter>Shape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Shape\hkDisplayCylinder.h">
+        <Filter>Shape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Process\hkStatisticsProcess.h">
+        <Filter>Process</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Type\hkKeyboard.h">
+        <Filter>Type</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Shape\hkDisplayCone.cpp">
+        <Filter>Shape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="hkProcessContext.cpp">
+        <Filter></Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="hkVisualDebugger.cpp">
+        <Filter></Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="hkDisplayGeometryBuilder.h">
+        <Filter></Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Shape\hkDisplayGeometry.cpp">
+        <Filter>Shape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+
+  </ItemGroup>
+</Project>

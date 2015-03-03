@@ -1,0 +1,2415 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--
+    
+    
+    
+    SOURCE_LEVEL = "PUBLIC"
+    REQUIRED_HAVOK_PRODUCTS = "COMMON"
+  -->
+        
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug DLL|x64">
+      <Configuration>Debug DLL</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Dev|x64">
+      <Configuration>Dev</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Dev DLL|x64">
+      <Configuration>Dev DLL</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Hybrid DLL|x64">
+      <Configuration>Hybrid DLL</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release DLL|x64">
+      <Configuration>Release DLL</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{BB95D3FE-94B6-4E81-AFD8-52AD8D9EA44D}</ProjectGuid>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <Keyword>StaticLibrary</Keyword>
+    <RootNamespace></RootNamespace>
+    <ProjectName>hkBase</ProjectName>
+    
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <CharacterSet>Unicode</CharacterSet>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CLRSupport>false</CLRSupport>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug DLL|x64'" Label="Configuration">
+    <CharacterSet>Unicode</CharacterSet>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CLRSupport>false</CLRSupport>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dev|x64'" Label="Configuration">
+    <CharacterSet>Unicode</CharacterSet>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CLRSupport>false</CLRSupport>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dev DLL|x64'" Label="Configuration">
+    <CharacterSet>Unicode</CharacterSet>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CLRSupport>false</CLRSupport>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Hybrid DLL|x64'" Label="Configuration">
+    <CharacterSet>Unicode</CharacterSet>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CLRSupport>false</CLRSupport>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <CharacterSet>Unicode</CharacterSet>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CLRSupport>false</CLRSupport>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release DLL|x64'" Label="Configuration">
+    <CharacterSet>Unicode</CharacterSet>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CLRSupport>false</CLRSupport>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  <PropertyGroup>
+<TargetExt  Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.lib</TargetExt>
+<TargetExt  Condition="'$(Configuration)|$(Platform)'=='Debug DLL|x64'">.lib</TargetExt>
+<TargetExt  Condition="'$(Configuration)|$(Platform)'=='Dev|x64'">.lib</TargetExt>
+<TargetExt  Condition="'$(Configuration)|$(Platform)'=='Dev DLL|x64'">.lib</TargetExt>
+<TargetExt  Condition="'$(Configuration)|$(Platform)'=='Hybrid DLL|x64'">.lib</TargetExt>
+<TargetExt  Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.lib</TargetExt>
+<TargetExt  Condition="'$(Configuration)|$(Platform)'=='Release DLL|x64'">.lib</TargetExt>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\..\..\Obj\x64_vs2010\debug\hkBase\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\..\..\Lib\x64_vs2010\debug\</OutDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">hkBase</TargetName>
+    <OutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\..\..\Lib\x64_vs2010\debug\hkBase.lib</OutputFile>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug DLL|x64'">..\..\..\Obj\x64_vs2010\debug_dll\hkBase\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug DLL|x64'">..\..\..\Lib\x64_vs2010\debug_dll\</OutDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug DLL|x64'">hkBase</TargetName>
+    <OutputFile Condition="'$(Configuration)|$(Platform)'=='Debug DLL|x64'">..\..\..\Lib\x64_vs2010\debug_dll\hkBase.lib</OutputFile>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Dev|x64'">..\..\..\Obj\x64_vs2010\dev\hkBase\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Dev|x64'">..\..\..\Lib\x64_vs2010\dev\</OutDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Dev|x64'">hkBase</TargetName>
+    <OutputFile Condition="'$(Configuration)|$(Platform)'=='Dev|x64'">..\..\..\Lib\x64_vs2010\dev\hkBase.lib</OutputFile>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Dev DLL|x64'">..\..\..\Obj\x64_vs2010\dev_dll\hkBase\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Dev DLL|x64'">..\..\..\Lib\x64_vs2010\dev_dll\</OutDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Dev DLL|x64'">hkBase</TargetName>
+    <OutputFile Condition="'$(Configuration)|$(Platform)'=='Dev DLL|x64'">..\..\..\Lib\x64_vs2010\dev_dll\hkBase.lib</OutputFile>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Hybrid DLL|x64'">..\..\..\Obj\x64_vs2010\hybrid_dll\hkBase\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Hybrid DLL|x64'">..\..\..\Lib\x64_vs2010\hybrid_dll\</OutDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Hybrid DLL|x64'">hkBase</TargetName>
+    <OutputFile Condition="'$(Configuration)|$(Platform)'=='Hybrid DLL|x64'">..\..\..\Lib\x64_vs2010\hybrid_dll\hkBase.lib</OutputFile>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\..\..\Obj\x64_vs2010\release\hkBase\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\..\..\Lib\x64_vs2010\release\</OutDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">hkBase</TargetName>
+    <OutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\..\..\Lib\x64_vs2010\release\hkBase.lib</OutputFile>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release DLL|x64'">..\..\..\Obj\x64_vs2010\release_dll\hkBase\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release DLL|x64'">..\..\..\Lib\x64_vs2010\release_dll\</OutDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release DLL|x64'">hkBase</TargetName>
+    <OutputFile Condition="'$(Configuration)|$(Platform)'=='Release DLL|x64'">..\..\..\Lib\x64_vs2010\release_dll\hkBase.lib</OutputFile>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug DLL|x64'">true</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Dev|x64'">true</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Dev DLL|x64'">true</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Hybrid DLL|x64'">true</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release DLL|x64'">false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    
+    
+    
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\..;..\..;</AdditionalIncludeDirectories>
+      <AdditionalOptions></AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <SDLCheck>true</SDLCheck>
+      <CallingConvention>Cdecl</CallingConvention>
+      <CompileAs>Default</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings></DisableSpecificWarnings>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <EnablePREfast></EnablePREfast>
+      <ExceptionHandling>false</ExceptionHandling>
+      <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
+      <FloatingPointExceptions>false</FloatingPointExceptions>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <OmitFramePointers></OmitFramePointers>
+      <Optimization>disabled</Optimization>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>Common/Base/hkBase.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)hkBase.pch</PrecompiledHeaderOutputFile>
+      <PreprocessorDefinitions>_WINDOWS;WIN32;_WIN32;_DEBUG;HK_DEBUG;HK_DEBUG_SLOW;_XT_STATICLINK;_LIB;_ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH;HK_DISABLE_MATH_CONSTRUCTORS;HK_DISABLE_OLD_VECTOR4_INTERFACE;HK_DISABLE_IMPLICIT_SIMDREAL_FLOAT_CONVERSION;HK_DISABLE_MIXED_FLOAT_DOUBLE_OPERATORS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <UndefinePreprocessorDefinitions></UndefinePreprocessorDefinitions>
+      <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <StringPooling>true</StringPooling>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <WarningLevel>Level4</WarningLevel>
+      <CompileAsManaged>false</CompileAsManaged>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+	  
+    </ClCompile>
+    <ResourceCompile>
+      <ResourceOutputFileName></ResourceOutputFileName>
+      <AdditionalIncludeDirectories>$(IntDir)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Lib>
+      <IgnoreAllDefaultLibraries></IgnoreAllDefaultLibraries>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\Lib\x64_vs2010\debug</AdditionalLibraryDirectories>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <UseUnicodeResponseFiles>true</UseUnicodeResponseFiles>
+      <AdditionalOptions> /ignore:4221</AdditionalOptions>
+    </Lib>
+    <Link>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\Lib\x64_vs2010\debug</AdditionalLibraryDirectories>
+      <AdditionalOptions> /ignore:4221</AdditionalOptions>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ImportLibrary></ImportLibrary>
+      <AssemblyDebug></AssemblyDebug>
+      <SubSystem>Console</SubSystem>
+      <ManifestFile>$(IntDir)Manifest$(TargetExt).intermediate.manifest</ManifestFile>
+      <OptimizeReferences></OptimizeReferences>
+      <EnableCOMDATFolding></EnableCOMDATFolding>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug DLL|x64'">
+    
+    
+    
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\..;..\..;</AdditionalIncludeDirectories>
+      <AdditionalOptions></AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <SDLCheck>true</SDLCheck>
+      <CallingConvention>Cdecl</CallingConvention>
+      <CompileAs>Default</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings></DisableSpecificWarnings>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <EnablePREfast></EnablePREfast>
+      <ExceptionHandling>false</ExceptionHandling>
+      <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
+      <FloatingPointExceptions>false</FloatingPointExceptions>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <OmitFramePointers></OmitFramePointers>
+      <Optimization>disabled</Optimization>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>Common/Base/hkBase.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)hkBase.pch</PrecompiledHeaderOutputFile>
+      <PreprocessorDefinitions>_WINDOWS;WIN32;_WIN32;_DEBUG;HK_DEBUG;HK_DEBUG_SLOW;_LIB;_ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH;HK_DISABLE_MATH_CONSTRUCTORS;HK_DISABLE_OLD_VECTOR4_INTERFACE;HK_DISABLE_IMPLICIT_SIMDREAL_FLOAT_CONVERSION;HK_DISABLE_MIXED_FLOAT_DOUBLE_OPERATORS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <UndefinePreprocessorDefinitions></UndefinePreprocessorDefinitions>
+      <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <StringPooling>true</StringPooling>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <WarningLevel>Level4</WarningLevel>
+      <CompileAsManaged>false</CompileAsManaged>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+	  
+    </ClCompile>
+    <ResourceCompile>
+      <ResourceOutputFileName></ResourceOutputFileName>
+      <AdditionalIncludeDirectories>$(IntDir)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Lib>
+      <IgnoreAllDefaultLibraries></IgnoreAllDefaultLibraries>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\Lib\x64_vs2010\debug_dll</AdditionalLibraryDirectories>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <UseUnicodeResponseFiles>true</UseUnicodeResponseFiles>
+      <AdditionalOptions> /ignore:4221</AdditionalOptions>
+    </Lib>
+    <Link>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\Lib\x64_vs2010\debug_dll</AdditionalLibraryDirectories>
+      <AdditionalOptions> /ignore:4221</AdditionalOptions>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ImportLibrary></ImportLibrary>
+      <AssemblyDebug></AssemblyDebug>
+      <SubSystem>Console</SubSystem>
+      <ManifestFile>$(IntDir)Manifest$(TargetExt).intermediate.manifest</ManifestFile>
+      <OptimizeReferences></OptimizeReferences>
+      <EnableCOMDATFolding></EnableCOMDATFolding>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dev|x64'">
+    
+    
+    
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\..;..\..;</AdditionalIncludeDirectories>
+      <AdditionalOptions></AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <SDLCheck>true</SDLCheck>
+      <CallingConvention>Cdecl</CallingConvention>
+      <CompileAs>Default</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings></DisableSpecificWarnings>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <EnablePREfast></EnablePREfast>
+      <ExceptionHandling>false</ExceptionHandling>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <FloatingPointExceptions>false</FloatingPointExceptions>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <OmitFramePointers></OmitFramePointers>
+      <Optimization>Full</Optimization>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>Common/Base/hkBase.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)hkBase.pch</PrecompiledHeaderOutputFile>
+      <PreprocessorDefinitions>_WINDOWS;WIN32;_WIN32;HK_DEBUG;_XT_STATICLINK;_LIB;_ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH;HK_DISABLE_MATH_CONSTRUCTORS;HK_DISABLE_OLD_VECTOR4_INTERFACE;HK_DISABLE_IMPLICIT_SIMDREAL_FLOAT_CONVERSION;HK_DISABLE_MIXED_FLOAT_DOUBLE_OPERATORS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <UndefinePreprocessorDefinitions></UndefinePreprocessorDefinitions>
+      <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <StringPooling>true</StringPooling>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <WarningLevel>Level4</WarningLevel>
+      <CompileAsManaged>false</CompileAsManaged>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+	  
+    </ClCompile>
+    <ResourceCompile>
+      <ResourceOutputFileName></ResourceOutputFileName>
+      <AdditionalIncludeDirectories>$(IntDir)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Lib>
+      <IgnoreAllDefaultLibraries></IgnoreAllDefaultLibraries>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\Lib\x64_vs2010\dev</AdditionalLibraryDirectories>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <UseUnicodeResponseFiles>true</UseUnicodeResponseFiles>
+      <AdditionalOptions> /ignore:4221</AdditionalOptions>
+    </Lib>
+    <Link>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\Lib\x64_vs2010\dev</AdditionalLibraryDirectories>
+      <AdditionalOptions> /ignore:4221</AdditionalOptions>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ImportLibrary></ImportLibrary>
+      <AssemblyDebug></AssemblyDebug>
+      <SubSystem>Console</SubSystem>
+      <ManifestFile>$(IntDir)Manifest$(TargetExt).intermediate.manifest</ManifestFile>
+      <OptimizeReferences></OptimizeReferences>
+      <EnableCOMDATFolding></EnableCOMDATFolding>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dev DLL|x64'">
+    
+    
+    
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\..;..\..;</AdditionalIncludeDirectories>
+      <AdditionalOptions></AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <SDLCheck>true</SDLCheck>
+      <CallingConvention>Cdecl</CallingConvention>
+      <CompileAs>Default</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings></DisableSpecificWarnings>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <EnablePREfast></EnablePREfast>
+      <ExceptionHandling>false</ExceptionHandling>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <FloatingPointExceptions>false</FloatingPointExceptions>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <OmitFramePointers></OmitFramePointers>
+      <Optimization>Full</Optimization>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>Common/Base/hkBase.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)hkBase.pch</PrecompiledHeaderOutputFile>
+      <PreprocessorDefinitions>_WINDOWS;WIN32;_WIN32;HK_DEBUG;_LIB;_ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH;HK_DISABLE_MATH_CONSTRUCTORS;HK_DISABLE_OLD_VECTOR4_INTERFACE;HK_DISABLE_IMPLICIT_SIMDREAL_FLOAT_CONVERSION;HK_DISABLE_MIXED_FLOAT_DOUBLE_OPERATORS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <UndefinePreprocessorDefinitions></UndefinePreprocessorDefinitions>
+      <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <StringPooling>true</StringPooling>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <WarningLevel>Level4</WarningLevel>
+      <CompileAsManaged>false</CompileAsManaged>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+	  
+    </ClCompile>
+    <ResourceCompile>
+      <ResourceOutputFileName></ResourceOutputFileName>
+      <AdditionalIncludeDirectories>$(IntDir)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Lib>
+      <IgnoreAllDefaultLibraries></IgnoreAllDefaultLibraries>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\Lib\x64_vs2010\dev_dll</AdditionalLibraryDirectories>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <UseUnicodeResponseFiles>true</UseUnicodeResponseFiles>
+      <AdditionalOptions> /ignore:4221</AdditionalOptions>
+    </Lib>
+    <Link>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\Lib\x64_vs2010\dev_dll</AdditionalLibraryDirectories>
+      <AdditionalOptions> /ignore:4221</AdditionalOptions>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ImportLibrary></ImportLibrary>
+      <AssemblyDebug></AssemblyDebug>
+      <SubSystem>Console</SubSystem>
+      <ManifestFile>$(IntDir)Manifest$(TargetExt).intermediate.manifest</ManifestFile>
+      <OptimizeReferences></OptimizeReferences>
+      <EnableCOMDATFolding></EnableCOMDATFolding>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Hybrid DLL|x64'">
+    
+    
+    
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\..;..\..;</AdditionalIncludeDirectories>
+      <AdditionalOptions></AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <SDLCheck>false</SDLCheck>
+      <CallingConvention>Cdecl</CallingConvention>
+      <CompileAs>Default</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings></DisableSpecificWarnings>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <EnablePREfast></EnablePREfast>
+      <ExceptionHandling>false</ExceptionHandling>
+      <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
+      <FloatingPointExceptions>false</FloatingPointExceptions>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <OmitFramePointers></OmitFramePointers>
+      <Optimization>disabled</Optimization>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>Common/Base/hkBase.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)hkBase.pch</PrecompiledHeaderOutputFile>
+      <PreprocessorDefinitions>HK_DEBUG;_WINDOWS;WIN32;_WIN32;_LIB;_ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH;HK_DISABLE_MATH_CONSTRUCTORS;HK_DISABLE_OLD_VECTOR4_INTERFACE;HK_DISABLE_IMPLICIT_SIMDREAL_FLOAT_CONVERSION;HK_DISABLE_MIXED_FLOAT_DOUBLE_OPERATORS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <UndefinePreprocessorDefinitions></UndefinePreprocessorDefinitions>
+      <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <StringPooling>true</StringPooling>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <WarningLevel>Level4</WarningLevel>
+      <CompileAsManaged>false</CompileAsManaged>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+	  
+    </ClCompile>
+    <ResourceCompile>
+      <ResourceOutputFileName></ResourceOutputFileName>
+      <AdditionalIncludeDirectories>$(IntDir)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Lib>
+      <IgnoreAllDefaultLibraries></IgnoreAllDefaultLibraries>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\Lib\x64_vs2010\hybrid_dll</AdditionalLibraryDirectories>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <UseUnicodeResponseFiles>true</UseUnicodeResponseFiles>
+      <AdditionalOptions> /ignore:4221</AdditionalOptions>
+    </Lib>
+    <Link>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\Lib\x64_vs2010\hybrid_dll</AdditionalLibraryDirectories>
+      <AdditionalOptions> /ignore:4221</AdditionalOptions>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ImportLibrary></ImportLibrary>
+      <AssemblyDebug></AssemblyDebug>
+      <SubSystem>Console</SubSystem>
+      <ManifestFile>$(IntDir)Manifest$(TargetExt).intermediate.manifest</ManifestFile>
+      <OptimizeReferences></OptimizeReferences>
+      <EnableCOMDATFolding></EnableCOMDATFolding>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    
+    
+    
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\..;..\..;</AdditionalIncludeDirectories>
+      <AdditionalOptions></AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <SDLCheck>false</SDLCheck>
+      <CallingConvention>Cdecl</CallingConvention>
+      <CompileAs>Default</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings></DisableSpecificWarnings>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <EnablePREfast></EnablePREfast>
+      <ExceptionHandling>false</ExceptionHandling>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <FloatingPointExceptions>false</FloatingPointExceptions>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <OmitFramePointers></OmitFramePointers>
+      <Optimization>Full</Optimization>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>Common/Base/hkBase.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)hkBase.pch</PrecompiledHeaderOutputFile>
+      <PreprocessorDefinitions>_WINDOWS;WIN32;_WIN32;_XT_STATICLINK;NDEBUG;_LIB;_ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH;HK_DISABLE_MATH_CONSTRUCTORS;HK_DISABLE_OLD_VECTOR4_INTERFACE;HK_DISABLE_IMPLICIT_SIMDREAL_FLOAT_CONVERSION;HK_DISABLE_MIXED_FLOAT_DOUBLE_OPERATORS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <UndefinePreprocessorDefinitions></UndefinePreprocessorDefinitions>
+      <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <StringPooling>true</StringPooling>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <WarningLevel>Level4</WarningLevel>
+      <CompileAsManaged>false</CompileAsManaged>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+	  
+    </ClCompile>
+    <ResourceCompile>
+      <ResourceOutputFileName></ResourceOutputFileName>
+      <AdditionalIncludeDirectories>$(IntDir)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Lib>
+      <IgnoreAllDefaultLibraries></IgnoreAllDefaultLibraries>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\Lib\x64_vs2010\release</AdditionalLibraryDirectories>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <UseUnicodeResponseFiles>true</UseUnicodeResponseFiles>
+      <AdditionalOptions> /ignore:4221</AdditionalOptions>
+    </Lib>
+    <Link>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\Lib\x64_vs2010\release</AdditionalLibraryDirectories>
+      <AdditionalOptions> /ignore:4221</AdditionalOptions>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <ImportLibrary></ImportLibrary>
+      <AssemblyDebug></AssemblyDebug>
+      <SubSystem>Console</SubSystem>
+      <ManifestFile>$(IntDir)Manifest$(TargetExt).intermediate.manifest</ManifestFile>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release DLL|x64'">
+    
+    
+    
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\..;..\..;</AdditionalIncludeDirectories>
+      <AdditionalOptions></AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <SDLCheck>false</SDLCheck>
+      <CallingConvention>Cdecl</CallingConvention>
+      <CompileAs>Default</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings></DisableSpecificWarnings>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <EnablePREfast></EnablePREfast>
+      <ExceptionHandling>false</ExceptionHandling>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <FloatingPointExceptions>false</FloatingPointExceptions>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <OmitFramePointers></OmitFramePointers>
+      <Optimization>Full</Optimization>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>Common/Base/hkBase.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)hkBase.pch</PrecompiledHeaderOutputFile>
+      <PreprocessorDefinitions>_WINDOWS;WIN32;_WIN32;NDEBUG;_LIB;_ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH;HK_DISABLE_MATH_CONSTRUCTORS;HK_DISABLE_OLD_VECTOR4_INTERFACE;HK_DISABLE_IMPLICIT_SIMDREAL_FLOAT_CONVERSION;HK_DISABLE_MIXED_FLOAT_DOUBLE_OPERATORS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <UndefinePreprocessorDefinitions></UndefinePreprocessorDefinitions>
+      <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <StringPooling>true</StringPooling>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <WarningLevel>Level4</WarningLevel>
+      <CompileAsManaged>false</CompileAsManaged>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+	  
+    </ClCompile>
+    <ResourceCompile>
+      <ResourceOutputFileName></ResourceOutputFileName>
+      <AdditionalIncludeDirectories>$(IntDir)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Lib>
+      <IgnoreAllDefaultLibraries></IgnoreAllDefaultLibraries>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\Lib\x64_vs2010\release_dll</AdditionalLibraryDirectories>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <UseUnicodeResponseFiles>true</UseUnicodeResponseFiles>
+      <AdditionalOptions> /ignore:4221</AdditionalOptions>
+    </Lib>
+    <Link>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\Lib\x64_vs2010\release_dll</AdditionalLibraryDirectories>
+      <AdditionalOptions> /ignore:4221</AdditionalOptions>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <ImportLibrary></ImportLibrary>
+      <AssemblyDebug></AssemblyDebug>
+      <SubSystem>Console</SubSystem>
+      <ManifestFile>$(IntDir)Manifest$(TargetExt).intermediate.manifest</ManifestFile>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="DebugUtil\Logger\hkLogger.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Container\BlockStream\hkBlockStreamBaseBlock.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Thread\Task\hkTask.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\SweptTransform\hkSweptTransformd.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Spu\Dma\Utils\hkSpuDmaUtils.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\Stream\stream.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Math\Vector\hkVector4Util.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Memory\Allocator\FreeList\hkFixedSizeAllocator.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Math\hkMath.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Thread\Job\ThreadPool\Cpu\hkCpuJobThreadPool.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Math\Header\hkMathHeaderUnions.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Math\Matrix\hkMatrix4d.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Reflection\hkClassMemberAccessor.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Types\hkHandle.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Types\hkPtrAndInt.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Memory\Tracker\Report\hkScanReportUtil.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Config\hkConfigSpuMonitors.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Memory\Allocator\Solver\hkSolverAllocator.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Container\BlockStream\Allocator\hkThreadLocalBlockStreamAllocator.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\Stopwatch\stopwatch.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Math\Vector\hkSimdDouble64.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\Vector\hkHalf8fUtil.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Classes\Reflections\hkMonitorStreamhkMonitorStreamAnalyzerReflection.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Math\LargeInt\Fpu\hkFpuSimdInt.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Classes\hkBaseClasses.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\Thread\TaskQueueTest.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Math\LargeInt\hkSimdInt.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Reflection\hkInternalClassMember.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Types\Traits\hkTraitIsPod.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Thread\Task\hkTaskScheduler.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="System\Stopwatch\hkStopwatch.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Thread\Task\hkTaskGraphUtil.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Container\Array\hkArrayUtil.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Math\Vector\Mx\hkMxMask.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Types\Physics\ContactPoint\hkContactPoint.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Reflection\Util\hkVariantDataUtil.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\Vector\Mx\hkMxMask_AVX.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Spu\Dma\hkDmaChannels.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Memory\Tracker\LayoutCalculator\Handler\hkTrackerStringPtrLayoutHandler.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Memory\Allocator\LargeBlock\hkLargeBlockAllocator.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkFloat16TransformReflection.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Math\Vector\hkSimdReal.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Memory\Tracker\LayoutCalculator\Handler\hkTrackerQueueLayoutHandler.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Config\hkConfigBranches.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Memory\Tracker\Report\hkTypeSummaryReportUtil.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Memory\Tracker\LayoutCalculator\Handler\hkTrackerArrayLayoutHandler.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Reflection\Registry\hkVtableClassRegistry.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="System\Error\hkError.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Math\Util\hkVector2dUtil.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="System\Init\PlatformInit.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="DebugUtil\TraceStream\hkTraceStream.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Container\MinHeap\hkMinHeap.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Thread\Task\hkTaskGraphUtil.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\Math\Linear\vector3.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Memory\Tracker\ScanCalculator\hkTrackerSnapshot.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Memory\Tracker\Report\hkVdbStreamReportUtil.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\Vector\Mx\hkMxHalf8f.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Math\Vector\hkVector2f.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Math\Matrix\hkTransformf.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Types\Geometry\Geometry\hkGeometryUtil.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Math\Vector\Sse\hkSseVector4.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Memory\Tracker\LayoutCalculator\Handler\hkTrackerJobQueueLayoutHandler.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkSphereReflection.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Math\ExtendedMath\hkMpMath.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\Math\Linear\simdreal.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Memory\Router\hkMemoryRouter.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\Vector\hkVector2.inl"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Container\BlockStream\hkBlockStream.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Types\Geometry\Aabb\hkAabb.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="System\Io\Writer\FileServer\hkFileServerStreamWriter.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\Matrix\hkTransformUtil.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="UnitTest\Math\Linear\matrix4.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Algorithm\Compression\hkBufferCompressionHash.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Fwd\hkcctype.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Math\Vector\hkSimdFloat32.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Types\Geometry\Aabb\hkAabbHalf.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Math\Header\hkMathHeaderFuncs.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="UnitTest\hkUnitTest.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Types\hkUFloat8.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Math\Float16Transform\hkFloat16Transform.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Math\Vector\hkPackedVector3.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="System\Io\Writer\SubStream\hkSubStreamWriter.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Math\Matrix\hkMatrix3f.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Math\Matrix\hkMatrixdNm.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Math\Vector\hk4xVector2.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="System\Io\Writer\Compressed\hkCompressedStreamWriter.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Memory\Allocator\hkMemoryAllocator.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Container\Tree\hkSortedTree.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\Container\FreeListArray.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Math\Vector\Mx\hkMxMaskf.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Memory\System\Util\hkMemoryInitUtil_FreeList.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Math\Vector\Mx\hkMxVector.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkSimplePropertyReflection.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Container\PointerMap\hkMap.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Algorithm\Compression\hkCompression.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\Vector\Mx\hkMxHalf8_AVX.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Classes\Reflections\hkMultiThreadCheckReflection.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="PreProcessor\Values\hkPreProcessorBool.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Thread\JobQueue\hkJobQueue.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Math\Vector\Mx\hkMxSinglef.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\Vector\Mx\hkMxHalf8d.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Memory\Tracker\ScanCalculator\hkTrackerSnapshot.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Memory\System\Checking\hkCheckingMemorySystem.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Reflection\hkClassEnum.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="System\Io\Platform\Win32\hkWin32FileSystem.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Memory\Tracker\LayoutCalculator\Handler\hkTrackerSetLayoutHandler.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Math\Matrix\hkMatrix3d.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Spu\Dma\Utils\hkDefaultSpuDmaUtils.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Memory\System\Util\hkMemoryInitUtil_Simple.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkUFloat8Reflection.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Container\BlockStream\Allocator\Fixed\hkFixedBlockStreamAllocator.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Algorithm\UnionFind\hkUnionFind.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\Binding\nonstandard.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="DebugUtil\MemoryExceptionTestingUtil\hkMemoryExceptionTestingUtil.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\_blank\blank.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Types\hkUFloat8.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\Vector\Mx\hkMxVectordUtil.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Math\Vector\hkVector4d.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Algorithm\Compression\hkBufferCompressionSuffixTree.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Reflection\hkClassUpdate.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Container\StringMap\hkStorageStringMap.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Types\Properties\hkSimpleProperty.inl"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Math\SweptTransform\hkSweptTransformUtil.inl"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Math\Vector\Mx\hkMxRealf.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Container\Array\hkSmallArray.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\Container\Set.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Types\Traits\hkTraitModifier.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\Matrix\hkMatrix4Util.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Reflection\TypeTree\hkTrackerTypeTreeTextCache.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\hkBaseUnitTestTrackerClasses.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Types\Physics\MotionState\hkMotionState.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\String\string.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="System\StackTracer\Impl\hkStackTracerIa32.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="UnitTest\Container\BlockList.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\Algorithm\Algorithm.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="System\Io\Reader\hkStreamReader.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Memory\Tracker\LayoutCalculator\Handler\hkTrackerPointerMapLayoutHandler.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Types\Geometry\Aabb20\hkAabb20.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Memory\Allocator\Recall\hkRecallAllocator.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Math\Matrix\hkMatrix4.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Thread\Thread\hkWorkerThreadContext.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Math\SweptTransform\hkSweptTransformdUtil.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Math\Vector\hkIntVector.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Types\Physics\ContactPoint\hkContactPoint.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Container\PointerMultiMap\hkMultiMap.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Container\Array\hkArray.inl"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Math\Vector\Sse\hkSseVector4Util_D_AVX.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Math\Vector\hkFourTransposedPoints.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Math\Matrix\hkMatrixDecomposition.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Container\RelArray\hkRelArray.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Container\Tree\hkTree.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Memory\Tracker\ScanCalculator\hkTrackerScanCalculator.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\Vector\Packing\hkVectordPackUtility.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="hkBase.cpp">
+        <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+        <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+        <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Dev|x64'">Create</PrecompiledHeader>
+        <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Dev DLL|x64'">Create</PrecompiledHeader>
+        <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release DLL|x64'">Create</PrecompiledHeader>
+        <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Hybrid DLL|x64'">Create</PrecompiledHeader>
+        <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug DLL|x64'">Create</PrecompiledHeader>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Reflection\TypeTree\hkTrackerTypeTreeParser.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Math\Vector\Fpu\hkFpuVector4dComparison.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Memory\Allocator\Checking\hkLeakDetectAllocator.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Types\Geometry\Sphere\hkSphere.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\Container\LocalArray.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="PreProcessor\Values\hkPreProcessorLsb.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Math\Matrix\hkRotationd.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="PreProcessor\Values\hkPreProcessorOr.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Container\Queue\hkQueue.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="System\Error\hkDefaultError.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Memory\Allocator\Stats\hkStatsAllocator.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\Memory\lifoallocator.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Math\Vector\hkVectorNd.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\Math\Linear\quaternion.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Math\Quaternion\hkQuaterniond.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Math\Vector\Sse\hkSseIntVector.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="DebugUtil\DeterminismUtil\hkCheckDeterminismUtil.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Container\Array\hkArrayUtil.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="System\Io\Util\hkLoadUtil.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Container\BlockStream\hkBlockStreamBaseRange.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Algorithm\FindIndex\hkFindIndex.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Algorithm\UnionFind\hkUnionFind.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Types\Traits\hkTraitArithmetic.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Types\Geometry\IntSpaceUtil\hkIntSpaceUtil.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Math\Vector\Mx\hkMxVectord.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="System\Error\hkError.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="System\Io\Writer\hkStreamWriter.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Thread\CriticalSection\Win32\hkWin32CriticalSection.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Math\Vector\Fpu\hkFpuSimdReal.inl"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="keycode.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Math\Vector\Sse\hkSseVector4_D_AVX.inl"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Math\Vector\Mx\hkMxVectord.inl"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Thread\CriticalSection\Empty\hkEmptyCriticalSection.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Math\SweptTransform\hkSweptTransformfUtil.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Math\Vector\Mx\hkMxMaskd.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Math\QsTransform\hkQsTransformf.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Container\BlockStream\hkBlockStreamBaseRange.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="System\Io\Reader\Buffered\hkBufferedStreamReader.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="System\Io\Platform\Stdio\hkStdioStreamWriter.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Container\BlockStream\Allocator\hkBlockStreamAllocator.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\Quaternion\hkQuaternionUtil.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="System\Io\Platform\Bsd\hkBsdSocket.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Types\hkRefPtr.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="System\Io\Writer\Array\hkArrayStreamWriter.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="System\Io\Writer\FileServer\hkFileServerStreamWriter.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Fwd\hkcstdarg.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Memory\Allocator\Checking\hkDelayedFreeAllocator.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Fwd\hkcmalloc.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Types\Properties\hkSimpleProperty.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <Compile Include="Types\hkSignalSlots.hxx">
+        <DeploymentContent>False</DeploymentContent></Compile>
+    <ClCompile Include="UnitTest\Math\SweptTransform.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Math\Vector\hkVector4f.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Algorithm\Compression\hkBufferCompression.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="DebugUtil\MultiThreadCheck\hkMultiThreadCheck.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkClassReflection.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Memory\Tracker\ScanCalculator\hkTrackerScanCalculator.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\Math\Linear\transform.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Config\hkConfigVersion.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Memory\Allocator\Checking\hkPaddedAllocator.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Container\Tree\hkAnderssonTree.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\Vector\Mx\hkMxQuaternion_AVX.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Types\hkRefVariant.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Memory\System\Util\hkMemoryInitUtil_Optimizer.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Types\Geometry\Geometry\hkGeometry.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="UnitTest\Container\StringMap.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Math\Util\hkConvertCoordinateSpace.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Thread\Task\hkTaskGraph.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Memory\Tracker\ScanCalculator\hkTrackerScanSnapshot.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Types\hkRefVariant.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="System\Io\FileSystem\hkNativeFileSystem.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Math\QTransform\hkQTransformf.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Math\Vector\hkVectorNf.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Thread\Job\ThreadPool\hkJobThreadPool.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\Math\Linear\mathfunc.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Math\Vector\hkFourTransposedPointsd.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Types\Properties\hkSimpleProperty.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Math\Vector\Mx\hkMxQuaternion.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Reflection\hkClass.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Memory\System\Util\hkMemoryInitUtil.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Algorithm\Collide\1AxisSweep16\hk1AxisSweep16.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Math\Vector\Mx\hkMxSingle.inl"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Container\CommandStream\hkCommandStream.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Memory\Allocator\Malloc\hkMallocAllocator.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\Multithread\multithread_tests.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Types\Geometry\Aabb20\hkAabb20.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Math\Matrix\hkMatrix4.inl"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Math\SweptTransform\hkSweptTransformf.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Memory\Tracker\LayoutCalculator\Handler\hkTrackerFlagsLayoutHandler.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Config\hkProductFeatures.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="System\Stopwatch\Impl\hkWindowsSystemClock.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Thread\JobQueue\hkJobQueue.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Math\Vector\Mx\hkMxSingle_AVX.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Math\Vector\hkVector4fComparison.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Types\Geometry\Aabb20\hkAabb20.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Types\hkRefVariant.inl"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Math\SweptTransform\hkSweptTransform.inl"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Math\LargeInt\Sse\hkSseInt64Vector4.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="UnitTest\Math\Linear\misc.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="System\Io\Platform\Win32\hkDebugConsoleStreamWriter.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="DebugUtil\MemoryExceptionTestingUtil\hkMemoryExceptionTestingUtil.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Math\Matrix\hkMatrix4f.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Memory\System\FreeList\hkFreeListMemorySystem.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Memory\Tracker\Report\hkTulipReportUtil.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Container\CommandStream\hkCommandStream.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="DebugUtil\Logger\hkOstreamLogger.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Math\QsTransform\hkQsTransformd.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Container\StringMap\hkCachedHashMap.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Container\Queue\hkQueue.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Math\Vector\hkVector2f.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Math\SweptTransform\hkSweptTransformfUtil.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Reflection\Registry\hkDynamicClassNameRegistry.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="System\Io\Writer\Crc\hkCrcStreamWriter.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Types\Geometry\hkGeometry.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\Math\Matrix6.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\Algorithm\ObjectArray.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Memory\Allocator\FreeList\hkFreeList.inl"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Math\Matrix\hkMatrix3f.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Classes\hkBaseTrackerClasses.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Container\RelArray\hkRelArrayUtil.inl"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Container\BlockList\hkBlockList.inl"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Container\String\hkUtf8.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Memory\Allocator\Solver\hkSolverAllocator.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Memory\System\Simple\hkSimpleMemorySystem.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Math\QTransform\hkQTransform.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Math\Vector\Packing\hkVectorPackUtility.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Math\Vector\Mx\hkMxSingled.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Container\BitField\hkBitField.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Memory\System\hkMemorySystem.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Memory\Tracker\LayoutCalculator\Handler\hkTrackerQueueLayoutHandler.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Memory\Tracker\Report\hkProductReportUtil.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Types\Geometry\hkStridedVertices.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Thread\Thread\hkThread.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Container\BlockStream\Allocator\hkBlockStreamAllocator.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Object\hkReferencedObject.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Thread\Thread\Win32\hkWin32Thread.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="System\Io\Socket\hkSocket.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\Memory\allocator_tests.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Math\Vector\hkVectorNf.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Math\SweptTransform\hkSweptTransformf.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Memory\System\Util\hkMemoryInitUtil_Checking.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Math\Matrix\hkTransformd.inl"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Math\LargeInt\Sse\hkSseSimdInt.inl"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Container\String\hkStringPtr.inl"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Container\StringDictionary\hkStringDictionary.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="DebugUtil\MultiThreadCheck\hkMultiThreadCheck.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Algorithm\PseudoRandom\hkPseudoRandomGenerator.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\Math\FloatDouble.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Memory\Tracker\LayoutCalculator\Handler\hkTrackerFlagsLayoutHandler.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="System\Io\IStream\hkIStream.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Types\hkSignalSlots.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="System\Io\Writer\Memory\hkMemoryStreamWriter.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Memory\MemoryClasses\hkMemoryClassesTable.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Memory\Util\hkMemUtil.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Math\Matrix\hkRotation.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\LargeInt\Fpu\hkFpuInt128Vector4.inl"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Math\Vector\Sse\hkSseVector4Comparison_D_AVX.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Math\QTransform\hkQTransformd.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\Reflection\ParserTest.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Container\Tree\hkAnderssonTree.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Container\Array\hkSmallArray.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Reflection\Util\hkVariantDataUtil.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Memory\Tracker\Report\hkFieldHierarchyReportUtil.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Math\Matrix\hkMatrixdNm.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Container\StringMap\hkStringMap.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Math\Vector\hkVector2.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Math\Float16Transform\hkFloat16Transform.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="System\Io\Platform\Stdio\hkStdioStreamReader.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Algorithm\Collide\1AxisSweep\hk1AxisSweep.inl"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="System\StackTracer\Impl\hkStackTracerGnu.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Types\Geometry\Aabb\hkAabbUtil.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Ext\hkBaseExt.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\Math\Linear\qstransform.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Memory\System\hkMemorySystem.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Config\hkConfigSolverLog.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\Vector\hkVector4fComparison.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Container\String\Deprecated\hkStringOld.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Container\BlockStream\Allocator\Fixed\hkFixedBlockStreamAllocator.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="DebugUtil\TraceStream\hkTraceStream.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Types\Physics\hkStepInfo.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="System\Io\FileSystem\hkServerFileSystem.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Memory\Tracker\Report\hkCategoryReportUtil.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Types\hkBaseDefs.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Math\Types\Fpu\hkFpuDoubleMathTypes.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Config\hkConfigMemory.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Config\hkConfigMemoryStats.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Container\Array\hkFixedCapacityArray.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="System\Io\OStream\hkOStream.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Thread\SimpleScheduler\hkSimpleScheduler.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Math\Types\Fpu\hkFpuCommonMathTypes.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Types\Geometry\Geometry\hkGeometryUtil.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Math\Header\hkMathHeaderMxClasses.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Types\Geometry\Aabb\hkAabb.inl"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Math\Quaternion\hkQuaternion.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Thread\Pool\hkCpuThreadPool.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="System\Io\Reader\FileServer\hkFileServerStreamReader.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkClassMemberReflection.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Algorithm\Sort\hkRadixSort.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Reflection\Registry\hkClassNameRegistry.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\BaseTypes\BaseTypes\baseTypesUnitTest.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Math\SweptTransform\hkSweptTransformdUtil.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Math\QsTransform\hkQsTransformd.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Math\Types\hkMathTypes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Container\SubString\hkSubString.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\Matrix\hkTransform.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Types\hkTypedUnion.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Reflection\hkClassMember.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Types\Geometry\Aabb\hkAabbHalf.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Math\Vector\hkSimdFloat32.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\Vector\Mx\hkMxQuaterniond.inl"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Math\Vector\Mx\hkMxQuaternion.inl"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Math\Vector\hk4xVector2.inl"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Types\Physics\MotionState\hkMotionState.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="UnitTest\Spu\DmaManager\DmaManagerTest.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Thread\Pool\hkThreadPool.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkContactPointMaterialReflection.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\Container\Queue.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Math\Types\Mx\hkMxMathTypes.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Reflection\Registry\hkVtableClassRegistry.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Container\BlockStream\hkBlockStream.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Memory\Tracker\Report\hkVdbStreamReportUtil.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Memory\Tracker\LayoutCalculator\hkTrackerExternalLayoutHandlerManager.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Container\String\hkString.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Container\String\hkStringPtr.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Memory\Tracker\Default\hkDefaultMemoryTracker.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Memory\Tracker\CurrentFunction\hkCurrentFunction.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Config\hkProductFeatures.inl"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Math\QTransform\hkQTransformf.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Types\hkIgnoreDeprecated.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Container\ObjectPackUtility\hkObjectPackUtility.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Classes\Reflections\hkSweptTransformdReflection.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Math\Matrix\hkTransformf.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Math\Header\hkMathHeaderEnums.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="PreProcessor\Values\hkPreProcessorAnd.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Math\Matrix\hkTransformUtil.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Memory\Allocator\TempDetect\hkTempDetectAllocator.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Types\Geometry\LocalFrame\hkLocalFrame.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Math\Header\hkMathHeaderConstants.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\Vector\hkVector4dComparison.inl"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="System\Io\Writer\Crc\hkCrcStreamWriter.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Thread\SimpleScheduler\hkSimpleScheduler.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\Vector\hkFourTransposedPoints.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Reflection\hkClassVersion1PaddedClass.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="System\Io\OStream\hkOStream.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Reflection\TypeTree\hkTrackerTypeTreeTextCache.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Types\Geometry\Aabb\hkAabbUtil.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Memory\Tracker\LayoutCalculator\hkTrackerExternalLayoutHandlerManager.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\hkBasehkMonitorStreamTrackerClasses.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkCustomAttributesReflection.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Container\Tree\hkSortedTree.inl"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="System\Io\OStream\hkOStream.inl"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Math\Quaternion\hkQuaternionf.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Memory\MemoryClasses\hkMemoryClasses.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Container\BlockStream\hkBlockStreamBaseStream.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Fwd\hkcstring.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Memory\Tracker\Util\hkTextReportLayoutUtil.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="System\Io\Writer\Printf\hkPrintfStreamWriter.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Math\Matrix\hkMatrix4d.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\Stream\crc32stream.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Container\Array\hkFixedCapacityArray.inl"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Types\Geometry\Aabb16\hkAabb16.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Memory\Tracker\Report\hkFieldHierarchyReportUtil.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Config\hkConfigThread.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Thread\CriticalSection\hkCriticalSection.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Container\Array\hkFixedInplaceArray.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Math\LargeInt\hkInt64Vector4.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Algorithm\FindIndex\hkFindIndex.inl"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Math\Vector\hkVector4Util.inl"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Container\RelArray\hkRelArray.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Math\Header\hkMathHeaderSharedImplementations.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Memory\Tracker\LayoutCalculator\Handler\hkTrackerStringMapLayoutHandler.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Math\Header\hkMathHeaderTypes.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Monitor\MonitorStreamAnalyzer\hkMonitorStreamAnalyzer.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\Vector\hkIntVector.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Thread\CpuCache\hkCpuCache.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Math\LargeInt\Sse\hkSseSimdInt128.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Math\Vector\Mx\hkMxQuaternionf.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\Container\SmallArray.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Container\BlockStream\hkBlockStreamBaseIterators.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="PreProcessor\Values\hkPreProcessorShl.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\Vector\Mx\hkMxReald.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Math\SweptTransform\hkSweptTransform.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Math\Vector\Mx\hkMxRealf.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Container\PointerMap\hkMap.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Thread\Task\hkTaskGraph.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Math\SweptTransform\hkSweptTransformdUtil.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\Vector\hkVector4.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Thread\Thread\hkWorkerThreadContext.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Memory\Util\hkMemUtil.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Memory\Tracker\hkMemoryTracker.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkQTransformfReflection.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Memory\Allocator\hkMemoryAllocator.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Math\Quaternion\hkQuaterniond.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Reflection\Attributes\hkAttributes.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Memory\Tracker\LayoutCalculator\Handler\hkTrackerEnumLayoutHandler.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\Vector\Mx\hkMxReal_AVX.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Math\Matrix\hkMatrix6.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Fwd\hkstandardheader.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Memory\Tracker\LayoutCalculator\Handler\hkTrackerJobQueueLayoutHandler.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Reflection\hkClassVersion1Class.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Math\Vector\Sse\hkSseVector4Util_D.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="System\Stopwatch\hkSystemClock.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Reflection\Registry\hkDefaultClassNameRegistry.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Memory\Tracker\LayoutCalculator\Handler\hkTrackerPointerMapLayoutHandler.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\Vector\Mx\hkMxVectorf.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="System\Io\Writer\Buffered\hkBufferedStreamWriter.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Math\Matrix\hkMatrixDecomposition.inl"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Math\Quaternion\hkQuaterniond.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Memory\Tracker\LayoutCalculator\Handler\hkTrackerPadSpuLayoutHandler.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Math\Util\hkVector2Util.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\ExtendedMath\hkMpMath.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Thread\Task\hkTaskScheduler.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Math\Vector\hkHalf8dUtil.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\LargeInt\hkSimdInt.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Memory\Tracker\Report\hkProductReportUtil.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\Memory\mem_tests.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkTraceStreamReflection.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Memory\Tracker\hkTrackerClassDefinition.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Algorithm\Sort\hkSort.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Algorithm\Collide\1AxisSweep\hk1AxisSweep.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="DebugUtil\Logger\hkLogger.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Math\Vector\hkHalf8Util.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="System\Io\FileSystem\Union\hkUnionFileSystem.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Reflection\hkClassEnum.inl"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Container\String\Deprecated\hkStringOld.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Memory\Tracker\ScanCalculator\hkTrackerScanSnapshot.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Types\Physics\ContactPoint\hkContactPointMaterial.inl"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="System\StackTracer\Impl\hkStackTracerNull.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Math\Vector\hk4xVector2d.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="System\Io\IArchive\hkIArchive.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Container\ObjectCache\hkObjectCache.inl"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Math\Vector\Sse\hkSseSimdReal_D.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Memory\System\Optimizer\hkOptimizerMemorySystem.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Memory\Allocator\FreeList\hkFreeList.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\Vector\Mx\hkMxMaskd.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="DebugUtil\DeterminismUtil\hkNetworkedDeterminismUtil.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Container\FreeListArray\hkFreeListArray.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Math\Vector\Mx\hkMxVectorf.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Memory\Tracker\Util\hkTextReportLayoutUtil.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Math\QTransform\hkQTransform.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Math\Matrix\hkMatrix6f.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Math\Vector\hkVector2d.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Object\hkSingleton.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Object\hkSingleton.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Types\Physics\ContactPoint\hkContactPointMaterial.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="System\hkBaseSystem.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\Math\MathStream.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Thread\Task\hkTaskQueue.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Math\Matrix\hkMatrix4Util.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Container\BitField\hkBitField.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Math\SweptTransform\hkSweptTransformd.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkBitFieldReflection.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Container\CommandStream\hkCommandStream.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\QsTransform\hkQsTransformf.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Math\Vector\hkVector4d.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Math\Vector\hkHalf8Util.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Memory\Tracker\LayoutCalculator\hkTrackerLayoutCalculator.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Container\Tree\hkAnderssonTree.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Fwd\hkcmath.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Memory\Tracker\Report\hkCategoryReportUtil.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Reflection\Registry\hkTypeInfoRegistry.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\Algorithm\FindIndex\findIndex.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkColorReflection.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="System\Io\OArchive\hkOArchive.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Reflection\TypeTree\hkTrackerTypeTreeCache.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Math\Header\hkMathHeaderAliases1.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\QsTransform\hkQsTransformd.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Container\hkContainerAllocators.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Memory\Tracker\Report\hkHierarchicalSummaryReportUtil.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="System\Error\hkDefaultError.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="System\Stopwatch\hkStopwatch.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Memory\Router\hkMemoryRouter.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\Types\SignalTest.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Math\Matrix\hkMatrix3Util.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Math\Matrix\hkRotationf.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkFourTransposedPointsfReflection.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="System\Io\Writer\Compressed\hkCompressedStreamWriter.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Math\Vector\Mx\hkMxMask.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Algorithm\Compression\hkBufferCompression.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Memory\Tracker\Report\hkHierarchyReportUtil.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="System\Io\Writer\OffsetOnly\hkOffsetOnlyStreamWriter.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Math\SymmetricMatrix\hkSymmetricMatrix3Util.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Container\String\Deprecated\hkStringOld.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Container\StringMap\hkCachedHashMap.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Container\SubString\hkSubString.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="UnitTest\Math\Linear\IntVector.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Math\SweptTransform\hkSweptTransformUtil.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\QsTransform\hkQsTransform.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Memory\Allocator\Monitor\hkMonitorAllocator.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Memory\Tracker\LayoutCalculator\Handler\hkTrackerPadSpuLayoutHandler.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkRefCountedPropertiesReflection.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Math\Vector\Packing\hkVectorPackUtilityCommon.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Memory\Allocator\Lifo\hkLifoAllocator.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Math\Vector\hkVectorNd.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Math\LargeInt\hkInt128Vector4.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Math\Util\hkVector2fUtil.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Math\LargeInt\Fpu\hkFpuInt64Vector4.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Container\PointerMap\hkLocalPointerMap.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\Vector\Sse\hkSseVector4Comparison_D.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Monitor\MonitorStreamAnalyzer\hkMonitorStreamAnalyzer.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Math\Vector\Packing\hkVectorfPackUtility.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkFreeListArrayReflection.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="System\StackTracer\hkStackTracer.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="System\StackTracer\hkStackTracer.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\Algorithm\Compression.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Fwd\hkcfloat.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Fwd\hkwindows.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Memory\Tracker\ScanCalculator\hkTrackerSnapshot.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Container\LocalArray\hkLocalArray.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Container\StringDictionary\hkStringDictionary.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Math\Types\Fpu\hkFpuMathTypes.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Math\SymmetricMatrix\hkSymmetricMatrix3Util.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\Vector\hkFourTransposedPointsd.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Types\Geometry\LocalFrame\hkLocalFrame.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\BaseObjecthkReferencedObjectReflection.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Container\MinHeap\hkMinHeap.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="System\Io\Platform\Win32\hkWin32StreamWriter.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\Matrix\hkMatrix3Util.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Object\hkBaseObject.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Reflection\TypeTree\hkTrackerTypeTreeParser.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Math\Vector\hkVector4f.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Thread\CriticalSection\hkCriticalSection.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Memory\System\Util\hkMemoryInitUtil_LeakDetect.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="System\Io\Platform\Win32\hkWin32FileSystem.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Memory\Allocator\Checking\hkDelayedFreeAllocator.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Math\Functions\hkMathFuncs.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Math\Vector\Mx\hkMxVectorUtil.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Math\Matrix\hkRotationf.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Math\Vector\Mx\hkMxMaskf.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Memory\Allocator\Pooled\hkPooledAllocator.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Reflection\Registry\hkDefaultClassNameRegistry.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Container\String\hkStringObject.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Math\Vector\hkHalf8fUtil.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Reflection\hkFinishLoadedObjectFlag.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Container\BlockStream\hkBlockStreamBaseRange.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Math\Vector\hkFourTransposedPointsf.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Memory\System\FreeList\hkFreeListMemorySystem.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Thread\Pool\hkCpuThreadPool.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Memory\Tracker\Util\hkVerifySnapshotTypesUtil.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\BaseObjecthkBaseObjectReflection.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Memory\Tracker\LayoutCalculator\hkTrackerLayoutCalculator.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Math\LargeInt\hkInt64Vector4.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Math\Vector\hkSimdDouble64.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Math\Vector\hk4xVector2d.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="System\Io\IArchive\hkIArchive.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Types\Physics\MotionState\hkMotionState.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Config\hkProductFeatures.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkContactPointReflection.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Math\Vector\hkVector4fComparison.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="DebugUtil\GlobalProperties\hkGlobalProperties.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Memory\Tracker\hkMemoryTracker.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Container\String\hkStringPtr.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="System\Io\Platform\Bsd\hkBsdSocket.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Memory\Allocator\Pooled\hkPooledAllocator.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="KeyCode.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Math\Float16Transform\hkFloat16Transform.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Math\Types\Fpu\hkFpuFloatMathTypes.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Memory\Tracker\Registration\hkRegisterTrackedClasses.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Memory\Tracker\Report\hkScanReportUtil.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Monitor\hkMonitorStream.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Math\LargeInt\Sse\hkSseInt128Vector4.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Memory\Allocator\FreeList\hkFreeListAllocator.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Math\Vector\hkSimdFloat32.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Memory\Tracker\Util\hkVerifySnapshotTypesUtil.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Memory\Tracker\Report\hkTypeReportUtil.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Math\Vector\hkVector4f.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\Math\ConvertCS.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Reflection\Registry\hkTypeInfoRegistry.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Algorithm\Noise\hkPerlinNoise2d.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Types\Geometry\Sphere\hkSphere.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Memory\Tracker\LayoutCalculator\Handler\hkTrackerRefPtrLayoutHandler.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Types\hkBaseTypes.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Algorithm\Sort\hkRadixSort.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Algorithm\Compression\hkCompression.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\BaseSystem\basesystem.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Types\hkTypedUnion.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="System\hkBaseSystem.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Config\hkOptionalComponent.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Thread\Semaphore\hkSemaphore.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\Vector\Sse\hkSseHalf8fUtil.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Math\Vector\hkPackedVector3.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Math\Vector\hkVector2d.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Memory\Tracker\hkTrackerClassDefinition.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Container\StringDictionary\hkStringDictionary.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Memory\Allocator\Stats\hkStatsAllocator.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Thread\JobQueue\hkJobQueue.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Math\Matrix\hkMatrixNm.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Memory\Allocator\TempDetect\hkTempDetectAllocator.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Memory\Allocator\Lifo\hkLifoAllocator.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Types\hkTrait.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="UnitTest\Math\Linear\mathtestutils.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="System\Io\Writer\Crc\hkCrcStreamWriter.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\Container\MinHeap.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="System\Io\Reader\Compressed\hkCompressedStreamReader.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Reflection\hkTypeInfo.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Math\Vector\hkFourTransposedPointsd.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Math\Vector\Mx\hkMxVectorfUtil.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Math\Vector\hkVector4.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="System\Io\IStream\hkIStream.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Math\Quaternion\hkQuaternion.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Algorithm\Collide\LineSegment\hkLineSegmentUtil.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Math\Header\hkMathHeaderForwardDeclarations.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="System\Stopwatch\hkSystemClock.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Container\String\hkStringBuf.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Classes\Reflections\hkAttributesReflection.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Memory\Tracker\LayoutCalculator\Handler\hkTrackerStringMapLayoutHandler.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Math\Vector\hkPackedTransform.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\Vector\Mx\hkMxVector_AVX.inl"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="System\Io\IStream\hkIStream.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Memory\Tracker\LayoutCalculator\Handler\hkTrackerSetLayoutHandler.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Container\BlockList\hkBlockList.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Math\Quaternion\hkQuaternionf.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Container\BlockStream\Allocator\Dynamic\hkDynamicBlockStreamAllocator.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\Vector\Mx\hkMxCommon_AVX.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Memory\System\Simple\hkSimpleMemorySystem.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Thread\Task\hkTaskQueue.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Math\Vector\hk4xVector2f.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Math\Matrix\hkTransformd.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\Container\MultiMap.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Container\PointerMultiMap\hkMultiMap.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Math\QTransform\hkQTransformd.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\Vector\Sse\hkSseVector4Util.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Monitor\hkMonitorStream.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Container\Tree\hkTree.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Math\Header\hkMathHeaderPlatformImplementations.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\Vector\Fpu\hkFpuSimdRealf.inl"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Math\Vector\hkHalf8dUtil.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="UnitTest\Container\Tree.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Memory\MemoryClasses\hkMemoryClassesTable.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Memory\Tracker\Report\hkStackTraceReportUtil.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkMotionStateReflection.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Memory\Allocator\Malloc\hkMallocAllocator.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Math\LargeInt\hkLargeIntTypes.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Types\hkSignalSlots.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Container\Tree\hkTree.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Memory\Tracker\CurrentFunction\hkCurrentFunction.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkStringObjectReflection.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Math\Matrix\hkTransformf.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Math\Vector\Packing\hkVectorfPackUtility.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Algorithm\Sort\hkSort.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\Vector\Mx\hkMxQuaternionf.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Math\Matrix\hkTransform.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Math\Vector\hkSimdReal.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Math\Vector\hkSimdDouble64.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Math\Vector\Fpu\hkFpuVector4fComparison.inl"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Math\Vector\Mx\hkMxVectorUtil.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="UnitTest\Math\Linear\LargeInt.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="hkBase.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Algorithm\Compression\hkBufferCompression.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="UnitTest\Container\BitField.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Math\Vector\Sse\hkSseSimdReal.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Container\StringMap\hkStringMap.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Math\Quaternion\hkQuaternionUtil.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Memory\System\Util\hkMemorySnapshot.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\Algorithm\Maps.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Math\Matrix\hkMatrix4f.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Math\Vector\Mx\hkMxVectordUtil.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Reflection\hkClassMemberAccessor.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkAabbHalfReflection.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Types\hkBaseTypes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Memory\Util\hkMemUtil.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Container\BlockStream\Allocator\hkThreadLocalBlockStreamAllocator.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Reflection\TypeTree\hkTrackerTypeTreeNode.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Math\QsTransform\hkQsTransformf.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Container\BlockStream\hkBlockStreamBaseIterators.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Ext\hkBaseExt.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Container\PointerMultiMap\hkMultiMap.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="UnitTest\Math\Linear\matrix3.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Container\String\hkStringBuf.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="System\Io\OArchive\hkOArchive.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkClassEnumReflection.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="System\Error\hkFilterError.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="System\Io\Writer\Array\hkArrayStreamWriter.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Memory\Allocator\LargeBlock\hkLargeBlockAllocator.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Algorithm\Collide\1AxisSweep16\hk1AxisSweep16.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\Math\MatrixDecomposition.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Types\hkPtrAndInt.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Math\Vector\hkFourTransposedPointsf.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Container\ObjectPackUtility\hkObjectPackUtility.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Types\hkScopedPtr.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\Vector\hkVectorN.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Classes\Reflections\hkAabb16Reflection.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="System\Io\Reader\Compressed\hkCompressedStreamReader.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="System\Io\Reader\Memory\hkMemoryStreamReader.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Types\hkRefPtr.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Algorithm\Sort\hkSort.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Memory\Tracker\ScanCalculator\hkTrackerSnapshotUtil.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\Algorithm\Sort\sort.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Math\Matrix\hkMatrix4f.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Container\Array\hkFixedInplaceArray.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\FileSystem\fileops.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Memory\Tracker\LayoutCalculator\Handler\hkTrackerStringPtrLayoutHandler.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Algorithm\Collide\1AxisSweep\hk1AxisSweep.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Container\SubString\hkSubString.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Memory\Tracker\LayoutCalculator\Handler\hkTrackerRefPtrLayoutHandler.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Container\Set\hkSet.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Config\hkConfigMonitors.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Reflection\hkCustomAttributes.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\Stream\filesystem.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Reflection\hkTypeInfo.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\Matrix\hkMatrix3d.inl"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Container\String\hkString.inl"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Memory\Allocator\Thread\hkThreadMemory.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Math\Vector\Mx\hkMxReal.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\hkBaseBaseObjectTrackerClasses.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Types\Geometry\IntSpaceUtil\hkIntSpaceUtil.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Container\PointerMap\hkMap.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Memory\Allocator\Thread\hkThreadMemory.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\Stream\memoryTrack.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="KeyCode.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Memory\Allocator\Checking\hkLeakDetectAllocator.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Memory\System\Optimizer\hkOptimizerMemorySystem.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Memory\Allocator\FreeList\hkFreeListAllocator.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Math\Matrix\hkMatrix6f.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\Vector\Fpu\hkFpuVector4d.inl"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Math\Vector\Sse\hkSseVector4Comparison.inl"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Math\Vector\Mx\hkMxHalf8.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Container\Array\hkArrayUtil.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Reflection\hkClassMember.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\Container\PointerMap.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkSweptTransformfReflection.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="System\Io\Writer\Printf\hkPrintfStreamWriter.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Memory\Allocator\FreeList\hkFixedSizeAllocator.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="System\Io\Reader\FileServer\hkFileServerStreamReader.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\Vector\Packing\hkVectorfPackUtility.inl"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Math\LargeInt\hkSimdInt128.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Types\Geometry\Aabb\hkAabb.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Math\Matrix\hkTransformd.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="DebugUtil\DeterminismUtil\hkNetworkedDeterminismUtil.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Reflection\hkClassEnum.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="System\Io\Writer\Buffered\hkBufferedStreamWriter.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkSetReflection.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Types\Geometry\Aabb16\hkAabb16.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Math\Vector\hkVector4dComparison.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="System\Io\OptionParser\hkOptionParser.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="System\Io\Writer\VdbCommand\hkVdbCommandWriter.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\Algorithm\1AxisSweep\1AxisSweep.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Thread\Semaphore\hkSemaphoreBusyWait.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\Allocator\allocators.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="UnitTest\Tests.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkPackedVector3Reflection.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="System\Io\Platform\Win32\hkWin32StreamWriter.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Math\Vector\hkVector2f.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="UnitTest\BaseTypes\Singleton\singleton.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Math\LargeInt\hkInt64Vector4.inl"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Math\Vector\hkVector4Comparison.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="System\Io\Reader\hkStreamReader.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Memory\Tracker\Report\hkHierarchyReportUtil.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="System\Io\FileSystem\hkServerFileSystem.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Memory\System\Checking\hkCheckingMemorySystem.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Types\Color\hkColor.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\Vector\Sse\hkSseVector4_D.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Container\RelArray\hkRelArrayUtil.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\Vector\Mx\hkMxVectorfUtil.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Math\SymmetricMatrix\hkSymmetricMatrix3.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Memory\Allocator\Linear\hkLinearAllocator.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Math\Header\hkMathHeaderAliases2.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\Vector\Packing\hkVectorPackUtility.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Memory\Allocator\Recall\hkRecallAllocator.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Math\Header\hkMathHeaderConstantDefinitions.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Math\Matrix\hkMatrix3d.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Math\Vector\Mx\hkMxReald.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Container\PointerMultiMap\hkPointerMultiMap.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\Vector\Fpu\hkFpuVector4f.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Math\Util\hkVector2fUtil.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\Math\Linear\mxvector.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Math\Vector\Mx\hkMxSinglef.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Math\SweptTransform\hkSweptTransformd.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Math\Vector\hkVector4Comparison.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\Types\aabbUnitTest.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Memory\Allocator\Lifo\hkLifoAllocator.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Memory\Tracker\Report\hkTypeReportUtil.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Memory\System\Util\hkMemoryInitUtil.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Container\BlockStream\hkBlockStreamBaseIterators.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Types\Geometry\IntSpaceUtil\hkIntSpaceUtil.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Container\String\hkUtf8.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="System\Io\Writer\Memory\hkMemoryStreamWriter.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Math\Vector\hkVector2d.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Memory\MemoryClasses\hkMemoryClassDefinitions.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Thread\Job\ThreadPool\Cpu\hkCpuJobThreadPool.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Math\Vector\Mx\hkMxUnroll.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="PreProcessor\Values\hkPreProcessorShr.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkQTransformdReflection.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Math\Util\hkVector2dUtil.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Math\Matrix\hkMatrix6d.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Reflection\hkClass.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="System\Io\Writer\OffsetOnly\hkOffsetOnlyStreamWriter.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Memory\Allocator\Thread\hkThreadMemory.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Container\String\hkStringBuf.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\Matrix\hkMatrix4d.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Algorithm\Compression\hkBufferCompressionInternal.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Spu\Config\hkSpuConfig.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Math\Matrix\hkMatrixfNm.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Container\LocalArray\hkLocalBuffer.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\Vector\hkFourTransposedPointsf.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Memory\Tracker\LayoutCalculator\Handler\hkTrackerArrayLayoutHandler.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Thread\Semaphore\Win32\hkWin32Semaphore.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="System\Io\OptionParser\hkOptionParser.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Math\Vector\Mx\hkMxVector.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Config\hkProductFeaturesNoPatchesOrCompat.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Types\Geometry\Geometry\hkGeometry.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Math\Matrix\hkMatrix4Util.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Memory\System\Util\hkMemorySnapshot.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="System\Io\Writer\hkStreamWriter.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Types\Geometry\Aabb\hkAabbUtil.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\Container\Array.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Container\String\hkString.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="System\Io\Platform\Stdio\hkStdioStreamReader.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Memory\System\Debug\hkDebugMemorySystem.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\Math\Linear\FourTransposedPoints.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Math\Vector\Packing\hkVectordPackUtility.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="DebugUtil\GlobalProperties\hkGlobalProperties.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Container\PointerMap\hkPointerMap.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\Vector\Fpu\hkFpuVector4.inl"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="System\Stopwatch\hkStopwatch.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Memory\Allocator\FreeList\hkFreeList.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Memory\Tracker\Report\hkStackTraceReportUtil.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\Math\Linear\vector3util.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="System\Io\Reader\Buffered\hkBufferedStreamReader.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="System\Io\FileSystem\hkFileSystem.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkFourTransposedPointsdReflection.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Types\Geometry\Aabb16\hkAabb16.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Math\Vector\hkVector4d.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Math\QsTransform\hkQsTransform.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="System\Io\Platform\Stdio\hkStdioStreamWriter.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Container\ObjectCache\hkObjectCache.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Math\Vector\hkVectorNf.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Memory\Tracker\Report\hkTypeSummaryReportUtil.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="System\Io\IArchive\hkIArchive.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Math\Vector\hk4xVector2f.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Object\hkReferencedObject.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Math\Util\hkConvertCoordinateSpace.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Reflection\TypeTree\hkTrackerTypeTreeCache.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Math\Matrix\hkMatrixfNm.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Container\BlockStream\hkBlockStreamBaseStream.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Math\LargeInt\hkInt128Vector4.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Memory\Tracker\ScanCalculator\hkTrackerSnapshotUtil.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Math\ExtendedMath\hkMpMath.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\LargeInt\Fpu\hkFpuSimdInt128.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Memory\Tracker\Report\hkHierarchicalSummaryReportUtil.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Math\Vector\hkSimdReal.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="PreProcessor\hkPreProcessor.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Fwd\hkcstdlib.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Container\String\hkUtf8.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Container\Array\hkArray.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Container\BlockStream\Allocator\Dynamic\hkDynamicBlockStreamAllocator.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Memory\Tracker\LayoutCalculator\Handler\hkTrackerEnumLayoutHandler.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Container\CommandStream\hkUnrollCaseMacro.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Math\Quaternion\hkQuaternionf.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Math\Vector\Packing\hkVectorPackUtility.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Container\Set\hkSet.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="System\Io\FileSystem\Union\hkUnionFileSystem.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Monitor\hkMonitorStream.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Math\SweptTransform\hkSweptTransformf.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Config\hkConfigSimd.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Memory\Allocator\Checking\hkPaddedAllocator.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Math\QTransform\hkQTransformf.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="System\Io\Util\hkLoadUtil.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Memory\Allocator\Linear\hkLinearAllocator.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Math\Vector\hkVector4dComparison.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Math\Vector\hkVectorN.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Thread\Thread\hkThreadLocalData.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Math\Vector\Mx\hkMxSingle.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\SymmetricMatrix\hkSymmetricMatrix3.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Math\hkMathMixedOperators.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Container\hkContainerAllocators.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="DebugUtil\DeterminismUtil\hkCheckDeterminismUtil.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Math\hkMath.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\Functions\Sse\hkSseMathFuncs.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Classes\Reflections\hkGeometryReflection.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Math\Types\Sse\hkSseMathTypes.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Config\hkOptionalComponent.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Math\Vector\Mx\hkMxReal.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="System\Io\FileSystem\hkFileSystem.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Reflection\hkClassMember.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Math\Matrix\hkMatrix3f.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="System\Io\Platform\Win32\hkDebugConsoleStreamWriter.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Memory\Tracker\Report\hkTulipReportUtil.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Algorithm\Collide\LineSegment\hkLineSegmentUtil.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\hkUnitTest.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Fwd\hkcstdio.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Math\Vector\Mx\hkMxQuaterniond.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Thread\CpuCache\hkCpuCache.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Container\BlockStream\hkBlockStreamBaseStream.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Math\Matrix\hkMatrix3.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Math\QTransform\hkQTransformd.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="System\Io\Socket\hkSocket.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="System\StackTracer\Impl\hkStackTracerWin32.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Types\Properties\hkRefCountedProperties.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Math\Vector\Mx\hkMxHalf8.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="System\Io\Reader\Memory\hkMemoryStreamReader.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Container\FreeListArray\hkFreeListArray.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Math\Matrix\hkRotationd.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Reflection\TypeTree\hkTrackerTypeTreeNode.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Math\Vector\hkVectorNd.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="UnitTest\Debugutil\monitors.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Math\Functions\Fpu\hkFpuMathFuncs.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Math\Vector\hkIntVector.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Thread\Task\hkTaskQueue.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Math\Vector\Packing\hkVectorPackUtilityCommon.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Classes\hkBaseClasses.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Container\BlockStream\hkBlockStreamBaseBlock.inl"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Thread\CriticalSection\Win32\hkWin32CriticalSection.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="System\Error\hkFilterError.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Types\Color\hkColor.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Container\Array\hkSmallArray.inl"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Math\Vector\Fpu\hkFpuSimdReald.inl"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Math\Vector\Fpu\hkFpuVector4Comparison.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Math\Header\hkMathHeaderIncludes.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\Math\Rotation.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkLocalFrameReflection.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Memory\Tracker\Default\hkDefaultMemoryTracker.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkBaseTypesReflection.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Types\Properties\hkRefCountedProperties.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Math\Matrix\hkMatrix3.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Math\Matrix\hkMatrix6d.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Math\Vector\Mx\hkMxVectorUtil_AVX.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Classes\Reflections\hkAabbReflection.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Math\SweptTransform\hkSweptTransformfUtil.inl"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Math\Vector\Mx\hkMxSingled.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Memory\Allocator\Monitor\hkMonitorAllocator.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Math\Vector\Packing\hkVectordPackUtility.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="System\Io\Writer\VdbCommand\hkVdbCommandWriter.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Object\hkReferencedObject.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisInputAssembly>$(OutputFile)</CodeAnalysisInputAssembly>
+</PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug DLL|x64'">
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisInputAssembly>$(OutputFile)</CodeAnalysisInputAssembly>
+</PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dev|x64'">
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisInputAssembly>$(OutputFile)</CodeAnalysisInputAssembly>
+</PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dev DLL|x64'">
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisInputAssembly>$(OutputFile)</CodeAnalysisInputAssembly>
+</PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Hybrid DLL|x64'">
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisInputAssembly>$(OutputFile)</CodeAnalysisInputAssembly>
+</PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisInputAssembly>$(OutputFile)</CodeAnalysisInputAssembly>
+</PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release DLL|x64'">
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisInputAssembly>$(OutputFile)</CodeAnalysisInputAssembly>
+</PropertyGroup>
+<PropertyGroup>
+</PropertyGroup>
+</Project>

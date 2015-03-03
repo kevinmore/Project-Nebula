@@ -1,0 +1,1215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Patches">
+        <UniqueIdentifier>3500BA05-500B-4535-0BA0-3500BA053500</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Deprecated\Util">
+        <UniqueIdentifier>1E7332FA-E733-4A1E-332F-1E7332FA1E73</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Patches\Utilities">
+        <UniqueIdentifier>455A24F1-55A2-4145-A24F-455A24F1455A</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Deprecated\UnitTest\Xml">
+        <UniqueIdentifier>5C5105E1-C510-415C-105E-5C5105E15C51</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Deprecated\UnitTest\SaveAsZero">
+        <UniqueIdentifier>144E565A-44E5-4A14-E565-144E565A144E</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Classes\Reflections">
+        <UniqueIdentifier>E9C8D3E9-8D3E-48D3-9C8D-E9C8D3E9C8D3</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Deprecated\UnitTest\Roundtrip">
+        <UniqueIdentifier>50F3AB2F-0F3A-4F50-3AB2-50F3AB2F50F3</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Deprecated\Compat\updates">
+        <UniqueIdentifier>6A7EEA34-A7EE-446A-EEA3-6A7EEA346A7E</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Patches\710">
+        <UniqueIdentifier>2F4C8352-4C83-4F4C-352F-C8352F4C8352</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Patches\660">
+        <UniqueIdentifier>2E5EFA61-E5EF-412E-EFA6-2E5EFA612E5E</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Deprecated\UnitTest\Binaryreader">
+        <UniqueIdentifier>1A6ABD45-A6AB-451A-ABD4-1A6ABD451A6A</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Patches\2013_1">
+        <UniqueIdentifier>5AC69846-AC69-465A-6984-5AC698465AC6</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Deprecated\Packfile">
+        <UniqueIdentifier>14471439-4471-4914-7143-144714391447</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Deprecated">
+        <UniqueIdentifier>378DFB49-78DF-4937-DFB4-378DFB49378D</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Patches\2012_2">
+        <UniqueIdentifier>370CC9CC-70CC-4C37-CC9C-370CC9CC370C</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Patches\2010_2">
+        <UniqueIdentifier>1FA9161E-FA91-4E1F-9161-1FA9161E1FA9</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Patches\2012_1">
+        <UniqueIdentifier>370CC9CF-70CC-4F37-CC9C-370CC9CF370C</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Classes">
+        <UniqueIdentifier>11230FAD-1230-4D11-30FA-11230FAD1123</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Deprecated\Compat\manifest">
+        <UniqueIdentifier>745AC42C-45AC-4C74-AC42-745AC42C745A</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Patches\2011_1">
+        <UniqueIdentifier>410B8584-0B85-410B-5841-B858410B8584</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Deprecated\Version">
+        <UniqueIdentifier>78815227-8815-4778-1522-788152277881</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Patches\2011_3">
+        <UniqueIdentifier>410B85A4-0B85-410B-5A41-B85A410B85A4</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Patches\2011_2">
+        <UniqueIdentifier>410B85B4-0B85-410B-5B41-B85B410B85B4</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Deprecated\UnitTest">
+        <UniqueIdentifier>2248ACA4-248A-4422-8ACA-2248ACA42248</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Patches\2010_1">
+        <UniqueIdentifier>1FA9161F-FA91-4F1F-9161-1FA9161F1FA9</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Deprecated\Compat">
+        <UniqueIdentifier>17C8E562-7C8E-4217-8E56-17C8E56217C8</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Patches\700">
+        <UniqueIdentifier>3040A6A3-40A6-4040-6A30-0A6A3040A6A3</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Patches\Legacy">
+        <UniqueIdentifier>1F567171-F567-411F-6717-1F5671711F56</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Deprecated\Packfile\Xml">
+        <UniqueIdentifier>4C4F9FF4-C4F9-444C-F9FF-4C4F9FF44C4F</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Deprecated\Packfile\Binary">
+        <UniqueIdentifier>4FB14B83-FB14-434F-14B8-4FB14B834FB1</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Patches\2013_1\hkpPatches_2013_1.cxx">
+        <Filter>Patches\2013_1</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\2011_2\hkPatches_2011_2.cxx">
+        <Filter>Patches\2011_2</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok201131r1Classes.cpp">
+        <Filter>Deprecated\Compat\manifest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk550r1_hk600b1.cpp">
+        <Filter>Deprecated\Compat\updates</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2011_1\hkdPatches_2011_1.cxx">
+        <Filter>Patches\2011_1</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk201010r1_hk201020r1.cpp">
+        <Filter>Deprecated\Compat\updates</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\710\hkpPatches_710.cpp">
+        <Filter>Patches\710</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2012_2\hkmsPatches_2012_2.cpp">
+        <Filter>Patches\2012_2</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2012_1\hkmsPatches_2012_1.cxx">
+        <Filter>Patches\2012_1</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Version\hkVersionCheckingUtilsOld.cpp">
+        <Filter>Deprecated\Version</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\UnitTest\loadFileInplace.cpp">
+        <Filter>Deprecated\UnitTest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk550b2_hk550r1.cpp">
+        <Filter>Deprecated\Compat\updates</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2011_2\hkaiPatches_2011_2.cpp">
+        <Filter>Patches\2011_2</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2010_2\hkPatches_2010_2.cxx">
+        <Filter>Patches\2010_2</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\660\hkdPatches_660.cxx">
+        <Filter>Patches\660</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\2010_1\hkpPatches_2010_1.cxx">
+        <Filter>Patches\2010_1</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\2013_1\hkaPatches_2013_1.cxx">
+        <Filter>Patches\2013_1</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok550b2Classes.cpp">
+        <Filter>Deprecated\Compat\manifest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\Legacy\hkcdPatches_Legacy.cpp">
+        <Filter>Patches\Legacy</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\660\hkaiPatches_660.cxx">
+        <Filter>Patches\660</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\2013_1\hkdPatches_2013_1.cpp">
+        <Filter>Patches\2013_1</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\660\hkPatches_660.cxx">
+        <Filter>Patches\660</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\2011_3\hkbPatches_2011_3.cpp">
+        <Filter>Patches\2011_3</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\UnitTest\Roundtrip\RoundTrip.cpp">
+        <Filter>Deprecated\UnitTest\Roundtrip</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2013_1\hkpConstraintPatches_2013_1.cxx">
+        <Filter>Patches\2013_1</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\Legacy\hkaPatches_Legacy.cpp">
+        <Filter>Patches\Legacy</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk550b1_hk550b2.cpp">
+        <Filter>Deprecated\Compat\updates</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2012_2\hkaiPatches_2012_2.cpp">
+        <Filter>Patches\2012_2</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\660\hkbPatches_660.cxx">
+        <Filter>Patches\660</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\2011_1\hkbPatches_2011_1.cxx">
+        <Filter>Patches\2011_1</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk710r1_hk201010r1.cpp">
+        <Filter>Deprecated\Compat\updates</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\660\hclPatches_660.cpp">
+        <Filter>Patches\660</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok510r1Classes.cpp">
+        <Filter>Deprecated\Compat\manifest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\710\hkaPatches_710.cxx">
+        <Filter>Patches\710</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\2010_1\hkPatches_2010_1.cxx">
+        <Filter>Patches\2010_1</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk400b2_hk400r1.cpp">
+        <Filter>Deprecated\Compat\updates</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2012_1\hkaPatches_2012_1.cxx">
+        <Filter>Patches\2012_1</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\2011_1\hclPatches_2011_1.cpp">
+        <Filter>Patches\2011_1</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk450r1_hk451r1.cpp">
+        <Filter>Deprecated\Compat\updates</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2012_2\hkndPatches_2012_2.cxx">
+        <Filter>Patches\2012_2</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok330a2Classes.cpp">
+        <Filter>Deprecated\Compat\manifest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2012_1\hkPatches_2012_1.cxx">
+        <Filter>Patches\2012_1</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Classes\Reflections\UnitTesthkSomeObjectReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk201311r1_Current.cpp">
+        <Filter>Deprecated\Compat\updates</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\660\hclPatches_660.cxx">
+        <Filter>Patches\660</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\2010_2\hkdPatches_2010_2.cpp">
+        <Filter>Patches\2010_2</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk402r1_hk403r1.cpp">
+        <Filter>Deprecated\Compat\updates</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Deprecated\Packfile\hkPackfileReader.h">
+        <Filter>Deprecated\Packfile</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Patches\660\hkcdPatches_660.cpp">
+        <Filter>Patches\660</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk660b1_hk660r1.cpp">
+        <Filter>Deprecated\Compat\updates</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2011_3\hkPatches_2011_3.cxx">
+        <Filter>Patches\2011_3</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok700b1Classes.cpp">
+        <Filter>Deprecated\Compat\manifest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2012_2\hkbPatches_2012_2.cxx">
+        <Filter>Patches\2012_2</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Classes\hkCompatUnitTestTrackerClasses.cpp">
+        <Filter>Classes</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2013_1\hkaiPatches_2013_1.cxx">
+        <Filter>Patches\2013_1</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok650r1Classes.cpp">
+        <Filter>Deprecated\Compat\manifest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\Legacy\hkpPatches_Legacy.cxx">
+        <Filter>Patches\Legacy</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\UnitTest\versionCheck.cpp">
+        <Filter>Deprecated\UnitTest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk201130r1_hk201131r1.cpp">
+        <Filter>Deprecated\Compat\updates</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2012_1\hclPatches_2012_1.cxx">
+        <Filter>Patches\2012_1</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\2011_2\hkpPatches_2011_2.cxx">
+        <Filter>Patches\2011_2</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok300Classes.cpp">
+        <Filter>Deprecated\Compat\manifest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2013_1\hclPatches_2013_1.cxx">
+        <Filter>Patches\2013_1</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\700\hkcdPatches_700.cpp">
+        <Filter>Patches\700</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2013_1\hknpPatches_2013_1.cpp">
+        <Filter>Patches\2013_1</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2013_1\hkbPatches_2013_1.cpp">
+        <Filter>Patches\2013_1</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Version\hkVersionUtilOld.cpp">
+        <Filter>Deprecated\Version</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk451r1_hk452r1.cpp">
+        <Filter>Deprecated\Compat\updates</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk700r1_hk710r1.cpp">
+        <Filter>Deprecated\Compat\updates</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok450b1Classes.cpp">
+        <Filter>Deprecated\Compat\manifest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\UnitTestRoundTripReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Deprecated\Compat\hkHavokAllClassUpdates.h">
+        <Filter>Deprecated\Compat</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok201311r1Classes.cpp">
+        <Filter>Deprecated\Compat\manifest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2013_1\hkPatches_2013_1.cxx">
+        <Filter>Patches\2013_1</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\2010_1\hkbPatches_2010_1.cpp">
+        <Filter>Patches\2010_1</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2012_2\hkcdPatches_2012_2.cxx">
+        <Filter>Patches\2012_2</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\2013_1\hkndPatches_2013_1.cpp">
+        <Filter>Patches\2013_1</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Deprecated\UnitTest\Xml\hkStressTestCinfo.h">
+        <Filter>Deprecated\UnitTest\Xml</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Patches\2012_2\hclPatches_2012_2.cxx">
+        <Filter>Patches\2012_2</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\710\hkPatches_710.cxx">
+        <Filter>Patches\710</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Util\hkBindingClassNameRegistry.cpp">
+        <Filter>Deprecated\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk330r1_hk400b1.cpp">
+        <Filter>Deprecated\Compat\updates</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2010_1\hkbPatches_2010_1.cxx">
+        <Filter>Patches\2010_1</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\700\hkPatches_700.cxx">
+        <Filter>Patches\700</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\2010_2\hkbPatches_2010_2.cxx">
+        <Filter>Patches\2010_2</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\Legacy\hkdPatches_Legacy.cpp">
+        <Filter>Patches\Legacy</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\700\hkaiPatches_700.cpp">
+        <Filter>Patches\700</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok400r1Classes.cpp">
+        <Filter>Deprecated\Compat\manifest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2010_1\hclPatches_2010_1.cxx">
+        <Filter>Patches\2010_1</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk600b2_hk600r1.cpp">
+        <Filter>Deprecated\Compat\updates</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2011_3\hkbPatches_2011_3.cxx">
+        <Filter>Patches\2011_3</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\2012_1\hkmsPatches_2012_1.cpp">
+        <Filter>Patches\2012_1</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2012_2\hkdPatches_2012_2.cxx">
+        <Filter>Patches\2012_2</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\2010_1\hkpPatches_2010_1.cpp">
+        <Filter>Patches\2010_1</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2013_1\hkdPatches_2013_1.cxx">
+        <Filter>Patches\2013_1</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\2011_2\hkPatches_2011_2.cpp">
+        <Filter>Patches\2011_2</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\UnitTest\Xml\StressTest.cpp">
+        <Filter>Deprecated\UnitTest\Xml</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok400b2Classes.cpp">
+        <Filter>Deprecated\Compat\manifest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\UnitTestsaveAsZeroReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Packfile\Xml\hkXmlPackfileWriter.cpp">
+        <Filter>Deprecated\Packfile\Xml</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2012_2\hkmsPatches_2012_2.cxx">
+        <Filter>Patches\2012_2</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk201020r1_hk201110r1.cpp">
+        <Filter>Deprecated\Compat\updates</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk452r1_hk460b1.cpp">
+        <Filter>Deprecated\Compat\updates</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk600b1_hk600b2.cpp">
+        <Filter>Deprecated\Compat\updates</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok500b1Classes.cpp">
+        <Filter>Deprecated\Compat\manifest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok330b1Classes.cpp">
+        <Filter>Deprecated\Compat\manifest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\660\hkdPatches_660.cpp">
+        <Filter>Patches\660</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok452r1Classes.cpp">
+        <Filter>Deprecated\Compat\manifest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2012_2\hkaPatches_2012_2.cpp">
+        <Filter>Patches\2012_2</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2010_2\hkPatches_2010_2.cpp">
+        <Filter>Patches\2010_2</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2013_1\hkpConstraintPatches_2013_1.cpp">
+        <Filter>Patches\2013_1</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\Legacy\hkaPatches_Legacy.cxx">
+        <Filter>Patches\Legacy</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\660\hkpPatches_660.cpp">
+        <Filter>Patches\660</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\Utilities\hkaAllPatches.cxx">
+        <Filter>Patches\Utilities</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Deprecated\Version\hkObjectUpdateTracker.h">
+        <Filter>Deprecated\Version</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Patches\2012_1\hkPatches_2012_1.cpp">
+        <Filter>Patches\2012_1</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2010_2\hkaiPatches_2010_2.cpp">
+        <Filter>Patches\2010_2</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk410r1_hk450b1.cpp">
+        <Filter>Deprecated\Compat\updates</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\Utilities\hkdAllPatches.cxx">
+        <Filter>Patches\Utilities</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\2011_1\hkcdPatches_2011_1.cxx">
+        <Filter>Patches\2011_1</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\2010_1\hkaiPatches_2010_1.cxx">
+        <Filter>Patches\2010_1</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk460b1_hk460b2.cpp">
+        <Filter>Deprecated\Compat\updates</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2011_1\hkdPatches_2011_1.cpp">
+        <Filter>Patches\2011_1</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2010_1\hkPatches_2010_1.cpp">
+        <Filter>Patches\2010_1</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2012_2\hkaiPatches_2012_2.cxx">
+        <Filter>Patches\2012_2</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\2011_3\hkpPatches_2011_3.cxx">
+        <Filter>Patches\2011_3</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\2010_1\hkaPatches_2010_1.cxx">
+        <Filter>Patches\2010_1</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Deprecated\UnitTest\SaveAsZero\saveAsZero.h">
+        <Filter>Deprecated\UnitTest\SaveAsZero</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok550b1Classes.cpp">
+        <Filter>Deprecated\Compat\manifest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok201130r1Classes.cpp">
+        <Filter>Deprecated\Compat\manifest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok450r1Classes.cpp">
+        <Filter>Deprecated\Compat\manifest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2011_2\hkaiPatches_2011_2.cxx">
+        <Filter>Patches\2011_2</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\hkInitialClassPatches.cxx">
+        <Filter>Patches</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\2011_3\hkcdPatches_2011_3.cpp">
+        <Filter>Patches\2011_3</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\710\hkpPatches_710.cxx">
+        <Filter>Patches\710</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\2011_1\hclPatches_2011_1.cxx">
+        <Filter>Patches\2011_1</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\2010_2\hkaPatches_2010_2.cxx">
+        <Filter>Patches\2010_2</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\2011_2\hkpPatches_2011_2.cpp">
+        <Filter>Patches\2011_2</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok310Classes.cpp">
+        <Filter>Deprecated\Compat\manifest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk330a2_hk330b1.cpp">
+        <Filter>Deprecated\Compat\updates</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk201131r1_hk201210r1.cpp">
+        <Filter>Deprecated\Compat\updates</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2013_1\hkbPatches_2013_1.cxx">
+        <Filter>Patches\2013_1</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\2011_3\hkaPatches_2011_3.cxx">
+        <Filter>Patches\2011_3</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok330r1Classes.cpp">
+        <Filter>Deprecated\Compat\manifest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Deprecated\UnitTest\Xml\StressTest.h">
+        <Filter>Deprecated\UnitTest\Xml</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok660b1Classes.cpp">
+        <Filter>Deprecated\Compat\manifest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2013_1\hkmsPatches_2013_1.cpp">
+        <Filter>Patches\2013_1</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2011_3\hkcdPatches_2011_3.cxx">
+        <Filter>Patches\2011_3</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\2010_2\hkdPatches_2010_2.cxx">
+        <Filter>Patches\2010_2</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\700\hkbPatches_700.cxx">
+        <Filter>Patches\700</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\2012_1\hkdPatches_2012_1.cpp">
+        <Filter>Patches\2012_1</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk201110r1_hk201120r1.cpp">
+        <Filter>Deprecated\Compat\updates</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk320_hk330a2.cpp">
+        <Filter>Deprecated\Compat\updates</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2013_1\hknpPatches_2013_1.cxx">
+        <Filter>Patches\2013_1</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Deprecated\UnitTest\Binaryreader\hkSomeObject.h">
+        <Filter>Deprecated\UnitTest\Binaryreader</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Patches\2011_2\hkbPatches_2011_2.cxx">
+        <Filter>Patches\2011_2</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk400b1_hk400b2.cpp">
+        <Filter>Deprecated\Compat\updates</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\700\hkcdPatches_700.cxx">
+        <Filter>Patches\700</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\2012_1\hkcdPatches_2012_1.cpp">
+        <Filter>Patches\2012_1</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\hkCompatUtil.cpp">
+        <Filter>Deprecated\Compat</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2011_1\hkaiPatches_2011_1.cxx">
+        <Filter>Patches\2011_1</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\Legacy\hkdPatches_Legacy.cxx">
+        <Filter>Patches\Legacy</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok451r1Classes.cpp">
+        <Filter>Deprecated\Compat\manifest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok550r1Classes.cpp">
+        <Filter>Deprecated\Compat\manifest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Version\hkPackfileObjectUpdateTracker.cpp">
+        <Filter>Deprecated\Version</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok403r1Classes.cpp">
+        <Filter>Deprecated\Compat\manifest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2012_2\hclPatches_2012_2.cpp">
+        <Filter>Patches\2012_2</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Deprecated\Packfile\Xml\hkXmlPackfileWriter.h">
+        <Filter>Deprecated\Packfile\Xml</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk650r1_hk660b1.cpp">
+        <Filter>Deprecated\Compat\updates</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2011_3\hclPatches_2011_3.cpp">
+        <Filter>Patches\2011_3</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\Legacy\hkaiPatches_Legacy.cpp">
+        <Filter>Patches\Legacy</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk650b1_hk650r1.cpp">
+        <Filter>Deprecated\Compat\updates</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\700\hkpPatches_700.cxx">
+        <Filter>Patches\700</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="hkCompat.cpp">
+        <Filter></Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2011_3\hkPatches_2011_3.cpp">
+        <Filter>Patches\2011_3</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok201120r1Classes.cpp">
+        <Filter>Deprecated\Compat\manifest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2012_2\hkbPatches_2012_2.cpp">
+        <Filter>Patches\2012_2</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\710\hkaiPatches_710.cpp">
+        <Filter>Patches\710</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\700\hkaiPatches_700.cxx">
+        <Filter>Patches\700</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\Utilities\hkndAllPatches.cxx">
+        <Filter>Patches\Utilities</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\660\hkcdPatches_660.cxx">
+        <Filter>Patches\660</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\2010_1\hclPatches_2010_1.cpp">
+        <Filter>Patches\2010_1</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2011_2\hkaPatches_2011_2.cxx">
+        <Filter>Patches\2011_2</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\2011_2\hkcdPatches_2011_2.cxx">
+        <Filter>Patches\2011_2</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk330b2_hk330r1.cpp">
+        <Filter>Deprecated\Compat\updates</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Deprecated\Compat\hkHavokVersionClasses.h">
+        <Filter>Deprecated\Compat</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Deprecated\Compat\hkCompat_All.cxx">
+        <Filter>Deprecated\Compat</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\Legacy\hclPatches_Legacy.cpp">
+        <Filter>Patches\Legacy</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\UnitTesthkStressTestCinfoReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2012_2\hknpPatches_2012_2.cxx">
+        <Filter>Patches\2012_2</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\2012_2\hkdPatches_2012_2.cpp">
+        <Filter>Patches\2012_2</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Deprecated\Compat\hkHavokAllClasses.h">
+        <Filter>Deprecated\Compat</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="hkCompat.h">
+        <Filter></Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Patches\660\hkpPatches_660.cxx">
+        <Filter>Patches\660</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\2013_1\hkndPatches_2013_1.cxx">
+        <Filter>Patches\2013_1</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\2011_1\hkpPatches_2011_1.cpp">
+        <Filter>Patches\2011_1</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok201020r1Classes.cpp">
+        <Filter>Deprecated\Compat\manifest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk460r1_hk461r1.cpp">
+        <Filter>Deprecated\Compat\updates</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\700\hkdPatches_700.cxx">
+        <Filter>Patches\700</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk500r1_hk510r1.cpp">
+        <Filter>Deprecated\Compat\updates</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\Utilities\hknpAllPatches.cxx">
+        <Filter>Patches\Utilities</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\2013_1\hkpPatches_2013_1.cpp">
+        <Filter>Patches\2013_1</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2011_1\hkcdPatches_2011_1.cpp">
+        <Filter>Patches\2011_1</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2012_2\hkPatches_2012_2.cxx">
+        <Filter>Patches\2012_2</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\hkRegisterPatches.cxx">
+        <Filter>Patches</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk300_hk310.cpp">
+        <Filter>Deprecated\Compat\updates</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk201221r1_hk201310r1.cpp">
+        <Filter>Deprecated\Compat\updates</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk510r1_hk550b1.cpp">
+        <Filter>Deprecated\Compat\updates</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2010_2\hclPatches_2010_2.cpp">
+        <Filter>Patches\2010_2</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2010_2\hkaiPatches_2010_2.cxx">
+        <Filter>Patches\2010_2</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\2011_1\hkaPatches_2011_1.cxx">
+        <Filter>Patches\2011_1</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Deprecated\Version\hkVersionUtilOld.h">
+        <Filter>Deprecated\Version</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Patches\710\hkbPatches_710.cxx">
+        <Filter>Patches\710</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Deprecated\Version\hkVersionRegistry.h">
+        <Filter>Deprecated\Version</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Deprecated\Version\hkVersionCheckingUtilsOld.h">
+        <Filter>Deprecated\Version</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Patches\2011_3\hkdPatches_2011_3.cpp">
+        <Filter>Patches\2011_3</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2010_1\hkcdPatches_2010_1.cxx">
+        <Filter>Patches\2010_1</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\700\hkPatches_700.cpp">
+        <Filter>Patches\700</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2011_3\hkpPatches_2011_3.cpp">
+        <Filter>Patches\2011_3</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2010_2\hkaPatches_2010_2.cpp">
+        <Filter>Patches\2010_2</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2011_1\hkPatches_2011_1.cxx">
+        <Filter>Patches\2011_1</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\700\hkaPatches_700.cpp">
+        <Filter>Patches\700</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Deprecated\Version\hkVersionRegistry.cxx">
+        <Filter>Deprecated\Version</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Deprecated\UnitTest\Roundtrip\RoundTrip.h">
+        <Filter>Deprecated\UnitTest\Roundtrip</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk403r1_hk410b1.cpp">
+        <Filter>Deprecated\Compat\updates</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2011_3\hkaPatches_2011_3.cpp">
+        <Filter>Patches\2011_3</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\700\hkbPatches_700.cpp">
+        <Filter>Patches\700</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2010_2\hkpPatches_2010_2.cxx">
+        <Filter>Patches\2010_2</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok460b1Classes.cpp">
+        <Filter>Deprecated\Compat\manifest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2011_2\hkbPatches_2011_2.cpp">
+        <Filter>Patches\2011_2</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk400r1_hk402r1.cpp">
+        <Filter>Deprecated\Compat\updates</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2012_2\hkpPatches_2012_2.cpp">
+        <Filter>Patches\2012_2</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Packfile\Xml\hkXmlPackfileReader.cpp">
+        <Filter>Deprecated\Packfile\Xml</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2013_1\hkmsPatches_2013_1.cxx">
+        <Filter>Patches\2013_1</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\2012_1\hkpPatches_2012_1.cpp">
+        <Filter>Patches\2012_1</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2011_2\hkdPatches_2011_2.cpp">
+        <Filter>Patches\2011_2</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\710\hclPatches_710.cxx">
+        <Filter>Patches\710</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Deprecated\Util\hkRenamedClassNameRegistry.h">
+        <Filter>Deprecated\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Patches\710\hkcdPatches_710.cxx">
+        <Filter>Patches\710</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok400b1Classes.cpp">
+        <Filter>Deprecated\Compat\manifest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\Legacy\hkPatches_Legacy.cpp">
+        <Filter>Patches\Legacy</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\710\hkdPatches_710.cxx">
+        <Filter>Patches\710</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\2011_2\hclPatches_2011_2.cpp">
+        <Filter>Patches\2011_2</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk410b1_hk410r1.cpp">
+        <Filter>Deprecated\Compat\updates</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\700\hclPatches_700.cxx">
+        <Filter>Patches\700</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk610r1_hk650b1.cpp">
+        <Filter>Deprecated\Compat\updates</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2013_1\hkaiPatches_2013_1.cpp">
+        <Filter>Patches\2013_1</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2012_1\hkdPatches_2012_1.cxx">
+        <Filter>Patches\2012_1</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\2011_3\hkaiPatches_2011_3.cpp">
+        <Filter>Patches\2011_3</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2010_2\hkcdPatches_2010_2.cxx">
+        <Filter>Patches\2010_2</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\hkSerializeDeprecated2.cpp">
+        <Filter>Deprecated</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\660\hkPatches_660.cpp">
+        <Filter>Patches\660</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\700\hkpPatches_700.cpp">
+        <Filter>Patches\700</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2013_1\hkaPatches_2013_1.cpp">
+        <Filter>Patches\2013_1</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2011_3\hclPatches_2011_3.cxx">
+        <Filter>Patches\2011_3</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\Legacy\hkcdPatches_Legacy.cxx">
+        <Filter>Patches\Legacy</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok201221r1Classes.cpp">
+        <Filter>Deprecated\Compat\manifest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2012_1\hkcdPatches_2012_1.cxx">
+        <Filter>Patches\2012_1</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\UnitTest\SaveAsZero\saveAsZero.cpp">
+        <Filter>Deprecated\UnitTest\SaveAsZero</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2011_1\hkaiPatches_2011_1.cpp">
+        <Filter>Patches\2011_1</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\660\hkaPatches_660.cxx">
+        <Filter>Patches\660</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Deprecated\Compat\hkCompat_Common.cxx">
+        <Filter>Deprecated\Compat</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\Utilities\hkbAllPatches.cxx">
+        <Filter>Patches\Utilities</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\2010_1\hkdPatches_2010_1.cxx">
+        <Filter>Patches\2010_1</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\2013_1\hkcdPatches_2013_1.cxx">
+        <Filter>Patches\2013_1</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\2012_1\hkaiPatches_2012_1.cxx">
+        <Filter>Patches\2012_1</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\710\hkaiPatches_710.cxx">
+        <Filter>Patches\710</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok710r1Classes.cpp">
+        <Filter>Deprecated\Compat\manifest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok460r1Classes.cpp">
+        <Filter>Deprecated\Compat\manifest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\Utilities\hkAllPatches.cxx">
+        <Filter>Patches\Utilities</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok410r1Classes.cpp">
+        <Filter>Deprecated\Compat\manifest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2011_2\hkaPatches_2011_2.cpp">
+        <Filter>Patches\2011_2</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\hkCompatTrackerClasses.cpp">
+        <Filter>Classes</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\Utilities\hkpAllPatches.cxx">
+        <Filter>Patches\Utilities</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\2012_1\hkbPatches_2012_1.cxx">
+        <Filter>Patches\2012_1</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok201310r1Classes.cpp">
+        <Filter>Deprecated\Compat\manifest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok410b1Classes.cpp">
+        <Filter>Deprecated\Compat\manifest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\Legacy\hkbPatches_Legacy.cpp">
+        <Filter>Patches\Legacy</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Deprecated\Packfile\Xml\hkXmlPackfileReader.h">
+        <Filter>Deprecated\Packfile\Xml</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok660r1Classes.cpp">
+        <Filter>Deprecated\Compat\manifest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\Legacy\hclPatches_Legacy.cxx">
+        <Filter>Patches\Legacy</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\2012_2\hkndPatches_2012_2.cpp">
+        <Filter>Patches\2012_2</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2012_2\hknpPatches_2012_2.cpp">
+        <Filter>Patches\2012_2</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2010_1\hkaPatches_2010_1.cpp">
+        <Filter>Patches\2010_1</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk201120r1_hk201130r1.cpp">
+        <Filter>Deprecated\Compat\updates</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\660\hkaiPatches_660.cpp">
+        <Filter>Patches\660</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok650b1Classes.cpp">
+        <Filter>Deprecated\Compat\manifest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\Legacy\hkaiPatches_Legacy.cxx">
+        <Filter>Patches\Legacy</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok201220r1Classes.cpp">
+        <Filter>Deprecated\Compat\manifest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2011_1\hkpPatches_2011_1.cxx">
+        <Filter>Patches\2011_1</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok600b2Classes.cpp">
+        <Filter>Deprecated\Compat\manifest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk660r1_hk700b1.cpp">
+        <Filter>Deprecated\Compat\updates</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2011_1\hkPatches_2011_1.cpp">
+        <Filter>Patches\2011_1</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\700\hkdPatches_700.cpp">
+        <Filter>Patches\700</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok460b2Classes.cpp">
+        <Filter>Deprecated\Compat\manifest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok600b1Classes.cpp">
+        <Filter>Deprecated\Compat\manifest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\710\hkbPatches_710.cpp">
+        <Filter>Patches\710</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk330b1_hk330b2.cpp">
+        <Filter>Deprecated\Compat\updates</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2012_1\hclPatches_2012_1.cpp">
+        <Filter>Patches\2012_1</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok201110r1Classes.cpp">
+        <Filter>Deprecated\Compat\manifest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Deprecated\Compat\hkCompatUtil.h">
+        <Filter>Deprecated\Compat</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Patches\Legacy\hkpPatches_Legacy.cpp">
+        <Filter>Patches\Legacy</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2012_2\hkPatches_2012_2.cpp">
+        <Filter>Patches\2012_2</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok700r1Classes.cpp">
+        <Filter>Deprecated\Compat\manifest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\660\hkbPatches_660.cpp">
+        <Filter>Patches\660</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Packfile\hkPackfileReader.cpp">
+        <Filter>Deprecated\Packfile</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\Utilities\hkcdAllPatches.cxx">
+        <Filter>Patches\Utilities</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\2011_3\hkdPatches_2011_3.cxx">
+        <Filter>Patches\2011_3</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\700\hkaPatches_700.cxx">
+        <Filter>Patches\700</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\2010_1\hkcdPatches_2010_1.cpp">
+        <Filter>Patches\2010_1</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\710\hkaPatches_710.cpp">
+        <Filter>Patches\710</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk201220r1_hk201221r1.cpp">
+        <Filter>Deprecated\Compat\updates</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk460b2_hk460r1.cpp">
+        <Filter>Deprecated\Compat\updates</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2011_1\hkbPatches_2011_1.cpp">
+        <Filter>Patches\2011_1</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2012_1\hkpPatches_2012_1.cxx">
+        <Filter>Patches\2012_1</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk500b1_hk500r1.cpp">
+        <Filter>Deprecated\Compat\updates</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\UnitTest\Binaryreader\binaryPackfileReader.cpp">
+        <Filter>Deprecated\UnitTest\Binaryreader</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\710\hclPatches_710.cpp">
+        <Filter>Patches\710</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk700b1_hk700r1.cpp">
+        <Filter>Deprecated\Compat\updates</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok320Classes.cpp">
+        <Filter>Deprecated\Compat\manifest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="hkHavokVersions.h">
+        <Filter></Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Patches\2011_3\hkaiPatches_2011_3.cxx">
+        <Filter>Patches\2011_3</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Deprecated\Compat\hkCompat_None.cxx">
+        <Filter>Deprecated\Compat</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Packfile\Binary\hkBinaryPackfileReader.cpp">
+        <Filter>Deprecated\Packfile\Binary</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\710\hkdPatches_710.cpp">
+        <Filter>Patches\710</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Version\hkVersionRegistry.cpp">
+        <Filter>Deprecated\Version</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2010_2\hkpPatches_2010_2.cpp">
+        <Filter>Patches\2010_2</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\Utilities\hkaiAllPatches.cxx">
+        <Filter>Patches\Utilities</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\Utilities\hclAllPatches.cxx">
+        <Filter>Patches\Utilities</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\2012_2\hkpPatches_2012_2.cxx">
+        <Filter>Patches\2012_2</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\2010_2\hkbPatches_2010_2.cpp">
+        <Filter>Patches\2010_2</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\Legacy\hkPatches_Legacy.cxx">
+        <Filter>Patches\Legacy</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\2012_1\hkaPatches_2012_1.cpp">
+        <Filter>Patches\2012_1</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2011_2\hclPatches_2011_2.cxx">
+        <Filter>Patches\2011_2</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\Utilities\hkmsAllPatches.cxx">
+        <Filter>Patches\Utilities</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok461r1Classes.cpp">
+        <Filter>Deprecated\Compat\manifest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk310_hk320.cpp">
+        <Filter>Deprecated\Compat\updates</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\710\hkcdPatches_710.cpp">
+        <Filter>Patches\710</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2010_2\hclPatches_2010_2.cxx">
+        <Filter>Patches\2010_2</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok402r1Classes.cpp">
+        <Filter>Deprecated\Compat\manifest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2011_1\hkaPatches_2011_1.cpp">
+        <Filter>Patches\2011_1</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk201310r1_hk201311r1.cpp">
+        <Filter>Deprecated\Compat\updates</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\700\hclPatches_700.cpp">
+        <Filter>Patches\700</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2013_1\hclPatches_2013_1.cpp">
+        <Filter>Patches\2013_1</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok201010r1Classes.cpp">
+        <Filter>Deprecated\Compat\manifest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2012_2\hkcdPatches_2012_2.cpp">
+        <Filter>Patches\2012_2</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2013_1\hkPatches_2013_1.cpp">
+        <Filter>Patches\2013_1</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2012_1\hkbPatches_2012_1.cpp">
+        <Filter>Patches\2012_1</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2010_1\hkaiPatches_2010_1.cpp">
+        <Filter>Patches\2010_1</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2011_2\hkcdPatches_2011_2.cpp">
+        <Filter>Patches\2011_2</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2010_2\hkcdPatches_2010_2.cpp">
+        <Filter>Patches\2010_2</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2013_1\hkcdPatches_2013_1.cpp">
+        <Filter>Patches\2013_1</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok600r1Classes.cpp">
+        <Filter>Deprecated\Compat\manifest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2012_2\hkaPatches_2012_2.cxx">
+        <Filter>Patches\2012_2</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\Legacy\hkbPatches_Legacy.cxx">
+        <Filter>Patches\Legacy</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok201210r1Classes.cpp">
+        <Filter>Deprecated\Compat\manifest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok610r1Classes.cpp">
+        <Filter>Deprecated\Compat\manifest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Deprecated\Version\hkPackfileObjectUpdateTracker.h">
+        <Filter>Deprecated\Version</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Deprecated\Util\hkBindingClassNameRegistry.h">
+        <Filter>Deprecated\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk461r1_hk500b1.cpp">
+        <Filter>Deprecated\Compat\updates</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Deprecated\Packfile\Binary\hkBinaryPackfileReader.h">
+        <Filter>Deprecated\Packfile\Binary</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Patches\660\hkaPatches_660.cpp">
+        <Filter>Patches\660</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2011_2\hkdPatches_2011_2.cxx">
+        <Filter>Patches\2011_2</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok330b2Classes.cpp">
+        <Filter>Deprecated\Compat\manifest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok500r1Classes.cpp">
+        <Filter>Deprecated\Compat\manifest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Deprecated\Compat\hkCompatVersions.h">
+        <Filter>Deprecated\Compat</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk600r1_hk610r1.cpp">
+        <Filter>Deprecated\Compat\updates</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\710\hkPatches_710.cpp">
+        <Filter>Patches\710</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk450b1_hk450r1.cpp">
+        <Filter>Deprecated\Compat\updates</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk201210r1_hk201220r1.cpp">
+        <Filter>Deprecated\Compat\updates</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2012_1\hkaiPatches_2012_1.cpp">
+        <Filter>Patches\2012_1</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2010_1\hkdPatches_2010_1.cpp">
+        <Filter>Patches\2010_1</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+
+  </ItemGroup>
+</Project>

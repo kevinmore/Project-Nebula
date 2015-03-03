@@ -226,13 +226,19 @@ void PhysicsWorld::handleNarrowPhase( CollisionPairPtr pair )
    		newInfo = backToTimeOfImpact(bodyA, bodyB);
 		if (newInfo.bIntersect) collisionInfo = newInfo;
 
-		//resetRigidBodyBeforeBackTrack(bodyA, trans1, bodyA->getLinearVelocity(), bodyA->getAngularVelocity());
-		//resetRigidBodyBeforeBackTrack(bodyB, trans2, bodyB->getLinearVelocity(), bodyB->getAngularVelocity());
+// 		resetRigidBodyBeforeBackTrack(bodyA, trans1, lv1, av1);
+// 		resetRigidBodyBeforeBackTrack(bodyB, trans2, lv2, av2);
 
 		// check the contact time
 		// if the difference is too small, means the contact point is the same, ignore it
 		// only deal with the case when the contact point is not the same
-		if (m_currentTime - pair->contactTime > 0.06f)
+		vec3 pointVelocityA = bodyA->getPointVelocityWorld(collisionInfo.closestPntAWorld);
+		vec3 pointVelocityB = bodyB->getPointVelocityWorld(collisionInfo.closestPntBWorld);
+		float Vrel = qAbs(vec3::dotProduct(collisionInfo.contactNormalWorld, pointVelocityA - pointVelocityB));
+		float allowedTime = 0.8f - Vrel * 0.1f;
+
+		qDebug() << allowedTime << collisionInfo.contactNormalWorld;
+		if (m_currentTime - pair->contactTime > allowedTime)
 		{
 			// update the contact point in the pair
 			pair->contactTime = m_currentTime;
@@ -380,9 +386,9 @@ NarrowPhaseCollisionFeedback PhysicsWorld::backToTimeOfImpact( RigidBody* rb1, R
 	}
 
 	// default behavioour
-	if(modifyBody1) rb1->backTrack(1.5f * m_timeStep);
-	if(modifyBody2) rb2->backTrack(1.5f * m_timeStep);
-	solver.checkCollision(collider1.data(), collider2.data(), collisionInfo, false);
+// 	if(modifyBody1) rb1->backTrack(1.5f * m_timeStep);
+// 	if(modifyBody2) rb2->backTrack(1.5f * m_timeStep);
+// 	solver.checkCollision(collider1.data(), collider2.data(), collisionInfo, false);
 
 	return collisionInfo;
 }
