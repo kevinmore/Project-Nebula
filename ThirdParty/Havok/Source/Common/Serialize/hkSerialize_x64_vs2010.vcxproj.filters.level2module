@@ -1,0 +1,693 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Serialize\StructuredBinaryStream">
+        <UniqueIdentifier>35B8D178-5B8D-4835-8D17-35B8D17835B8</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Data\Util">
+        <UniqueIdentifier>19184377-9184-4719-8437-191843771918</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="UnitTest">
+        <UniqueIdentifier>1D4E8DF6-D4E8-461D-E8DF-1D4E8DF61D4E</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Copier">
+        <UniqueIdentifier>7D1A6674-D1A6-447D-A667-7D1A66747D1A</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Tagfile\Text">
+        <UniqueIdentifier>61B4ED13-1B4E-4361-4ED1-61B4ED1361B4</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="UnitTest\Tagfile">
+        <UniqueIdentifier>1EA34C98-EA34-481E-34C9-1EA34C981EA3</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="UnitTest\Parser">
+        <UniqueIdentifier>5AB7E9E4-AB7E-445A-7E9E-5AB7E9E45AB7</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="UnitTest\Nullname">
+        <UniqueIdentifier>12F8BD45-2F8B-4512-8BD4-12F8BD4512F8</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Tagfile\Binary">
+        <UniqueIdentifier>68BD1EA3-8BD1-4368-D1EA-68BD1EA368BD</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Tagfile\Xml">
+        <UniqueIdentifier>254E47AA-54E4-4A25-E47A-254E47AA254E</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Classes\Reflections">
+        <UniqueIdentifier>E9C8D3E9-8D3E-48D3-9C8D-E9C8D3E9C8D3</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Util">
+        <UniqueIdentifier>6310CE50-310C-4063-0CE5-6310CE506310</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Packfile">
+        <UniqueIdentifier>7A20FAB5-A20F-457A-0FAB-7A20FAB57A20</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="UnitTest\Defaultcopy">
+        <UniqueIdentifier>1498F646-498F-4614-8F64-1498F6461498</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="UnitTest\DataObjectUtil">
+        <UniqueIdentifier>4AD76ABC-AD76-4C4A-76AB-4AD76ABC4AD7</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Data\Dict">
+        <UniqueIdentifier>1E222FBD-E222-4D1E-22FB-1E222FBD1E22</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="UnitTest\PatchTest">
+        <UniqueIdentifier>4FD963E4-D963-4FD9-3E4F-963E4FD963E4</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Resource">
+        <UniqueIdentifier>427FFDC4-27FF-4442-FFDC-427FFDC4427F</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Tagfile">
+        <UniqueIdentifier>4772B43B-772B-4B47-2B43-4772B43B4772</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Util\Xml">
+        <UniqueIdentifier>1E06C7B5-E06C-451E-6C7B-1E06C7B51E06</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Serialize\Xml">
+        <UniqueIdentifier>2AA8EAB4-AA8E-442A-8EAB-2AA8EAB42AA8</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Packfile\Binary">
+        <UniqueIdentifier>5884A1B1-884A-4158-4A1B-5884A1B15884</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Classes">
+        <UniqueIdentifier>11230FAD-1230-4D11-30FA-11230FAD1123</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="TypeManager">
+        <UniqueIdentifier>579253D6-7925-4657-253D-579253D65792</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="UnitTest\Enumcopy">
+        <UniqueIdentifier>3F0B4FDB-F0B4-4B3F-B4FD-3F0B4FDB3F0B</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="ResourceDatabase">
+        <UniqueIdentifier>14FD99E3-4FD9-4314-D99E-14FD99E314FD</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Data\Native">
+        <UniqueIdentifier>6EC2DD9A-EC2D-4A6E-2DD9-6EC2DD9A6EC2</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="UnitTest\SerializeUtil">
+        <UniqueIdentifier>26AD58E6-6AD5-4626-D58E-26AD58E626AD</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Data">
+        <UniqueIdentifier>7F65EB3C-F65E-4C7F-5EB3-7F65EB3C7F65</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Serialize">
+        <UniqueIdentifier>690CDF15-90CD-4569-CDF1-690CDF15690C</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Serialize\Platform">
+        <UniqueIdentifier>4E4E0D93-E4E0-434E-E0D9-4E4E0D934E4E</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="UnitTest\loadAsObject">
+        <UniqueIdentifier>2505BE12-505B-4225-5BE1-2505BE122505</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="UnitTest\SerializeRelArray">
+        <UniqueIdentifier>14AD3AF2-4AD3-4214-D3AF-14AD3AF214AD</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Version">
+        <UniqueIdentifier>1347C093-347C-4313-7C09-1347C0931347</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="UnitTest\PatchObjectTest">
+        <UniqueIdentifier>72813757-8137-4281-7572-137572813757</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Classlist">
+        <UniqueIdentifier>1CE12269-CE12-491C-1226-1CE122691CE1</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="UnitTest\TupleOfTuple">
+        <UniqueIdentifier>4F609B7A-F609-4A4F-09B7-4F609B7A4F60</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Serialize\StructuredBinaryStream\hkStructuredBinaryStream.inl">
+        <Filter>Serialize\StructuredBinaryStream</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Version\hkVersionUtil.h">
+        <Filter>Version</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Util\Xml\hkXmlParser.cpp">
+        <Filter>Util\Xml</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Data\hkDataObject.cpp">
+        <Filter>Data</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkPackfileSectionHeaderReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Tagfile\Binary\hkTagStringList.h">
+        <Filter>Tagfile\Binary</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Tagfile\hkTagfileReader.cpp">
+        <Filter>Tagfile</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\Parser\HeaderParser.cpp">
+        <Filter>UnitTest\Parser</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\base64Test.cpp">
+        <Filter>UnitTest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Util\hkSerializeUtil.h">
+        <Filter>Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="UnitTest\Nullname\NullName.h">
+        <Filter>UnitTest\Nullname</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\contentsAccessTest.cpp">
+        <Filter>UnitTest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Util\hkVersionCheckingUtils.cpp">
+        <Filter>Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Copier\hkDeepCopier.cpp">
+        <Filter>Copier</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Classlist\hkCommonClasses.h">
+        <Filter>Classlist</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Packfile\hkPackfileWriter.h">
+        <Filter>Packfile</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Tagfile\Text\hkTextTagfileWriter.h">
+        <Filter>Tagfile\Text</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Serialize\Platform\hkPlatformObjectWriter.cpp">
+        <Filter>Serialize\Platform</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Resource\hkObjectResource.h">
+        <Filter>Resource</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Data\Util\hkDataObjectUtil.cpp">
+        <Filter>Data\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Packfile\Binary\hkPackfileSectionHeader.cpp">
+        <Filter>Packfile\Binary</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Data\Dict\hkDataObjectDict.h">
+        <Filter>Data\Dict</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="UnitTest\SerializeRelArray\serializeRelArray.h">
+        <Filter>UnitTest\SerializeRelArray</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\typeTraitsTest.cpp">
+        <Filter>UnitTest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\classdump.cpp">
+        <Filter>UnitTest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\Enumcopy\EnumCopy.cpp">
+        <Filter>UnitTest\Enumcopy</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Util\hkStructureLayout.h">
+        <Filter>Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Packfile\Binary\hkPackfileSectionHeader.h">
+        <Filter>Packfile\Binary</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Serialize\Xml\hkXmlObjectReader.h">
+        <Filter>Serialize\Xml</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\xmlEntityTest.cpp">
+        <Filter>UnitTest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Serialize\Xml\hkXmlObjectWriter.cpp">
+        <Filter>Serialize\Xml</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\hkSerializeTrackerClasses.cpp">
+        <Filter>Classes</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Util\Xml\hkXmlParser.h">
+        <Filter>Util\Xml</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Packfile\hkPackfileData.h">
+        <Filter>Packfile</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\testStructureLayout.cpp">
+        <Filter>UnitTest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="UnitTest\PlatformClassList.h">
+        <Filter>UnitTest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Data\hkDataObject.inl">
+        <Filter>Data</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Util\hkObjectInspector.h">
+        <Filter>Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="UnitTest\PatchObjectTest\patchObjectTest.h">
+        <Filter>UnitTest\PatchObjectTest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Serialize\hkObjectReader.h">
+        <Filter>Serialize</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Tagfile\Xml\hkXmlTagfileWriter.cpp">
+        <Filter>Tagfile\Xml</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Tagfile\Binary\hkBinaryTagfileWriter.cpp">
+        <Filter>Tagfile\Binary</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="UnitTest\PatchTest\patchTestClasses.h">
+        <Filter>UnitTest\PatchTest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Data\hkDataObjectImpl.h">
+        <Filter>Data</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Util\hkSerializeUtil.cpp">
+        <Filter>Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\loadAsObject\loadAsObjectTest.cpp">
+        <Filter>UnitTest\loadAsObject</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Util\hkRootLevelContainer.cpp">
+        <Filter>Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Tagfile\Binary\hkBinaryTagfileReader.cpp">
+        <Filter>Tagfile\Binary</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Util\hkClassPointerVtable.cpp">
+        <Filter>Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Data\Dict\hkDataObjectDict.cpp">
+        <Filter>Data\Dict</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Packfile\Binary\hkPackfileHeader.h">
+        <Filter>Packfile\Binary</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Serialize\Platform\hkPlatformObjectWriter.h">
+        <Filter>Serialize\Platform</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="UnitTest\loadAsObject\loadAsObjectTest.h">
+        <Filter>UnitTest\loadAsObject</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Util\Xml\hkXmlParser.inl">
+        <Filter>Util\Xml</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Util\Xml\hkXmlLexAnalyzer.h">
+        <Filter>Util\Xml</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Data\Util\hkDataWorldCloner.cpp">
+        <Filter>Data\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="hkSerialize.cpp">
+        <Filter></Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Data\Native\hkDataObjectNative.h">
+        <Filter>Data\Native</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Util\hkStructureLayout.cpp">
+        <Filter>Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Serialize\Xml\hkXmlObjectWriter.h">
+        <Filter>Serialize\Xml</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Util\Xml\hkXmlStreamParser.h">
+        <Filter>Util\Xml</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Data\hkDataObject.h">
+        <Filter>Data</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Util\hkRootLevelContainer.inl">
+        <Filter>Util</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Tagfile\hkTagfileWriter.cpp">
+        <Filter>Tagfile</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\patchesVersionCheck.cpp">
+        <Filter>UnitTest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Resource\hkResource.h">
+        <Filter>Resource</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Version\hkVersionUtil.cpp">
+        <Filter>Version</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Classlist\hkKeyCodeClasses.h">
+        <Filter>Classlist</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="UnitTest\PatchTest\patchDataObjectTest.cxx">
+        <Filter>UnitTest\PatchTest</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Serialize\Xml\hkXmlObjectReader.cpp">
+        <Filter>Serialize\Xml</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Version\hkVersionPatchManager.cpp">
+        <Filter>Version</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\UnitTestDefaultCopyReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Util\hkLoader.h">
+        <Filter>Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Classlist\hkMilSimClasses.h">
+        <Filter>Classlist</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Classlist\hkAnimationClasses.h">
+        <Filter>Classlist</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\UnitTestpatchObjectTestReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Classes\hkSerializeClasses.cxx">
+        <Filter>Classes</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Classlist\hkPathfindingClasses.h">
+        <Filter>Classlist</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\reflectionCheck.cpp">
+        <Filter>UnitTest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="UnitTest\Enumcopy\EnumCopy.h">
+        <Filter>UnitTest\Enumcopy</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Packfile\hkPackfileWriter.cpp">
+        <Filter>Packfile</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="UnitTest\Tests.h">
+        <Filter>UnitTest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Tagfile\hkTagfileWriter.h">
+        <Filter>Tagfile</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Tagfile\Xml\hkXmlTagfileReader.h">
+        <Filter>Tagfile\Xml</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\PatchTest\patchDataObjectTest.cpp">
+        <Filter>UnitTest\PatchTest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Util\hkSerializeMultiMap.h">
+        <Filter>Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Classlist\hkDestruction2012Classes.h">
+        <Filter>Classlist</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\Nullname\NullName.cpp">
+        <Filter>UnitTest\Nullname</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Util\hkSerializationCheckingUtils.cpp">
+        <Filter>Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Util\hkBuiltinTypeRegistry.h">
+        <Filter>Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Classlist\hkDestructionClasses.h">
+        <Filter>Classlist</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="TypeManager\hkTypeManager.h">
+        <Filter>TypeManager</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Classlist\hkClothClasses.h">
+        <Filter>Classlist</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\showOffsets.cpp">
+        <Filter>UnitTest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Util\hkSerializeLog.h">
+        <Filter>Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="hkSerialize.h">
+        <Filter></Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Util\hkSerializationCheckingUtils.h">
+        <Filter>Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Packfile\Binary\hkBinaryPackfileWriter.cpp">
+        <Filter>Packfile\Binary</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Util\hkChainedClassNameRegistry.cpp">
+        <Filter>Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\PatchObjectTest\patchObjectTest.cpp">
+        <Filter>UnitTest\PatchObjectTest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Version\hkVersionPatchManager.cxx">
+        <Filter>Version</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Classlist\hkPhysics2012Classes.h">
+        <Filter>Classlist</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Util\hkChainedClassNameRegistry.h">
+        <Filter>Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\UnitTesttupleOfTupleTestReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\UnitTestpatchTestClassesReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="UnitTest\Parser\HeaderParser.h">
+        <Filter>UnitTest\Parser</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Util\hkStaticClassNameRegistry.h">
+        <Filter>Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="UnitTest\Defaultcopy\DefaultCopy.h">
+        <Filter>UnitTest\Defaultcopy</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\UnitTestserializeRelArrayReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\Tagfile\tagfileTest.cpp">
+        <Filter>UnitTest\Tagfile</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Util\hkNativePackfileUtils.h">
+        <Filter>Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Util\Xml\hkParserBuffer.h">
+        <Filter>Util\Xml</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Packfile\hkPackfileData.cpp">
+        <Filter>Packfile</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="ResourceDatabase\hkResourceHandle.h">
+        <Filter>ResourceDatabase</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkRootLevelContainerReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\Defaultcopy\DefaultCopy.cpp">
+        <Filter>UnitTest\Defaultcopy</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Tagfile\Xml\hkXmlTagfileCommon.h">
+        <Filter>Tagfile\Xml</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Version\hkVersionPatchManager.h">
+        <Filter>Version</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Util\Xml\hkFloatParseUtil.cpp">
+        <Filter>Util\Xml</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\UnitTestHeaderParserReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Data\Util\hkDataObjectUtil.h">
+        <Filter>Data\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\UnitTestloadAsObjectTestReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Resource\hkObjectResource.cpp">
+        <Filter>Resource</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkResourceHandleReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Tagfile\Text\hkTextTagfileWriter.cpp">
+        <Filter>Tagfile\Text</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\hkSerializeUnitTestTrackerClasses.cpp">
+        <Filter>Classes</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Tagfile\Binary\hkBinaryTagfileCommon.h">
+        <Filter>Tagfile\Binary</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Serialize\hkRelocationInfo.h">
+        <Filter>Serialize</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Util\Xml\hkParserBuffer.inl">
+        <Filter>Util\Xml</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Util\hkStaticClassNameRegistry.cpp">
+        <Filter>Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Classlist\hkClasses.h">
+        <Filter>Classlist</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Util\hkNativePackfileUtils.cpp">
+        <Filter>Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Tagfile\Xml\hkXmlTagfileWriter.h">
+        <Filter>Tagfile\Xml</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="UnitTest\patchesVersionCheck.cxx">
+        <Filter>UnitTest</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Data\Util\hkDataObjectToNative.cpp">
+        <Filter>Data\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Data\hkDataObjectDeclarations.h">
+        <Filter>Data</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Util\hkSerializeLog.cpp">
+        <Filter>Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Util\hkSerializeUtil.inl">
+        <Filter>Util</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="UnitTest\DataObjectUtil\dataObjectUtil.cpp">
+        <Filter>UnitTest\DataObjectUtil</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Packfile\Binary\hkPackfileHeader.cpp">
+        <Filter>Packfile\Binary</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\stringArrayTest.cpp">
+        <Filter>UnitTest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Data\Util\hkDataObjectToNative.h">
+        <Filter>Data\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\deepCopyTest.cpp">
+        <Filter>UnitTest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Classlist\hkPhysicsClasses.h">
+        <Filter>Classlist</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\dataClassTest.cpp">
+        <Filter>UnitTest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Util\Xml\hkParserBuffer.cpp">
+        <Filter>Util\Xml</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Tagfile\Binary\hkBinaryTagfileReader.h">
+        <Filter>Tagfile\Binary</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\SerializeRelArray\serializeRelArray.cpp">
+        <Filter>UnitTest\SerializeRelArray</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\dataObjectTest.cpp">
+        <Filter>UnitTest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Packfile\Binary\hkBinaryPackfileWriter.h">
+        <Filter>Packfile\Binary</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Copier\hkObjectCopier.h">
+        <Filter>Copier</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Util\hkBuiltinTypeRegistry.cpp">
+        <Filter>Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Util\hkRootLevelContainer.h">
+        <Filter>Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Serialize\hkObjectWriter.h">
+        <Filter>Serialize</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Util\hkSerializeDeprecated.h">
+        <Filter>Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Serialize\hkRelocationInfo.cpp">
+        <Filter>Serialize</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="UnitTest\serializeUtilities.h">
+        <Filter>UnitTest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Util\hkBuiltinTypeRegistry.cxx">
+        <Filter>Util</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Classlist\hkBehaviorClasses.h">
+        <Filter>Classlist</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Data\Util\hkDataWorldCloner.h">
+        <Filter>Data\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Util\Xml\hkXmlLexAnalyzer.cpp">
+        <Filter>Util\Xml</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Data\Native\hkDataObjectNative.cpp">
+        <Filter>Data\Native</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Serialize\StructuredBinaryStream\hkStructuredBinaryStream.h">
+        <Filter>Serialize\StructuredBinaryStream</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Util\hkObjectInspector.cpp">
+        <Filter>Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkPackfileHeaderReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="ResourceDatabase\hkResourceHandle.cpp">
+        <Filter>ResourceDatabase</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Tagfile\hkTagfileReader.h">
+        <Filter>Tagfile</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Util\Xml\hkFloatParseUtil.h">
+        <Filter>Util\Xml</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="TypeManager\hkTypeManager.cpp">
+        <Filter>TypeManager</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Resource\hkResource.inl">
+        <Filter>Resource</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Data\hkDataObjectImpl.cpp">
+        <Filter>Data</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Copier\hkDeepCopier.h">
+        <Filter>Copier</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\SerializeUtil\SerializeUtil.cpp">
+        <Filter>UnitTest\SerializeUtil</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="UnitTest\TupleOfTuple\tupleOfTupleTest.h">
+        <Filter>UnitTest\TupleOfTuple</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Util\Xml\hkXmlStreamParser.cpp">
+        <Filter>Util\Xml</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Util\hkVersionCheckingUtils.h">
+        <Filter>Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\serializeMultiMap.cpp">
+        <Filter>UnitTest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\UnitTestNullNameReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Copier\hkObjectCopier.cpp">
+        <Filter>Copier</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Tagfile\Binary\hkTagStringList.cpp">
+        <Filter>Tagfile\Binary</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Version\hkVersionPatchManager.inl">
+        <Filter>Version</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Util\hkClassPointerVtable.h">
+        <Filter>Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Util\hkSerializeDeprecated.cpp">
+        <Filter>Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\UnitTestEnumCopyReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Util\hkLoader.cpp">
+        <Filter>Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Classes\hkSerializeClasses.h">
+        <Filter>Classes</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Tagfile\Xml\hkXmlTagfileReader.cpp">
+        <Filter>Tagfile\Xml</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="UnitTest\PatchObjectTest\patchObjectTestPatches.cxx">
+        <Filter>UnitTest\PatchObjectTest</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Util\hkSerializeMultiMap.inl">
+        <Filter>Util</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Tagfile\Binary\hkBinaryTagfileWriter.h">
+        <Filter>Tagfile\Binary</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\TupleOfTuple\tupleOfTupleTest.cpp">
+        <Filter>UnitTest\TupleOfTuple</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+
+  </ItemGroup>
+</Project>

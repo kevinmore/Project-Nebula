@@ -1,0 +1,2001 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="UnitTest">
+        <UniqueIdentifier>1D4E8DF6-D4E8-461D-E8DF-1D4E8DF61D4E</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Agent\Util\Symmetric">
+        <UniqueIdentifier>9C54FF49-54FF-4C54-F49C-4FF49C54FF49</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Shape\Misc\PhantomCallback">
+        <UniqueIdentifier>6DFBA3EF-DFBA-4F6D-BA3E-6DFBA3EF6DFB</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Util\Welding">
+        <UniqueIdentifier>6C00FC14-C00F-446C-0FC1-6C00FC146C00</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Query\Collector\PointCollector">
+        <UniqueIdentifier>18B7601E-8B76-4E18-7601-18B7601E18B7</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Shape\Compound\Collection\Mesh">
+        <UniqueIdentifier>D7C81E1D-C81E-47C8-E1D7-81E1D7C81E1D</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Shape\Compound">
+        <UniqueIdentifier>47D0FC50-7D0F-4047-0FC5-47D0FC5047D0</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Agent3\Machine">
+        <UniqueIdentifier>43157223-3157-4343-5722-431572234315</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Query\Multithreaded\RayCastQuery">
+        <UniqueIdentifier>7D2FAA27-D2FA-477D-FAA2-7D2FAA277D2F</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Agent\Util\LinearCast">
+        <UniqueIdentifier>3322DE28-322D-4833-2DE2-3322DE283322</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Shape\Compound\Collection\List">
+        <UniqueIdentifier>DE1C1D4D-1C1D-4E1C-D4DE-C1D4DE1C1D4D</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Agent\ConvexAgent\SphereBox">
+        <UniqueIdentifier>6AAB7232-AAB7-426A-B723-6AAB72326AAB</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Agent\Query">
+        <UniqueIdentifier>5DCB19CC-DCB1-4C5D-B19C-5DCB19CC5DCB</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Util\ShapeVirtualTable">
+        <UniqueIdentifier>223061CA-2306-4A22-061C-223061CA2230</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Shape\Convex\ConvexTransform">
+        <UniqueIdentifier>6C26B837-C26B-476C-6B83-6C26B8376C26</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Agent\HeightFieldAgent">
+        <UniqueIdentifier>53CDE395-CDE3-43CD-3953-DE3953CDE395</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Agent\Deprecated">
+        <UniqueIdentifier>6FFBD7F6-FFBD-466F-BD7F-6FFBD7F66FFB</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Agent\MiscAgent">
+        <UniqueIdentifier>31AE37C1-1AE3-4131-E37C-31AE37C131AE</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Agent3\PredGskCylinderAgent3">
+        <UniqueIdentifier>5FC1A044-FC1A-445F-1A04-5FC1A0445FC1</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Agent3\BvTree3">
+        <UniqueIdentifier>22DF8DB9-2DF8-4922-F8DB-22DF8DB922DF</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Filter\DefaultConvexList">
+        <UniqueIdentifier>49483DB4-9483-4449-83DB-49483DB44948</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Util\ShapeDepth">
+        <UniqueIdentifier>78CCDA51-8CCD-4178-CDA5-78CCDA5178CC</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Classes">
+        <UniqueIdentifier>11230FAD-1230-4D11-30FA-11230FAD1123</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Shape\Deprecated\Mesh">
+        <UniqueIdentifier>4F59C7AC-F59C-4C4F-9C7A-4F59C7AC4F59</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Shape\Convex\Triangle">
+        <UniqueIdentifier>43608DA3-3608-4343-08DA-43608DA34360</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Shape\Deprecated\ConvexList">
+        <UniqueIdentifier>300EC260-00EC-4030-EC26-300EC260300E</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Agent3\PredGskAgent3">
+        <UniqueIdentifier>3A94339A-A943-4A3A-4339-3A94339A3A94</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Shape\HeightField">
+        <UniqueIdentifier>442B4F97-42B4-4744-B4F9-442B4F97442B</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Dispatch">
+        <UniqueIdentifier>49913B92-9913-4249-13B9-49913B924991</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Shape\Misc\Transform">
+        <UniqueIdentifier>3E39D071-E39D-413E-9D07-3E39D0713E39</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Shape\Convex\ConvexTranslate">
+        <UniqueIdentifier>26B04E79-6B04-4926-04E7-26B04E7926B0</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Agent\CompoundAgent\List">
+        <UniqueIdentifier>48DECE7B-8DEC-4B48-ECE7-48DECE7B48DE</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Query\CastUtil">
+        <UniqueIdentifier>357B027F-57B0-4F35-B027-357B027F357B</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Filter\Null">
+        <UniqueIdentifier>45C44A82-5C44-4245-44A8-45C44A8245C4</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Agent\MiscAgent\Phantom">
+        <UniqueIdentifier>2C0FF28C-C0FF-4C2C-FF28-2C0FF28C2C0F</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Shape\Compound\Tree\Mopp\Modifiers">
+        <UniqueIdentifier>6CEA3172-CEA3-426C-A317-6CEA31726CEA</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Shape\Misc">
+        <UniqueIdentifier>16550B71-6550-4116-50B7-16550B711655</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Agent">
+        <UniqueIdentifier>B09DB92B-9DB9-409D-92B0-DB92B09DB92B</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Agent\MiscAgent\Bv">
+        <UniqueIdentifier>2FAC9F6A-FAC9-4A2F-C9F6-2FAC9F6A2FAC</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Agent3\Machine\1n">
+        <UniqueIdentifier>1563E961-563E-4115-3E96-1563E9611563</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Shape\Compound\Collection\StorageExtendedMesh">
+        <UniqueIdentifier>3471EF60-471E-4034-1EF6-3471EF603471</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Agent\Deprecated\MultiSphereTriangle">
+        <UniqueIdentifier>780EFAA2-80EF-4278-EFAA-780EFAA2780E</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Query\Multithreaded\CollisionQuery">
+        <UniqueIdentifier>642EB356-42EB-4664-EB35-642EB356642E</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Shape\Convex\Capsule">
+        <UniqueIdentifier>7D930D53-D930-437D-30D5-7D930D537D93</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Agent\MiscAgent\MultirayConvex">
+        <UniqueIdentifier>2813F96E-813F-4E28-3F96-2813F96E2813</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Query\Multithreaded\Spu">
+        <UniqueIdentifier>190FD0BD-90FD-4D19-FD0B-190FD0BD190F</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Query\Multithreaded">
+        <UniqueIdentifier>52FD853D-2FD8-4D52-D853-52FD853D52FD</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Agent3\List3">
+        <UniqueIdentifier>65DEB33B-5DEB-4B65-EB33-65DEB33B65DE</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Query\Multithreaded\RayCastQuery\Util">
+        <UniqueIdentifier>17F86130-7F86-4017-8613-17F8613017F8</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Query\Multithreaded\RayCastQuery\Cpu">
+        <UniqueIdentifier>7E571E87-E571-477E-71E8-7E571E877E57</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Shape\Convex\Sphere">
+        <UniqueIdentifier>4C7DB2D8-C7DB-484C-DB2D-4C7DB2D84C7D</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Dispatch\Agent3Bridge">
+        <UniqueIdentifier>4BC01224-C012-4BC0-224B-01224BC01224</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Util\ShapeShrinker">
+        <UniqueIdentifier>7B684EDF-B684-4F7B-84ED-7B684EDF7B68</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Query\Collector\BodyPairCollector">
+        <UniqueIdentifier>5E12811F-E128-4F5E-2811-5E12811F5E12</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Agent3\BoxBox">
+        <UniqueIdentifier>2C0D5227-C0D5-472C-D522-2C0D52272C0D</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Agent3\Machine\Midphase">
+        <UniqueIdentifier>759CEAE3-59CE-4375-CEAE-759CEAE3759C</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="UnitTest\Agent">
+        <UniqueIdentifier>79FB52E7-9FB5-4779-B52E-79FB52E779FB</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Util\ShapeSkinning">
+        <UniqueIdentifier>5F39E0E8-F39E-485F-9E0E-5F39E0E85F39</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Util\ShapeInfo">
+        <UniqueIdentifier>408120E9-0812-4940-120E-408120E94081</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Agent\ConvexAgent\SphereSphere">
+        <UniqueIdentifier>4D12C427-D12C-474D-2C42-4D12C4274D12</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Shape">
+        <UniqueIdentifier>7C866D0E-C866-4E7C-66D0-7C866D0E7C86</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Shape\Convex">
+        <UniqueIdentifier>4D77EF44-77EF-4D77-F44D-7EF44D77EF44</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Shape\Query">
+        <UniqueIdentifier>4B419CF8-B419-484B-19CF-4B419CF84B41</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Query">
+        <UniqueIdentifier>7CC614F9-CC61-497C-614F-7CC614F97CC6</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="BroadPhase\3AxisSweep">
+        <UniqueIdentifier>2A9200FE-A920-4E2A-200F-2A9200FE2A92</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Shape\Compound\Collection">
+        <UniqueIdentifier>12310F01-2310-4112-10F0-12310F011231</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Agent\ConvexAgent\CapsuleTriangle">
+        <UniqueIdentifier>62381AFD-2381-4D62-81AF-62381AFD6238</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="UnitTest\Shape">
+        <UniqueIdentifier>557FA2F9-57FA-4955-FA2F-557FA2F9557F</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Shape\Misc\Bv">
+        <UniqueIdentifier>145E0EF6-45E0-4614-E0EF-145E0EF6145E</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Classes\Reflections">
+        <UniqueIdentifier>E9C8D3E9-8D3E-48D3-9C8D-E9C8D3E9C8D3</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Shape\Deprecated\ConvexPieceMesh">
+        <UniqueIdentifier>37F13914-7F13-4437-1391-37F1391437F1</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Shape\Compound\Tree">
+        <UniqueIdentifier>7E53EDD9-E53E-497E-3EDD-7E53EDD97E53</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="UnitTest\Query">
+        <UniqueIdentifier>74A05D18-4A05-4874-05D1-74A05D1874A0</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Agent\Util">
+        <UniqueIdentifier>14667F1B-4667-4B14-67F1-14667F1B1466</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Agent\ConvexAgent\SphereCapsule">
+        <UniqueIdentifier>6CE6A71C-CE6A-4C6C-6A71-6CE6A71C6CE6</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Agent3\Machine\Nn">
+        <UniqueIdentifier>11A29ADE-1A29-4E11-29AD-11A29ADE11A2</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="BroadPhase">
+        <UniqueIdentifier>7FD09CDD-FD09-4D7F-09CD-7FD09CDD7FD0</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Shape\Compound\Tree\Mopp">
+        <UniqueIdentifier>7F74BEDA-F74B-4A7F-4BED-7F74BEDA7F74</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Agent\ConvexAgent\BoxBox">
+        <UniqueIdentifier>7D1B70D9-D1B7-497D-B70D-7D1B70D97D1B</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Filter\List">
+        <UniqueIdentifier>5F37A8D7-F37A-475F-7A8D-5F37A8D75F37</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Agent\ContactMgr">
+        <UniqueIdentifier>87DBAD58-DBAD-47DB-D587-BAD587DBAD58</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Agent\Collidable">
+        <UniqueIdentifier>722B512C-22B5-4C72-B512-722B512C722B</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Agent3\CapsuleTriangle">
+        <UniqueIdentifier>100A6D2D-00A6-4D10-A6D2-100A6D2D100A</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Shape\Deprecated\MultiSphere">
+        <UniqueIdentifier>1B1444D2-B144-421B-444D-1B1444D21B14</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Agent\CompoundAgent">
+        <UniqueIdentifier>2AB9ACE2-B9AC-4AB9-CE2A-9ACE2AB9ACE2</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Agent3">
+        <UniqueIdentifier>4BEBE1CC-BEBE-4C4B-BE1C-4BEBE1CC4BEB</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Agent3\CollectionCollection3">
+        <UniqueIdentifier>ACD00BFA-D00B-4CD0-BFAC-00BFACD00BFA</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Shape\HeightField\CompressedSampledHeightField">
+        <UniqueIdentifier>44CCABC4-CCAB-44CC-BC44-CABC44CCABC4</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Shape\Deprecated">
+        <UniqueIdentifier>62289836-2289-4662-8983-622898366228</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="UnitTest\Utils">
+        <UniqueIdentifier>1683CD47-683C-4716-3CD4-1683CD471683</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Shape\Compound\Collection\SimpleMesh">
+        <UniqueIdentifier>28DDAAB5-8DDA-4528-DAAB-28DDAAB528DD</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Query\Collector\RayCollector">
+        <UniqueIdentifier>3F1FEF4E-F1FE-4E3F-FEF4-3F1FEF4E3F1F</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Filter">
+        <UniqueIdentifier>21B45750-1B45-4021-4575-21B4575021B4</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Shape\Misc\MultiRay">
+        <UniqueIdentifier>3DB876AB-DB87-4B3D-876A-3DB876AB3DB8</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Agent\ConvexAgent\CapsuleCapsule">
+        <UniqueIdentifier>3167DAA5-167D-4531-7DAA-3167DAA53167</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Shape\Deprecated\FastMesh">
+        <UniqueIdentifier>3B494E6E-B494-4E3B-94E6-3B494E6E3B49</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Query\Collector">
+        <UniqueIdentifier>375D0162-75D0-4237-D016-375D0162375D</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Shape\Convex\ConvexVertices">
+        <UniqueIdentifier>7315B29D-315B-4D73-5B29-7315B29D7315</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Agent3\ConvexList3">
+        <UniqueIdentifier>3421369C-4213-4C34-1369-3421369C3421</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Agent\MiscAgent\Transform">
+        <UniqueIdentifier>529D0297-29D0-4752-D029-529D0297529D</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Agent\Util\Null">
+        <UniqueIdentifier>6BE1796B-BE17-4B6B-1796-6BE1796B6BE1</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Agent\ConvexAgent">
+        <UniqueIdentifier>52F8476E-2F84-4E52-8476-52F8476E52F8</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Agent\Deprecated\MultiSphere">
+        <UniqueIdentifier>7148B172-148B-4271-8B17-7148B1727148</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Shape\Convex\Box">
+        <UniqueIdentifier>459DC894-9DC8-459D-8945-DC89459DC894</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Shape\HeightField\TriSampledHeightField">
+        <UniqueIdentifier>50768779-0768-4950-6877-507687795076</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Dispatch\ContactMgr">
+        <UniqueIdentifier>3284B1C1-284B-4132-4B1C-3284B1C13284</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Agent\CompoundAgent\ShapeCollection">
+        <UniqueIdentifier>29ACD581-9ACD-4129-CD58-29ACD58129AC</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Util\ShapeCutter">
+        <UniqueIdentifier>1FFCD47E-FFCD-4E1F-CD47-1FFCD47E1FFC</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="UnitTest\Algorithms">
+        <UniqueIdentifier>33AD8B33-D8B3-4D8B-3AD8-33AD8B33AD8B</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Dispatch\BroadPhase">
+        <UniqueIdentifier>6FCC4474-FCC4-446F-C447-6FCC44746FCC</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="BoxBox">
+        <UniqueIdentifier>220D1F94-20D1-4422-D1F9-220D1F94220D</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Shape\Compound\Collection\ExtendedMeshShape">
+        <UniqueIdentifier>56F6A796-6F6A-4656-6A79-56F6A79656F6</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Query\Multithreaded\CollisionQuery\Cpu">
+        <UniqueIdentifier>3A7B4644-A7B4-443A-B464-3A7B46443A7B</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Filter\Group">
+        <UniqueIdentifier>623F19A3-23F1-4362-F19A-623F19A3623F</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Shape\HeightField\StorageSampledHeightField">
+        <UniqueIdentifier>424C57A5-24C5-4542-C57A-424C57A5424C</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="UnitTest\Broadphase">
+        <UniqueIdentifier>68251730-8251-4068-5173-682517306825</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Util">
+        <UniqueIdentifier>6310CE50-310C-4063-0CE5-6310CE506310</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Shape\Deprecated\StorageMesh">
+        <UniqueIdentifier>746A7C46-46A7-4674-A7C4-746A7C46746A</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Shape\Convex\Cylinder">
+        <UniqueIdentifier>6EE74045-EE74-456E-7404-6EE740456EE7</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Agent3\Collection3">
+        <UniqueIdentifier>67ECD039-7ECD-4967-CD03-67ECD03967EC</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Agent\Deprecated\ConvexList">
+        <UniqueIdentifier>5275CC2C-275C-4C52-5CC2-5275CC2C5275</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Agent\CompoundAgent\BvTree">
+        <UniqueIdentifier>1C3867D9-C386-491C-867D-1C3867D91C38</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Agent\CompoundAgent\BvTreeStream">
+        <UniqueIdentifier>1FDD3025-FDD3-451F-D302-1FDD30251FDD</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Agent\ConvexAgent\Gjk">
+        <UniqueIdentifier>27F86FEC-7F86-4C27-86FE-27F86FEC27F8</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Shape\HeightField\SampledHeightField">
+        <UniqueIdentifier>1023FDF1-023F-4110-3FDF-1023FDF11023</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Agent\FullManifoldAgent">
+        <UniqueIdentifier>427461F2-2746-4242-461F-427461F24274</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Agent\ConvexAgent\SphereTriangle">
+        <UniqueIdentifier>2CEE73FA-CEE7-4A2C-E73F-2CEE73FA2CEE</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Shape\HeightField\Plane">
+        <UniqueIdentifier>55B19C03-5B19-4355-19C0-55B19C0355B1</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Shape\Deprecated\CompressedMesh">
+        <UniqueIdentifier>61229B55-1229-4561-29B5-61229B556122</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Classes\Reflections\hkpHeightFieldhkpSampledHeightFieldShapeReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Query\Collector\RayCollector\hkpAllRayHitCollector.h">
+        <Filter>Query\Collector\RayCollector</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Query\Collector\PointCollector\hkpRootCdPoint.h">
+        <Filter>Query\Collector\PointCollector</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Shape\hkpShapeContainer.cpp">
+        <Filter>Shape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Agent\MiscAgent\Transform\hkpTransformAgent.h">
+        <Filter>Agent\MiscAgent\Transform</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Query\Collector\BodyPairCollector\hkpFlagCdBodyPairCollector.inl">
+        <Filter>Query\Collector\BodyPairCollector</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Classes\Reflections\hkpMeshShapehkpStorageMeshShapeReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="BroadPhase\hkpBroadPhaseHandle.h">
+        <Filter>BroadPhase</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Dispatch\Agent3Bridge\hkpAgent3Bridge.cpp">
+        <Filter>Dispatch\Agent3Bridge</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Shape\Compound\Collection\ExtendedMeshShape\hkpExtendedMeshShape.cpp">
+        <Filter>Shape\Compound\Collection\ExtendedMeshShape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Agent3\ConvexList3\hkpConvexListAgent3.h">
+        <Filter>Agent3\ConvexList3</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\Algorithms\mopp.cpp">
+        <Filter>UnitTest\Algorithms</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="BroadPhase\3AxisSweep\hkp3AxisSweep.inl">
+        <Filter>BroadPhase\3AxisSweep</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Shape\Misc\Bv\hkpBvShape.inl">
+        <Filter>Shape\Misc\Bv</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Util\ShapeVirtualTable\hkpShapeVirtualTableUtil_CollisionQuery.cpp">
+        <Filter>Util\ShapeVirtualTable</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpCollisionFilterReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Agent\CompoundAgent\ShapeCollection\hkpShapeCollectionAgent.h">
+        <Filter>Agent\CompoundAgent\ShapeCollection</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Shape\Compound\Collection\SimpleMesh\hkpSimpleMeshShape.h">
+        <Filter>Shape\Compound\Collection\SimpleMesh</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Shape\HeightField\CompressedSampledHeightField\hkpCompressedSampledHeightFieldShape.h">
+        <Filter>Shape\HeightField\CompressedSampledHeightField</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Shape\Compound\Collection\List\hkpListShape.inl">
+        <Filter>Shape\Compound\Collection\List</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="BroadPhase\hkpBroadPhase.cpp">
+        <Filter>BroadPhase</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Shape\Convex\ConvexVertices\hkpConvexVerticesConnectivity.h">
+        <Filter>Shape\Convex\ConvexVertices</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Query\CastUtil\hkpWorldRayCastOutput.inl">
+        <Filter>Query\CastUtil</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Classes\hkpCollidehkpCompressedMeshShapeTrackerClasses.cpp">
+        <Filter>Classes</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Query\Multithreaded\RayCastQuery\Util\hkpCollisionQueryUtil.h">
+        <Filter>Query\Multithreaded\RayCastQuery\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Shape\Convex\ConvexVertices\hkpConvexVerticesConnectivityUtil.h">
+        <Filter>Shape\Convex\ConvexVertices</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Query\Collector\RayCollector\hkpClosestRayHitCollector.cpp">
+        <Filter>Query\Collector\RayCollector</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\Shape\GetShapeTypeName.cpp">
+        <Filter>UnitTest\Shape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Agent\Collidable\hkpCdBody.h">
+        <Filter>Agent\Collidable</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Shape\Deprecated\CompressedMesh\hkpCompressedMeshShape.inl">
+        <Filter>Shape\Deprecated\CompressedMesh</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Shape\Convex\Box\hkpBoxShape.cpp">
+        <Filter>Shape\Convex\Box</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Shape\Convex\Cylinder\hkpCylinderShape.h">
+        <Filter>Shape\Convex\Cylinder</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Agent\Util\Symmetric\hkpSymmetricAgentLinearCast.inl">
+        <Filter>Agent\Util\Symmetric</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Classes\Reflections\hkpMoppBvTreeShapeReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpMeshShapehkpMeshShapeReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Agent\CompoundAgent\List\hkpListAgent.cpp">
+        <Filter>Agent\CompoundAgent\List</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Query\Collector\BodyPairCollector\hkpAllCdBodyPairCollector.inl">
+        <Filter>Query\Collector\BodyPairCollector</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Query\Collector\PointCollector\hkpFixedBufferCdPointCollector.cpp">
+        <Filter>Query\Collector\PointCollector</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Shape\Query\hkpShapeRayBundleCastInput.h">
+        <Filter>Shape\Query</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Query\Collector\RayCollector\hkpAllRayHitCollector.cpp">
+        <Filter>Query\Collector\RayCollector</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Agent\MiscAgent\Phantom\hkpPhantomAgent.h">
+        <Filter>Agent\MiscAgent\Phantom</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Agent3\BvTree3\hkpBvTreeAgent3.h">
+        <Filter>Agent3\BvTree3</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Shape\HeightField\SampledHeightField\hkpSampledHeightFieldShape.h">
+        <Filter>Shape\HeightField\SampledHeightField</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Agent\MiscAgent\Bv\hkpBvAgent.h">
+        <Filter>Agent\MiscAgent\Bv</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Agent\ConvexAgent\Gjk\hkpClosestPointManifold.cpp">
+        <Filter>Agent\ConvexAgent\Gjk</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Agent\hkpCollisionQualityInfo.h">
+        <Filter>Agent</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\Algorithms\ContinuousGskTest.cpp">
+        <Filter>UnitTest\Algorithms</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Agent\Collidable\hkpCdBody.inl">
+        <Filter>Agent\Collidable</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Classes\Reflections\hkpHeightFieldhkpStorageSampledHeightFieldShapeReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Shape\Deprecated\CompressedMesh\hkTjunctionDetector.h">
+        <Filter>Shape\Deprecated\CompressedMesh</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Shape\Deprecated\CompressedMesh\hkpCompressedMeshShape.h">
+        <Filter>Shape\Deprecated\CompressedMesh</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="BroadPhase\3AxisSweep\hkp3AxisSweep32.cpp">
+        <Filter>BroadPhase\3AxisSweep</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpShapeReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Agent\Deprecated\MultiSphere\hkpMultiSphereAgent.cpp">
+        <Filter>Agent\Deprecated\MultiSphere</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Shape\Deprecated\ConvexPieceMesh\hkpConvexPieceShape.h">
+        <Filter>Shape\Deprecated\ConvexPieceMesh</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Shape\Query\hkpShapeRayBundleCastInput.cpp">
+        <Filter>Shape\Query</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Shape\Compound\Collection\SimpleMesh\hkpSimpleMeshShape.inl">
+        <Filter>Shape\Compound\Collection\SimpleMesh</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Classes\Reflections\hkpConvexPieceMeshShapehkpConvexPieceMeshShapeReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Shape\Misc\MultiRay\hkpMultiRayShape.cpp">
+        <Filter>Shape\Misc\MultiRay</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Agent3\Machine\Nn\hkpLinkedCollidable.inl">
+        <Filter>Agent3\Machine\Nn</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Agent\Deprecated\MultiSphereTriangle\hkpMultiSphereTriangleAgent.cpp">
+        <Filter>Agent\Deprecated\MultiSphereTriangle</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Dispatch\BroadPhase\hkpTypedBroadPhaseHandle.inl">
+        <Filter>Dispatch\BroadPhase</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Agent\Query\hkpCdBodyPairCollector.inl">
+        <Filter>Agent\Query</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Agent\ConvexAgent\Gjk\hkpClosestPointManifold.h">
+        <Filter>Agent\ConvexAgent\Gjk</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Agent\ConvexAgent\BoxBox\hkpBoxBoxAgent.h">
+        <Filter>Agent\ConvexAgent\BoxBox</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Shape\hkpShapeBase.h">
+        <Filter>Shape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Agent3\Collection3\hkpCollectionAgent3.h">
+        <Filter>Agent3\Collection3</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Dispatch\Agent3Bridge\hkpAgent3Bridge.h">
+        <Filter>Dispatch\Agent3Bridge</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Query\CastUtil\hkpSimpleWorldRayCaster.cpp">
+        <Filter>Query\CastUtil</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpConvexListFilterReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Shape\Convex\hkpConvexShape.cpp">
+        <Filter>Shape\Convex</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpDefaultConvexListFilterReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Agent3\PredGskCylinderAgent3\hkpPredGskCylinderAgent3.cpp">
+        <Filter>Agent3\PredGskCylinderAgent3</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Agent\CompoundAgent\BvTree\hkpMoppAgent.h">
+        <Filter>Agent\CompoundAgent\BvTree</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Filter\Null\hkpNullCollisionFilter.cpp">
+        <Filter>Filter\Null</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Shape\hkpShapeContainer.h">
+        <Filter>Shape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Util\ShapeShrinker\hkpShapeShrinker.cpp">
+        <Filter>Util\ShapeShrinker</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Shape\Compound\Collection\SimpleMesh\hkpSimpleMeshShape.cpp">
+        <Filter>Shape\Compound\Collection\SimpleMesh</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Agent3\BoxBox\hkpBoxBoxAgent3.cpp">
+        <Filter>Agent3\BoxBox</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Agent\FullManifoldAgent\hkpFullManifoldAgent.cpp">
+        <Filter>Agent\FullManifoldAgent</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Agent\ConvexAgent\SphereBox\hkpSphereBoxAgent.h">
+        <Filter>Agent\ConvexAgent\SphereBox</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Agent\MiscAgent\Phantom\hkpPhantomAgent.cpp">
+        <Filter>Agent\MiscAgent\Phantom</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Agent\FullManifoldAgent\hkpFullManifoldAgent.h">
+        <Filter>Agent\FullManifoldAgent</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Query\Multithreaded\CollisionQuery\hkpCollisionQueryJobQueueUtils.cpp">
+        <Filter>Query\Multithreaded\CollisionQuery</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Agent3\Machine\Midphase\hkpShapeKeyTrack.inl">
+        <Filter>Agent3\Machine\Midphase</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Util\ShapeSkinning\hkpShapeSkinningUtil.cpp">
+        <Filter>Util\ShapeSkinning</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Agent\Query\hkpCdPointCollector.inl">
+        <Filter>Agent\Query</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Query\Multithreaded\CollisionQuery\hkpCollisionQueryJobs.inl">
+        <Filter>Query\Multithreaded\CollisionQuery</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Util\ShapeDepth\hkpShapeDepthUtil.cpp">
+        <Filter>Util\ShapeDepth</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Agent\ConvexAgent\SphereSphere\hkpSphereSphereAgent.h">
+        <Filter>Agent\ConvexAgent\SphereSphere</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Agent3\Machine\Nn\hkpAgentNnMachine.inl">
+        <Filter>Agent3\Machine\Nn</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Agent\ConvexAgent\Gjk\hkpGskfAgent.cpp">
+        <Filter>Agent\ConvexAgent\Gjk</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Shape\Convex\Cylinder\hkpCylinderShape.cpp">
+        <Filter>Shape\Convex\Cylinder</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Query\Multithreaded\RayCastQuery\Util\hkpCollisionQueryUtil.inl">
+        <Filter>Query\Multithreaded\RayCastQuery\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Shape\Query\hkpShapeRayCastOutput.h">
+        <Filter>Shape\Query</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Shape\Misc\MultiRay\hkpMultiRayShape.h">
+        <Filter>Shape\Misc\MultiRay</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Agent\Query\hkpCdBodyPairCollector.h">
+        <Filter>Agent\Query</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpSphereRepShapeReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\Agent\sphereboxagent.cpp">
+        <Filter>UnitTest\Agent</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Dispatch\BroadPhase\hkpTypedBroadPhaseDispatcher.inl">
+        <Filter>Dispatch\BroadPhase</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Shape\hkpShape.cpp">
+        <Filter>Shape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Agent\CompoundAgent\ShapeCollection\hkpShapeCollectionAgent.cpp">
+        <Filter>Agent\CompoundAgent\ShapeCollection</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Agent3\Machine\1n\hkpAgent1nMachine.h">
+        <Filter>Agent3\Machine\1n</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpHeightFieldhkpTriSampledHeightFieldBvTreeShapeReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Query\CastUtil\hkpWorldLinearCaster.cpp">
+        <Filter>Query\CastUtil</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Agent3\Machine\1n\hkpAgent1nMachineProcess.cxx">
+        <Filter>Agent3\Machine\1n</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Shape\HeightField\TriSampledHeightField\hkpTriSampledHeightFieldBvTreeShape.h">
+        <Filter>Shape\HeightField\TriSampledHeightField</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpNamedMeshMaterialReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\Shape\rayconvex.cpp">
+        <Filter>UnitTest\Shape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Agent\ConvexAgent\CapsuleTriangle\hkpCapsuleTriangleAgent.cpp">
+        <Filter>Agent\ConvexAgent\CapsuleTriangle</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Agent\Util\Null\hkpNullAgent.h">
+        <Filter>Agent\Util\Null</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Agent\MiscAgent\MultirayConvex\hkpMultiRayConvexAgent.cpp">
+        <Filter>Agent\MiscAgent\MultirayConvex</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpCollisionFilterListReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Shape\Deprecated\Mesh\hkpMeshShape.cpp">
+        <Filter>Shape\Deprecated\Mesh</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpHeightFieldhkpHeightFieldShapeReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Agent\CompoundAgent\List\hkpListAgent.h">
+        <Filter>Agent\CompoundAgent\List</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="BoxBox\hkpBoxBoxManifold.inl">
+        <Filter>BoxBox</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Classes\Reflections\hkpShapeContainerReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Shape\Query\hkpShapeRayCastInput.inl">
+        <Filter>Shape\Query</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Query\Collector\PointCollector\hkpAllCdPointCollector.cpp">
+        <Filter>Query\Collector\PointCollector</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpBvShapeReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Util\hkpCollideCapsuleUtil.h">
+        <Filter>Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Shape\hkpShapeType.cpp">
+        <Filter>Shape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Shape\HeightField\TriSampledHeightField\hkpTriSampledHeightFieldCollection.inl">
+        <Filter>Shape\HeightField\TriSampledHeightField</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="BroadPhase\hkpBroadPhase.h">
+        <Filter>BroadPhase</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Shape\Compound\Tree\Mopp\hkpMoppCompilerInput.cpp">
+        <Filter>Shape\Compound\Tree\Mopp</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Shape\Misc\PhantomCallback\hkpPhantomCallbackShape.cpp">
+        <Filter>Shape\Misc\PhantomCallback</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Query\Collector\PointCollector\hkpSimpleClosestContactCollector.inl">
+        <Filter>Query\Collector\PointCollector</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Dispatch\BroadPhase\hkpTypedBroadPhaseDispatcher.cpp">
+        <Filter>Dispatch\BroadPhase</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Query\Multithreaded\CollisionQuery\Cpu\hkpCpuPairLinearCastJob.h">
+        <Filter>Query\Multithreaded\CollisionQuery\Cpu</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpHeightFieldhkpPlaneShapeReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Shape\Convex\ConvexVertices\hkpConvexVerticesConnectivityUtil.cpp">
+        <Filter>Shape\Convex\ConvexVertices</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Query\CastUtil\hkpWorldRayCaster.cpp">
+        <Filter>Query\CastUtil</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Query\Multithreaded\hkpQueryRegisterSpu.cpp">
+        <Filter>Query\Multithreaded</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Agent\Query\hkpLinearCastCollisionInput.h">
+        <Filter>Agent\Query</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Shape\Query\hkpShapeRayBundleCastInput.inl">
+        <Filter>Shape\Query</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="UnitTest\Query\FixedBufferCdPointCollectorTest.cpp">
+        <Filter>UnitTest\Query</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Shape\Deprecated\Mesh\hkpMeshShape.h">
+        <Filter>Shape\Deprecated\Mesh</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Dispatch\BroadPhase\hkpTypedBroadPhaseDispatcher.h">
+        <Filter>Dispatch\BroadPhase</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Agent3\Machine\Nn\hkpLinkedCollidable.h">
+        <Filter>Agent3\Machine\Nn</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Query\Multithreaded\CollisionQuery\hkpCollisionQueryJobs.h">
+        <Filter>Query\Multithreaded\CollisionQuery</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Shape\Misc\Transform\hkpTransformShape.cpp">
+        <Filter>Shape\Misc\Transform</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Dispatch\hkpAgentRegisterUtil.cpp">
+        <Filter>Dispatch</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Agent\hkpProcessCollisionOutput.h">
+        <Filter>Agent</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Shape\Deprecated\CompressedMesh\hkpCompressedMeshShapeBuilder.h">
+        <Filter>Shape\Deprecated\CompressedMesh</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Shape\Convex\ConvexTransform\hkpConvexTransformShape.inl">
+        <Filter>Shape\Convex\ConvexTransform</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Dispatch\hkpAgentRegisterUtil.h">
+        <Filter>Dispatch</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\Shape\SphereCastUnitTest.cpp">
+        <Filter>UnitTest\Shape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Query\Multithreaded\CollisionQuery\Cpu\hkpCpuPairLinearCastJob.cpp">
+        <Filter>Query\Multithreaded\CollisionQuery\Cpu</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Query\Collector\BodyPairCollector\hkpFirstCdBodyPairCollector.h">
+        <Filter>Query\Collector\BodyPairCollector</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Shape\Query\hkpShapeRayCastOutput.inl">
+        <Filter>Shape\Query</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Util\Welding\hkpWeldingUtilityTableInit.cpp">
+        <Filter>Util\Welding</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Agent3\Machine\Nn\hkpAgentNnTrack.h">
+        <Filter>Agent3\Machine\Nn</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\hkpCollidehkpExtendedMeshShapeTrackerClasses.cpp">
+        <Filter>Classes</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="BroadPhase\3AxisSweep\hkp3AxisSweep.h">
+        <Filter>BroadPhase\3AxisSweep</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpRayCollidableFilterReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpConvexVerticesShapeReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Shape\Convex\ConvexVertices\hkpConvexVerticesShape.inl">
+        <Filter>Shape\Convex\ConvexVertices</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Agent3\PredGskCylinderAgent3\hkpPredGskCylinderAgent3.h">
+        <Filter>Agent3\PredGskCylinderAgent3</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="hkpCollide.cpp">
+        <Filter></Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Query\Collector\BodyPairCollector\hkpFirstCdBodyPairCollector.inl">
+        <Filter>Query\Collector\BodyPairCollector</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Query\Multithreaded\RayCastQuery\hkpRayCastQueryJobQueueUtils.cpp">
+        <Filter>Query\Multithreaded\RayCastQuery</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Agent\CompoundAgent\BvTree\hkpMoppAgent.cpp">
+        <Filter>Agent\CompoundAgent\BvTree</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Agent3\BoxBox\hkpBoxBoxAgent3.h">
+        <Filter>Agent3\BoxBox</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Agent\ConvexAgent\Gjk\hkpGskfAgent.h">
+        <Filter>Agent\ConvexAgent\Gjk</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Shape\Compound\Tree\Mopp\Modifiers\hkpRemoveTerminalsMoppModifier.h">
+        <Filter>Shape\Compound\Tree\Mopp\Modifiers</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Shape\Deprecated\MultiSphere\hkpMultiSphereShape.h">
+        <Filter>Shape\Deprecated\MultiSphere</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Agent3\Machine\Midphase\hkpMidphaseAgentData.h">
+        <Filter>Agent3\Machine\Midphase</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\Agent\ExtremeCasesGskTest.cpp">
+        <Filter>UnitTest\Agent</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Agent\hkpProcessCdPoint.h">
+        <Filter>Agent</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="BoxBox\hkpBoxBoxContactPoint.h">
+        <Filter>BoxBox</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Filter\Null\hkpNullCollisionFilter.h">
+        <Filter>Filter\Null</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\Agent\shapecollectioncastray.cpp">
+        <Filter>UnitTest\Agent</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\hkpCollidehkpSimpleMeshShapeTrackerClasses.cpp">
+        <Filter>Classes</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Agent\CompoundAgent\BvTree\hkpStaticCompoundAgent.cpp">
+        <Filter>Agent\CompoundAgent\BvTree</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Shape\Compound\Tree\Mopp\hkpMoppBvTreeShape.h">
+        <Filter>Shape\Compound\Tree\Mopp</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Query\CastUtil\hkpWorldRayCaster.h">
+        <Filter>Query\CastUtil</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Query\Collector\RayCollector\hkpClosestRayHitCollector.h">
+        <Filter>Query\Collector\RayCollector</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Shape\Misc\Bv\hkpBvShape.h">
+        <Filter>Shape\Misc\Bv</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Agent\ConvexAgent\SphereTriangle\hkpSphereTriangleAgent.h">
+        <Filter>Agent\ConvexAgent\SphereTriangle</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Agent3\Machine\Nn\hkpAgentNnMachine.cpp">
+        <Filter>Agent3\Machine\Nn</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpConvexShapeReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\Shape\raycast.cpp">
+        <Filter>UnitTest\Shape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="BoxBox\hkpBoxBoxManifold.cpp">
+        <Filter>BoxBox</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Filter\hkpShapeCollectionFilter.h">
+        <Filter>Filter</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Agent\CompoundAgent\BvTree\hkpBvTreeAgent.cpp">
+        <Filter>Agent\CompoundAgent\BvTree</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Query\Multithreaded\CollisionQuery\Cpu\hkpCpuMoppAabbJob.cpp">
+        <Filter>Query\Multithreaded\CollisionQuery\Cpu</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Util\ShapeVirtualTable\hkpShapeVirtualTableUtil.h">
+        <Filter>Util\ShapeVirtualTable</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpExtendedMeshShapehkpExtendedMeshShapeReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Shape\Compound\Tree\Mopp\hkpMoppBvTreeShape.cpp">
+        <Filter>Shape\Compound\Tree\Mopp</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Shape\Convex\hkpConvexShape.h">
+        <Filter>Shape\Convex</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Agent\Collidable\hkpCollidable.inl">
+        <Filter>Agent\Collidable</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Util\ShapeVirtualTable\hkpShapeVirtualTableUtil.cpp">
+        <Filter>Util\ShapeVirtualTable</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Query\Multithreaded\CollisionQuery\Cpu\hkpCpuWorldLinearCastJob.cpp">
+        <Filter>Query\Multithreaded\CollisionQuery\Cpu</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpSphereShapeReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Agent3\Machine\1n\hkpCpuDoubleContainerIterator.inl">
+        <Filter>Agent3\Machine\1n</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Shape\Convex\Triangle\hkpTriangleShape.cpp">
+        <Filter>Shape\Convex\Triangle</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Agent\HeightFieldAgent\hkpHeightFieldAgent.cpp">
+        <Filter>Agent\HeightFieldAgent</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="BroadPhase\hkpBroadPhaseHandlePair.h">
+        <Filter>BroadPhase</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Dispatch\hkpCollisionDispatcher.inl">
+        <Filter>Dispatch</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Agent\ConvexAgent\Gjk\hkpGskBaseAgent.cpp">
+        <Filter>Agent\ConvexAgent\Gjk</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Query\CastUtil\hkpSimpleWorldRayCaster.h">
+        <Filter>Query\CastUtil</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpPhantomCallbackShapeReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Shape\Deprecated\MultiSphere\hkpMultiSphereShape.inl">
+        <Filter>Shape\Deprecated\MultiSphere</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Agent\Query\hkpLinearCastCollisionInput.inl">
+        <Filter>Agent\Query</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Filter\DefaultConvexList\hkpDefaultConvexListFilter.h">
+        <Filter>Filter\DefaultConvexList</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\hkpCollidehkpMeshShapeTrackerClasses.cpp">
+        <Filter>Classes</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Query\Collector\BodyPairCollector\hkpAllCdBodyPairCollector.h">
+        <Filter>Query\Collector\BodyPairCollector</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Query\Multithreaded\RayCastQuery\Cpu\hkpCpuShapeRaycastJob.cpp">
+        <Filter>Query\Multithreaded\RayCastQuery\Cpu</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Shape\Query\hkpRayHitCollector.inl">
+        <Filter>Shape\Query</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Agent\MiscAgent\Transform\hkpTransformAgent.cpp">
+        <Filter>Agent\MiscAgent\Transform</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpBoxShapeReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="BroadPhase\hkpBroadPhase.inl">
+        <Filter>BroadPhase</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Shape\HeightField\Plane\hkpPlaneShape.h">
+        <Filter>Shape\HeightField\Plane</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Query\Collector\BodyPairCollector\hkpFlagCdBodyPairCollector.cpp">
+        <Filter>Query\Collector\BodyPairCollector</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Agent\Query\hkpCdPointCollector.h">
+        <Filter>Agent\Query</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpCompressedMeshShapehkpCompressedMeshShapeReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Agent\HeightFieldAgent\hkpHeightFieldAgent.h">
+        <Filter>Agent\HeightFieldAgent</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Util\ShapeInfo\hkpShapeInfo.h">
+        <Filter>Util\ShapeInfo</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Agent\CompoundAgent\BvTree\hkpStaticCompoundAgent.h">
+        <Filter>Agent\CompoundAgent\BvTree</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Shape\HeightField\TriSampledHeightField\hkpTriSampledHeightFieldBvTreeShape.cpp">
+        <Filter>Shape\HeightField\TriSampledHeightField</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpSimpleMeshShapehkpSimpleMeshShapeReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Query\Multithreaded\CollisionQuery\Cpu\hkpCpuPairGetClosestPointsJob.cpp">
+        <Filter>Query\Multithreaded\CollisionQuery\Cpu</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Agent3\List3\hkpListAgent3.cpp">
+        <Filter>Agent3\List3</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Shape\hkpShape.h">
+        <Filter>Shape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Query\Multithreaded\CollisionQuery\Cpu\hkpCpuMoppAabbJob.h">
+        <Filter>Query\Multithreaded\CollisionQuery\Cpu</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpGroupFilterReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpMultiRayShapeReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Agent\ConvexAgent\CapsuleTriangle\hkpCapsuleTriangleAgent.h">
+        <Filter>Agent\ConvexAgent\CapsuleTriangle</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Shape\Query\hkpAabbCastCollector.h">
+        <Filter>Shape\Query</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Classes\hkpCollideClasses.cxx">
+        <Filter>Classes</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Agent\hkpProcessCollisionData.h">
+        <Filter>Agent</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Shape\HeightField\TriSampledHeightField\hkpTriSampledHeightFieldCollection.cpp">
+        <Filter>Shape\HeightField\TriSampledHeightField</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\Shape\MeshShapeUnitTest.cpp">
+        <Filter>UnitTest\Shape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Shape\HeightField\SampledHeightField\hkpSampledHeightFieldShape.inl">
+        <Filter>Shape\HeightField\SampledHeightField</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Query\Collector\PointCollector\hkpFixedBufferCdPointCollector.h">
+        <Filter>Query\Collector\PointCollector</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Query\CastUtil\hkpWorldRayCastOutput.h">
+        <Filter>Query\CastUtil</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Shape\Deprecated\ConvexList\hkpConvexListShape.h">
+        <Filter>Shape\Deprecated\ConvexList</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Agent\CompoundAgent\BvTree\hkpBvCompressedMeshAgent.cpp">
+        <Filter>Agent\CompoundAgent\BvTree</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Shape\Compound\Collection\List\hkpListShape.h">
+        <Filter>Shape\Compound\Collection\List</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\Algorithms\DegenerateTriangles.cpp">
+        <Filter>UnitTest\Algorithms</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Shape\HeightField\hkpSphereRepShape.inl">
+        <Filter>Shape\HeightField</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Util\Welding\hkpWeldingUtility.cpp">
+        <Filter>Util\Welding</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Shape\Compound\Tree\hkpBvTreeShape.cpp">
+        <Filter>Shape\Compound\Tree</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Shape\Deprecated\ConvexPieceMesh\hkpConvexPieceShape.cpp">
+        <Filter>Shape\Deprecated\ConvexPieceMesh</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Shape\Deprecated\ConvexPieceMesh\hkpConvexPieceMeshShape.cpp">
+        <Filter>Shape\Deprecated\ConvexPieceMesh</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Classes\hkpCollideClasses.h">
+        <Filter>Classes</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Query\CastUtil\hkpLinearCastInput.h">
+        <Filter>Query\CastUtil</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Agent3\Machine\1n\hkpCpuSingleContainerIterator.inl">
+        <Filter>Agent3\Machine\1n</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Agent3\BvTree3\hkpBvTreeAgent3.cpp">
+        <Filter>Agent3\BvTree3</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Filter\Group\hkpGroupFilter.h">
+        <Filter>Filter\Group</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Shape\HeightField\SampledHeightField\hkpSampledHeightFieldShape_Default.cpp">
+        <Filter>Shape\HeightField\SampledHeightField</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Agent\hkpCollisionAgentConfig.h">
+        <Filter>Agent</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpWeldingUtilityReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Util\hkpSphereUtil.h">
+        <Filter>Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\hkpCollidehkpHeightFieldTrackerClasses.cpp">
+        <Filter>Classes</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpCollidableCollidableFilterReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Dispatch\hkpAgentDispatchUtil.h">
+        <Filter>Dispatch</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Agent3\Machine\1n\hkpAgent1nMachineProcess.cpp">
+        <Filter>Agent3\Machine\1n</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Filter\List\hkpCollisionFilterList.cpp">
+        <Filter>Filter\List</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Agent\CompoundAgent\BvTreeStream\hkpBvTreeStreamAgent.h">
+        <Filter>Agent\CompoundAgent\BvTreeStream</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Shape\HeightField\Plane\hkpPlaneShape.cpp">
+        <Filter>Shape\HeightField\Plane</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Filter\Group\hkpGroupFilter.cpp">
+        <Filter>Filter\Group</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Shape\Deprecated\FastMesh\hkpFastMeshShape.cpp">
+        <Filter>Shape\Deprecated\FastMesh</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Shape\Convex\Triangle\hkpTriangleShape.h">
+        <Filter>Shape\Convex\Triangle</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Agent3\List3\hkpListAgent3.h">
+        <Filter>Agent3\List3</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Shape\Convex\Cylinder\hkpCylinderShape.inl">
+        <Filter>Shape\Convex\Cylinder</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Dispatch\BroadPhase\hkpNullBroadPhaseListener.cpp">
+        <Filter>Dispatch\BroadPhase</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Agent\hkpCollisionInput.h">
+        <Filter>Agent</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpRemoveTerminalsMoppModifierReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Shape\Convex\Box\hkpBoxShape.inl">
+        <Filter>Shape\Convex\Box</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="UnitTest\Broadphase\broadPhaseBatchAddUnitTest.cpp">
+        <Filter>UnitTest\Broadphase</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Agent\ConvexAgent\SphereCapsule\hkpSphereCapsuleAgent.h">
+        <Filter>Agent\ConvexAgent\SphereCapsule</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Query\Collector\BodyPairCollector\hkpAllCdBodyPairCollector.cpp">
+        <Filter>Query\Collector\BodyPairCollector</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Agent3\Machine\Midphase\hkpShapeKeyTrack.h">
+        <Filter>Agent3\Machine\Midphase</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Query\Collector\RayCollector\hkpFixedBufferRayHitCollector.h">
+        <Filter>Query\Collector\RayCollector</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Query\CastUtil\hkpWorldLinearCaster.h">
+        <Filter>Query\CastUtil</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpConvexVerticesConnectivityReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Agent\ConvexAgent\Gjk\hkpGskBaseAgent.h">
+        <Filter>Agent\ConvexAgent\Gjk</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Query\Collector\PointCollector\hkpFixedBufferCdPointCollector.inl">
+        <Filter>Query\Collector\PointCollector</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Shape\Compound\Tree\hkpBvTreeShape.h">
+        <Filter>Shape\Compound\Tree</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Agent\ConvexAgent\Gjk\hkpGskConvexConvexAgent.cpp">
+        <Filter>Agent\ConvexAgent\Gjk</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Agent\hkpCollisionAgent.inl">
+        <Filter>Agent</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="BroadPhase\hkpBroadPhaseCastCollector.h">
+        <Filter>BroadPhase</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Filter\hkpConvexListFilter.h">
+        <Filter>Filter</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Shape\Misc\Transform\hkpTransformShape.inl">
+        <Filter>Shape\Misc\Transform</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Shape\Deprecated\CompressedMesh\hkpCompressedMeshShape.cpp">
+        <Filter>Shape\Deprecated\CompressedMesh</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Agent\ContactMgr\hkpContactMgr.inl">
+        <Filter>Agent\ContactMgr</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Agent\hkpProcessCollisionInput.h">
+        <Filter>Agent</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\Algorithms\MultiplePenetrationTest.cpp">
+        <Filter>UnitTest\Algorithms</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Shape\Compound\Collection\Mesh\hkpMeshMaterial.h">
+        <Filter>Shape\Compound\Collection\Mesh</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Util\hkpTriangleUtil.inl">
+        <Filter>Util</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Agent\Deprecated\MultiSphere\hkpMultiSphereAgent.h">
+        <Filter>Agent\Deprecated\MultiSphere</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Agent\hkpCollisionAgent.cpp">
+        <Filter>Agent</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpShapeCollectionFilterReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Agent\Util\Symmetric\hkpSymmetricAgent.h">
+        <Filter>Agent\Util\Symmetric</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Agent\ConvexAgent\SphereTriangle\hkpSphereTriangleAgent.cpp">
+        <Filter>Agent\ConvexAgent\SphereTriangle</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Query\Multithreaded\CollisionQuery\Cpu\hkpCpuWorldLinearCastJob.h">
+        <Filter>Query\Multithreaded\CollisionQuery\Cpu</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Shape\Convex\ConvexVertices\hkpConvexVerticesShape.cpp">
+        <Filter>Shape\Convex\ConvexVertices</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Agent\Collidable\hkpCollidableQualityType.h">
+        <Filter>Agent\Collidable</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpMeshShapehkpFastMeshShapeReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Query\Multithreaded\RayCastQuery\Cpu\hkpCpuWorldRaycastJob.cpp">
+        <Filter>Query\Multithreaded\RayCastQuery\Cpu</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Shape\Query\hkpRayHitCollector.h">
+        <Filter>Shape\Query</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Agent\Collidable\hkpCollidable.cpp">
+        <Filter>Agent\Collidable</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpLinkedCollidableReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Query\Collector\RayCollector\hkpFixedBufferRayHitCollector.inl">
+        <Filter>Query\Collector\RayCollector</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Agent\Util\Symmetric\hkpSymmetricAgentLinearCast.cpp">
+        <Filter>Agent\Util\Symmetric</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Agent\hkpCollisionAgentConfig.inl">
+        <Filter>Agent</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Agent3\CollectionCollection3\hkpCollectionCollectionAgent3.h">
+        <Filter>Agent3\CollectionCollection3</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Shape\Compound\Collection\Mesh\hkpNamedMeshMaterial.h">
+        <Filter>Shape\Compound\Collection\Mesh</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Shape\Compound\Collection\ExtendedMeshShape\hkpExtendedMeshShape.inl">
+        <Filter>Shape\Compound\Collection\ExtendedMeshShape</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Shape\Convex\ConvexTransform\hkpConvexTransformShape.h">
+        <Filter>Shape\Convex\ConvexTransform</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Shape\HeightField\TriSampledHeightField\hkpTriSampledHeightFieldCollection.h">
+        <Filter>Shape\HeightField\TriSampledHeightField</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpTransformShapeReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Filter\Group\hkpGroupFilterSetup.h">
+        <Filter>Filter\Group</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Dispatch\ContactMgr\hkpContactMgrFactory.h">
+        <Filter>Dispatch\ContactMgr</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Agent\ConvexAgent\SphereCapsule\hkpSphereCapsuleAgent.cpp">
+        <Filter>Agent\ConvexAgent\SphereCapsule</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Agent3\Machine\1n\hkpCpuDoubleContainerIterator.h">
+        <Filter>Agent3\Machine\1n</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Query\Multithreaded\RayCastQuery\hkpRayCastQueryJobQueueUtils.h">
+        <Filter>Query\Multithreaded\RayCastQuery</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Query\Collector\RayCollector\hkpAllRayHitCollector.inl">
+        <Filter>Query\Collector\RayCollector</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Agent\CompoundAgent\BvTree\hkpBvCompressedMeshAgent.h">
+        <Filter>Agent\CompoundAgent\BvTree</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Agent\Deprecated\ConvexList\hkpConvexListAgent.cpp">
+        <Filter>Agent\Deprecated\ConvexList</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Shape\HeightField\TriSampledHeightField\hkpTriSampledHeightFieldBvTreeShape.inl">
+        <Filter>Shape\HeightField\TriSampledHeightField</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Agent\MiscAgent\MultirayConvex\hkpMultiRayConvexAgent.h">
+        <Filter>Agent\MiscAgent\MultirayConvex</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpTriangleShapeReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Agent\ConvexAgent\Gjk\hkpPredGskfAgent.h">
+        <Filter>Agent\ConvexAgent\Gjk</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Query\Multithreaded\CollisionQuery\hkpCollisionQueryJobs.cpp">
+        <Filter>Query\Multithreaded\CollisionQuery</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Agent\hkpCollisionAgent.h">
+        <Filter>Agent</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="UnitTest\Tests.h">
+        <Filter>UnitTest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Filter\hkpCollidableCollidableFilter.h">
+        <Filter>Filter</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\Shape\CylinderShapeUnitTest.cpp">
+        <Filter>UnitTest\Shape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpShapeInfoReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="BoxBox\hkpBoxBoxCollisionDetection.inl">
+        <Filter>BoxBox</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Dispatch\BroadPhase\hkpNullBroadPhaseListener.h">
+        <Filter>Dispatch\BroadPhase</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Agent\Util\LinearCast\hkpIterativeLinearCastAgent.cpp">
+        <Filter>Agent\Util\LinearCast</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Shape\Deprecated\MultiSphere\hkpMultiSphereShape.cpp">
+        <Filter>Shape\Deprecated\MultiSphere</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Shape\hkpShape.inl">
+        <Filter>Shape</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Util\ShapeVirtualTable\hkpShapeVirtualTableUtil_Internals.inl">
+        <Filter>Util\ShapeVirtualTable</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Agent\Deprecated\ConvexList\hkpConvexListUtils.h">
+        <Filter>Agent\Deprecated\ConvexList</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Shape\Deprecated\StorageMesh\hkpStorageMeshShape.h">
+        <Filter>Shape\Deprecated\StorageMesh</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Agent\Collidable\hkpCollidable.h">
+        <Filter>Agent\Collidable</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpTypedBroadPhaseHandleReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Agent\Util\Null\hkpNullAgent.cpp">
+        <Filter>Agent\Util\Null</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\hkpCollideTrackerClasses.cpp">
+        <Filter>Classes</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Agent\Deprecated\ConvexList\hkpConvexListAgent.h">
+        <Filter>Agent\Deprecated\ConvexList</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Util\hkpCollideTriangleUtil.cpp">
+        <Filter>Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Agent\MiscAgent\Bv\hkpBvAgent.cpp">
+        <Filter>Agent\MiscAgent\Bv</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Util\Welding\hkpMeshWeldingUtility.cpp">
+        <Filter>Util\Welding</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Query\Multithreaded\RayCastQuery\Cpu\hkpCpuWorldRaycastJob.h">
+        <Filter>Query\Multithreaded\RayCastQuery\Cpu</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Agent3\PredGskAgent3\hkpPredGskAgent3.cpp">
+        <Filter>Agent3\PredGskAgent3</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Util\Welding\hkpWeldingUtility.inl">
+        <Filter>Util\Welding</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Shape\Convex\Box\hkpBoxShape.h">
+        <Filter>Shape\Convex\Box</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Shape\HeightField\StorageSampledHeightField\hkpStorageSampledHeightFieldShape.h">
+        <Filter>Shape\HeightField\StorageSampledHeightField</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Agent\ConvexAgent\Gjk\hkpGskConvexConvexAgent.h">
+        <Filter>Agent\ConvexAgent\Gjk</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Shape\HeightField\hkpHeightFieldShape.h">
+        <Filter>Shape\HeightField</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Query\Collector\BodyPairCollector\hkpFirstCdBodyPairCollector.cpp">
+        <Filter>Query\Collector\BodyPairCollector</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Filter\hkpCollisionFilter.h">
+        <Filter>Filter</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Shape\Misc\Bv\hkpBvShape.cpp">
+        <Filter>Shape\Misc\Bv</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Query\Multithreaded\RayCastQuery\Cpu\hkpCpuShapeRaycastJob.h">
+        <Filter>Query\Multithreaded\RayCastQuery\Cpu</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Shape\HeightField\CompressedSampledHeightField\hkpCompressedSampledHeightFieldShape.cpp">
+        <Filter>Shape\HeightField\CompressedSampledHeightField</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\hkpCollidehkpConvexPieceMeshShapeTrackerClasses.cpp">
+        <Filter>Classes</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Agent\ContactMgr\hkpContactMgr.h">
+        <Filter>Agent\ContactMgr</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Shape\Compound\Collection\ExtendedMeshShape\hkpExtendedMeshShape.h">
+        <Filter>Shape\Compound\Collection\ExtendedMeshShape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Shape\Compound\Collection\List\hkpListShape.cpp">
+        <Filter>Shape\Compound\Collection\List</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\Shape\ShapeInterfaceUnitTest.cpp">
+        <Filter>UnitTest\Shape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Agent3\Machine\1n\hkpCpuSingleContainerIterator.h">
+        <Filter>Agent3\Machine\1n</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Shape\Compound\Tree\Mopp\hkpMoppCompilerInput.h">
+        <Filter>Shape\Compound\Tree\Mopp</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Shape\Deprecated\ConvexList\hkpConvexListShape.cpp">
+        <Filter>Shape\Deprecated\ConvexList</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpShapeBaseReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpExtendedMeshShapehkpStorageExtendedMeshShapeReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Shape\Compound\Collection\hkpShapeCollection.h">
+        <Filter>Shape\Compound\Collection</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="BoxBox\hkpBoxBoxCollisionDetection.h">
+        <Filter>BoxBox</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Util\ShapeVirtualTable\hkpShapeVirtualTableUtil_Integrate.cpp">
+        <Filter>Util\ShapeVirtualTable</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Query\Collector\PointCollector\hkpAllCdPointCollector.inl">
+        <Filter>Query\Collector\PointCollector</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Filter\List\hkpCollisionFilterList.h">
+        <Filter>Filter\List</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Agent\ConvexAgent\Gjk\hkpPredGskfAgent.cpp">
+        <Filter>Agent\ConvexAgent\Gjk</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Shape\Compound\Tree\Mopp\hkpMoppUtility.cpp">
+        <Filter>Shape\Compound\Tree\Mopp</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpMultiSphereShapeReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\Agent\BoxBoxTest.cpp">
+        <Filter>UnitTest\Agent</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Shape\HeightField\StorageSampledHeightField\hkpStorageSampledHeightFieldShape.inl">
+        <Filter>Shape\HeightField\StorageSampledHeightField</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Dispatch\BroadPhase\hkpBroadPhaseListener.h">
+        <Filter>Dispatch\BroadPhase</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Agent\CompoundAgent\BvTreeStream\hkpMoppBvTreeStreamAgent.cpp">
+        <Filter>Agent\CompoundAgent\BvTreeStream</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\Utils\TriangleContainsPointUnitTest.cpp">
+        <Filter>UnitTest\Utils</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Shape\HeightField\hkpSphereRepShape.h">
+        <Filter>Shape\HeightField</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Shape\Misc\Transform\hkpTransformShape.h">
+        <Filter>Shape\Misc\Transform</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Shape\Compound\Collection\StorageExtendedMesh\hkpStorageExtendedMeshShape.cpp">
+        <Filter>Shape\Compound\Collection\StorageExtendedMesh</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Dispatch\hkpCollisionDispatcher.h">
+        <Filter>Dispatch</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Shape\Convex\Capsule\hkpCapsuleShape.inl">
+        <Filter>Shape\Convex\Capsule</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Shape\Compound\Tree\Mopp\Modifiers\hkpRemoveTerminalsMoppModifier.cpp">
+        <Filter>Shape\Compound\Tree\Mopp\Modifiers</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpConvexTranslateShapeReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Shape\Deprecated\StorageMesh\hkpStorageMeshShape.cpp">
+        <Filter>Shape\Deprecated\StorageMesh</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Query\Collector\PointCollector\hkpRootCdPoint.inl">
+        <Filter>Query\Collector\PointCollector</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Classes\Reflections\hkpShapeCollectionReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Util\hkpTriangleUtil.h">
+        <Filter>Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpListShapeReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Util\ShapeCutter\hkpShapeCutterUtil.h">
+        <Filter>Util\ShapeCutter</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Shape\hkpShapeBase.cpp">
+        <Filter>Shape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Shape\Deprecated\CompressedMesh\hkTjunctionDetector.cpp">
+        <Filter>Shape\Deprecated\CompressedMesh</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpCdBodyReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Query\Multithreaded\CollisionQuery\Cpu\hkpCpuPairGetClosestPointsJob.h">
+        <Filter>Query\Multithreaded\CollisionQuery\Cpu</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Agent3\Machine\1n\hkpAgent1nMachine.cpp">
+        <Filter>Agent3\Machine\1n</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Util\hkpSphereUtil.inl">
+        <Filter>Util</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Query\Collector\BodyPairCollector\hkpFlagCdBodyPairCollector.h">
+        <Filter>Query\Collector\BodyPairCollector</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Shape\Deprecated\FastMesh\hkpFastMeshShape.h">
+        <Filter>Shape\Deprecated\FastMesh</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Agent\Util\LinearCast\hkpIterativeLinearCastAgent.h">
+        <Filter>Agent\Util\LinearCast</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpConvexTransformShapeReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Util\ShapeVirtualTable\hkpShapeVirtualTableUtil_CollideStaticCompound.cpp">
+        <Filter>Util\ShapeVirtualTable</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Query\Collector\BodyPairCollector\hkpRootCdBodyPair.h">
+        <Filter>Query\Collector\BodyPairCollector</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Shape\Query\hkpRayShapeCollectionFilter.h">
+        <Filter>Shape\Query</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Filter\hkpRayCollidableFilter.h">
+        <Filter>Filter</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Shape\Convex\ConvexVertices\hkpConvexVerticesConnectivity.cpp">
+        <Filter>Shape\Convex\ConvexVertices</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Shape\HeightField\CompressedSampledHeightField\hkpCompressedSampledHeightFieldShape.inl">
+        <Filter>Shape\HeightField\CompressedSampledHeightField</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Filter\hkpCollisionFilter.cpp">
+        <Filter>Filter</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Agent\CompoundAgent\BvTree\hkpBvTreeAgent.inl">
+        <Filter>Agent\CompoundAgent\BvTree</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Shape\Compound\Tree\Mopp\hkpMoppUtility.h">
+        <Filter>Shape\Compound\Tree\Mopp</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Query\Multithreaded\RayCastQuery\hkpRayCastQueryJobs.cpp">
+        <Filter>Query\Multithreaded\RayCastQuery</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="BoxBox\hkpBoxBoxManifold.h">
+        <Filter>BoxBox</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Agent3\Collection3\hkpCollectionAgent3.cpp">
+        <Filter>Agent3\Collection3</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Shape\hkpShapeBuffer.h">
+        <Filter>Shape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Shape\Query\hkpShapeRayCastCollectorOutput.h">
+        <Filter>Shape\Query</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Agent\ContactMgr\hkpContactMgr.cpp">
+        <Filter>Agent\ContactMgr</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Dispatch\BroadPhase\hkpTypedBroadPhaseHandle.h">
+        <Filter>Dispatch\BroadPhase</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Shape\HeightField\StorageSampledHeightField\hkpStorageSampledHeightFieldShape.cpp">
+        <Filter>Shape\HeightField\StorageSampledHeightField</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Agent\ConvexAgent\BoxBox\hkpBoxBoxAgent.cpp">
+        <Filter>Agent\ConvexAgent\BoxBox</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Agent\ConvexAgent\CapsuleCapsule\hkpCapsuleCapsuleAgent.h">
+        <Filter>Agent\ConvexAgent\CapsuleCapsule</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Agent3\Machine\1n\hkpAgent1nTrack.h">
+        <Filter>Agent3\Machine\1n</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Shape\HeightField\SampledHeightField\hkpSampledHeightFieldShape_Dda.cpp">
+        <Filter>Shape\HeightField\SampledHeightField</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Shape\Compound\Collection\StorageExtendedMesh\hkpStorageExtendedMeshShape.h">
+        <Filter>Shape\Compound\Collection\StorageExtendedMesh</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Agent3\hkpAgent3.h">
+        <Filter>Agent3</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Agent\hkpProcessCollisionData.inl">
+        <Filter>Agent</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Dispatch\BroadPhase\hkpTypedBroadPhaseHandlePair.inl">
+        <Filter>Dispatch\BroadPhase</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="UnitTest\Broadphase\broadPhaseRayCast.cpp">
+        <Filter>UnitTest\Broadphase</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Query\Multithreaded\CollisionQuery\hkpCollisionQueryJobQueueUtils.h">
+        <Filter>Query\Multithreaded\CollisionQuery</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Agent\Collidable\hkpCdPoint.h">
+        <Filter>Agent\Collidable</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpHeightFieldhkpTriSampledHeightFieldCollectionReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Query\Multithreaded\Spu\hkpSpuConfig.h">
+        <Filter>Query\Multithreaded\Spu</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Dispatch\ContactMgr\hkpNullContactMgr.h">
+        <Filter>Dispatch\ContactMgr</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Query\Collector\RayCollector\hkpClosestRayHitCollector.inl">
+        <Filter>Query\Collector\RayCollector</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Classes\Reflections\hkpCylinderShapeReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\Utils\TriangleDegeneracyTest.cpp">
+        <Filter>UnitTest\Utils</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpBroadPhaseHandleReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Filter\DefaultConvexList\hkpDefaultConvexListFilter.cpp">
+        <Filter>Filter\DefaultConvexList</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpHeightFieldhkpCompressedSampledHeightFieldShapeReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpBvTreeShapeReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Util\ShapeVirtualTable\hkpShapeVirtualTableUtil_SelfTest.inl">
+        <Filter>Util\ShapeVirtualTable</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Classes\Reflections\hkpCollidableReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\Shape\hkpConvexTransformShapeUnitTest.cpp">
+        <Filter>UnitTest\Shape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Agent\CompoundAgent\BvTreeStream\hkpMoppBvTreeStreamAgent.h">
+        <Filter>Agent\CompoundAgent\BvTreeStream</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Agent3\CapsuleTriangle\hkpCapsuleTriangleAgent3.cpp">
+        <Filter>Agent3\CapsuleTriangle</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Query\Collector\PointCollector\hkpAllCdPointCollector.h">
+        <Filter>Query\Collector\PointCollector</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpRayShapeCollectionFilterReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Agent\Util\Symmetric\hkpSymmetricAgent.inl">
+        <Filter>Agent\Util\Symmetric</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Query\Collector\PointCollector\hkpClosestCdPointCollector.cpp">
+        <Filter>Query\Collector\PointCollector</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Shape\hkpShapeType.h">
+        <Filter>Shape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Shape\Convex\ConvexTranslate\hkpConvexTranslateShape.cpp">
+        <Filter>Shape\Convex\ConvexTranslate</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Shape\Convex\Triangle\hkpTriangleShape.inl">
+        <Filter>Shape\Convex\Triangle</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Dispatch\hkpCollisionDispatcher.cpp">
+        <Filter>Dispatch</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Shape\Convex\Sphere\hkpSphereShape.inl">
+        <Filter>Shape\Convex\Sphere</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Query\Multithreaded\CollisionQuery\Cpu\hkpCpuWorldGetClosestPointsJob.h">
+        <Filter>Query\Multithreaded\CollisionQuery\Cpu</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Util\ShapeVirtualTable\hkpShapeVirtualTableUtil_RayCastQuery.cpp">
+        <Filter>Util\ShapeVirtualTable</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\Shape\bundleRaycast.cpp">
+        <Filter>UnitTest\Shape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="BoxBox\hkpBoxBoxCollisionDetection.cpp">
+        <Filter>BoxBox</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Agent3\Machine\Nn\hkpAgentNnMachine.h">
+        <Filter>Agent3\Machine\Nn</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Shape\Query\hkpShapeRayCastCollectorOutput.inl">
+        <Filter>Shape\Query</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Classes\Reflections\hkpMeshMaterialReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Util\ShapeCutter\hkpShapeCutterUtil.cpp">
+        <Filter>Util\ShapeCutter</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Util\Welding\hkpMeshWeldingUtility.h">
+        <Filter>Util\Welding</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpNullCollisionFilterReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Shape\Deprecated\ConvexPieceMesh\hkpConvexPieceMeshShape.h">
+        <Filter>Shape\Deprecated\ConvexPieceMesh</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Agent\ConvexAgent\CapsuleCapsule\hkpCapsuleCapsuleAgent.cpp">
+        <Filter>Agent\ConvexAgent\CapsuleCapsule</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Shape\HeightField\SampledHeightField\hkpSampledHeightFieldShape.cpp">
+        <Filter>Shape\HeightField\SampledHeightField</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Query\Collector\PointCollector\hkpClosestCdPointCollector.inl">
+        <Filter>Query\Collector\PointCollector</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Agent3\Machine\Midphase\hkpShapeKeyTrack.cpp">
+        <Filter>Agent3\Machine\Midphase</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Shape\Convex\ConvexTranslate\hkpConvexTranslateShape.inl">
+        <Filter>Shape\Convex\ConvexTranslate</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Query\Multithreaded\CollisionQuery\Cpu\hkpCpuWorldGetClosestPointsJob.cpp">
+        <Filter>Query\Multithreaded\CollisionQuery\Cpu</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Agent\ConvexAgent\SphereBox\hkpSphereBoxAgent.cpp">
+        <Filter>Agent\ConvexAgent\SphereBox</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\Algorithms\aabb.cpp">
+        <Filter>UnitTest\Algorithms</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpCapsuleShapeReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Shape\HeightField\SampledHeightField\hkpSampledHeightFieldShape_Coarse.cpp">
+        <Filter>Shape\HeightField\SampledHeightField</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Agent\CompoundAgent\BvTreeStream\hkpBvTreeStreamAgent.cpp">
+        <Filter>Agent\CompoundAgent\BvTreeStream</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Shape\Convex\Sphere\hkpSphereShape.cpp">
+        <Filter>Shape\Convex\Sphere</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Util\hkpCollideCapsuleUtil.cpp">
+        <Filter>Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Shape\Convex\Capsule\hkpCapsuleShape.h">
+        <Filter>Shape\Convex\Capsule</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Filter\Group\hkpGroupFilter.inl">
+        <Filter>Filter\Group</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Classes\Reflections\hkpConvexListShapeReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Shape\hkpLegacyShapeType.h">
+        <Filter>Shape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Shape\hkpShapeBase.inl">
+        <Filter>Shape</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Shape\Convex\ConvexTransform\hkpConvexTransformShape.cpp">
+        <Filter>Shape\Convex\ConvexTransform</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Util\ShapeVirtualTable\hkpShapeVirtualTableUtil_Defines.inl">
+        <Filter>Util\ShapeVirtualTable</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Util\ShapeShrinker\hkpShapeShrinker.h">
+        <Filter>Util\ShapeShrinker</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Dispatch\ContactMgr\hkpNullContactMgrFactory.h">
+        <Filter>Dispatch\ContactMgr</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Agent\Util\Symmetric\hkpSymmetricAgentLinearCast.h">
+        <Filter>Agent\Util\Symmetric</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Query\Collector\PointCollector\hkpSimpleClosestContactCollector.cpp">
+        <Filter>Query\Collector\PointCollector</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Util\hkpTriangleUtil.cpp">
+        <Filter>Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Shape\Query\hkpRayHitCollector.cpp">
+        <Filter>Shape\Query</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Shape\Misc\PhantomCallback\hkpPhantomCallbackShape.h">
+        <Filter>Shape\Misc\PhantomCallback</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Util\ShapeVirtualTable\hkpShapeVirtualTableUtil_CharacterProxy.cpp">
+        <Filter>Util\ShapeVirtualTable</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Shape\Convex\Sphere\hkpSphereShape.h">
+        <Filter>Shape\Convex\Sphere</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Query\Multithreaded\RayCastQuery\hkpRayCastQueryJobs.h">
+        <Filter>Query\Multithreaded\RayCastQuery</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Shape\Compound\Collection\hkpShapeCollection.cpp">
+        <Filter>Shape\Compound\Collection</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Shape\Compound\Tree\hkpBvTreeShape.inl">
+        <Filter>Shape\Compound\Tree</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="UnitTest\Broadphase\BroadPhaseLinearCast.cpp">
+        <Filter>UnitTest\Broadphase</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Shape\Convex\hkpConvexShape.inl">
+        <Filter>Shape\Convex</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Util\Welding\hkpWeldingUtility.h">
+        <Filter>Util\Welding</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Agent3\ConvexList3\hkpConvexListAgent3.cpp">
+        <Filter>Agent3\ConvexList3</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Util\ShapeDepth\hkpShapeDepthUtil.h">
+        <Filter>Util\ShapeDepth</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Shape\Convex\ConvexVertices\hkpConvexVerticesShapeConstructor.cpp">
+        <Filter>Shape\Convex\ConvexVertices</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Query\Collector\PointCollector\hkpSimpleClosestContactCollector.h">
+        <Filter>Query\Collector\PointCollector</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Shape\Deprecated\CompressedMesh\hkpCompressedMeshShapeBuilder.cpp">
+        <Filter>Shape\Deprecated\CompressedMesh</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpAgent1nTrackReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Agent\ConvexAgent\SphereSphere\hkpSphereSphereAgent.cpp">
+        <Filter>Agent\ConvexAgent\SphereSphere</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Util\ShapeVirtualTable\hkpShapeVirtualTableUtil_Collide.cpp">
+        <Filter>Util\ShapeVirtualTable</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Shape\Convex\ConvexTranslate\hkpConvexTranslateShape.h">
+        <Filter>Shape\Convex\ConvexTranslate</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Util\ShapeSkinning\hkpShapeSkinningUtil.h">
+        <Filter>Util\ShapeSkinning</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="hkpCollide.h">
+        <Filter></Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\hkpCollideClientTrackerClasses.cpp">
+        <Filter>Classes</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Agent3\Machine\Nn\hkpLinkedCollidable.cpp">
+        <Filter>Agent3\Machine\Nn</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Query\Collector\PointCollector\hkpClosestCdPointCollector.h">
+        <Filter>Query\Collector\PointCollector</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Agent3\CapsuleTriangle\hkpCapsuleTriangleAgent3.h">
+        <Filter>Agent3\CapsuleTriangle</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Agent\Deprecated\MultiSphereTriangle\hkpMultiSphereTriangleAgent.h">
+        <Filter>Agent\Deprecated\MultiSphereTriangle</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="BroadPhase\3AxisSweep\hkp3AxisSweep.cpp">
+        <Filter>BroadPhase\3AxisSweep</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Dispatch\BroadPhase\hkpTypedBroadPhaseHandlePair.h">
+        <Filter>Dispatch\BroadPhase</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Shape\Deprecated\Mesh\hkpMeshShape.inl">
+        <Filter>Shape\Deprecated\Mesh</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Agent\CompoundAgent\BvTree\hkpBvTreeAgent.h">
+        <Filter>Agent\CompoundAgent\BvTree</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Shape\Compound\Tree\Mopp\hkpMoppBvTreeShape.inl">
+        <Filter>Shape\Compound\Tree\Mopp</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Shape\Convex\ConvexVertices\hkpConvexVerticesShape.h">
+        <Filter>Shape\Convex\ConvexVertices</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Shape\Query\hkpShapeRayCastInput.h">
+        <Filter>Shape\Query</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Util\hkpCollideTriangleUtil.h">
+        <Filter>Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Query\Collector\RayCollector\hkpFixedBufferRayHitCollector.cpp">
+        <Filter>Query\Collector\RayCollector</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Agent3\PredGskAgent3\hkpPredGskAgent3.h">
+        <Filter>Agent3\PredGskAgent3</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Shape\HeightField\SampledHeightField\hkpSampledHeightFieldBaseCinfo.h">
+        <Filter>Shape\HeightField\SampledHeightField</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Agent3\CollectionCollection3\hkpCollectionCollectionAgent3.cpp">
+        <Filter>Agent3\CollectionCollection3</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Query\Multithreaded\RayCastQuery\hkpRayCastQueryJobs.inl">
+        <Filter>Query\Multithreaded\RayCastQuery</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Query\CastUtil\hkpWorldRayCastInput.h">
+        <Filter>Query\CastUtil</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Shape\Convex\Capsule\hkpCapsuleShape.cpp">
+        <Filter>Shape\Convex\Capsule</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+
+  </ItemGroup>
+</Project>

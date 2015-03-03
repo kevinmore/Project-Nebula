@@ -1,0 +1,1251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Phantom">
+        <UniqueIdentifier>54C17180-4C17-4054-1718-54C1718054C1</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Constraint\Util">
+        <UniqueIdentifier>6D0F7300-D0F7-406D-F730-6D0F73006D0F</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Constraint\Atom">
+        <UniqueIdentifier>F333655F-3365-4333-55F3-3655F333655F</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Destruction\BreakableMaterial\MultiMaterial\ListShape">
+        <UniqueIdentifier>526C57FC-26C5-4C52-C57F-526C57FC526C</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Destruction\BreakableShape">
+        <UniqueIdentifier>674F02D6-74F0-4667-F02D-674F02D6674F</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Motion\Util">
+        <UniqueIdentifier>285F8801-85F8-4128-F880-285F8801285F</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="UnitTest">
+        <UniqueIdentifier>1D4E8DF6-D4E8-461D-E8DF-1D4E8DF61D4E</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Constraint\Chain\StiffSpring">
+        <UniqueIdentifier>16558475-6558-4516-5847-165584751655</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Constraint\ConstraintKit">
+        <UniqueIdentifier>5EBAD172-EBAD-425E-AD17-5EBAD1725EBA</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Classes\Reflections">
+        <UniqueIdentifier>E9C8D3E9-8D3E-48D3-9C8D-E9C8D3E9C8D3</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="World\BroadPhaseBorder">
+        <UniqueIdentifier>60B3456F-0B34-4F60-3456-60B3456F60B3</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Collide\Deprecated">
+        <UniqueIdentifier>5B40F497-B40F-475B-0F49-5B40F4975B40</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="UnitTest\Collision">
+        <UniqueIdentifier>60DF7868-0DF7-4860-F786-60DF786860DF</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Collide\Filter\Pair">
+        <UniqueIdentifier>42354A85-2354-4542-54A8-42354A854235</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Destruction\BreakableMaterial\MultiMaterial">
+        <UniqueIdentifier>3384801D-3848-4D33-4801-3384801D3384</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Collide\ContactListener\Util">
+        <UniqueIdentifier>5A1C4C1E-A1C4-4E5A-C4C1-5A1C4C1E5A1C</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Constraint\Breakable">
+        <UniqueIdentifier>64913E30-4913-4064-13E3-64913E306491</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="World\CommandQueue">
+        <UniqueIdentifier>99A81569-A815-49A8-5699-815699A81569</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Constraint\Setup">
+        <UniqueIdentifier>7A0015A6-A001-467A-015A-7A0015A67A00</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="UnitTest\Activation">
+        <UniqueIdentifier>5AA438F5-A438-4AA4-8F5A-438F5AA438F5</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Motion\Rigid\ThinBoxMotion">
+        <UniqueIdentifier>9A06AB9A-6AB9-46AB-A06A-9A06AB9A06AB</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Collide">
+        <UniqueIdentifier>6E720A2D-E720-4D6E-20A2-6E720A2D6E72</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="World\Simulation">
+        <UniqueIdentifier>AA61F1DA-61F1-4A61-1DAA-1F1DAA61F1DA</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Destruction\BreakableMaterial\MultiMaterial\ExtendedMeshShape">
+        <UniqueIdentifier>4F9F48B0-F9F4-404F-F48B-4F9F48B04F9F</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="UnitTest\World">
+        <UniqueIdentifier>4729BC84-29BC-4729-C847-9BC84729BC84</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Constraint\Chain\BallSocket">
+        <UniqueIdentifier>48EE9E35-8EE9-4548-E9E3-48EE9E3548EE</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="World\Util">
+        <UniqueIdentifier>488BE5CA-88BE-4A48-BE5C-488BE5CA488B</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Destruction\BreakableBody">
+        <UniqueIdentifier>6CF40438-CF40-486C-4043-6CF404386CF4</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="World">
+        <UniqueIdentifier>29254A39-9254-4929-54A3-29254A392925</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Destruction\BreakableMaterial">
+        <UniqueIdentifier>2260FD3B-260F-4B22-0FD3-2260FD3B2260</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Collide\Filter">
+        <UniqueIdentifier>9C4A9BE9-4A9B-4C4A-BE9C-A9BE9C4A9BE9</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="World\Simulation\Multithreaded">
+        <UniqueIdentifier>45BBC4BF-5BBC-4F45-BC4B-45BBC4BF45BB</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="UnitTest\Entity">
+        <UniqueIdentifier>2AB82AC0-AB82-402A-82AC-2AB82AC02AB8</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Entity\Util">
+        <UniqueIdentifier>4A371D98-A371-484A-71D9-4A371D984A37</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="World\Extensions">
+        <UniqueIdentifier>1822EDC6-822E-4618-2EDC-1822EDC61822</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Constraint">
+        <UniqueIdentifier>66D536B9-6D53-4966-536B-66D536B966D5</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Collide\Filter\Constraint">
+        <UniqueIdentifier>5CC18548-CC18-485C-1854-5CC185485CC1</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="World\Simulation\Multithreaded\Cpu">
+        <UniqueIdentifier>37140B49-7140-4937-40B4-37140B493714</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="World\Maintenance\Default">
+        <UniqueIdentifier>730B7989-30B7-4973-B798-730B7989730B</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="World\Listener">
+        <UniqueIdentifier>3A0816DE-A081-4E3A-816D-3A0816DE3A08</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Collide\Deprecated\Dispatch">
+        <UniqueIdentifier>2A93FAB2-A93F-422A-3FAB-2A93FAB22A93</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Motion">
+        <UniqueIdentifier>365FDDB0-65FD-4036-FDDB-365FDDB0365F</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Constraint\Response">
+        <UniqueIdentifier>52FB8F53-2FB8-4352-B8F5-52FB8F5352FB</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Constraint\Malleable">
+        <UniqueIdentifier>3DA9AB2E-DA9A-4E3D-9AB2-3DA9AB2E3DA9</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Classes">
+        <UniqueIdentifier>11230FAD-1230-4D11-30FA-11230FAD1123</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Common">
+        <UniqueIdentifier>2EF353D5-EF35-452E-353D-2EF353D52EF3</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Constraint\Chain">
+        <UniqueIdentifier>1CD1432A-CD14-4A1C-1432-1CD1432A1CD1</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Collide\ContactListener">
+        <UniqueIdentifier>7D0CBF79-D0CB-497D-CBF7-7D0CBF797D0C</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Action">
+        <UniqueIdentifier>37D5B2A8-7D5B-4837-5B2A-37D5B2A837D5</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Destruction\BreakableMaterial\Simple">
+        <UniqueIdentifier>7C1C1024-C1C1-447C-C102-7C1C10247C1C</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="World\Simulation\Backstep">
+        <UniqueIdentifier>7EB4105D-EB41-4D7E-4105-7EB4105D7EB4</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="World\Memory\Default">
+        <UniqueIdentifier>6D5A055E-D5A0-4E6D-A055-6D5A055E6D5A</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Constraint\Contact">
+        <UniqueIdentifier>749C4421-49C4-4174-C442-749C4421749C</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="World\Simulation\Continuous">
+        <UniqueIdentifier>287E1487-87E1-4728-E148-287E1487287E</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="UnitTest\Motion">
+        <UniqueIdentifier>B55C0BBB-5C0B-455C-BBB5-C0BBB55C0BBB</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="World\Util\BroadPhase">
+        <UniqueIdentifier>4B3DB91C-B3DB-4C4B-DB91-4B3DB91C4B3D</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Entity">
+        <UniqueIdentifier>4FDEF914-DEF9-4FDE-914F-EF914FDEF914</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Destruction\Utilities">
+        <UniqueIdentifier>6E41D371-E41D-416E-1D37-6E41D3716E41</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="World\Maintenance">
+        <UniqueIdentifier>145CFB8C-45CF-4C14-CFB8-145CFB8C145C</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="World\Memory">
+        <UniqueIdentifier>6B51AB0B-B51A-4B6B-1AB0-6B51AB0B6B51</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Constraint\Chain\Powered">
+        <UniqueIdentifier>D94F3F6D-4F3F-494F-F6D9-F3F6D94F3F6D</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Motion\Rigid">
+        <UniqueIdentifier>3DC4C289-DC4C-493D-4C28-3DC4C2893DC4</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="World\Simulation\Multithreaded\Spu">
+        <UniqueIdentifier>133CF407-33CF-4713-CF40-133CF407133C</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Destruction">
+        <UniqueIdentifier>363B2413-3B24-463B-4136-B241363B2413</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Destruction\BreakableMaterial\MultiMaterial\CompoundShape">
+        <UniqueIdentifier>4C8BCF0F-C8BC-4F4C-BCF0-4C8BCF0F4C8B</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Action\hkpAction.h">
+        <Filter>Action</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Collide\Deprecated\hkpCollisionListener.h">
+        <Filter>Collide\Deprecated</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Phantom\hkpAabbPhantom.cpp">
+        <Filter>Phantom</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpModifierConstraintAtomReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Constraint\Setup\hkpConstraintSolverSetup.cpp">
+        <Filter>Constraint\Setup</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="World\Simulation\Multithreaded\Cpu\hkpCpuBuildAccumulatorsJob.h">
+        <Filter>World\Simulation\Multithreaded\Cpu</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="World\Listener\hkpIslandPostIntegrateListener.h">
+        <Filter>World\Listener</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Constraint\Malleable\hkpMalleableConstraintData.h">
+        <Filter>Constraint\Malleable</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Classes\hkpDynamicsClasses.h">
+        <Filter>Classes</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Collide\Deprecated\hkpCollisionEvents.inl">
+        <Filter>Collide\Deprecated</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Destruction\BreakableMaterial\MultiMaterial\hkpBreakableMultiMaterial.cpp">
+        <Filter>Destruction\BreakableMaterial\MultiMaterial</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Motion\Rigid\hkpCharacterMotion.cpp">
+        <Filter>Motion\Rigid</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="World\Maintenance\Default\hkpDefaultWorldMaintenanceMgr.h">
+        <Filter>World\Maintenance\Default</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="World\CommandQueue\hkpPhysicsCommand.h">
+        <Filter>World\CommandQueue</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="World\hkpWorldCinfo.cpp">
+        <Filter>World</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Constraint\Chain\Powered\hkpPoweredChainData.h">
+        <Filter>Constraint\Chain\Powered</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="World\hkpWorldCinfo.h">
+        <Filter>World</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpConstraintCollisionFilterReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Common\hkpProperty.h">
+        <Filter>Common</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\Motion\keyframedmotion.cpp">
+        <Filter>UnitTest\Motion</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Constraint\Util\hkpConstraintPivotsUtil.cpp">
+        <Filter>Constraint\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpStiffSpringChainDataReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Phantom\hkpSimpleShapePhantom.cpp">
+        <Filter>Phantom</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Constraint\Chain\StiffSpring\hkpStiffSpringChainData.cpp">
+        <Filter>Constraint\Chain\StiffSpring</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Destruction\BreakableMaterial\hkpBreakableMaterial.cpp">
+        <Filter>Destruction\BreakableMaterial</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpListShapeBreakableMaterialReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="hkpDynamics.cpp">
+        <Filter></Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="World\Simulation\Multithreaded\hkpDynamicsJobQueueUtils.h">
+        <Filter>World\Simulation\Multithreaded</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="World\Extensions\hkpWorldExtension.cpp">
+        <Filter>World\Extensions</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Constraint\Contact\hkpSimpleContactConstraintData.h">
+        <Filter>Constraint\Contact</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Phantom\hkpAabbPhantom.h">
+        <Filter>Phantom</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpFixedRigidMotionReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Motion\hkpMotion.h">
+        <Filter>Motion</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="World\Simulation\Multithreaded\hkpDynamicsJobs.cpp">
+        <Filter>World\Simulation\Multithreaded</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Phantom\hkpShapePhantom.cpp">
+        <Filter>Phantom</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="World\Util\hkpWorldCallbackUtil.h">
+        <Filter>World\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpConstraintInstanceReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Collide\ContactListener\Util\hkpEndOfStepCallbackUtil.h">
+        <Filter>Collide\ContactListener\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Action\hkpAction.inl">
+        <Filter>Action</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="World\hkpWorldObject.cpp">
+        <Filter>World</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Collide\ContactListener\hkpContactPointEvent.cpp">
+        <Filter>Collide\ContactListener</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpWorldReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\World\addremove.cpp">
+        <Filter>UnitTest\World</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Entity\hkpEntityListener.h">
+        <Filter>Entity</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="World\hkpWorldObject.inl">
+        <Filter>World</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="World\Simulation\Multithreaded\Cpu\hkpCpuIntegrateJob.cpp">
+        <Filter>World\Simulation\Multithreaded\Cpu</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Constraint\Breakable\hkpBreakableConstraintData.inl">
+        <Filter>Constraint\Breakable</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Classes\Reflections\hkpBreakableConstraintDataReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Destruction\BreakableBody\hkpBreakableBody.inl">
+        <Filter>Destruction\BreakableBody</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Destruction\BreakableMaterial\MultiMaterial\CompoundShape\hkpScsBreakableMaterial.h">
+        <Filter>Destruction\BreakableMaterial\MultiMaterial\CompoundShape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="World\hkpSimulationIsland.cpp">
+        <Filter>World</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Classes\hkpDynamicsClasses.cxx">
+        <Filter>Classes</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="World\Simulation\Multithreaded\hkpDeferredConstraintOwner.h">
+        <Filter>World\Simulation\Multithreaded</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="World\CommandQueue\hkpPhysicsCommandQueue.inl">
+        <Filter>World\CommandQueue</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Entity\hkpEntity.h">
+        <Filter>Entity</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Constraint\Atom\hkpModifierConstraintAtom.cpp">
+        <Filter>Constraint\Atom</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Motion\Rigid\hkpFixedRigidMotion.cpp">
+        <Filter>Motion\Rigid</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpEntityReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="World\Simulation\Multithreaded\Cpu\hkpCpuSplitSimulationIslandJob.h">
+        <Filter>World\Simulation\Multithreaded\Cpu</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Constraint\hkpConstraintOwner.h">
+        <Filter>Constraint</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Collide\Filter\Pair\hkpPairCollisionFilter.cpp">
+        <Filter>Collide\Filter\Pair</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="World\Memory\hkpWorldMemoryAvailableWatchDog.h">
+        <Filter>World\Memory</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="World\Simulation\Multithreaded\Cpu\hkpCpuBuildAccumulatorsJob.cpp">
+        <Filter>World\Simulation\Multithreaded\Cpu</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="World\Util\hkpWorldOperationQueue.cpp">
+        <Filter>World\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Destruction\BreakableMaterial\MultiMaterial\CompoundShape\hkpScsBreakableMaterial.cpp">
+        <Filter>Destruction\BreakableMaterial\MultiMaterial\CompoundShape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Constraint\ConstraintKit\hkpConstraintModifier.h">
+        <Filter>Constraint\ConstraintKit</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Collide\ContactListener\Util\hkpEndOfStepCallbackUtil.cpp">
+        <Filter>Collide\ContactListener\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Collide\Deprecated\hkpCollisionEvents.cpp">
+        <Filter>Collide\Deprecated</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Action\hkpActionListener.h">
+        <Filter>Action</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="World\Extensions\hkpWorldExtension.inl">
+        <Filter>World\Extensions</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Constraint\ConstraintKit\hkpConstraintConstructionKit.cpp">
+        <Filter>Constraint\ConstraintKit</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="World\Listener\hkpWorldDeletionListener.h">
+        <Filter>World\Listener</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Phantom\hkpCachingShapePhantom.inl">
+        <Filter>Phantom</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Constraint\Contact\hkpSimpleContactConstraintUtil.cpp">
+        <Filter>Constraint\Contact</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpPhantomReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Action\hkpBinaryAction.inl">
+        <Filter>Action</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="World\hkpWorldRegisterSpu.cpp">
+        <Filter>World</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpBreakableMaterialReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Phantom\hkpPhantomBroadPhaseListener.h">
+        <Filter>Phantom</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Constraint\hkpConstraintInstance.h">
+        <Filter>Constraint</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Motion\Rigid\hkpSphereMotion.h">
+        <Filter>Motion\Rigid</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="World\BroadPhaseBorder\hkpBroadPhaseBorder.cpp">
+        <Filter>World\BroadPhaseBorder</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Constraint\Util\hkpConstraintChainLengthUtil.cpp">
+        <Filter>Constraint\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Collide\ContactListener\Util\hkpAddModifierUtil.cpp">
+        <Filter>Collide\ContactListener\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpBreakableShapeReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Entity\Util\hkpEntityCallbackUtil.cpp">
+        <Filter>Entity\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpWorldObjectReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="World\Simulation\Multithreaded\Cpu\hkpCpuPostCollideJob.cpp">
+        <Filter>World\Simulation\Multithreaded\Cpu</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Constraint\ConstraintKit\hkpGenericConstraintData.h">
+        <Filter>Constraint\ConstraintKit</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Constraint\Util\hkpConstraintStabilizationUtil.h">
+        <Filter>Constraint\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="World\Simulation\Multithreaded\Cpu\hkpCpuFireJacobianSetupCallbackJob.cpp">
+        <Filter>World\Simulation\Multithreaded\Cpu</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Entity\hkpEntity.inl">
+        <Filter>Entity</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Action\hkpArrayAction.h">
+        <Filter>Action</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpRigidBodyReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Action\hkpUnaryAction.inl">
+        <Filter>Action</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Collide\Deprecated\hkpReportContactMgr.h">
+        <Filter>Collide\Deprecated</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="World\Simulation\Multithreaded\Cpu\hkpCpuAgentSectorJob.h">
+        <Filter>World\Simulation\Multithreaded\Cpu</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Phantom\hkpSimpleShapePhantom.inl">
+        <Filter>Phantom</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Classes\hkpDynamicsTrackerClasses.cpp">
+        <Filter>Classes</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Destruction\BreakableMaterial\Simple\hkpSimpleBreakableMaterial.h">
+        <Filter>Destruction\BreakableMaterial\Simple</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="World\Simulation\Multithreaded\Cpu\hkpCpuAgentSectorJob.cpp">
+        <Filter>World\Simulation\Multithreaded\Cpu</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Motion\Rigid\hkpCharacterMotion.h">
+        <Filter>Motion\Rigid</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="World\Maintenance\Default\hkpDefaultWorldMaintenanceMgr.cpp">
+        <Filter>World\Maintenance\Default</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Phantom\hkpPhantom.h">
+        <Filter>Phantom</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Constraint\Chain\BallSocket\hkpBallSocketChainData.h">
+        <Filter>Constraint\Chain\BallSocket</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Collide\hkpResponseModifier.cpp">
+        <Filter>Collide</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Entity\hkpEntityActivationListener.h">
+        <Filter>Entity</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="World\hkpPhysicsSystem.cpp">
+        <Filter>World</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Constraint\Contact\hkpContactPointProperties.h">
+        <Filter>Constraint\Contact</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="World\Simulation\Continuous\hkpContinuousSimulation.h">
+        <Filter>World\Simulation\Continuous</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Collide\hkpSimpleConstraintContactMgr.cpp">
+        <Filter>Collide</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="World\Simulation\Multithreaded\hkpDynamicsJobs.inl">
+        <Filter>World\Simulation\Multithreaded</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Destruction\BreakableMaterial\hkpBreakableMaterial.h">
+        <Filter>Destruction\BreakableMaterial</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpGenericConstraintSchemeReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Constraint\Util\hkpConstraintPivotsUtil.h">
+        <Filter>Constraint\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="World\Simulation\Continuous\hkpContinuousSimulation.cpp">
+        <Filter>World\Simulation\Continuous</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Collide\Filter\Constraint\hkpConstraintCollisionFilter.cpp">
+        <Filter>Collide\Filter\Constraint</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Phantom\hkpShapePhantom.inl">
+        <Filter>Phantom</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Constraint\Setup\hkpConstraintSolverSetup.h">
+        <Filter>Constraint\Setup</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="World\Util\BroadPhase\hkpEntityEntityBroadPhaseListener.h">
+        <Filter>World\Util\BroadPhase</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Collide\Deprecated\hkpReportContactMgr.cpp">
+        <Filter>Collide\Deprecated</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Entity\hkpEntity.cpp">
+        <Filter>Entity</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Motion\Rigid\hkpKeyframedRigidMotion.cpp">
+        <Filter>Motion\Rigid</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Motion\Rigid\ThinBoxMotion\hkpThinBoxMotion.h">
+        <Filter>Motion\Rigid\ThinBoxMotion</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="World\Util\BroadPhase\hkpBroadPhaseBorderListener.h">
+        <Filter>World\Util\BroadPhase</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Destruction\BreakableBody\hkpBreakableBody.h">
+        <Filter>Destruction\BreakableBody</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpPoweredChainDatahkpPoweredChainDataReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Entity\hkpRigidBodyCinfo.h">
+        <Filter>Entity</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="World\Simulation\Backstep\hkpBackstepSimulation.cpp">
+        <Filter>World\Simulation\Backstep</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Constraint\ConstraintKit\hkpConstraintConstructionKit.h">
+        <Filter>Constraint\ConstraintKit</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="World\Util\hkpWorldMemoryUtil.cpp">
+        <Filter>World\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Constraint\Util\hkpConstraintCallbackUtil.cpp">
+        <Filter>Constraint\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Constraint\Breakable\hkpBreakableConstraintData.cpp">
+        <Filter>Constraint\Breakable</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Motion\Rigid\hkpSphereMotion.cpp">
+        <Filter>Motion\Rigid</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="World\Simulation\Multithreaded\Cpu\hkpCpuIntegrateMotionJob.h">
+        <Filter>World\Simulation\Multithreaded\Cpu</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Destruction\BreakableMaterial\Simple\hkpSimpleBreakableMaterial.cpp">
+        <Filter>Destruction\BreakableMaterial\Simple</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Motion\Util\hkpRigidMotionUtil.h">
+        <Filter>Motion\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="World\Simulation\Multithreaded\Cpu\hkpCpuPostCollideJob.h">
+        <Filter>World\Simulation\Multithreaded\Cpu</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Collide\ContactListener\hkpCollisionEvent.inl">
+        <Filter>Collide\ContactListener</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Classes\Reflections\hkpCharacterMotionReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpBinaryActionReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpBoxMotionReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Constraint\Util\hkpConstraintDataCloningUtil.h">
+        <Filter>Constraint\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Phantom\hkpCachingShapePhantom.cpp">
+        <Filter>Phantom</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Entity\Util\hkpEntityAabbUtil.cpp">
+        <Filter>Entity\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Entity\Util\hkpEntityAabbUtil.h">
+        <Filter>Entity\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Entity\hkpRigidBody.inl">
+        <Filter>Entity</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Classes\hkpDynamicshkpPoweredChainDataTrackerClasses.cpp">
+        <Filter>Classes</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="hkpDynamics.h">
+        <Filter></Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Destruction\BreakableMaterial\hkpBreakableMaterial.inl">
+        <Filter>Destruction\BreakableMaterial</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Classes\Reflections\hkpConstraintChainDataReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Motion\Rigid\hkpKeyframedRigidMotion.h">
+        <Filter>Motion\Rigid</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="World\Util\hkpWorldConstraintUtil.h">
+        <Filter>World\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Constraint\Contact\hkpSimpleContactConstraintUtil.h">
+        <Filter>Constraint\Contact</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Destruction\Utilities\hkpDestructionSpuUtil.h">
+        <Filter>Destruction\Utilities</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Collide\Deprecated\hkpCollisionListener.cpp">
+        <Filter>Collide\Deprecated</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="World\hkpSimulationIsland.h">
+        <Filter>World</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpSphereMotionReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="World\hkpWorldObject.h">
+        <Filter>World</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Destruction\BreakableMaterial\MultiMaterial\ListShape\hkpListShapeBreakableMaterial.inl">
+        <Filter>Destruction\BreakableMaterial\MultiMaterial\ListShape</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Classes\hkpDynamicsClientTrackerClasses.cpp">
+        <Filter>Classes</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Constraint\Atom\hkpSimpleContactConstraintAtomUtil.cpp">
+        <Filter>Constraint\Atom</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="World\Simulation\Multithreaded\Spu\hkpSpuConfig.h">
+        <Filter>World\Simulation\Multithreaded\Spu</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpArrayActionReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Constraint\hkpConstraintListener.h">
+        <Filter>Constraint</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="World\Util\hkpWorldConstraintUtil.inl">
+        <Filter>World\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Constraint\ConstraintKit\ConstraintConstructionKit.svg">
+        <Filter>Constraint\ConstraintKit</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="World\Maintenance\hkpWorldMaintenanceMgr.h">
+        <Filter>World\Maintenance</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Action\hkpArrayAction.cpp">
+        <Filter>Action</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Collide\Filter\Constraint\hkpConstraintCollisionFilter.h">
+        <Filter>Collide\Filter\Constraint</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Collide\ContactListener\Util\hkpCollisionCallbackUtil.inl">
+        <Filter>Collide\ContactListener\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="World\Simulation\Continuous\hkpContinuousSimulation.inl">
+        <Filter>World\Simulation\Continuous</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Collide\ContactListener\Util\hkpAddModifierUtil.h">
+        <Filter>Collide\ContactListener\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpMaterialReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Destruction\BreakableMaterial\MultiMaterial\ExtendedMeshShape\hkpEmsBreakableMaterial.h">
+        <Filter>Destruction\BreakableMaterial\MultiMaterial\ExtendedMeshShape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="World\Extensions\hkpWorldExtension.h">
+        <Filter>World\Extensions</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpBreakableBodyReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Constraint\Util\hkpConstraintStabilizationUtil.cpp">
+        <Filter>Constraint\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpConstraintChainInstanceActionReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="World\hkpPhysicsSystem.h">
+        <Filter>World</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpWorldCinfoReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Motion\Rigid\hkpBoxMotion.cpp">
+        <Filter>Motion\Rigid</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Common\hkpMaterial.inl">
+        <Filter>Common</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="World\hkpPhysicsSystem.inl">
+        <Filter>World</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="World\Simulation\Multithreaded\hkpDynamicsJobs.h">
+        <Filter>World\Simulation\Multithreaded</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Destruction\BreakableShape\hkpBreakableShape.h">
+        <Filter>Destruction\BreakableShape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Phantom\hkpPhantom.cpp">
+        <Filter>Phantom</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="World\Util\hkpWorldOperationUtil.inl">
+        <Filter>World\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Classes\Reflections\hkpEmsBreakableMaterialReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Constraint\Contact\hkpContactImpulseLimitBreachedListener.h">
+        <Filter>Constraint\Contact</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="World\Util\hkpWorldAgentUtil.h">
+        <Filter>World\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Constraint\Malleable\hkpMalleableConstraintData.cpp">
+        <Filter>Constraint\Malleable</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Phantom\hkpShapePhantom.h">
+        <Filter>Phantom</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Constraint\Chain\hkpConstraintChainInstanceAction.cpp">
+        <Filter>Constraint\Chain</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpShapePhantomReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Constraint\Atom\hkpSimpleContactConstraintAtom.cpp">
+        <Filter>Constraint\Atom</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpUnaryActionReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Phantom\hkpPhantom.inl">
+        <Filter>Phantom</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Constraint\hkpConstraintInstance.inl">
+        <Filter>Constraint</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="World\Simulation\Multithreaded\Cpu\hkpCpuSolveConstraintsJobs.cpp">
+        <Filter>World\Simulation\Multithreaded\Cpu</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="World\Listener\hkpWorldPostIntegrateListener.h">
+        <Filter>World\Listener</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="World\Simulation\Multithreaded\Cpu\hkpCpuIntegrateJob.h">
+        <Filter>World\Simulation\Multithreaded\Cpu</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Destruction\BreakableMaterial\MultiMaterial\ListShape\hkpListShapeBreakableMaterial.h">
+        <Filter>Destruction\BreakableMaterial\MultiMaterial\ListShape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Phantom\hkpAabbPhantom.inl">
+        <Filter>Phantom</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Collide\ContactListener\hkpContactListener.cpp">
+        <Filter>Collide\ContactListener</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Constraint\Breakable\hkpBreakableListener.h">
+        <Filter>Constraint\Breakable</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Collide\Deprecated\Dispatch\hkpCollideCallbackDispatcher.inl">
+        <Filter>Collide\Deprecated\Dispatch</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="World\Listener\hkpWorldPostCollideListener.h">
+        <Filter>World\Listener</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="World\Simulation\Multithreaded\Cpu\hkpCpuSolveConstraintsJobs.h">
+        <Filter>World\Simulation\Multithreaded\Cpu</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="World\Util\hkpWorldOperationQueue.inl">
+        <Filter>World\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Classes\Reflections\hkpPairCollisionFilterReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="World\Simulation\Multithreaded\hkpDynamicsJobQueueUtils.cpp">
+        <Filter>World\Simulation\Multithreaded</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Constraint\Chain\hkpConstraintChainData.h">
+        <Filter>Constraint\Chain</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="UnitTest\Tests.h">
+        <Filter>UnitTest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Motion\Rigid\ThinBoxMotion\hkpThinBoxMotion.cpp">
+        <Filter>Motion\Rigid\ThinBoxMotion</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="World\Listener\hkpWorldPostSimulationListener.h">
+        <Filter>World\Listener</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Common\hkpMaterial.h">
+        <Filter>Common</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Constraint\Chain\Powered\hkpPoweredChainData.cpp">
+        <Filter>Constraint\Chain\Powered</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpConstraintChainInstanceReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Destruction\BreakableShape\hkpBreakableShape.inl">
+        <Filter>Destruction\BreakableShape</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Phantom\hkpCachingShapePhantom.h">
+        <Filter>Phantom</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Collide\ContactListener\hkpContactPointEvent.inl">
+        <Filter>Collide\ContactListener</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Constraint\Util\hkpConstraintDataCloningUtil.cpp">
+        <Filter>Constraint\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="World\Memory\hkpWorldMemoryAvailableWatchdog.inl">
+        <Filter>World\Memory</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Classes\Reflections\hkpSimulationReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Constraint\ConstraintKit\hkpGenericConstraintParameters.h">
+        <Filter>Constraint\ConstraintKit</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Destruction\BreakableMaterial\hkpBreakableMaterialUtil.h">
+        <Filter>Destruction\BreakableMaterial</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="World\Util\hkpBodyOperation.h">
+        <Filter>World\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Constraint\Chain\BallSocket\hkpBallSocketChainData.cpp">
+        <Filter>Constraint\Chain\BallSocket</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Constraint\Util\hkpConstraintCallbackUtil.h">
+        <Filter>Constraint\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Collide\hkpResponseModifier.h">
+        <Filter>Collide</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="World\Memory\Default\hkpDefaultWorldMemoryWatchDog.h">
+        <Filter>World\Memory\Default</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="World\Simulation\Backstep\hkpBackstepSimulation.h">
+        <Filter>World\Simulation\Backstep</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Constraint\Chain\StiffSpring\hkpStiffSpringChainData.h">
+        <Filter>Constraint\Chain\StiffSpring</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\World\FilterChangeUnitTest.cpp">
+        <Filter>UnitTest\World</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="World\hkpWorld.cpp">
+        <Filter>World</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Collide\hkpSimpleConstraintContactMgr.h">
+        <Filter>Collide</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="World\Util\hkpWorldOperationUtil.cpp">
+        <Filter>World\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Collide\Filter\Pair\hkpPairCollisionFilter.h">
+        <Filter>Collide\Filter\Pair</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Phantom\hkpPhantomOverlapListener.h">
+        <Filter>Phantom</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Constraint\Chain\hkpConstraintChainInstance.cpp">
+        <Filter>Constraint\Chain</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="World\hkpWorld.h">
+        <Filter>World</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Constraint\Atom\hkpSimpleContactConstraintAtomUtil.h">
+        <Filter>Constraint\Atom</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpThinBoxMotionReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Constraint\Contact\hkpDynamicsCpIdMgr.inl">
+        <Filter>Constraint\Contact</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Constraint\Contact\hkpSimpleContactConstraintData.inl">
+        <Filter>Constraint\Contact</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Motion\hkpMotion.inl">
+        <Filter>Motion</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="World\Util\hkpWorldAgentUtil.cpp">
+        <Filter>World\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\Motion\rigidmotion.cpp">
+        <Filter>UnitTest\Motion</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Phantom\hkpPhantomType.h">
+        <Filter>Phantom</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="World\CommandQueue\hkpPhysicsCommandMachine.cpp">
+        <Filter>World\CommandQueue</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Destruction\BreakableMaterial\MultiMaterial\ListShape\hkpListShapeBreakableMaterial.cpp">
+        <Filter>Destruction\BreakableMaterial\MultiMaterial\ListShape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Action\hkpBinaryAction.cpp">
+        <Filter>Action</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Collide\hkpResponseModifier.inl">
+        <Filter>Collide</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="World\Simulation\hkpSimulation.cpp">
+        <Filter>World\Simulation</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpCachingShapePhantomReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="World\Util\hkpWorldOperationQueue.h">
+        <Filter>World\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="World\Util\hkpWorldCallbackUtil.cpp">
+        <Filter>World\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Constraint\Response\hkpSimpleCollisionResponse.h">
+        <Filter>Constraint\Response</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Motion\Rigid\hkpBoxMotion.h">
+        <Filter>Motion\Rigid</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="World\Listener\hkpIslandPostCollideListener.h">
+        <Filter>World\Listener</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Action\hkpUnaryAction.h">
+        <Filter>Action</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\World\EntityManagement.cpp">
+        <Filter>UnitTest\World</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Destruction\BreakableMaterial\MultiMaterial\ExtendedMeshShape\hkpEmsBreakableMaterial.cpp">
+        <Filter>Destruction\BreakableMaterial\MultiMaterial\ExtendedMeshShape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpMalleableConstraintDataReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Constraint\Response\hkpSimpleCollisionResponse.cpp">
+        <Filter>Constraint\Response</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Action\hkpBinaryAction.h">
+        <Filter>Action</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="World\Simulation\hkpSimulation.h">
+        <Filter>World\Simulation</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Motion\hkpMotion.cpp">
+        <Filter>Motion</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Entity\hkpRigidBodyCinfo.cpp">
+        <Filter>Entity</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Action\hkpUnaryAction.cpp">
+        <Filter>Action</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Constraint\Atom\hkpModifierConstraintAtom.h">
+        <Filter>Constraint\Atom</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Collide\ContactListener\Util\hkpCollisionCallbackUtil.cpp">
+        <Filter>Collide\ContactListener\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Phantom\hkpPhantomListener.h">
+        <Filter>Phantom</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Entity\Util\hkpEntityCallbackUtil.h">
+        <Filter>Entity\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Motion\Util\hkpRigidMotionUtil.cpp">
+        <Filter>Motion\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="World\Util\hkpWorldOperationUtil.h">
+        <Filter>World\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="World\hkpSimulationIsland.inl">
+        <Filter>World</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Constraint\ConstraintKit\hkpGenericConstraintScheme.h">
+        <Filter>Constraint\ConstraintKit</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Collide\Filter\Pair\hkpPairCollisionFilter.inl">
+        <Filter>Collide\Filter\Pair</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Destruction\BreakableMaterial\MultiMaterial\hkpBreakableMultiMaterial.inl">
+        <Filter>Destruction\BreakableMaterial\MultiMaterial</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Constraint\Breakable\hkpBreakableConstraintData.h">
+        <Filter>Constraint\Breakable</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpGenericConstraintDataReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Collide\Deprecated\Dispatch\hkpCollideCallbackDispatcher.h">
+        <Filter>Collide\Deprecated\Dispatch</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Constraint\hkpConstraintInstance.cpp">
+        <Filter>Constraint</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpScsBreakableMaterialReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Phantom\hkpPhantomBroadPhaseListener.cpp">
+        <Filter>Phantom</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Constraint\Contact\hkpDynamicsCpIdMgr.h">
+        <Filter>Constraint\Contact</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Destruction\BreakableMaterial\hkpBreakableMaterialUtil.inl">
+        <Filter>Destruction\BreakableMaterial</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="World\Util\BroadPhase\hkpEntityEntityBroadPhaseListener.cpp">
+        <Filter>World\Util\BroadPhase</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Constraint\ConstraintKit\hkpGenericConstraintData.cpp">
+        <Filter>Constraint\ConstraintKit</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpActionReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Entity\hkpRigidBody.h">
+        <Filter>Entity</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="World\Simulation\Multithreaded\Cpu\hkpCpuSplitSimulationIslandJob.cpp">
+        <Filter>World\Simulation\Multithreaded\Cpu</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="World\Util\BroadPhase\hkpBroadPhaseBorderListener.cpp">
+        <Filter>World\Util\BroadPhase</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="World\Simulation\Multithreaded\Cpu\hkpCpuIntegrateMotionJob.cpp">
+        <Filter>World\Simulation\Multithreaded\Cpu</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Constraint\Contact\hkpSimpleContactConstraintData.cpp">
+        <Filter>Constraint\Contact</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="World\CommandQueue\hkpPhysicsCommandQueue.h">
+        <Filter>World\CommandQueue</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpBallSocketChainDataReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Collide\ContactListener\Util\hkpCollisionCallbackUtil.h">
+        <Filter>Collide\ContactListener\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpPhysicsSystemReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpDefaultWorldMemoryWatchDogReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Destruction\BreakableMaterial\hkpBreakableMaterialUtil.cpp">
+        <Filter>Destruction\BreakableMaterial</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpSimpleContactConstraintAtomReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Destruction\BreakableMaterial\MultiMaterial\hkpBreakableMultiMaterial.h">
+        <Filter>Destruction\BreakableMaterial\MultiMaterial</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpWorldMemoryAvailableWatchDogReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\Activation\activation.cpp">
+        <Filter>UnitTest\Activation</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="World\Simulation\Multithreaded\Cpu\hkpCpuSingleThreadedJobsOnIsland.h">
+        <Filter>World\Simulation\Multithreaded\Cpu</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="World\Simulation\Multithreaded\hkpMultithreadedSimulation.h">
+        <Filter>World\Simulation\Multithreaded</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="World\BroadPhaseBorder\hkpBroadPhaseBorder.h">
+        <Filter>World\BroadPhaseBorder</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="World\Memory\Default\hkpDefaultWorldMemoryWatchDog.cpp">
+        <Filter>World\Memory\Default</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Destruction\Utilities\hkpDestructionBreakOffUtil.cpp">
+        <Filter>Destruction\Utilities</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Motion\Rigid\hkpFixedRigidMotion.h">
+        <Filter>Motion\Rigid</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpAabbPhantomReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpBreakableMultiMaterialReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Destruction\Utilities\hkpDestructionBreakOffUtil.h">
+        <Filter>Destruction\Utilities</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Constraint\ConstraintKit\hkpGenericConstraintScheme.cpp">
+        <Filter>Constraint\ConstraintKit</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Collide\hkpDynamicsContactMgr.h">
+        <Filter>Collide</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpSimpleShapePhantomReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Constraint\Chain\hkpConstraintChainInstanceAction.h">
+        <Filter>Constraint\Chain</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="World\Simulation\Multithreaded\Cpu\hkpCpuBroadPhaseJob.cpp">
+        <Filter>World\Simulation\Multithreaded\Cpu</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="World\Util\hkpWorldMemoryUtil.h">
+        <Filter>World\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Collide\Deprecated\hkpCollisionEvents.h">
+        <Filter>Collide\Deprecated</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Collide\ContactListener\hkpContactListener.h">
+        <Filter>Collide\ContactListener</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="World\Simulation\Multithreaded\Cpu\hkpCpuBuildJacobiansJob.h">
+        <Filter>World\Simulation\Multithreaded\Cpu</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpKeyframedRigidMotionReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Constraint\Chain\hkpConstraintChainInstance.h">
+        <Filter>Constraint\Chain</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Collide\Deprecated\hkpContactUpdater.h">
+        <Filter>Collide\Deprecated</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Collide\ContactListener\hkpCollisionEvent.h">
+        <Filter>Collide\ContactListener</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\World\ActionManagement.cpp">
+        <Filter>UnitTest\World</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\Collision\hkpPairwiseCollisionTest.cpp">
+        <Filter>UnitTest\Collision</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="World\Listener\hkpIslandActivationListener.h">
+        <Filter>World\Listener</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="World\Simulation\Multithreaded\hkpMultithreadedSimulation.cpp">
+        <Filter>World\Simulation\Multithreaded</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Constraint\Contact\hkpContactImpulseLimitBreachedListener.inl">
+        <Filter>Constraint\Contact</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="World\Util\hkpWorldConstraintUtil.cpp">
+        <Filter>World\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Constraint\Util\hkpConstraintChainLengthUtil.h">
+        <Filter>Constraint\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="World\hkpWorld.inl">
+        <Filter>World</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Entity\hkpRigidBody.cpp">
+        <Filter>Entity</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Destruction\Utilities\hkpDestructionBreakOffUtil.inl">
+        <Filter>Destruction\Utilities</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Phantom\hkpSimpleShapePhantom.h">
+        <Filter>Phantom</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Collide\Deprecated\hkpContactUpdater.cpp">
+        <Filter>Collide\Deprecated</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="World\Simulation\Multithreaded\Cpu\hkpCpuBuildJacobiansJob.cpp">
+        <Filter>World\Simulation\Multithreaded\Cpu</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\Entity\rigidbodyclone.cpp">
+        <Filter>UnitTest\Entity</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Constraint\Atom\hkpSimpleContactConstraintAtom.h">
+        <Filter>Constraint\Atom</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpMotionReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Destruction\BreakableMaterial\MultiMaterial\ExtendedMeshShape\hkpEmsBreakableMaterial.inl">
+        <Filter>Destruction\BreakableMaterial\MultiMaterial\ExtendedMeshShape</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="World\Util\hkpNullAction.h">
+        <Filter>World\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Collide\ContactListener\hkpContactPointEvent.h">
+        <Filter>Collide\ContactListener</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpSimpleBreakableMaterialReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+
+  </ItemGroup>
+</Project>

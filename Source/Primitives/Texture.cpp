@@ -117,7 +117,7 @@ void Texture::release()
 
 QPixmap Texture::generateQPixmap()
 {
-	QImage im(static_cast<const uchar *>(m_blob.data()), m_image.columns(), m_image.rows(), QImage::Format_ARGB32);
+	QImage im(static_cast<const uchar *>(m_blob.data()), m_image.columns(), m_image.rows(), QImage::Format_RGB32);
 
 	QPixmap pix;
 	pix.convertFromImage(im);

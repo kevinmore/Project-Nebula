@@ -1,0 +1,1185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Dynamics\KeyFrame">
+        <UniqueIdentifier>541ECE03-41EC-4354-ECE0-541ECE03541E</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Collide\ShapeUtils\SimpleMeshTklStreamer">
+        <UniqueIdentifier>4D609FF9-D609-494D-09FF-4D609FF94D60</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Actions\MouseSpring">
+        <UniqueIdentifier>65A873F8-5A87-4865-873F-65A873F865A8</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="UnitTest">
+        <UniqueIdentifier>1D4E8DF6-D4E8-461D-E8DF-1D4E8DF61D4E</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Dynamics\TimeSteppers">
+        <UniqueIdentifier>6FD171EE-FD17-4E6F-171E-6FD171EE6FD1</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Dynamics\Inertia">
+        <UniqueIdentifier>67E857E8-7E85-4867-857E-67E857E867E8</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Actions\Motor">
+        <UniqueIdentifier>11D34A1B-1D34-4B11-34A1-11D34A1B11D3</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="CharacterControl\CharacterProxy\Multithreaded\Spu">
+        <UniqueIdentifier>C391E1CC-91E1-4391-1CC3-1E1CC391E1CC</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="CharacterControl\StateMachine\Util">
+        <UniqueIdentifier>7BCCDC28-BCCD-487B-CDC2-7BCCDC287BCC</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Constraint\Bilateral">
+        <UniqueIdentifier>7682B7D7-682B-4776-2B7D-7682B7D77682</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Collide">
+        <UniqueIdentifier>6E720A2D-E720-4D6E-20A2-6E720A2D6E72</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="CharacterControl\StateMachine\InAir">
+        <UniqueIdentifier>4CCF27C2-CCF2-424C-F27C-4CCF27C24CCF</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Dynamics\PhantomBatchMove">
+        <UniqueIdentifier>250F4041-50F4-4125-F404-250F4041250F</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="CharacterControl\StateMachine">
+        <UniqueIdentifier>19E681B5-9E68-4519-681B-19E681B519E6</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="VisualDebugger\Viewer\Collide">
+        <UniqueIdentifier>41E6ABB2-1E6A-4241-6ABB-41E6ABB241E6</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Classes">
+        <UniqueIdentifier>11230FAD-1230-4D11-30FA-11230FAD1123</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Collide\ContactModifiers\SoftContact">
+        <UniqueIdentifier>36E751AC-6E75-4C36-751A-36E751AC36E7</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Collide\ShapeUtils\MoppCodeStreamer">
+        <UniqueIdentifier>68587659-8587-4968-8765-685876596858</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Actions\Wind">
+        <UniqueIdentifier>3C77C79F-C77C-4F3C-7C79-3C77C79F3C77</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="UnitTest\Inertia">
+        <UniqueIdentifier>6CB4F398-CB4F-486C-4F39-6CB4F3986CB4</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="CharacterControl\CharacterRigidBody">
+        <UniqueIdentifier>412CB875-12CB-4541-CB87-412CB875412C</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Collide\ContactModifiers\SurfaceVelocity\Filtered">
+        <UniqueIdentifier>E453584E-5358-4453-84E4-3584E453584E</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="VisualDebugger\Viewer\Dynamics">
+        <UniqueIdentifier>19BBE379-9BBE-4919-BE37-19BBE37919BB</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="VisualDebugger\Viewer\Utilities">
+        <UniqueIdentifier>5BF9EE8E-BF9E-4E5B-9EE8-5BF9EE8E5BF9</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="CharacterControl\StateMachine\Jumping">
+        <UniqueIdentifier>49A37971-9A37-4149-3797-49A3797149A3</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Weapons">
+        <UniqueIdentifier>52BA3970-2BA3-4052-A397-52BA397052BA</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="UnitTest\Collide">
+        <UniqueIdentifier>6EFA3BE8-EFA3-486E-A3BE-6EFA3BE86EFA</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Dynamics\EntityContactCollector">
+        <UniqueIdentifier>153FE76B-53FE-4B15-FE76-153FE76B153F</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="CharacterControl\StateMachine\OnGround">
+        <UniqueIdentifier>78D63CA2-8D63-4278-63CA-78D63CA278D6</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="CharacterControl\StateMachine\Flying">
+        <UniqueIdentifier>8B5B0A38-5B0A-4B5B-A38B-B0A38B5B0A38</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Actions\EasePenetration">
+        <UniqueIdentifier>1DCDEEAF-DCDE-4F1D-DEEA-1DCDEEAF1DCD</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Dynamics\SaveContactPoints">
+        <UniqueIdentifier>58BDE6B0-8BDE-4058-DE6B-58BDE6B058BD</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Collide\ShapeUtils">
+        <UniqueIdentifier>478302B6-7830-4647-302B-478302B64783</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="CharacterControl\CharacterProxy">
+        <UniqueIdentifier>7C2D8748-C2D8-487C-D874-7C2D87487C2D</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="CharacterControl\CharacterProxy\Multithreaded">
+        <UniqueIdentifier>5EAB2CCA-EAB2-4A5E-B2CC-5EAB2CCA5EAB</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="VisualDebugger\Viewer\Vehicle">
+        <UniqueIdentifier>2A593F34-A593-442A-93F3-2A593F342A59</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Collide\Filter\GroupFilter">
+        <UniqueIdentifier>4CE694D1-CE69-414C-694D-4CE694D14CE6</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Constraint\Chain">
+        <UniqueIdentifier>1CD1432A-CD14-4A1C-1432-1CD1432A1CD1</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="UnitTest\LoadNativeFileInplace">
+        <UniqueIdentifier>2E1FDF25-E1FD-452E-FDF2-2E1FDF252E1F</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Dynamics\Lazyadd">
+        <UniqueIdentifier>2A7368DD-A736-4D2A-368D-2A7368DD2A73</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Collide\ContactModifiers\CenterOfMassChanger">
+        <UniqueIdentifier>5830F4DE-830F-4E58-0F4D-5830F4DE5830</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="VisualDebugger\Viewer\Dynamics\Constraint\Drawer">
+        <UniqueIdentifier>330D9B17-30D9-4733-D9B1-330D9B17330D</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Serialize">
+        <UniqueIdentifier>690CDF15-90CD-4569-CDF1-690CDF15690C</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="CharacterControl">
+        <UniqueIdentifier>492A68F0-92A6-4049-A68F-492A68F0492A</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Collide\ContactModifiers\SurfaceVelocity">
+        <UniqueIdentifier>57081828-7081-4857-8182-570818285708</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Dynamics">
+        <UniqueIdentifier>35C20306-5C20-4635-2030-35C2030635C2</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Dynamics\ScaleSystem">
+        <UniqueIdentifier>96157039-1570-4615-0396-570396157039</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Collide\ShapeUtils\ShapeConverter">
+        <UniqueIdentifier>472AF304-72AF-4447-AF30-472AF304472A</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="VisualDebugger\Viewer\Dynamics\Constraint">
+        <UniqueIdentifier>57872907-7872-4757-7290-578729075787</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Collide\ContactModifiers\ViscoseSurface">
+        <UniqueIdentifier>5AF0F71E-AF0F-4E5A-0F71-5AF0F71E5AF0</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Classes\Reflections">
+        <UniqueIdentifier>E9C8D3E9-8D3E-48D3-9C8D-E9C8D3E9C8D3</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Actions\Reorient">
+        <UniqueIdentifier>636C113B-36C1-4B63-C113-636C113B636C</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Dynamics\RigidBodyReset">
+        <UniqueIdentifier>1D41C8C1-D41C-411D-1C8C-1D41C8C11D41</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Dynamics\SuspendInactiveAgents">
+        <UniqueIdentifier>3D1F12BF-D1F1-4F3D-F12B-3D1F12BF3D1F</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Constraint">
+        <UniqueIdentifier>66D536B9-6D53-4966-536B-66D536B966D5</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Geometry">
+        <UniqueIdentifier>212FD948-12FD-4821-FD94-212FD948212F</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Collide\ShapeUtils\ShapeScaling">
+        <UniqueIdentifier>4BAB3549-BAB3-494B-B354-4BAB35494BAB</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Collide\ShapeUtils\ShapeToMeshConverter">
+        <UniqueIdentifier>4F05AB72-F05A-424F-5AB7-4F05AB724F05</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="VisualDebugger\ShapeHash">
+        <UniqueIdentifier>806043E8-6043-4060-3E80-043E806043E8</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="VisualDebugger">
+        <UniqueIdentifier>2274476F-2744-4F22-4476-2274476F2274</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Collide\ContactModifiers\MassChanger">
+        <UniqueIdentifier>377D1E8E-77D1-4E37-D1E8-377D1E8E377D</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Collide\TriggerVolume">
+        <UniqueIdentifier>41ACFD75-1ACF-4541-CFD7-41ACFD7541AC</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Collide\ShapeUtils\ShapeKeyPath">
+        <UniqueIdentifier>1FCDBE8A-FCDB-4A1F-DBE8-1FCDBE8A1FCD</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Deprecated\H1Group">
+        <UniqueIdentifier>5D47D489-D47D-495D-7D48-5D47D4895D47</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="UnitTest\TriggerVolume">
+        <UniqueIdentifier>71FC063E-1FC0-4E71-C063-71FC063E71FC</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="CharacterControl\CharacterProxy\Multithreaded\Cpu">
+        <UniqueIdentifier>568A1D8C-68A1-4C56-A1D8-568A1D8C568A</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Actions">
+        <UniqueIdentifier>2C798412-C798-422C-9841-2C7984122C79</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Actions\EaseConstraints">
+        <UniqueIdentifier>3BC689F0-BC68-403B-689F-3BC689F03BC6</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Collide\ShapeUtils\CollapseTransform">
+        <UniqueIdentifier>47109547-7109-4747-0954-471095474710</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="CharacterControl\FirstPersonCharacter">
+        <UniqueIdentifier>89F18518-F185-49F1-5189-185189F18518</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Deprecated">
+        <UniqueIdentifier>378DFB49-78DF-4937-DFB4-378DFB49378D</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Collide\Filter">
+        <UniqueIdentifier>9C4A9BE9-4A9B-4C4A-BE9C-A9BE9C4A9BE9</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Destruction">
+        <UniqueIdentifier>363B2413-3B24-463B-4136-B241363B2413</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Collide\RemoveContact">
+        <UniqueIdentifier>1128ABB5-128A-4511-8ABB-1128ABB51128</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Collide\ShapeUtils\ShapeMerger">
+        <UniqueIdentifier>42DC7235-2DC7-4542-C723-42DC723542DC</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Collide\ShapeUtils\CreateShape">
+        <UniqueIdentifier>B7687CDB-687C-4768-CDB7-87CDB7687CDB</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Destruction\BreakOffParts">
+        <UniqueIdentifier>86105D38-105D-4610-D386-05D386105D38</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Deprecated\ConstrainedSystem">
+        <UniqueIdentifier>5A4EAC2C-A4EA-4C5A-EAC2-5A4EAC2C5A4E</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Deprecated\DisableEntity">
+        <UniqueIdentifier>3D862426-D862-463D-6242-3D8624263D86</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Serialize\Display">
+        <UniqueIdentifier>3808B61B-808B-4B38-8B61-3808B61B3808</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="CharacterControl\CharacterProxy\Multithreaded\Util">
+        <UniqueIdentifier>3A2B2BE7-A2B2-473A-B2BE-3A2B2BE73A2B</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="VisualDebugger\Viewer">
+        <UniqueIdentifier>20596218-0596-4820-9621-205962182059</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="CharacterControl\StateMachine\Climbing">
+        <UniqueIdentifier>4FDD5017-FDD5-474F-D501-4FDD50174FDD</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Collide\ShapeUtils\ShapeSharing">
+        <UniqueIdentifier>588D1012-88D1-4258-D101-588D1012588D</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Collide\ContactModifiers">
+        <UniqueIdentifier>5D9E4210-D9E4-405D-E421-5D9E42105D9E</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Actions\AngularDashpot">
+        <UniqueIdentifier>2B440A2B-40A2-440A-B440-2B440A2B440A</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Actions\Spring">
+        <UniqueIdentifier>5391BFA5-91BF-4391-FA53-1BFA5391BFA5</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Actions\Dashpot">
+        <UniqueIdentifier>A3C6E05A-C6E0-43C6-05A3-6E05A3C6E05A</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Dynamics\ImpulseAccumulator">
+        <UniqueIdentifier>47E70804-7E70-4447-7080-47E7080447E7</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="VisualDebugger\Viewer\Collide\hkpContactPointViewer.cpp">
+        <Filter>VisualDebugger\Viewer\Collide</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpCharacterControllerCinfoReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpPoweredChainMapperReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Constraint\Chain\hkpConstraintChainUtil.h">
+        <Filter>Constraint\Chain</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Dynamics\Inertia\hkpInertiaTensorComputer.cpp">
+        <Filter>Dynamics\Inertia</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\ConstrainedSystem\hkpConstrainedSystemFilter.cpp">
+        <Filter>Deprecated\ConstrainedSystem</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\TriggerVolume\triggerVolumeContinuousCollision.cpp">
+        <Filter>UnitTest\TriggerVolume</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Dynamics\SuspendInactiveAgents\hkpSuspendInactiveAgentsUtil.h">
+        <Filter>Dynamics\SuspendInactiveAgents</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Actions\EasePenetration\hkpEasePenetrationAction.cpp">
+        <Filter>Actions\EasePenetration</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="CharacterControl\StateMachine\Flying\hkpCharacterStateFlying.cpp">
+        <Filter>CharacterControl\StateMachine\Flying</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Constraint\Chain\hkpConstraintChainUtil.cpp">
+        <Filter>Constraint\Chain</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="VisualDebugger\Viewer\Dynamics\hkpSimulationIslandViewer.h">
+        <Filter>VisualDebugger\Viewer\Dynamics</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Serialize\Display\hkpSerializedDisplayMarker.h">
+        <Filter>Serialize\Display</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Serialize\hkpPhysicsData.inl">
+        <Filter>Serialize</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Constraint\Chain\hkpPoweredChainMapperUtil.h">
+        <Filter>Constraint\Chain</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Serialize\hkpDisplayBindingData.h">
+        <Filter>Serialize</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="CharacterControl\CharacterProxy\Multithreaded\hkpCharacterProxyJobs.h">
+        <Filter>CharacterControl\CharacterProxy\Multithreaded</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\Inertia\inertia.cpp">
+        <Filter>UnitTest\Inertia</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\hkpCollapseTransformsDeprecated.cpp">
+        <Filter>Deprecated</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpMountedBallGunReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="CharacterControl\CharacterRigidBody\hkpCharacterRigidBody.cpp">
+        <Filter>CharacterControl\CharacterRigidBody</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpSerializedDisplayRbTransformsReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Collide\ContactModifiers\ViscoseSurface\hkpViscoseSurfaceUtil.h">
+        <Filter>Collide\ContactModifiers\ViscoseSurface</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Collide\RemoveContact\hkpRemoveContactUtil.cpp">
+        <Filter>Collide\RemoveContact</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="VisualDebugger\Viewer\Collide\hkpWeldingViewer.h">
+        <Filter>VisualDebugger\Viewer\Collide</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Serialize\Display\hkpSerializedDisplayMarkerList.inl">
+        <Filter>Serialize\Display</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Classes\Reflections\hkpDisableEntityCollisionFilterReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Constraint\Bilateral\hkpConstraintUtils.cpp">
+        <Filter>Constraint\Bilateral</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Weapons\hkpGravityGun.h">
+        <Filter>Weapons</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpBallGunReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Constraint\Chain\hkpPoweredChainMapper.h">
+        <Filter>Constraint\Chain</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Collide\TriggerVolume\hkpTriggerVolume.cpp">
+        <Filter>Collide\TriggerVolume</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="CharacterControl\CharacterProxy\Multithreaded\hkpCharacterProxyRegisterSpu.cpp">
+        <Filter>CharacterControl\CharacterProxy\Multithreaded</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\hkpUtilitiesTrackerClasses.cpp">
+        <Filter>Classes</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Collide\Filter\GroupFilter\hkpGroupFilterUtil.cpp">
+        <Filter>Collide\Filter\GroupFilter</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Actions\Spring\hkpSpringAction.cpp">
+        <Filter>Actions\Spring</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Collide\ShapeUtils\CollapseTransform\hkpTransformCollapseUtil.h">
+        <Filter>Collide\ShapeUtils\CollapseTransform</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Collide\ShapeUtils\SimpleMeshTklStreamer\hkpSimpleMeshTklStreamer.h">
+        <Filter>Collide\ShapeUtils\SimpleMeshTklStreamer</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="CharacterControl\CharacterProxy\Multithreaded\Util\hkpCharacterProxyJobUtil.cpp">
+        <Filter>CharacterControl\CharacterProxy\Multithreaded\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Dynamics\SaveContactPoints\hkpSaveContactPointsUtil.cpp">
+        <Filter>Dynamics\SaveContactPoints</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Collide\ContactModifiers\SurfaceVelocity\hkpSurfaceVelocityUtil.inl">
+        <Filter>Collide\ContactModifiers\SurfaceVelocity</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Serialize\Display\hkpSerializedDisplayMarkerList.h">
+        <Filter>Serialize\Display</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Actions\Wind\hkpWindAction.cpp">
+        <Filter>Actions\Wind</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Actions\AngularDashpot\hkpAngularDashpotAction.cpp">
+        <Filter>Actions\AngularDashpot</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Dynamics\TimeSteppers\hkpAsynchronousTimestepper.h">
+        <Filter>Dynamics\TimeSteppers</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="VisualDebugger\Viewer\Collide\hkpInactiveContactPointViewer.h">
+        <Filter>VisualDebugger\Viewer\Collide</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="VisualDebugger\Viewer\hkpShapeDisplayBuilder.h">
+        <Filter>VisualDebugger\Viewer</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Weapons\hkpMountedBallGun.cpp">
+        <Filter>Weapons</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Dynamics\KeyFrame\hkpKeyFrameUtility.h">
+        <Filter>Dynamics\KeyFrame</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Collide\ContactModifiers\MassChanger\hkpCollisionMassChangerUtil.cpp">
+        <Filter>Collide\ContactModifiers\MassChanger</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="CharacterControl\CharacterRigidBody\hkpCharacterRigidBodyListener.cpp">
+        <Filter>CharacterControl\CharacterRigidBody</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Collide\ShapeUtils\CollapseTransform\hkpTransformCollapseUtil.cpp">
+        <Filter>Collide\ShapeUtils\CollapseTransform</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Constraint\Chain\hkpPoweredChainMapper.cpp">
+        <Filter>Constraint\Chain</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Geometry\hkpGeometryConverter.h">
+        <Filter>Geometry</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="CharacterControl\hkpCharacterControl.h">
+        <Filter>CharacterControl</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Actions\Wind\hkpWindAction.h">
+        <Filter>Actions\Wind</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="CharacterControl\StateMachine\hkpDefaultCharacterStates.h">
+        <Filter>CharacterControl\StateMachine</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="VisualDebugger\Viewer\Dynamics\hkpRigidBodyCentreOfMassViewer.h">
+        <Filter>VisualDebugger\Viewer\Dynamics</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="CharacterControl\CharacterProxy\hkpCharacterProxy.h">
+        <Filter>CharacterControl\CharacterProxy</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="CharacterControl\StateMachine\hkpCharacterStateManager.h">
+        <Filter>CharacterControl\StateMachine</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Dynamics\KeyFrame\hkpKeyFrameUtility.cpp">
+        <Filter>Dynamics\KeyFrame</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="CharacterControl\CharacterProxy\hkpCharacterProxy.cpp">
+        <Filter>CharacterControl\CharacterProxy</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="VisualDebugger\Viewer\Dynamics\hkpRigidBodyInertiaViewer.h">
+        <Filter>VisualDebugger\Viewer\Dynamics</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="CharacterControl\CharacterProxy\Multithreaded\Cpu\hkpCpuCharacterProxyUtil.inl">
+        <Filter>CharacterControl\CharacterProxy\Multithreaded\Cpu</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="VisualDebugger\ShapeHash\hkpShapeHashUtil.h">
+        <Filter>VisualDebugger\ShapeHash</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpReorientActionReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Dynamics\SaveContactPoints\hkpSerializedAgentNnEntry.cpp">
+        <Filter>Dynamics\SaveContactPoints</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Serialize\hkpPhysicsData.h">
+        <Filter>Serialize</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Constraint\Bilateral\hkpConstraintUtils.h">
+        <Filter>Constraint\Bilateral</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="VisualDebugger\Viewer\Collide\hkpActiveContactPointViewer.cpp">
+        <Filter>VisualDebugger\Viewer\Collide</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="VisualDebugger\Viewer\Collide\hkpToiContactPointViewer.cpp">
+        <Filter>VisualDebugger\Viewer\Collide</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Dynamics\RigidBodyReset\hkpRigidBodyResetUtil.h">
+        <Filter>Dynamics\RigidBodyReset</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpSpringActionReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="CharacterControl\StateMachine\Flying\hkpCharacterStateFlying.h">
+        <Filter>CharacterControl\StateMachine\Flying</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Dynamics\Inertia\hkpAccurateInertiaTensorComputer.cpp">
+        <Filter>Dynamics\Inertia</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpGroupCollisionFilterReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpProjectileGunReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpCharacterProxyCinfoReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpConstrainedSystemFilterReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="CharacterControl\StateMachine\hkpCharacterContext.h">
+        <Filter>CharacterControl\StateMachine</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Actions\Spring\hkpSpringAction.h">
+        <Filter>Actions\Spring</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\LoadNativeFileInplace\loadNativeFileInplace.cpp">
+        <Filter>UnitTest\LoadNativeFileInplace</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="CharacterControl\CharacterProxy\Multithreaded\Cpu\hkpCpuCharacterProxyCollector.cpp">
+        <Filter>CharacterControl\CharacterProxy\Multithreaded\Cpu</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="VisualDebugger\Viewer\Dynamics\hkpSweptTransformDisplayViewer.h">
+        <Filter>VisualDebugger\Viewer\Dynamics</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="VisualDebugger\Viewer\Dynamics\hkpPhantomDisplayViewer.cpp">
+        <Filter>VisualDebugger\Viewer\Dynamics</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Actions\Wind\hkpWindRegion.h">
+        <Filter>Actions\Wind</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Destruction\BreakOffParts\hkpBreakOffPartsUtil.inl">
+        <Filter>Destruction\BreakOffParts</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Actions\Spring\hkpSpringAction.inl">
+        <Filter>Actions\Spring</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Classes\Reflections\hkpGravityGunReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Serialize\Display\hkpSerializedDisplayMarker.inl">
+        <Filter>Serialize\Display</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Dynamics\SaveContactPoints\hkpSerializedAgentNnEntry.h">
+        <Filter>Dynamics\SaveContactPoints</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="VisualDebugger\ShapeHash\hkpShapeHashUtil.cpp">
+        <Filter>VisualDebugger\ShapeHash</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Collide\hkpShapeGenerator.h">
+        <Filter>Collide</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="VisualDebugger\Viewer\Collide\hkpActiveContactPointViewer.h">
+        <Filter>VisualDebugger\Viewer\Collide</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Dynamics\Lazyadd\hkpLazyAddToWorld.h">
+        <Filter>Dynamics\Lazyadd</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Dynamics\SaveContactPoints\hkpSaveContactPointsEndianUtil.cpp">
+        <Filter>Dynamics\SaveContactPoints</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpAngularDashpotActionReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Actions\AngularDashpot\hkpAngularDashpotAction.inl">
+        <Filter>Actions\AngularDashpot</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="CharacterControl\CharacterProxy\Multithreaded\Cpu\hkpCpuCharacterProxyIntegrateJob.cpp">
+        <Filter>CharacterControl\CharacterProxy\Multithreaded\Cpu</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpCharacterRigidBodyCinfoReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="CharacterControl\StateMachine\Jumping\hkpCharacterStateJumping.h">
+        <Filter>CharacterControl\StateMachine\Jumping</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="VisualDebugger\Viewer\Collide\hkpConvexRadiusViewer.cpp">
+        <Filter>VisualDebugger\Viewer\Collide</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Collide\ShapeUtils\ShapeConverter\hkpShapeConverter.h">
+        <Filter>Collide\ShapeUtils\ShapeConverter</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Dynamics\SaveContactPoints\hkpPhysicsSystemWithContacts.cpp">
+        <Filter>Dynamics\SaveContactPoints</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="VisualDebugger\Viewer\Utilities\hkpMousePickingViewer.h">
+        <Filter>VisualDebugger\Viewer\Utilities</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Collide\ShapeUtils\CreateShape\hkpCreateShapeUtility.cpp">
+        <Filter>Collide\ShapeUtils\CreateShape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\TriggerVolume\addRemoveTriggerVolume.cpp">
+        <Filter>UnitTest\TriggerVolume</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Collide\ShapeUtils\ShapeKeyPath\hkpShapeKeyPath.h">
+        <Filter>Collide\ShapeUtils\ShapeKeyPath</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Dynamics\ImpulseAccumulator\hkpImpulseAccumulator.h">
+        <Filter>Dynamics\ImpulseAccumulator</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="VisualDebugger\Viewer\Dynamics\Constraint\Drawer\hkpConstraintChainDrawer.h">
+        <Filter>VisualDebugger\Viewer\Dynamics\Constraint\Drawer</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpFirstPersonGunReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Collide\Filter\GroupFilter\hkpGroupFilterUtil.h">
+        <Filter>Collide\Filter\GroupFilter</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Deprecated\DisableEntity\hkpDisableEntityCollisionFilter.cpp">
+        <Filter>Deprecated\DisableEntity</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="CharacterControl\StateMachine\Util\hkpCharacterMovementUtil.h">
+        <Filter>CharacterControl\StateMachine\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Collide\ContactModifiers\SurfaceVelocity\Filtered\hkpFilteredSurfaceVelocityUtil.cpp">
+        <Filter>Collide\ContactModifiers\SurfaceVelocity\Filtered</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="UnitTest\Tests.h">
+        <Filter>UnitTest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="VisualDebugger\Viewer\Collide\hkpConvexRadiusViewer.h">
+        <Filter>VisualDebugger\Viewer\Collide</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Serialize\hkpHavokSnapshot.cpp">
+        <Filter>Serialize</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="CharacterControl\CharacterProxy\hkpCharacterProxyCinfo.h">
+        <Filter>CharacterControl\CharacterProxy</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Collide\ShapeUtils\CreateShape\hkpCreateShapeUtility.h">
+        <Filter>Collide\ShapeUtils\CreateShape</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpPhysicsSystemWithContactsReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpSerializedDisplayMarkerListReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Collide\ShapeUtils\ShapeToMeshConverter\hkpShapeToMeshConverter.cpp">
+        <Filter>Collide\ShapeUtils\ShapeToMeshConverter</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Collide\ContactModifiers\MassChanger\hkpCollisionMassChangerUtil.h">
+        <Filter>Collide\ContactModifiers\MassChanger</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Actions\EaseConstraints\hkpEaseConstraintsAction.cpp">
+        <Filter>Actions\EaseConstraints</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="CharacterControl\StateMachine\hkpCharacterState.h">
+        <Filter>CharacterControl\StateMachine</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Serialize\Display\hkpSerializedDisplayRbTransforms.h">
+        <Filter>Serialize\Display</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Collide\ShapeUtils\ShapeKeyPath\hkpShapeKeyPath.inl">
+        <Filter>Collide\ShapeUtils\ShapeKeyPath</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="VisualDebugger\Viewer\Collide\hkpToiContactPointViewer.h">
+        <Filter>VisualDebugger\Viewer\Collide</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Actions\Wind\hkpPrevailingWind.h">
+        <Filter>Actions\Wind</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="VisualDebugger\Viewer\Dynamics\Constraint\Drawer\hkpConstraintChainDrawer.cpp">
+        <Filter>VisualDebugger\Viewer\Dynamics\Constraint\Drawer</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Constraint\Chain\hkpPoweredChainMapper.inl">
+        <Filter>Constraint\Chain</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Dynamics\ImpulseAccumulator\hkpImpulseAccumulator.cpp">
+        <Filter>Dynamics\ImpulseAccumulator</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Actions\Wind\hkpPrevailingWind.cpp">
+        <Filter>Actions\Wind</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="VisualDebugger\hkpPhysicsContext.cpp">
+        <Filter>VisualDebugger</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Actions\Motor\hkpMotorAction.inl">
+        <Filter>Actions\Motor</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="Collide\TriggerVolume\hkpTriggerVolume.inl">
+        <Filter>Collide\TriggerVolume</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="VisualDebugger\Viewer\Collide\hkpConvexRadiusBuilder.h">
+        <Filter>VisualDebugger\Viewer\Collide</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="UnitTest\TriggerVolume\unitTestTriggerVolume.h">
+        <Filter>UnitTest\TriggerVolume</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Collide\ContactModifiers\ViscoseSurface\hkpViscoseSurfaceUtil.cpp">
+        <Filter>Collide\ContactModifiers\ViscoseSurface</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="CharacterControl\CharacterRigidBody\hkpCharacterRigidBodyCinfo.h">
+        <Filter>CharacterControl\CharacterRigidBody</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="CharacterControl\StateMachine\Climbing\hkpCharacterStateClimbing.h">
+        <Filter>CharacterControl\StateMachine\Climbing</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Collide\ShapeUtils\ShapeScaling\hkpShapeScalingUtility.cpp">
+        <Filter>Collide\ShapeUtils\ShapeScaling</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="CharacterControl\StateMachine\InAir\hkpCharacterStateInAir.h">
+        <Filter>CharacterControl\StateMachine\InAir</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="CharacterControl\CharacterProxy\Multithreaded\hkpCharacterProxyJobQueueUtils.cpp">
+        <Filter>CharacterControl\CharacterProxy\Multithreaded</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Dynamics\TimeSteppers\hkpVariableTimestepper.cpp">
+        <Filter>Dynamics\TimeSteppers</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Dynamics\ScaleSystem\hkpSystemScalingUtility.cpp">
+        <Filter>Dynamics\ScaleSystem</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="CharacterControl\StateMachine\InAir\hkpCharacterStateInAir.cpp">
+        <Filter>CharacterControl\StateMachine\InAir</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Collide\ShapeUtils\ShapeScaling\hkpShapeScalingUtility.h">
+        <Filter>Collide\ShapeUtils\ShapeScaling</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="VisualDebugger\Viewer\Collide\hkpToiCountViewer.h">
+        <Filter>VisualDebugger\Viewer\Collide</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Deprecated\hkpCollapseTransformsDeprecated.h">
+        <Filter>Deprecated</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Deprecated\DisableEntity\hkpDisableEntityCollisionFilter.h">
+        <Filter>Deprecated\DisableEntity</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpTriggerVolumeReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Destruction\BreakOffParts\hkpBreakOffPartsUtil.cpp">
+        <Filter>Destruction\BreakOffParts</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="VisualDebugger\Viewer\Dynamics\hkpConstraintViewer.h">
+        <Filter>VisualDebugger\Viewer\Dynamics</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Dynamics\SaveContactPoints\hkpPhysicsSystemWithContacts.inl">
+        <Filter>Dynamics\SaveContactPoints</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Collide\ShapeUtils\ShapeSharing\hkpShapeSharingUtil.cpp">
+        <Filter>Collide\ShapeUtils\ShapeSharing</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Dynamics\Inertia\hkpAccurateInertiaTensorComputer.h">
+        <Filter>Dynamics\Inertia</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Dynamics\TimeSteppers\hkpAsynchronousTimestepper.cpp">
+        <Filter>Dynamics\TimeSteppers</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="CharacterControl\CharacterProxy\Multithreaded\Cpu\hkpCpuCharacterProxyCollector.h">
+        <Filter>CharacterControl\CharacterProxy\Multithreaded\Cpu</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpSerializedAgentNnEntryReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Weapons\hkpGravityGun.cpp">
+        <Filter>Weapons</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Serialize\hkpPhysicsToSceneDataBridge.h">
+        <Filter>Serialize</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpDisplayBindingDataReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="VisualDebugger\Viewer\Dynamics\hkpWorldSnapshotViewer.cpp">
+        <Filter>VisualDebugger\Viewer\Dynamics</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="VisualDebugger\Viewer\Dynamics\hkpConstraintViewer.cpp">
+        <Filter>VisualDebugger\Viewer\Dynamics</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="VisualDebugger\Viewer\Collide\hkpInconsistentWindingViewer.h">
+        <Filter>VisualDebugger\Viewer\Collide</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="VisualDebugger\Viewer\Dynamics\hkpRigidBodyLocalFrameViewer.cpp">
+        <Filter>VisualDebugger\Viewer\Dynamics</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Collide\TriggerVolume\hkpTriggerVolume.h">
+        <Filter>Collide\TriggerVolume</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Collide\ShapeUtils\ShapeMerger\hkpShapeMergeUtility.cpp">
+        <Filter>Collide\ShapeUtils\ShapeMerger</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="VisualDebugger\Viewer\Dynamics\hkpRigidBodyLocalFrameViewer.h">
+        <Filter>VisualDebugger\Viewer\Dynamics</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Dynamics\ImpulseAccumulator\hkpImpulseAccumulator.inl">
+        <Filter>Dynamics\ImpulseAccumulator</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="CharacterControl\StateMachine\hkpCharacterContext.cpp">
+        <Filter>CharacterControl\StateMachine</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpMouseSpringActionReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Actions\MouseSpring\hkpMouseSpringAction.cpp">
+        <Filter>Actions\MouseSpring</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Destruction\BreakOffParts\hkpBreakOffPartsUtil.h">
+        <Filter>Destruction\BreakOffParts</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpMotorActionReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Serialize\Display\hkpSerializedDisplayRbTransforms.inl">
+        <Filter>Serialize\Display</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Serialize\Display\hkpSerializedDisplayRbTransforms.cpp">
+        <Filter>Serialize\Display</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="VisualDebugger\Viewer\Collide\hkpWeldingViewer.cpp">
+        <Filter>VisualDebugger\Viewer\Collide</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Dynamics\SaveContactPoints\hkpPhysicsSystemWithContacts.h">
+        <Filter>Dynamics\SaveContactPoints</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Dynamics\EntityContactCollector\hkpEntityContactCollector.h">
+        <Filter>Dynamics\EntityContactCollector</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Dynamics\RigidBodyReset\hkpRigidBodyResetUtil.cpp">
+        <Filter>Dynamics\RigidBodyReset</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Deprecated\ConstrainedSystem\hkpConstrainedSystemFilter.h">
+        <Filter>Deprecated\ConstrainedSystem</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Actions\Dashpot\hkpDashpotAction.cpp">
+        <Filter>Actions\Dashpot</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="VisualDebugger\Viewer\Collide\hkpInactiveContactPointViewer.cpp">
+        <Filter>VisualDebugger\Viewer\Collide</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Constraint\Chain\hkpPoweredChainMapperUtil.cpp">
+        <Filter>Constraint\Chain</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Actions\AngularDashpot\hkpAngularDashpotAction.h">
+        <Filter>Actions\AngularDashpot</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Dynamics\PhantomBatchMove\hkpPhantomBatchMoveUtil.h">
+        <Filter>Dynamics\PhantomBatchMove</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Weapons\hkpFirstPersonGun.cpp">
+        <Filter>Weapons</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="CharacterControl\CharacterProxy\Multithreaded\Cpu\hkpCpuCharacterProxyIntegrateJob.h">
+        <Filter>CharacterControl\CharacterProxy\Multithreaded\Cpu</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="CharacterControl\CharacterProxy\Multithreaded\Util\hkpCharacterProxyJobUtil.h">
+        <Filter>CharacterControl\CharacterProxy\Multithreaded\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Classes\hkpUtilitiesClasses.cxx">
+        <Filter>Classes</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Actions\EaseConstraints\hkpEaseConstraintsAction.h">
+        <Filter>Actions\EaseConstraints</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Collide\ShapeUtils\ShapeKeyPath\hkpShapeKeyPath.cpp">
+        <Filter>Collide\ShapeUtils\ShapeKeyPath</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Actions\Dashpot\hkpDashpotAction.h">
+        <Filter>Actions\Dashpot</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="CharacterControl\CharacterProxy\Multithreaded\hkpCharacterProxyJobQueueUtils.h">
+        <Filter>CharacterControl\CharacterProxy\Multithreaded</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="VisualDebugger\Viewer\Dynamics\hkpWorldSnapshotViewer.h">
+        <Filter>VisualDebugger\Viewer\Dynamics</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Dynamics\SaveContactPoints\hkpSaveContactPointsEndianUtil.h">
+        <Filter>Dynamics\SaveContactPoints</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="CharacterControl\StateMachine\Climbing\hkpCharacterStateClimbing.cpp">
+        <Filter>CharacterControl\StateMachine\Climbing</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Dynamics\PhantomBatchMove\hkpPhantomBatchMoveUtil.cpp">
+        <Filter>Dynamics\PhantomBatchMove</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Collide\ContactModifiers\SoftContact\hkpSoftContactUtil.h">
+        <Filter>Collide\ContactModifiers\SoftContact</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Weapons\hkpFirstPersonGun.h">
+        <Filter>Weapons</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="CharacterControl\CharacterProxy\Multithreaded\Cpu\hkpCpuCharacterProxyUtil.h">
+        <Filter>CharacterControl\CharacterProxy\Multithreaded\Cpu</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\TriggerVolume\overlappingBodiesRemoval.cpp">
+        <Filter>UnitTest\TriggerVolume</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="VisualDebugger\Viewer\Collide\hkpContactPointViewer.h">
+        <Filter>VisualDebugger\Viewer\Collide</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Actions\Reorient\hkpReorientAction.h">
+        <Filter>Actions\Reorient</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="CharacterControl\FirstPersonCharacter\hkpFirstPersonCharacter.cpp">
+        <Filter>CharacterControl\FirstPersonCharacter</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Collide\hkpShapeGenerator.cpp">
+        <Filter>Collide</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="CharacterControl\StateMachine\OnGround\hkpCharacterStateOnGround.cpp">
+        <Filter>CharacterControl\StateMachine\OnGround</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="VisualDebugger\Viewer\Vehicle\hkpVehicleViewer.h">
+        <Filter>VisualDebugger\Viewer\Vehicle</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Actions\Wind\hkpWind.cpp">
+        <Filter>Actions\Wind</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="CharacterControl\StateMachine\hkpCharacterStateManager.cpp">
+        <Filter>CharacterControl\StateMachine</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="CharacterControl\FirstPersonCharacter\hkpFirstPersonCharacter.h">
+        <Filter>CharacterControl\FirstPersonCharacter</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="VisualDebugger\Viewer\Collide\hkpMidphaseViewer.h">
+        <Filter>VisualDebugger\Viewer\Collide</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="CharacterControl\hkpCharacterControllerCinfo.h">
+        <Filter>CharacterControl</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="CharacterControl\CharacterProxy\Multithreaded\hkpCharacterProxyJobs.cpp">
+        <Filter>CharacterControl\CharacterProxy\Multithreaded</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="VisualDebugger\Viewer\Collide\hkpCollideDebugUtil.h">
+        <Filter>VisualDebugger\Viewer\Collide</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="VisualDebugger\Viewer\Dynamics\hkpSimulationIslandViewer.cpp">
+        <Filter>VisualDebugger\Viewer\Dynamics</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Collide\RemoveContact\hkpRemoveContactUtil.h">
+        <Filter>Collide\RemoveContact</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Collide\ContactModifiers\SurfaceVelocity\Filtered\hkpFilteredSurfaceVelocityUtil.h">
+        <Filter>Collide\ContactModifiers\SurfaceVelocity\Filtered</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Collide\ShapeUtils\SimpleMeshTklStreamer\hkpSimpleMeshTklStreamer.cpp">
+        <Filter>Collide\ShapeUtils\SimpleMeshTklStreamer</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Collide\ShapeUtils\MoppCodeStreamer\hkpMoppCodeStreamer.h">
+        <Filter>Collide\ShapeUtils\MoppCodeStreamer</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="VisualDebugger\Viewer\Dynamics\hkpSingleBodyConstraintViewer.h">
+        <Filter>VisualDebugger\Viewer\Dynamics</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="VisualDebugger\Viewer\Collide\hkpToiCountViewer.cpp">
+        <Filter>VisualDebugger\Viewer\Collide</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Weapons\hkpBallGun.h">
+        <Filter>Weapons</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Dynamics\EntityContactCollector\hkpEntityContactCollector.cpp">
+        <Filter>Dynamics\EntityContactCollector</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpSerializedDisplayMarkerReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Collide\ShapeUtils\MoppCodeStreamer\hkpMoppCodeStreamer.cpp">
+        <Filter>Collide\ShapeUtils\MoppCodeStreamer</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Classes\hkpUtilitiesClasses.h">
+        <Filter>Classes</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Weapons\hkpBallGun.cpp">
+        <Filter>Weapons</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Collide\ShapeUtils\ShapeConverter\hkpShapeConverter.cpp">
+        <Filter>Collide\ShapeUtils\ShapeConverter</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Deprecated\H1Group\hkpGroupCollisionFilter.h">
+        <Filter>Deprecated\H1Group</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="VisualDebugger\Viewer\Collide\hkpMidphaseViewer.cpp">
+        <Filter>VisualDebugger\Viewer\Collide</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\hkpUtilitiesUnitTestTrackerClasses.cpp">
+        <Filter>Classes</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Actions\Reorient\hkpReorientAction.cpp">
+        <Filter>Actions\Reorient</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Serialize\hkpPhysicsToSceneDataBridge.cpp">
+        <Filter>Serialize</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="VisualDebugger\Viewer\Dynamics\hkpRigidBodyCentreOfMassViewer.cpp">
+        <Filter>VisualDebugger\Viewer\Dynamics</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="CharacterControl\CharacterProxy\Multithreaded\Cpu\hkpCpuCharacterProxyUtil.cpp">
+        <Filter>CharacterControl\CharacterProxy\Multithreaded\Cpu</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="VisualDebugger\Viewer\Dynamics\hkpWorldViewerBase.h">
+        <Filter>VisualDebugger\Viewer\Dynamics</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\TriggerVolume\teleportTriggerVolume.cpp">
+        <Filter>UnitTest\TriggerVolume</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="CharacterControl\CharacterProxy\hkpCharacterProxy.inl">
+        <Filter>CharacterControl\CharacterProxy</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="UnitTest\Inertia\inertiahelper.cpp">
+        <Filter>UnitTest\Inertia</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Weapons\hkpMountedBallGun.h">
+        <Filter>Weapons</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\Collide\shapekeypath.cpp">
+        <Filter>UnitTest\Collide</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Collide\ContactModifiers\SurfaceVelocity\hkpSurfaceVelocityUtil.cpp">
+        <Filter>Collide\ContactModifiers\SurfaceVelocity</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="VisualDebugger\Viewer\Dynamics\hkpRigidBodyInertiaViewer.cpp">
+        <Filter>VisualDebugger\Viewer\Dynamics</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="VisualDebugger\hkpPhysicsContext.h">
+        <Filter>VisualDebugger</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="CharacterControl\StateMachine\Util\hkpCharacterMovementUtil.cpp">
+        <Filter>CharacterControl\StateMachine\Util</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Actions\EasePenetration\hkpEasePenetrationAction.h">
+        <Filter>Actions\EasePenetration</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Collide\ShapeUtils\ShapeSharing\hkpShapeSharingUtil.h">
+        <Filter>Collide\ShapeUtils\ShapeSharing</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Dynamics\Lazyadd\hkpLazyAddToWorld.cpp">
+        <Filter>Dynamics\Lazyadd</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Actions\Motor\hkpMotorAction.cpp">
+        <Filter>Actions\Motor</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="VisualDebugger\Viewer\Vehicle\hkpVehicleViewer.cpp">
+        <Filter>VisualDebugger\Viewer\Vehicle</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Dynamics\SaveContactPoints\hkpSaveContactPointsUtil.h">
+        <Filter>Dynamics\SaveContactPoints</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="VisualDebugger\Viewer\Utilities\hkpMousePickingViewer.cpp">
+        <Filter>VisualDebugger\Viewer\Utilities</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="VisualDebugger\Viewer\Dynamics\hkpSweptTransformDisplayViewer.cpp">
+        <Filter>VisualDebugger\Viewer\Dynamics</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Collide\ContactModifiers\SurfaceVelocity\hkpSurfaceVelocityUtil.h">
+        <Filter>Collide\ContactModifiers\SurfaceVelocity</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\Collide\collapse.cpp">
+        <Filter>UnitTest\Collide</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Collide\ShapeUtils\ShapeToMeshConverter\hkpShapeToMeshConverter.h">
+        <Filter>Collide\ShapeUtils\ShapeToMeshConverter</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Collide\ContactModifiers\CenterOfMassChanger\hkpCenterOfMassChangerUtil.h">
+        <Filter>Collide\ContactModifiers\CenterOfMassChanger</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="VisualDebugger\Viewer\Collide\hkpInconsistentWindingViewer.cpp">
+        <Filter>VisualDebugger\Viewer\Collide</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="VisualDebugger\Viewer\Collide\hkpBroadphaseViewer.cpp">
+        <Filter>VisualDebugger\Viewer\Collide</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Dynamics\Inertia\hkpInertiaTensorComputer.h">
+        <Filter>Dynamics\Inertia</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\Collide\shareshapes.cpp">
+        <Filter>UnitTest\Collide</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="VisualDebugger\Viewer\Collide\hkpShapeDisplayViewer.cpp">
+        <Filter>VisualDebugger\Viewer\Collide</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="VisualDebugger\Viewer\hkpShapeDisplayBuilder.cpp">
+        <Filter>VisualDebugger\Viewer</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="VisualDebugger\Viewer\Collide\hkpBroadphaseViewer.h">
+        <Filter>VisualDebugger\Viewer\Collide</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="CharacterControl\CharacterProxy\Multithreaded\Spu\hkpSpuCharacterProxyConfig.h">
+        <Filter>CharacterControl\CharacterProxy\Multithreaded\Spu</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Serialize\hkpHavokSnapshot.h">
+        <Filter>Serialize</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="VisualDebugger\Viewer\hkpShapeContinueData.h">
+        <Filter>VisualDebugger\Viewer</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Actions\Wind\hkpWind.h">
+        <Filter>Actions\Wind</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="CharacterControl\CharacterRigidBody\hkpCharacterRigidBody.h">
+        <Filter>CharacterControl\CharacterRigidBody</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Collide\ContactModifiers\CenterOfMassChanger\hkpCenterOfMassChangerUtil.cpp">
+        <Filter>Collide\ContactModifiers\CenterOfMassChanger</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Dynamics\SuspendInactiveAgents\hkpSuspendInactiveAgentsUtil.cpp">
+        <Filter>Dynamics\SuspendInactiveAgents</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Actions\Wind\hkpWindRegion.cpp">
+        <Filter>Actions\Wind</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Dynamics\ScaleSystem\hkpSystemScalingUtility.h">
+        <Filter>Dynamics\ScaleSystem</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Weapons\hkpProjectileGun.cpp">
+        <Filter>Weapons</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="CharacterControl\StateMachine\OnGround\hkpCharacterStateOnGround.h">
+        <Filter>CharacterControl\StateMachine\OnGround</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="CharacterControl\CharacterRigidBody\hkpCharacterRigidBodyListener.h">
+        <Filter>CharacterControl\CharacterRigidBody</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\TriggerVolume\overlappingCollisions.cpp">
+        <Filter>UnitTest\TriggerVolume</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Dynamics\TimeSteppers\hkpVariableTimestepper.h">
+        <Filter>Dynamics\TimeSteppers</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="CharacterControl\StateMachine\hkpCharacterState.cpp">
+        <Filter>CharacterControl\StateMachine</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="CharacterControl\CharacterProxy\hkpCharacterProxyListener.h">
+        <Filter>CharacterControl\CharacterProxy</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Collide\ContactModifiers\SoftContact\hkpSoftContactUtil.cpp">
+        <Filter>Collide\ContactModifiers\SoftContact</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Weapons\hkpProjectileGun.h">
+        <Filter>Weapons</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="VisualDebugger\Viewer\Dynamics\hkpPhantomDisplayViewer.h">
+        <Filter>VisualDebugger\Viewer\Dynamics</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Actions\Dashpot\hkpDashpotAction.inl">
+        <Filter>Actions\Dashpot</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Geometry\hkpGeometryConverter.cpp">
+        <Filter>Geometry</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Actions\Motor\hkpMotorAction.h">
+        <Filter>Actions\Motor</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Deprecated\H1Group\hkpGroupCollisionFilter.cpp">
+        <Filter>Deprecated\H1Group</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="VisualDebugger\Viewer\Collide\hkpShapeDisplayViewer.h">
+        <Filter>VisualDebugger\Viewer\Collide</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpDashpotActionReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="VisualDebugger\Viewer\Collide\hkpConvexRadiusBuilder.cpp">
+        <Filter>VisualDebugger\Viewer\Collide</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="VisualDebugger\Viewer\Dynamics\hkpWorldViewerBase.cpp">
+        <Filter>VisualDebugger\Viewer\Dynamics</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="VisualDebugger\ShapeHash\hkpShapeHashUtil.inl">
+        <Filter>VisualDebugger\ShapeHash</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <None Include="CharacterControl\CharacterProxy\Multithreaded\hkpCharacterProxyJobs.inl">
+        <Filter>CharacterControl\CharacterProxy\Multithreaded</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="CharacterControl\StateMachine\Jumping\hkpCharacterStateJumping.cpp">
+        <Filter>CharacterControl\StateMachine\Jumping</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Collide\ShapeUtils\ShapeMerger\hkpShapeMergeUtility.h">
+        <Filter>Collide\ShapeUtils\ShapeMerger</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpPhysicsDataReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Actions\MouseSpring\hkpMouseSpringAction.h">
+        <Filter>Actions\MouseSpring</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="VisualDebugger\Viewer\Dynamics\hkpSingleBodyConstraintViewer.cpp">
+        <Filter>VisualDebugger\Viewer\Dynamics</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Serialize\hkpPhysicsData.cpp">
+        <Filter>Serialize</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+
+  </ItemGroup>
+</Project>
