@@ -140,6 +140,42 @@ namespace Math
 
 			return mat;
 		}
+
+		/************************************************************************/
+		/*  Convert From Hk to Qt                                               */
+		/************************************************************************/
+		static vec3 toQtVec3(const hkVector4& v)
+		{
+			return vec3(v(0), v(1), v(2));
+		}
+
+		static vec4 toQtVec4(const hkVector4& v)
+		{
+			return vec4(v(0), v(1), v(2), v(3));
+		}
+
+		static quat toQtQuat(const hkQuaternion& q)
+		{
+			return quat(q(3), q(0), q(1), q(2));
+		}
+
+		/************************************************************************/
+		/*  Convert From Qt to Hk                                               */
+		/************************************************************************/
+		static hkVector4 toHkVec4(const vec3& v)
+		{
+			return hkVector4(v.x(), v.y(), v.z());
+		}
+
+		static hkVector4 toHkVec4(const vec4& v)
+		{
+			return hkVector4(v.x(), v.y(), v.z(), v.w());
+		}
+
+		static hkQuaternion toHkQuat(const quat& q)
+		{
+			return hkQuaternion(q.x(), q.y(), q.z(), q.scalar());
+		}
 	}
 
 	namespace Matrix3

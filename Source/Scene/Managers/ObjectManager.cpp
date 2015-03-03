@@ -52,8 +52,13 @@ void ObjectManager::renderAll(const float currentTime)
 // 			}
  			//rb->applyAngularImpulse(vec3(0,0.1,0.1));
 			//rb->applyPointImpulse(vec3(0.1, 0, 0), vec3(0.2, 0, 0.2));
-			go->setPosition(rb->getPosition());
-			go->setRotation(rb->getRotation());
+// 			go->setPosition(rb->getPosition());
+// 			go->setRotation(rb->getRotation());
+
+			// use havok
+			hkpRigidBody* hkrb = rb->getHkReference();
+			go->setPosition(Math::Converter::toQtVec3(hkrb->getPosition()));
+			go->setRotation(Math::Converter::toQtQuat(hkrb->getRotation()));
 		}
 	}
 

@@ -85,6 +85,8 @@ private:
 	void saveScene(QString& fileName);
 
 	void initPhysicsModule();
+	void initHavokPhysicsModule();
+	void bridgeToHavokPhysicsWorld();
 
 	mutable bool m_bPhysicsPaused, m_bStepPhysics;
 	QString m_currentSceneFile;
@@ -116,5 +118,7 @@ private:
 	// Physics
 	//
 	PhysicsWorld* m_physicsWorld;
+
+	hkpWorld* m_havokPhysicsWorld;
 };
 

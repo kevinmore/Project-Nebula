@@ -144,6 +144,7 @@
     <ClInclude Include="UI\HierarchyWidget.h" />
     <ClInclude Include="Physicis\Entity\RigidBody.h" />
     <ClInclude Include="Scene\Scene.h" />
+    <ClInclude Include="Utility\HavokFeatures.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="UI\HierarchyWidget.ui" />

@@ -5,43 +5,7 @@
 #include <Primitives/Puppet.h>
 #include <Physicis/Collision/Collider/SphereCollider.h>
 #include <Physicis/Collision/Collider/BoxCollider.h>
-
-
-//
-// Forward declarations
-//
-
-void setupPhysics(hkpWorld* physicsWorld);
-hkVisualDebugger* setupVisualDebugger(hkpPhysicsContext* worlds);
-void stepVisualDebugger(hkVisualDebugger* vdb);
-hkpRigidBody* g_ball;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#include <Utility/HavokFeatures.h>
 
 Scene::Scene(QObject* parent)
 	: IScene(parent),
@@ -61,6 +25,7 @@ Scene::~Scene()
 	clearScene();
 	SAFE_DELETE(m_camera);
 	SAFE_DELETE(m_sceneRootNode);
+	m_havokPhysicsWorld->removeReference();
 }
 
 void Scene::initialize()
@@ -68,6 +33,7 @@ void Scene::initialize()
 	Q_ASSERT(initializeOpenGLFunctions());
 
 	initPhysicsModule();
+	initHavokPhysicsModule();
 
 	//glEnable(GL_PROGRAM_POINT_SIZE);
 	glEnable(GL_CULL_FACE);
@@ -93,6 +59,7 @@ void Scene::initPhysicsModule()
 	PhysicsWorldConfig config;
 
 	m_physicsWorld = new PhysicsWorld(config);
+
 }
 
 void Scene::update(float currentTime)
@@ -113,7 +80,8 @@ void Scene::update(float currentTime)
 	if (!m_bPhysicsPaused || m_bStepPhysics)
 	{
 		// update the physics world
-		m_physicsWorld->simulate(dt);
+		//m_physicsWorld->simulate(dt);
+		m_havokPhysicsWorld->stepDeltaTime(dt);
 	}
 	m_physicsWorld->setCurrentTime(m_relativeTime);
 
@@ -279,7 +247,7 @@ void Scene::loadScene( QString& fileName )
 	// make sure to send out this signal
 	emit updateHierarchy();
 
-
+	bridgeToHavokPhysicsWorld();
 	// broad phase demo
 // 	{
 // 		GameObjectPtr go = createEmptyGameObject("Boarder");
@@ -581,5 +549,111 @@ void Scene::addLight( LightPtr l )
 	emit ligthsChanged();
 }
 
+void Scene::initHavokPhysicsModule()
+{
+	hkMemorySystem::FrameInfo finfo(500 * 1024);	// Allocate 500KB of Physics solver buffer
+	hkMemoryRouter* memoryRouter = hkMemoryInitUtil::initDefault(hkMallocAllocator::m_defaultMallocAllocator, finfo);
+	hkBaseSystem::init( memoryRouter, errorReport );
 
+	// Create the physics world
+	hkpWorldCinfo worldInfo;
+	worldInfo.setupSolverInfo(hkpWorldCinfo::SOLVER_TYPE_4ITERS_MEDIUM);
+	worldInfo.m_gravity = hkVector4(0.0f, -9.8f, 0.0f);
+	worldInfo.m_broadPhaseBorderBehaviour = hkpWorldCinfo::BROADPHASE_BORDER_FIX_ENTITY; // just fix the entity if the object falls off too far
+
+	// You must specify the size of the broad phase - objects should not be simulated outside this region
+	worldInfo.setBroadPhaseWorldSize(1000.0f);
+	m_havokPhysicsWorld = new hkpWorld(worldInfo);
+
+	// Register all collision agents, even though only box - box will be used in this particular example.
+	// It's important to register collision agents before adding any entities to the world.
+	{
+		hkpAgentRegisterUtil::registerAllAgents( m_havokPhysicsWorld->getCollisionDispatcher() );
+	}
+
+	// Create the floor as a fixed box
+	{
+		hkpRigidBodyCinfo boxInfo;
+		hkVector4 boxSize(50.0f, 0.5f , 50.0f);
+		hkpBoxShape* boxShape = new hkpBoxShape(boxSize);
+		boxInfo.m_shape = boxShape;
+		boxInfo.m_motionType = hkpMotion::MOTION_FIXED;
+		boxInfo.m_position.set(0.0f, -0.25f, 0.0f);
+		boxInfo.m_restitution = 0.9f;
+
+		hkpRigidBody* floor = new hkpRigidBody(boxInfo);
+		boxShape->removeReference();
+
+		m_havokPhysicsWorld->addEntity(floor);
+		floor->removeReference();
+	}
+}
+
+void Scene::bridgeToHavokPhysicsWorld()
+{
+	// reads all entities from native physics world
+	m_havokPhysicsWorld->removeAll();
+	QList<PhysicsWorldObject*> entityList = m_physicsWorld->getEntityList();
+	foreach(PhysicsWorldObject* obj, entityList)
+	{
+		RigidBody* rb = (RigidBody*)obj;
+
+		hkpRigidBodyCinfo bodyInfo;
+		hkpRigidBody* hkRB;
+		hkpShape* shape;
+
+		RigidBody::MotionType motion = rb->getMotionType();
+		switch(motion)
+		{
+		case RigidBody::MOTION_BOX_INERTIA:
+			bodyInfo.m_motionType == hkpMotion::MOTION_BOX_INERTIA;
+			break;
+		case  RigidBody::MOTION_SPHERE_INERTIA:
+			bodyInfo.m_motionType == hkpMotion::MOTION_SPHERE_INERTIA;
+			break;
+		case RigidBody::MOTION_FIXED:
+			bodyInfo.m_motionType == hkpMotion::MOTION_FIXED;
+			break;
+		}
+
+		ColliderPtr collider = rb->getBroadPhaseCollider();
+		BoxColliderPtr box = collider.dynamicCast<BoxCollider>();
+		SphereColliderPtr sphere = collider.dynamicCast<SphereCollider>();
+		hkMassProperties massProperties;
+		if (box)
+		{
+			hkVector4 boxSize = Math::Converter::toHkVec4(box->getHalfExtents());
+			shape = new hkpBoxShape(boxSize);
+
+			// Compute mass properties
+			hkpInertiaTensorComputer::computeBoxVolumeMassProperties(boxSize, rb->getMass(), massProperties);
+		}
+		if (sphere)
+		{
+			shape = new hkpSphereShape(sphere->getRadius());
+
+			// Compute mass properties
+			hkpInertiaTensorComputer::computeSphereVolumeMassProperties(sphere->getRadius(), rb->getMass(), massProperties);
+		}
+
+		bodyInfo.m_shape = shape;
+		bodyInfo.m_inertiaTensor = massProperties.m_inertiaTensor;
+		bodyInfo.m_centerOfMass = massProperties.m_centerOfMass;
+		bodyInfo.m_mass = massProperties.m_mass;
+		bodyInfo.m_position = Math::Converter::toHkVec4(rb->getPosition());
+		bodyInfo.m_rotation = Math::Converter::toHkQuat(rb->getRotation());
+		bodyInfo.m_linearVelocity = Math::Converter::toHkVec4(rb->getLinearVelocity());
+		bodyInfo.m_angularVelocity = Math::Converter::toHkVec4(rb->getAngularVelocity());
+		bodyInfo.m_restitution = rb->getRestitution();
+		bodyInfo.m_gravityFactor = rb->getGravityFactor();
+		
+		hkRB = new hkpRigidBody(bodyInfo);
+		m_havokPhysicsWorld->addEntity(hkRB);
+
+		rb->setHkReference(hkRB);
+
+		shape->removeReference();
+		hkRB->removeReference();
+	}
+}
 

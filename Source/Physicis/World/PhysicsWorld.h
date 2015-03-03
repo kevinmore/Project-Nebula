@@ -76,6 +76,8 @@ public:
 
 	inline void setCurrentTime(const float time) { m_currentTime = time; }
 
+	QList<PhysicsWorldObject*> getEntityList() const { return m_entityList; }
+
 private:
 	PhysicsWorldConfig m_config;
 	

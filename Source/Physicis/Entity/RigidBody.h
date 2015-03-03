@@ -347,6 +347,9 @@ public:
 	/// Back tracks the angular velocity for a given time duration
 	void backTrackAngularVelocity(const float duration);
 
+	void setHkReference(hkpRigidBody* rb) { m_hkReference = rb; }
+	inline hkpRigidBody* getHkReference() const { return m_hkReference; }
+
 protected:
 
 	/// overload function from component
@@ -465,6 +468,11 @@ protected:
 	vec3 m_userPointImpulse;
 	vec3 m_userImpulsePosition;
 	vec3 m_userAngularImpulse;
+
+	//
+	// Havok Rigid Body Reference
+	//
+	hkpRigidBody* m_hkReference;
 };
 
 typedef QSharedPointer<RigidBody> RigidBodyPtr;

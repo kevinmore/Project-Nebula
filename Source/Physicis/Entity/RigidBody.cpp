@@ -9,7 +9,7 @@
 RigidBody::RigidBody(const vec3& position, const quat& rotation, QObject* parent)
 	: PhysicsWorldObject(parent)
 {
-
+	m_hkReference = NULL;
 	m_motionType = RigidBody::MOTION_BOX_INERTIA;
 
 	m_linearVelocity = Math::Vector3::ZERO;
