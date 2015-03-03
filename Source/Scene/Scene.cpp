@@ -585,10 +585,6 @@ void Scene::bridgeToHavokPhysicsWorld()
 		hkpShape* shape = NULL;
 
 		RigidBody::MotionType motion = rb->getMotionType();
-		if (motion == RigidBody::MOTION_FIXED)
-		{
-			continue;
-		}
 		switch(motion)
 		{
 		case RigidBody::MOTION_BOX_INERTIA:

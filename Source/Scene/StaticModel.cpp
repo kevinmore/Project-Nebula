@@ -37,22 +37,22 @@ StaticModel::StaticModel( const StaticModel* orignal )
 	// copy the bounding box
 	BoxColliderPtr otherBox = orignal->getBoundingBox();
 	vec3 halfExtents = otherBox->getHalfExtents();
-
+	
 	// reset the scale of the bounding box
 	halfExtents.setX(halfExtents.x() / scale.x());
 	halfExtents.setY(halfExtents.y() / scale.y());
 	halfExtents.setZ(halfExtents.z() / scale.z());
-	m_boundingBox  = BoxColliderPtr(new BoxCollider(otherBox->getPosition(), halfExtents, m_scene));
+	m_boundingBox  = BoxColliderPtr(new BoxCollider(otherBox->getGeometryShape().getCenter(), halfExtents, m_scene));
 
 	// copy the bounding sphere
 	SphereColliderPtr otherSphere = orignal->getBoundingSphere();
 	float radius = otherSphere->getRadius() / scale.x();
-	m_boundingSpehre = SphereColliderPtr(new SphereCollider(otherSphere->getPosition(), radius, m_scene));
+	m_boundingSpehre = SphereColliderPtr(new SphereCollider(otherSphere->getGeometryShape().getCenter(), radius, m_scene));
 
 	// copy the convex hull collider
 	ConvexHullColliderPtr otherCH = orignal->getConvexHullCollider();
 	ConvexShape shape = otherCH->getGeometryShape();
-	m_convexHull = ConvexHullColliderPtr(new ConvexHullCollider(otherCH->getPosition(), shape, m_scene));
+	m_convexHull = ConvexHullColliderPtr(new ConvexHullCollider(otherCH->getGeometryShape().getCenter(), shape, m_scene));
 
 	// assign the current bounding volume
 	ColliderPtr currentBV = orignal->getCurrentBoundingVolume();
