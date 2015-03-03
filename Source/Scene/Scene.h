@@ -40,7 +40,6 @@ public:
 	MaterialManager* materialManager();
 	ObjectManager*  objectManager();
 
-	QStateMachine* getStateMachine() const { return m_stateMachine; }
 	GameObject* sceneRoot() const { return m_sceneRootNode; }
 	void setBackGroundColor(const QColor& col);
 	SkyboxPtr getSkybox() const  { return m_skybox; }
@@ -108,7 +107,6 @@ private:
 
 	QVector<vec3> m_path;
 
-	QStateMachine* m_stateMachine;
 	AnimatorController* m_playerController;
 	QVector<NPCController*> m_NPCs;
 	ParticleSystem* m_particleSystem;

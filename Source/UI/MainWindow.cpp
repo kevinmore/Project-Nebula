@@ -3,13 +3,6 @@
 #include "SkyboxDialog.h"
 #include <Utility/LogCenter.h>
 
-StateMachineViewer* MainWindow::showStateMachine(QStateMachine* machine)
-{
-	StateMachineViewer* smv = new StateMachineViewer(this);
-	smv->setStateMachine(machine);
-	return smv;
-}
-
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent),
 	  m_canvas(nullptr),
@@ -42,17 +35,6 @@ void MainWindow::initializeCanvas()
 	m_scene    = m_canvas->getScene();
 	m_camera   = m_scene->getCamera();
 
-	// show the state machine viewer
-	QStateMachine* machine = m_scene->getStateMachine();
-	if(machine)
-	{
-		m_stateMachineViewer = new QDockWidget("State Machine Viewer", this);
-		StateMachineViewer* smv = showStateMachine(machine);
-		m_stateMachineViewer->setWidget(smv);
-		m_stateMachineViewer->setFeatures(QDockWidget::AllDockWidgetFeatures);
-		addDockWidget(Qt::BottomDockWidgetArea, m_stateMachineViewer);
-		m_stateMachineViewer->hide();
-	}
 
 	QWidget* canvas = QWidget::createWindowContainer(m_canvas.data());
 	QDockWidget* m_dockCanvas = new QDockWidget("Scene", this);
@@ -155,9 +137,6 @@ void MainWindow::initializeMenuBar()
 	toggleSettingsTab->setText("Show Settings Window");
 	windowMenu->addAction(toggleSettingsTab);
 
-	QAction* toggleStateMachineViewer = m_stateMachineViewer->toggleViewAction();
-	toggleStateMachineViewer->setText("Show State Machine");
-	windowMenu->addAction(toggleStateMachineViewer);
 
 	// ############ Preference Menu ############
 	QMenu *prefMenu = menuBar()->addMenu("&Preference");

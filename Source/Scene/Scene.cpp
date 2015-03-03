@@ -60,7 +60,6 @@ Scene::~Scene()
 {
 	clearScene();
 	SAFE_DELETE(m_camera);
-	SAFE_DELETE(m_stateMachine);
 	SAFE_DELETE(m_sceneRootNode);
 }
 
@@ -82,8 +81,6 @@ void Scene::initialize()
 	m_textureManager = new TextureManager(this);
 	m_meshManager = new MeshManager(this);
 
-
-	m_stateMachine = new QStateMachine();
 
 	m_sceneRootNode = new GameObject(this);
 	m_sceneRootNode->setObjectName("Scene Root");
