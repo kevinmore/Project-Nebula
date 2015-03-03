@@ -173,6 +173,7 @@ void Scene::resetToDefaultScene()
 
 void Scene::reloadScene()
 {
+	pause();
 	if (!m_currentSceneFile.isEmpty())
 		loadScene(m_currentSceneFile);
 	else
@@ -567,26 +568,7 @@ void Scene::initHavokPhysicsModule()
 
 	// Register all collision agents, even though only box - box will be used in this particular example.
 	// It's important to register collision agents before adding any entities to the world.
-	{
-		hkpAgentRegisterUtil::registerAllAgents( m_havokPhysicsWorld->getCollisionDispatcher() );
-	}
-
-	// Create the floor as a fixed box
-	{
-		hkpRigidBodyCinfo boxInfo;
-		hkVector4 boxSize(50.0f, 0.5f , 50.0f);
-		hkpBoxShape* boxShape = new hkpBoxShape(boxSize);
-		boxInfo.m_shape = boxShape;
-		boxInfo.m_motionType = hkpMotion::MOTION_FIXED;
-		boxInfo.m_position.set(0.0f, -0.25f, 0.0f);
-		boxInfo.m_restitution = 0.9f;
-
-		hkpRigidBody* floor = new hkpRigidBody(boxInfo);
-		boxShape->removeReference();
-
-		m_havokPhysicsWorld->addEntity(floor);
-		floor->removeReference();
-	}
+	hkpAgentRegisterUtil::registerAllAgents( m_havokPhysicsWorld->getCollisionDispatcher() );
 }
 
 void Scene::bridgeToHavokPhysicsWorld()
@@ -599,10 +581,14 @@ void Scene::bridgeToHavokPhysicsWorld()
 		RigidBody* rb = (RigidBody*)obj;
 
 		hkpRigidBodyCinfo bodyInfo;
-		hkpRigidBody* hkRB;
-		hkpShape* shape;
+		hkpRigidBody* hkRB = NULL;
+		hkpShape* shape = NULL;
 
 		RigidBody::MotionType motion = rb->getMotionType();
+		if (motion == RigidBody::MOTION_FIXED)
+		{
+			continue;
+		}
 		switch(motion)
 		{
 		case RigidBody::MOTION_BOX_INERTIA:
@@ -622,7 +608,7 @@ void Scene::bridgeToHavokPhysicsWorld()
 		hkMassProperties massProperties;
 		if (box)
 		{
-			hkVector4 boxSize = Math::Converter::toHkVec4(box->getHalfExtents());
+			hkVector4 boxSize = Math::Converter::toHkVec4(0.85f*box->getHalfExtents());
 			shape = new hkpBoxShape(boxSize);
 
 			// Compute mass properties
@@ -654,6 +640,23 @@ void Scene::bridgeToHavokPhysicsWorld()
 
 		shape->removeReference();
 		hkRB->removeReference();
+	}
+
+	// Create the floor as a fixed box
+	{
+		hkpRigidBodyCinfo boxInfo;
+		hkVector4 boxSize(50.0f, 0.01f , 50.0f);
+		hkpBoxShape* boxShape = new hkpBoxShape(boxSize);
+		boxInfo.m_shape = boxShape;
+		boxInfo.m_motionType = hkpMotion::MOTION_FIXED;
+		boxInfo.m_position.set(0.0f, 0.0f, 0.0f);
+		boxInfo.m_restitution = 0.9f;
+
+		hkpRigidBody* floor = new hkpRigidBody(boxInfo);
+		boxShape->removeReference();
+
+		m_havokPhysicsWorld->addEntity(floor);
+		floor->removeReference();
 	}
 }
 

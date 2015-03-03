@@ -64,6 +64,32 @@ void RigidBody::computeInertiaTensor()
 			for (int j = 0; j < 3; ++j)
 				m_inertiaTensorInv[i][j] = 0;
 	}
+
+	if (m_hkReference)
+	{
+		hkpRigidBodyCinfo cInfo;
+		hkMassProperties massProperties;
+
+		if (box && m_motionType == MOTION_BOX_INERTIA)
+		{
+			hkVector4 boxSize = Converter::toHkVec4(box->getHalfExtents());
+			hkpInertiaTensorComputer::computeBoxVolumeMassProperties(boxSize, m_mass, massProperties);
+			m_hkReference->setInertiaLocal(massProperties.m_inertiaTensor);
+
+			hkpBoxShape* boxShape = new hkpBoxShape(boxSize);
+			m_hkReference->setShape(boxShape);
+			boxShape->removeReference();
+		}
+		else if (sphere && m_motionType == MOTION_SPHERE_INERTIA)
+		{
+			hkpInertiaTensorComputer::computeSphereVolumeMassProperties(sphere->getRadius(), m_mass, massProperties);
+			m_hkReference->setInertiaLocal(massProperties.m_inertiaTensor);
+
+			hkpSphereShape* sphereShape = new hkpSphereShape(sphere->getRadius());
+			m_hkReference->setShape(sphereShape);
+			sphereShape->removeReference();
+		}
+	}	
 }
 
 void RigidBody::update( const float dt )
@@ -244,6 +270,12 @@ void RigidBody::syncTransform( const Transform& transform )
 	{
 		m_transform = transform;
 		setAwake();
+
+		if (m_hkReference)
+		{
+			m_hkReference->setPosition(Converter::toHkVec4(transform.getPosition()));
+			m_hkReference->setRotation(Converter::toHkQuat(transform.getRotation()));
+		}
 	}
 }
 
@@ -363,16 +395,19 @@ void RigidBody::setMotionType_SLOT( const QString& type )
 void RigidBody::setMass_SLOT( double val )
 {
 	setMass(val);
+	if (m_hkReference) m_hkReference->setMass(val);
 }
 
 void RigidBody::setGravityFactor_SLOT( double val )
 {
 	m_gravityFactor = val;
+	if (m_hkReference) m_hkReference->setGravityFactor(val);
 }
 
 void RigidBody::setRestitution_SLOT( double val )
 {
 	m_restitution = val;
+	if (m_hkReference) m_hkReference->setRestitution(val);
 }
 
 void RigidBody::setLinearVelocityX_SLOT( double val )
