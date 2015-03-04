@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Steering\Ackerman">
+        <UniqueIdentifier>586303F8-8630-4858-303F-586303F85863</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="WheelCollide\LinearCast">
+        <UniqueIdentifier>7B18EBF6-B18E-467B-8EBF-7B18EBF67B18</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Simulation\PerWheel">
+        <UniqueIdentifier>224D8672-24D8-4222-D867-224D8672224D</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Camera">
+        <UniqueIdentifier>5FE5C76D-FE5C-4D5F-5C76-5FE5C76D5FE5</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Suspension">
+        <UniqueIdentifier>7C291667-C291-477C-9166-7C2916677C29</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Brake\Default">
+        <UniqueIdentifier>611A976F-11A9-4F61-A976-611A976F611A</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Manager\MultithreadedVehicle">
+        <UniqueIdentifier>17750DE1-7750-4117-50DE-17750DE11775</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Engine">
+        <UniqueIdentifier>45A54D60-5A54-4045-54D6-45A54D6045A5</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Manager\LinearCastBatchingManager">
+        <UniqueIdentifier>327983EF-2798-4F32-983E-327983EF3279</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="WheelCollide\RejectChassisListener">
+        <UniqueIdentifier>6B017154-B017-446B-1715-6B0171546B01</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Classes\Reflections">
+        <UniqueIdentifier>E9C8D3E9-8D3E-48D3-9C8D-E9C8D3E9C8D3</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Suspension\Default">
+        <UniqueIdentifier>627A5C46-27A5-4662-A5C4-627A5C46627A</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="VelocityDamper\Default">
+        <UniqueIdentifier>686165C5-8616-4568-165C-686165C56861</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="WheelCollide\RayCast">
+        <UniqueIdentifier>1DFBCCBC-DFBC-4C1D-BCCB-1DFBCCBC1DFB</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="WheelCollide">
+        <UniqueIdentifier>374B9043-74B9-4337-B904-374B9043374B</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="DriverInput\Default">
+        <UniqueIdentifier>C313D3EC-13D3-4313-3EC3-3D3EC313D3EC</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Wheel">
+        <UniqueIdentifier>654E9E60-54E9-4065-E9E6-654E9E60654E</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Transmission">
+        <UniqueIdentifier>45B0B5C8-5B0B-4845-0B5C-45B0B5C845B0</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="AeroDynamics">
+        <UniqueIdentifier>4B16B749-B16B-494B-6B74-4B16B7494B16</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Steering\Default">
+        <UniqueIdentifier>22D7FA32-2D7F-4222-7FA3-22D7FA3222D7</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Simulation">
+        <UniqueIdentifier>127E424F-27E4-4F12-E424-127E424F127E</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Classes">
+        <UniqueIdentifier>11230FAD-1230-4D11-30FA-11230FAD1123</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="AeroDynamics\Default">
+        <UniqueIdentifier>538013A6-3801-4653-013A-538013A65380</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Simulation\Default">
+        <UniqueIdentifier>470CA8A4-70CA-4447-CA8A-470CA8A4470C</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Engine\Default">
+        <UniqueIdentifier>2CEAC1D2-EAC1-4CEA-1D2C-AC1D2CEAC1D2</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="VelocityDamper">
+        <UniqueIdentifier>4C153118-C153-484C-5311-4C1531184C15</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Transmission\Default">
+        <UniqueIdentifier>1A5DE895-A5DE-451A-DE89-1A5DE8951A5D</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="DriverInput">
+        <UniqueIdentifier>43F96E13-3F96-4343-96E1-43F96E1343F9</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Manager\RayCastBatchingManager">
+        <UniqueIdentifier>4E6BD991-E6BD-414E-BD99-4E6BD9914E6B</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Manager">
+        <UniqueIdentifier>670465F2-7046-4267-465F-670465F26704</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Brake">
+        <UniqueIdentifier>6FEA6B74-FEA6-446F-A6B7-6FEA6B746FEA</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Steering">
+        <UniqueIdentifier>3904603D-9046-4D39-4603-3904603D3904</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="TyreMarks">
+        <UniqueIdentifier>3A0DA683-A0DA-433A-DA68-3A0DA6833A0D</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Classes\Reflections\hkpVehicleTransmissionReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Camera\hkp1dAngularFollowCam.h">
+        <Filter>Camera</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Suspension\Default\hkpVehicleDefaultSuspension.cpp">
+        <Filter>Suspension\Default</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Manager\hkpVehicleManager.cpp">
+        <Filter>Manager</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Simulation\PerWheel\hkpVehiclePerWheelSimulation.h">
+        <Filter>Simulation\PerWheel</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpVehicleSteeringReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Manager\hkpVehicleCastBatchingManager.cpp">
+        <Filter>Manager</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="hkpVehicleData.h">
+        <Filter></Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Steering\hkpVehicleSteering.h">
+        <Filter>Steering</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpVehicleCastBatchingManagerReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Suspension\Default\hkpVehicleDefaultSuspension.h">
+        <Filter>Suspension\Default</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="WheelCollide\RejectChassisListener\hkpRejectChassisListener.h">
+        <Filter>WheelCollide\RejectChassisListener</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Engine\hkpVehicleEngine.h">
+        <Filter>Engine</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Steering\Default\hkpVehicleDefaultSteering.cpp">
+        <Filter>Steering\Default</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpVehicleDefaultVelocityDamperReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="hkpVehicle.h">
+        <Filter></Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpRejectChassisListenerReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpVehicleDefaultEngineReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpVehicleSuspensionReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Transmission\hkpVehicleTransmission.h">
+        <Filter>Transmission</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Simulation\hkpVehicleSimulation.h">
+        <Filter>Simulation</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Wheel\hkpRaycastWheel.cpp">
+        <Filter>Wheel</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Transmission\Default\hkpVehicleDefaultTransmission.h">
+        <Filter>Transmission\Default</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="WheelCollide\RejectChassisListener\hkpRejectChassisListener.cpp">
+        <Filter>WheelCollide\RejectChassisListener</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Wheel\hkpWheel.h">
+        <Filter>Wheel</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpVehicleRayCastWheelCollideReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="AeroDynamics\Default\hkpVehicleDefaultAerodynamics.h">
+        <Filter>AeroDynamics\Default</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpVehicleInstanceReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpVehicleBrakeReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="DriverInput\Default\hkpVehicleDefaultAnalogDriverInput.h">
+        <Filter>DriverInput\Default</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpTyremarksInfoReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Camera\hkp1dAngularFollowCamCinfo.h">
+        <Filter>Camera</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="hkpVehicle.cpp">
+        <Filter></Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\hkpVehicleTrackerClasses.cpp">
+        <Filter>Classes</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpVehicleLinearCastBatchingManagerReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpVehicleEngineReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="hkpVehicleInstance.cpp">
+        <Filter></Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Classes\hkpVehicleClasses.cxx">
+        <Filter>Classes</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Brake\hkpVehicleBrake.h">
+        <Filter>Brake</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Manager\LinearCastBatchingManager\hkpVehicleLinearCastBatchingManager.cpp">
+        <Filter>Manager\LinearCastBatchingManager</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Manager\MultithreadedVehicle\hkpMultithreadedVehicleManager.h">
+        <Filter>Manager\MultithreadedVehicle</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpVehicleWheelCollideReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpVehicleManagerReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Simulation\Default\hkpVehicleDefaultSimulation.cpp">
+        <Filter>Simulation\Default</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Manager\MultithreadedVehicle\hkpMultithreadedVehicleManager.cpp">
+        <Filter>Manager\MultithreadedVehicle</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Manager\MultithreadedVehicle\hkpVehicleIntegrateJob.h">
+        <Filter>Manager\MultithreadedVehicle</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Manager\hkpVehicleManager.h">
+        <Filter>Manager</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpVehicleDefaultBrakeReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="hkpVehicleInstance.inl">
+        <Filter></Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Classes\Reflections\hkpVehicleSteeringAckermanReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="WheelCollide\LinearCast\hkpVehicleLinearCastWheelCollide.h">
+        <Filter>WheelCollide\LinearCast</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Wheel\hkpWheel.cpp">
+        <Filter>Wheel</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpVehicleDriverInputReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="AeroDynamics\hkpVehicleAerodynamics.h">
+        <Filter>AeroDynamics</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpVehicleDefaultAnalogDriverInputReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="hkpVehicleData.cpp">
+        <Filter></Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Engine\Default\hkpVehicleDefaultEngine.h">
+        <Filter>Engine\Default</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpVehicleDefaultAerodynamicsReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpVehicleDefaultTransmissionReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpVehicleRayCastBatchingManagerReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Manager\RayCastBatchingManager\hkpVehicleRayCastBatchingManager.cpp">
+        <Filter>Manager\RayCastBatchingManager</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="WheelCollide\LinearCast\hkpVehicleLinearCastWheelCollide.cpp">
+        <Filter>WheelCollide\LinearCast</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Manager\LinearCastBatchingManager\hkpVehicleLinearCastBatchingManager.h">
+        <Filter>Manager\LinearCastBatchingManager</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="hkpVehicleInstance.h">
+        <Filter></Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpVehicleDataReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Simulation\Default\hkpVehicleDefaultSimulation.h">
+        <Filter>Simulation\Default</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="TyreMarks\hkpTyremarksInfo.h">
+        <Filter>TyreMarks</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Steering\Default\hkpVehicleDefaultSteering.h">
+        <Filter>Steering\Default</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkpVehicleAerodynamicsReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Suspension\hkpVehicleSuspension.h">
+        <Filter>Suspension</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Manager\hkpVehicleCastBatchingManager.h">
+        <Filter>Manager</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Manager\MultithreadedVehicle\hkpVehicleIntegrateJob.cpp">
+        <Filter>Manager\MultithreadedVehicle</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="DriverInput\hkpVehicleDriverInput.h">
+        <Filter>DriverInput</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Camera\hkp1dAngularFollowCam.cpp">
+        <Filter>Camera</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Wheel\hkpRaycastWheel.h">
+        <Filter>Wheel</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="WheelCollide\RayCast\hkpVehicleRayCastWheelCollide.cpp">
+        <Filter>WheelCollide\RayCast</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Wheel\hkpLinearCastWheel.h">
+        <Filter>Wheel</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Manager\MultithreadedVehicle\hkpVehicleJobQueueUtils.cpp">
+        <Filter>Manager\MultithreadedVehicle</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="TyreMarks\hkpTyremarksInfo.cpp">
+        <Filter>TyreMarks</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Manager\hkpVehicleManager.inl">
+        <Filter>Manager</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Classes\Reflections\hkpVehicleDefaultSteeringReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpVehiclePerWheelSimulationReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Manager\MultithreadedVehicle\hkpVehicleJobQueueUtils.h">
+        <Filter>Manager\MultithreadedVehicle</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Manager\MultithreadedVehicle\hkpVehicleJobs.inl">
+        <Filter>Manager\MultithreadedVehicle</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Classes\Reflections\hkpVehicleLinearCastWheelCollideReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Classes\hkpVehicleClasses.h">
+        <Filter>Classes</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="WheelCollide\hkpVehicleWheelCollide.h">
+        <Filter>WheelCollide</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Manager\RayCastBatchingManager\hkpVehicleRayCastBatchingManager.h">
+        <Filter>Manager\RayCastBatchingManager</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="WheelCollide\RayCast\hkpVehicleRayCastWheelCollide.h">
+        <Filter>WheelCollide\RayCast</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Transmission\Default\hkpVehicleDefaultTransmission.cpp">
+        <Filter>Transmission\Default</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Steering\Ackerman\hkpVehicleSteeringAckerman.cpp">
+        <Filter>Steering\Ackerman</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Manager\MultithreadedVehicle\hkpVehicleJobs.h">
+        <Filter>Manager\MultithreadedVehicle</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="VelocityDamper\Default\hkpVehicleDefaultVelocityDamper.cpp">
+        <Filter>VelocityDamper\Default</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Simulation\PerWheel\hkpVehiclePerWheelSimulation.cpp">
+        <Filter>Simulation\PerWheel</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="VelocityDamper\Default\hkpVehicleDefaultVelocityDamper.h">
+        <Filter>VelocityDamper\Default</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Brake\Default\hkpVehicleDefaultBrake.cpp">
+        <Filter>Brake\Default</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Engine\Default\hkpVehicleDefaultEngine.cpp">
+        <Filter>Engine\Default</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="DriverInput\Default\hkpVehicleDefaultAnalogDriverInput.cpp">
+        <Filter>DriverInput\Default</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Steering\Ackerman\hkpVehicleSteeringAckerman.h">
+        <Filter>Steering\Ackerman</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="VelocityDamper\hkpVehicleVelocityDamper.h">
+        <Filter>VelocityDamper</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="AeroDynamics\Default\hkpVehicleDefaultAerodynamics.cpp">
+        <Filter>AeroDynamics\Default</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpVehicleSimulationReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpVehicleDefaultSimulationReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpVehicleVelocityDamperReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpVehicleDefaultSuspensionReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkpMultithreadedVehicleManagerReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Manager\MultithreadedVehicle\hkpVehicleJobs.cpp">
+        <Filter>Manager\MultithreadedVehicle</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Brake\Default\hkpVehicleDefaultBrake.h">
+        <Filter>Brake\Default</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Wheel\hkpLinearCastWheel.cpp">
+        <Filter>Wheel</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+
+  </ItemGroup>
+</Project>

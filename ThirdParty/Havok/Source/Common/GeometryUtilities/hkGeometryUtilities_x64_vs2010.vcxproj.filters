@@ -1,0 +1,555 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Mesh\Utils\MeshShapeUtil">
+        <UniqueIdentifier>4A252D56-A252-464A-52D5-4A252D564A25</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="UnitTest\FindClosestPosition">
+        <UniqueIdentifier>29766A85-9766-4529-66A8-29766A852976</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Mesh\Utils\MeshMaterialUtil">
+        <UniqueIdentifier>1E2B17F9-E2B1-491E-B17F-1E2B17F91E2B</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Mesh\Utils\LinearVertexCalculator">
+        <UniqueIdentifier>11284D08-1284-4811-84D0-11284D081128</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Misc">
+        <UniqueIdentifier>311F156C-11F1-4C31-F156-311F156C311F</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="UnitTest">
+        <UniqueIdentifier>1D4E8DF6-D4E8-461D-E8DF-1D4E8DF61D4E</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Mesh\Utils\MeshSectionBuilder">
+        <UniqueIdentifier>21BC508C-1BC5-4C21-C508-21BC508C21BC</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Mesh\Converters\MeshTohkGeometry">
+        <UniqueIdentifier>7AC72873-AC72-437A-7287-7AC728737AC7</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Mesh\Utils\PrimitiveUtil">
+        <UniqueIdentifier>5E99B50F-E99B-4F5E-9B50-5E99B50F5E99</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Mesh\Utils\MeshSectionMergeUtil">
+        <UniqueIdentifier>1E5F1931-5F19-4E5F-931E-F1931E5F1931</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Mesh\Memory">
+        <UniqueIdentifier>40EF4C97-0EF4-4740-F4C9-40EF4C9740EF</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Mesh\Converters\MeshToSceneData">
+        <UniqueIdentifier>7C2C7667-C2C7-477C-C766-7C2C76677C2C</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Mesh\Utils\NormalCalculator">
+        <UniqueIdentifier>2651369A-6513-4A26-1369-2651369A2651</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Mesh\Deform">
+        <UniqueIdentifier>413EEA21-13EE-4141-EEA2-413EEA21413E</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Mesh\Utils\IndexSet">
+        <UniqueIdentifier>646D1C27-46D1-4764-D1C2-646D1C27646D</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Mesh\Utils\FindUniqueIndicesUtil">
+        <UniqueIdentifier>3A28F655-A28F-453A-8F65-3A28F6553A28</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Mesh\Utils\VertexFloat32Converter">
+        <UniqueIdentifier>7E6E0494-E6E0-447E-E049-7E6E04947E6E</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Classes\Reflections">
+        <UniqueIdentifier>E9C8D3E9-8D3E-48D3-9C8D-E9C8D3E9C8D3</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Mesh\Utils\FindVertexWeightsUtil">
+        <UniqueIdentifier>EFA84AEE-A84A-4FA8-AEEF-84AEEFA84AEE</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Mesh">
+        <UniqueIdentifier>38E84333-8E84-4338-8433-38E8433338E8</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Mesh\Utils\BarycentricVertexInterpolator">
+        <UniqueIdentifier>73B26EBD-3B26-4D73-26EB-73B26EBD73B2</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Mesh\Simplifiers\QemSimplifier">
+        <UniqueIdentifier>B8796BFB-796B-4879-BFB8-96BFB8796BFB</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="UnitTest\QuadricMetric">
+        <UniqueIdentifier>77996CBB-7996-4B77-96CB-77996CBB7799</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Mesh\Skin">
+        <UniqueIdentifier>155BF4C7-55BF-4715-BF4C-155BF4C7155B</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Mesh\Simplifiers">
+        <UniqueIdentifier>421986F4-2198-4442-986F-421986F44219</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Mesh\Converters">
+        <UniqueIdentifier>778228B3-7822-4377-228B-778228B37782</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Classes">
+        <UniqueIdentifier>11230FAD-1230-4D11-30FA-11230FAD1123</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Mesh\Utils">
+        <UniqueIdentifier>490EDD2A-90ED-4A49-EDD2-490EDD2A490E</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Mesh\Default">
+        <UniqueIdentifier>3B4AA4A8-B4AA-483B-AA4A-3B4AA4A83B4A</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Mesh\Utils\SkinningUtil">
+        <UniqueIdentifier>5CB50B5A-CB50-4A5C-50B5-5CB50B5A5CB5</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Mesh\Utils\VertexBufferUtil">
+        <UniqueIdentifier>472DDC71-72DD-4147-DDC7-472DDC71472D</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Mesh\Converters\SceneDataToMesh">
+        <UniqueIdentifier>7B43167D-B431-4D7B-3167-7B43167D7B43</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Mesh\Utils\DisplacementMappingUtil">
+        <UniqueIdentifier>117FD215-17FD-4511-FD21-117FD215117F</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Mesh\MultipleVertexBuffer">
+        <UniqueIdentifier>17E92994-7E92-4417-9299-17E9299417E9</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Spu">
+        <UniqueIdentifier>627CB86D-27CB-4D62-CB86-627CB86D627C</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Mesh\Utils\MeshSectionLockSet">
+        <UniqueIdentifier>6DE5736E-DE57-4E6D-5736-6DE5736E6DE5</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Inertia">
+        <UniqueIdentifier>1A8F2D43-A8F2-431A-F2D4-1A8F2D431A8F</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Mesh\Utils\VertexBufferSharingUtil">
+        <UniqueIdentifier>305A700E-05A7-4E30-A700-305A700E305A</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="UnitTest\GeometryUtils">
+        <UniqueIdentifier>66A7F9F3-6A7F-4366-7F9F-66A7F9F366A7</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Mesh\Utils\FindClosestPositionUtil">
+        <UniqueIdentifier>7614F00B-614F-4B76-4F00-7614F00B7614</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Mesh\Utils\FindUniquePositionsUtil">
+        <UniqueIdentifier>31E21876-1E21-4631-2187-31E2187631E2</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Mesh\Utils\VertexSharingUtil">
+        <UniqueIdentifier>9239C7A9-39C7-4239-7A92-9C7A9239C7A9</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Matching">
+        <UniqueIdentifier>57A39DFD-7A39-4D57-39DF-57A39DFD57A3</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+    <Filter Include="Mesh\IndexedTransformSet">
+        <UniqueIdentifier>6708720C-7087-4C67-8720-6708720C6708</UniqueIdentifier>
+        <DeploymentContent>False</DeploymentContent></Filter>
+
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Mesh\Utils\PrimitiveUtil\hkMeshPrimitiveUtil.inl">
+        <Filter>Mesh\Utils\PrimitiveUtil</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Misc\hkGeometryUtils.h">
+        <Filter>Misc</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Mesh\Memory\hkMemoryMeshBody.h">
+        <Filter>Mesh\Memory</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkMeshBodyReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Mesh\hkMeshTexture.cpp">
+        <Filter>Mesh</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\hkGeometryUtilitiesTrackerClasses.cpp">
+        <Filter>Classes</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Mesh\hkMeshBody.h">
+        <Filter>Mesh</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Mesh\Utils\VertexSharingUtil\hkVertexSharingUtil.h">
+        <Filter>Mesh\Utils\VertexSharingUtil</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Mesh\hkMeshBody.cpp">
+        <Filter>Mesh</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkMemoryMeshShapeReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Mesh\hkMeshTexture.h">
+        <Filter>Mesh</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Mesh\Simplifiers\QemSimplifier\hkMeshSimplifierConverter.cpp">
+        <Filter>Mesh\Simplifiers\QemSimplifier</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Mesh\Utils\SkinningUtil\hkSkinningUtil.h">
+        <Filter>Mesh\Utils\SkinningUtil</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkMemoryMeshMaterialReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Mesh\Default\hkDefaultCompoundMeshShape.cpp">
+        <Filter>Mesh\Default</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Mesh\hkMeshMaterialRegistry.h">
+        <Filter>Mesh</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="UnitTest\FindClosestPosition\FindClosestPosition.cpp">
+        <Filter>UnitTest\FindClosestPosition</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Mesh\Default\hkDefaultMeshMaterialRegistry.h">
+        <Filter>Mesh\Default</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Mesh\Memory\hkMemoryMeshBody.cpp">
+        <Filter>Mesh\Memory</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\QuadricMetric\QuadricMetric.cpp">
+        <Filter>UnitTest\QuadricMetric</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Mesh\MultipleVertexBuffer\hkMultipleVertexBuffer.h">
+        <Filter>Mesh\MultipleVertexBuffer</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Mesh\Converters\SceneDataToMesh\hkSceneDataToMeshConverter.cpp">
+        <Filter>Mesh\Converters\SceneDataToMesh</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Mesh\Utils\VertexFloat32Converter\hkVertexFloat32Converter.h">
+        <Filter>Mesh\Utils\VertexFloat32Converter</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Mesh\hkMeshSystem.h">
+        <Filter>Mesh</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Mesh\Utils\MeshSectionMergeUtil\hkMeshSectionMergeUtil.cpp">
+        <Filter>Mesh\Utils\MeshSectionMergeUtil</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Classes\hkGeometryUtilitiesClasses.h">
+        <Filter>Classes</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Mesh\Simplifiers\QemSimplifier\hkQuadricMetric.h">
+        <Filter>Mesh\Simplifiers\QemSimplifier</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Mesh\Memory\hkMemoryMeshVertexBuffer.h">
+        <Filter>Mesh\Memory</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Mesh\Deform\hkSimdSkinningDeformer.h">
+        <Filter>Mesh\Deform</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Mesh\Memory\hkMemoryMeshSystem.h">
+        <Filter>Mesh\Memory</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Mesh\Converters\MeshToSceneData\hkMeshToSceneDataConverter.h">
+        <Filter>Mesh\Converters\MeshToSceneData</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Mesh\Utils\DisplacementMappingUtil\hkDisplacementMappingUtil.h">
+        <Filter>Mesh\Utils\DisplacementMappingUtil</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Mesh\Utils\MeshShapeUtil\hkMeshShapeUtil.cpp">
+        <Filter>Mesh\Utils\MeshShapeUtil</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Mesh\hkMeshVertexBuffer.inl">
+        <Filter>Mesh</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Mesh\Simplifiers\QemSimplifier\hkQuadricMetric.cpp">
+        <Filter>Mesh\Simplifiers\QemSimplifier</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Matching\hkGeometryMatchingUtils.cpp">
+        <Filter>Matching</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Mesh\Skin\hkSkinBinding.cpp">
+        <Filter>Mesh\Skin</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Mesh\Skin\hkSkinBinding.h">
+        <Filter>Mesh\Skin</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Mesh\Deform\hkSkinOperator.h">
+        <Filter>Mesh\Deform</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkSkinnedMeshShapeReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Mesh\Simplifiers\QemSimplifier\hkQemVertexContractionController.h">
+        <Filter>Mesh\Simplifiers\QemSimplifier</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkSkinBindingReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Mesh\Utils\SkinningUtil\hkSkinningUtil.inl">
+        <Filter>Mesh\Utils\SkinningUtil</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Mesh\Utils\VertexSharingUtil\hkVertexSharingUtil.cpp">
+        <Filter>Mesh\Utils\VertexSharingUtil</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Inertia\hkInertiaTensorComputer.cpp">
+        <Filter>Inertia</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Mesh\Memory\hkMemoryMeshTexture.h">
+        <Filter>Mesh\Memory</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Mesh\Simplifiers\QemSimplifier\hkMeshSimplifierConverter.h">
+        <Filter>Mesh\Simplifiers\QemSimplifier</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="hkGeometryUtilities.h">
+        <Filter></Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Mesh\Skin\hkSkinnedMeshShapeBuilder.h">
+        <Filter>Mesh\Skin</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Spu\hkSpuConfig.h">
+        <Filter>Spu</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Inertia\hkInertiaTensorComputer.h">
+        <Filter>Inertia</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Mesh\hkMeshVertexBuffer.h">
+        <Filter>Mesh</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Mesh\Utils\LinearVertexCalculator\hkLinearVertexCalculator.h">
+        <Filter>Mesh\Utils\LinearVertexCalculator</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Mesh\Default\hkDefaultCompoundMeshShape.h">
+        <Filter>Mesh\Default</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Mesh\Utils\VertexBufferUtil\hkMeshVertexBufferUtil.cpp">
+        <Filter>Mesh\Utils\VertexBufferUtil</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Mesh\Utils\VertexBufferSharingUtil\hkVertexBufferSharingUtil.cpp">
+        <Filter>Mesh\Utils\VertexBufferSharingUtil</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="UnitTest\Tests.h">
+        <Filter>UnitTest</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Matching\hkGeometryMatchingUtils.h">
+        <Filter>Matching</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkCompressedInertiaTensorReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkMeshVertexBufferReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Mesh\Simplifiers\QemSimplifier\hkQemVertexContractionController.cpp">
+        <Filter>Mesh\Simplifiers\QemSimplifier</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Mesh\Utils\MeshShapeUtil\hkMeshShapeUtil.h">
+        <Filter>Mesh\Utils\MeshShapeUtil</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Misc\hkGeometryUtils.cpp">
+        <Filter>Misc</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Mesh\Utils\MeshMaterialUtil\hkMeshMaterialUtil.h">
+        <Filter>Mesh\Utils\MeshMaterialUtil</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Mesh\hkMeshVertexBuffer.cpp">
+        <Filter>Mesh</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Mesh\Skin\hkSkinnedMeshShape.h">
+        <Filter>Mesh\Skin</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Mesh\Utils\FindClosestPositionUtil\hkFindClosestPositionUtil.cpp">
+        <Filter>Mesh\Utils\FindClosestPositionUtil</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Inertia\hkCompressedInertiaTensor.h">
+        <Filter>Inertia</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Mesh\Memory\hkMemoryMeshShape.h">
+        <Filter>Mesh\Memory</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Mesh\hkMeshShape.h">
+        <Filter>Mesh</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Mesh\Utils\SkinningUtil\hkSkinningUtil.cpp">
+        <Filter>Mesh\Utils\SkinningUtil</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Mesh\Simplifiers\QemSimplifier\hkQemSimplifier.h">
+        <Filter>Mesh\Simplifiers\QemSimplifier</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Mesh\Utils\MeshSectionMergeUtil\hkMeshSectionMergeUtil.h">
+        <Filter>Mesh\Utils\MeshSectionMergeUtil</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Mesh\Converters\MeshTohkGeometry\hkMeshTohkGeometryConverter.h">
+        <Filter>Mesh\Converters\MeshTohkGeometry</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkSkinnedRefMeshShapeReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Mesh\Default\hkDefaultMeshMaterialRegistry.cpp">
+        <Filter>Mesh\Default</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Mesh\hkMeshMaterialRegistry.cpp">
+        <Filter>Mesh</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Mesh\Utils\VertexFloat32Converter\hkVertexFloat32Converter.cpp">
+        <Filter>Mesh\Utils\VertexFloat32Converter</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkMemoryMeshBodyReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Mesh\Skin\hkSkinnedMeshShapeBuilder.cpp">
+        <Filter>Mesh\Skin</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Mesh\Utils\FindUniquePositionsUtil\hkFindUniquePositionsUtil.h">
+        <Filter>Mesh\Utils\FindUniquePositionsUtil</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Mesh\Utils\FindUniqueIndicesUtil\hkFindUniqueIndicesUtil.cpp">
+        <Filter>Mesh\Utils\FindUniqueIndicesUtil</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Mesh\Utils\NormalCalculator\hkNormalCalculator.cpp">
+        <Filter>Mesh\Utils\NormalCalculator</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Classes\hkGeometryUtilitiesClasses.cxx">
+        <Filter>Classes</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Mesh\Utils\FindVertexWeightsUtil\hkFindVertexWeightsUtil.cpp">
+        <Filter>Mesh\Utils\FindVertexWeightsUtil</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Mesh\Deform\hkSkinOperatorGeneric.inl">
+        <Filter>Mesh\Deform</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Mesh\Memory\hkMemoryMeshVertexBuffer.cpp">
+        <Filter>Mesh\Memory</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Mesh\Utils\MeshSectionBuilder\hkMeshSectionBuilder.cpp">
+        <Filter>Mesh\Utils\MeshSectionBuilder</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Mesh\Deform\hkSimdSkinningDeformer.cpp">
+        <Filter>Mesh\Deform</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkMemoryMeshTextureReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Mesh\Skin\hkSkinnedRefMeshShape.cpp">
+        <Filter>Mesh\Skin</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="hkGeometryUtilities.cpp">
+        <Filter></Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Mesh\Utils\BarycentricVertexInterpolator\hkBarycentricVertexInterpolator.h">
+        <Filter>Mesh\Utils\BarycentricVertexInterpolator</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Mesh\Utils\DisplacementMappingUtil\hkDisplacementMappingUtil.inl">
+        <Filter>Mesh\Utils\DisplacementMappingUtil</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Mesh\Memory\hkMemoryMeshSystem.cpp">
+        <Filter>Mesh\Memory</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Mesh\Utils\VertexBufferSharingUtil\hkVertexBufferSharingUtil.h">
+        <Filter>Mesh\Utils\VertexBufferSharingUtil</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Inertia\hkCompressedInertiaTensor.cpp">
+        <Filter>Inertia</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Mesh\Deform\hkSkinOperatorCpu.cpp">
+        <Filter>Mesh\Deform</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkIndexedTransformSetReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Mesh\Simplifiers\QemSimplifier\hkQemSimplifier.cpp">
+        <Filter>Mesh\Simplifiers\QemSimplifier</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Mesh\Converters\SceneDataToMesh\hkSceneDataToMeshConverter.h">
+        <Filter>Mesh\Converters\SceneDataToMesh</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Mesh\Utils\BarycentricVertexInterpolator\hkBarycentricVertexInterpolator.cpp">
+        <Filter>Mesh\Utils\BarycentricVertexInterpolator</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Mesh\Utils\IndexSet\hkIndexSet.cpp">
+        <Filter>Mesh\Utils\IndexSet</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Mesh\Skin\hkSkinnedRefMeshShape.h">
+        <Filter>Mesh\Skin</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Mesh\IndexedTransformSet\hkIndexedTransformSet.cpp">
+        <Filter>Mesh\IndexedTransformSet</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Mesh\Memory\hkMemoryMeshTexture.cpp">
+        <Filter>Mesh\Memory</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Mesh\hkMeshShape.cpp">
+        <Filter>Mesh</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="UnitTest\GeometryUtils\GeometryUtilsTest.cpp">
+        <Filter>UnitTest\GeometryUtils</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Mesh\Utils\VertexBufferUtil\hkMeshVertexBufferUtil.h">
+        <Filter>Mesh\Utils\VertexBufferUtil</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Mesh\Memory\hkMemoryMeshMaterial.h">
+        <Filter>Mesh\Memory</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Mesh\Utils\MeshSectionLockSet\hkMeshSectionLockSet.h">
+        <Filter>Mesh\Utils\MeshSectionLockSet</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Mesh\IndexedTransformSet\hkIndexedTransformSet.h">
+        <Filter>Mesh\IndexedTransformSet</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Mesh\Memory\hkMemoryMeshShape.cpp">
+        <Filter>Mesh\Memory</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Mesh\Converters\MeshToSceneData\hkMeshToSceneDataConverter.cpp">
+        <Filter>Mesh\Converters\MeshToSceneData</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Mesh\Utils\MeshSectionBuilder\hkMeshSectionBuilder.h">
+        <Filter>Mesh\Utils\MeshSectionBuilder</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Mesh\Utils\MeshMaterialUtil\hkMeshMaterialUtil.cpp">
+        <Filter>Mesh\Utils\MeshMaterialUtil</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkMultipleVertexBufferReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Mesh\Utils\FindUniquePositionsUtil\hkFindUniquePositionsUtil.cpp">
+        <Filter>Mesh\Utils\FindUniquePositionsUtil</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Mesh\Utils\FindClosestPositionUtil\hkFindClosestPositionUtil.h">
+        <Filter>Mesh\Utils\FindClosestPositionUtil</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkMemoryMeshVertexBufferReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Mesh\Utils\FindUniqueIndicesUtil\hkFindUniqueIndicesUtil.h">
+        <Filter>Mesh\Utils\FindUniqueIndicesUtil</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Mesh\Skin\hkSkinnedMeshShape.cpp">
+        <Filter>Mesh\Skin</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Mesh\Utils\PrimitiveUtil\hkMeshPrimitiveUtil.h">
+        <Filter>Mesh\Utils\PrimitiveUtil</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Mesh\Utils\IndexSet\hkIndexSet.h">
+        <Filter>Mesh\Utils\IndexSet</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkMeshShapeReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\hkMeshTextureReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Mesh\Utils\FindVertexWeightsUtil\hkFindVertexWeightsUtil.h">
+        <Filter>Mesh\Utils\FindVertexWeightsUtil</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Classes\Reflections\hkInertiaTensorComputerReflection.cpp">
+        <Filter>Classes\Reflections</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Mesh\MultipleVertexBuffer\hkMultipleVertexBuffer.cpp">
+        <Filter>Mesh\MultipleVertexBuffer</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Mesh\Utils\DisplacementMappingUtil\hkDisplacementMappingUtil.cpp">
+        <Filter>Mesh\Utils\DisplacementMappingUtil</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Mesh\Utils\NormalCalculator\hkNormalCalculator.h">
+        <Filter>Mesh\Utils\NormalCalculator</Filter>
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Mesh\Converters\MeshTohkGeometry\hkMeshTohkGeometryConverter.cpp">
+        <Filter>Mesh\Converters\MeshTohkGeometry</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Matching\hkGeometryMatchingUtils.inl">
+        <Filter>Matching</Filter>
+        <DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Mesh\Memory\hkMemoryMeshMaterial.cpp">
+        <Filter>Mesh\Memory</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Mesh\Utils\MeshSectionLockSet\hkMeshSectionLockSet.cpp">
+        <Filter>Mesh\Utils\MeshSectionLockSet</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Mesh\Utils\LinearVertexCalculator\hkLinearVertexCalculator.cpp">
+        <Filter>Mesh\Utils\LinearVertexCalculator</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Mesh\Utils\PrimitiveUtil\hkMeshPrimitiveUtil.cpp">
+        <Filter>Mesh\Utils\PrimitiveUtil</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Mesh\hkMeshSystem.cpp">
+        <Filter>Mesh</Filter>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+
+  </ItemGroup>
+</Project>

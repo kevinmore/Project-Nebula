@@ -1,0 +1,1297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--
+    
+    
+    
+    SOURCE_LEVEL = "PUBLIC"
+    REQUIRED_HAVOK_PRODUCTS = "COMMON"
+  -->
+        
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug DLL|x64">
+      <Configuration>Debug DLL</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Dev|x64">
+      <Configuration>Dev</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Dev DLL|x64">
+      <Configuration>Dev DLL</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Hybrid DLL|x64">
+      <Configuration>Hybrid DLL</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release DLL|x64">
+      <Configuration>Release DLL</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{C3531196-37A4-4292-A8EA-120B7FF46C21}</ProjectGuid>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <Keyword>StaticLibrary</Keyword>
+    <RootNamespace></RootNamespace>
+    <ProjectName>hkCompat</ProjectName>
+    
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <CharacterSet>Unicode</CharacterSet>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CLRSupport>false</CLRSupport>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug DLL|x64'" Label="Configuration">
+    <CharacterSet>Unicode</CharacterSet>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CLRSupport>false</CLRSupport>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dev|x64'" Label="Configuration">
+    <CharacterSet>Unicode</CharacterSet>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CLRSupport>false</CLRSupport>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dev DLL|x64'" Label="Configuration">
+    <CharacterSet>Unicode</CharacterSet>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CLRSupport>false</CLRSupport>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Hybrid DLL|x64'" Label="Configuration">
+    <CharacterSet>Unicode</CharacterSet>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CLRSupport>false</CLRSupport>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <CharacterSet>Unicode</CharacterSet>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CLRSupport>false</CLRSupport>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release DLL|x64'" Label="Configuration">
+    <CharacterSet>Unicode</CharacterSet>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CLRSupport>false</CLRSupport>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  <PropertyGroup>
+<TargetExt  Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.lib</TargetExt>
+<TargetExt  Condition="'$(Configuration)|$(Platform)'=='Debug DLL|x64'">.lib</TargetExt>
+<TargetExt  Condition="'$(Configuration)|$(Platform)'=='Dev|x64'">.lib</TargetExt>
+<TargetExt  Condition="'$(Configuration)|$(Platform)'=='Dev DLL|x64'">.lib</TargetExt>
+<TargetExt  Condition="'$(Configuration)|$(Platform)'=='Hybrid DLL|x64'">.lib</TargetExt>
+<TargetExt  Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.lib</TargetExt>
+<TargetExt  Condition="'$(Configuration)|$(Platform)'=='Release DLL|x64'">.lib</TargetExt>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\..\..\Obj\x64_vs2010\debug\hkCompat\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\..\..\Lib\x64_vs2010\debug\</OutDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">hkCompat</TargetName>
+    <OutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\..\..\Lib\x64_vs2010\debug\hkCompat.lib</OutputFile>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug DLL|x64'">..\..\..\Obj\x64_vs2010\debug_dll\hkCompat\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug DLL|x64'">..\..\..\Lib\x64_vs2010\debug_dll\</OutDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug DLL|x64'">hkCompat</TargetName>
+    <OutputFile Condition="'$(Configuration)|$(Platform)'=='Debug DLL|x64'">..\..\..\Lib\x64_vs2010\debug_dll\hkCompat.lib</OutputFile>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Dev|x64'">..\..\..\Obj\x64_vs2010\dev\hkCompat\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Dev|x64'">..\..\..\Lib\x64_vs2010\dev\</OutDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Dev|x64'">hkCompat</TargetName>
+    <OutputFile Condition="'$(Configuration)|$(Platform)'=='Dev|x64'">..\..\..\Lib\x64_vs2010\dev\hkCompat.lib</OutputFile>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Dev DLL|x64'">..\..\..\Obj\x64_vs2010\dev_dll\hkCompat\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Dev DLL|x64'">..\..\..\Lib\x64_vs2010\dev_dll\</OutDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Dev DLL|x64'">hkCompat</TargetName>
+    <OutputFile Condition="'$(Configuration)|$(Platform)'=='Dev DLL|x64'">..\..\..\Lib\x64_vs2010\dev_dll\hkCompat.lib</OutputFile>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Hybrid DLL|x64'">..\..\..\Obj\x64_vs2010\hybrid_dll\hkCompat\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Hybrid DLL|x64'">..\..\..\Lib\x64_vs2010\hybrid_dll\</OutDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Hybrid DLL|x64'">hkCompat</TargetName>
+    <OutputFile Condition="'$(Configuration)|$(Platform)'=='Hybrid DLL|x64'">..\..\..\Lib\x64_vs2010\hybrid_dll\hkCompat.lib</OutputFile>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\..\..\Obj\x64_vs2010\release\hkCompat\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\..\..\Lib\x64_vs2010\release\</OutDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">hkCompat</TargetName>
+    <OutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\..\..\Lib\x64_vs2010\release\hkCompat.lib</OutputFile>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release DLL|x64'">..\..\..\Obj\x64_vs2010\release_dll\hkCompat\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release DLL|x64'">..\..\..\Lib\x64_vs2010\release_dll\</OutDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release DLL|x64'">hkCompat</TargetName>
+    <OutputFile Condition="'$(Configuration)|$(Platform)'=='Release DLL|x64'">..\..\..\Lib\x64_vs2010\release_dll\hkCompat.lib</OutputFile>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug DLL|x64'">true</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Dev|x64'">true</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Dev DLL|x64'">true</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Hybrid DLL|x64'">true</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release DLL|x64'">false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    
+    
+    
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\..;</AdditionalIncludeDirectories>
+      <AdditionalOptions></AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <SDLCheck>true</SDLCheck>
+      <CallingConvention>Cdecl</CallingConvention>
+      <CompileAs>Default</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings></DisableSpecificWarnings>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <EnablePREfast></EnablePREfast>
+      <ExceptionHandling>false</ExceptionHandling>
+      <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
+      <FloatingPointExceptions>false</FloatingPointExceptions>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <OmitFramePointers></OmitFramePointers>
+      <Optimization>disabled</Optimization>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>Common/Compat/hkCompat.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)hkCompat.pch</PrecompiledHeaderOutputFile>
+      <PreprocessorDefinitions>_WINDOWS;WIN32;_WIN32;_DEBUG;HK_DEBUG;HK_DEBUG_SLOW;_XT_STATICLINK;_LIB;_ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH;HK_DISABLE_OLD_VECTOR4_INTERFACE;HK_DISABLE_IMPLICIT_SIMDREAL_FLOAT_CONVERSION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <UndefinePreprocessorDefinitions></UndefinePreprocessorDefinitions>
+      <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <StringPooling>true</StringPooling>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <WarningLevel>Level4</WarningLevel>
+      <CompileAsManaged>false</CompileAsManaged>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+	  
+    </ClCompile>
+    <ResourceCompile>
+      <ResourceOutputFileName></ResourceOutputFileName>
+      <AdditionalIncludeDirectories>$(IntDir)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Lib>
+      <IgnoreAllDefaultLibraries></IgnoreAllDefaultLibraries>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\Lib\x64_vs2010\debug</AdditionalLibraryDirectories>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <UseUnicodeResponseFiles>true</UseUnicodeResponseFiles>
+      <AdditionalOptions> /ignore:4221</AdditionalOptions>
+    </Lib>
+    <Link>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\Lib\x64_vs2010\debug</AdditionalLibraryDirectories>
+      <AdditionalOptions> /ignore:4221</AdditionalOptions>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ImportLibrary></ImportLibrary>
+      <AssemblyDebug></AssemblyDebug>
+      <SubSystem>Console</SubSystem>
+      <ManifestFile>$(IntDir)Manifest$(TargetExt).intermediate.manifest</ManifestFile>
+      <OptimizeReferences></OptimizeReferences>
+      <EnableCOMDATFolding></EnableCOMDATFolding>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug DLL|x64'">
+    
+    
+    
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\..;</AdditionalIncludeDirectories>
+      <AdditionalOptions></AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <SDLCheck>true</SDLCheck>
+      <CallingConvention>Cdecl</CallingConvention>
+      <CompileAs>Default</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings></DisableSpecificWarnings>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <EnablePREfast></EnablePREfast>
+      <ExceptionHandling>false</ExceptionHandling>
+      <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
+      <FloatingPointExceptions>false</FloatingPointExceptions>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <OmitFramePointers></OmitFramePointers>
+      <Optimization>disabled</Optimization>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>Common/Compat/hkCompat.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)hkCompat.pch</PrecompiledHeaderOutputFile>
+      <PreprocessorDefinitions>_WINDOWS;WIN32;_WIN32;_DEBUG;HK_DEBUG;HK_DEBUG_SLOW;_LIB;_ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH;HK_DISABLE_OLD_VECTOR4_INTERFACE;HK_DISABLE_IMPLICIT_SIMDREAL_FLOAT_CONVERSION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <UndefinePreprocessorDefinitions></UndefinePreprocessorDefinitions>
+      <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <StringPooling>true</StringPooling>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <WarningLevel>Level4</WarningLevel>
+      <CompileAsManaged>false</CompileAsManaged>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+	  
+    </ClCompile>
+    <ResourceCompile>
+      <ResourceOutputFileName></ResourceOutputFileName>
+      <AdditionalIncludeDirectories>$(IntDir)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Lib>
+      <IgnoreAllDefaultLibraries></IgnoreAllDefaultLibraries>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\Lib\x64_vs2010\debug_dll</AdditionalLibraryDirectories>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <UseUnicodeResponseFiles>true</UseUnicodeResponseFiles>
+      <AdditionalOptions> /ignore:4221</AdditionalOptions>
+    </Lib>
+    <Link>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\Lib\x64_vs2010\debug_dll</AdditionalLibraryDirectories>
+      <AdditionalOptions> /ignore:4221</AdditionalOptions>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ImportLibrary></ImportLibrary>
+      <AssemblyDebug></AssemblyDebug>
+      <SubSystem>Console</SubSystem>
+      <ManifestFile>$(IntDir)Manifest$(TargetExt).intermediate.manifest</ManifestFile>
+      <OptimizeReferences></OptimizeReferences>
+      <EnableCOMDATFolding></EnableCOMDATFolding>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dev|x64'">
+    
+    
+    
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\..;</AdditionalIncludeDirectories>
+      <AdditionalOptions></AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <SDLCheck>true</SDLCheck>
+      <CallingConvention>Cdecl</CallingConvention>
+      <CompileAs>Default</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings></DisableSpecificWarnings>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <EnablePREfast></EnablePREfast>
+      <ExceptionHandling>false</ExceptionHandling>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <FloatingPointExceptions>false</FloatingPointExceptions>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <OmitFramePointers></OmitFramePointers>
+      <Optimization>Full</Optimization>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>Common/Compat/hkCompat.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)hkCompat.pch</PrecompiledHeaderOutputFile>
+      <PreprocessorDefinitions>_WINDOWS;WIN32;_WIN32;HK_DEBUG;_XT_STATICLINK;_LIB;_ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH;HK_DISABLE_OLD_VECTOR4_INTERFACE;HK_DISABLE_IMPLICIT_SIMDREAL_FLOAT_CONVERSION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <UndefinePreprocessorDefinitions></UndefinePreprocessorDefinitions>
+      <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <StringPooling>true</StringPooling>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <WarningLevel>Level4</WarningLevel>
+      <CompileAsManaged>false</CompileAsManaged>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+	  
+    </ClCompile>
+    <ResourceCompile>
+      <ResourceOutputFileName></ResourceOutputFileName>
+      <AdditionalIncludeDirectories>$(IntDir)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Lib>
+      <IgnoreAllDefaultLibraries></IgnoreAllDefaultLibraries>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\Lib\x64_vs2010\dev</AdditionalLibraryDirectories>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <UseUnicodeResponseFiles>true</UseUnicodeResponseFiles>
+      <AdditionalOptions> /ignore:4221</AdditionalOptions>
+    </Lib>
+    <Link>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\Lib\x64_vs2010\dev</AdditionalLibraryDirectories>
+      <AdditionalOptions> /ignore:4221</AdditionalOptions>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ImportLibrary></ImportLibrary>
+      <AssemblyDebug></AssemblyDebug>
+      <SubSystem>Console</SubSystem>
+      <ManifestFile>$(IntDir)Manifest$(TargetExt).intermediate.manifest</ManifestFile>
+      <OptimizeReferences></OptimizeReferences>
+      <EnableCOMDATFolding></EnableCOMDATFolding>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dev DLL|x64'">
+    
+    
+    
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\..;</AdditionalIncludeDirectories>
+      <AdditionalOptions></AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <SDLCheck>true</SDLCheck>
+      <CallingConvention>Cdecl</CallingConvention>
+      <CompileAs>Default</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings></DisableSpecificWarnings>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <EnablePREfast></EnablePREfast>
+      <ExceptionHandling>false</ExceptionHandling>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <FloatingPointExceptions>false</FloatingPointExceptions>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <OmitFramePointers></OmitFramePointers>
+      <Optimization>Full</Optimization>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>Common/Compat/hkCompat.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)hkCompat.pch</PrecompiledHeaderOutputFile>
+      <PreprocessorDefinitions>_WINDOWS;WIN32;_WIN32;HK_DEBUG;_LIB;_ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH;HK_DISABLE_OLD_VECTOR4_INTERFACE;HK_DISABLE_IMPLICIT_SIMDREAL_FLOAT_CONVERSION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <UndefinePreprocessorDefinitions></UndefinePreprocessorDefinitions>
+      <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <StringPooling>true</StringPooling>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <WarningLevel>Level4</WarningLevel>
+      <CompileAsManaged>false</CompileAsManaged>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+	  
+    </ClCompile>
+    <ResourceCompile>
+      <ResourceOutputFileName></ResourceOutputFileName>
+      <AdditionalIncludeDirectories>$(IntDir)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Lib>
+      <IgnoreAllDefaultLibraries></IgnoreAllDefaultLibraries>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\Lib\x64_vs2010\dev_dll</AdditionalLibraryDirectories>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <UseUnicodeResponseFiles>true</UseUnicodeResponseFiles>
+      <AdditionalOptions> /ignore:4221</AdditionalOptions>
+    </Lib>
+    <Link>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\Lib\x64_vs2010\dev_dll</AdditionalLibraryDirectories>
+      <AdditionalOptions> /ignore:4221</AdditionalOptions>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ImportLibrary></ImportLibrary>
+      <AssemblyDebug></AssemblyDebug>
+      <SubSystem>Console</SubSystem>
+      <ManifestFile>$(IntDir)Manifest$(TargetExt).intermediate.manifest</ManifestFile>
+      <OptimizeReferences></OptimizeReferences>
+      <EnableCOMDATFolding></EnableCOMDATFolding>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Hybrid DLL|x64'">
+    
+    
+    
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\..;</AdditionalIncludeDirectories>
+      <AdditionalOptions></AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <SDLCheck>false</SDLCheck>
+      <CallingConvention>Cdecl</CallingConvention>
+      <CompileAs>Default</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings></DisableSpecificWarnings>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <EnablePREfast></EnablePREfast>
+      <ExceptionHandling>false</ExceptionHandling>
+      <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
+      <FloatingPointExceptions>false</FloatingPointExceptions>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <OmitFramePointers></OmitFramePointers>
+      <Optimization>disabled</Optimization>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>Common/Compat/hkCompat.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)hkCompat.pch</PrecompiledHeaderOutputFile>
+      <PreprocessorDefinitions>HK_DEBUG;_WINDOWS;WIN32;_WIN32;_LIB;_ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH;HK_DISABLE_OLD_VECTOR4_INTERFACE;HK_DISABLE_IMPLICIT_SIMDREAL_FLOAT_CONVERSION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <UndefinePreprocessorDefinitions></UndefinePreprocessorDefinitions>
+      <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <StringPooling>true</StringPooling>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <WarningLevel>Level4</WarningLevel>
+      <CompileAsManaged>false</CompileAsManaged>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+	  
+    </ClCompile>
+    <ResourceCompile>
+      <ResourceOutputFileName></ResourceOutputFileName>
+      <AdditionalIncludeDirectories>$(IntDir)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Lib>
+      <IgnoreAllDefaultLibraries></IgnoreAllDefaultLibraries>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\Lib\x64_vs2010\hybrid_dll</AdditionalLibraryDirectories>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <UseUnicodeResponseFiles>true</UseUnicodeResponseFiles>
+      <AdditionalOptions> /ignore:4221</AdditionalOptions>
+    </Lib>
+    <Link>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\Lib\x64_vs2010\hybrid_dll</AdditionalLibraryDirectories>
+      <AdditionalOptions> /ignore:4221</AdditionalOptions>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ImportLibrary></ImportLibrary>
+      <AssemblyDebug></AssemblyDebug>
+      <SubSystem>Console</SubSystem>
+      <ManifestFile>$(IntDir)Manifest$(TargetExt).intermediate.manifest</ManifestFile>
+      <OptimizeReferences></OptimizeReferences>
+      <EnableCOMDATFolding></EnableCOMDATFolding>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    
+    
+    
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\..;</AdditionalIncludeDirectories>
+      <AdditionalOptions></AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <SDLCheck>false</SDLCheck>
+      <CallingConvention>Cdecl</CallingConvention>
+      <CompileAs>Default</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings></DisableSpecificWarnings>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <EnablePREfast></EnablePREfast>
+      <ExceptionHandling>false</ExceptionHandling>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <FloatingPointExceptions>false</FloatingPointExceptions>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <OmitFramePointers></OmitFramePointers>
+      <Optimization>Full</Optimization>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>Common/Compat/hkCompat.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)hkCompat.pch</PrecompiledHeaderOutputFile>
+      <PreprocessorDefinitions>_WINDOWS;WIN32;_WIN32;_XT_STATICLINK;NDEBUG;_LIB;_ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH;HK_DISABLE_OLD_VECTOR4_INTERFACE;HK_DISABLE_IMPLICIT_SIMDREAL_FLOAT_CONVERSION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <UndefinePreprocessorDefinitions></UndefinePreprocessorDefinitions>
+      <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <StringPooling>true</StringPooling>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <WarningLevel>Level4</WarningLevel>
+      <CompileAsManaged>false</CompileAsManaged>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+	  
+    </ClCompile>
+    <ResourceCompile>
+      <ResourceOutputFileName></ResourceOutputFileName>
+      <AdditionalIncludeDirectories>$(IntDir)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Lib>
+      <IgnoreAllDefaultLibraries></IgnoreAllDefaultLibraries>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\Lib\x64_vs2010\release</AdditionalLibraryDirectories>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <UseUnicodeResponseFiles>true</UseUnicodeResponseFiles>
+      <AdditionalOptions> /ignore:4221</AdditionalOptions>
+    </Lib>
+    <Link>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\Lib\x64_vs2010\release</AdditionalLibraryDirectories>
+      <AdditionalOptions> /ignore:4221</AdditionalOptions>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <ImportLibrary></ImportLibrary>
+      <AssemblyDebug></AssemblyDebug>
+      <SubSystem>Console</SubSystem>
+      <ManifestFile>$(IntDir)Manifest$(TargetExt).intermediate.manifest</ManifestFile>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release DLL|x64'">
+    
+    
+    
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\..;</AdditionalIncludeDirectories>
+      <AdditionalOptions></AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <SDLCheck>false</SDLCheck>
+      <CallingConvention>Cdecl</CallingConvention>
+      <CompileAs>Default</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings></DisableSpecificWarnings>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <EnablePREfast></EnablePREfast>
+      <ExceptionHandling>false</ExceptionHandling>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <FloatingPointExceptions>false</FloatingPointExceptions>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <OmitFramePointers></OmitFramePointers>
+      <Optimization>Full</Optimization>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>Common/Compat/hkCompat.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)hkCompat.pch</PrecompiledHeaderOutputFile>
+      <PreprocessorDefinitions>_WINDOWS;WIN32;_WIN32;NDEBUG;_LIB;_ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH;HK_DISABLE_OLD_VECTOR4_INTERFACE;HK_DISABLE_IMPLICIT_SIMDREAL_FLOAT_CONVERSION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <UndefinePreprocessorDefinitions></UndefinePreprocessorDefinitions>
+      <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <StringPooling>true</StringPooling>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <WarningLevel>Level4</WarningLevel>
+      <CompileAsManaged>false</CompileAsManaged>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+	  
+    </ClCompile>
+    <ResourceCompile>
+      <ResourceOutputFileName></ResourceOutputFileName>
+      <AdditionalIncludeDirectories>$(IntDir)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Lib>
+      <IgnoreAllDefaultLibraries></IgnoreAllDefaultLibraries>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\Lib\x64_vs2010\release_dll</AdditionalLibraryDirectories>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <UseUnicodeResponseFiles>true</UseUnicodeResponseFiles>
+      <AdditionalOptions> /ignore:4221</AdditionalOptions>
+    </Lib>
+    <Link>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\Lib\x64_vs2010\release_dll</AdditionalLibraryDirectories>
+      <AdditionalOptions> /ignore:4221</AdditionalOptions>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <ImportLibrary></ImportLibrary>
+      <AssemblyDebug></AssemblyDebug>
+      <SubSystem>Console</SubSystem>
+      <ManifestFile>$(IntDir)Manifest$(TargetExt).intermediate.manifest</ManifestFile>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="Patches\2012_2\hkaPatches_2012_2.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\700\hkcdPatches_700.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\660\hkaiPatches_660.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\2012_2\hkaPatches_2012_2.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2012_1\hkPatches_2012_1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk402r1_hk403r1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Deprecated\UnitTest\Binaryreader\hkSomeObject.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok330b2Classes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk500b1_hk500r1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Deprecated\Compat\hkCompatUtil.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok500b1Classes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2011_1\hkPatches_2011_1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2013_1\hkpPatches_2013_1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2010_2\hkaPatches_2010_2.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2012_1\hkcdPatches_2012_1.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\Legacy\hkPatches_Legacy.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2012_1\hkpPatches_2012_1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok600b1Classes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2012_1\hclPatches_2012_1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\710\hkbPatches_710.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2010_2\hkaPatches_2010_2.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok550r1Classes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\700\hkdPatches_700.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok201130r1Classes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Deprecated\Util\hkRenamedClassNameRegistry.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Deprecated\Packfile\hkPackfileReader.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Deprecated\UnitTest\Xml\StressTest.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Patches\700\hkPatches_700.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok310Classes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\660\hkbPatches_660.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\2010_2\hkdPatches_2010_2.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Version\hkVersionUtilOld.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk550b2_hk550r1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\Legacy\hkdPatches_Legacy.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok320Classes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok201120r1Classes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2013_1\hknpPatches_2013_1.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\2012_1\hkpPatches_2012_1.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\2011_1\hkdPatches_2011_1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2011_2\hkpPatches_2011_2.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok330a2Classes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok450r1Classes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2013_1\hkpPatches_2013_1.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\2011_1\hkdPatches_2011_1.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Deprecated\Version\hkVersionRegistry.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk330b1_hk330b2.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok600b2Classes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok451r1Classes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk461r1_hk500b1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2010_2\hkdPatches_2010_2.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Packfile\Binary\hkBinaryPackfileReader.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\700\hclPatches_700.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk201220r1_hk201221r1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2010_2\hkbPatches_2010_2.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2011_3\hkPatches_2011_3.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2012_1\hkmsPatches_2012_1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\660\hkpPatches_660.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk400b2_hk400r1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2011_3\hkpPatches_2011_3.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2011_1\hkaPatches_2011_1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2011_1\hkcdPatches_2011_1.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Deprecated\Compat\hkCompat_Common.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok201010r1Classes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\Legacy\hkbPatches_Legacy.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\2013_1\hkbPatches_2013_1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2011_3\hclPatches_2011_3.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\660\hkaPatches_660.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk650b1_hk650r1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok710r1Classes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2011_1\hkaiPatches_2011_1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk400r1_hk402r1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2012_1\hkdPatches_2012_1.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\2011_3\hkaiPatches_2011_3.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2012_1\hkbPatches_2012_1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2012_2\hkndPatches_2012_2.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\2010_2\hkaiPatches_2010_2.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2010_1\hkbPatches_2010_1.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Version\hkPackfileObjectUpdateTracker.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok550b1Classes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk660r1_hk700b1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2011_1\hkPatches_2011_1.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\hkInitialClassPatches.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\2010_1\hkaPatches_2010_1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Deprecated\Compat\hkHavokVersionClasses.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Patches\2013_1\hkaPatches_2013_1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2011_3\hkpPatches_2011_3.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\700\hkcdPatches_700.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2013_1\hkpConstraintPatches_2013_1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk310_hk320.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk201010r1_hk201020r1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2010_1\hclPatches_2010_1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk460r1_hk461r1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2011_3\hkaPatches_2011_3.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\2012_2\hkcdPatches_2012_2.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2011_3\hkaPatches_2011_3.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok600r1Classes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2012_2\hkPatches_2012_2.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\2011_2\hkaiPatches_2011_2.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk710r1_hk201010r1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\710\hkaiPatches_710.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\Utilities\hkbAllPatches.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\Legacy\hkpPatches_Legacy.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk451r1_hk452r1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2012_2\hkbPatches_2012_2.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Util\hkBindingClassNameRegistry.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2010_2\hkpPatches_2010_2.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Deprecated\Packfile\hkPackfileReader.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk510r1_hk550b1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2011_3\hkcdPatches_2011_3.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\UnitTest\Binaryreader\binaryPackfileReader.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok610r1Classes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok201311r1Classes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\700\hkaiPatches_700.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\2010_2\hkcdPatches_2010_2.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\660\hkPatches_660.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2012_2\hknpPatches_2012_2.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk460b1_hk460b2.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\Legacy\hkPatches_Legacy.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk201020r1_hk201110r1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2013_1\hclPatches_2013_1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2011_2\hkcdPatches_2011_2.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\UnitTest\Xml\StressTest.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\710\hkdPatches_710.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2010_1\hkcdPatches_2010_1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2013_1\hkpConstraintPatches_2013_1.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk410b1_hk410r1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok460r1Classes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="hkCompat.cpp">
+        <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+        <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+        <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Dev|x64'">Create</PrecompiledHeader>
+        <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Dev DLL|x64'">Create</PrecompiledHeader>
+        <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release DLL|x64'">Create</PrecompiledHeader>
+        <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Hybrid DLL|x64'">Create</PrecompiledHeader>
+        <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug DLL|x64'">Create</PrecompiledHeader>
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Version\hkVersionRegistry.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2010_2\hkpPatches_2010_2.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\Utilities\hknpAllPatches.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok300Classes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk201131r1_hk201210r1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2011_1\hkbPatches_2011_1.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk660b1_hk660r1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2012_2\hkdPatches_2012_2.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\2012_2\hkaiPatches_2012_2.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2011_3\hclPatches_2011_3.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\Utilities\hclAllPatches.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\Legacy\hkaiPatches_Legacy.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\Legacy\hkaPatches_Legacy.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Packfile\Xml\hkXmlPackfileWriter.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\UnitTestsaveAsZeroReflection.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2012_2\hkdPatches_2012_2.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2011_1\hkaiPatches_2011_1.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\2011_3\hkPatches_2011_3.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\660\hclPatches_660.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok400b2Classes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2013_1\hkcdPatches_2013_1.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Deprecated\Util\hkBindingClassNameRegistry.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Patches\710\hkPatches_710.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2010_1\hkaPatches_2010_1.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\700\hkaiPatches_700.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\Utilities\hkaiAllPatches.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\2011_3\hkbPatches_2011_3.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\2011_1\hclPatches_2011_1.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\700\hkbPatches_700.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\2011_2\hkPatches_2011_2.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Packfile\Xml\hkXmlPackfileReader.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk330r1_hk400b1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2012_2\hkPatches_2012_2.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2011_2\hkaPatches_2011_2.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\700\hkdPatches_700.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk400b1_hk400b2.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\660\hkdPatches_660.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok402r1Classes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok452r1Classes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2010_1\hkpPatches_2010_1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\660\hkcdPatches_660.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2012_1\hkmsPatches_2012_1.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\2011_2\hkdPatches_2011_2.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk650r1_hk660b1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\660\hkaPatches_660.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\2013_1\hknpPatches_2013_1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk201130r1_hk201131r1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2013_1\hkPatches_2013_1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2012_2\hkmsPatches_2012_2.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Deprecated\UnitTest\Xml\hkStressTestCinfo.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Patches\2012_2\hclPatches_2012_2.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\2010_1\hkPatches_2010_1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\hkSerializeDeprecated2.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok201210r1Classes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk201120r1_hk201130r1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\hkCompatUtil.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk550r1_hk600b1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\UnitTest\SaveAsZero\saveAsZero.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2012_2\hkpPatches_2012_2.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\710\hkpPatches_710.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\Utilities\hkaAllPatches.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk460b2_hk460r1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\710\hkaPatches_710.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2010_2\hclPatches_2010_2.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok410r1Classes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="hkCompat.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Patches\2011_2\hkbPatches_2011_2.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\Legacy\hkaiPatches_Legacy.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\660\hclPatches_660.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok650r1Classes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2011_2\hkpPatches_2011_2.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\2013_1\hkaPatches_2013_1.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\2010_1\hclPatches_2010_1.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\2013_1\hkaiPatches_2013_1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2011_2\hkcdPatches_2011_2.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok201220r1Classes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\710\hkpPatches_710.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok460b1Classes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\Utilities\hkndAllPatches.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\2012_1\hkdPatches_2012_1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2012_2\hkbPatches_2012_2.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk201310r1_hk201311r1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2011_1\hkbPatches_2011_1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2013_1\hkPatches_2013_1.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\2011_2\hclPatches_2011_2.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2011_2\hkPatches_2011_2.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2013_1\hkndPatches_2013_1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2013_1\hkdPatches_2013_1.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk500r1_hk510r1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2012_2\hknpPatches_2012_2.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk450r1_hk451r1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2013_1\hclPatches_2013_1.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\710\hclPatches_710.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk201221r1_hk201310r1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2013_1\hkbPatches_2013_1.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\700\hclPatches_700.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\700\hkaPatches_700.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\Legacy\hkcdPatches_Legacy.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk330a2_hk330b1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Deprecated\Compat\hkHavokAllClassUpdates.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok201020r1Classes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk600b1_hk600b2.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2013_1\hkndPatches_2013_1.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\2012_2\hkaiPatches_2012_2.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\660\hkpPatches_660.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\Legacy\hkpPatches_Legacy.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\2011_2\hkaPatches_2011_2.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk452r1_hk460b1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2012_1\hkaPatches_2012_1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2013_1\hkmsPatches_2013_1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\700\hkbPatches_700.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk201210r1_hk201220r1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\Utilities\hkcdAllPatches.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Deprecated\Compat\hkCompat_None.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Deprecated\Version\hkVersionCheckingUtilsOld.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Patches\2011_3\hkdPatches_2011_3.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk403r1_hk410b1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2011_2\hkaiPatches_2011_2.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\710\hkdPatches_710.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\2012_1\hkcdPatches_2012_1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2013_1\hkcdPatches_2013_1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\Legacy\hkdPatches_Legacy.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\UnitTest\versionCheck.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\UnitTest\loadFileInplace.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\Utilities\hkmsAllPatches.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok500r1Classes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\Legacy\hclPatches_Legacy.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2011_2\hclPatches_2011_2.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\700\hkpPatches_700.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\710\hkbPatches_710.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok400b1Classes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\Utilities\hkdAllPatches.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\2010_1\hkpPatches_2010_1.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Deprecated\UnitTest\Roundtrip\RoundTrip.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Patches\2010_2\hclPatches_2010_2.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok410b1Classes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok460b2Classes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2012_1\hkbPatches_2012_1.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\2010_1\hkdPatches_2010_1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2011_1\hkpPatches_2011_1.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Deprecated\Compat\hkHavokAllClasses.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Patches\2011_1\hclPatches_2011_1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\710\hclPatches_710.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk201311r1_Current.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk300_hk310.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\660\hkPatches_660.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\2012_2\hkcdPatches_2012_2.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk700r1_hk710r1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2013_1\hkaiPatches_2013_1.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\2012_2\hkpPatches_2012_2.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2013_1\hkdPatches_2013_1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\Utilities\hkAllPatches.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk320_hk330a2.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok700b1Classes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk410r1_hk450b1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\Legacy\hkaPatches_Legacy.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2012_2\hclPatches_2012_2.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk201110r1_hk201120r1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok330r1Classes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2011_2\hkbPatches_2011_2.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2010_1\hkaiPatches_2010_1.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\660\hkcdPatches_660.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\2010_2\hkaiPatches_2010_2.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Classes\hkCompatUnitTestTrackerClasses.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2012_2\hkmsPatches_2012_2.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok550b2Classes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\UnitTesthkSomeObjectReflection.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\660\hkbPatches_660.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok201310r1Classes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2012_1\hclPatches_2012_1.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok201110r1Classes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2012_1\hkPatches_2012_1.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\2011_3\hkbPatches_2011_3.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk550b1_hk550b2.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2011_3\hkcdPatches_2011_3.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok201131r1Classes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Deprecated\Packfile\Binary\hkBinaryPackfileReader.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Patches\2011_3\hkaiPatches_2011_3.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok403r1Classes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\Legacy\hkcdPatches_Legacy.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk600b2_hk600r1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2011_3\hkdPatches_2011_3.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2011_1\hkpPatches_2011_1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk610r1_hk650b1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClInclude Include="Deprecated\UnitTest\SaveAsZero\saveAsZero.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Deprecated\Packfile\Xml\hkXmlPackfileReader.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Deprecated\Version\hkVersionCheckingUtilsOld.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\Utilities\hkpAllPatches.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\2010_2\hkPatches_2010_2.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok450b1Classes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2012_1\hkaiPatches_2012_1.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Deprecated\Version\hkObjectUpdateTracker.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Deprecated\Version\hkVersionRegistry.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\2010_1\hkPatches_2010_1.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\710\hkaiPatches_710.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok330b1Classes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2010_1\hkcdPatches_2010_1.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok700r1Classes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\710\hkPatches_710.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Deprecated\Version\hkVersionUtilOld.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk600r1_hk610r1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Classes\Reflections\UnitTestRoundTripReflection.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok461r1Classes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok510r1Classes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk330b2_hk330r1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok201221r1Classes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\700\hkPatches_700.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\2012_1\hkaPatches_2012_1.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\Legacy\hclPatches_Legacy.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\2010_2\hkcdPatches_2010_2.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Classes\hkCompatTrackerClasses.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2010_1\hkaiPatches_2010_1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\710\hkcdPatches_710.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok660b1Classes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\700\hkpPatches_700.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Deprecated\Version\hkPackfileObjectUpdateTracker.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="hkHavokVersions.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <ClInclude Include="Deprecated\Compat\hkCompatVersions.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Patches\660\hkdPatches_660.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\2010_1\hkbPatches_2010_1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok660r1Classes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2012_2\hkndPatches_2012_2.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok400r1Classes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2011_1\hkaPatches_2011_1.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClInclude Include="Deprecated\Packfile\Xml\hkXmlPackfileWriter.h">
+        <DeploymentContent>False</DeploymentContent></ClInclude>
+    <None Include="Patches\700\hkaPatches_700.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Patches\2010_2\hkPatches_2010_2.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2011_2\hkdPatches_2011_2.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2010_1\hkdPatches_2010_1.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Classes\Reflections\UnitTesthkStressTestCinfoReflection.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\2010_2\hkbPatches_2010_2.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\710\hkcdPatches_710.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\2013_1\hkmsPatches_2013_1.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <None Include="Patches\710\hkaPatches_710.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk700b1_hk700r1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Deprecated\Compat\hkCompat_All.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\Compat\updates\hkCompat_hk450b1_hk450r1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <None Include="Patches\hkRegisterPatches.cxx"><DeploymentContent>False</DeploymentContent></None>
+    <ClCompile Include="Deprecated\UnitTest\Roundtrip\RoundTrip.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\660\hkaiPatches_660.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2011_1\hkcdPatches_2011_1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\Legacy\hkbPatches_Legacy.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Patches\2012_1\hkaiPatches_2012_1.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+    <ClCompile Include="Deprecated\Compat\manifest\hkHavok650b1Classes.cpp">
+        <DeploymentContent>False</DeploymentContent></ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisInputAssembly>$(OutputFile)</CodeAnalysisInputAssembly>
+</PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug DLL|x64'">
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisInputAssembly>$(OutputFile)</CodeAnalysisInputAssembly>
+</PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dev|x64'">
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisInputAssembly>$(OutputFile)</CodeAnalysisInputAssembly>
+</PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dev DLL|x64'">
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisInputAssembly>$(OutputFile)</CodeAnalysisInputAssembly>
+</PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Hybrid DLL|x64'">
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisInputAssembly>$(OutputFile)</CodeAnalysisInputAssembly>
+</PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisInputAssembly>$(OutputFile)</CodeAnalysisInputAssembly>
+</PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release DLL|x64'">
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisInputAssembly>$(OutputFile)</CodeAnalysisInputAssembly>
+</PropertyGroup>
+<PropertyGroup>
+</PropertyGroup>
+</Project>
