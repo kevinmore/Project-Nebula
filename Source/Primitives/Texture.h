@@ -1,8 +1,6 @@
 #pragma once
 #include <QOpenGLFunctions_4_3_Core>
 #include <QString>
-#include <QImage>
-#include <QPixmap>
 #include <QSharedPointer>
 
 #define DIFFUSE_TEXTURE_UNIT GL_TEXTURE0
@@ -55,6 +53,7 @@ private:
 	void init();
 	bool load();
 	void destroy();
+	QImage& QImageNone();
 
 	//pointer to the image, once loaded
 	FIBITMAP* m_image;
