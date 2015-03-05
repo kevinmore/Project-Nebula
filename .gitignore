@@ -221,3 +221,4 @@ TempFiles/
 Debug/Project Nebula.exe
 QtMocRule.props
 ThirdParty/Havok/Lib/x64_vs2010/debug_dll/hkCompat.lib
+ThirdParty/Havok/Lib/x64_vs2010/release_dll/hkCompat.lib
