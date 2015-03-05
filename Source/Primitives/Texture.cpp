@@ -1,11 +1,10 @@
 #include <Primitives/Texture.h>
 #include <QDebug>
-#include <QGLWidget>
 #include <assert.h>
 #include <FreeImage.h>
 
 Texture::Texture(const QString& fileName, TextureType type, TextureUsage usage)
-	: 
+	: m_image(0),
 	  m_fileName(fileName),
 	  m_type(type),
 	  m_usage(usage),
@@ -14,7 +13,6 @@ Texture::Texture(const QString& fileName, TextureType type, TextureUsage usage)
 	init();
 	load();
 }
-
 
 Texture::~Texture()
 {
@@ -31,8 +29,7 @@ bool Texture::load()
 	// load image using freeimage
 	//image format
 	FREE_IMAGE_FORMAT fif = FIF_UNKNOWN;
-	//pointer to the image, once loaded
-	FIBITMAP* m_image;
+
 	//pointer to the image data
 	BYTE* bits(0);
 	//image width and height
@@ -90,7 +87,7 @@ void Texture::destroy()
 	}
 
 	//Free FreeImage's copy of the data
-//	FreeImage_Unload(m_image);
+	FreeImage_Unload(m_image);
 }
 
 void Texture::bind(GLenum textureUnit)
@@ -106,10 +103,11 @@ void Texture::release()
 
 QPixmap Texture::generateQPixmap()
 {
-	QImage im;//(static_cast<const uchar *>(m_blob.data()), m_image.columns(), m_image.rows(), QImage::Format_RGB32);
-
 	QPixmap pix;
-	pix.convertFromImage(im);
+
+	uint width = FreeImage_GetWidth(m_image);
+	uint height = FreeImage_GetHeight(m_image);
+	pix.loadFromData((const uchar*)m_image, width * height);
 
 	return pix;
 }

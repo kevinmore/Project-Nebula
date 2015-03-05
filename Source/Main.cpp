@@ -2,7 +2,6 @@
 
 int main(int argc, char* argv[])
 {
-	Magick::InitializeMagick(*argv);
 	QApplication app(argc, argv);
 
 	// setup resource and load the stylesheet
