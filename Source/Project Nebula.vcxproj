@@ -166,6 +166,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Resource\Logo\nebula.ico" />
+    <None Include="packages.config" />
     <None Include="Physicis\World\PhysicsWorldObject.inl" />
     <None Include="UI\HierarchyWidget.ui" />
     <None Include="UI\SkyboxWidget.ui" />
@@ -269,7 +270,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\ThirdParty\Qt\include;$(ProjectDir)..\ThirdParty\Qt\include\QtCore;$(ProjectDir)..\ThirdParty\Qt\include\QtGui;$(ProjectDir)..\ThirdParty\Qt\include\QtWidgets;$(ProjectDir)..\ThirdParty\Qt\include\QtOpenGL;$(ProjectDir)..\ThirdParty\assimp\include;$(ProjectDir)..\ThirdParty\ImageMagick\include;$(ProjectDir)..\ThirdParty\statemachineviewer\include;$(ProjectDir)..\ThirdParty\QHull\include;$(ProjectDir)..\ThirdParty\glm;$(ProjectDir)..\ThirdParty\CGAL\include;$(ProjectDir)..\ThirdParty\CGAL\auxiliary\gmp\include;$(ProjectDir)..\ThirdParty\boost\include;$(ProjectDir)..\ThirdParty\Havok\Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\ThirdParty\Qt\include;$(ProjectDir)..\ThirdParty\Qt\include\QtCore;$(ProjectDir)..\ThirdParty\Qt\include\QtGui;$(ProjectDir)..\ThirdParty\Qt\include\QtWidgets;$(ProjectDir)..\ThirdParty\Qt\include\QtOpenGL;$(ProjectDir)..\ThirdParty\assimp\3.1.1\;$(ProjectDir)..\ThirdParty\ImageMagick\include;$(ProjectDir)..\ThirdParty\statemachineviewer\include;$(ProjectDir)..\ThirdParty\QHull\include;$(ProjectDir)..\ThirdParty\glm;$(ProjectDir)..\ThirdParty\CGAL\include;$(ProjectDir)..\ThirdParty\CGAL\auxiliary\gmp\include;$(ProjectDir)..\ThirdParty\boost\include;$(ProjectDir)..\ThirdParty\Havok\Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
@@ -314,7 +315,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\ThirdParty\Qt\include;$(ProjectDir)..\ThirdParty\Qt\include\QtCore;$(ProjectDir)..\ThirdParty\Qt\include\QtGui;$(ProjectDir)..\ThirdParty\Qt\include\QtWidgets;$(ProjectDir)..\ThirdParty\Qt\include\QtOpenGL;$(ProjectDir)..\ThirdParty\assimp\include;$(ProjectDir)..\ThirdParty\ImageMagick\include;$(ProjectDir)..\ThirdParty\statemachineviewer\include;$(ProjectDir)..\ThirdParty\QHull\include;$(ProjectDir)..\ThirdParty\glm;$(ProjectDir)..\ThirdParty\CGAL\include;$(ProjectDir)..\ThirdParty\CGAL\auxiliary\gmp\include;$(ProjectDir)..\ThirdParty\boost\include;$(ProjectDir)..\ThirdParty\Havok\Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\ThirdParty\Qt\include;$(ProjectDir)..\ThirdParty\Qt\include\QtCore;$(ProjectDir)..\ThirdParty\Qt\include\QtGui;$(ProjectDir)..\ThirdParty\Qt\include\QtWidgets;$(ProjectDir)..\ThirdParty\Qt\include\QtOpenGL;$(ProjectDir)..\ThirdParty\assimp\3.1.1\;$(ProjectDir)..\ThirdParty\ImageMagick\include;$(ProjectDir)..\ThirdParty\statemachineviewer\include;$(ProjectDir)..\ThirdParty\QHull\include;$(ProjectDir)..\ThirdParty\glm;$(ProjectDir)..\ThirdParty\CGAL\include;$(ProjectDir)..\ThirdParty\CGAL\auxiliary\gmp\include;$(ProjectDir)..\ThirdParty\boost\include;$(ProjectDir)..\ThirdParty\Havok\Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -332,5 +333,14 @@
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\BuildRules\QtMocRule.targets" />
     <Import Project="..\BuildRules\QtUicGlobal.targets" />
+    <Import Project="..\packages\freeimage.redist.3.16.0\build\native\freeimage.redist.targets" Condition="Exists('..\packages\freeimage.redist.3.16.0\build\native\freeimage.redist.targets')" />
+    <Import Project="..\packages\freeimage.3.16.0\build\native\freeimage.targets" Condition="Exists('..\packages\freeimage.3.16.0\build\native\freeimage.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。启用“NuGet 程序包还原”可下载这些程序包。有关详细信息，请参阅 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\freeimage.redist.3.16.0\build\native\freeimage.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\freeimage.redist.3.16.0\build\native\freeimage.redist.targets'))" />
+    <Error Condition="!Exists('..\packages\freeimage.3.16.0\build\native\freeimage.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\freeimage.3.16.0\build\native\freeimage.targets'))" />
+  </Target>
 </Project>

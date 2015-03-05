@@ -287,24 +287,6 @@ void ModelLoader::prepareVertexBuffers()
 		GLuint BONE_WEIGHT_LOCATION = glGetAttribLocation(m_shaderProgramID, "Weights");
 		glEnableVertexAttribArray(BONE_WEIGHT_LOCATION);    
 		glVertexAttribPointer(BONE_WEIGHT_LOCATION, NUM_BONES_PER_VEREX, GL_FLOAT, GL_FALSE, sizeof(VertexBoneData), (const GLvoid*)(NUM_BONES_PER_VEREX * sizeof(uint)));
-
-		qDebug() << sizeof(VertexBoneData);
-
-		QFile file("out.txt");
-		if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
-			return;
-
-		QTextStream out(&file);
-		for (int k = 0; k < m_Bones.size(); ++k)
-		{
-			VertexBoneData bone = m_Bones[k];
-			out << "Vertex:" << k << "\n";
-			for (int i = 0; i < 4; ++i)
-			{
-				out << bone.IDs[i] << " --- " << bone.Weights[i] << "\n";
-			}
-			out << endl;
-		}
 	}
 
 	// Make sure the VAO is not changed from the outside

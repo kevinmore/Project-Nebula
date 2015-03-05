@@ -151,6 +151,7 @@
     <None Include="UI\SkyboxWidget.ui" />
     <None Include="Physicis\World\PhysicsWorldObject.inl" />
     <None Include="..\Resource\Logo\nebula.ico" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Project Nebula.rc" />
