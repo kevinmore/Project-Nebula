@@ -254,7 +254,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\ThirdParty\Qt\5.3\include;$(ProjectDir)..\ThirdParty\Qt\5.3\include\QtCore;$(ProjectDir)..\ThirdParty\Qt\5.3\include\QtGui;$(ProjectDir)..\ThirdParty\Qt\5.3\include\QtWidgets;$(ProjectDir)..\ThirdParty\Qt\5.3\include\QtOpenGL;$(ProjectDir)..\ThirdParty\assimp\include;$(ProjectDir)..\ThirdParty\statemachineviewer\include;$(ProjectDir)..\ThirdParty\QHull\include;$(ProjectDir)..\ThirdParty\glm;$(ProjectDir)..\ThirdParty\CGAL\include;$(ProjectDir)..\ThirdParty\CGAL\auxiliary\gmp\include;$(ProjectDir)..\ThirdParty\boost\include;$(ProjectDir)..\ThirdParty\Havok\Source;%(AdditionalIncludeDirectories);$(ProjectDir)..\ThirdParty\FreeImage\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\ThirdParty\Qt\5.3\include;$(ProjectDir)..\ThirdParty\Qt\5.3\include\QtCore;$(ProjectDir)..\ThirdParty\Qt\5.3\include\QtGui;$(ProjectDir)..\ThirdParty\Qt\5.3\include\QtWidgets;$(ProjectDir)..\ThirdParty\Qt\5.3\include\QtOpenGL;$(ProjectDir)..\ThirdParty\statemachineviewer\include;$(ProjectDir)..\ThirdParty\QHull\include;$(ProjectDir)..\ThirdParty\glm;$(ProjectDir)..\ThirdParty\CGAL\include;$(ProjectDir)..\ThirdParty\CGAL\auxiliary\gmp\include;$(ProjectDir)..\ThirdParty\boost\include;$(ProjectDir)..\ThirdParty\Havok\Source;%(AdditionalIncludeDirectories);$(ProjectDir)..\ThirdParty\FreeImage\include</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
@@ -274,7 +274,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\ThirdParty\Qt\include;$(ProjectDir)..\ThirdParty\Qt\include\QtCore;$(ProjectDir)..\ThirdParty\Qt\include\QtGui;$(ProjectDir)..\ThirdParty\Qt\include\QtWidgets;$(ProjectDir)..\ThirdParty\Qt\include\QtOpenGL;$(ProjectDir)..\ThirdParty\statemachineviewer\include;$(ProjectDir)..\ThirdParty\QHull\include;$(ProjectDir)..\ThirdParty\glm;$(ProjectDir)..\ThirdParty\CGAL\include;$(ProjectDir)..\ThirdParty\CGAL\auxiliary\gmp\include;$(ProjectDir)..\ThirdParty\boost\include;$(ProjectDir)..\ThirdParty\Havok\Source;%(AdditionalIncludeDirectories);$(ProjectDir)..\ThirdParty\FreeImage\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\ThirdParty\Qt\include;$(ProjectDir)..\ThirdParty\Qt\include\QtCore;$(ProjectDir)..\ThirdParty\Qt\include\QtGui;$(ProjectDir)..\ThirdParty\Qt\include\QtWidgets;$(ProjectDir)..\ThirdParty\Qt\include\QtOpenGL;$(ProjectDir)..\ThirdParty\statemachineviewer\include;$(ProjectDir)..\ThirdParty\QHull\include;$(ProjectDir)..\ThirdParty\glm;$(ProjectDir)..\ThirdParty\CGAL\include;$(ProjectDir)..\ThirdParty\CGAL\auxiliary\gmp\include;$(ProjectDir)..\ThirdParty\boost\include;$(ProjectDir)..\ThirdParty\Havok\Source;$(ProjectDir)..\ThirdParty\FreeImage\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
@@ -296,7 +296,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\ThirdParty\Qt\5.3\include;$(ProjectDir)..\ThirdParty\Qt\5.3\include\QtCore;$(ProjectDir)..\ThirdParty\Qt\5.3\include\QtGui;$(ProjectDir)..\ThirdParty\Qt\5.3\include\QtWidgets;$(ProjectDir)..\ThirdParty\Qt\5.3\include\QtOpenGL;$(ProjectDir)..\ThirdParty\assimp\include;$(ProjectDir)..\ThirdParty\statemachineviewer\include;$(ProjectDir)..\ThirdParty\QHull\include;$(ProjectDir)..\ThirdParty\glm;$(ProjectDir)..\ThirdParty\CGAL\include;$(ProjectDir)..\ThirdParty\CGAL\auxiliary\gmp\include;$(ProjectDir)..\ThirdParty\boost\include;$(ProjectDir)..\ThirdParty\Havok\Source;%(AdditionalIncludeDirectories);$(ProjectDir)..\ThirdParty\FreeImage\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\ThirdParty\Qt\5.3\include;$(ProjectDir)..\ThirdParty\Qt\5.3\include\QtCore;$(ProjectDir)..\ThirdParty\Qt\5.3\include\QtGui;$(ProjectDir)..\ThirdParty\Qt\5.3\include\QtWidgets;$(ProjectDir)..\ThirdParty\Qt\5.3\include\QtOpenGL;$(ProjectDir)..\ThirdParty\statemachineviewer\include;$(ProjectDir)..\ThirdParty\QHull\include;$(ProjectDir)..\ThirdParty\glm;$(ProjectDir)..\ThirdParty\CGAL\include;$(ProjectDir)..\ThirdParty\CGAL\auxiliary\gmp\include;$(ProjectDir)..\ThirdParty\boost\include;$(ProjectDir)..\ThirdParty\Havok\Source;%(AdditionalIncludeDirectories);$(ProjectDir)..\ThirdParty\FreeImage\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -319,7 +319,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\ThirdParty\Qt\include;$(ProjectDir)..\ThirdParty\Qt\include\QtCore;$(ProjectDir)..\ThirdParty\Qt\include\QtGui;$(ProjectDir)..\ThirdParty\Qt\include\QtWidgets;$(ProjectDir)..\ThirdParty\Qt\include\QtOpenGL;$(ProjectDir)..\ThirdParty\statemachineviewer\include;$(ProjectDir)..\ThirdParty\QHull\include;$(ProjectDir)..\ThirdParty\glm;$(ProjectDir)..\ThirdParty\CGAL\include;$(ProjectDir)..\ThirdParty\CGAL\auxiliary\gmp\include;$(ProjectDir)..\ThirdParty\boost\include;$(ProjectDir)..\ThirdParty\Havok\Source;%(AdditionalIncludeDirectories);$(ProjectDir)/ThirdParty/FreeImage/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\ThirdParty\Qt\include;$(ProjectDir)..\ThirdParty\Qt\include\QtCore;$(ProjectDir)..\ThirdParty\Qt\include\QtGui;$(ProjectDir)..\ThirdParty\Qt\include\QtWidgets;$(ProjectDir)..\ThirdParty\Qt\include\QtOpenGL;$(ProjectDir)..\ThirdParty\statemachineviewer\include;$(ProjectDir)..\ThirdParty\QHull\include;$(ProjectDir)..\ThirdParty\glm;$(ProjectDir)..\ThirdParty\CGAL\include;$(ProjectDir)..\ThirdParty\CGAL\auxiliary\gmp\include;$(ProjectDir)..\ThirdParty\boost\include;$(ProjectDir)..\ThirdParty\Havok\Source;%(AdditionalIncludeDirectories);$(ProjectDir)..\ThirdParty\FreeImage\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
