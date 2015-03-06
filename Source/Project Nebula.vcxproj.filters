@@ -75,7 +75,6 @@
     <ClCompile Include="Primitives\moc_Component.cc" />
     <ClCompile Include="Physicis\Entity\moc_RigidBody.cc" />
     <ClCompile Include="UI\GameObjectTreeInspector.cpp" />
-    <ClCompile Include="Utility\ImageHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Primitives\Texture.h" />
@@ -146,7 +145,6 @@
     <ClInclude Include="Physicis\Entity\RigidBody.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Utility\HavokFeatures.h" />
-    <ClInclude Include="Utility\ImageHandler.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="UI\HierarchyWidget.ui" />

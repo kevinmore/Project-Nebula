@@ -1,7 +1,7 @@
 #include <Primitives/Texture.h>
 #include <QDebug>
 #include <assert.h>
-#include <Utility/ImageHandler.h>
+#include <FreeImage.h>
 
 Texture::Texture(const QString& fileName, TextureType type, TextureUsage usage)
 	: m_image(0),
@@ -103,5 +103,11 @@ void Texture::release()
 
 QPixmap Texture::generateQPixmap()
 {
-	return ImageHandler::FIBitmapToQPixmap(m_image);
+	QPixmap pix;
+
+	uint width = FreeImage_GetWidth(m_image);
+	uint height = FreeImage_GetHeight(m_image);
+	pix.loadFromData((const uchar*)m_image, width * height);
+
+	return pix;
 }
