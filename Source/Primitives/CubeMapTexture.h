@@ -1,6 +1,7 @@
 #pragma once
 #include <QOpenGLFunctions_4_3_Core>
 #include <QString>
+#include <Magick++.h>
 #include <QImage>
 #include <QSharedPointer>
 
@@ -23,6 +24,9 @@ private:
 	void init();
 	bool load();
 	void destroy();
+
+	Magick::Image m_image;
+	Magick::Blob  m_blob;
 
 	QVector<QString> m_fileNames;
 	QVector<QPixmap> m_qpixmaps;
