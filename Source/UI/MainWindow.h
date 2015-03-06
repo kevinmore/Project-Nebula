@@ -3,6 +3,7 @@
 #include <UI/Canvas.h>
 #include <Scene/Scene.h>
 #include <Scene/Camera.h>
+#include <statemachineviewer.h>
 
 class MainWindow : public QMainWindow
 {
@@ -18,6 +19,7 @@ private:
 	void initializeMenuBar();
 	void initializeRightDockableArea();
 	void initializeParamsArea();
+	StateMachineViewer* showStateMachine(QStateMachine* machine);
 
 private slots:
 	void setFullScreen(bool state);
