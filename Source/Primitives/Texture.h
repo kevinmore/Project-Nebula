@@ -1,6 +1,7 @@
 #pragma once
 #include <QOpenGLFunctions_4_3_Core>
 #include <QString>
+#include <Magick++.h>
 #include <QImage>
 #include <QSharedPointer>
 
@@ -10,6 +11,7 @@
 
 class Texture : protected QOpenGLFunctions_4_3_Core
 {
+
 public:
 
 	enum TextureType
@@ -37,6 +39,7 @@ public:
 	};
 
 	Texture(const QString& fileName, TextureType type = Texture2D, TextureUsage usage = DiffuseMap);
+	Texture(const QImage& image, TextureType type = Texture2D, TextureUsage usage = DiffuseMap);
 	virtual ~Texture();
 
 	void bind(GLenum textureUnit);
@@ -54,7 +57,10 @@ private:
 	bool load();
 	void destroy();
 
+	QImage m_qimage;
 
+	Magick::Image m_image;
+	Magick::Blob  m_blob;
 
 	QString m_fileName;
 	TextureType m_type;
