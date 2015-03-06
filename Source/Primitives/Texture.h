@@ -2,12 +2,12 @@
 #include <QOpenGLFunctions_4_3_Core>
 #include <QString>
 #include <QSharedPointer>
+#include <QImage>
 
 #define DIFFUSE_TEXTURE_UNIT GL_TEXTURE0
 #define SHADOW_TEXTURE_UNIT  GL_TEXTURE1
 #define NORMAL_TEXTURE_UNIT  GL_TEXTURE2
 
-struct FIBITMAP;
 class Texture : protected QOpenGLFunctions_4_3_Core
 {
 public:
@@ -53,10 +53,8 @@ private:
 	void init();
 	bool load();
 	void destroy();
-	QImage& QImageNone();
 
-	//pointer to the image, once loaded
-	FIBITMAP* m_image;
+	QImage m_image;
 
 	QString m_fileName;
 	TextureType m_type;
