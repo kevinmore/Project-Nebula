@@ -208,7 +208,7 @@ void Scene::showSaveSceneDialog()
 	pause();
 
 	QString fileName = QFileDialog::getSaveFileName(0, tr("Save Scene"),
-		"../Resource/Scenes",
+		"../Resource/Scenes/scene",
 		tr("Scene File (*.nebula)"));
 
 	if (!fileName.isEmpty())
@@ -283,6 +283,9 @@ void Scene::loadPrefab( const QString& fileName )
 
 	// check if this object has the same name with another
 	QString name = go->objectName();
+	go->setPosition(0, 0, 0);
+	go->setRotation(0, 0, 0);
+
 	int duplication = 0;
 	foreach(QString key, m_objectManager->m_gameObjectMap.keys())
 	{

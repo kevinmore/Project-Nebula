@@ -13,6 +13,7 @@ HierarchyWidget::HierarchyWidget(Canvas* canvas, QWidget *parent)
 
 {
 	setMaximumWidth(380);
+	setAcceptDrops(true);
 
 	ui->setupUi(this);
 	ui->treeWidget->setContainerWidget(this);
@@ -46,11 +47,13 @@ HierarchyWidget::HierarchyWidget(Canvas* canvas, QWidget *parent)
 	// popup menu
 	m_deleteAction = new QAction("Delete", this);
 	m_addRigidBodyAction = new QAction("Rigid Body", this);
-
+	m_savePrefabAction = new QAction("Save Prefab", this);
+	
 	ui->treeWidget->setContextMenuPolicy(Qt::CustomContextMenu);
 	connect(ui->treeWidget, SIGNAL(customContextMenuRequested(const QPoint)), this, SLOT(showMouseRightButton(const QPoint)));
 	connect(m_deleteAction, SIGNAL(triggered()), this, SLOT(deleteGameObject()));
 	connect(m_addRigidBodyAction, SIGNAL(triggered()), this, SLOT(createRigidBody()));
+	connect(m_savePrefabAction, SIGNAL(triggered()), this, SLOT(savePrefab()));
 
 	// tab widget
 	int tabCount = ui->tabWidget->count();
@@ -407,9 +410,12 @@ void HierarchyWidget::showMouseRightButton( const QPoint& point )
 
 	// construct the popup menu
 	QMenu* popMenu = new QMenu(ui->treeWidget);
-	popMenu->addAction(m_deleteAction);
+
 	QMenu* addMenu = popMenu->addMenu("Add");
 	addMenu->addAction(m_addRigidBodyAction);
+
+	popMenu->addAction(m_savePrefabAction);
+	popMenu->addAction(m_deleteAction);
 
 	// show the menu
 	popMenu->exec(QCursor::pos());
@@ -1270,4 +1276,37 @@ void HierarchyWidget::connectRigidBodyTab( RigidBodyPtr rb )
 	connect(ui->doubleSpinBox_RigidBodyAngularImpulseX, SIGNAL(valueChanged(double)), rb.data(), SLOT(setAngularImpulseX_SLOT(double)));
 	connect(ui->doubleSpinBox_RigidBodyAngularImpulseY, SIGNAL(valueChanged(double)), rb.data(), SLOT(setAngularImpulseY_SLOT(double)));
 	connect(ui->doubleSpinBox_RigidBodyAngularImpulseZ, SIGNAL(valueChanged(double)), rb.data(), SLOT(setAngularImpulseZ_SLOT(double)));
+}
+
+void HierarchyWidget::savePrefab()
+{
+	QString fileName = QFileDialog::getSaveFileName(0, tr("Save Prefab"),
+		"../Resource/Prefabs/" + m_currentObject->objectName(),
+		tr("Prefab File (*.prefab)"));
+
+	if (!fileName.isEmpty())
+	{
+		GameObjectPtr go = ObjectManager::instance()->getGameObject(m_currentObject->objectName());
+		m_scene->savePrefab(fileName, go);
+	}
+}
+
+void HierarchyWidget::dragEnterEvent( QDragEnterEvent *event )
+{
+	QString filename = event->mimeData()->text();
+	int right = filename.lastIndexOf(".");
+	QString filetype = filename.right(filename.length() - right - 1);
+
+	if (filetype.toLower() == "prefab")
+	{
+		event->acceptProposedAction();
+	}
+}
+
+void HierarchyWidget::dropEvent( QDropEvent * event )
+{
+	// mmtext is "file:///...", the header takes 8 places
+	QString mmtext = event->mimeData()->text();
+	QString filename = mmtext.right(mmtext.length() - 8);
+	m_scene->loadPrefab(filename);
 }

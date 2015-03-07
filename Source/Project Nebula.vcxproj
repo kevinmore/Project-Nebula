@@ -122,7 +122,7 @@
     <ClInclude Include="UI\GameObjectTreeInspector.h" />
     <ClInclude Include="Utility\AssimpThread.h" />
     <ClInclude Include="UI\Canvas.h" />
-    <ClInclude Include="UI\HierarchyWidget.h" />
+    <QtMOC Include="UI\HierarchyWidget.h" />
     <ClInclude Include="UI\MainWindow.h" />
     <ClInclude Include="Utility\HavokFeatures.h" />
     <ClInclude Include="Utility\LogCenter.h" />

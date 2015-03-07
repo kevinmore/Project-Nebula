@@ -26,7 +26,7 @@ private:
 	Light* m_currentLight;
 	RigidBody* m_currentRigidBody;
 
-	QAction *m_deleteAction, *m_addRigidBodyAction;
+	QAction *m_deleteAction, *m_addRigidBodyAction, *m_savePrefabAction;
 	QWidget *m_renderingTab, *m_particleSystemTab, *m_lightTab, *m_rigidBodyTab;
 
 	void readHierarchy(GameObject* go, QTreeWidgetItem* parentItem); // go through the game objects
@@ -58,6 +58,7 @@ private slots:
 	void changeShader(const QString& shaderFile);
 	void changeLightType(const QString& type);
 	void createRigidBody();
+	void savePrefab();
 
 	void onShininessSliderChange(int value);
 	void onShininessDoubleBoxChange(double value);
@@ -119,5 +120,7 @@ signals:
 
 protected:
 	bool eventFilter(QObject *obj, QEvent *ev); // install a filter event for the color picker
+	void dragEnterEvent(QDragEnterEvent *event);
+	void dropEvent(QDropEvent * event);
 };
 

@@ -48,6 +48,9 @@ public:
 	void addLight(LightPtr l);
 	bool isSkyBoxEnabled() const { return m_bShowSkybox; }
 
+	void loadPrefab(const QString& fileName);
+	void savePrefab(const QString& fileName, const GameObjectPtr objectOut);
+
 public slots:
 	void toggleFill(bool state);
 	void toggleWireframe(bool state);
@@ -83,9 +86,6 @@ signals:
 private:
 	void loadScene(const QString& fileName);
 	void saveScene(const QString& fileName);
-
-	void loadPrefab(const QString& fileName);
-	void savePrefab(const QString& fileName, const GameObjectPtr objectOut);
 
 	void initPhysicsModule();
 	void initHavokPhysicsModule();
