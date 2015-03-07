@@ -12,8 +12,7 @@ class ObjectManager : QObject
 	Q_OBJECT
 
 public:
-	ObjectManager(QObject* parent = 0);
-	~ObjectManager();
+	static ObjectManager* instance();
 
 	void registerGameObject(const QString& name, GameObjectPtr go);
 
@@ -43,6 +42,10 @@ public slots:
 	void removeComponentFromRenderQueue(ComponentPtr comp);
 
 private:
+	ObjectManager(QObject* parent = 0);
+	~ObjectManager();
+	static ObjectManager* m_instance;
+
 	void readHierarchy(GameObject* root);
 };
 

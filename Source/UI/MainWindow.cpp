@@ -599,5 +599,5 @@ void MainWindow::showSkyboxDialog()
 
 void MainWindow::actionTriggered( QAction* action )
 {
-	m_scene->objectManager()->setLoadingFlag(action->text());
+	ObjectManager::instance()->setLoadingFlag(action->text());
 }

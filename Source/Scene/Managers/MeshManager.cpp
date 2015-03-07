@@ -3,7 +3,23 @@
 MeshManager::MeshManager(QObject* parent) 
 	: QObject(parent)
 {}
+
 MeshManager::~MeshManager() {}
+
+MeshManager* MeshManager::m_instance = 0;
+
+MeshManager* MeshManager::instance()
+{
+	static QMutex mutex;
+	if (!m_instance)
+	{
+		QMutexLocker locker(&mutex);
+		if (!m_instance)
+			m_instance = new MeshManager;
+	}
+
+	return m_instance;
+}
 
 MeshPtr MeshManager::getMesh( const QString& name )
 {

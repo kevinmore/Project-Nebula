@@ -15,7 +15,7 @@ void GameObjectTreeInspector::setContainerWidget( HierarchyWidget* widget )
 void GameObjectTreeInspector::dropEvent( QDropEvent * event )
 {
 	// retrieve the source and destination game objects
-	GameObject* dest = m_scene->objectManager()->getGameObject(itemAt(event->pos())->text(0)).data();
+	GameObject* dest = ObjectManager::instance()->getGameObject(itemAt(event->pos())->text(0)).data();
 	GameObject* source = m_container->getCurrentGameObject();
 
 	// validate

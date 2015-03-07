@@ -14,7 +14,7 @@ Skybox::~Skybox()
 	// clean up the meshes
 	foreach(MeshPtr mesh, m_meshes)
 	{
-		m_scene->meshManager()->deleteMesh(mesh);
+		MeshManager::instance()->deleteMesh(mesh);
 		mesh.clear();
 	}
 }
@@ -52,10 +52,10 @@ bool Skybox::init(const QString& PosXFilename,
 	{
 		ModelDataPtr data = modelDataVector[i];
 		// deal with the mesh
-		MeshPtr mesh = m_scene->meshManager()->getMesh(data->meshData.name);
+		MeshPtr mesh = MeshManager::instance()->getMesh(data->meshData.name);
 		if (!mesh)
 		{
-			mesh = m_scene->meshManager()->addMesh(data->meshData.name, data->meshData.numIndices, data->meshData.baseVertex, 	data->meshData.baseIndex);
+			mesh = MeshManager::instance()->addMesh(data->meshData.name, data->meshData.numIndices, data->meshData.baseVertex, 	data->meshData.baseIndex);
 		}
 
 		m_meshes.push_back(mesh);

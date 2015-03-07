@@ -9,8 +9,23 @@ ObjectManager::ObjectManager(QObject* parent)
 	  m_loadingFlag("Quality")
 {}
 
-
 ObjectManager::~ObjectManager() {}
+
+ObjectManager* ObjectManager::m_instance = 0;
+
+ObjectManager* ObjectManager::instance()
+{
+	static QMutex mutex;
+	if (!m_instance) 
+	{
+		QMutexLocker locker(&mutex);
+		if (!m_instance)
+			m_instance = new ObjectManager;
+	}
+
+	return m_instance;
+}
+
 
 void ObjectManager::registerGameObject( const QString& name, GameObjectPtr go )
 {

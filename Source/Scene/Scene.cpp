@@ -33,7 +33,8 @@ Scene* Scene::m_instance = 0;
 Scene* Scene::instance()
 {
 	static QMutex mutex;
-	if (!m_instance) {
+	if (!m_instance) 
+	{
 		QMutexLocker locker(&mutex);
 		if (!m_instance)
 			m_instance = new Scene;
@@ -55,13 +56,11 @@ void Scene::initialize()
 	glEnable(GL_DEPTH_TEST);
 	glClearDepth( 1.0 );
 
-
-	m_objectManager = new ObjectManager(this);
-	m_materialManager = new MaterialManager(this);
-	m_textureManager = new TextureManager(this);
-	m_meshManager = new MeshManager(this);
-
-
+	m_meshManager     = MeshManager::instance();
+	m_textureManager  = TextureManager::instance();
+	m_materialManager = MaterialManager::instance();
+	m_objectManager   = ObjectManager::instance();
+	
 	m_sceneRootNode = new GameObject;
 	m_sceneRootNode->setObjectName("Scene Root");
 
@@ -113,26 +112,6 @@ void Scene::update(float currentTime)
 Camera* Scene::getCamera()
 {
 	return m_camera;
-}
-
-MeshManager* Scene::meshManager()
-{
-	return m_meshManager;
-}
-
-TextureManager* Scene::textureManager()
-{
-	return m_textureManager;
-}
-
-MaterialManager* Scene::materialManager()
-{
-	return m_materialManager;
-}
-
-ObjectManager* Scene::objectManager()
-{
-	return m_objectManager;
 }
 
 void Scene::clearScene()

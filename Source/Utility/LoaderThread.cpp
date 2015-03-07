@@ -6,7 +6,7 @@
 
 LoaderThread::LoaderThread(const QString fileName, GameObjectPtr reference, bool generateGameObject)
 	: QThread(Scene::instance()),
-	  m_objectManager(Scene::instance()->objectManager()),
+	  m_objectManager(ObjectManager::instance()),
 	  m_fileName(fileName),
 	  m_reference(reference),
 	  m_shouldGenerateGameObject(generateGameObject)

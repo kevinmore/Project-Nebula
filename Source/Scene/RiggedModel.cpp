@@ -102,9 +102,9 @@ void RiggedModel::initialize(QVector<ModelDataPtr> modelDataVector)
 {
 	IModel::init();
 
-	m_meshManager     = m_scene->meshManager();
-	m_textureManager  = m_scene->textureManager();
-	m_materialManager = m_scene->materialManager();
+	m_meshManager     = MeshManager::instance();
+	m_textureManager  = TextureManager::instance();
+	m_materialManager = MaterialManager::instance();
 
 	// create a FKController for the model
 	FKController* controller = new FKController(m_modelLoader, m_modelLoader->getSkeletom());

@@ -40,11 +40,6 @@ public:
 
 	Camera* getCamera();
 	
-	MeshManager*     meshManager();
-	TextureManager*  textureManager();
-	MaterialManager* materialManager();
-	ObjectManager*  objectManager();
-
 	GameObject* sceneRoot() const { return m_sceneRootNode; }
 	void setBackGroundColor(const QColor& col);
 	SkyboxPtr getSkybox() const  { return m_skybox; }
@@ -93,6 +88,11 @@ private:
 	void initHavokPhysicsModule();
 	void bridgeToHavokPhysicsWorld();
 
+	ObjectManager*  m_objectManager;
+	MeshManager*     m_meshManager;
+	TextureManager* m_textureManager;
+	MaterialManager* m_materialManager;
+
 	mutable bool m_bPhysicsPaused, m_bStepPhysics;
 	QString m_currentSceneFile;
 	GameObject* m_sceneRootNode;
@@ -100,11 +100,6 @@ private:
 	Camera* m_camera;
 
 	ModelPtr m_model;
-
-	ObjectManager*  m_objectManager;
-	MeshManager*     m_meshManager;
-	TextureManager* m_textureManager;
-	MaterialManager* m_materialManager;
 
 	QList<LightPtr>		  m_lights;
 	

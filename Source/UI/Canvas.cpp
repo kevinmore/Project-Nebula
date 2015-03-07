@@ -510,7 +510,7 @@ GameObjectPtr Canvas::pickObject(const QPoint& mousePos, vec3& hitPointOut)
 
 	// prepare the container (a ray can hit several object)
 	QMap<float, GameObjectPtr> distanceMap;
-	foreach(GameObjectPtr go, getScene()->objectManager()->m_gameObjectMap.values())
+	foreach(GameObjectPtr go, ObjectManager::instance()->m_gameObjectMap.values())
 	{
 		float distance = 0.0f;
 		if(testRayOBBIntersection(direction, go, distance))

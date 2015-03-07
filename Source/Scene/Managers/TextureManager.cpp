@@ -4,7 +4,23 @@
 TextureManager::TextureManager(QObject* parent) 
 	: QObject(parent)
 {}
+
 TextureManager::~TextureManager() {}
+
+TextureManager* TextureManager::m_instance = 0;
+
+TextureManager* TextureManager::instance()
+{
+	static QMutex mutex;
+	if (!m_instance) 
+	{
+		QMutexLocker locker(&mutex);
+		if (!m_instance)
+			m_instance = new TextureManager;
+	}
+
+	return m_instance;
+}
 
 TexturePtr TextureManager::getTexture( const QString& name )
 {

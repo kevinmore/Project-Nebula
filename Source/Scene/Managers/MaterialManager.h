@@ -6,8 +6,7 @@
 class MaterialManager : QObject
 {
 public:
-	MaterialManager(QObject* parent = 0);
-	~MaterialManager();
+	static MaterialManager* instance();
 
 	MaterialPtr getMaterial(const QString& name);
 
@@ -27,6 +26,10 @@ public:
 	void clear();
 
 private:
+	MaterialManager(QObject* parent = 0);
+	~MaterialManager();
+	static MaterialManager* m_instance;
+
 	QMap<QString, MaterialPtr> m_materials;
 };
 

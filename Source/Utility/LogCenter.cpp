@@ -7,6 +7,7 @@
 #include <QDateTime>
 #include <QLoggingCategory>
 #include <QFile>
+#include <Utility/EngineCommon.h>
 
 void static logCenterFunction(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
@@ -61,7 +62,8 @@ LogCenter * LogCenter::m_instance = 0;
 LogCenter * LogCenter::instance()
 {
 	static QMutex mutex;
-	if (!m_instance) {
+	if (!m_instance) 
+	{
 		QMutexLocker locker(&mutex);
 		if (!m_instance)
 			m_instance = new LogCenter;
@@ -79,9 +81,8 @@ LogCenter::LogCenter()
 }
 
 
-LogCenter::~LogCenter(void)
-{
-}
+LogCenter::~LogCenter()
+{}
 
 void LogCenter::toggleWriteToFile( bool state )
 {

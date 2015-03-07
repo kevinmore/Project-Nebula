@@ -1,13 +1,25 @@
 #include "MaterialManager.h"
 
-
 MaterialManager::MaterialManager(QObject* parent)
 	: QObject(parent)
-{
-}
-
+{}
 
 MaterialManager::~MaterialManager(){}
+
+MaterialManager* MaterialManager::m_instance = 0;
+
+MaterialManager* MaterialManager::instance()
+{
+	static QMutex mutex;
+	if (!m_instance) 
+	{
+		QMutexLocker locker(&mutex);
+		if (!m_instance)
+			m_instance = new MaterialManager;
+	}
+
+	return m_instance;
+}
 
 MaterialPtr MaterialManager::getMaterial( const QString& name )
 {

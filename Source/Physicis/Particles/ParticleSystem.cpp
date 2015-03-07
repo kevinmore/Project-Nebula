@@ -238,10 +238,10 @@ void ParticleSystem::setParticleColor( const QColor& col )
 void ParticleSystem::loadTexture( const QString& fileName )
 {
 	// clear the previous loaded texture
-	m_scene->textureManager()->deleteTexture(m_actor->objectName() + "_texture");
+	TextureManager::instance()->deleteTexture(m_actor->objectName() + "_texture");
 
 	// load a new one
-	m_Texture = m_scene->textureManager()->addTexture(m_actor->objectName() + "_texture", fileName);
+	m_Texture = TextureManager::instance()->addTexture(m_actor->objectName() + "_texture", fileName);
 }
 
 QString ParticleSystem::getTextureFileName()

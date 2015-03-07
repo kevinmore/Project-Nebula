@@ -191,7 +191,7 @@ void HierarchyWidget::resetSelectedObject()
 	else if (current == ui->treeWidget->topLevelItem(0))
 		m_currentObject = m_scene->sceneRoot();
 	else
-		m_currentObject = m_scene->objectManager()->getGameObject(current->text(0)).data();
+		m_currentObject = ObjectManager::instance()->getGameObject(current->text(0)).data();
 
 	clearTransformationArea();
 	resetHierarchy(m_currentObject);
@@ -281,7 +281,7 @@ void HierarchyWidget::onSelectedGameObjectChanged(QTreeWidgetItem* current, QTre
 	}
 	
 	// get the selected game object
-	m_currentObject = m_scene->objectManager()->getGameObject(current->text(0)).data();
+	m_currentObject = ObjectManager::instance()->getGameObject(current->text(0)).data();
 	if(!m_currentObject) return;
 
 	// read this game object
@@ -398,11 +398,11 @@ void HierarchyWidget::renameGameObject( QTreeWidgetItem * item, int column )
 	if(item == ui->treeWidget->topLevelItem(0)) return;
 
 	// delete the current one
-	GameObjectPtr go = m_scene->objectManager()->m_gameObjectMap.take(m_currentObject->objectName());
+	GameObjectPtr go = ObjectManager::instance()->m_gameObjectMap.take(m_currentObject->objectName());
 
 	// add the new record
 	go->setObjectName(item->text(column));
-	m_scene->objectManager()->m_gameObjectMap[go->objectName()] = go;
+	ObjectManager::instance()->m_gameObjectMap[go->objectName()] = go;
 }
 
 void HierarchyWidget::showMouseRightButton( const QPoint& point )
@@ -424,7 +424,7 @@ void HierarchyWidget::deleteGameObject()
 {
 	// take the object from the map, and delete it
 	if (!m_currentObject) return;
-	m_scene->objectManager()->deleteObject(m_currentObject->objectName());
+	ObjectManager::instance()->deleteObject(m_currentObject->objectName());
 	updateObjectTree();
 	m_currentObject = NULL;
 }
@@ -624,10 +624,10 @@ bool HierarchyWidget::eventFilter( QObject *obj, QEvent *ev )
 			if (!fileName.isEmpty())
 			{
 				// apply the texture to the material and color picker both
-				TexturePtr texture_normalMap = m_scene->textureManager()->getTexture(fileName);
+				TexturePtr texture_normalMap = TextureManager::instance()->getTexture(fileName);
 				if(!texture_normalMap)
 				{
-					texture_normalMap = m_scene->textureManager()->addTexture(fileName, fileName, Texture::Texture2D, Texture::NormalMap);
+					texture_normalMap = TextureManager::instance()->addTexture(fileName, fileName, Texture::Texture2D, Texture::NormalMap);
 				}
 				m_currentMaterials[0]->addTexture(texture_normalMap);
 				emit materialChanged();

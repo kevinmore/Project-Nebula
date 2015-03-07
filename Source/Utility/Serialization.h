@@ -516,7 +516,7 @@ QDataStream& operator >> (QDataStream& in, Camera* object)
 // Order: Model Manager -> Camera -> SkyBox
 QDataStream& operator << (QDataStream& out, Scene* object)
 {
-	out << object->objectManager() << object->getCamera() << object->isSkyBoxEnabled();
+	out << ObjectManager::instance() << object->getCamera() << object->isSkyBoxEnabled();
 
 	return out;
 }
@@ -524,7 +524,7 @@ QDataStream& operator << (QDataStream& out, Scene* object)
 QDataStream& operator >> (QDataStream& in, Scene* object)
 {
 	bool skyboxEnabled;
-	in >> object->objectManager() >> object->getCamera() >> skyboxEnabled;
+	in >> ObjectManager::instance() >> object->getCamera() >> skyboxEnabled;
 
 	object->toggleSkybox(skyboxEnabled);
 

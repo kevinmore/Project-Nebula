@@ -6,8 +6,7 @@
 class TextureManager : QObject
 {
 public:
-	TextureManager(QObject* parent = 0);
-	~TextureManager();
+	static TextureManager* instance();
 
 	TexturePtr getTexture(const QString& name);
 	TexturePtr addTexture(const QString& name, const QString& fileName, 
@@ -19,5 +18,10 @@ public:
 
 //private:
 	QMap<QString, TexturePtr> m_textures;
+
+private:
+	TextureManager(QObject* parent = 0);
+	~TextureManager();
+	static TextureManager* m_instance;
 };
 
