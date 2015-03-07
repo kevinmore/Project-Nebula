@@ -358,7 +358,7 @@ QDataStream& operator >> (QDataStream& in, GameObjectPtr object)
 			QString fileName, shaderName;
 			int materialCount;
 			in >> fileName >> shaderName >> materialCount;
- 			LoaderThread loader(object->getScene(), fileName, object, object->getScene()->sceneRoot(), false);
+ 			LoaderThread loader(fileName, object, false);
 
 			// get the model
 			ComponentPtr comp = object->getComponent("Model");
@@ -380,7 +380,7 @@ QDataStream& operator >> (QDataStream& in, GameObjectPtr object)
 		else if (className == "ParticleSystem")
 		{
 			// create a particle system and attach it to the this game object
-			ParticleSystemPtr ps(new ParticleSystem(object->getScene()));
+			ParticleSystemPtr ps(new ParticleSystem);
 			object->attachComponent(ps);
 			ps->initParticleSystem();
 			in >> ps;
@@ -388,15 +388,15 @@ QDataStream& operator >> (QDataStream& in, GameObjectPtr object)
 		else if (className == "Light")
 		{
 			// create a light source
-			LightPtr light(new Light(object->getScene(), object.data()));
-			object->getScene()->addLight(light);
+			LightPtr light(new Light);
+			Scene::instance()->addLight(light);
 			object->attachComponent(light);
 			in >> light;
 		}
 		else if (className == "RigidBody")
 		{
 			// create a rigid body and attach to this object
-			RigidBodyPtr rb = object->getScene()->createRigidBody(object.data());
+			RigidBodyPtr rb = Scene::instance()->createRigidBody(object.data());
 			in >> rb;
 		}
 
@@ -470,7 +470,7 @@ QDataStream& operator >> (QDataStream& in, ObjectManager* object)
 		// find the parent object
 		GameObjectPtr parent = object->getGameObject(parentName);
 
-		GameObjectPtr go = object->getScene()->createEmptyGameObject("Game Object", parent.data());
+		GameObjectPtr go = Scene::instance()->createEmptyGameObject("Game Object", parent.data());
 		QString autoName = go->objectName();
 
 		in >> go;

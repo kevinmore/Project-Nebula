@@ -3,7 +3,6 @@
 #include <Primitives/Component.h>
 #include <Primitives/Transform.h>
 
-class Scene;
 class Light : public Component
 {
 
@@ -19,7 +18,7 @@ public:
 		AreaLight
 	};
 
-	Light(Scene* scene, GameObject* go);
+	Light();
 	~Light();
 
 	virtual QString className() { return "Light"; }
@@ -71,7 +70,6 @@ protected:
 	virtual void syncTransform(const Transform& transform);
 
 private:
-	Scene* m_scene;
 
 	LightType m_type;
 

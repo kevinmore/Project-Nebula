@@ -4,9 +4,8 @@
 #include <Animation/IK/FABRIKSolver.h>
 #include <Physicis/Entity/RigidBody.h>
 
-ObjectManager::ObjectManager(Scene* scene, QObject* parent)
+ObjectManager::ObjectManager(QObject* parent)
 	: QObject(parent),
-	  m_scene(scene),
 	  m_loadingFlag("Quality")
 {}
 
@@ -107,7 +106,7 @@ GameObjectPtr ObjectManager::createGameObject( const QString& customName, GameOb
 	if (duplication) 
 		name += "_" + QString::number(duplication);
 
-	GameObjectPtr go(new GameObject(m_scene, parent));
+	GameObjectPtr go(new GameObject(parent));
 	go->setObjectName(name);
 
 	registerGameObject(name, go);
@@ -135,11 +134,6 @@ void ObjectManager::deleteObject( const QString& name )
 	}
 
 	go.clear();
-}
-
-Scene* ObjectManager::getScene() const
-{
-	return m_scene;
 }
 
 void ObjectManager::addComponentToRenderQueue( ComponentPtr comp )
@@ -205,7 +199,7 @@ void ObjectManager::readHierarchy( GameObject* root )
 QList<GameObjectPtr> ObjectManager::getGameObjectTreeList()
 {
 	m_gameObjectTreeList.clear();
-	readHierarchy(m_scene->sceneRoot());
+	readHierarchy(Scene::instance()->sceneRoot());
 
 	QList<GameObjectPtr> retList;
 	foreach(GameObject* go, m_gameObjectTreeList)

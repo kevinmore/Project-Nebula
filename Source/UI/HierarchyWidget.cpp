@@ -4,9 +4,9 @@
 #include <Physicis/Collision/Collider/BoxCollider.h>
 #include <Physicis/Collision/Collider/SphereCollider.h>
 
-HierarchyWidget::HierarchyWidget(Scene* scene, Canvas* canvas, QWidget *parent)
+HierarchyWidget::HierarchyWidget(Canvas* canvas, QWidget *parent)
 	: QWidget(parent),
-	  m_scene(scene),
+	  m_scene(Scene::instance()),
 	  m_canvas(canvas),
 	  m_currentObject(0),
 	  ui(new Ui::HierarchyViewer)
@@ -15,7 +15,6 @@ HierarchyWidget::HierarchyWidget(Scene* scene, Canvas* canvas, QWidget *parent)
 	setMaximumWidth(380);
 
 	ui->setupUi(this);
-	ui->treeWidget->setScene(scene);
 	ui->treeWidget->setContainerWidget(this);
 
 	// connection to a ray casting function in the scene

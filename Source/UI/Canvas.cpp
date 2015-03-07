@@ -8,7 +8,7 @@
 Canvas::Canvas(QScreen *screen)
 	: QWindow(screen),
 	  m_context(new QOpenGLContext),
-	  m_scene(new Scene(this)),
+	  m_scene(Scene::instance()),
 	  m_rightButtonPressed(false),
 	  m_middleButtonPressed(false),
 	  m_cameraSpeed(getScene()->getCamera()->speed()),

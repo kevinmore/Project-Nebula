@@ -1,7 +1,7 @@
 #include "ConvexHullCollider.h"
 
-ConvexHullCollider::ConvexHullCollider( const vec3& center, const ConvexShape& shape, Scene* scene )
-	: ICollider(center, scene),
+ConvexHullCollider::ConvexHullCollider( const vec3& center, const ConvexShape& shape )
+	: ICollider(center),
 	  m_convexShape(shape),
 	  m_scale(Math::Vector3::UNIT_SCALE)
 {

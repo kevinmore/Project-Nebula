@@ -3,9 +3,9 @@
 #include <Scene/Scene.h>
 #include "Puppet.h"
 
-GameObject::GameObject(Scene* scene, GameObject* parent)
+GameObject::GameObject(GameObject* parent)
 	: QObject(parent),
-	  m_scene(scene),
+	  m_scene(Scene::instance()),
 	  m_movingBehaviour(CONSECUTIVE),
 	  m_transform(),
 	  m_modelMatrixDirty(true),
@@ -331,16 +331,6 @@ ComponentPtr GameObject::getComponent( const QString& name )
 		}
 	}
 	return ComponentPtr();
-}
-
-void GameObject::setScene( Scene* scene )
-{
-	m_scene = scene;
-}
-
-Scene* GameObject::getScene() const
-{
-	return m_scene;
 }
 
 void GameObject::translateX( float x )

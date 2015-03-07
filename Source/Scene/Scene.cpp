@@ -28,6 +28,20 @@ Scene::~Scene()
 	m_havokPhysicsWorld->removeReference();
 }
 
+Scene* Scene::m_instance = 0;
+
+Scene* Scene::instance()
+{
+	static QMutex mutex;
+	if (!m_instance) {
+		QMutexLocker locker(&mutex);
+		if (!m_instance)
+			m_instance = new Scene;
+	}
+
+	return m_instance;
+}
+
 void Scene::initialize()
 {
 	Q_ASSERT(initializeOpenGLFunctions());
@@ -42,13 +56,13 @@ void Scene::initialize()
 	glClearDepth( 1.0 );
 
 
-	m_objectManager = new ObjectManager(this, this);
+	m_objectManager = new ObjectManager(this);
 	m_materialManager = new MaterialManager(this);
 	m_textureManager = new TextureManager(this);
 	m_meshManager = new MeshManager(this);
 
 
-	m_sceneRootNode = new GameObject(this);
+	m_sceneRootNode = new GameObject;
 	m_sceneRootNode->setObjectName("Scene Root");
 
 	resetToDefaultScene();
@@ -159,8 +173,8 @@ void Scene::resetToDefaultScene()
 // 	LoaderThread backup(this, "../Resource/Models/Common/sphere.obj", temp, m_sceneRootNode);
 
 	// load the floor
-	GameObjectPtr floorRef(new GameObject(this));
-	LoaderThread floorLoader(this, "../Resource/Models/Common/DemoRoom/WoodenFloor.obj", floorRef, m_sceneRootNode);
+	GameObjectPtr floorRef(new GameObject);
+	LoaderThread floorLoader("../Resource/Models/Common/DemoRoom/WoodenFloor.obj", floorRef);
 	GameObjectPtr floorObject = m_objectManager->getGameObject("WoodenFloor");
 	ModelPtr floor = floorObject ->getComponent("Model").dynamicCast<IModel>();
 	RigidBodyPtr floorBody = RigidBodyPtr(new RigidBody());
@@ -188,7 +202,7 @@ void Scene::showLoadModelDialog()
 		"../Resource/Models",
 		tr("3D Model File (*.dae *.obj *.3ds)"));
 
-	LoaderThread loader(this, fileName, GameObjectPtr(), m_sceneRootNode);
+	LoaderThread loader(fileName, GameObjectPtr());
 }
 
 void Scene::showOpenSceneDialog()
@@ -315,7 +329,7 @@ ParticleSystemPtr Scene::createParticleSystem(GameObject* objectToAttach)
 	GameObjectPtr ref = createEmptyGameObject("Particle System", objectToAttach);
 
 	// particle system
-	ParticleSystemPtr ps(new ParticleSystem(this));
+	ParticleSystemPtr ps(new ParticleSystem);
 	ref->attachComponent(ps);
 	ps->initParticleSystem();
 	ps->assingCollisionObject(m_objectManager->getGameObject("Floor"));
@@ -328,7 +342,7 @@ LightPtr Scene::createLight( GameObject* objectToAttach )
 	GameObjectPtr ref = createEmptyGameObject("Light", objectToAttach);
 
 	// light
-	LightPtr l(new Light(this, ref.data()));
+	LightPtr l(new Light);
 	addLight(l);
 	ref->attachComponent(l);
 
@@ -377,7 +391,7 @@ void Scene::toggleSkybox( bool state )
 	
 	if (state)
 	{
-		m_skybox.reset(new Skybox(this));
+		m_skybox.reset(new Skybox);
 // 		m_skybox->init(
 // 			"../Resource/Textures/skybox/Vasa/posx.jpg",
 // 			"../Resource/Textures/skybox/Vasa/negx.jpg",

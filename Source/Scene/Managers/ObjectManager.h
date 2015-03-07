@@ -12,10 +12,9 @@ class ObjectManager : QObject
 	Q_OBJECT
 
 public:
-	ObjectManager(Scene* scene, QObject* parent = 0);
+	ObjectManager(QObject* parent = 0);
 	~ObjectManager();
 
-	Scene* getScene() const;
 	void registerGameObject(const QString& name, GameObjectPtr go);
 
 	GameObjectPtr getGameObject(const QString& name);
@@ -45,8 +44,6 @@ public slots:
 
 private:
 	void readHierarchy(GameObject* root);
-
-	Scene* m_scene;
 };
 
 typedef QSharedPointer<ObjectManager> ObjectManagerPtr;

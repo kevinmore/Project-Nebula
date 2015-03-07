@@ -6,7 +6,7 @@ class Scene;
 class BoxCollider : public ICollider
 {
 public:
-	BoxCollider(const vec3& center, const vec3& halfExtents, Scene* scene);
+	BoxCollider(const vec3& center, const vec3& halfExtents);
 	BoxShape getGeometryShape() const;
 
 	void setHalfExtents(const vec3& halfExtents);

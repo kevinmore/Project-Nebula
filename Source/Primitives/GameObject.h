@@ -22,7 +22,7 @@ class GameObject : public QObject
 	Q_PROPERTY(vec3 localSpeed READ localSpeed WRITE setSpeed)
 
 public:
-	GameObject(Scene* scene, GameObject* parent = 0);
+	GameObject(GameObject* parent = 0);
 	~GameObject();
 
 	bool isMoving() const;
@@ -94,9 +94,6 @@ public:
 
 	void setMovingBehaviour(MovingBehaviour type);
 	MovingBehaviour movingBehaviour() const;
-
-	void setScene(Scene* scene);
-	Scene* getScene() const;
 
 signals:
 	void synchronized();

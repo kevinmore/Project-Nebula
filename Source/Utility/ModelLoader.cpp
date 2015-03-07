@@ -4,9 +4,8 @@
 #include <Utility/Math.h>
 #include <Animation/IK/FABRIKSolver.h>
 
-ModelLoader::ModelLoader(Scene* scene)
+ModelLoader::ModelLoader()
 {
-	m_scene = scene;
 	m_effect = ShadingTechniquePtr();
 	Q_ASSERT(initializeOpenGLFunctions());
 }
@@ -214,7 +213,7 @@ GLuint ModelLoader::installShader()
 		shaderType = ShadingTechnique::STATIC;
 	}
 
-	m_effect = ShadingTechniquePtr(new ShadingTechnique("common", shaderType, m_scene));
+	m_effect = ShadingTechniquePtr(new ShadingTechnique("common", shaderType));
 
 	return m_effect->getShaderProgram()->programId();
 }
@@ -543,7 +542,7 @@ SphereCollider* ModelLoader::getBoundingSphere()
 		radiusSquared = qMax(radiusSquared, (pos - center).lengthSquared());
 	}
 	// generate a sphere collider
-	return new SphereCollider(center, qSqrt(radiusSquared), m_scene);
+	return new SphereCollider(center, qSqrt(radiusSquared));
 }
 
 BoxCollider* ModelLoader::getBoundingBox()
@@ -552,7 +551,7 @@ BoxCollider* ModelLoader::getBoundingBox()
 	vec3 center((m_maxX + m_minX) * 0.5f, (m_maxY + m_minY) * 0.5f, (m_maxZ + m_minZ) * 0.5f);
 	
 	// generate a box collider
-	return new BoxCollider(center, halfExtents, m_scene);
+	return new BoxCollider(center, halfExtents);
 }
 
 ConvexHullCollider* ModelLoader::getConvexHullCollider()
@@ -560,24 +559,6 @@ ConvexHullCollider* ModelLoader::getConvexHullCollider()
 	vec3 center((m_maxX + m_minX) * 0.5f, (m_maxY + m_minY) * 0.5f, (m_maxZ + m_minZ) * 0.5f);
 
 	// generate a convex hull collider
-// 	QVector<vec3> verticesList;
-// 
-// 	foreach(vec3 p, m_positions)
-// 	{
-// 		bool exists = false;
-// 		// check if the vertex is unique
-// 		foreach (vec3 v, verticesList)
-// 		{
-// 			if (p == v)
-// 			{
-// 				exists = true;
-// 				break;
-// 			}
-// 		}
-// 
-// 		if(!exists) verticesList << p;
-// 		exists = false;
-// 	}
 	ConvexShape shpe(m_positions);
-	return new ConvexHullCollider(center, shpe, m_scene);
+	return new ConvexHullCollider(center, shpe);
 }

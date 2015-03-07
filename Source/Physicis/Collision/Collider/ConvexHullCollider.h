@@ -6,7 +6,7 @@ class Scene;
 class ConvexHullCollider : public ICollider
 {
 public:
-	ConvexHullCollider(const vec3& center, const ConvexShape& shape, Scene* scene);
+	ConvexHullCollider(const vec3& center, const ConvexShape& shape);
 
 	ConvexShape getGeometryShape() const;
 	void setScale(const vec3& scale);

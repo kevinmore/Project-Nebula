@@ -2,10 +2,10 @@
 #include <Scene/Scene.h>
 #include <Animation/Rig/Pose.h>
 
-RiggedModel::RiggedModel(const QString& name, Scene* scene, ModelLoaderPtr loader)
+RiggedModel::RiggedModel(const QString& name, ModelLoaderPtr loader)
    : IModel(loader->getRenderingEffect(), name),
     m_modelLoader(loader),
-    m_scene(scene),
+    m_scene(Scene::instance()),
 	m_skeleton(loader->getSkeletom()),
 	m_FKController(0),
 	m_IKSolver(0),
@@ -15,10 +15,10 @@ RiggedModel::RiggedModel(const QString& name, Scene* scene, ModelLoaderPtr loade
 	initialize();
 }
 
-RiggedModel::RiggedModel(const QString& name, Scene* scene, ModelLoaderPtr loader, QVector<ModelDataPtr> modelData)
+RiggedModel::RiggedModel(const QString& name, ModelLoaderPtr loader, QVector<ModelDataPtr> modelData)
   : IModel(loader->getRenderingEffect(), name),
     m_modelLoader(loader),
-    m_scene(scene),
+    m_scene(Scene::instance()),
 	m_skeleton(loader->getSkeletom()),
 	m_FKController(0),
 	m_IKSolver(0),
@@ -32,7 +32,7 @@ RiggedModel::RiggedModel(const QString& name, Scene* scene, ModelLoaderPtr loade
 RiggedModel::RiggedModel( const RiggedModel* orignal )
 {
 	m_fileName = orignal->fileName();
-	m_scene = orignal->getScene();
+	m_scene = Scene::instance();
 	m_modelDataVector = orignal->getModelData();
 	// copy the loader and skeleton
 	m_modelLoader = orignal->getLoader();
@@ -41,7 +41,7 @@ RiggedModel::RiggedModel( const RiggedModel* orignal )
 
 	// install shader
 	QString shaderName = orignal->getShadingTech()->shaderFileName();
-	m_renderingEffect = ShadingTechniquePtr(new ShadingTechnique(shaderName, ShadingTechnique::RIGGED, m_scene));
+	m_renderingEffect = ShadingTechniquePtr(new ShadingTechnique(shaderName, ShadingTechnique::RIGGED));
 	// copy the vao
 	m_vao = orignal->getShadingTech()->getVAO();
 	m_renderingEffect->setVAO(m_vao);
@@ -57,17 +57,17 @@ RiggedModel::RiggedModel( const RiggedModel* orignal )
 	halfExtents.setX(halfExtents.x() / scale.x());
 	halfExtents.setY(halfExtents.y() / scale.y());
 	halfExtents.setZ(halfExtents.z() / scale.z());
-	m_boundingBox  = BoxColliderPtr(new BoxCollider(otherBox->getPosition(), halfExtents, m_scene));
+	m_boundingBox  = BoxColliderPtr(new BoxCollider(otherBox->getPosition(), halfExtents));
 
 	// copy the bounding sphere
 	SphereColliderPtr otherSphere = orignal->getBoundingSphere();
 	float radius = otherSphere->getRadius() / scale.x();
-	m_boundingSpehre = SphereColliderPtr(new SphereCollider(otherSphere->getPosition(), radius, m_scene));
+	m_boundingSpehre = SphereColliderPtr(new SphereCollider(otherSphere->getPosition(), radius));
 
 	// copy the convex hull collider
 	ConvexHullColliderPtr otherCH = orignal->getConvexHullCollider();
 	ConvexShape shape = otherCH->getGeometryShape();
-	m_convexHull = ConvexHullColliderPtr(new ConvexHullCollider(otherCH->getPosition(), shape, m_scene));
+	m_convexHull = ConvexHullColliderPtr(new ConvexHullCollider(otherCH->getPosition(), shape));
 
 	// assign the current bounding volume
 	ColliderPtr currentBV = orignal->getCurrentBoundingVolume();

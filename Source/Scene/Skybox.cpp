@@ -1,8 +1,8 @@
 #include "Skybox.h"
 #include <Scene/Scene.h>
 
-Skybox::Skybox( Scene* scene )
-	: m_scene(scene),
+Skybox::Skybox()
+	: m_scene(Scene::instance()),
 	  m_skyboxTechnique(SkyboxTechniquePtr()),
 	  m_cubemapTex(0)
 {
@@ -43,7 +43,7 @@ bool Skybox::init(const QString& PosXFilename,
 														 PosZFilename,
 														 NegZFilename));
 
-	ModelLoader loader(m_scene);
+	ModelLoader loader;
 	QVector<ModelDataPtr> modelDataVector = loader.loadModel("../Resource/Models/Common/sphere.obj", m_skyboxTechnique->getShaderProgram()->programId());
 	m_vao = loader.getVAO();
 

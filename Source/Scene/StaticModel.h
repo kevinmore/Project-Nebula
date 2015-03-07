@@ -10,8 +10,8 @@ class Scene;
 class StaticModel : public IModel
 {
 public:
-	StaticModel(const QString& name, Scene* scene, ShadingTechniquePtr tech);
-	StaticModel(const QString& name, Scene* scene, ShadingTechniquePtr tech, QVector<ModelDataPtr> modelDataVector);
+	StaticModel(const QString& name, ShadingTechniquePtr tech);
+	StaticModel(const QString& name, ShadingTechniquePtr tech, QVector<ModelDataPtr> modelDataVector);
 	
 	// copy constructor
 	StaticModel( const StaticModel* orignal );
@@ -22,7 +22,6 @@ public:
 	//virtual QString className() { return "StaticModel"; }
 	ShadingTechniquePtr getShadingTech() const { return m_renderingEffect; }
 
-	Scene* getScene() const { return m_scene; }
 	QVector<ModelDataPtr> getModelData() const { return m_modelDataVector; }
 
 protected:

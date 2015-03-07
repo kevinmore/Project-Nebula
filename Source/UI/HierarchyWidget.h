@@ -12,7 +12,7 @@ class HierarchyWidget : public QWidget
 	Q_OBJECT
 
 public:
-	HierarchyWidget(Scene* scene, Canvas* canvas, QWidget *parent = 0);
+	HierarchyWidget(Canvas* canvas, QWidget *parent = 0);
 	~HierarchyWidget();
 	GameObject* getCurrentGameObject() { return m_currentObject; }
 

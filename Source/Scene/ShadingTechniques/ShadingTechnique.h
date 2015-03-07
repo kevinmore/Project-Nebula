@@ -21,7 +21,7 @@ public:
 		RIGGED
 	};
 
-    ShadingTechnique(const QString &shaderName, ShaderType shaderType = STATIC, Scene* scene = 0);
+    ShadingTechnique(const QString &shaderName, ShaderType shaderType = STATIC);
     virtual bool init();
 	virtual void enable();
 

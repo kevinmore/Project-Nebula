@@ -10,7 +10,7 @@ class Scene;
 class Skybox : protected QOpenGLFunctions_4_3_Core
 {
 public:
-	Skybox(Scene* scene);
+	Skybox();
 	~Skybox();
 
 	bool init(const QString& PosXFilename,

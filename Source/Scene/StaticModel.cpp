@@ -1,16 +1,16 @@
 #include "StaticModel.h"
 #include <Scene/Scene.h>
 
-StaticModel::StaticModel(const QString& name, Scene* scene, ShadingTechniquePtr tech)
+StaticModel::StaticModel(const QString& name, ShadingTechniquePtr tech)
   : IModel(tech, name),
-	m_scene(scene)
+	m_scene(Scene::instance())
 {
 	initialize();
 }
 
-StaticModel::StaticModel(const QString& name, Scene* scene, ShadingTechniquePtr tech, QVector<ModelDataPtr> modelData)
+StaticModel::StaticModel(const QString& name, ShadingTechniquePtr tech, QVector<ModelDataPtr> modelData)
   : IModel(tech, name),
-    m_scene(scene)
+    m_scene(Scene::instance())
 {
 	m_modelDataVector = modelData;
 	initialize(modelData);
@@ -19,13 +19,13 @@ StaticModel::StaticModel(const QString& name, Scene* scene, ShadingTechniquePtr 
 StaticModel::StaticModel( const StaticModel* orignal )
 {
 	m_fileName = orignal->fileName();
-	m_scene = orignal->getScene();
+	m_scene = Scene::instance();
 	m_modelDataVector = orignal->getModelData();
 	initialize(m_modelDataVector);
 
 	// install shader
 	QString shaderName = orignal->getShadingTech()->shaderFileName();
-	m_renderingEffect = ShadingTechniquePtr(new ShadingTechnique(shaderName, ShadingTechnique::STATIC, m_scene));
+	m_renderingEffect = ShadingTechniquePtr(new ShadingTechnique(shaderName, ShadingTechnique::STATIC));
 
 	// copy the vao
 	m_vao = orignal->getShadingTech()->getVAO();
@@ -42,17 +42,17 @@ StaticModel::StaticModel( const StaticModel* orignal )
 	halfExtents.setX(halfExtents.x() / scale.x());
 	halfExtents.setY(halfExtents.y() / scale.y());
 	halfExtents.setZ(halfExtents.z() / scale.z());
-	m_boundingBox  = BoxColliderPtr(new BoxCollider(otherBox->getGeometryShape().getCenter(), halfExtents, m_scene));
+	m_boundingBox  = BoxColliderPtr(new BoxCollider(otherBox->getGeometryShape().getCenter(), halfExtents));
 
 	// copy the bounding sphere
 	SphereColliderPtr otherSphere = orignal->getBoundingSphere();
 	float radius = otherSphere->getRadius() / scale.x();
-	m_boundingSpehre = SphereColliderPtr(new SphereCollider(otherSphere->getGeometryShape().getCenter(), radius, m_scene));
+	m_boundingSpehre = SphereColliderPtr(new SphereCollider(otherSphere->getGeometryShape().getCenter(), radius));
 
 	// copy the convex hull collider
 	ConvexHullColliderPtr otherCH = orignal->getConvexHullCollider();
 	ConvexShape shape = otherCH->getGeometryShape();
-	m_convexHull = ConvexHullColliderPtr(new ConvexHullCollider(otherCH->getGeometryShape().getCenter(), shape, m_scene));
+	m_convexHull = ConvexHullColliderPtr(new ConvexHullCollider(otherCH->getGeometryShape().getCenter(), shape));
 
 	// assign the current bounding volume
 	ColliderPtr currentBV = orignal->getCurrentBoundingVolume();

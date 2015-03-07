@@ -4,9 +4,9 @@
 #include <QtMath>
 #include <Scene/Scene.h>
 
-ShadingTechnique::ShadingTechnique(const QString &shaderName, ShaderType shaderType, Scene* scene)
+ShadingTechnique::ShadingTechnique(const QString &shaderName, ShaderType shaderType)
 	: Technique(shaderName),
-	  m_scene(scene),
+	  m_scene(Scene::instance()),
 	  m_shaderType(shaderType),
 	  usingCubeMap(false)
 {

@@ -26,7 +26,7 @@ class ParticleSystem : public Component, protected QOpenGLFunctions_4_3_Core
 	Q_OBJECT
 
 public:
-	ParticleSystem(Scene* scene);
+	ParticleSystem();
 	~ParticleSystem();
 
 	void initParticleSystem();

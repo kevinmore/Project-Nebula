@@ -3,12 +3,12 @@
 #include <Scene/Scene.h>
 #include <Primitives/GameObject.h>
 
-ICollider::ICollider( const vec3& center, Scene* scene )
+ICollider::ICollider( const vec3& center )
 	: Component(0),
 	  m_position(center),
 	  m_margin(0.0001f),
 	  m_rigidBody(NULL),
-	  m_scene(scene),
+	  m_scene(Scene::instance()),
 	  m_motionColor(Qt::green),
 	  m_collisionCount(0)
 {

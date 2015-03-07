@@ -6,7 +6,7 @@ class Scene;
 class SphereCollider : public ICollider
 {
 public:
-	SphereCollider(const vec3& center, const float radius, Scene* scene);
+	SphereCollider(const vec3& center, const float radius);
 	SphereShape getGeometryShape() const;
 
 	void setRadius(const float radius);

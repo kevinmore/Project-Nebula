@@ -25,9 +25,14 @@ class Scene : public IScene, protected QOpenGLFunctions_4_3_Core
 {
 	Q_OBJECT
 
-public:
+private:
 	Scene(QObject* parent = 0);
 	virtual ~Scene();
+
+	static Scene* m_instance;
+
+public:
+	static Scene* instance();
 
 	virtual void initialize();
 	virtual void update(float currentTime);

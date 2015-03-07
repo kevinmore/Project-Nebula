@@ -8,7 +8,7 @@ ImageLoader::ImageLoader()
 ImageLoader::~ImageLoader()
 {}
 
-ImageLoader * ImageLoader::m_instance = 0;
+ImageLoader* ImageLoader::m_instance = 0;
 
 ImageLoader* ImageLoader::instance()
 {

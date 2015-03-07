@@ -26,7 +26,7 @@ public:
 		COLLIDER_MAX_ID
 	};
 
-	ICollider(const vec3& center, Scene* scene);
+	ICollider(const vec3& center);
 
 	inline vec3 getPosition() const { return m_position; }
 	inline void setPosition(const vec3& pos) { m_position = pos; }
@@ -44,7 +44,6 @@ public:
 	void setMotionColor(const QColor& col);
 	void setColor(const QColor& col);
 	void resetColor();
-	Scene* getScene() const { return m_scene; }
 
 	inline const mat4& getTransformMatrix() { return m_transformMatrix; }
 

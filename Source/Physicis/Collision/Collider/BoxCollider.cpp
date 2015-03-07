@@ -3,8 +3,8 @@
 #include <Physicis/Entity/RigidBody.h>
 using namespace Math;
 
-BoxCollider::BoxCollider( const vec3& center, const vec3& halfExtents, Scene* scene )
-	: ICollider(center, scene),
+BoxCollider::BoxCollider( const vec3& center, const vec3& halfExtents )
+	: ICollider(center),
 	  m_boxShape(center, halfExtents)
 {
 	m_colliderType = ICollider::COLLIDER_BOX;

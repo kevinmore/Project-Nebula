@@ -64,7 +64,7 @@ class Scene;
 class ModelLoader : protected QOpenGLFunctions_4_3_Core
 {
 public:
-	ModelLoader(Scene* scene = 0);
+	ModelLoader();
 	virtual ~ModelLoader();
 
 	enum MODEL_TYPE
@@ -167,7 +167,6 @@ private:
 	 *	Members Variables
 	 */
 	QString m_fileName;
-	Scene* m_scene;
 	Assimp::Importer m_importer;
 	const aiScene* m_aiScene;
 	Skeleton* m_skeleton;

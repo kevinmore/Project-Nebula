@@ -2,8 +2,8 @@
 #include <Scene/Scene.h>
 
 
-SphereCollider::SphereCollider( const vec3& center, const float radius, Scene* scene )
-	: ICollider(center, scene),
+SphereCollider::SphereCollider( const vec3& center, const float radius )
+	: ICollider(center),
 	  m_sphereShape(center, radius)
 {
 	m_colliderType = ICollider::COLLIDER_SPHERE;

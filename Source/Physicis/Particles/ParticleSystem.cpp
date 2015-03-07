@@ -2,13 +2,13 @@
 #include <Scene/Scene.h>
 #include <Utility/Math.h>
 
-ParticleSystem::ParticleSystem(Scene* scene)
+ParticleSystem::ParticleSystem()
 	: Component(1),// get rendered last
 	  m_curReadBufferIndex(0),
 	  m_aliveParticlesCount(0),
 	  m_elapsedTime(0.0f),
 	  m_nextEmitTime(0.0f),
-	  m_scene(scene),
+	  m_scene(Scene::instance()),
 	  m_initialized(false),
 	  m_generateImpulse(false)
 {}

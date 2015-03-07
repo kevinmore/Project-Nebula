@@ -13,8 +13,8 @@ class Scene;
 class RiggedModel : public IModel
 {
 public:
-	RiggedModel(const QString& name, Scene* scene, ModelLoaderPtr loader);
-	RiggedModel(const QString& name, Scene* scene, ModelLoaderPtr loader, QVector<ModelDataPtr> modelDataVector);
+	RiggedModel(const QString& name, ModelLoaderPtr loader);
+	RiggedModel(const QString& name, ModelLoaderPtr loader, QVector<ModelDataPtr> modelDataVector);
 
 	// copy constructor
 	RiggedModel( const RiggedModel* orignal );
@@ -26,7 +26,6 @@ public:
 
 	ShadingTechniquePtr getShadingTech() const { return m_renderingEffect; }
 
-	Scene* getScene() const { return m_scene; }
 	QVector<ModelDataPtr> getModelData() const { return m_modelDataVector; }
 	ModelLoaderPtr getLoader() const { return m_modelLoader; }
 
@@ -54,7 +53,6 @@ protected:
 private:
 
 	void initialize(QVector<ModelDataPtr> modelDataVector = QVector<ModelDataPtr>());
-
 
 	Scene* m_scene;
 	QVector<ModelDataPtr> m_modelDataVector;

@@ -3,15 +3,9 @@
 #include <Scene/Scene.h>
 
 GameObjectTreeInspector::GameObjectTreeInspector( QWidget *parent /*= 0*/ )
-	: QTreeWidget(parent)
-{
-
-}
-
-void GameObjectTreeInspector::setScene( Scene* scene )
-{
-	m_scene = scene;
-}
+	: QTreeWidget(parent),
+	  m_scene(Scene::instance())
+{}
 
 void GameObjectTreeInspector::setContainerWidget( HierarchyWidget* widget )
 {
@@ -30,14 +24,19 @@ void GameObjectTreeInspector::dropEvent( QDropEvent * event )
 		if (itemAt(event->pos()) == topLevelItem(0))
 		{
 			source->setParent(m_scene->sceneRoot());
-			QTreeWidget::dropEvent(event);
+			finishEvent(event);
 		}
 		return;
 	}
 
 	// change the parent of the current game object
 	source->setParent(dest);
+	finishEvent(event);
+}
 
+void GameObjectTreeInspector::finishEvent( QDropEvent * event )
+{
+	emit m_scene->updateHierarchy();
 	QTreeWidget::dropEvent(event);
 }
 
