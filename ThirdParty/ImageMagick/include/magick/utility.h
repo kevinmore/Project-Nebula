@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2013 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2015 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
   You may not use this file except in compliance with the License.
@@ -39,10 +39,6 @@ extern MagickExport char
   *Base64Encode(const unsigned char *,const size_t,size_t *),
   **GetPathComponents(const char *,size_t *),
   **ListFiles(const char *,const char *,size_t *);
-
-extern MagickExport int
-  SystemCommand(const MagickBooleanType,const MagickBooleanType,const char *,
-    ExceptionInfo *);
 
 extern MagickExport MagickBooleanType
   AcquireUniqueFilename(char *),

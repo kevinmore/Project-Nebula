@@ -1,12 +1,12 @@
 /*
-  Copyright 1999-2013 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2015 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
-
+  
   You may not use this file except in compliance with the License.
   obtain a copy of the License at
-
+  
     http://www.imagemagick.org/script/license.php
-
+  
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,14 +18,14 @@
 #ifndef _MAGICKCORE_DRAW_H
 #define _MAGICKCORE_DRAW_H
 
+#include "magick/geometry.h"
+#include "magick/image.h"
+#include "magick/pixel.h"
+#include "magick/type.h"
+
 #if defined(__cplusplus) || defined(c_plusplus)
 extern "C" {
 #endif
-
-#include "geometry.h"
-#include "image.h"
-#include "pixel.h"
-#include "type.h"
 
 typedef enum
 {
@@ -135,7 +135,7 @@ typedef enum
 } SpreadMethod;
 
 typedef struct _PointInfo
-{
+{ 
   double
     x,
     y;

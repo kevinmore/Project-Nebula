@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2013 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2015 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
 
   You may not use this file except in compliance with the License.
@@ -18,11 +18,11 @@
 #ifndef _MAGICKCORE_QUANTUM_PRIVATE_H
 #define _MAGICKCORE_QUANTUM_PRIVATE_H
 
+#include "magick/cache.h"
+
 #if defined(__cplusplus) || defined(c_plusplus)
 extern "C" {
 #endif
-
-#include "magick/cache.h"
 
 typedef struct _QuantumState
 {
@@ -468,6 +468,10 @@ static inline unsigned int ScaleQuantumToLong(const Quantum quantum)
 #if !defined(MAGICKCORE_HDRI_SUPPORT)
   return((unsigned int) quantum);
 #else
+  if (quantum <= 0.0)
+    return(0);
+  if ((quantum) >= 4294967295.0)
+    return(4294967295);
   return((unsigned int) (quantum+0.5));
 #endif
 }

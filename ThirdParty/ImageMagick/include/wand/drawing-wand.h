@@ -1,12 +1,12 @@
 /*
-  Copyright 1999-2013 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2015 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
-
+  
   You may not use this file except in compliance with the License.
   obtain a copy of the License at
-
+  
     http://www.imagemagick.org/script/license.php
-
+  
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,11 +18,11 @@
 #ifndef _MAGICKWAND_DRAWING_WAND_H
 #define _MAGICKWAND_DRAWING_WAND_H
 
+#include "wand/pixel-wand.h"
+
 #if defined(__cplusplus) || defined(c_plusplus)
 extern "C" {
 #endif
-
-#include "pixel-wand.h"
 
 typedef struct _DrawingWand
   DrawingWand;
@@ -43,6 +43,9 @@ extern WandExport ClipPathUnits
 
 extern WandExport DecorationType
   DrawGetTextDecoration(const DrawingWand *);
+
+extern WandExport DirectionType
+  DrawGetTextDirection(const DrawingWand *);
 
 extern WandExport double
   DrawGetFillOpacity(const DrawingWand *),
@@ -204,6 +207,7 @@ extern WandExport void
   DrawSetTextAlignment(DrawingWand *,const AlignType),
   DrawSetTextAntialias(DrawingWand *,const MagickBooleanType),
   DrawSetTextDecoration(DrawingWand *,const DecorationType),
+  DrawSetTextDirection(DrawingWand *,const DirectionType),
   DrawSetTextEncoding(DrawingWand *,const char *),
   DrawSetTextUnderColor(DrawingWand *,const PixelWand *),
   DrawSetViewbox(DrawingWand *,ssize_t,ssize_t,ssize_t,ssize_t),

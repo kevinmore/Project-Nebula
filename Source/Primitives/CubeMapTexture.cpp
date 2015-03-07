@@ -58,7 +58,7 @@ bool CubemapTexture::load()
 		}
 		catch (Magick::Error& e) 
 		{
-			qDebug() << e.what();
+			qWarning() << e.what();
 			destroy();
 			return false;
 		}

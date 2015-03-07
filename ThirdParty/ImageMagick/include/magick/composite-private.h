@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2013 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2015 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
 
   You may not use this file except in compliance with the License.
@@ -18,6 +18,11 @@
 #ifndef _MAGICKCORE_COMPOSITE_PRIVATE_H
 #define _MAGICKCORE_COMPOSITE_PRIVATE_H
 
+#include "magick/color.h"
+#include "magick/image.h"
+#include "magick/image-private.h"
+#include "magick/pixel-private.h"
+
 #if defined(__cplusplus) || defined(c_plusplus)
 extern "C" {
 #endif
@@ -25,12 +30,6 @@ extern "C" {
 /*
   ImageMagick Alpha Composite Inline Methods (special export)
 */
-
-#include "magick/color.h"
-#include "magick/image.h"
-#include "magick/image-private.h"
-#include "magick/pixel-private.h"
-
 static inline MagickRealType RoundToUnity(const MagickRealType value)
 {
   return(value < 0.0 ? 0.0 : (value > 1.0) ? 1.0 : value);
@@ -39,30 +38,34 @@ static inline MagickRealType RoundToUnity(const MagickRealType value)
 static inline MagickRealType MagickOver_(const MagickRealType p,
   const MagickRealType alpha,const MagickRealType q,const MagickRealType beta)
 {
-  return((1.0-QuantumScale*alpha)*p+(1.0-QuantumScale*beta)*q*
-    QuantumScale*alpha);
+  MagickRealType
+    Da,
+    Sa;
+
+  Sa=1.0-QuantumScale*alpha;
+  Da=1.0-QuantumScale*beta;
+  return(QuantumRange*(QuantumScale*Sa*p+QuantumScale*Da*q*(1.0-Sa)));
 }
 
 static inline void MagickCompositeOver(const PixelPacket *p,
   const MagickRealType alpha,const PixelPacket *q,const MagickRealType beta,
   PixelPacket *composite)
 {
-  double
-    gamma;
+  MagickRealType
+    Da,
+    gamma,
+    Sa;
 
   /*
     Compose pixel p over pixel q with the given opacities.
   */
-  if (alpha == TransparentOpacity)
-    {
-      if (composite != q)
-        *composite=(*q);
-      return;
-    }
-  gamma=1.0-QuantumScale*QuantumScale*alpha*beta;
-#if !defined(MAGICKCORE_HDRI_SUPPORT)
-  composite->opacity=(Quantum) (QuantumRange*(1.0-gamma)+0.5);
+  Sa=1.0-QuantumScale*alpha;
+  Da=1.0-QuantumScale*beta;
+  gamma=Sa*(-Da)+Sa+Da;
   gamma=PerceptibleReciprocal(gamma);
+#if !defined(MAGICKCORE_HDRI_SUPPORT)
+  SetPixelOpacity(composite,(MagickRealType) (QuantumRange*
+    (1.0-RoundToUnity(Sa+Da-Sa*Da))+0.5));
   SetPixelRed(composite,gamma*MagickOver_((MagickRealType)
     GetPixelRed(p),alpha,(MagickRealType) GetPixelRed(q),beta)+0.5);
   SetPixelGreen(composite,gamma*MagickOver_((MagickRealType)
@@ -70,8 +73,7 @@ static inline void MagickCompositeOver(const PixelPacket *p,
   SetPixelBlue(composite,gamma*MagickOver_((MagickRealType)
     GetPixelBlue(p),alpha,(MagickRealType) GetPixelBlue(q),beta)+0.5);
 #else
-  SetPixelOpacity(composite,QuantumRange*(1.0-gamma));
-  gamma=PerceptibleReciprocal(gamma);
+  SetPixelOpacity(composite,QuantumRange*(1.0-RoundToUnity(Sa+Da-Sa*Da)));
   SetPixelRed(composite,gamma*MagickOver_((MagickRealType)
     GetPixelRed(p),alpha,(MagickRealType) GetPixelRed(q),beta));
   SetPixelGreen(composite,gamma*MagickOver_((MagickRealType)
@@ -85,20 +87,20 @@ static inline void MagickPixelCompositeOver(const MagickPixelPacket *p,
   const MagickRealType alpha,const MagickPixelPacket *q,
   const MagickRealType beta,MagickPixelPacket *composite)
 {
-  double
-    gamma;
+  MagickRealType
+    Da,
+    gamma,
+    Sa;
 
   /*
     Compose pixel p over pixel q with the given opacities.
   */
-  if (alpha == OpaqueOpacity)
-    {
-      *composite=(*p);
-      return;
-    }
-  gamma=1.0-QuantumScale*QuantumScale*alpha*beta;
-  composite->opacity=(MagickRealType) QuantumRange*(1.0-gamma);
+  Sa=1.0-QuantumScale*alpha;
+  Da=1.0-QuantumScale*beta;
+  gamma=Sa*(-Da)+Sa+Da;
   gamma=PerceptibleReciprocal(gamma);
+  composite->opacity=(MagickRealType) (QuantumRange*(1.0-
+    RoundToUnity(Sa+Da-Sa*Da)));
   composite->red=gamma*MagickOver_(p->red,alpha,q->red,beta);
   composite->green=gamma*MagickOver_(p->green,alpha,q->green,beta);
   composite->blue=gamma*MagickOver_(p->blue,alpha,q->blue,beta);

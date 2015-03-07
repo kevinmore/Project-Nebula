@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2013 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2015 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
   You may not use this file except in compliance with the License.
@@ -18,19 +18,20 @@
 #ifndef _MAGICKCORE_EXCEPTION_PRIVATE_H
 #define _MAGICKCORE_EXCEPTION_PRIVATE_H
 
-#if defined(__cplusplus) || defined(c_plusplus)
-extern "C" {
-#endif
-
 #include "magick/log.h"
 #include "magick/magick.h"
 #include "magick/string_.h"
 
+#if defined(__cplusplus) || defined(c_plusplus)
+extern "C" {
+#endif
+
 #define ThrowBinaryException(severity,tag,context) \
 { \
+  assert(tag != (const char *) NULL); \
   if (image != (Image *) NULL) \
     (void) ThrowMagickException(&image->exception,GetMagickModule(),severity, \
-      tag == (const char *) NULL ? "unknown" : tag,"`%s'",context); \
+       tag,"`%s'",context); \
   return(MagickFalse); \
 }
 #define ThrowFatalException(severity,tag) \
@@ -39,15 +40,16 @@ extern "C" {
     *message; \
  \
   ExceptionInfo \
-    exception; \
+    *exception; \
  \
-  GetExceptionInfo(&exception); \
+  assert(tag != (const char *) NULL); \
+  exception=AcquireExceptionInfo(); \
   message=GetExceptionMessage(errno); \
-  (void) ThrowMagickException(&exception,GetMagickModule(),severity, \
-    tag == (const char *) NULL ? "unknown" : tag,"`%s'",message); \
+  (void) ThrowMagickException(exception,GetMagickModule(),severity,tag, \
+    "`%s'",message); \
   message=DestroyString(message); \
-  CatchException(&exception); \
-  (void) DestroyExceptionInfo(&exception); \
+  CatchException(exception); \
+  (void) DestroyExceptionInfo(exception); \
   MagickCoreTerminus(); \
   _exit((int) (severity-FatalErrorException)+1); \
 }
@@ -56,21 +58,24 @@ extern "C" {
   char \
     *message; \
  \
+  assert(tag != (const char *) NULL); \
   message=GetExceptionMessage(errno); \
-  (void) ThrowMagickException(exception,GetMagickModule(),severity, \
-    tag == (const char *) NULL ? "unknown" : tag,"`%s': %s",context,message); \
+  (void) ThrowMagickException(exception,GetMagickModule(),severity,tag, \
+    "`%s': %s",context,message); \
   message=DestroyString(message); \
 }
 #define ThrowImageException(severity,tag) \
 { \
-  (void) ThrowMagickException(exception,GetMagickModule(),severity, \
-    tag == (const char *) NULL ? "unknown" : tag,"`%s'",image->filename); \
+  assert(tag != (const char *) NULL); \
+  (void) ThrowMagickException(exception,GetMagickModule(),severity,tag, \
+    "`%s'",image->filename); \
   return((Image *) NULL); \
 }
 #define ThrowReaderException(severity,tag) \
 { \
-  (void) ThrowMagickException(exception,GetMagickModule(),severity, \
-    tag == (const char *) NULL ? "unknown" : tag,"`%s'",image_info->filename); \
+  assert(tag != (const char *) NULL); \
+  (void) ThrowMagickException(exception,GetMagickModule(),severity,tag, \
+    "`%s'",image_info->filename); \
   if ((image) != (Image *) NULL) \
     { \
       (void) CloseBlob(image); \
@@ -80,14 +85,21 @@ extern "C" {
 }
 #define ThrowWriterException(severity,tag) \
 { \
+  assert(tag != (const char *) NULL); \
   (void) ThrowMagickException(&image->exception,GetMagickModule(),severity, \
-    tag == (const char *) NULL ? "unknown" : tag,"`%s'",image->filename); \
+    tag,"`%s'",image->filename); \
   if (image_info->adjoin != MagickFalse) \
     while (image->previous != (Image *) NULL) \
       image=image->previous; \
   (void) CloseBlob(image); \
   return(MagickFalse); \
 }
+
+extern MagickPrivate MagickBooleanType
+  ClearExceptionInfo(ExceptionInfo *,MagickBooleanType);
+
+extern MagickPrivate void
+  InitializeExceptionInfo(ExceptionInfo *);
 
 #if defined(__cplusplus) || defined(c_plusplus)
 }

@@ -1,5 +1,5 @@
 /*
-  Copyright 1999-2013 ImageMagick Studio LLC, a non-profit organization
+  Copyright 1999-2015 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
   
   You may not use this file except in compliance with the License.
@@ -22,6 +22,9 @@
 extern "C" {
 #endif
 
+#include <stdarg.h>
+#include "magick/semaphore.h"
+
 typedef struct _DelegateInfo
 {
   char
@@ -29,21 +32,24 @@ typedef struct _DelegateInfo
     *decode,
     *encode,
     *commands;
-                                                                                
+
   ssize_t
     mode;
-                                                                                
+
   MagickBooleanType
     thread_support,
     spawn,
     stealth;
-                                                                                
+
   struct _DelegateInfo
     *previous,
     *next;  /* deprecated, use GetDelegateInfoList() */
 
   size_t
     signature;
+
+  SemaphoreInfo
+    *semaphore;
 } DelegateInfo;
 
 extern MagickExport char
@@ -57,6 +63,10 @@ extern MagickExport const char
 extern MagickExport const DelegateInfo
   *GetDelegateInfo(const char *,const char *,ExceptionInfo *exception),
   **GetDelegateInfoList(const char *,size_t *,ExceptionInfo *);
+
+extern MagickExport int
+  ExternalDelegateCommand(const MagickBooleanType,const MagickBooleanType,
+    const char *,char *,ExceptionInfo *);
 
 extern MagickExport ssize_t
   GetDelegateMode(const DelegateInfo *);
