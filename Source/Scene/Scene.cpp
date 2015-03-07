@@ -162,6 +162,8 @@ void Scene::resetToDefaultScene()
 	floorBody->attachNarrowPhaseCollider(floor->getConvexHullCollider());
 	floorObject->attachComponent(floorBody);
 	m_physicsWorld->addEntity(floorBody.data());
+
+	loadPrefab("test.prefab");
 }
 
 void Scene::reloadScene()
@@ -215,7 +217,7 @@ void Scene::showSaveSceneDialog()
 		saveScene(fileName);
 }
 
-void Scene::loadScene( QString& fileName )
+void Scene::loadScene( const QString& fileName )
 {
 	QFile file(fileName);
 	if (!file.open(QIODevice::ReadOnly))
@@ -228,7 +230,7 @@ void Scene::loadScene( QString& fileName )
 	clearScene();
 
 	QDataStream in(&file);
-	in.setVersion(QDataStream::Qt_5_3);
+	in.setVersion(QDataStream::Qt_5_4);
 
 	in >> this;
 
@@ -242,31 +244,9 @@ void Scene::loadScene( QString& fileName )
 	emit updateHierarchy();
 
 	bridgeToHavokPhysicsWorld();
-	// broad phase demo
-// 	{
-// 		GameObjectPtr go = createEmptyGameObject("Boarder");
-// 		go->setPosition(0, 6.1, 0);
-// 		BoxColliderPtr boarder(new BoxCollider(vec3(0, 0, 0), vec3(6, 6, 6), this));
-// 		boarder->setColor(Qt::cyan);
-// 		go->attachComponent(boarder);
-// 
-// 		// create rigid bodies for simulation
-// 		for(int i = 0; i < 50; ++i)
-// 		{
-// 			float ratio = Math::Random::random(0.5f, 1.2f);
-// 			go = createEmptyGameObject("Alien");
-// 			LoaderThread loader(this, "../Resource/Models/static/alien.obj", go, m_sceneRootNode, false);
-// 			go->setPosition(Math::Random::random(vec3(-4, 1, -4), vec3(4, 9, 4)));
-// 			RigidBodyPtr rb = createRigidBody(go.data());
-// 			rb->setGravityFactor(0.0f);
-// 			rb->setLinearVelocity(Math::Random::random(vec3(-4, -4, -4), vec3(4, 4, 4)));
-// 			rb->setAngularVelocity(Math::Random::random(vec3(-1, -1, -1), vec3(1, 1, 1)));
-// 			rb->setMotionType_SLOT("Sphere");
-// 		}
-// 	}
 }
 
-void Scene::saveScene( QString& fileName )
+void Scene::saveScene( const QString& fileName )
 {
 	QFile file(fileName);
 	if (!file.open(QIODevice::WriteOnly))
@@ -276,7 +256,7 @@ void Scene::saveScene( QString& fileName )
 	}
 
 	QDataStream out(&file);
-	out.setVersion(QDataStream::Qt_5_3);
+	out.setVersion(QDataStream::Qt_5_4);
 
 	out << this;
 
@@ -286,6 +266,44 @@ void Scene::saveScene( QString& fileName )
 	qDebug() << "Saved scene to" << fileName;
 
 	m_currentSceneFile = fileName;
+}
+
+void Scene::loadPrefab( const QString& fileName )
+{
+	QFile file(fileName);
+	if (!file.open(QIODevice::ReadOnly))
+	{
+		qWarning() << "Unable to open file:" << fileName;
+		return;
+	}
+
+	QDataStream in(&file);
+	in.setVersion(QDataStream::Qt_5_4);
+
+	in >> createEmptyGameObject();
+
+	file.close();
+
+	// make sure to send out this signal
+	emit updateHierarchy();
+}
+
+void Scene::savePrefab( const QString& fileName, const GameObjectPtr objectOut )
+{
+	QFile file(fileName);
+	if (!file.open(QIODevice::WriteOnly))
+	{
+		qWarning() << "Unable to save to file:" << fileName;
+		return;
+	}
+
+	QDataStream out(&file);
+	out.setVersion(QDataStream::Qt_5_4);
+
+	out << objectOut;
+
+	file.flush();
+	file.close();
 }
 
 void Scene::modelLoaded()
@@ -648,4 +666,3 @@ void Scene::bridgeToHavokPhysicsWorld()
 		floor->removeReference();
 	}
 }
-

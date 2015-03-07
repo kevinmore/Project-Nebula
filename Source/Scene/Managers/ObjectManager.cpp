@@ -57,15 +57,6 @@ void ObjectManager::renderAll(const float currentTime)
 		RigidBodyPtr rb = go->getComponent("RigidBody").dynamicCast<RigidBody>();
 		if (rb && rb->getMotionType() != RigidBody::MOTION_FIXED)
 		{
-// 			QObjectList children = go->children();
-// 			foreach(QObject* obj, children)
-// 			{
-// 				GameObject* child = dynamic_cast<GameObject*>(obj);
-// 				ParticleSystemPtr ps = child->getComponent("ParticleSystem").dynamicCast<ParticleSystem>();
-// 				rb->applyPointImpulse(ps->getLinearImpuse() * 0.8f, child->position() / 100.0f);
-// 			}
- 			//rb->applyAngularImpulse(vec3(0,0.1,0.1));
-			//rb->applyPointImpulse(vec3(0.1, 0, 0), vec3(0.2, 0, 0.2));
 // 			go->setPosition(rb->getPosition());
 // 			go->setRotation(rb->getRotation());
 
@@ -119,7 +110,7 @@ GameObjectPtr ObjectManager::createGameObject( const QString& customName, GameOb
 			++duplication;
 	}
 	if (duplication) 
-		name += "_" + QString::number(duplication);
+		name += "_" + QString::number(duplication + 1);
 
 	GameObjectPtr go(new GameObject(parent));
 	go->setObjectName(name);

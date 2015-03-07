@@ -81,8 +81,11 @@ signals:
 	void cleared();
 
 private:
-	void loadScene(QString& fileName);
-	void saveScene(QString& fileName);
+	void loadScene(const QString& fileName);
+	void saveScene(const QString& fileName);
+
+	void loadPrefab(const QString& fileName);
+	void savePrefab(const QString& fileName, const GameObjectPtr objectOut);
 
 	void initPhysicsModule();
 	void initHavokPhysicsModule();

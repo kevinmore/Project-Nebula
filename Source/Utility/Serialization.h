@@ -470,15 +470,15 @@ QDataStream& operator >> (QDataStream& in, ObjectManager* object)
 		// find the parent object
 		GameObjectPtr parent = object->getGameObject(parentName);
 
-		GameObjectPtr go = Scene::instance()->createEmptyGameObject("Game Object", parent.data());
-		QString autoName = go->objectName();
+		QString autoName = "Game Object_" + i;
+		GameObjectPtr go = Scene::instance()->createEmptyGameObject(autoName, parent.data());
 
 		in >> go;
 
 		// since the object is already defined in the scene file
 		// thus, we need to rename this game object
 		// delete the current one
-		go = object->m_gameObjectMap.take(autoName);
+		object->m_gameObjectMap.remove(autoName);
 		// add the new record
 		object->m_gameObjectMap[go->objectName()] = go;
 	}
