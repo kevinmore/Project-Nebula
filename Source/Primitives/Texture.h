@@ -39,7 +39,6 @@ public:
 	};
 
 	Texture(const QString& fileName, TextureType type = Texture2D, TextureUsage usage = DiffuseMap);
-	Texture(const QImage& image, TextureType type = Texture2D, TextureUsage usage = DiffuseMap);
 	virtual ~Texture();
 
 	void bind(GLenum textureUnit);

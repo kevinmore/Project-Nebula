@@ -16,18 +16,6 @@ Texture::Texture(const QString& fileName, TextureType type, TextureUsage usage)
 	load();
 }
 
-Texture::Texture(const QImage& image, TextureType type, TextureUsage usage)
-	: m_qimage(QGLWidget::convertToGLFormat(image)),
-	m_image(),
-	m_fileName(""),
-	m_type(type),
-	m_usage(usage),
-	m_textureId(0)
-{
-	init();
-	load();
-}
-
 
 Texture::~Texture()
 {

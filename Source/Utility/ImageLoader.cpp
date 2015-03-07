@@ -36,8 +36,6 @@ bool ImageLoader::processWithImageMagick( const QString& filename )
 		m_image = image;
 		m_blob = blob;
 
-		m_qimage = QImage(static_cast<const uchar *>(m_blob.data()), m_image.columns(), m_image.rows(), QImage::Format_ARGB32);
-
 		return true;
 	}
 	catch (Magick::Error& e)
