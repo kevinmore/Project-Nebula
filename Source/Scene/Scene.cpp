@@ -162,8 +162,6 @@ void Scene::resetToDefaultScene()
 	floorBody->attachNarrowPhaseCollider(floor->getConvexHullCollider());
 	floorObject->attachComponent(floorBody);
 	m_physicsWorld->addEntity(floorBody.data());
-
-	loadPrefab("test.prefab");
 }
 
 void Scene::reloadScene()
@@ -280,7 +278,21 @@ void Scene::loadPrefab( const QString& fileName )
 	QDataStream in(&file);
 	in.setVersion(QDataStream::Qt_5_4);
 
-	in >> createEmptyGameObject();
+	GameObjectPtr go = createEmptyGameObject();
+	in >> go;
+
+	// check if this object has the same name with another
+	QString name = go->objectName();
+	int duplication = 0;
+	foreach(QString key, m_objectManager->m_gameObjectMap.keys())
+	{
+		if(key.contains(name)) 
+			++duplication;
+	}
+	if (duplication) 
+		name += "_" + QString::number(duplication + 1);
+
+	m_objectManager->renameGameObject(go, name);
 
 	file.close();
 

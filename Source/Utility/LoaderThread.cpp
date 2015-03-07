@@ -65,17 +65,6 @@ ModelPtr LoaderThread::loadModel( const QString& customName, const QString& file
 {
 	ModelPtr pModel;
 
-	// check if the custom name is unique
-	QString name = customName;
-	int duplication = 0;
-	foreach(QString key, m_objectManager->m_gameObjectMap.keys())
-	{
-		if(key.contains(customName)) 
-			++duplication;
-	}
-	if (duplication) 
-		name += "_" + QString::number(duplication);
-
 	// if the model already exists, make a copy
 	foreach(ComponentPtr comp, m_objectManager->m_renderQueue)
 	{
@@ -130,12 +119,8 @@ ModelPtr LoaderThread::loadModel( const QString& customName, const QString& file
 	if (generateGameObject)
 	{
 		// attach this model to a new game object
-		GameObjectPtr go(new GameObject(Scene::instance()->sceneRoot()));
-		go->setObjectName(name);
+		GameObjectPtr go = ObjectManager::instance()->createGameObject(customName, Scene::instance()->sceneRoot());
 		go->attachComponent(pModel);
-
-		// add the data into the maps
-		m_objectManager->registerGameObject(name, go);
 	}
 
 	return pModel;

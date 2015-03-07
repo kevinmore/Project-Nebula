@@ -478,9 +478,7 @@ QDataStream& operator >> (QDataStream& in, ObjectManager* object)
 		// since the object is already defined in the scene file
 		// thus, we need to rename this game object
 		// delete the current one
-		object->m_gameObjectMap.remove(autoName);
-		// add the new record
-		object->m_gameObjectMap[go->objectName()] = go;
+		object->renameGameObject(autoName, go->objectName());
 	}
 
 	return in;

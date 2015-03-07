@@ -17,6 +17,8 @@ public:
 	void registerGameObject(const QString& name, GameObjectPtr go);
 
 	GameObjectPtr getGameObject(const QString& name);
+	void renameGameObject(const QString& oldName, const QString& newName);
+	void renameGameObject(GameObjectPtr go, const QString& newName);
 
 	// returns a list containing all the game objects, from parent to child order
 	QList<GameObjectPtr> getGameObjectTreeList();

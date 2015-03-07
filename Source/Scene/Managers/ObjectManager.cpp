@@ -26,7 +26,6 @@ ObjectManager* ObjectManager::instance()
 	return m_instance;
 }
 
-
 void ObjectManager::registerGameObject( const QString& name, GameObjectPtr go )
 {
 	// add the game object into the map
@@ -220,4 +219,26 @@ QList<GameObjectPtr> ObjectManager::getGameObjectTreeList()
 	}
 
 	return retList;
+}
+
+void ObjectManager::renameGameObject( GameObjectPtr go, const QString& newName )
+{
+	for (auto it = m_gameObjectMap.begin(); it != m_gameObjectMap.end();)
+		if (it.value() == go)
+		{
+			it = m_gameObjectMap.erase(it);
+			break;
+		}
+		else
+			++it;
+
+	go->setObjectName(newName);
+	m_gameObjectMap[newName] = go;
+}
+
+void ObjectManager::renameGameObject( const QString& oldName, const QString& newName )
+{
+	GameObjectPtr go = m_gameObjectMap.take(oldName);
+	go->setObjectName(newName);
+	m_gameObjectMap[newName] = go;
 }

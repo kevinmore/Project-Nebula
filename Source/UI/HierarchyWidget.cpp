@@ -397,12 +397,7 @@ void HierarchyWidget::renameGameObject( QTreeWidgetItem * item, int column )
 	// ignore the root node
 	if(item == ui->treeWidget->topLevelItem(0)) return;
 
-	// delete the current one
-	GameObjectPtr go = ObjectManager::instance()->m_gameObjectMap.take(m_currentObject->objectName());
-
-	// add the new record
-	go->setObjectName(item->text(column));
-	ObjectManager::instance()->m_gameObjectMap[go->objectName()] = go;
+	ObjectManager::instance()->renameGameObject(m_currentObject->objectName(), item->text(column));
 }
 
 void HierarchyWidget::showMouseRightButton( const QPoint& point )
