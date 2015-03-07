@@ -2,6 +2,8 @@
 #include <QDebug>
 #include <QPixmap>
 #include <assert.h>
+#include <Utility/ImageLoader.h>
+#include <QGLWidget>
 
 static const GLenum types[6] = 
 {  GL_TEXTURE_CUBE_MAP_POSITIVE_X,
@@ -35,44 +37,58 @@ CubemapTexture::~CubemapTexture()
 void CubemapTexture::init()
 {
 	Q_ASSERT(initializeOpenGLFunctions());
-
 }
 
 bool CubemapTexture::load()
 {
 	glGenTextures(1, &m_textureId);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, m_textureId);
+	ImageLoader* loader = ImageLoader::instance();
 
 	for (int i = 0 ; i < 6 ; ++i) 
 	{
-		try 
+		if (loader->processWithImageMagick(m_fileNames[i]))
 		{
-			m_image.read(m_fileNames[i].toStdString());
-			m_image.magick("RGBA");
-			m_image.write(&m_blob);
+			m_image = loader->getImage();
+			m_blob = loader->getBlob();
 
-			QImage im(static_cast<const uchar *>(m_blob.data()), m_image.columns(), m_image.rows(), QImage::Format_ARGB32);
 			QPixmap pix;
-			pix.convertFromImage(im);
-			m_qpixmaps.push_back(pix);
-		}
-		catch (Magick::Error& e) 
-		{
-			qWarning() << e.what();
-			destroy();
-			return false;
-		}
+			pix.convertFromImage(loader->getQImage());
+			m_qpixmaps << pix;
 
-		glTexImage2D(types[i],
-			0,
-			GL_RGBA,
-			static_cast<GLsizei>(m_image.columns()),
-			static_cast<GLsizei>(m_image.rows()),
-			0,
-			GL_RGBA,
-			GL_UNSIGNED_BYTE,
-			m_blob.data()
-			);
+			glTexImage2D(types[i],
+				0,
+				GL_RGBA,
+				static_cast<GLsizei>(m_image.columns()),
+				static_cast<GLsizei>(m_image.rows()),
+				0,
+				GL_RGBA,
+				GL_UNSIGNED_BYTE,
+				m_blob.data()
+				);
+		}
+		else
+		{
+			QImage qimage = loader->getQImage();
+			if (qimage.isNull() || qimage.width() == 0 || qimage.height() == 0)
+			{
+				destroy();
+				return false;
+			}
+			qimage = QGLWidget::convertToGLFormat(qimage);
+
+			glTexImage2D(types[i],
+				0,
+				GL_RGBA,
+				qimage.width(),
+				qimage.height(),
+				0,
+				GL_RGBA,
+				GL_UNSIGNED_BYTE,
+				qimage.bits()
+				);
+		}
+		
 	}    
 
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);

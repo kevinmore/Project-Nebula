@@ -2,14 +2,15 @@
 #include <QDebug>
 #include <QGLWidget>
 #include <assert.h>
+#include <Utility/ImageLoader.h>
 
 Texture::Texture(const QString& fileName, TextureType type, TextureUsage usage)
 	: m_qimage(),
-	  m_image(),
-	  m_fileName(fileName),
-	  m_type(type),
-	  m_usage(usage),
-	  m_textureId(0)
+	m_image(),
+	m_fileName(fileName),
+	m_type(type),
+	m_usage(usage),
+	m_textureId(0)
 {
 	init();
 	load();
@@ -31,7 +32,7 @@ Texture::Texture(const QImage& image, TextureType type, TextureUsage usage)
 Texture::~Texture()
 {
 	if(QOpenGLContext::currentContext() && m_textureId != 0)
- 		glDeleteTextures(1, &m_textureId);
+		glDeleteTextures(1, &m_textureId);
 }
 
 void Texture::init()
@@ -43,22 +44,12 @@ bool Texture::load()
 {
 	glGenTextures(1, &m_textureId);
 	glBindTexture(m_type, m_textureId);
+	ImageLoader* loader = ImageLoader::instance();
 
-	// use image magick
-	if(!m_fileName.isEmpty())
+	if (loader->processWithImageMagick(m_fileName))
 	{
-		try
-		{
-			m_image.read(m_fileName.toStdString());
-			m_image.magick("RGBA");
-			m_image.write(&m_blob);
-		}
-		catch (Magick::Error& e)
-		{
-			qWarning() << e.what();
-			destroy();
-			return false;
-		}
+		m_image = loader->getImage();
+		m_blob = loader->getBlob();
 
 		glTexImage2D(m_type,
 			0,
@@ -71,9 +62,17 @@ bool Texture::load()
 			m_blob.data()
 			);
 	}
-	// use qt image
 	else
 	{
+		m_qimage = loader->getQImage();
+		if (m_qimage.isNull() || m_qimage.width() == 0 || m_qimage.height() == 0)
+		{
+			destroy();
+			return false;
+		}
+
+		m_qimage = QGLWidget::convertToGLFormat(m_qimage);
+
 		glTexImage2D(m_type,
 			0,
 			GL_RGBA,
@@ -85,6 +84,8 @@ bool Texture::load()
 			m_qimage.bits()
 			);
 	}
+
+
 
 	glTexParameterf(m_type, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameterf(m_type, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -118,7 +119,7 @@ void Texture::release()
 QPixmap Texture::generateQPixmap()
 {
 	QImage im(static_cast<const uchar *>(m_blob.data()), static_cast<int>(m_image.columns()), static_cast<int>(m_image.rows()), QImage::Format_RGBA8888);
-	
+
 	QPixmap pix;
 	pix.convertFromImage(im);
 

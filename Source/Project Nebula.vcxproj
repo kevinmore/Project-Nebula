@@ -24,6 +24,7 @@
     <ClCompile Include="Animation\IK\FABRIKSolver.cpp" />
     <ClCompile Include="Animation\IK\CCDIKSolver.cpp" />
     <ClCompile Include="Animation\Rig\Pose.cpp" />
+    <ClCompile Include="Utility\ImageLoader.cpp" />
     <ClCompile Include="Physicis\Collision\Collider\ConvexHullCollider.cpp" />
     <ClCompile Include="Physicis\Entity\moc_RigidBody.cc" />
     <ClCompile Include="Physicis\Geometry\Polytope.cpp" />
@@ -95,6 +96,7 @@
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Utility\ImageLoader.h" />
     <ClInclude Include="Physicis\Collision\Collider\ConvexHullCollider.h" />
     <ClInclude Include="Physicis\Geometry\Edge.h" />
     <ClInclude Include="Physicis\Geometry\Polytope.h" />
