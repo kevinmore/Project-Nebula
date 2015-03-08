@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Main.cpp" />
     <ClCompile Include="Primitives\Texture.cpp" />
     <ClCompile Include="Primitives\Material.cpp" />
     <ClCompile Include="Primitives\Mesh.cpp" />
@@ -146,6 +145,7 @@
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Utility\HavokFeatures.h" />
     <ClInclude Include="Utility\ImageLoader.h" />
+    <ClInclude Include="UI\HierarchyWidget.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="UI\HierarchyWidget.ui" />
@@ -158,6 +158,6 @@
     <ResourceCompile Include="Project Nebula.rc" />
   </ItemGroup>
   <ItemGroup>
-    <QtMOC Include="UI\HierarchyWidget.h" />
+    <CudaCompile Include="main.cu" />
   </ItemGroup>
 </Project>

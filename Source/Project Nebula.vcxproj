@@ -93,7 +93,6 @@
     <ClCompile Include="Primitives\Texture.cpp" />
     <ClCompile Include="Scene\Managers\MaterialManager.cpp" />
     <ClCompile Include="Scene\Managers\TextureManager.cpp" />
-    <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utility\ImageLoader.h" />
@@ -122,7 +121,7 @@
     <ClInclude Include="UI\GameObjectTreeInspector.h" />
     <ClInclude Include="Utility\AssimpThread.h" />
     <ClInclude Include="UI\Canvas.h" />
-    <QtMOC Include="UI\HierarchyWidget.h" />
+    <ClInclude Include="UI\HierarchyWidget.h" />
     <ClInclude Include="UI\MainWindow.h" />
     <ClInclude Include="Utility\HavokFeatures.h" />
     <ClInclude Include="Utility\LogCenter.h" />
@@ -176,6 +175,9 @@
   <ItemGroup>
     <ResourceCompile Include="Project Nebula.rc" />
   </ItemGroup>
+  <ItemGroup>
+    <CudaCompile Include="main.cu" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{89A9A61D-5047-460C-91C1-C99FC990ABD7}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
@@ -207,6 +209,7 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
     <Import Project="..\BuildRules\QtMocRule.props" />
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\CUDA 6.5.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -252,7 +255,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\ThirdParty\Qt\5.3\include;$(ProjectDir)..\ThirdParty\Qt\5.3\include\QtCore;$(ProjectDir)..\ThirdParty\Qt\5.3\include\QtGui;$(ProjectDir)..\ThirdParty\Qt\5.3\include\QtWidgets;$(ProjectDir)..\ThirdParty\Qt\5.3\include\QtOpenGL;$(ProjectDir)..\ThirdParty\assimp\include;$(ProjectDir)..\ThirdParty\ImageMagick\include;$(ProjectDir)..\ThirdParty\statemachineviewer\include;$(ProjectDir)..\ThirdParty\QHull\include;$(ProjectDir)..\ThirdParty\glm;$(ProjectDir)..\ThirdParty\CGAL\include;$(ProjectDir)..\ThirdParty\CGAL\auxiliary\gmp\include;$(ProjectDir)..\ThirdParty\boost\include;$(ProjectDir)..\ThirdParty\Havok\Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\ThirdParty\Qt\5.3\include;$(ProjectDir)..\ThirdParty\Qt\5.3\include\QtCore;$(ProjectDir)..\ThirdParty\Qt\5.3\include\QtGui;$(ProjectDir)..\ThirdParty\Qt\5.3\include\QtWidgets;$(ProjectDir)..\ThirdParty\Qt\5.3\include\QtOpenGL;$(ProjectDir)..\ThirdParty\assimp\include;$(ProjectDir)..\ThirdParty\ImageMagick\include;$(ProjectDir)..\ThirdParty\statemachineviewer\include;$(ProjectDir)..\ThirdParty\QHull\include;$(ProjectDir)..\ThirdParty\glm;$(ProjectDir)..\ThirdParty\CGAL\include;$(ProjectDir)..\ThirdParty\CGAL\auxiliary\gmp\include;$(ProjectDir)..\ThirdParty\boost\include;$(ProjectDir)..\ThirdParty\Havok\Source;%(AdditionalIncludeDirectories);$(SolutionDir)\ThirdParty\CUDA\include</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
@@ -272,13 +275,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\ThirdParty\Qt\include;$(ProjectDir)..\ThirdParty\Qt\include\QtCore;$(ProjectDir)..\ThirdParty\Qt\include\QtGui;$(ProjectDir)..\ThirdParty\Qt\include\QtWidgets;$(ProjectDir)..\ThirdParty\Qt\include\QtOpenGL;$(ProjectDir)..\ThirdParty\ImageMagick\include;$(ProjectDir)..\ThirdParty\statemachineviewer\include;$(ProjectDir)..\ThirdParty\QHull\include;$(ProjectDir)..\ThirdParty\glm;$(ProjectDir)..\ThirdParty\CGAL\include;$(ProjectDir)..\ThirdParty\CGAL\auxiliary\gmp\include;$(ProjectDir)..\ThirdParty\boost\include;$(ProjectDir)..\ThirdParty\Havok\Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\ThirdParty\Qt\include;$(ProjectDir)..\ThirdParty\Qt\include\QtCore;$(ProjectDir)..\ThirdParty\Qt\include\QtGui;$(ProjectDir)..\ThirdParty\Qt\include\QtWidgets;$(ProjectDir)..\ThirdParty\Qt\include\QtOpenGL;$(ProjectDir)..\ThirdParty\ImageMagick\include;$(ProjectDir)..\ThirdParty\statemachineviewer\include;$(ProjectDir)..\ThirdParty\QHull\include;$(ProjectDir)..\ThirdParty\glm;$(ProjectDir)..\ThirdParty\CGAL\include;$(ProjectDir)..\ThirdParty\CGAL\auxiliary\gmp\include;$(ProjectDir)..\ThirdParty\boost\include;$(ProjectDir)..\ThirdParty\Havok\Source;%(AdditionalIncludeDirectories);$(SolutionDir)\ThirdParty\CUDA\include</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\ThirdParty\Qt\lib;$(ProjectDir)..\ThirdParty\ImageMagick\lib;$(ProjectDir)..\ThirdParty\boost\lib;$(ProjectDir)..\ThirdParty\CGAL\lib\Debug;$(ProjectDir)..\ThirdParty\CGAL\auxiliary\gmp\lib;$(ProjectDir)..\ThirdParty\QHull\lib\Debug;$(ProjectDir)..\ThirdParty\Havok\Lib\x64_vs2010\debug_dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\ThirdParty\Qt\lib;$(ProjectDir)..\ThirdParty\ImageMagick\lib;$(ProjectDir)..\ThirdParty\boost\lib;$(SolutionDir)\ThirdParty\CUDA\lib\x64;$(ProjectDir)..\ThirdParty\CGAL\lib\Debug;$(ProjectDir)..\ThirdParty\CGAL\auxiliary\gmp\lib;$(ProjectDir)..\ThirdParty\QHull\lib\Debug;$(ProjectDir)..\ThirdParty\Havok\Lib\x64_vs2010\debug_dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>Qt5Cored.lib;Qt5Guid.lib;Qt5OpenGLd.lib;Qt5Widgetsd.lib;opengl32.lib;qhullstatic.lib;%(AdditionalDependencies);CORE_DB_Magick++_.lib;CGAL_Core-vc100-mt-gd-4.5.2.lib;CGAL_ImageIO-vc100-mt-gd-4.5.2.lib;CGAL-vc100-mt-gd-4.5.2.lib;CGAL_Qt4-vc100-mt-gd-4.5.2.lib;libmpfr-4.lib;libgmp-10.lib;hkBase.lib;hkCompat.lib;hkSceneData.lib;hkSerialize.lib;hkInternal.lib;hkGeometryUtilities.lib;hkVisualize.lib;hkcdInternal.lib;hkcdCollide.lib;hkpCollide.lib;hkpConstraint.lib;hkpConstraintSolver.lib;hkpDynamics.lib;hkpInternal.lib;hkpUtilities.lib;hkpVehicle.lib</AdditionalDependencies>
     </Link>
     <BuildLog>
@@ -294,7 +297,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\ThirdParty\Qt\5.3\include;$(ProjectDir)..\ThirdParty\Qt\5.3\include\QtCore;$(ProjectDir)..\ThirdParty\Qt\5.3\include\QtGui;$(ProjectDir)..\ThirdParty\Qt\5.3\include\QtWidgets;$(ProjectDir)..\ThirdParty\Qt\5.3\include\QtOpenGL;$(ProjectDir)..\ThirdParty\assimp\include;$(ProjectDir)..\ThirdParty\ImageMagick\include;$(ProjectDir)..\ThirdParty\statemachineviewer\include;$(ProjectDir)..\ThirdParty\QHull\include;$(ProjectDir)..\ThirdParty\glm;$(ProjectDir)..\ThirdParty\CGAL\include;$(ProjectDir)..\ThirdParty\CGAL\auxiliary\gmp\include;$(ProjectDir)..\ThirdParty\boost\include;$(ProjectDir)..\ThirdParty\Havok\Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\ThirdParty\Qt\5.3\include;$(ProjectDir)..\ThirdParty\Qt\5.3\include\QtCore;$(ProjectDir)..\ThirdParty\Qt\5.3\include\QtGui;$(ProjectDir)..\ThirdParty\Qt\5.3\include\QtWidgets;$(ProjectDir)..\ThirdParty\Qt\5.3\include\QtOpenGL;$(ProjectDir)..\ThirdParty\assimp\include;$(ProjectDir)..\ThirdParty\ImageMagick\include;$(ProjectDir)..\ThirdParty\statemachineviewer\include;$(ProjectDir)..\ThirdParty\QHull\include;$(ProjectDir)..\ThirdParty\glm;$(ProjectDir)..\ThirdParty\CGAL\include;$(ProjectDir)..\ThirdParty\CGAL\auxiliary\gmp\include;$(ProjectDir)..\ThirdParty\boost\include;$(ProjectDir)..\ThirdParty\Havok\Source;%(AdditionalIncludeDirectories);$(SolutionDir)\ThirdParty\CUDA\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -317,14 +320,14 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\ThirdParty\Qt\include;$(ProjectDir)..\ThirdParty\Qt\include\QtCore;$(ProjectDir)..\ThirdParty\Qt\include\QtGui;$(ProjectDir)..\ThirdParty\Qt\include\QtWidgets;$(ProjectDir)..\ThirdParty\Qt\include\QtOpenGL;$(ProjectDir)..\ThirdParty\ImageMagick\include;$(ProjectDir)..\ThirdParty\statemachineviewer\include;$(ProjectDir)..\ThirdParty\QHull\include;$(ProjectDir)..\ThirdParty\glm;$(ProjectDir)..\ThirdParty\CGAL\include;$(ProjectDir)..\ThirdParty\CGAL\auxiliary\gmp\include;$(ProjectDir)..\ThirdParty\boost\include;$(ProjectDir)..\ThirdParty\Havok\Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\ThirdParty\Qt\include;$(ProjectDir)..\ThirdParty\Qt\include\QtCore;$(ProjectDir)..\ThirdParty\Qt\include\QtGui;$(ProjectDir)..\ThirdParty\Qt\include\QtWidgets;$(ProjectDir)..\ThirdParty\Qt\include\QtOpenGL;$(ProjectDir)..\ThirdParty\ImageMagick\include;$(ProjectDir)..\ThirdParty\statemachineviewer\include;$(ProjectDir)..\ThirdParty\QHull\include;$(ProjectDir)..\ThirdParty\glm;$(ProjectDir)..\ThirdParty\CGAL\include;$(ProjectDir)..\ThirdParty\CGAL\auxiliary\gmp\include;$(ProjectDir)..\ThirdParty\boost\include;$(ProjectDir)..\ThirdParty\Havok\Source;%(AdditionalIncludeDirectories);$(SolutionDir)\ThirdParty\CUDA\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\ThirdParty\Qt\lib;$(ProjectDir)..\ThirdParty\ImageMagick\lib;$(ProjectDir)..\ThirdParty\boost\lib;$(ProjectDir)..\ThirdParty\CGAL\lib\Release;$(ProjectDir)..\ThirdParty\CGAL\auxiliary\gmp\lib;$(ProjectDir)..\ThirdParty\QHull\lib\Release;$(ProjectDir)..\ThirdParty\Havok\Lib\x64_vs2010\release_dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\ThirdParty\Qt\lib;$(ProjectDir)..\ThirdParty\ImageMagick\lib;$(ProjectDir)..\ThirdParty\boost\lib;$(SolutionDir)\ThirdParty\CUDA\lib\x64;$(ProjectDir)..\ThirdParty\CGAL\lib\Release;$(ProjectDir)..\ThirdParty\CGAL\auxiliary\gmp\lib;$(ProjectDir)..\ThirdParty\QHull\lib\Release;$(ProjectDir)..\ThirdParty\Havok\Lib\x64_vs2010\release_dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>Qt5Core.lib;Qt5Gui.lib;Qt5OpenGL.lib;Qt5Widgets.lib;opengl32.lib;qhullstatic.lib;%(AdditionalDependencies);CORE_RL_Magick++_.lib;CGAL-vc100-mt-4.5.2.lib;CGAL_ImageIO-vc100-mt-4.5.2.lib;CGAL_Core-vc100-mt-4.5.2.lib;CGAL_Qt4-vc100-mt-4.5.2.lib;libmpfr-4.lib;libgmp-10.lib;hkBase.lib;hkCompat.lib;hkSceneData.lib;hkSerialize.lib;hkInternal.lib;hkGeometryUtilities.lib;hkVisualize.lib;hkcdInternal.lib;hkcdCollide.lib;hkpCollide.lib;hkpConstraint.lib;hkpConstraintSolver.lib;hkpDynamics.lib;hkpInternal.lib;hkpUtilities.lib;hkpVehicle.lib</AdditionalDependencies>
     </Link>
     <BuildLog>
@@ -337,6 +340,7 @@
     <Import Project="..\BuildRules\QtUicGlobal.targets" />
     <Import Project="..\packages\Assimp.redist.3.0.0\build\native\Assimp.redist.targets" Condition="Exists('..\packages\Assimp.redist.3.0.0\build\native\Assimp.redist.targets')" />
     <Import Project="..\packages\Assimp.3.0.0\build\native\Assimp.targets" Condition="Exists('..\packages\Assimp.3.0.0\build\native\Assimp.targets')" />
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\CUDA 6.5.targets" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
