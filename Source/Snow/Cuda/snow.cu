@@ -1,30 +1,7 @@
-/**************************************************************************
-**
-**   SNOW - CS224 BROWN UNIVERSITY
-**
-**   snow.cu
-**   Author: mliberma
-**   Created: 7 Apr 2014
-**
-**************************************************************************/
-
-#ifndef SNOW_CU
-#define SNOW_CU
-
-#include <cuda.h>
-#include <cuda_runtime.h>
+#include <windows.h>
 #include <cuda_gl_interop.h>
-#include <helper_cuda.h>
-#include <helper_cuda_gl.h>
-
-#ifndef GLM_FORCE_RADIANS
-    #define GLM_FORCE_RADIANS
-#endif
-#include <glm/geometric.hpp>
-
-#define CUDA_INCLUDE
-#include "sim/particle.h"
-#include "cuda/functions.h"
+#include <Snow/SnowParticle.h>
+#include "Functions.h"
 
 void registerVBO( cudaGraphicsResource **resource, GLuint vbo )
 {
@@ -50,4 +27,3 @@ void unregisterVBO( cudaGraphicsResource *resource )
 //    checkCudaErrors( cudaDeviceSynchronize() );
 //}
 
-#endif // SNOW_CU

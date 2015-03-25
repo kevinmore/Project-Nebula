@@ -1,36 +1,15 @@
-/**************************************************************************
-**
-**   SNOW - CS224 BROWN UNIVERSITY
-**
-**   implicit.h
-**   Authors: evjang, mliberma, taparson, wyegelwe
-**   Created: 26 Apr 2014
-**
-**************************************************************************/
+#pragma once
 
-#ifndef IMPLICIT_H
-#define IMPLICIT_H
+#include <Snow/Grid.h>
+#include <Snow/GridNode.h>
+#include <Snow/Caches.h>
+#include <Snow/SnowParticle.h>
 
-#include <cuda.h>
-#include <cuda_runtime.h>
-#include <helper_functions.h>
-#include <helper_cuda.h>
-#include "math.h"
-
-#define CUDA_INCLUDE
-#include "geometry/grid.h"
-#include "sim/caches.h"
-#include "sim/material.h"
-#include "sim/particle.h"
-#include "sim/particlegridnode.h"
-#include "cuda/vector.h"
-
-#include "cuda/helpers.h"
-#include "cuda/atomic.h"
-#include "cuda/decomposition.h"
-#include "cuda/weighting.h"
-
-#include "common/common.h"
+#include "CUDAVector.h"
+#include "CUDAHelpers.h"
+#include "Atomic.h"
+#include "Decomposition.h"
+#include "Weighting.h"
 
 #define BETA 0.5f
 #define MAX_ITERATIONS 15
@@ -39,30 +18,30 @@
 /**
  * Called over particles
  **/
-__global__ void computedF( const Particle *particles, ParticleCache *particleCache, int numParticles,
+__global__ void computedF( const SnowParticle *particles, SnowParticleCache *particleCache, int numParticles,
                            const Grid *grid, const NodeCache *nodeCaches,
                            NodeCache::Offset uOffset, float dt )
 {
     int particleIdx = blockIdx.x*blockDim.x + threadIdx.x;
     if ( particleIdx >= numParticles ) return;
 
-    const Particle &particle = particles[particleIdx];
+    const SnowParticle &particle = particles[particleIdx];
 
     const glm::ivec3 &dim = grid->dim;
 
     // Compute neighborhood of particle in grid
-    vec3 gridIndex = (particle.position - grid->pos) / grid->h,
-         gridMax = vec3::floor( gridIndex + vec3(2,2,2) ),
-         gridMin = vec3::ceil( gridIndex - vec3(2,2,2) );
+    CUDAVec3 gridIndex = (particle.position - grid->pos) / grid->h,
+         gridMax = CUDAVec3::floor( gridIndex + CUDAVec3(2,2,2) ),
+         gridMin = CUDAVec3::ceil( gridIndex - CUDAVec3(2,2,2) );
     glm::ivec3 maxIndex = glm::clamp( glm::ivec3(gridMax), glm::ivec3(0,0,0), dim ),
                minIndex = glm::clamp( glm::ivec3(gridMin), glm::ivec3(0,0,0), dim );
 
     // Fill dF
-    mat3 dF(0.0f);
+    CUDAMat3 dF(0.0f);
     int rowSize = dim.z+1;
     int pageSize = (dim.y+1)*rowSize;
     for ( int i = minIndex.x; i <= maxIndex.x; ++i ) {
-        vec3 d, s;
+        CUDAVec3 d, s;
         d.x = gridIndex.x - i;
         d.x *= ( s.x = ( d.x < 0 ) ? -1.f : 1.f );
         int pageOffset = i*pageSize;
@@ -73,13 +52,13 @@ __global__ void computedF( const Particle *particles, ParticleCache *particleCac
             for ( int k = minIndex.z; k <= maxIndex.z; ++k ) {
                 d.z = gridIndex.z - k;
                 d.z *= ( s.z = ( d.z < 0 ) ? -1.f : 1.f );
-                vec3 wg;
+                CUDAVec3 wg;
                 weightGradient( s, d, wg );
 
                 const NodeCache &nodeCache = nodeCaches[rowOffset+k];
-                vec3 du_j = dt * nodeCache[uOffset];
+                CUDAVec3 du_j = dt * nodeCache[uOffset];
 
-                dF += mat3::outerProduct( du_j, wg );
+                dF += CUDAMat3::outerProduct( du_j, wg );
             }
         }
     }
@@ -88,18 +67,18 @@ __global__ void computedF( const Particle *particles, ParticleCache *particleCac
 }
 
 /** Currently computed in computedF, we could parallelize this and computedF but not sure what the time benefit would be*/
-__global__ void computeFeHat( Particle *particles, ParticleCache *particleCache, int numParticles, Grid *grid, float dt, Node *nodes )
+__global__ void computeFeHat( SnowParticle *particles, SnowParticleCache *particleCache, int numParticles, Grid *grid, float dt, Node *nodes )
 {
     int particleIdx = blockIdx.x*blockDim.x + threadIdx.x;
     if ( particleIdx >= numParticles ) return;
 
-    Particle &particle = particles[particleIdx];
+    SnowParticle &particle = particles[particleIdx];
 
-    vec3 particleGridPos = (particle.position - grid->pos) / grid->h;
+    CUDAVec3 particleGridPos = (particle.position - grid->pos) / grid->h;
     glm::ivec3 min = glm::ivec3(std::ceil(particleGridPos.x - 2), std::ceil(particleGridPos.y - 2), std::ceil(particleGridPos.z - 2));
     glm::ivec3 max = glm::ivec3(std::floor(particleGridPos.x + 2), std::floor(particleGridPos.y + 2), std::floor(particleGridPos.z + 2));
 
-    mat3 vGradient(0.0f);
+    CUDAMat3 vGradient(0.0f);
 
     min = glm::max(glm::ivec3(0.0f), min);
     max = glm::min(grid->dim, max);
@@ -109,19 +88,19 @@ __global__ void computeFeHat( Particle *particles, ParticleCache *particleCache,
                 int currIdx = grid->getGridIndex(i, j, k, grid->dim+1);
                 Node &node = nodes[currIdx];
 
-                vec3 wg;
-                weightGradient(particleGridPos - vec3(i, j, k), wg);
+                CUDAVec3 wg;
+                weightGradient(particleGridPos - CUDAVec3(i, j, k), wg);
 
-                vGradient += mat3::outerProduct(dt*node.velocity, wg);
+                vGradient += CUDAMat3::outerProduct(dt*node.velocity, wg);
             }
         }
     }
 
-    mat3 &FeHat = particleCache->FeHats[particleIdx];
-    mat3 &ReHat = particleCache->ReHats[particleIdx];
-    mat3 &SeHat = particleCache->SeHats[particleIdx];
+    CUDAMat3 &FeHat = particleCache->FeHats[particleIdx];
+    CUDAMat3 &ReHat = particleCache->ReHats[particleIdx];
+    CUDAMat3 &SeHat = particleCache->SeHats[particleIdx];
 
-    FeHat = mat3::addIdentity(vGradient) * particle.elasticF;
+    FeHat = CUDAMat3::addIdentity(vGradient) * particle.elasticF;
     computePD( FeHat, ReHat, SeHat );
 }
 
@@ -135,20 +114,20 @@ __global__ void computeFeHat( Particle *particles, ParticleCache *particleCache,
  *
  *
  */
-__device__ void computedR( const mat3 &dF, const mat3 &Se, const mat3 &Re, mat3 &dR )
+__device__ void computedR( const CUDAMat3 &dF, const CUDAMat3 &Se, const CUDAMat3 &Re, CUDAMat3 &dR )
 {
-    mat3 V = mat3::multiplyAtB( Re, dF ) - mat3::multiplyAtB( dF, Re );
+    CUDAMat3 V = CUDAMat3::multiplyAtB( Re, dF ) - CUDAMat3::multiplyAtB( dF, Re );
 
     // Solve for compontents of R^T * dR
-    mat3 A = mat3( Se[0]+Se[4],       Se[5],      -Se[2], //remember, column major
+    CUDAMat3 A = CUDAMat3( Se[0]+Se[4],       Se[5],      -Se[2], //remember, column major
                          Se[5], Se[0]+Se[8],       Se[1],
                         -Se[2],       Se[1], Se[4]+Se[8] );
 
-    vec3 b( V[3], V[6], V[7] );
-    vec3 x = mat3::solve( A, b ); // Should replace this with a linear system solver function
+    CUDAVec3 b( V[3], V[6], V[7] );
+    CUDAVec3 x = CUDAMat3::solve( A, b ); // Should replace this with a linear system solver function
 
     // Fill R^T * dR
-    mat3 RTdR = mat3(   0, -x.x, -x.y, //remember, column major
+    CUDAMat3 RTdR = CUDAMat3(   0, -x.x, -x.y, //remember, column major
                       x.x,    0, -x.z,
                       x.y,  x.z,    0 );
 
@@ -178,7 +157,7 @@ __device__ void computedR( const mat3 &dF, const mat3 &Se, const mat3 &Re, mat3 
  *
  *
  */
-__device__ void compute_dJF_invTrans( const mat3 &F, const mat3 &dF, mat3 &dJF_invTrans )
+__device__ void compute_dJF_invTrans( const CUDAMat3 &F, const CUDAMat3 &dF, CUDAMat3 &dJF_invTrans )
 {
     dJF_invTrans[0] = F[4]*dF[8] - F[5]*dF[7] - F[7]*dF[5] + F[8]*dF[4];
     dJF_invTrans[1] = F[5]*dF[6] - F[3]*dF[8] + F[6]*dF[5] - F[8]*dF[3];
@@ -194,45 +173,45 @@ __device__ void compute_dJF_invTrans( const mat3 &F, const mat3 &dF, mat3 &dJF_i
 /**
  * Called over particles
  **/
-__global__ void computeAp( const Particle *particles, ParticleCache *particleCache, int numParticles )
+__global__ void computeAp( const SnowParticle *particles, SnowParticleCache *particleCache, int numParticles )
 {
     int particleIdx =  blockIdx.x*blockDim.x + threadIdx.x;
     if ( particleIdx >= numParticles ) return;
 
-    const Particle &particle = particles[particleIdx];
-    const Material &material = particle.material;
+    const SnowParticle &particle = particles[particleIdx];
+    const SnowMaterial &material = particle.material;
 
-    const mat3 &dF = particleCache->dFs[particleIdx];
+    const CUDAMat3 &dF = particleCache->dFs[particleIdx];
 
-    const mat3 &Fp = particle.plasticF; //for the sake of making the code look like the math
-    const mat3 &Fe = particleCache->FeHats[particleIdx];
-    const mat3 &Re = particleCache->ReHats[particleIdx];
-    const mat3 &Se = particleCache->SeHats[particleIdx];
+    const CUDAMat3 &Fp = particle.plasticF; //for the sake of making the code look like the math
+    const CUDAMat3 &Fe = particleCache->FeHats[particleIdx];
+    const CUDAMat3 &Re = particleCache->ReHats[particleIdx];
+    const CUDAMat3 &Se = particleCache->SeHats[particleIdx];
 
-    float Jpp = mat3::determinant(Fp);
-    float Jep = mat3::determinant(Fe);
+    float Jpp = CUDAMat3::determinant(Fp);
+    float Jep = CUDAMat3::determinant(Fe);
 
     float muFp = material.mu*__expf(material.xi*(1-Jpp));
     float lambdaFp = material.lambda*__expf(material.xi*(1-Jpp));
 
-    mat3 dR;
+    CUDAMat3 dR;
     computedR( dF, Se, Re, dR );
 
-    mat3 dJFe_invTrans;
+    CUDAMat3 dJFe_invTrans;
     compute_dJF_invTrans( Fe, dF, dJFe_invTrans );
 
-    mat3 JFe_invTrans = mat3::cofactor( Fe );
+    CUDAMat3 JFe_invTrans = CUDAMat3::cofactor( Fe );
 
-    particleCache->Aps[particleIdx] = (2*muFp*(dF - dR) + lambdaFp*JFe_invTrans*mat3::innerProduct(JFe_invTrans, dF) + lambdaFp*(Jep - 1)*dJFe_invTrans);
+    particleCache->Aps[particleIdx] = (2*muFp*(dF - dR) + lambdaFp*JFe_invTrans*CUDAMat3::innerProduct(JFe_invTrans, dF) + lambdaFp*(Jep - 1)*dJFe_invTrans);
 }
 
-__global__ void computedf( const Particle *particles, const ParticleCache *particleCache, int numParticles, const Grid *grid, NodeCache *nodeCaches )
+__global__ void computedf( const SnowParticle *particles, const SnowParticleCache *particleCache, int numParticles, const Grid *grid, NodeCache *nodeCaches )
 {
     int particleIdx = blockIdx.y*gridDim.x*blockDim.x + blockIdx.x*blockDim.x + threadIdx.x;
     if ( particleIdx >= numParticles ) return;
 
-    const Particle &particle = particles[particleIdx];
-    vec3 gridPos = (particle.position-grid->pos)/grid->h;
+    const SnowParticle &particle = particles[particleIdx];
+    CUDAVec3 gridPos = (particle.position-grid->pos)/grid->h;
 
     glm::ivec3 ijk;
     Grid::gridIndexToIJK( threadIdx.y, glm::ivec3(4,4,4), ijk );
@@ -240,10 +219,10 @@ __global__ void computedf( const Particle *particles, const ParticleCache *parti
 
     if ( Grid::withinBoundsInclusive(ijk, glm::ivec3(0,0,0), grid->dim) ) {
 
-        vec3 wg;
-        vec3 nodePos(ijk);
+        CUDAVec3 wg;
+        CUDAVec3 nodePos(ijk);
         weightGradient( gridPos-nodePos, wg );
-        vec3 df_j = -particle.volume * mat3::multiplyABt( particleCache->Aps[particleIdx], particle.elasticF ) * wg;
+        CUDAVec3 df_j = -particle.volume * CUDAMat3::multiplyABt( particleCache->Aps[particleIdx], particle.elasticF ) * wg;
 
         int gridIndex = Grid::getGridIndex( ijk, grid->nodeDim() );
         atomicAdd( &(nodeCaches[gridIndex].df), df_j );
@@ -264,13 +243,13 @@ __global__ void zero_df( NodeCache *nodeCaches, int numNodes )
 {
     int tid = blockDim.x*blockIdx.x + threadIdx.x;
     if ( tid >= numNodes ) return;
-    nodeCaches[tid].df = vec3(0.0f);
+    nodeCaches[tid].df = CUDAVec3(0.0f);
 }
 
 /**
  * Computes the matrix-vector product Eu.
  */
-__host__ void computeEu( const Particle *particles, ParticleCache *particleCache, int numParticles,
+__host__ void computeEu( const SnowParticle *particles, SnowParticleCache *particleCache, int numParticles,
                          const Grid *grid, const Node *nodes, NodeCache *nodeCaches, int numNodes,
                          NodeCache::Offset uOffset, NodeCache::Offset resultOffset, float dt )
 {
@@ -332,7 +311,7 @@ __global__ void updatePApResidualKernel( NodeCache *nodeCaches, int numNodes, do
     NodeCache &nodeCache = nodeCaches[nodeIdx];
     nodeCache.p = nodeCache.r + beta * nodeCache.p;
     nodeCache.Ap = nodeCache.Ar + beta * nodeCache.Ap;
-    nodeCache.scratch = (double)vec3::dot( nodeCache.r, nodeCache.r );
+    nodeCache.scratch = (double)CUDAVec3::dot( nodeCache.r, nodeCache.r );
 }
 
 __global__ void finishConjugateResidualKernel( Node *nodes, const NodeCache *nodeCaches, int numNodes )
@@ -372,7 +351,7 @@ __global__ void innerProductKernel( NodeCache *nodeCaches, int numNodes, NodeCac
     int nodeIdx = blockDim.x*blockIdx.x + threadIdx.x;
     if ( nodeIdx >= numNodes ) return;
     NodeCache &nodeCache = nodeCaches[nodeIdx];
-    nodeCache.scratch = (double)vec3::dot( nodeCache[uOffset], nodeCache[vOffset] );
+    nodeCache.scratch = (double)CUDAVec3::dot( nodeCache[uOffset], nodeCache[vOffset] );
 }
 
 __host__ double innerProduct( NodeCache *nodeCaches, int numNodes, NodeCache::Offset uOffset, NodeCache::Offset vOffset )
@@ -383,7 +362,7 @@ __host__ double innerProduct( NodeCache *nodeCaches, int numNodes, NodeCache::Of
     return scratchSum( nodeCaches, numNodes );
 }
 
-__host__ void integrateNodeForces( Particle *particles, ParticleCache *particleCache, int numParticles,
+__host__ void integrateNodeForces( SnowParticle *particles, SnowParticleCache *particleCache, int numParticles,
                                    Grid *grid, Node *nodes, NodeCache *nodeCaches, int numNodes,
                                    float dt )
 {
@@ -417,11 +396,9 @@ __host__ void integrateNodeForces( Particle *particles, ParticleCache *particleC
         LAUNCH( updatePApResidualKernel<<<blocks,threads>>>(nodeCaches,numNodes,beta) );
         residual = scratchSum( nodeCaches, numNodes );
 
-        LOG( "k = %3d, rAr = %10g, alpha = %10g, beta = %10g, r = %g", k, alphaNum, alpha, beta, residual );
+        printf( "k = %3d, rAr = %10g, alpha = %10g, beta = %10g, r = %g", k, alphaNum, alpha, beta, residual );
 
     } while ( ++k < MAX_ITERATIONS && residual > RESIDUAL_THRESHOLD );
 
     LAUNCH( finishConjugateResidualKernel<<<blocks,threads>>>(nodes, nodeCaches, numNodes) );
 }
-
-#endif // IMPLICIT_H

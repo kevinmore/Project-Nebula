@@ -157,6 +157,16 @@
     <ClInclude Include="Snow\Cuda\Weighting.h" />
     <ClInclude Include="Snow\Cuda\Decomposition.h" />
     <ClInclude Include="Utility\CUDAMath.h" />
+    <ClInclude Include="Snow\Grid.h" />
+    <ClInclude Include="Snow\SnowParticle.h" />
+    <ClInclude Include="Snow\SnowMaterial.h" />
+    <ClInclude Include="Snow\GridNode.h" />
+    <ClInclude Include="Snow\Caches.h" />
+    <ClInclude Include="Snow\ImplicitCollider.h" />
+    <ClInclude Include="Snow\Cuda\Collider.h" />
+    <ClInclude Include="Snow\Cuda\SnowTypes.h" />
+    <ClInclude Include="Snow\Cuda\Functions.h" />
+    <ClInclude Include="Snow\Cuda\Implicit.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="UI\HierarchyWidget.ui" />
@@ -169,6 +179,8 @@
     <ResourceCompile Include="Project Nebula.rc" />
   </ItemGroup>
   <ItemGroup>
-    <CudaCompile Include="Snow\Cuda\test.cu" />
+    <CudaCompile Include="Snow\Cuda\Snow.cu" />
+    <CudaCompile Include="Snow\Cuda\SnowSimulation.cu" />
+    <CudaCompile Include="Snow\Cuda\Mesh.cu" />
   </ItemGroup>
 </Project>

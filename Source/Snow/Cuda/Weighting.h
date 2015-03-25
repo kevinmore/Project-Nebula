@@ -9,13 +9,7 @@
  * still get some weight, and any particles further than that get
  * weight =0
  */
-// #define funcN( _d )                                                                      \
-// 	({                                                                                  \
-// 	( ( 0 <= _d && _d < 1 ) * ( .5*_d*_d*_d - _d*_d + 2.f/3.f ) +                    \
-// 	( 1 <= _d && _d < 2 ) * ( -1.f/6.f*_d*_d*_d + _d*_d - 2*_d + 4.f/3.f ) );      \
-// })                                                                                  \
-
-static inline float funcN(float d)
+static __host__ __device__ __forceinline__ float funcN(float d)
 {
 	return  ((0 <= d && d < 1) * (.5*d*d*d - d*d + 2.f / 3.f) + 
 		(1 <= d && d < 2) * (-1.f / 6.f*d*d*d + d*d - 2 * d + 4.f / 3.f));
@@ -46,12 +40,7 @@ __host__ __device__ __forceinline__ float weight( CUDAVec3 &dx)
 /*
  * derivative of N with respect to d
  */
-// #define funcNd( _d )                                                                    \
-// 	({                                                                                 \
-// 	( ( 0 <= _d && _d < 1 ) * ( 1.5f*_d*_d - 2*_d ) +                              \
-// 	( 1 <= _d && _d < 2 ) * ( -.5*_d*_d + 2*_d - 2 ) );                          \
-// })  
-static inline float funcNd(float _d)
+static __host__ __device__ __forceinline__ float funcNd(float _d)
 {
 	return ((0 <= _d && _d < 1) * (1.5f*_d*_d - 2 * _d) +
 		(1 <= _d && _d < 2) * (-.5*_d*_d + 2 * _d - 2));

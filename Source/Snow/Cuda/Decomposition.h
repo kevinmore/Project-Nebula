@@ -73,21 +73,7 @@ __host__ __device__ __forceinline__ void jacobiEigenanalysis( CUDAMat3 &S, CUDAQ
     jacobiConjugation( 2, 0, 1, S, qV );
 }
 
-// #define condSwap( COND, X, Y )          \
-// {                                       \
-// 	__typeof__ (X) _X_ = X;             \
-// 	X = COND ? Y : X;                   \
-// 	Y = COND ? _X_ : Y;                 \
-// }
-// 
-// #define condNegSwap( COND, X, Y )       \
-// {                                       \
-// 	__typeof__ (X) _X_ = -X;            \
-// 	X = COND ? Y : X;                   \
-// 	Y = COND ? _X_ : Y;                 \
-// }
-
-static inline void condSwap(bool COND, CUDAVec3 X, CUDAVec3 Y)
+static __host__ __device__ __forceinline__ void condSwap(bool COND, CUDAVec3 X, CUDAVec3 Y)
 {
 	CUDAVec3 temp = X;
 
@@ -95,7 +81,7 @@ static inline void condSwap(bool COND, CUDAVec3 X, CUDAVec3 Y)
 	Y = COND ? temp : Y;
 }
 
-static inline void condNegSwap(bool COND, CUDAVec3 X, CUDAVec3 Y)
+static __host__ __device__ __forceinline__ void condNegSwap(bool COND, CUDAVec3 X, CUDAVec3 Y)
 {
 	CUDAVec3 temp = -X;
 

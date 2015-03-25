@@ -1,7 +1,6 @@
 #pragma once
 #include <Utility/CUDAInclude.h>
 
-#define CUDA_INCLUDE
 #include "CUDAVector.h"
 #include "CUDAMatrix.h"
 

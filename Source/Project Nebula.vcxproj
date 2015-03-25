@@ -96,12 +96,22 @@
     <ClCompile Include="Scene\Managers\TextureManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Snow\Caches.h" />
     <ClInclude Include="Snow\Cuda\Atomic.h" />
+    <ClInclude Include="Snow\Cuda\Collider.h" />
     <ClInclude Include="Snow\Cuda\CUDAMatrix.h" />
     <ClInclude Include="Snow\Cuda\CUDAHelpers.h" />
     <ClInclude Include="Snow\Cuda\Decomposition.h" />
+    <ClInclude Include="Snow\Cuda\Functions.h" />
+    <ClInclude Include="Snow\Cuda\Implicit.h" />
     <ClInclude Include="Snow\Cuda\Noise.h" />
+    <ClInclude Include="Snow\Cuda\SnowTypes.h" />
     <ClInclude Include="Snow\Cuda\Weighting.h" />
+    <ClInclude Include="Snow\Grid.h" />
+    <ClInclude Include="Snow\GridNode.h" />
+    <ClInclude Include="Snow\ImplicitCollider.h" />
+    <ClInclude Include="Snow\SnowMaterial.h" />
+    <ClInclude Include="Snow\SnowParticle.h" />
     <ClInclude Include="Utility\CUDAInclude.h" />
     <ClInclude Include="Snow\Cuda\CUDAVector.h" />
     <ClInclude Include="Snow\Cuda\CUDAQuaternion.h" />
@@ -187,7 +197,9 @@
     <ResourceCompile Include="Project Nebula.rc" />
   </ItemGroup>
   <ItemGroup>
-    <CudaCompile Include="Snow\Cuda\test.cu" />
+    <CudaCompile Include="Snow\Cuda\Mesh.cu" />
+    <CudaCompile Include="Snow\Cuda\SnowSimulation.cu" />
+    <CudaCompile Include="Snow\Cuda\Snow.cu" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{89A9A61D-5047-460C-91C1-C99FC990ABD7}</ProjectGuid>
