@@ -15,7 +15,8 @@ public:
 	enum ShaderType
 	{
 		UPDATE,
-		RENDER
+		RENDER,
+		SNOW
 	};
 
 	ParticleTechnique(const QString &shaderName, ShaderType shaderType);

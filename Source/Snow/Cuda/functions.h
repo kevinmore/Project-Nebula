@@ -3,7 +3,7 @@
 #include <Snow/GridNode.h>
 
 typedef unsigned int GLuint;
-struct cudaGraphicsResource;
+//struct cudaGraphicsResource;
 struct Grid;
 struct SnowParticle;
 struct SnowParticleCache;

@@ -3,6 +3,7 @@
 #include <cuda_runtime.h>
 #include <helper_cuda.h>
 #include <helper_functions.h>
+#include <driver_types.h>
 #include "CUDAMath.h"
 
 #define __CUDA_INTERNAL_COMPILATION__

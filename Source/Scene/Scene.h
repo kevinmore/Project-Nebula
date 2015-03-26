@@ -18,6 +18,7 @@
 #include <Physicis/Particles/ParticleSystem.h>
 #include <Physicis/World/PhysicsWorld.h>
 #include <Physicis/Entity/RigidBody.h>
+//#include <Snow/Snow.h>
 
 typedef QSharedPointer<QOpenGLShaderProgram> ShadersProgramPtr;
 

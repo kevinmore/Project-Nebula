@@ -21,12 +21,12 @@ bool ParticleTechnique::init()
 bool ParticleTechnique::compileShader()
 {
 	m_shaderProgram->addShaderFromSourceFile(QOpenGLShader::Vertex, m_shaderFilePath + m_shaderFileName + ".vert");
-	m_shaderProgram->addShaderFromSourceFile(QOpenGLShader::Geometry, m_shaderFilePath + m_shaderFileName + ".geom");
 	
 	switch(m_shaderType)
 	{
 	case UPDATE:
 	{
+		m_shaderProgram->addShaderFromSourceFile(QOpenGLShader::Geometry, m_shaderFilePath + m_shaderFileName + ".geom");
 		const char* sVaryings[NUM_PARTICLE_ATTRIBUTES] = 
 		{
 			"vPositionOut",
@@ -44,7 +44,11 @@ bool ParticleTechnique::compileShader()
 	}
 		
 	case RENDER:
+		m_shaderProgram->addShaderFromSourceFile(QOpenGLShader::Geometry, m_shaderFilePath + m_shaderFileName + ".geom");
 		m_shaderProgram->addShaderFromSourceFile(QOpenGLShader::Fragment, m_shaderFilePath + m_shaderFileName + ".frag");
+		break;
+
+	case SNOW:
 		break;
 	}
 

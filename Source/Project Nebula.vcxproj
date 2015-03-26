@@ -25,6 +25,7 @@
     <ClCompile Include="Animation\IK\CCDIKSolver.cpp" />
     <ClCompile Include="Animation\Rig\Pose.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Snow\Snow.cpp" />
     <ClCompile Include="Utility\ImageLoader.cpp" />
     <ClCompile Include="Physicis\Collision\Collider\ConvexHullCollider.cpp" />
     <ClCompile Include="Physicis\Entity\moc_RigidBody.cc" />
@@ -96,6 +97,7 @@
     <ClCompile Include="Scene\Managers\TextureManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Snow\Snow.h" />
     <ClInclude Include="Snow\Caches.h" />
     <ClInclude Include="Snow\Cuda\Atomic.h" />
     <ClInclude Include="Snow\Cuda\Collider.h" />

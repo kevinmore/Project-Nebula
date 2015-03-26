@@ -76,6 +76,7 @@
     <ClCompile Include="UI\GameObjectTreeInspector.cpp" />
     <ClCompile Include="Utility\ImageLoader.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Snow\Snow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Primitives\Texture.h" />
@@ -167,6 +168,7 @@
     <ClInclude Include="Snow\Cuda\SnowTypes.h" />
     <ClInclude Include="Snow\Cuda\Functions.h" />
     <ClInclude Include="Snow\Cuda\Implicit.h" />
+    <ClInclude Include="Snow\Snow.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="UI\HierarchyWidget.ui" />

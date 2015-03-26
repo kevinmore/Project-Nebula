@@ -1,6 +1,4 @@
 #pragma once
-#include <QOpenGLShader>
-#include <QOpenGLShaderProgram>
 #include <QOpenGLFunctions_4_3_Core>
 #include <QColor>
 #include <Utility/EngineCommon.h>
