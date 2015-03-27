@@ -157,14 +157,14 @@ void fillMesh( cudaGraphicsResource **resource, int triCount, const Grid &grid, 
     checkCudaErrors( cudaMalloc((void**)&devFlags, voxelCount*sizeof(bool)) );
     checkCudaErrors( cudaMemset((void*)devFlags, 0, voxelCount*sizeof(bool)) );
     voxelizeMeshKernel<<< blocks, threads >>>( devTris, triCount, grid, devFlags );
-    checkCudaErrors( cudaDeviceSynchronize() );
+    //checkCudaErrors( cudaDeviceSynchronize() );
 
     int powerOfTwo = (int)(log2f(voxelCount)+1);
     int reductionSize = 1 << powerOfTwo;
     int *devReduction;
     checkCudaErrors( cudaMalloc((void**)&devReduction, reductionSize*sizeof(int)) );
     initReduction<<< (reductionSize+511)/512, 512 >>>( devFlags, voxelCount, devReduction, reductionSize );
-    checkCudaErrors( cudaDeviceSynchronize() );
+    //checkCudaErrors( cudaDeviceSynchronize() );
     for ( int i = 0; i < powerOfTwo-1; ++i ) {
         int size = 1 << (powerOfTwo-i-1);
         reduce<<< (size+511)/512, 512 >>>( devReduction, size );
@@ -185,7 +185,7 @@ void fillMesh( cudaGraphicsResource **resource, int triCount, const Grid &grid, 
     SnowParticle *devParticles;
     checkCudaErrors( cudaMalloc((void**)&devParticles, particleCount*sizeof(SnowParticle)) );
     fillMeshVoxelsKernel<<< (particleCount+511)/512, 512 >>>( devStates, time(NULL), grid, devFlags, devParticles, particleMass, particleCount );
-    checkCudaErrors( cudaDeviceSynchronize() );
+    //checkCudaErrors( cudaDeviceSynchronize() );
 
     switch (materialPreset)
     {

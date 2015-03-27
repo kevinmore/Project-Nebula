@@ -11,6 +11,7 @@
 #include <Physicis/Collision/Collider/BoxCollider.h>
 #include <Physicis/Collision/Collider/SphereCollider.h>
 #include <Physicis/Collision/Collider/ConvexHullCollider.h>
+#include <Snow/Cuda/CUDAVector.h>
 
 struct MeshData
 {
@@ -99,7 +100,7 @@ public:
 	BoxCollider* getBoundingBox();
 	ConvexHullCollider* getConvexHullCollider();
 	cudaGraphicsResource* getCudaVBO() { return m_cudaVBO; }
-	uint getNumFaces() const { return m_faces.size(); }
+	uint getNumFaces() const { return m_faces.size() / 3; }
 	uint getNumVertices() const { return m_positions.size(); }
 
 private:
@@ -146,7 +147,7 @@ private:
 	/*
 	 *	Face Container (for convex shape)
 	 */
-	QVector<vec3> m_faces;
+	QVector<CUDAVec3> m_faces;
 
 
 	/*

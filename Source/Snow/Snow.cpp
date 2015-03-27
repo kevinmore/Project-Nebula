@@ -165,5 +165,5 @@ void Snow::convertFromMesh()
 	grid.pos.y = boxCollider->getAABBMinLocal().y() + m_actor->position().y();
 	grid.pos.z = boxCollider->getAABBMinLocal().z() + m_actor->position().z();
 
-	fillMesh(&cudaVBO, model->getNumFaces(), grid, m_particles.data(), PARTICLE_COUNT, DENSITY,  SNOW_MATERIAL);
+	fillMesh(&cudaVBO, model->getNumFaces(), grid, m_particles.data(), PARTICLE_COUNT, DENSITY, SNOW_MATERIAL);
 }

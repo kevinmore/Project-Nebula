@@ -87,7 +87,7 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName, GLuint sh
 	m_normals.reserve(numVertices);
 	m_texCoords.reserve(numVertices);
 	m_tangents.reserve(numVertices);
-	m_faces.reserve(numFaces);
+	m_faces.reserve(numIndices);
 	m_indices.reserve(numIndices);
 	if(m_modelType == RIGGED_MODEL)
 		m_Bones.resize(numVertices);
@@ -201,29 +201,12 @@ void ModelLoader::prepareVertexContainers(unsigned int index, const aiMesh* mesh
 		}
 		else
 		{
-			m_faces << vec3(face.mIndices[0], face.mIndices[1], face.mIndices[2]);
 			m_indices << face.mIndices[0] << face.mIndices[1] << face.mIndices[2];
+			m_faces << Math::Converter::toCUDAVec3(m_positions[face.mIndices[0]])
+				    << Math::Converter::toCUDAVec3(m_positions[face.mIndices[1]])
+					<< Math::Converter::toCUDAVec3(m_positions[face.mIndices[2]]);
 		}
 	}
-}
-
-GLuint ModelLoader::installShader()
-{
-	ShadingTechnique::ShaderType shaderType;
-
-	// process shader prefix (skinning or static)
-	if (m_modelType == RIGGED_MODEL)
-	{
-		shaderType = ShadingTechnique::RIGGED;
-	}
-	else if (m_modelType == STATIC_MODEL)
-	{
-		shaderType = ShadingTechnique::STATIC;
-	}
-
-	m_effect = ShadingTechniquePtr(new ShadingTechnique("common", shaderType));
-
-	return m_effect->getShaderProgram()->programId();
 }
 
 void ModelLoader::prepareVertexBuffers()
@@ -310,11 +293,34 @@ void ModelLoader::prepareVertexBuffers()
 
 	// OpenGL Interoperability for CUDA
 	// Register the Position VBO
-	registerVBO(&m_cudaVBO, m_Buffers[POS_VB]);
+	GLuint facesBuffer;
+	glGenBuffers(1, &facesBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, facesBuffer);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(m_faces[0]) * m_faces.size(), m_faces.data(), usage);
+	registerVBO(&m_cudaVBO, facesBuffer);
 
 	// Make sure the VAO is not changed from the outside
 	glBindVertexArray(0);
 	if(m_effect) m_effect->setVAO(m_VAO);
+}
+
+GLuint ModelLoader::installShader()
+{
+	ShadingTechnique::ShaderType shaderType;
+
+	// process shader prefix (skinning or static)
+	if (m_modelType == RIGGED_MODEL)
+	{
+		shaderType = ShadingTechnique::RIGGED;
+	}
+	else if (m_modelType == STATIC_MODEL)
+	{
+		shaderType = ShadingTechnique::STATIC;
+	}
+
+	m_effect = ShadingTechniquePtr(new ShadingTechnique("common", shaderType));
+
+	return m_effect->getShaderProgram()->programId();
 }
 
 void ModelLoader::loadBones( uint MeshIndex, const aiMesh* paiMesh )

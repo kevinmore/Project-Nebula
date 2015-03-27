@@ -1,6 +1,7 @@
 #pragma once
 #include <Utility/EngineCommon.h>
 #include <assimp/types.h>
+#include <Snow/Cuda/CUDAMatrix.h>
 
 namespace Math
 {
@@ -175,6 +176,14 @@ namespace Math
 		static hkQuaternion toHkQuat(const quat& q)
 		{
 			return hkQuaternion(q.x(), q.y(), q.z(), q.scalar());
+		}
+
+		/************************************************************************/
+		/*  Convert From Qt to CUDA                                             */
+		/************************************************************************/
+		static CUDAVec3 toCUDAVec3(const vec3& v)
+		{
+			return CUDAVec3(v.x(), v.y(), v.z());
 		}
 	}
 
