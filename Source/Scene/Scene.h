@@ -18,7 +18,11 @@
 #include <Physicis/Particles/ParticleSystem.h>
 #include <Physicis/World/PhysicsWorld.h>
 #include <Physicis/Entity/RigidBody.h>
-//#include <Snow/Snow.h>
+
+// Snow stuff
+#include <Snow/Snow.h>
+#include <Snow/ImplicitCollider.h>
+#include <Snow/Caches.h>
 
 typedef QSharedPointer<QOpenGLShaderProgram> ShadersProgramPtr;
 
@@ -115,14 +119,37 @@ private:
 
 	AnimatorController* m_playerController;
 	QVector<NPCController*> m_NPCs;
-	ParticleSystem* m_particleSystem;
 	SkyboxPtr m_skybox;
 	bool m_bShowSkybox;
 	//
 	// Physics
 	//
 	PhysicsWorld* m_physicsWorld;
-
 	hkpWorld* m_havokPhysicsWorld;
+
+	//
+	// Snow
+	//
+	// CPU data structures
+	Snow *m_snow;
+	Grid m_grid;
+	QVector<ImplicitCollider> m_colliders;
+
+	// CUDA pointers
+	cudaGraphicsResource *m_particlesResource; // Particles
+	cudaGraphicsResource *m_nodesResource; // Particle grid nodes
+	Grid *m_devGrid;
+
+	NodeCache *m_devNodeCaches;
+
+	SnowParticleCache *m_hostParticleCache;
+	SnowParticleCache *m_devParticleCache;
+
+	ImplicitCollider *m_devColliders;
+	SnowMaterial *m_devMaterial;
+
+	void initializeCudaResources();
+	void freeCudaResources();
+	void updateSnow(const float dt);
 };
 

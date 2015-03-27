@@ -6,6 +6,7 @@
 #include <Physicis/Collision/Collider/SphereCollider.h>
 #include <Physicis/Collision/Collider/BoxCollider.h>
 #include <Utility/HavokFeatures.h>
+#include <Snow/Cuda/Functions.h>
 
 Scene::Scene(QObject* parent)
 	: IScene(parent),
@@ -18,6 +19,9 @@ Scene::Scene(QObject* parent)
 	  m_bStepPhysics(false),
 	  m_physicsWorld(0)
 {
+	//test
+// 	m_hostParticleCache = NULL;
+// 	m_snow = new Snow;
 }
 
 Scene::~Scene()
@@ -26,6 +30,9 @@ Scene::~Scene()
 	SAFE_DELETE(m_camera);
 	SAFE_DELETE(m_sceneRootNode);
 	m_havokPhysicsWorld->removeReference();
+
+	SAFE_DELETE( m_snow );
+	SAFE_DELETE( m_hostParticleCache );
 }
 
 Scene* Scene::m_instance = 0;
@@ -65,6 +72,8 @@ void Scene::initialize()
 	m_sceneRootNode->setObjectName("Scene Root");
 
 	resetToDefaultScene();
+	//initializeCudaResources();
+	//freeCudaResources();
 }
 
 void Scene::initPhysicsModule()
@@ -107,6 +116,9 @@ void Scene::update(float currentTime)
 
 	// always reset the flag of step physics
 	m_bStepPhysics = false;
+
+	// Snow
+	//updateSnow(dt);
 }
 
 Camera* Scene::getCamera()
@@ -162,6 +174,17 @@ void Scene::resetToDefaultScene()
 	floorBody->attachNarrowPhaseCollider(floor->getConvexHullCollider());
 	floorObject->attachComponent(floorBody);
 	m_physicsWorld->addEntity(floorBody.data());
+
+
+	// SNOW TEST
+	GameObjectPtr snowRef(new GameObject);
+	LoaderThread snowLoader("../Resource/Models/Common/sphere.obj", snowRef);
+	GameObjectPtr snowObject = m_objectManager->getGameObject("sphere");
+	snowObject->setFixedPositionY(1);
+
+	SnowPtr snow = SnowPtr(new Snow);
+	snowObject->attachComponent(snow);
+	snow->initializeSnow();
 }
 
 void Scene::reloadScene()
@@ -680,4 +703,118 @@ void Scene::bridgeToHavokPhysicsWorld()
 		m_havokPhysicsWorld->addEntity(floor);
 		floor->removeReference();
 	}
+}
+
+void Scene::initializeCudaResources()
+{
+	qDebug() << "Initializing CUDA resources...";
+
+	// Particles
+	registerVBO( &m_particlesResource, m_snow->vbo() );
+	float particlesSize = m_snow->size()*sizeof(SnowParticle) / 1e6;
+	qDebug() <<  "Allocated"<<particlesSize<<"MB for particle system.";
+
+	int numNodes = m_grid.nodeCount();
+	int numParticles = m_snow->size();
+
+	// Grid Nodes
+// 	registerVBO( &m_nodesResource, m_particleGrid->vbo() );
+// 	float nodesSize =  numNodes*sizeof(Node) / 1e6;
+// 	qDebug() <<  "Allocating" <<  nodesSize << "MB for grid nodes.";
+
+	// Grid
+	checkCudaErrors(cudaMalloc( (void**)&m_devGrid, sizeof(Grid) ));
+	checkCudaErrors(cudaMemcpy( m_devGrid, &m_grid, sizeof(Grid), cudaMemcpyHostToDevice ));
+
+
+	// Colliders
+	checkCudaErrors(cudaMalloc( (void**)&m_devColliders, m_colliders.size()*sizeof(ImplicitCollider) ));
+	checkCudaErrors(cudaMemcpy( m_devColliders, m_colliders.data(), m_colliders.size()*sizeof(ImplicitCollider), cudaMemcpyHostToDevice ));
+
+	// Caches
+	checkCudaErrors(cudaMalloc( (void**)&m_devNodeCaches, numNodes*sizeof(NodeCache)) );
+	checkCudaErrors(cudaMemset( m_devNodeCaches, 0, numNodes*sizeof(NodeCache)) );
+	float nodeCachesSize = numNodes*sizeof(NodeCache) / 1e6;
+	qDebug() <<  "Allocating" << nodeCachesSize << "MB for implicit update node cache.";
+
+	SAFE_DELETE( m_hostParticleCache );
+	m_hostParticleCache = new SnowParticleCache;
+	cudaMalloc( (void**)&m_hostParticleCache->sigmas, numParticles*sizeof(mat3) );
+	cudaMalloc( (void**)&m_hostParticleCache->Aps, numParticles*sizeof(mat3) );
+	cudaMalloc( (void**)&m_hostParticleCache->FeHats, numParticles*sizeof(mat3) );
+	cudaMalloc( (void**)&m_hostParticleCache->ReHats, numParticles*sizeof(mat3) );
+	cudaMalloc( (void**)&m_hostParticleCache->SeHats, numParticles*sizeof(mat3) );
+	cudaMalloc( (void**)&m_hostParticleCache->dFs, numParticles*sizeof(mat3) );
+	cudaMalloc( (void**)&m_devParticleCache, sizeof(SnowParticleCache) );
+	cudaMemcpy( m_devParticleCache, m_hostParticleCache, sizeof(SnowParticleCache), cudaMemcpyHostToDevice );
+	float particleCachesSize = numParticles*6*sizeof(mat3) / 1e6;
+	qDebug() <<  "Allocating" << particleCachesSize << "MB for implicit update particle caches.";
+
+	qDebug() <<  "Allocated"<< particlesSize /*+ nodesSize*/ + nodeCachesSize + particleCachesSize << "MB in total";
+
+	qDebug() <<  "Computing particle volumes...";
+	cudaGraphicsMapResources( 1, &m_particlesResource, 0 );
+	SnowParticle *devParticles;
+	size_t size;
+	checkCudaErrors( cudaGraphicsResourceGetMappedPointer( (void**)&devParticles, &size, m_particlesResource ) );
+	if ( (int)(size/sizeof(SnowParticle)) != m_snow->size() )
+		qDebug() <<  "SnowParticle resource error :"<<size<<"bytes ("<< m_snow->size()*sizeof(SnowParticle) <<"expected)";
+
+	initializeParticleVolumes( devParticles, m_snow->size(), m_devGrid, numNodes );
+	checkCudaErrors( cudaGraphicsUnmapResources(1, &m_particlesResource, 0) );
+
+	qDebug() <<  "Initialization complete.";
+}
+
+void Scene::freeCudaResources()
+{
+	qDebug() << "Freeing CUDA resources...";
+	unregisterVBO( m_particlesResource );
+	unregisterVBO( m_nodesResource );
+	cudaFree( m_devGrid );
+	cudaFree( m_devColliders );
+	cudaFree( m_devNodeCaches );
+
+	// Free the particle cache using the host structure
+	cudaFree( m_hostParticleCache->sigmas );
+	cudaFree( m_hostParticleCache->Aps );
+	cudaFree( m_hostParticleCache->FeHats );
+	cudaFree( m_hostParticleCache->ReHats );
+	cudaFree( m_hostParticleCache->SeHats );
+	cudaFree( m_hostParticleCache->dFs );
+	SAFE_DELETE( m_hostParticleCache );
+	cudaFree( m_devParticleCache );
+
+	cudaFree( m_devMaterial );
+}
+
+void Scene::updateSnow(const float dt)
+{
+	cudaGraphicsMapResources( 1, &m_particlesResource, 0 );
+	SnowParticle *devParticles;
+	size_t size;
+	checkCudaErrors( cudaGraphicsResourceGetMappedPointer( (void**)&devParticles, &size, m_particlesResource ) );
+	checkCudaErrors( cudaDeviceSynchronize() );
+
+	if ( (int)(size/sizeof(SnowParticle)) != m_snow->size() ) {
+		LOG( "SnowParticle resource error : %lu bytes (%lu expected)", size, m_snow->size()*sizeof(SnowParticle) );
+	}
+
+	cudaGraphicsMapResources( 1, &m_nodesResource, 0 );
+	Node *devNodes;
+	checkCudaErrors( cudaGraphicsResourceGetMappedPointer( (void**)&devNodes, &size, m_nodesResource ) );
+	checkCudaErrors( cudaDeviceSynchronize() );
+
+// 	if ( (int)(size/sizeof(Node)) != m_particleGrid->size() ) {
+// 		LOG( "Grid nodes resource error : %lu bytes (%lu expected)", size, m_particleGrid->size()*sizeof(Node) );
+// 	}
+
+	updateParticles( devParticles, m_devParticleCache, m_hostParticleCache, m_snow->size(), m_devGrid,
+		devNodes, m_devNodeCaches, m_grid.nodeCount(), m_devColliders, m_colliders.size(),
+		dt, true );
+
+
+	checkCudaErrors( cudaGraphicsUnmapResources( 1, &m_particlesResource, 0 ) );
+	checkCudaErrors( cudaGraphicsUnmapResources( 1, &m_nodesResource, 0 ) );
+	checkCudaErrors( cudaDeviceSynchronize() );
 }

@@ -3,9 +3,11 @@
 #include <Scene/Scene.h>
 #include <Utility/Math.h>
 #include <Animation/IK/FABRIKSolver.h>
+#include <Snow/Cuda/Functions.h>
 
 ModelLoader::ModelLoader()
 {
+	m_cudaVBO = NULL;
 	m_effect = ShadingTechniquePtr();
 	Q_ASSERT(initializeOpenGLFunctions());
 }
@@ -23,7 +25,12 @@ void ModelLoader::clear()
 	m_Bones.clear();
 
 	if (m_Buffers.size()) 
+	{
+		if(m_modelType != COLLIDER)
+			unregisterVBO(m_cudaVBO);
+
 		glDeleteBuffers(m_Buffers.size(), m_Buffers.data());
+	}
 }
 
 ModelLoader::~ModelLoader()
@@ -63,7 +70,8 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName, GLuint sh
 	
    	m_GlobalInverseTransform = Math::convToQMat4(m_aiScene->mRootNode->mTransformation.Inverse());
 
-	m_modelType = m_aiScene->HasAnimations() ? RIGGED_MODEL : STATIC_MODEL;
+	if (m_modelType != COLLIDER)
+		m_modelType = m_aiScene->HasAnimations() ? RIGGED_MODEL : STATIC_MODEL;
 
 	uint numVertices = 0, numIndices = 0, numFaces = 0;
 
@@ -229,9 +237,14 @@ void ModelLoader::prepareVertexBuffers()
 		m_Buffers.resize(NUM_VBs);
 		usage = GL_STREAM_DRAW;
 	}
-	else
+	else if(m_modelType == STATIC_MODEL)
 	{
 		m_Buffers.resize(NUM_VBs - 1);
+		usage = GL_STATIC_DRAW;
+	}
+	else if(m_modelType == COLLIDER)
+	{
+		m_Buffers.resize(2); // index + pos
 		usage = GL_STATIC_DRAW;
 	}
 
@@ -239,12 +252,22 @@ void ModelLoader::prepareVertexBuffers()
 	glGenBuffers(m_Buffers.size(), m_Buffers.data());
 
 	// Generate and populate the buffers with vertex attributes and the indices
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_Buffers[INDEX_BUFFER]);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(m_indices[0]) * m_indices.size(), m_indices.data(), usage);
+
 	GLuint POSITION_LOCATION = glGetAttribLocation(m_shaderProgramID, "Position");
 	glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[POS_VB]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(m_positions[0]) * m_positions.size(), m_positions.data(), usage);
 	glEnableVertexAttribArray(POSITION_LOCATION);
 	glVertexAttribPointer(POSITION_LOCATION, 3, GL_FLOAT, GL_FALSE, 0, 0);    
 
+	// If the model loaded is used for the collider, exit the process here
+	if (m_modelType == COLLIDER)
+	{
+		glBindVertexArray(0);
+		if(m_effect) m_effect->setVAO(m_VAO);
+		return;
+	}
 
 	GLuint COLOR_LOCATION = glGetAttribLocation(m_shaderProgramID, "Color");
 	glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[COLOR_VB]);
@@ -271,9 +294,6 @@ void ModelLoader::prepareVertexBuffers()
 	glEnableVertexAttribArray(TANGENT_LOCATION);
 	glVertexAttribPointer(TANGENT_LOCATION, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_Buffers[INDEX_BUFFER]);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(m_indices[0]) * m_indices.size(), m_indices.data(), usage);
-
 	if (m_modelType == RIGGED_MODEL)
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[BONE_VB]);
@@ -287,6 +307,10 @@ void ModelLoader::prepareVertexBuffers()
 		glEnableVertexAttribArray(BONE_WEIGHT_LOCATION);    
 		glVertexAttribPointer(BONE_WEIGHT_LOCATION, NUM_BONES_PER_VEREX, GL_FLOAT, GL_FALSE, sizeof(VertexBoneData), (const GLvoid*)(NUM_BONES_PER_VEREX * sizeof(uint)));
 	}
+
+	// OpenGL Interoperability for CUDA
+	// Register the Position VBO
+	registerVBO(&m_cudaVBO, m_Buffers[POS_VB]);
 
 	// Make sure the VAO is not changed from the outside
 	glBindVertexArray(0);

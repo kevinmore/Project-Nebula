@@ -31,6 +31,7 @@ void BoxCollider::init()
 	ICollider::init();
 
 	ModelLoader loader;
+	loader.setModelType(ModelLoader::COLLIDER);
 	QVector<ModelDataPtr> modelDataVector = loader.loadModel("../Resource/Models/Common/cube.obj", m_renderingEffect->getShaderProgram()->programId());
 	m_vao = loader.getVAO();
 

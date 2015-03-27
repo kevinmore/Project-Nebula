@@ -1,5 +1,10 @@
 #include "Snow.h"
 #include <Scene/Scene.h>
+#include "Cuda/Functions.h"
+#define CELL_SIZE 1e-3
+#define PARTICLE_COUNT 1e4
+#define DENSITY 100 // kg/m^3
+#define SNOW_MATERIAL 0
 
 Snow::Snow()
 	: Component(1),// get rendered last
@@ -7,14 +12,25 @@ Snow::Snow()
 	  m_glVBO(0),
 	  m_glVAO(0)
 {
-	Q_ASSERT(initializeOpenGLFunctions());
-	installShader();
 }
 
 
 Snow::~Snow()
 {
 	deleteBuffers();
+}
+
+void Snow::initializeSnow()
+{
+	if (!m_actor)
+	{
+		qWarning() << "Snow component initialize failed. Needs to be attached to a Game Object first.";
+		return;
+	}
+	Q_ASSERT(initializeOpenGLFunctions());
+	installShader();
+	convertFromMesh();
+	buildBuffers();
 }
 
 void Snow::render( const float currentTime )
@@ -120,4 +136,34 @@ void Snow::buildBuffers()
 	glBindBuffer( GL_ARRAY_BUFFER, 0 );
 
 	m_snowEffect->setVAO(m_glVAO);
+}
+
+void Snow::convertFromMesh()
+{
+	// get the model from the game object
+	ComponentPtr comp = m_actor->getComponent("Model");
+	ModelPtr model = comp.dynamicCast<IModel>();
+	if (!model)
+	{
+		qWarning() << "Snow component initialize failed. Needs a mesh representation.";
+		return;
+	}
+
+	cudaGraphicsResource* cudaVBO = model->getCudaVBO();
+	if (!cudaVBO)
+	{
+		qWarning() << "Snow component filling mesh failed. CUDA Graphics Resource hasn't been created for the mesh.";
+		return;
+	}
+
+	BoxColliderPtr boxCollider = model->getBoundingBox();
+	vec3 halfExtents = boxCollider->getHalfExtents();
+	Grid grid;
+	grid.h = CELL_SIZE;
+	grid.dim = glm::round(Math::Converter::toGLMVec3(halfExtents * 2 / CELL_SIZE));
+	grid.pos.x = boxCollider->getAABBMinLocal().x() + m_actor->position().x();
+	grid.pos.y = boxCollider->getAABBMinLocal().y() + m_actor->position().y();
+	grid.pos.z = boxCollider->getAABBMinLocal().z() + m_actor->position().z();
+
+	fillMesh(&cudaVBO, model->getNumFaces(), grid, m_particles.data(), PARTICLE_COUNT, DENSITY,  SNOW_MATERIAL);
 }

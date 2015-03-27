@@ -59,6 +59,7 @@ typedef QSharedPointer<TextureData> TextureDataPtr;
 typedef QSharedPointer<MaterialData> MaterialDataPtr;
 typedef QSharedPointer<ModelData> ModelDataPtr;
 
+struct cudaGraphicsResource;
 
 class Scene;
 class ModelLoader : protected QOpenGLFunctions_4_3_Core
@@ -70,7 +71,8 @@ public:
 	enum MODEL_TYPE
 	{
 		STATIC_MODEL,
-		RIGGED_MODEL
+		RIGGED_MODEL,
+		COLLIDER
 	};
 
 	/*
@@ -80,7 +82,7 @@ public:
 
 
 	/*
-	 *	Public Getters
+	 *	Public Getters And Setters
 	 */
 	GLuint getVAO() const { return m_VAO; };
 	uint getNumBones() const {	return m_NumBones;	}
@@ -92,9 +94,13 @@ public:
 	Skeleton* getSkeletom() const { return m_skeleton; }
 	ShadingTechniquePtr getRenderingEffect() const { return m_effect; }
 	MODEL_TYPE getModelType() const { return m_modelType; }
+	void setModelType(MODEL_TYPE type) { m_modelType = type; } 
 	SphereCollider* getBoundingSphere();
 	BoxCollider* getBoundingBox();
 	ConvexHullCollider* getConvexHullCollider();
+	cudaGraphicsResource* getCudaVBO() { return m_cudaVBO; }
+	uint getNumFaces() const { return m_faces.size(); }
+	uint getNumVertices() const { return m_positions.size(); }
 
 private:
 	/*
@@ -180,6 +186,9 @@ private:
 
 	// bounding box limits
 	float m_minX, m_maxX, m_minY, m_maxY, m_minZ, m_maxZ;
+
+	// CUDA Stuff
+	cudaGraphicsResource *m_cudaVBO;
 };
 
 typedef QSharedPointer<ModelLoader> ModelLoaderPtr;

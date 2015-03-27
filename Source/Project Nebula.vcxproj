@@ -313,6 +313,9 @@
     <BuildLog>
       <Path>$(ProjectDir)\..\TempFiles\$(MSBuildProjectName).log</Path>
     </BuildLog>
+    <CudaCompile>
+      <TargetMachinePlatform>64</TargetMachinePlatform>
+    </CudaCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -359,6 +362,9 @@
     <BuildLog>
       <Path>$(ProjectDir)\..\TempFiles\$(MSBuildProjectName).log</Path>
     </BuildLog>
+    <CudaCompile>
+      <TargetMachinePlatform>64</TargetMachinePlatform>
+    </CudaCompile>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

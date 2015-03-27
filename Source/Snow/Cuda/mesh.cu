@@ -12,12 +12,16 @@
 #include <Snow/SnowParticle.h>
 #include <Snow/Grid.h>
 
-struct Tri {
-    CUDAVec3 v0, n0;
-    CUDAVec3 v1, n1;
-    CUDAVec3 v2, n2;
-};
+// struct Tri {
+// 	CUDAVec3 v0, n0;
+// 	CUDAVec3 v1, n1;
+// 	CUDAVec3 v2, n2;
+// };
 
+struct Tri 
+{
+	CUDAVec3 v0, v1, v2;
+};
 
 /*
  * Moller, T, and Trumbore, B. Fast, Minimum Storage Ray/Triangle Intersection.

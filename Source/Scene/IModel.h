@@ -16,7 +16,7 @@
 #include <Physicis/Collision/Collider/BoxCollider.h>
 #include <Physicis/Collision/Collider/ConvexHullCollider.h>
 
-
+struct cudaGraphicsResource;
 class IModel : public Component, protected QOpenGLFunctions_4_3_Core
 {
 public:
@@ -57,6 +57,16 @@ public:
 
 	const vec3& getScale() const { return m_scale; }
 
+	// Snow filling
+	void setCudaVBO(cudaGraphicsResource* vbo) { m_cudaVBO = vbo; }
+	cudaGraphicsResource* getCudaVBO() { return m_cudaVBO; }
+
+	void setNumFaces(const uint count) { m_numFaces = count; }
+	uint getNumFaces() const { return m_numFaces; }
+
+	void setNumVertices(const uint count) { m_numVertices = count; }
+	uint getNumVertices() const { return m_numVertices; }
+
 protected:
 	virtual void syncTransform(const Transform& transform);
 	void init();
@@ -76,4 +86,10 @@ protected:
 
 	mat4 m_transformMatrix;
 	vec3 m_scale;
+
+	uint m_numFaces;
+	uint m_numVertices;
+
+	// CUDA Stuff
+	cudaGraphicsResource *m_cudaVBO;
 };

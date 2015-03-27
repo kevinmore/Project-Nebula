@@ -114,6 +114,14 @@ ModelPtr LoaderThread::loadModel( const QString& customName, const QString& file
 		pModel->setConvexHullCollider(modelLoader->getConvexHullCollider());
 		pModel->setBoundingSphere(modelLoader->getBoundingSphere());
 		pModel->setBoundingBox(modelLoader->getBoundingBox());
+
+		// CUDA stuff
+		if (modelLoader->getModelType() != ModelLoader::COLLIDER)
+		{
+			pModel->setCudaVBO(modelLoader->getCudaVBO());
+			pModel->setNumFaces(modelLoader->getNumFaces());
+			pModel->setNumVertices(modelLoader->getNumVertices());
+		}
 	}
 
 	if (generateGameObject)

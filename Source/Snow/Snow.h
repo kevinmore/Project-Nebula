@@ -20,6 +20,7 @@ public:
 	virtual QString className() { return "Snow"; }
 	virtual void render(const float currentTime);
 
+	void initializeSnow();
 	void clear();
 	inline int size() const { return m_particles.size(); }
 	inline void resize( int n ) { m_particles.resize(n); }
@@ -41,6 +42,7 @@ public:
 
 private:
 	void installShader();
+	void convertFromMesh();
 	QVector<SnowParticle> m_particles;
 	Scene* m_scene;
 	ParticleTechniquePtr m_snowEffect;
