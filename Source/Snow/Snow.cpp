@@ -1,19 +1,17 @@
 #include "Snow.h"
 #include <Scene/Scene.h>
 #include "Cuda/Functions.h"
-#define CELL_SIZE 1e-3
-#define PARTICLE_COUNT 1e4
+#define CELL_SIZE 0.01f
+#define PARTICLE_COUNT 100000
 #define DENSITY 100 // kg/m^3
-#define SNOW_MATERIAL 0
+#define SNOW_MATERIAL 1
 
 Snow::Snow()
 	: Component(1),// get rendered last
 	  m_scene(Scene::instance()),
 	  m_glVBO(0),
 	  m_glVAO(0)
-{
-}
-
+{}
 
 Snow::~Snow()
 {
@@ -28,6 +26,7 @@ void Snow::initializeSnow()
 		return;
 	}
 	Q_ASSERT(initializeOpenGLFunctions());
+	m_particles.resize(PARTICLE_COUNT);
 	installShader();
 	convertFromMesh();
 	buildBuffers();
@@ -156,14 +155,20 @@ void Snow::convertFromMesh()
 		return;
 	}
 
-	BoxColliderPtr boxCollider = model->getBoundingBox();
-	vec3 halfExtents = boxCollider->getHalfExtents();
-	Grid grid;
-	grid.h = CELL_SIZE;
-	grid.dim = glm::round(Math::Converter::toGLMVec3(halfExtents * 2 / CELL_SIZE));
-	grid.pos.x = boxCollider->getAABBMinLocal().x() + m_actor->position().x();
-	grid.pos.y = boxCollider->getAABBMinLocal().y() + m_actor->position().y();
-	grid.pos.z = boxCollider->getAABBMinLocal().z() + m_actor->position().z();
+//	BoxColliderPtr boxCollider = model->getBoundingBox();
+// 	vec3 halfExtents = boxCollider->getHalfExtents();
+// 	Grid grid;
+// 	grid.h = CELL_SIZE;
+// 	grid.dim = glm::round(Math::Converter::toGLMVec3(halfExtents * 2 / CELL_SIZE));
+// 	grid.pos.x = boxCollider->getAABBMinLocal().x() + m_actor->position().x();
+// 	grid.pos.y = boxCollider->getAABBMinLocal().y() + m_actor->position().y();
+// 	grid.pos.z = boxCollider->getAABBMinLocal().z() + m_actor->position().z();
+	
+	Grid grid = model->getBoundingBox()->getGeometryShape().toGrid(CELL_SIZE);
 
-	fillMesh(&cudaVBO, model->getNumFaces(), grid, m_particles.data(), PARTICLE_COUNT, DENSITY, SNOW_MATERIAL);
+	fillMeshWithVBO(&cudaVBO, model->getNumFaces(), grid, m_particles.data(), PARTICLE_COUNT, DENSITY, SNOW_MATERIAL);
+	//fillMeshWithTriangles(model->getCudaTriangles().data(), model->getCudaTriangles().size(), grid, m_particles.data(), PARTICLE_COUNT, DENSITY, SNOW_MATERIAL);
+
+	// if the voxelization is ok, hide the model
+	model->setRenderLayer(-1);
 }

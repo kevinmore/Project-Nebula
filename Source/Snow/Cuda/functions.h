@@ -13,6 +13,11 @@ struct ImplicitCollider;
 struct SimulationParameters;
 struct SnowMaterial;
 
+struct CUDATriangle 
+{
+	CUDAVec3 v0, v1, v2;
+};
+
 extern "C"
 {
 	// OpenGL-CUDA interop
@@ -26,8 +31,8 @@ extern "C"
 						  float timeStep, bool implicitUpdate );
 
 	// Mesh filling
-	void fillMesh( cudaGraphicsResource **resource, int triCount, const Grid &grid, SnowParticle *particles, int particleCount, float targetDensity, int materialPreset);
-
+	void fillMeshWithVBO( cudaGraphicsResource **resource, int triCount, const Grid &grid, SnowParticle *particles, int particleCount, float targetDensity, int materialPreset);
+	void fillMeshWithTriangles( CUDATriangle *hostTris, int triCount, const Grid &grid, SnowParticle *particles, int particleCount, float targetDensity, int materialPreset);
 
 	// One time computation to get particle volumes
 	void initializeParticleVolumes( SnowParticle *particles, int numParticles, const Grid *grid, int numNodes );

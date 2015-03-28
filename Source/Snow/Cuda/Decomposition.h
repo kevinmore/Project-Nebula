@@ -3,9 +3,9 @@
 #include "CUDAQuaternion.h"
 #include "CUDAMatrix.h"
 
-#define GAMMA 5.828427124 // FOUR_GAMMA_SQUARED = sqrt(8)+3;
-#define CSTAR 0.923879532 // cos(pi/8)
-#define SSTAR 0.3826834323 // sin(p/8)
+#define GAMMA 5.828427124f // FOUR_GAMMA_SQUARED = sqrt(8)+3;
+#define CSTAR 0.923879532f // cos(pi/8)
+#define SSTAR 0.3826834323f // sin(p/8)
 
 __host__ __device__ void jacobiConjugation( int x, int y, int z, CUDAMat3 &S, CUDAQuat &qV )
 {

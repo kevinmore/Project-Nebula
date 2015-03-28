@@ -16,8 +16,8 @@ struct SnowParticle
 	{
 		position = CUDAVec3( 0.f, 0.f, 0.f );
 		velocity = CUDAVec3( 0.f, 0.f, 0.f );
-		mass = 1e-6;
-		volume = 1e-9;
+		mass = 0.000001f; //1e-6;
+		volume = 0.000000001f; //1e-9;
 		elasticF = CUDAMat3( 1.f );
 		plasticF = CUDAMat3( 1.f );
 		material = SnowMaterial(); // default

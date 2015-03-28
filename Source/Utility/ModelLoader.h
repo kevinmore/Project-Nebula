@@ -12,6 +12,7 @@
 #include <Physicis/Collision/Collider/SphereCollider.h>
 #include <Physicis/Collision/Collider/ConvexHullCollider.h>
 #include <Snow/Cuda/CUDAVector.h>
+#include <Snow/Cuda/Functions.h>
 
 struct MeshData
 {
@@ -54,6 +55,11 @@ struct ModelData
 	bool hasAnimation;
 	float animationDuration;
 };
+
+// struct CUDATriangle 
+// {
+// 	CUDAVec3 v0, v1, v2;
+// };
 
 typedef QSharedPointer<MeshData> MeshDataPtr;
 typedef QSharedPointer<TextureData> TextureDataPtr;
@@ -100,8 +106,9 @@ public:
 	BoxCollider* getBoundingBox();
 	ConvexHullCollider* getConvexHullCollider();
 	cudaGraphicsResource* getCudaVBO() { return m_cudaVBO; }
-	uint getNumFaces() const { return m_faces.size() / 3; }
+	uint getNumFaces() const { return m_faces.size(); }
 	uint getNumVertices() const { return m_positions.size(); }
+	QVector<CUDATriangle> getCudaTriangles() { return m_faces; }
 
 private:
 	/*
@@ -145,10 +152,9 @@ private:
 	QVector<uint> m_indices;
 
 	/*
-	 *	Face Container (for convex shape)
+	 *	Face Container
 	 */
-	QVector<CUDAVec3> m_faces;
-
+	QVector<CUDATriangle> m_faces;
 
 	/*
 	 *	Vertex Buffers

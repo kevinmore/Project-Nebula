@@ -18,10 +18,7 @@
 // 	CUDAVec3 v2, n2;
 // };
 
-struct Tri 
-{
-	CUDAVec3 v0, v1, v2;
-};
+
 
 /*
  * Moller, T, and Trumbore, B. Fast, Minimum Storage Ray/Triangle Intersection.
@@ -53,7 +50,7 @@ __device__ int intersectTri(const CUDAVec3 &v1, const CUDAVec3 &v2, const CUDAVe
 }
 
 
-__global__ void voxelizeMeshKernel( Tri *tris, int triCount, Grid grid, bool *flags )
+__global__ void voxelizeMeshKernel( CUDATriangle *tris, int triCount, Grid grid, bool *flags )
 {
     const glm::ivec3 &dim = grid.dim;
 
@@ -70,7 +67,7 @@ __global__ void voxelizeMeshKernel( Tri *tris, int triCount, Grid grid, bool *fl
     float t;
     int xyOffset = x*dim.y*dim.z + y*dim.z, z;
     for ( int i = 0; i < triCount; ++i ) {
-        const Tri &tri = tris[i];
+        const CUDATriangle &tri = tris[i];
         if ( intersectTri(tri.v0, tri.v1, tri.v2, origin, direction, t) ) {
             z = (int)(t/grid.h);
             flags[xyOffset+z] = true;
@@ -140,11 +137,11 @@ __global__ void fillMeshVoxelsKernel( curandState *states, unsigned int seed, Gr
     particles[tid] = particle;
 }
 
-void fillMesh( cudaGraphicsResource **resource, int triCount, const Grid &grid, SnowParticle *particles, int particleCount, float targetDensity, int materialPreset)
+void fillMeshWithVBO( cudaGraphicsResource **resource, int triCount, const Grid &grid, SnowParticle *particles, int particleCount, float targetDensity, int materialPreset)
 {
     // Get mesh data
     cudaGraphicsMapResources( 1, resource, 0 );
-    Tri *devTris;
+    CUDATriangle *devTris;
     size_t size;
     checkCudaErrors( cudaGraphicsResourceGetMappedPointer((void**)&devTris, &size, *resource) );
 
@@ -157,14 +154,14 @@ void fillMesh( cudaGraphicsResource **resource, int triCount, const Grid &grid, 
     checkCudaErrors( cudaMalloc((void**)&devFlags, voxelCount*sizeof(bool)) );
     checkCudaErrors( cudaMemset((void*)devFlags, 0, voxelCount*sizeof(bool)) );
     voxelizeMeshKernel<<< blocks, threads >>>( devTris, triCount, grid, devFlags );
-    //checkCudaErrors( cudaDeviceSynchronize() );
+    checkCudaErrors( cudaDeviceSynchronize() );
 
     int powerOfTwo = (int)(log2f(voxelCount)+1);
     int reductionSize = 1 << powerOfTwo;
     int *devReduction;
     checkCudaErrors( cudaMalloc((void**)&devReduction, reductionSize*sizeof(int)) );
     initReduction<<< (reductionSize+511)/512, 512 >>>( devFlags, voxelCount, devReduction, reductionSize );
-    //checkCudaErrors( cudaDeviceSynchronize() );
+    checkCudaErrors( cudaDeviceSynchronize() );
     for ( int i = 0; i < powerOfTwo-1; ++i ) {
         int size = 1 << (powerOfTwo-i-1);
         reduce<<< (size+511)/512, 512 >>>( devReduction, size );
@@ -175,8 +172,8 @@ void fillMesh( cudaGraphicsResource **resource, int triCount, const Grid &grid, 
     checkCudaErrors( cudaFree(devReduction) );
     float volume = count*grid.h*grid.h*grid.h;
     float particleMass = targetDensity * volume / particleCount;
-    printf( "Average %.2f particles per grid cell.", float(particleCount)/count );
-    printf( "Target Density: %.1f kg/m3 -> Particle Mass: %g kg", targetDensity, particleMass );
+    printf( "\nAverage %.2f particles per grid cell.", float(particleCount)/count );
+    printf( "\nTarget Density: %.1f kg/m3 -> Particle Mass: %g kg", targetDensity, particleMass );
 
 
     // Randomly fill mesh voxels and copy back resulting particles
@@ -185,7 +182,7 @@ void fillMesh( cudaGraphicsResource **resource, int triCount, const Grid &grid, 
     SnowParticle *devParticles;
     checkCudaErrors( cudaMalloc((void**)&devParticles, particleCount*sizeof(SnowParticle)) );
     fillMeshVoxelsKernel<<< (particleCount+511)/512, 512 >>>( devStates, time(NULL), grid, devFlags, devParticles, particleMass, particleCount );
-    //checkCudaErrors( cudaDeviceSynchronize() );
+    checkCudaErrors( cudaDeviceSynchronize() );
 
     switch (materialPreset)
     {
@@ -204,4 +201,69 @@ void fillMesh( cudaGraphicsResource **resource, int triCount, const Grid &grid, 
     checkCudaErrors( cudaFree(devFlags) );
     checkCudaErrors( cudaFree(devStates) );
     checkCudaErrors( cudaGraphicsUnmapResources(1, resource, 0) );
+}
+
+void fillMeshWithTriangles( CUDATriangle *hostTris, int triCount, const Grid &grid, SnowParticle *particles, int particleCount, float targetDensity, int materialPreset)
+{
+	// Voxelize mesh
+	int x = grid.dim.x > 16 ? MAX( 1, MIN(16, grid.dim.x/8)) : 1;
+	int y = grid.dim.y > 16 ? MAX( 1, MIN(16, grid.dim.y/8)) : 1;
+	dim3 blocks( (grid.dim.x+x-1)/x, (grid.dim.y+y-1)/y ), threads( x, y );
+	int voxelCount = grid.dim.x * grid.dim.y * grid.dim.z;
+	bool *devFlags;
+	checkCudaErrors( cudaMalloc((void**)&devFlags, voxelCount*sizeof(bool)) );
+	checkCudaErrors( cudaMemset((void*)devFlags, 0, voxelCount*sizeof(bool)) );
+
+	CUDATriangle* devTris;
+	checkCudaErrors( cudaMalloc((void**)&devTris, triCount*sizeof(CUDATriangle)) );
+	checkCudaErrors( cudaMemcpy((void*)devTris, hostTris, triCount*sizeof(CUDATriangle), cudaMemcpyHostToDevice) );
+
+	voxelizeMeshKernel<<< blocks, threads >>>( devTris, triCount, grid, devFlags );
+	checkCudaErrors( cudaDeviceSynchronize() );
+
+	int powerOfTwo = (int)(log2f(voxelCount)+1);
+	int reductionSize = 1 << powerOfTwo;
+	int *devReduction;
+	checkCudaErrors( cudaMalloc((void**)&devReduction, reductionSize*sizeof(int)) );
+	initReduction<<< (reductionSize+511)/512, 512 >>>( devFlags, voxelCount, devReduction, reductionSize );
+	checkCudaErrors( cudaDeviceSynchronize() );
+	for ( int i = 0; i < powerOfTwo-1; ++i ) {
+		int size = 1 << (powerOfTwo-i-1);
+		reduce<<< (size+511)/512, 512 >>>( devReduction, size );
+		checkCudaErrors( cudaDeviceSynchronize() );
+	}
+	int count;
+	checkCudaErrors( cudaMemcpy(&count, devReduction, sizeof(int), cudaMemcpyDeviceToHost) );
+	checkCudaErrors( cudaFree(devReduction) );
+	float volume = count*grid.h*grid.h*grid.h;
+	float particleMass = targetDensity * volume / particleCount;
+	printf( "Average %.2f particles per grid cell.", float(particleCount)/count );
+	printf( "Target Density: %.1f kg/m3 -> Particle Mass: %g kg", targetDensity, particleMass );
+
+
+	// Randomly fill mesh voxels and copy back resulting particles
+	curandState *devStates;
+	checkCudaErrors( cudaMalloc(&devStates, particleCount*sizeof(curandState)) );
+	SnowParticle *devParticles;
+	checkCudaErrors( cudaMalloc((void**)&devParticles, particleCount*sizeof(SnowParticle)) );
+	fillMeshVoxelsKernel<<< (particleCount+511)/512, 512 >>>( devStates, time(NULL), grid, devFlags, devParticles, particleMass, particleCount );
+	checkCudaErrors( cudaDeviceSynchronize() );
+
+	switch (materialPreset)
+	{
+	case 0:
+		break;
+	case 1:
+		LAUNCH( applyChunky<<<(particleCount+511)/512, 512>>>(devParticles,particleCount) ); // TODO - we could use the uisettings materialstiffness here
+		printf( "Chunky applied" );
+		break;
+	default:
+		break;
+	}
+
+	checkCudaErrors( cudaMemcpy(particles, devParticles, particleCount*sizeof(SnowParticle), cudaMemcpyDeviceToHost) );
+
+	checkCudaErrors( cudaFree(devTris) );
+	checkCudaErrors( cudaFree(devFlags) );
+	checkCudaErrors( cudaFree(devStates) );
 }

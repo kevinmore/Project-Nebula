@@ -3,7 +3,6 @@
 #include <Scene/Scene.h>
 #include <Utility/Math.h>
 #include <Animation/IK/FABRIKSolver.h>
-#include <Snow/Cuda/Functions.h>
 
 ModelLoader::ModelLoader()
 {
@@ -87,7 +86,7 @@ QVector<ModelDataPtr> ModelLoader::loadModel( const QString& fileName, GLuint sh
 	m_normals.reserve(numVertices);
 	m_texCoords.reserve(numVertices);
 	m_tangents.reserve(numVertices);
-	m_faces.reserve(numIndices);
+	m_faces.reserve(numFaces);
 	m_indices.reserve(numIndices);
 	if(m_modelType == RIGGED_MODEL)
 		m_Bones.resize(numVertices);
@@ -202,9 +201,12 @@ void ModelLoader::prepareVertexContainers(unsigned int index, const aiMesh* mesh
 		else
 		{
 			m_indices << face.mIndices[0] << face.mIndices[1] << face.mIndices[2];
-			m_faces << Math::Converter::toCUDAVec3(m_positions[face.mIndices[0]])
-				    << Math::Converter::toCUDAVec3(m_positions[face.mIndices[1]])
-					<< Math::Converter::toCUDAVec3(m_positions[face.mIndices[2]]);
+
+			CUDATriangle tri;
+			tri.v0 = Math::Converter::toCUDAVec3(m_positions[face.mIndices[0]]);
+			tri.v1 = Math::Converter::toCUDAVec3(m_positions[face.mIndices[1]]);
+			tri.v2 = Math::Converter::toCUDAVec3(m_positions[face.mIndices[2]]);
+			m_faces << tri;
 		}
 	}
 }

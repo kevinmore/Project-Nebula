@@ -16,7 +16,11 @@
 #include <Physicis/Collision/Collider/BoxCollider.h>
 #include <Physicis/Collision/Collider/ConvexHullCollider.h>
 
+#include <Snow/Cuda/CUDAVector.h>
+#include <Snow/Cuda/Functions.h>
+
 struct cudaGraphicsResource;
+
 class IModel : public Component, protected QOpenGLFunctions_4_3_Core
 {
 public:
@@ -67,6 +71,9 @@ public:
 	void setNumVertices(const uint count) { m_numVertices = count; }
 	uint getNumVertices() const { return m_numVertices; }
 
+	void setCudaTriangles(const QVector<CUDATriangle>& tris) { m_faces = tris; }
+	QVector<CUDATriangle> getCudaTriangles() const { return m_faces; }
+
 protected:
 	virtual void syncTransform(const Transform& transform);
 	void init();
@@ -92,4 +99,5 @@ protected:
 
 	// CUDA Stuff
 	cudaGraphicsResource *m_cudaVBO;
+	QVector<CUDATriangle> m_faces;
 };

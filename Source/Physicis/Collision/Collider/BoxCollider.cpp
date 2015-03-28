@@ -227,11 +227,13 @@ void BoxCollider::setScale( const vec3& scale )
 
 vec3 BoxCollider::getAABBMinLocal() const
 {
-	return m_boxShape.getCenter() - m_boxShape.getHalfExtents();
+	//return m_boxShape.getCenter() - m_boxShape.getHalfExtents();
+	return m_boxShape.getMin();
 }
 
 vec3 BoxCollider::getAABBMaxLocal() const
 {
-	return m_boxShape.getCenter() + m_boxShape.getHalfExtents();
+	//return m_boxShape.getCenter() + m_boxShape.getHalfExtents();
+	return m_boxShape.getMax();
 }
 

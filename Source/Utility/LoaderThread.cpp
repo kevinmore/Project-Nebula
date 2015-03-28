@@ -121,6 +121,7 @@ ModelPtr LoaderThread::loadModel( const QString& customName, const QString& file
 			pModel->setCudaVBO(modelLoader->getCudaVBO());
 			pModel->setNumFaces(modelLoader->getNumFaces());
 			pModel->setNumVertices(modelLoader->getNumVertices());
+			pModel->setCudaTriangles(modelLoader->getCudaTriangles());
 		}
 	}
 

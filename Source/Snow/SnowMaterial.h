@@ -1,24 +1,24 @@
 #pragma once
 #include <Utility/CUDAInclude.h>
 
-#define POISSONS_RATIO 0.2
+#define POISSONS_RATIO 0.2f
 
 // YOUNGS MODULUS
-#define E0 1.4e5 // default modulus
-#define MIN_E0 4.8e4
-#define MAX_E0 1.4e5
+#define E0 140000.f //1.4e5 // default modulus
+#define MIN_E0 48000.f //4.8e4
+#define MAX_E0 140000.f //1.4e5
 
 // CRITICAL COMPRESSION
-#define MIN_THETA_C 1.9e-2
-#define MAX_THETA_C 2.5e-2
+#define MIN_THETA_C 0.019f //1.9e-2
+#define MAX_THETA_C 0.025f //2.5e-2
 
 // CRITICAL STRETCH
-#define MIN_THETA_S 5e-3
-#define MAX_THETA_S 7.5e-3
+#define MIN_THETA_S 0.005f //5e-3
+#define MAX_THETA_S 0.0075f //7.5e-3
 
 // HARDENING COEFF
-#define MIN_XI 5
-#define MAX_XI 10
+#define MIN_XI 5.f
+#define MAX_XI 10.f
 
 struct SnowMaterial
 {

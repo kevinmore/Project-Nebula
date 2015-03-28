@@ -69,15 +69,11 @@ void ObjectManager::renderAll(const float currentTime)
 		}
 	}
 
-	//int totalParticles = 0;
 	foreach(ComponentPtr comp, m_renderQueue)
 	{
-		comp->render(currentTime);
-		//totalParticles += comp.dynamicCast<ParticleSystem>()->getAliveParticles();
+		// double check the render layer
+		if(comp->renderLayer() >= 0) comp->render(currentTime);
 	}
-
-	// print out the particles count
-	//if(totalParticles) qDebug() << "Alive Particles:" << totalParticles;
 }
 
 void ObjectManager::clear()
