@@ -1,10 +1,7 @@
 #version 430
-
-in vec4 particleColor;
-
-out vec4 fragmentColor;
+out vec4 FragColor;
 
 void main( void )
 {
-    fragmentColor = particleColor;
+    FragColor = vec4( 0.8, 0.8, 0.9, 1.0 );
 }

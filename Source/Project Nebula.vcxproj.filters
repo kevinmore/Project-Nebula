@@ -77,6 +77,7 @@
     <ClCompile Include="Utility\ImageLoader.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Snow\Snow.cpp" />
+    <ClCompile Include="Snow\SnowSimulator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Primitives\Texture.h" />
@@ -169,6 +170,7 @@
     <ClInclude Include="Snow\Cuda\Functions.h" />
     <ClInclude Include="Snow\Cuda\Implicit.h" />
     <ClInclude Include="Snow\Snow.h" />
+    <ClInclude Include="Snow\SnowSimulator.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="UI\HierarchyWidget.ui" />
@@ -181,8 +183,8 @@
     <ResourceCompile Include="Project Nebula.rc" />
   </ItemGroup>
   <ItemGroup>
-    <CudaCompile Include="Snow\Cuda\Snow.cu" />
     <CudaCompile Include="Snow\Cuda\SnowSimulation.cu" />
     <CudaCompile Include="Snow\Cuda\Mesh.cu" />
+    <CudaCompile Include="Snow\Cuda\CUDAOpenGLInterp.cu" />
   </ItemGroup>
 </Project>

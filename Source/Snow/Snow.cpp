@@ -1,16 +1,27 @@
 #include "Snow.h"
 #include <Scene/Scene.h>
 #include "Cuda/Functions.h"
-#define CELL_SIZE 0.01f
-#define PARTICLE_COUNT 100000
-#define DENSITY 100 // kg/m^3
-#define SNOW_MATERIAL 1
 
 Snow::Snow()
 	: Component(1),// get rendered last
 	  m_scene(Scene::instance()),
 	  m_glVBO(0),
-	  m_glVAO(0)
+	  m_glVAO(0),
+	  m_cellSize(0.01f),
+	  m_particleCount(100000),
+	  m_density(100.0f),
+	  m_snowMaterial(1)
+{}
+
+Snow::Snow( float cellSize, uint particleCount, float density, uint snowMaterial )
+	:Component(1),// get rendered last
+	m_scene(Scene::instance()),
+	m_glVBO(0),
+	m_glVAO(0),
+	m_cellSize(cellSize),
+	m_particleCount(particleCount),
+	m_density(density),
+	m_snowMaterial(snowMaterial)
 {}
 
 Snow::~Snow()
@@ -26,32 +37,16 @@ void Snow::initializeSnow()
 		return;
 	}
 	Q_ASSERT(initializeOpenGLFunctions());
-	m_particles.resize(PARTICLE_COUNT);
+	m_particles.resize(m_particleCount);
 	installShader();
-	convertFromMesh();
+	voxelizeMesh();
 	buildBuffers();
 }
 
-void Snow::render( const float currentTime )
+void Snow::reset()
 {
-	m_snowEffect->enable();
-	m_snowEffect->getShaderProgram()->setUniformValue("gWVP", m_scene->getCamera()->viewProjectionMatrix() * m_actor->getTransformMatrix());
-
-	GLfloat oldPointSize;
-
-	glGetFloatv(GL_VERTEX_PROGRAM_POINT_SIZE, &oldPointSize);
-
-	glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
-	glEnable( GL_POINT_SMOOTH );
-
-	glHint( GL_POINT_SMOOTH_HINT, GL_NICEST );
-
-	glBindVertexArray( m_glVAO );
-	glDrawArrays( GL_POINTS, 0, m_particles.size() );
-	glBindVertexArray( 0 );
-
-	glDisable(GL_VERTEX_PROGRAM_POINT_SIZE);
-	glDisable( GL_POINT_SMOOTH );
+	deleteBuffers();
+	buildBuffers();
 }
 
 void Snow::installShader()
@@ -62,6 +57,22 @@ void Snow::installShader()
 		qWarning() << "Snow rendering effect initializing failed.";
 		return;
 	}
+}
+
+void Snow::render( const float currentTime )
+{
+	m_snowEffect->enable();
+	m_snowEffect->getShaderProgram()->setUniformValue("gWVP", m_scene->getCamera()->viewProjectionMatrix() * m_actor->getTransformMatrix());
+
+ 	glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
+	glEnable( GL_POINT_SMOOTH );
+
+	glBindVertexArray( m_glVAO );
+	glDrawArrays( GL_POINTS, 0, m_particles.size() );
+	glBindVertexArray( 0 );
+
+	glDisable(GL_VERTEX_PROGRAM_POINT_SIZE);
+	glDisable( GL_POINT_SMOOTH );
 }
 
 void Snow::clear()
@@ -91,8 +102,6 @@ void Snow::deleteBuffers()
 
 void Snow::buildBuffers()
 {
-	deleteBuffers();
-
 	// Build OpenGL VAO
 	glGenVertexArrays( 1, &m_glVAO );
 	glBindVertexArray( m_glVAO );
@@ -137,7 +146,7 @@ void Snow::buildBuffers()
 	m_snowEffect->setVAO(m_glVAO);
 }
 
-void Snow::convertFromMesh()
+void Snow::voxelizeMesh()
 {
 	// get the model from the game object
 	ComponentPtr comp = m_actor->getComponent("Model");
@@ -148,26 +157,18 @@ void Snow::convertFromMesh()
 		return;
 	}
 
-	cudaGraphicsResource* cudaVBO = model->getCudaVBO();
-	if (!cudaVBO)
-	{
-		qWarning() << "Snow component filling mesh failed. CUDA Graphics Resource hasn't been created for the mesh.";
-		return;
-	}
-
-//	BoxColliderPtr boxCollider = model->getBoundingBox();
-// 	vec3 halfExtents = boxCollider->getHalfExtents();
-// 	Grid grid;
-// 	grid.h = CELL_SIZE;
-// 	grid.dim = glm::round(Math::Converter::toGLMVec3(halfExtents * 2 / CELL_SIZE));
-// 	grid.pos.x = boxCollider->getAABBMinLocal().x() + m_actor->position().x();
-// 	grid.pos.y = boxCollider->getAABBMinLocal().y() + m_actor->position().y();
-// 	grid.pos.z = boxCollider->getAABBMinLocal().z() + m_actor->position().z();
+// 	cudaGraphicsResource* cudaVBO = model->getCudaVBO();
+// 	if (!cudaVBO)
+// 	{
+// 		qWarning() << "Snow component filling mesh failed. CUDA Graphics Resource hasn't been created for the mesh.";
+// 		return;
+// 	}
 	
-	Grid grid = model->getBoundingBox()->getGeometryShape().toGrid(CELL_SIZE);
+	Grid grid = model->getBoundingBox()->getGeometryShape().toGrid(m_cellSize);
 
-	fillMeshWithVBO(&cudaVBO, model->getNumFaces(), grid, m_particles.data(), PARTICLE_COUNT, DENSITY, SNOW_MATERIAL);
-	//fillMeshWithTriangles(model->getCudaTriangles().data(), model->getCudaTriangles().size(), grid, m_particles.data(), PARTICLE_COUNT, DENSITY, SNOW_MATERIAL);
+	//fillMeshWithVBO(&cudaVBO, model->getNumFaces(), grid, m_particles.data(), m_particleCount, m_density, m_snowMaterial);
+	fillMeshWithTriangles(model->getCudaTriangles().data(), model->getCudaTriangles().size(), grid, 
+		m_particles.data(), m_particleCount, m_density, m_snowMaterial);
 
 	// if the voxelization is ok, hide the model
 	model->setRenderLayer(-1);

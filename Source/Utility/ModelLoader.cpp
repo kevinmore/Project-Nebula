@@ -295,11 +295,11 @@ void ModelLoader::prepareVertexBuffers()
 
 	// OpenGL Interoperability for CUDA
 	// Register the Position VBO
-	GLuint facesBuffer;
-	glGenBuffers(1, &facesBuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, facesBuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(m_faces[0]) * m_faces.size(), m_faces.data(), usage);
-	registerVBO(&m_cudaVBO, facesBuffer);
+// 	GLuint facesBuffer;
+// 	glGenBuffers(1, &facesBuffer);
+// 	glBindBuffer(GL_ARRAY_BUFFER, facesBuffer);
+// 	glBufferData(GL_ARRAY_BUFFER, sizeof(m_faces[0]) * m_faces.size(), m_faces.data(), usage);
+// 	registerVBO(&m_cudaVBO, facesBuffer);
 
 	// Make sure the VAO is not changed from the outside
 	glBindVertexArray(0);

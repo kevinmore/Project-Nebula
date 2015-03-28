@@ -19,7 +19,7 @@ struct Grid
 	FUNC Grid( const Grid &grid ) : dim(grid.dim), pos(grid.pos), h(grid.h) {}
 
 	FUNC int cellCount() const { return dim.x * dim.y * dim.z; }
-	FUNC bool empty() const { return dim.x*dim.y*dim.z == 0; }
+	FUNC bool isEmpty() const { return dim.x*dim.y*dim.z == 0; }
 	FUNC glm::ivec3 nodeDim() const { return dim + glm::ivec3(1,1,1); }
 
 	FUNC int nodeCount() const { return (dim.x+1)*(dim.y+1)*(dim.z+1); }
