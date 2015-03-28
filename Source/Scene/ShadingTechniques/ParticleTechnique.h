@@ -16,7 +16,7 @@ public:
 	{
 		UPDATE,
 		RENDER,
-		SNOW
+		GENERAL
 	};
 
 	ParticleTechnique(const QString &shaderName, ShaderType shaderType);

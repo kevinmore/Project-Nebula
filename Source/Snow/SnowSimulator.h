@@ -1,5 +1,6 @@
 #pragma once
 #include <Snow/Snow.h>
+#include <Snow/SnowGrid.h>
 #include <Snow/Caches.h>
 #include <Snow/ImplicitCollider.h>
 
@@ -7,7 +8,7 @@ class SnowSimulator
 {
 public:
 	static SnowSimulator* instance();
-	void simulate(const float dt);
+	void update(const float dt);
 
 	// Returns whether it actually did start
 	bool start();
@@ -41,6 +42,7 @@ private:
 
 	// CPU data structures
 	Snow *m_snowCollection;
+	SnowGrid *m_snowGrid;
 	Grid m_grid;
 	QVector<ImplicitCollider> m_colliders;
 
@@ -57,7 +59,6 @@ private:
 	ImplicitCollider *m_devColliders;
 	SnowMaterial *m_devMaterial;
 
-	bool m_busy;
 	bool m_running;
 	bool m_paused;
 };

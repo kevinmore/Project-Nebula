@@ -19,9 +19,6 @@
 #include <Physicis/World/PhysicsWorld.h>
 #include <Physicis/Entity/RigidBody.h>
 
-// Snow stuff
-#include <Snow/SnowSimulator.h>
-
 typedef QSharedPointer<QOpenGLShaderProgram> ShadersProgramPtr;
 
 class Scene : public IScene, protected QOpenGLFunctions_4_3_Core

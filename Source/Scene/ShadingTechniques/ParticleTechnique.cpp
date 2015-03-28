@@ -48,7 +48,7 @@ bool ParticleTechnique::compileShader()
 		m_shaderProgram->addShaderFromSourceFile(QOpenGLShader::Fragment, m_shaderFilePath + m_shaderFileName + ".frag");
 		break;
 
-	case SNOW:
+	case GENERAL:
 		m_shaderProgram->addShaderFromSourceFile(QOpenGLShader::Fragment, m_shaderFilePath + m_shaderFileName + ".frag");
 		break;
 	}

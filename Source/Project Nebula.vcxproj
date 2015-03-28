@@ -25,6 +25,7 @@
     <ClCompile Include="Animation\IK\CCDIKSolver.cpp" />
     <ClCompile Include="Animation\Rig\Pose.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Snow\SnowGrid.cpp" />
     <ClCompile Include="Snow\SnowSimulator.cpp" />
     <ClCompile Include="Snow\Snow.cpp" />
     <ClCompile Include="Utility\ImageLoader.cpp" />
@@ -98,6 +99,7 @@
     <ClCompile Include="Scene\Managers\TextureManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Snow\SnowGrid.h" />
     <ClInclude Include="Snow\SnowSimulator.h" />
     <ClInclude Include="Snow\Snow.h" />
     <ClInclude Include="Snow\Caches.h" />

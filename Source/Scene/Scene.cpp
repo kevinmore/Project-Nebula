@@ -7,6 +7,9 @@
 #include <Physicis/Collision/Collider/BoxCollider.h>
 #include <Utility/HavokFeatures.h>
 
+// Snow stuff
+#include <Snow/SnowSimulator.h>
+
 Scene::Scene(QObject* parent)
 	: IScene(parent),
 	  m_camera(new Camera(NULL,this)),
@@ -17,11 +20,7 @@ Scene::Scene(QObject* parent)
 	  m_bPhysicsPaused(true),
 	  m_bStepPhysics(false),
 	  m_physicsWorld(0)
-{
-	//test
-// 	m_hostParticleCache = NULL;
-// 	m_snow = new Snow;
-}
+{}
 
 Scene::~Scene()
 {
@@ -100,7 +99,10 @@ void Scene::update(float currentTime)
 	{
 		// update the physics world
 		//m_physicsWorld->simulate(dt);
-		m_havokPhysicsWorld->stepDeltaTime(dt);
+		//m_havokPhysicsWorld->stepDeltaTime(dt);
+
+		// Snow
+		SnowSimulator::instance()->update(dt);
 	}
 	m_physicsWorld->setCurrentTime(m_relativeTime);
 
@@ -113,9 +115,6 @@ void Scene::update(float currentTime)
 
 	// always reset the flag of step physics
 	m_bStepPhysics = false;
-
-	// Snow
-	//updateSnow(dt);
 }
 
 Camera* Scene::getCamera()
@@ -179,9 +178,13 @@ void Scene::resetToDefaultScene()
 	GameObjectPtr snowObject = m_objectManager->getGameObject("sphere");
 	snowObject->setFixedPositionY(1);
 
+// 	SnowGridPtr snowGrid = SnowGridPtr(new SnowGrid);
+// 	snowObject->attachComponent(snowGrid);
+// 	snowGrid->initialize();
+
 	SnowPtr snow = SnowPtr(new Snow);
 	snowObject->attachComponent(snow);
-	snow->initializeSnow();
+	snow->initialize();
 }
 
 void Scene::reloadScene()
@@ -508,6 +511,9 @@ void Scene::pause()
 	m_physicsWorld->lock();
 
 	m_canvas->getContainerWidget()->setWindowTitle("Scene - Physics Simulation: Off");
+
+	// stop the snow simulation
+	SnowSimulator::instance()->stop();
 }
 
 void Scene::play()
@@ -519,6 +525,9 @@ void Scene::play()
 	m_delayedTime += m_absoluteTime - m_relativeTime;
 
 	m_canvas->getContainerWidget()->setWindowTitle("Scene - Physics Simulation: On");
+
+	// start the snow simulation
+	SnowSimulator::instance()->start();
 }
 
 void Scene::step()

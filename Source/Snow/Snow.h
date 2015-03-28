@@ -5,23 +5,20 @@
 #include <QSharedPointer>
 #include <Scene/ShadingTechniques/ParticleTechnique.h>
 #include "SnowParticle.h"
-#include "Grid.h"
-
-class Scene;
-class GameObject;
-typedef QSharedPointer<GameObject> GameObjectPtr;
+#include "GridNode.h"
 
 class Snow : public Component, protected QOpenGLFunctions_4_3_Core
 {
 public:
 	Snow();
+	Snow(uint particleCount);
 	Snow(float cellSize, uint particleCount, float density, uint snowMaterial);
 	~Snow();
 
 	virtual QString className() { return "Snow"; }
 	virtual void render(const float currentTime);
 
-	void initializeSnow();
+	void initialize();
 	void clear();
 	void reset();
 	inline int size() const { return m_particles.size(); }
@@ -31,23 +28,22 @@ public:
 	const QVector<SnowParticle>& getParticles() const { return m_particles; }
 	QVector<SnowParticle>& particles() { return m_particles; }
 
+	GLuint vbo() { if ( !hasBuffers() ) buildBuffers(); return m_glVBO; }
+
+	void merge( const Snow &other ) { m_particles += other.m_particles; reset(); }
+
+	Snow& operator += ( const Snow &other ) { m_particles += other.m_particles; reset(); return *this; }
+	Snow& operator += ( const SnowParticle &particle ) { m_particles.append(particle); reset(); return *this; }
+
+private:
 	bool hasBuffers() const;
 	void buildBuffers();
 	void deleteBuffers();
 
-	GLuint vbo() { if ( !hasBuffers() ) buildBuffers(); return m_glVBO; }
-
-	void merge( const Snow &particles ) { m_particles += particles.m_particles; reset(); }
-
-	Snow& operator += ( const Snow &particles ) { m_particles += particles.m_particles; reset(); return *this; }
-	Snow& operator += ( const SnowParticle &particle ) { m_particles.append(particle); reset(); return *this; }
-
-private:
 	void installShader();
 	void voxelizeMesh();
 	QVector<SnowParticle> m_particles;
-	Scene* m_scene;
-	ParticleTechniquePtr m_snowEffect;
+	ParticleTechniquePtr m_renderingEffect;
 	GLuint m_glVBO;
 	GLuint m_glVAO;
 
