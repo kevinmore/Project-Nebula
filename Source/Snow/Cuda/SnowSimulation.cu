@@ -81,6 +81,7 @@ __global__ void computeParticleVolume( SnowParticle *particleData, int numPartic
     if ( particleIdx >= numParticles ) return;
     SnowParticle &particle = particleData[particleIdx];
     particle.volume = particle.mass / particle.volume; // Note: particle.volume is assumed to be the (particle's density ) before we compute it correctly
+	//printf("\nparticle volume: %f",particle.volume);
 }
 
 __host__ void initializeParticleVolumes( SnowParticle *particles, int numParticles, const Grid *grid, int numNodes )
@@ -115,6 +116,7 @@ __global__ void computeSigma( const SnowParticle *particles, SnowParticleCache *
     float Jep = CUDAMat3::determinant(Fe);
 
     CUDAMat3 Re;
+
     computePD( Fe, Re );
 
     const SnowMaterial material = particle.material;
@@ -123,6 +125,11 @@ __global__ void computeSigma( const SnowParticle *particles, SnowParticleCache *
     float lambdaFp = material.lambda*expf(material.xi*(1-Jpp));
 
     particleCache->sigmas[particleIdx] = (2*muFp*CUDAMat3::multiplyABt(Fe-Re, Fe) + CUDAMat3(lambdaFp*(Jep-1)*Jep)) * -particle.volume;
+
+// 	if (particleIdx == 10)
+// 	{
+// 		printf("\n%f", particleCache->sigmas[10]);
+// 	}
 }
 
 /**
@@ -151,8 +158,10 @@ __global__ void computeCellMassVelocityAndForceFast( const SnowParticle *particl
     CUDAVec3 particleGridPos = (particle.position-grid->pos)/grid->h;
     currIJK += glm::ivec3( particleGridPos-1 );
 
-    if ( Grid::withinBoundsInclusive(currIJK, glm::ivec3(0,0,0), grid->dim) ) {
+    if ( Grid::withinBoundsInclusive(currIJK, glm::ivec3(0,0,0), grid->dim) ) 
+	{
         Node &node = nodes[Grid::getGridIndex(currIJK, grid->dim+1)];
+		//printf("\nmass: %.6f, force: (%.6f, %.6f, %.6f)", node.mass, node.force.x, node.force.y, node.force.z);
 
         float w;
         CUDAVec3 wg;
@@ -189,8 +198,8 @@ __global__ void updateNodeVelocities( Node *nodes, int numNodes, float dt, const
 
     Node &node = nodes[nodeIdx];
 
-    if ( node.mass > 0.f ) {
-
+    if ( node.mass > 0.f ) 
+	{
         // Have to normalize velocity by mass to conserve momentum
         float scale = 1.f / node.mass;
         node.velocity *= scale;
@@ -211,7 +220,6 @@ __global__ void updateNodeVelocities( Node *nodes, int numNodes, float dt, const
         checkForAndHandleCollisions( colliders, numColliders, nodePosition, node.velocity );
 
         if ( updateVelocityChange ) node.velocityChange = node.velocity - node.velocityChange;
-
     }
 }
 
@@ -308,11 +316,17 @@ __global__ void updateParticlesFromGrid( SnowParticle *particles, int numParticl
     checkForAndHandleCollisions( colliders, numColliders, particle.position, particle.velocity );
 
     particle.position += timeStep * ( particle.velocity );
+
+// 	if (particleIdx == 10)
+// 	{
+// 		printf("\n time step: %.6f, particle position: (%.6f, %.6f, %.6f)", timeStep, particle.position.x, particle.position.y, particle.position.z);
+// 	}
 }
 
 __global__ void updateColliderPositions(ImplicitCollider *colliders, int numColliders,float timestep)
 {
     int colliderIdx = blockDim.x*blockIdx.x + threadIdx.x;
+	if ( colliderIdx >= numColliders ) return;
     colliders[colliderIdx].center += colliders[colliderIdx].velocity*timestep;
 }
 
@@ -322,7 +336,15 @@ __host__ void updateParticles( SnowParticle *particles, SnowParticleCache *devPa
                                float timeStep, bool implicitUpdate )
 {
     cudaDeviceSetCacheConfig( cudaFuncCachePreferL1 );
+// 	SnowParticle* hostParticles = new SnowParticle[numParticles];
+// 	cudaMemcpy(hostParticles, particles, numParticles*sizeof(SnowParticle), cudaMemcpyDeviceToHost);
 
+// 	for (int i = 0; i < numParticles; ++i)
+// 	{
+// 		CUDAVec3::print(hostParticles[i].position);
+// 	}
+// 	CUDAVec3::print(hostParticles[99].position);
+// 	delete [] hostParticles;
     // Clear data before update
     checkCudaErrors( cudaMemset(nodes, 0, numNodes*sizeof(Node)) );
     checkCudaErrors( cudaMemset(nodeCaches, 0, numNodes*sizeof(NodeCache)) );
@@ -343,13 +365,33 @@ __host__ void updateParticles( SnowParticle *particles, SnowParticleCache *devPa
 
     LAUNCH( updateColliderPositions<<<numColliders,1>>>(colliders,numColliders,timeStep) );
 
-    LAUNCH( computeSigma<<<pBlocks1D,threads1D>>>(particles,devParticleCache,numParticles,grid) );
+	LAUNCH( computeSigma<<<pBlocks1D,threads1D>>>(particles,devParticleCache,numParticles,grid) );
 
-    LAUNCH( computeCellMassVelocityAndForceFast<<<pBlocks2D,threads2D>>>(particles,devParticleCache,numParticles,grid,nodes) );
+	LAUNCH( computeCellMassVelocityAndForceFast<<<pBlocks2D,threads2D>>>(particles,devParticleCache,numParticles,grid,nodes) );
 
     LAUNCH( updateNodeVelocities<<<nBlocks1D,threads1D>>>(nodes,numNodes,timeStep,colliders,numColliders,grid,!implicitUpdate) );
 
     if ( implicitUpdate ) integrateNodeForces( particles, devParticleCache, numParticles, grid, nodes, nodeCaches, numNodes, timeStep );
 
     LAUNCH( updateParticlesFromGrid<<<pBlocks1D,threads1D>>>(particles,numParticles,grid,nodes,timeStep,colliders,numColliders) );
+
+	// 	Node* hostNodes = new Node[numNodes];
+	// 	cudaMemcpy(hostNodes, nodes, numNodes*sizeof(Node), cudaMemcpyDeviceToHost);
+	// 	for (int i = 0; i < numNodes; ++i)
+	// 	{
+	// 		Node node = hostNodes[i];
+	// 		printf("\nmass: %.6f, force: (%.6f, %.6f, %.6f)", node.mass, node.force.x, node.force.y, node.force.z);
+	// 
+	// 	}
+	// 	delete [] hostNodes;
+
+// 	SnowParticle* hostParticles = new SnowParticle[numParticles];
+// 	cudaMemcpy(hostParticles, particles, numParticles*sizeof(SnowParticle), cudaMemcpyDeviceToHost);
+// 
+// 	for (int i = 0; i < numParticles; ++i)
+// 	{
+// 		CUDAVec3::print(hostParticles[i].position);
+// 	}
+// 	CUDAVec3::print(hostParticles[99].position);
+// 	delete [] hostParticles;
 }

@@ -178,10 +178,6 @@ void Scene::resetToDefaultScene()
 	GameObjectPtr snowObject = m_objectManager->getGameObject("sphere");
 	snowObject->setFixedPositionY(1);
 
-// 	SnowGridPtr snowGrid = SnowGridPtr(new SnowGrid);
-// 	snowObject->attachComponent(snowGrid);
-// 	snowGrid->initialize();
-
 	SnowPtr snow = SnowPtr(new Snow);
 	snowObject->attachComponent(snow);
 	snow->initialize();

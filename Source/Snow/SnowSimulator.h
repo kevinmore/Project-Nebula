@@ -18,15 +18,15 @@ public:
 	void reset();
 	bool isRunning() { return m_running; }
 
-	void addParticleSystem(const Snow &particles);
-	void clearParticleSystem();
-	Snow* particleSystem() { return m_snowCollection; }
+	void addSnowInstance(const Snow &instance);
+	void setSnowInstance(Snow* instance) { m_snowCollection = instance; }
+	void clearAllSnowInstances();
+	Snow* snowInstances() { return m_snowCollection; }
 
 	void setGrid(const Grid &grid) { m_grid = grid; }
 	Grid getGrid() {return m_grid; }
 
-	void addCollider( const ImplicitCollider &collider ) { m_colliders += collider; }
-	void addCollider(const ColliderType &t,const CUDAVec3 &center, const CUDAVec3 &param, const CUDAVec3 &velocity);
+	void addCollider( const ImplicitCollider &collider ) { m_colliders << collider; }
 
 	void clearColliders() { m_colliders.clear(); }
 	QVector<ImplicitCollider>& colliders() { return m_colliders; }

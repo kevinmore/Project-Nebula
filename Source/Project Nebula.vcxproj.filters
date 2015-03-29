@@ -13,7 +13,6 @@
     <ClCompile Include="Animation\FK\FKController.cpp" />
     <ClCompile Include="Animation\Rig\Skeleton.cpp" />
     <ClCompile Include="Scene\RiggedModel.cpp" />
-    <ClCompile Include="Scene\StaticModel.cpp" />
     <ClCompile Include="Scene\ShadingTechniques\ShadingTechnique.cpp" />
     <ClCompile Include="Animation\IK\FABRIKSolver.cpp" />
     <ClCompile Include="Animation\IK\CCDIKSolver.cpp" />
@@ -79,6 +78,7 @@
     <ClCompile Include="Snow\Snow.cpp" />
     <ClCompile Include="Snow\SnowSimulator.cpp" />
     <ClCompile Include="Snow\SnowGrid.cpp" />
+    <ClCompile Include="Scene\StaticModel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Primitives\Texture.h" />

@@ -7,15 +7,14 @@
  * can be paramterized using at most 3 parameters. For instance, a half-plane is a point (ImplicitCollider.center)
  * and a normal (ImplicitCollider.param). A sphere is a center (ImplicitCollider.center) and a radius (ImplicitCollider.param.x)
  */
-
-enum ColliderType
-{
-    HALF_PLANE = 0,
-    SPHERE = 1
-};
-
 struct ImplicitCollider
 {
+	enum ColliderType
+	{
+		HALF_PLANE = 0,
+		SPHERE = 1
+	};
+
 	ColliderType type;
 	CUDAVec3 center;
 	CUDAVec3 param;

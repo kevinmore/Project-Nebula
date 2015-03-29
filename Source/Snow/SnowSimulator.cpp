@@ -2,11 +2,18 @@
 #include <Snow/Cuda/Functions.h>
 
 SnowSimulator::SnowSimulator()
-	: m_snowCollection(new Snow(0)),
+	: m_snowCollection(NULL),
 	  m_hostParticleCache(NULL),
 	  m_running(false),
 	  m_paused(false)
-{}
+{
+	// Add a plane collider as the ground
+	CUDAVec3 center(0, 0, 0);
+	CUDAVec3 param(0, 1, 0); // up normal
+	CUDAVec3 velocity(0, 0, 0); // fixed
+	ImplicitCollider ground(ImplicitCollider::HALF_PLANE, center, param, velocity, 0.2f);
+	//addCollider(ground);
+}
 
 SnowSimulator::~SnowSimulator()
 {
@@ -83,14 +90,8 @@ void SnowSimulator::initializeCudaResources()
 	if ( (int)(size/sizeof(SnowParticle)) != m_snowCollection->particleSize() )
 		qWarning() <<  "SnowParticle resource error :"<<size<<"bytes ("<< m_snowCollection->particleSize()*sizeof(SnowParticle) <<"expected)";
 
-// 	foreach(SnowParticle p, m_snowCollection->particles())
-// 		qDebug() << p.mass;
-
 	initializeParticleVolumes( devParticles, m_snowCollection->particleSize(), m_devGrid, numNodes );
 	checkCudaErrors( cudaGraphicsUnmapResources(1, &m_particlesResource, 0) );
-
-// 	foreach(SnowParticle p, m_snowCollection->particles())
-// 		qDebug() << p.mass;
 
 	qDebug() <<  "Initialization complete.";
 }
@@ -150,21 +151,29 @@ void SnowSimulator::update(const float dt)
 
 	updateParticles( devParticles, m_devParticleCache, m_hostParticleCache, m_snowCollection->particleSize(), m_devGrid,
 		devNodes, m_devNodeCaches, m_grid.nodeCount(), m_devColliders, m_colliders.size(),
-		dt, true );
+		dt, false );
 
+
+// 	SnowParticle* particles = new SnowParticle[m_snowCollection->particleSize()];
+// 	cudaMemcpy(particles, devParticles, m_snowCollection->particleSize(), cudaMemcpyDeviceToHost);
+// 	checkCudaErrors( cudaDeviceSynchronize() );
+// 
+// 	SnowParticle p = particles[0];
+// 	qDebug() << p.position.x << p.position.y << p.position.z;
+// 
+// 	delete [] particles ;
 
 	checkCudaErrors( cudaGraphicsUnmapResources( 1, &m_particlesResource, 0 ) );
 	checkCudaErrors( cudaGraphicsUnmapResources( 1, &m_nodesResource, 0 ) );
 	checkCudaErrors( cudaDeviceSynchronize() );
 }
 
-void SnowSimulator::addParticleSystem( const Snow &particles )
+void SnowSimulator::addSnowInstance( const Snow &instance )
 {
-	QVector<SnowParticle> parts = particles.getParticles();
-	*m_snowCollection += particles;
+	*m_snowCollection += instance;
 }
 
-void SnowSimulator::clearParticleSystem()
+void SnowSimulator::clearAllSnowInstances()
 {
 	m_snowCollection->clear();
 }
@@ -215,6 +224,6 @@ void SnowSimulator::reset()
 {
 	if ( !m_running ) {
 		clearColliders();
-		clearParticleSystem();
+		clearAllSnowInstances();
 	}
 }

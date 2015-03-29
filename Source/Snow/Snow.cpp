@@ -2,6 +2,7 @@
 #include "Cuda/Functions.h"
 #include "SnowSimulator.h"
 #include <Scene/Scene.h>
+#include <Utility/Math.h>
 
 Snow::Snow()
 	: Component(1),// get rendered last
@@ -9,8 +10,8 @@ Snow::Snow()
 	  m_gridVBO(0),
 	  m_VAO(0),
 	  m_gridSize(0),
-	  m_cellSize(0.1f),
-	  m_particleCount(1000),
+	  m_cellSize(0.02f),
+	  m_particleCount(100000),
 	  m_density(100.0f),
 	  m_snowMaterial(1)
 {
@@ -85,8 +86,9 @@ void Snow::installShader()
 void Snow::render( const float currentTime )
 {
 	m_renderingEffect->enable();
+	// the absolute position is already set in the buffer, so there is no need to multiply by the transform matrix
 	m_renderingEffect->getShaderProgram()->setUniformValue("gWVP", 
-		Scene::instance()->getCamera()->viewProjectionMatrix() * m_actor->getTransformMatrix());
+		Scene::instance()->getCamera()->viewProjectionMatrix() /** m_actor->getTransformMatrix()*/);
 
  	glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
 	glEnable( GL_POINT_SMOOTH );
@@ -187,7 +189,7 @@ void Snow::voxelizeMesh()
 // 		qWarning() << "Snow component filling mesh failed. CUDA Graphics Resource hasn't been created for the mesh.";
 // 		return;
 // 	}
-	
+
 	setGrid(model->getBoundingBox()->getGeometryShape().toGrid(m_cellSize));
 
 	//fillMeshWithVBO(&cudaVBO, model->getNumFaces(), m_grid, m_particles.data(), m_particleCount, m_density, m_snowMaterial);
@@ -197,8 +199,22 @@ void Snow::voxelizeMesh()
 	// if the voxelization is ok, hide the model
 	model->setRenderLayer(-1);
 
+	// sync the position of the game object
+// 	mat4 transformMatrix = m_actor->getTransformMatrix();
+// 	glm::mat4 ctm = Math::Converter::toGLMMat4(transformMatrix);
+// 	glm::vec4 newGridpos = ctm * glm::vec4( glm::vec3(m_grid.pos), 0.f );
+// 	m_grid.pos = CUDAVec3(newGridpos.x, newGridpos.y, newGridpos.z);
+
+	CUDAVec3 gameobjectPos(m_actor->position().x(), m_actor->position().y(), m_actor->position().z());
+	m_grid.pos += gameobjectPos;
+	for (int i = 0; i < m_particles.size(); ++i)
+	{
+		m_particles[i].position += gameobjectPos;
+	}
+
 	// add this instance to the simulator
-	SnowSimulator::instance()->addParticleSystem(*this);
+	//SnowSimulator::instance()->addSnowInstance(*this);
+	SnowSimulator::instance()->setSnowInstance(this);
 	SnowSimulator::instance()->setGrid(m_grid);
 }
 
@@ -232,17 +248,17 @@ void Snow::buildGridBuffers()
 
 	delete [] data;
 
-	// Mass attribute
-	glEnableVertexAttribArray( 0 );
-	glVertexAttribPointer( 0, 1, GL_FLOAT, GL_FALSE, sizeof(Node), (void*)(0) );
-
-	// Velocity attribute
-	glEnableVertexAttribArray( 1 );
-	glVertexAttribPointer( 1, 3, GL_FLOAT, GL_FALSE, sizeof(Node), (void*)(sizeof(GLfloat)) );
-
-	// Force attribute
-	glEnableVertexAttribArray( 2 );
-	glVertexAttribPointer( 2, 3, GL_FLOAT, GL_FALSE, sizeof(Node), (void*)(sizeof(GLfloat)+2*sizeof(vec3)) );
+// 	// Mass attribute
+// 	glEnableVertexAttribArray( 0 );
+// 	glVertexAttribPointer( 0, 1, GL_FLOAT, GL_FALSE, sizeof(Node), (void*)(0) );
+// 
+// 	// Velocity attribute
+// 	glEnableVertexAttribArray( 1 );
+// 	glVertexAttribPointer( 1, 3, GL_FLOAT, GL_FALSE, sizeof(Node), (void*)(sizeof(GLfloat)) );
+// 
+// 	// Force attribute
+// 	glEnableVertexAttribArray( 2 );
+// 	glVertexAttribPointer( 2, 3, GL_FLOAT, GL_FALSE, sizeof(Node), (void*)(sizeof(GLfloat)+2*sizeof(vec3)) );
 
 	glBindBuffer( GL_ARRAY_BUFFER, 0 );
 }

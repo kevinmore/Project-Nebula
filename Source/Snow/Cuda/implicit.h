@@ -396,7 +396,7 @@ __host__ void integrateNodeForces( SnowParticle *particles, SnowParticleCache *p
         LAUNCH( updatePApResidualKernel<<<blocks,threads>>>(nodeCaches,numNodes,beta) );
         residual = scratchSum( nodeCaches, numNodes );
 
-        printf( "k = %3d, rAr = %10g, alpha = %10g, beta = %10g, r = %g", k, alphaNum, alpha, beta, residual );
+        printf( "\nk = %3d, rAr = %10g, alpha = %10g, beta = %10g, r = %g", k, alphaNum, alpha, beta, residual );
 
     } while ( ++k < MAX_ITERATIONS && residual > RESIDUAL_THRESHOLD );
 

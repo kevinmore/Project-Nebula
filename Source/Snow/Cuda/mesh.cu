@@ -132,7 +132,7 @@ __global__ void fillMeshVoxelsKernel( curandState *states, unsigned int seed, Gr
     SnowParticle particle;
     particle.mass = particleMass;
     particle.position = min + r*(max-min);
-    particle.velocity = CUDAVec3(0,-1,0);
+//    particle.velocity = CUDAVec3(0,-1,0);
     particle.material = SnowMaterial();
     particles[tid] = particle;
 }
@@ -162,7 +162,8 @@ void fillMeshWithVBO( cudaGraphicsResource **resource, int triCount, const Grid 
     checkCudaErrors( cudaMalloc((void**)&devReduction, reductionSize*sizeof(int)) );
     initReduction<<< (reductionSize+511)/512, 512 >>>( devFlags, voxelCount, devReduction, reductionSize );
     checkCudaErrors( cudaDeviceSynchronize() );
-    for ( int i = 0; i < powerOfTwo-1; ++i ) {
+    for ( int i = 0; i < powerOfTwo-1; ++i ) 
+	{
         int size = 1 << (powerOfTwo-i-1);
         reduce<<< (size+511)/512, 512 >>>( devReduction, size );
         checkCudaErrors( cudaDeviceSynchronize() );

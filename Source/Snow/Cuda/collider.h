@@ -68,15 +68,17 @@ __device__ void colliderNormal(const ImplicitCollider &collider, const CUDAVec3 
 
 __device__ void checkForAndHandleCollisions( const ImplicitCollider *colliders, int numColliders, const CUDAVec3 &position, CUDAVec3 &velocity )
 {
-    for ( int i = 0; i < numColliders; ++i ) {
+    for ( int i = 0; i < numColliders; ++i ) 
+	{
         const ImplicitCollider &collider = colliders[i];
-//        collider.center += velocity*timestep;
-        if ( isColliding(collider, position) ){
+        if ( isColliding(collider, position) )
+		{
             CUDAVec3 vRel = velocity - collider.velocity;
             CUDAVec3 normal;
             colliderNormal( collider, position, normal );
             float vn = CUDAVec3::dot( vRel, normal );
-            if ( vn < 0 ) { //Bodies are not separating and a collision must be applied
+            if ( vn < 0 ) 
+			{ //Bodies are not separating and a collision must be applied
                 CUDAVec3 vt = vRel - normal*vn;
                 float magVt = CUDAVec3::length(vt);
                 if ( magVt <= -collider.coeffFriction*vn ) { // tangential velocity not enough to overcome force of friction
@@ -91,10 +93,3 @@ __device__ void checkForAndHandleCollisions( const ImplicitCollider *colliders, 
         }
     }
 }
-//__device__ void updateColliderPositions(ImplicitCollider *colliders, int numColliders, float timestep)
-//{
-//    for ( int i = 0; i < numColliders; ++i ) {
-//        ImplicitCollider &collider = colliders[i];
-//        collider.center += collider.velocity*timestep;
-//    }
-//}
