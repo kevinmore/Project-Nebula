@@ -5,10 +5,12 @@
 
 Snow::Snow()
 	: Component(1),// get rendered last
-	  m_glVBO(0),
-	  m_glVAO(0),
-	  m_cellSize(0.02f),
-	  m_particleCount(200000),
+	  m_particleVBO(0),
+	  m_gridVBO(0),
+	  m_VAO(0),
+	  m_gridSize(0),
+	  m_cellSize(0.1f),
+	  m_particleCount(1000),
 	  m_density(100.0f),
 	  m_snowMaterial(1)
 {
@@ -18,8 +20,10 @@ Snow::Snow()
 
 Snow::Snow( float cellSize, uint particleCount, float density, uint snowMaterial )
 	:Component(1),// get rendered last
-	m_glVBO(0),
-	m_glVAO(0),
+	m_particleVBO(0),
+	m_gridVBO(0),
+	m_VAO(0),
+	m_gridSize(0),
 	m_cellSize(cellSize),
 	m_particleCount(particleCount),
 	m_density(density),
@@ -31,8 +35,10 @@ Snow::Snow( float cellSize, uint particleCount, float density, uint snowMaterial
 
 Snow::Snow( uint particleCount )
 	: Component(1),// get rendered last
-	m_glVBO(0),
-	m_glVAO(0),
+	m_particleVBO(0),
+	m_gridVBO(0),
+	m_VAO(0),
+	m_gridSize(0),
 	m_cellSize(0.02f),
 	m_particleCount(particleCount),
 	m_density(100.0f),
@@ -44,7 +50,8 @@ Snow::Snow( uint particleCount )
 
 Snow::~Snow()
 {
-	deleteBuffers();
+	deleteParticleBuffers();
+	deleteGridBuffers();
 }
 
 void Snow::initialize()
@@ -56,13 +63,13 @@ void Snow::initialize()
 	}
 	installShader();
 	voxelizeMesh();
-	buildBuffers();
+	buildParticleBuffers();
 }
 
-void Snow::reset()
+void Snow::resetParticleBuffers()
 {
-	deleteBuffers();
-	buildBuffers();
+	deleteParticleBuffers();
+	buildParticleBuffers();
 }
 
 void Snow::installShader()
@@ -84,7 +91,7 @@ void Snow::render( const float currentTime )
  	glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
 	glEnable( GL_POINT_SMOOTH );
 
-	glBindVertexArray( m_glVAO );
+	glBindVertexArray( m_VAO );
 	glDrawArrays( GL_POINTS, 0, m_particles.size() );
 	glBindVertexArray( 0 );
 
@@ -95,37 +102,37 @@ void Snow::render( const float currentTime )
 void Snow::clear()
 {
 	m_particles.clear();
-	deleteBuffers();
+	deleteParticleBuffers();
 }
 
-bool Snow::hasBuffers() const
+bool Snow::hasParticleBuffers() const
 {
-	return m_glVBO > 0;
+	return m_particleVBO > 0;
 }
 
-void Snow::deleteBuffers()
+void Snow::deleteParticleBuffers()
 {
 	// Delete OpenGL VBO and unregister with CUDA
-	if ( hasBuffers() ) 
+	if ( hasParticleBuffers() ) 
 	{
-		glBindBuffer( GL_ARRAY_BUFFER, m_glVBO );
-		glDeleteBuffers( 1, &m_glVBO );
-		glDeleteVertexArrays( 1, &m_glVAO );
+		glBindBuffer( GL_ARRAY_BUFFER, m_particleVBO );
+		glDeleteBuffers( 1, &m_particleVBO );
+		glDeleteVertexArrays( 1, &m_VAO );
 		glBindBuffer( GL_ARRAY_BUFFER, 0 );
 	}
-	m_glVBO = 0;
-	m_glVAO = 0;
+	m_particleVBO = 0;
+	m_VAO = 0;
 }
 
-void Snow::buildBuffers()
+void Snow::buildParticleBuffers()
 {
 	// Build OpenGL VAO
-	glGenVertexArrays( 1, &m_glVAO );
-	glBindVertexArray( m_glVAO );
+	glGenVertexArrays( 1, &m_VAO );
+	glBindVertexArray( m_VAO );
 
 	// Build OpenGL VBO
-	glGenBuffers( 1, &m_glVBO );
-	glBindBuffer( GL_ARRAY_BUFFER, m_glVBO );
+	glGenBuffers( 1, &m_particleVBO );
+	glBindBuffer( GL_ARRAY_BUFFER, m_particleVBO );
 	glBufferData( GL_ARRAY_BUFFER, m_particles.size()*sizeof(SnowParticle), m_particles.data(), GL_DYNAMIC_DRAW );
 
 	std::size_t offset = 0; // offset within particle struct
@@ -161,7 +168,7 @@ void Snow::buildBuffers()
 	glBindBuffer( GL_ARRAY_BUFFER, 0 );
 
 	if (m_renderingEffect)
-		m_renderingEffect->setVAO(m_glVAO);
+		m_renderingEffect->setVAO(m_VAO);
 }
 
 void Snow::voxelizeMesh()
@@ -181,10 +188,10 @@ void Snow::voxelizeMesh()
 // 		return;
 // 	}
 	
-	Grid grid = model->getBoundingBox()->getGeometryShape().toGrid(m_cellSize);
+	setGrid(model->getBoundingBox()->getGeometryShape().toGrid(m_cellSize));
 
-	//fillMeshWithVBO(&cudaVBO, model->getNumFaces(), grid, m_particles.data(), m_particleCount, m_density, m_snowMaterial);
-	fillMeshWithTriangles(model->getCudaTriangles().data(), model->getCudaTriangles().size(), grid, 
+	//fillMeshWithVBO(&cudaVBO, model->getNumFaces(), m_grid, m_particles.data(), m_particleCount, m_density, m_snowMaterial);
+	fillMeshWithTriangles(model->getCudaTriangles().data(), model->getCudaTriangles().size(), m_grid, 
 		m_particles.data(), m_particleCount, m_density, m_snowMaterial);
 
 	// if the voxelization is ok, hide the model
@@ -192,8 +199,80 @@ void Snow::voxelizeMesh()
 
 	// add this instance to the simulator
 	SnowSimulator::instance()->addParticleSystem(*this);
-	SnowSimulator::instance()->setGrid(grid);
+	SnowSimulator::instance()->setGrid(m_grid);
+}
 
-	SnowGridPtr snowGrid = m_actor->getComponent("SnowGrid").dynamicCast<SnowGrid>();
-	if (snowGrid) snowGrid->setGrid(grid);
+bool Snow::hasGridBuffers() const
+{
+	return m_gridVBO > 0;
+}
+
+void Snow::deleteGridBuffers()
+{
+	// Delete OpenGL VBO and unregister with CUDA
+	if ( hasGridBuffers() ) 
+	{
+		glBindBuffer( GL_ARRAY_BUFFER, m_gridVBO );
+		glDeleteBuffers( 1, &m_gridVBO );
+		glBindBuffer( GL_ARRAY_BUFFER, 0 );
+	}
+
+	m_gridVBO = 0;
+}
+
+void Snow::buildGridBuffers()
+{
+	Node *data = new Node[m_gridSize];
+	memset( data, 0, m_gridSize*sizeof(Node) );
+
+	// Build VBO
+	glGenBuffers( 1, &m_gridVBO );
+	glBindBuffer( GL_ARRAY_BUFFER, m_gridVBO );
+	glBufferData( GL_ARRAY_BUFFER, m_gridSize*sizeof(Node), data, GL_DYNAMIC_DRAW );
+
+	delete [] data;
+
+	// Mass attribute
+	glEnableVertexAttribArray( 0 );
+	glVertexAttribPointer( 0, 1, GL_FLOAT, GL_FALSE, sizeof(Node), (void*)(0) );
+
+	// Velocity attribute
+	glEnableVertexAttribArray( 1 );
+	glVertexAttribPointer( 1, 3, GL_FLOAT, GL_FALSE, sizeof(Node), (void*)(sizeof(GLfloat)) );
+
+	// Force attribute
+	glEnableVertexAttribArray( 2 );
+	glVertexAttribPointer( 2, 3, GL_FLOAT, GL_FALSE, sizeof(Node), (void*)(sizeof(GLfloat)+2*sizeof(vec3)) );
+
+	glBindBuffer( GL_ARRAY_BUFFER, 0 );
+}
+
+void Snow::setGrid( const Grid &grid )
+{
+	m_grid = grid;
+	m_gridSize = m_grid.nodeCount();
+	resetGridBuffers();
+}
+
+void Snow::resetGridBuffers()
+{
+	deleteGridBuffers();
+	buildGridBuffers();
+}
+
+Snow& Snow::operator+=( const Snow &other )
+{
+	m_particles += other.m_particles; 
+	resetParticleBuffers(); 
+	m_grid = other.m_grid;
+	m_gridSize = other.m_gridSize;
+	m_gridVBO = other.m_gridVBO;
+	return *this;
+}
+
+Snow& Snow::operator+=( const SnowParticle &particle )
+{
+	m_particles.append(particle); 
+	resetParticleBuffers(); 
+	return *this;
 }

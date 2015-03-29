@@ -38,6 +38,7 @@ __global__ void computeNodeMasses( const SnowParticle *particles, int numParticl
         CUDAVec3 dx = CUDAVec3::abs( particleGridPos - nodePosition );
         float w = weight( dx );
         atomicAdd( &nodeMasses[Grid::getGridIndex(currIJK, grid->dim+1)], particle.mass*w );
+		//printf("\nnode mass: %f",nodeMasses[Grid::getGridIndex(currIJK, grid->dim+1)]);
      }
 }
 

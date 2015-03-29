@@ -3,7 +3,6 @@
 
 SnowSimulator::SnowSimulator()
 	: m_snowCollection(new Snow(0)),
-	  m_snowGrid(new SnowGrid),
 	  m_hostParticleCache(NULL),
 	  m_running(false),
 	  m_paused(false)
@@ -35,22 +34,21 @@ void SnowSimulator::initializeCudaResources()
 	qDebug() << "Initializing CUDA resources...";
 
 	// Particles
-	registerVBO( &m_particlesResource, m_snowCollection->vbo() );
-	float particlesSize = m_snowCollection->size()*sizeof(SnowParticle) / 1e6;
+	registerVBO( &m_particlesResource, m_snowCollection->particleVBO() );
+	float particlesSize = m_snowCollection->particleSize()*sizeof(SnowParticle) / 1e6;
 	qDebug() <<  "Allocated"<<particlesSize<<"MB for particle system.";
 
 	int numNodes = m_grid.nodeCount();
-	int numParticles = m_snowCollection->size();
+	int numParticles = m_snowCollection->particleSize();
 
 	// Grid Nodes
-	registerVBO( &m_nodesResource, m_snowGrid->vbo() );
+	registerVBO( &m_nodesResource, m_snowCollection->gridVBO() );
 	float nodesSize =  numNodes*sizeof(Node) / 1e6;
 	qDebug() <<  "Allocating" <<  nodesSize << "MB for grid nodes.";
 
 	// Grid
 	checkCudaErrors(cudaMalloc( (void**)&m_devGrid, sizeof(Grid) ));
 	checkCudaErrors(cudaMemcpy( m_devGrid, &m_grid, sizeof(Grid), cudaMemcpyHostToDevice ));
-
 
 	// Colliders
 	checkCudaErrors(cudaMalloc( (void**)&m_devColliders, m_colliders.size()*sizeof(ImplicitCollider) ));
@@ -82,11 +80,17 @@ void SnowSimulator::initializeCudaResources()
 	SnowParticle *devParticles;
 	size_t size;
 	checkCudaErrors( cudaGraphicsResourceGetMappedPointer( (void**)&devParticles, &size, m_particlesResource ) );
-	if ( (int)(size/sizeof(SnowParticle)) != m_snowCollection->size() )
-		qWarning() <<  "SnowParticle resource error :"<<size<<"bytes ("<< m_snowCollection->size()*sizeof(SnowParticle) <<"expected)";
+	if ( (int)(size/sizeof(SnowParticle)) != m_snowCollection->particleSize() )
+		qWarning() <<  "SnowParticle resource error :"<<size<<"bytes ("<< m_snowCollection->particleSize()*sizeof(SnowParticle) <<"expected)";
 
-	initializeParticleVolumes( devParticles, m_snowCollection->size(), m_devGrid, numNodes );
+// 	foreach(SnowParticle p, m_snowCollection->particles())
+// 		qDebug() << p.mass;
+
+	initializeParticleVolumes( devParticles, m_snowCollection->particleSize(), m_devGrid, numNodes );
 	checkCudaErrors( cudaGraphicsUnmapResources(1, &m_particlesResource, 0) );
+
+// 	foreach(SnowParticle p, m_snowCollection->particles())
+// 		qDebug() << p.mass;
 
 	qDebug() <<  "Initialization complete.";
 }
@@ -111,7 +115,7 @@ void SnowSimulator::freeCudaResources()
 
 	cudaFree( m_devMaterial );
 
-	qDebug() << "Freed CUDA resources.=";
+	qDebug() << "Freed CUDA resources.";
 }
 
 void SnowSimulator::update(const float dt)
@@ -133,19 +137,18 @@ void SnowSimulator::update(const float dt)
 	checkCudaErrors( cudaGraphicsResourceGetMappedPointer( (void**)&devParticles, &size, m_particlesResource ) );
 	checkCudaErrors( cudaDeviceSynchronize() );
 
-	if ( (int)(size/sizeof(SnowParticle)) != m_snowCollection->size() )
-		qWarning() <<  "SnowParticle resource error :"<<size<<"bytes ("<< m_snowCollection->size()*sizeof(SnowParticle) <<"expected)";
+	if ( (int)(size/sizeof(SnowParticle)) != m_snowCollection->particleSize() )
+		qWarning() <<  "SnowParticle resource error :"<<size<<"bytes ("<< m_snowCollection->particleSize()*sizeof(SnowParticle) <<"expected)";
 
-//	cudaGraphicsMapResources( 1, &m_nodesResource, 0 );
+	cudaGraphicsMapResources( 1, &m_nodesResource, 0 );
 	Node *devNodes;
-// 	checkCudaErrors( cudaGraphicsResourceGetMappedPointer( (void**)&devNodes, &size, m_nodesResource ) );
-// 	checkCudaErrors( cudaDeviceSynchronize() );
+ 	checkCudaErrors( cudaGraphicsResourceGetMappedPointer( (void**)&devNodes, &size, m_nodesResource ) );
+ 	checkCudaErrors( cudaDeviceSynchronize() );
 
-	// 	if ( (int)(size/sizeof(Node)) != m_particleGrid->size() ) {
-	// 		LOG( "Grid nodes resource error : %lu bytes (%lu expected)", size, m_particleGrid->size()*sizeof(Node) );
-	// 	}
+	if ( (int)(size/sizeof(Node)) != m_snowCollection->gridSize() )
+		qWarning() <<  "Grid nodes resource error :"<<size<<"bytes ("<< m_snowCollection->gridSize()*sizeof(Node) <<"expected)";
 
-	updateParticles( devParticles, m_devParticleCache, m_hostParticleCache, m_snowCollection->size(), m_devGrid,
+	updateParticles( devParticles, m_devParticleCache, m_hostParticleCache, m_snowCollection->particleSize(), m_devGrid,
 		devNodes, m_devNodeCaches, m_grid.nodeCount(), m_devColliders, m_colliders.size(),
 		dt, true );
 
@@ -168,7 +171,7 @@ void SnowSimulator::clearParticleSystem()
 
 bool SnowSimulator::start()
 {
-	if (m_snowCollection->size() == 0)
+	if (m_snowCollection->particleSize() == 0)
 	{
 		qWarning() << "Empty snow collection. Snow simulator starting failed.";
 		return false;

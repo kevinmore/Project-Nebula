@@ -42,7 +42,6 @@ private:
 
 	// CPU data structures
 	Snow *m_snowCollection;
-	SnowGrid *m_snowGrid;
 	Grid m_grid;
 	QVector<ImplicitCollider> m_colliders;
 

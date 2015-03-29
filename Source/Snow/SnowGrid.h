@@ -7,10 +7,6 @@
 #include "SnowParticle.h"
 #include "GridNode.h"
 
-class Scene;
-class GameObject;
-typedef QSharedPointer<GameObject> GameObjectPtr;
-
 class SnowGrid : public Component, protected QOpenGLFunctions_4_3_Core
 {
 public:

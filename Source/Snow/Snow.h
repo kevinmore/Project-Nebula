@@ -20,38 +20,52 @@ public:
 
 	void initialize();
 	void clear();
-	void reset();
-	inline int size() const { return m_particles.size(); }
+	void resetParticleBuffers();
+	void resetGridBuffers();
+	inline int particleSize() const { return m_particles.size(); }
+	inline int gridSize() const { return m_gridSize; }
 	inline void resize( int n ) { m_particles.resize(n); }
 
 	SnowParticle* data() { return m_particles.data(); }
 	const QVector<SnowParticle>& getParticles() const { return m_particles; }
 	QVector<SnowParticle>& particles() { return m_particles; }
 
-	GLuint vbo() { if ( !hasBuffers() ) buildBuffers(); return m_glVBO; }
+	void setGrid( const Grid &grid );
+	Grid getGrid() const { return m_grid; }
 
-	void merge( const Snow &other ) { m_particles += other.m_particles; reset(); }
+	GLuint particleVBO() { if ( !hasParticleBuffers() ) buildParticleBuffers(); return m_particleVBO; }
+	GLuint gridVBO() { if ( !hasGridBuffers() ) buildGridBuffers(); return m_gridVBO; }
 
-	Snow& operator += ( const Snow &other ) { m_particles += other.m_particles; reset(); return *this; }
-	Snow& operator += ( const SnowParticle &particle ) { m_particles.append(particle); reset(); return *this; }
+	void merge( const Snow &other ) { m_particles += other.m_particles; resetParticleBuffers(); }
+
+	Snow& operator += ( const Snow &other );
+	Snow& operator += ( const SnowParticle &particle );
 
 private:
-	bool hasBuffers() const;
-	void buildBuffers();
-	void deleteBuffers();
+	bool hasParticleBuffers() const;
+	void buildParticleBuffers();
+	void deleteParticleBuffers();
+
+	bool hasGridBuffers() const;
+	void buildGridBuffers();
+	void deleteGridBuffers();
 
 	void installShader();
 	void voxelizeMesh();
 	QVector<SnowParticle> m_particles;
 	ParticleTechniquePtr m_renderingEffect;
-	GLuint m_glVBO;
-	GLuint m_glVAO;
+	GLuint m_particleVBO, m_gridVBO;
+	GLuint m_VAO;
 
 	// Snow properties
 	float m_cellSize;
 	uint m_particleCount;
 	float m_density;
 	uint m_snowMaterial;
+
+	// Grid properties
+	Grid m_grid;
+	int m_gridSize;
 };
 
 typedef QSharedPointer<Snow> SnowPtr;
