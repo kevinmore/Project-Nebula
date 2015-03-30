@@ -58,7 +58,8 @@ Canvas::Canvas(QScreen *screen)
 	// Create a timer for updating the rendering area of 60Hz
 	QTimer* timer = new QTimer(this);
 	connect(timer, SIGNAL(timeout()), this, SLOT(updateScene()));
-	timer->start(1.0f/FPS); // f = 1 / 16.10e-3 = 60Hz
+	int interval = qRound(1000.0f/FPS);// f = 1 / 16.10e-3 = 60Hz
+	timer->start(0);
 }
 
 Canvas::~Canvas() 

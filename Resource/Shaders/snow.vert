@@ -17,5 +17,5 @@ const int STIFFNESS = 3;
 void main( void )
 {
     gl_Position = gWVP * vec4( particlePosition, 1.0 );
-    gl_PointSize = 3.0;
+    gl_PointSize = 4.0;
 }

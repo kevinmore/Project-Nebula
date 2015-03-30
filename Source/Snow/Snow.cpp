@@ -11,8 +11,8 @@ Snow::Snow()
 	  m_VAO(0),
 	  m_gridSize(0),
 	  m_cellSize(0.02f),
-	  m_particleCount(100000),
-	  m_density(100.0f),
+	  m_particleCount(200000),
+	  m_density(300.0f),
 	  m_snowMaterial(1)
 {
 	m_particles.resize(m_particleCount);
@@ -215,6 +215,10 @@ void Snow::voxelizeMesh()
 	// add this instance to the simulator
 	//SnowSimulator::instance()->addSnowInstance(*this);
 	SnowSimulator::instance()->setSnowInstance(this);
+	//SnowSimulator::instance()->setGrid(m_grid);
+
+// 	BoxShape box(vec3(0, 3, 0), vec3(3, 3, 3));
+// 	setGrid(box.toGrid(0.1f));
 	SnowSimulator::instance()->setGrid(m_grid);
 }
 

@@ -12,7 +12,7 @@ SnowSimulator::SnowSimulator()
 	CUDAVec3 param(0, 1, 0); // up normal
 	CUDAVec3 velocity(0, 0, 0); // fixed
 	ImplicitCollider ground(ImplicitCollider::HALF_PLANE, center, param, velocity, 0.2f);
-	//addCollider(ground);
+	addCollider(ground);
 }
 
 SnowSimulator::~SnowSimulator()
@@ -153,16 +153,6 @@ void SnowSimulator::update(const float dt)
 		devNodes, m_devNodeCaches, m_grid.nodeCount(), m_devColliders, m_colliders.size(),
 		dt, false );
 
-
-// 	SnowParticle* particles = new SnowParticle[m_snowCollection->particleSize()];
-// 	cudaMemcpy(particles, devParticles, m_snowCollection->particleSize(), cudaMemcpyDeviceToHost);
-// 	checkCudaErrors( cudaDeviceSynchronize() );
-// 
-// 	SnowParticle p = particles[0];
-// 	qDebug() << p.position.x << p.position.y << p.position.z;
-// 
-// 	delete [] particles ;
-
 	checkCudaErrors( cudaGraphicsUnmapResources( 1, &m_particlesResource, 0 ) );
 	checkCudaErrors( cudaGraphicsUnmapResources( 1, &m_nodesResource, 0 ) );
 	checkCudaErrors( cudaDeviceSynchronize() );
@@ -198,7 +188,6 @@ bool SnowSimulator::start()
 
 	initializeCudaResources();
 	m_running = true;
-	qDebug() << "Snow simulation started.";
 
 	return true;
 }
@@ -215,8 +204,7 @@ void SnowSimulator::resume()
 
 void SnowSimulator::stop()
 {
-	qDebug() << "Snow simulation stopped.";
-	freeCudaResources();
+	if(m_snowCollection) freeCudaResources();
 	m_running = false;
 }
 

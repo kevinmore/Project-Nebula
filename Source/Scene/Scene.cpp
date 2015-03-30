@@ -102,7 +102,7 @@ void Scene::update(float currentTime)
 		//m_havokPhysicsWorld->stepDeltaTime(dt);
 
 		// Snow
-		SnowSimulator::instance()->update(dt);
+		SnowSimulator::instance()->update(0.002f);
 	}
 	m_physicsWorld->setCurrentTime(m_relativeTime);
 
@@ -174,13 +174,20 @@ void Scene::resetToDefaultScene()
 
 	// SNOW TEST
 	GameObjectPtr snowRef(new GameObject);
-	LoaderThread snowLoader("../Resource/Models/Common/sphere.obj", snowRef);
-	GameObjectPtr snowObject = m_objectManager->getGameObject("sphere");
-	snowObject->setFixedPositionY(1);
-
+	LoaderThread snowLoader("../Resource/Models/static/Statue.obj", snowRef);
+	GameObjectPtr snowObject = m_objectManager->getGameObject("Statue");
+	snowObject->setFixedPositionX(1.5);
+	snowObject->setFixedPositionY(0.1);
+		
 	SnowPtr snow = SnowPtr(new Snow);
 	snowObject->attachComponent(snow);
 	snow->initialize();
+
+	GameObjectPtr snowRef2(new GameObject);
+	LoaderThread snowLoader2("../Resource/Models/static/Statue.obj", snowRef2);
+	GameObjectPtr snowObject2 = m_objectManager->getGameObject("Statue_2");
+ 	snowObject2->setFixedPositionX(-1.5);
+	snowObject2->setFixedPositionY(0.1);
 }
 
 void Scene::reloadScene()

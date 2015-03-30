@@ -12,13 +12,6 @@
 #include <Snow/SnowParticle.h>
 #include <Snow/Grid.h>
 
-// struct Tri {
-// 	CUDAVec3 v0, n0;
-// 	CUDAVec3 v1, n1;
-// 	CUDAVec3 v2, n2;
-// };
-
-
 
 /*
  * Moller, T, and Trumbore, B. Fast, Minimum Storage Ray/Triangle Intersection.
@@ -191,7 +184,7 @@ void fillMeshWithVBO( cudaGraphicsResource **resource, int triCount, const Grid 
         break;
     case 1:
         LAUNCH( applyChunky<<<(particleCount+511)/512, 512>>>(devParticles,particleCount) ); // TODO - we could use the uisettings materialstiffness here
-        printf( "Chunky applied" );
+        //printf( "\nChunky applied" );
         break;
     default:
         break;
