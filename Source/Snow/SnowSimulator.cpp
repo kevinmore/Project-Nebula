@@ -13,6 +13,12 @@ SnowSimulator::SnowSimulator()
 	CUDAVec3 velocity(0, 0, 0); // fixed
 	ImplicitCollider ground(ImplicitCollider::HALF_PLANE, center, param, velocity, 0.2f);
 	addCollider(ground);
+
+	center = CUDAVec3(1.5f, 1.5f, 3.0f);
+	param = CUDAVec3(.5f, 0.0f, 0.0f);
+	velocity = CUDAVec3(0, 0, -10);
+	ImplicitCollider ball(ImplicitCollider::SPHERE, center, param, velocity, 0.1f);
+	addCollider(ball);
 }
 
 SnowSimulator::~SnowSimulator()

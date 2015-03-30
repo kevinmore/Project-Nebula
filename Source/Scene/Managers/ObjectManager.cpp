@@ -56,16 +56,16 @@ void ObjectManager::renderAll(const float currentTime)
 		RigidBodyPtr rb = go->getComponent("RigidBody").dynamicCast<RigidBody>();
 		if (rb && rb->getMotionType() != RigidBody::MOTION_FIXED)
 		{
-// 			go->setPosition(rb->getPosition());
-// 			go->setRotation(rb->getRotation());
+			go->setPosition(rb->getPosition());
+			go->setRotation(rb->getRotation());
 
 			// use havok
-			hkpRigidBody* hkrb = rb->getHkReference();
-			if (hkrb)
-			{
-				go->setPosition(Math::Converter::toQtVec3(hkrb->getPosition()));
-				go->setRotation(Math::Converter::toQtQuat(hkrb->getRotation()));
-			}
+// 			hkpRigidBody* hkrb = rb->getHkReference();
+// 			if (hkrb)
+// 			{
+// 				go->setPosition(Math::Converter::toQtVec3(hkrb->getPosition()));
+// 				go->setRotation(Math::Converter::toQtQuat(hkrb->getRotation()));
+// 			}
 		}
 	}
 
