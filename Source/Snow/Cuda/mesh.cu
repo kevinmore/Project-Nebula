@@ -249,7 +249,7 @@ void fillMeshWithTriangles( CUDATriangle *hostTris, int triCount, const Grid &gr
 		break;
 	case 1:
 		LAUNCH( applyChunky<<<(particleCount+511)/512, 512>>>(devParticles,particleCount) ); // TODO - we could use the uisettings materialstiffness here
-		printf( "Chunky applied" );
+		//printf( "Chunky applied" );
 		break;
 	default:
 		break;

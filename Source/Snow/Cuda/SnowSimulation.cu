@@ -11,7 +11,7 @@
 #include "Weighting.h"
 #include "Functions.h"
 
-#define ALPHA 0.05f
+#define ALPHA 0.95f
 
 #define GRAVITY CUDAVec3(0.f,-9.8f,0.f)
 
@@ -140,7 +140,6 @@ __global__ void computeSigma( const SnowParticle *particles, SnowParticleCache *
  * In:
  * particleData -- list of particles
  * grid -- Stores grid paramters
- * worldParams -- Global parameters dealing with the physics of the world
  *
  * Out:
  * nodes -- list of every node in grid ((dim.x+1)*(dim.y+1)*(dim.z+1))
@@ -184,7 +183,6 @@ __global__ void computeCellMassVelocityAndForceFast( const SnowParticle *particl
  * dt -- delta time, time step of simulation
  * colliders -- array of colliders in the scene.
  * numColliders -- number of colliders in the scene
- * worldParams -- Global parameters dealing with the physics of the world
  * grid -- parameters defining the grid
  *
  * Out:
@@ -316,11 +314,6 @@ __global__ void updateParticlesFromGrid( SnowParticle *particles, int numParticl
     checkForAndHandleCollisions( colliders, numColliders, particle.position, particle.velocity );
 
     particle.position += timeStep * ( particle.velocity );
-
-// 	if (particleIdx == 10)
-// 	{
-// 		printf("\n time step: %.6f, particle position: (%.6f, %.6f, %.6f)", timeStep, particle.position.x, particle.position.y, particle.position.z);
-// 	}
 }
 
 __global__ void updateColliderPositions(ImplicitCollider *colliders, int numColliders,float timestep)

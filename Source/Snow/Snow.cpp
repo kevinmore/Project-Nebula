@@ -11,7 +11,7 @@ Snow::Snow()
 	  m_VAO(0),
 	  m_gridSize(0),
 	  m_cellSize(0.02f),
-	  m_particleCount(200000),
+	  m_particleCount(300000),
 	  m_density(300.0f),
 	  m_snowMaterial(1)
 {
