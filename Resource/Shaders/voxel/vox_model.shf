@@ -1,0 +1,69 @@
+#version 430
+
+in vec4 ndcPos;
+in vec2 texcoord0;
+in vec3 worldPos;
+in vec3 normal;
+
+out vec4 fragDataOut0; // color
+
+layout(binding = 0, rgba8) uniform image3D voxelColor;
+
+uniform sampler2D sampler0; // diffuse
+
+uniform mat4 storageTransform;
+
+uniform sampler2D sampler15; // shadow map
+uniform mat4 shadowMVP;
+
+uniform vec3 primaryLightDir;
+uniform vec3 primaryLightColor;
+
+
+float CalcShadowing(vec3 worldPos)
+{
+	vec4 shadowPos = shadowMVP * vec4(worldPos, 1.0);
+	// finish projection
+	shadowPos.w = 1.0 / shadowPos.w;
+	shadowPos.xyz *= shadowPos.w;
+	// [-1, 1] to [0, 1]
+	shadowPos.xyz = shadowPos.xyz * .5 + .5;
+	
+	float shadowSample = texture2D(sampler15, shadowPos.xy).x;
+	// compare and weight with bias
+	shadowSample = shadowSample + .0025 - shadowPos.z;
+	shadowSample = shadowSample < 0.0 ? 0.0 : 1.0;
+	
+	return shadowSample;
+}
+
+void main()
+{
+	vec4 diffuseTex = texture(sampler0, texcoord0);
+#ifdef ENABLE_ALPHA_TEST
+	if (diffuseTex.a < .5)
+		discard;
+#endif
+
+	vec3 bumpNormal = normalize(normal);
+	
+// direct lighting
+	float shadowing = CalcShadowing(worldPos);
+	
+	float lightingNL = clamp(dot(bumpNormal, primaryLightDir), 0.0, 1.0);
+	vec3 diffuseLight = primaryLightColor * (lightingNL * shadowing);
+
+	vec3 diffuse = diffuseTex.xyz * diffuseLight;
+
+	vec4 outColor = vec4(diffuse, 1.0);
+
+// store voxel	
+	vec4 storagePos = storageTransform * ndcPos;
+	storagePos.xyz *= 1.0 / storagePos.w;
+	
+	ivec3 voxelPos = ivec3(imageSize(voxelColor) * (storagePos.xyz * .5 + .5));
+
+	// compress outColor range to encode limited HDR
+	outColor.xyz *= .5;
+	imageStore(voxelColor, voxelPos, outColor);
+}

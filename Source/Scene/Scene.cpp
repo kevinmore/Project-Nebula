@@ -98,11 +98,11 @@ void Scene::update(float currentTime)
 	if (!m_bPhysicsPaused || m_bStepPhysics)
 	{
 		// update the physics world
-		m_physicsWorld->simulate(0.002f);
+		//m_physicsWorld->simulate(0.002f);
 		//m_havokPhysicsWorld->stepDeltaTime(dt);
 
 		// Snow
-		SnowSimulator::instance()->update(0.002f);
+		//SnowSimulator::instance()->update(0.002f);
 	}
 	m_physicsWorld->setCurrentTime(m_relativeTime);
 
@@ -173,35 +173,35 @@ void Scene::resetToDefaultScene()
 
 
 	// SNOW TEST
-	GameObjectPtr snowRef(new GameObject);
-	LoaderThread snowLoader("../Resource/Models/static/Statue.obj", snowRef);
-	GameObjectPtr snowObject = m_objectManager->getGameObject("Statue");
-	snowObject->setFixedPositionX(1.5);
-	snowObject->setFixedPositionY(0.1);
-		
-	SnowPtr snow = SnowPtr(new Snow);
-	snowObject->attachComponent(snow);
-	snow->initialize();
-
-	GameObjectPtr snowRef2(new GameObject);
-	LoaderThread snowLoader2("../Resource/Models/static/Statue.obj", snowRef2);
-	GameObjectPtr snowObject2 = m_objectManager->getGameObject("Statue_2");
- 	snowObject2->setFixedPositionX(-1.5);
-	snowObject2->setFixedPositionY(0.1);
-
-	GameObjectPtr ballRef(new GameObject);
-	LoaderThread ballLoader("../Resource/Models/common/woodenball.obj", ballRef);
-	GameObjectPtr ballObject = m_objectManager->getGameObject("woodenball");
-	ModelPtr ballmesh = ballObject ->getComponent("Model").dynamicCast<IModel>();
-	RigidBodyPtr ball = RigidBodyPtr(new RigidBody());
-	ball->setMotionType(RigidBody::MOTION_SPHERE_INERTIA);
-	ball->setPosition(vec3(1.5f, 1.5f, 3.0f));
-	ball->setLinearVelocity(vec3(0, 0, -10));
-	ball->setGravityFactor(0.0f);
-	ball->attachBroadPhaseCollider(ballmesh->getBoundingBox());
-	ball->attachNarrowPhaseCollider(ballmesh->getConvexHullCollider());
-	ballObject->attachComponent(ball);
-	m_physicsWorld->addEntity(ball.data());
+// 	GameObjectPtr snowRef(new GameObject);
+// 	LoaderThread snowLoader("../Resource/Models/static/Statue.obj", snowRef);
+// 	GameObjectPtr snowObject = m_objectManager->getGameObject("Statue");
+// 	snowObject->setFixedPositionX(1.5);
+// 	snowObject->setFixedPositionY(0.1);
+// 		
+// 	SnowPtr snow = SnowPtr(new Snow);
+// 	snowObject->attachComponent(snow);
+// 	snow->initialize();
+// 
+// 	GameObjectPtr snowRef2(new GameObject);
+// 	LoaderThread snowLoader2("../Resource/Models/static/Statue.obj", snowRef2);
+// 	GameObjectPtr snowObject2 = m_objectManager->getGameObject("Statue_2");
+//  	snowObject2->setFixedPositionX(-1.5);
+// 	snowObject2->setFixedPositionY(0.1);
+// 
+// 	GameObjectPtr ballRef(new GameObject);
+// 	LoaderThread ballLoader("../Resource/Models/common/woodenball.obj", ballRef);
+// 	GameObjectPtr ballObject = m_objectManager->getGameObject("woodenball");
+// 	ModelPtr ballmesh = ballObject ->getComponent("Model").dynamicCast<IModel>();
+// 	RigidBodyPtr ball = RigidBodyPtr(new RigidBody());
+// 	ball->setMotionType(RigidBody::MOTION_SPHERE_INERTIA);
+// 	ball->setPosition(vec3(1.5f, 1.5f, 3.0f));
+// 	ball->setLinearVelocity(vec3(0, 0, -10));
+// 	ball->setGravityFactor(0.0f);
+// 	ball->attachBroadPhaseCollider(ballmesh->getBoundingBox());
+// 	ball->attachNarrowPhaseCollider(ballmesh->getConvexHullCollider());
+// 	ballObject->attachComponent(ball);
+// 	m_physicsWorld->addEntity(ball.data());
 }
 
 void Scene::reloadScene()
@@ -530,7 +530,7 @@ void Scene::pause()
 	m_canvas->getContainerWidget()->setWindowTitle("Scene - Physics Simulation: Off");
 
 	// stop the snow simulation
-	SnowSimulator::instance()->stop();
+	//SnowSimulator::instance()->stop();
 }
 
 void Scene::play()
@@ -544,7 +544,7 @@ void Scene::play()
 	m_canvas->getContainerWidget()->setWindowTitle("Scene - Physics Simulation: On");
 
 	// start the snow simulation
-	SnowSimulator::instance()->start();
+	//SnowSimulator::instance()->start();
 }
 
 void Scene::step()

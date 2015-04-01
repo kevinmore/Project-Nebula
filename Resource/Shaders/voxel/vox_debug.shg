@@ -1,0 +1,173 @@
+#version 430
+
+// input
+in VSOutput
+{
+	vec3 texcoord0;
+} vs_out[];
+
+// output
+out GSOutput
+{
+	vec3 texcoord0;
+	vec3 offset;
+} gs_out;
+
+uniform mat4 mvp;
+
+uniform float cubeScale;
+
+// point -> cube
+void main()
+{
+	vec4 centerPos = gl_in[0].gl_Position;
+	
+	// throw away off-screen cubes to save some performance
+	vec4 centerNDCPos = mvp * centerPos;
+	if (centerNDCPos.x < -centerNDCPos.w
+		|| centerNDCPos.x > centerNDCPos.w
+		|| centerNDCPos.y < -centerNDCPos.w
+		|| centerNDCPos.y > centerNDCPos.w
+		|| centerNDCPos.z < -centerNDCPos.w
+		|| centerNDCPos.z > centerNDCPos.w)
+		return;
+	
+	// -X
+	{
+		gl_Position = mvp * (centerPos + cubeScale * vec4(-.5, .5, .5, 0.0));
+		gs_out.texcoord0 = vs_out[0].texcoord0;
+		gs_out.offset = vec3(-.5, .5, .5);
+		EmitVertex();
+
+		gl_Position = mvp * (centerPos + cubeScale * vec4(-.5, .5, -.5, 0.0));
+		gs_out.texcoord0 = vs_out[0].texcoord0;
+		gs_out.offset = vec3(-.5, .5, -.5);
+		EmitVertex();
+
+		gl_Position = mvp * (centerPos + cubeScale * vec4(-.5, -.5, .5, 0.0));
+		gs_out.texcoord0 = vs_out[0].texcoord0;
+		gs_out.offset = vec3(-.5, -.5, .5);
+		EmitVertex();
+		
+		gl_Position = mvp * (centerPos + cubeScale * vec4(-.5, -.5, -.5, 0.0));
+		gs_out.texcoord0 = vs_out[0].texcoord0;
+		gs_out.offset = vec3(-.5, -.5, -.5);
+		EmitVertex();
+	}
+	EndPrimitive();
+	// +X
+	{
+		gl_Position = mvp * (centerPos + cubeScale * vec4(.5, .5, -.5, 0.0));
+		gs_out.texcoord0 = vs_out[0].texcoord0;
+		gs_out.offset = vec3(.5, .5, -.5);
+		EmitVertex();
+
+		gl_Position = mvp * (centerPos + cubeScale * vec4(.5, .5, .5, 0.0));			
+		gs_out.texcoord0 = vs_out[0].texcoord0;
+		gs_out.offset = vec3(.5, .5, .5);
+		EmitVertex();
+
+		gl_Position = mvp * (centerPos + cubeScale * vec4(.5, -.5, -.5, 0.0));
+		gs_out.texcoord0 = vs_out[0].texcoord0;
+		gs_out.offset = vec3(.5, -.5, -.5);
+		EmitVertex();
+		
+		gl_Position = mvp * (centerPos + cubeScale * vec4(.5, -.5, .5, 0.0));
+		gs_out.texcoord0 = vs_out[0].texcoord0;
+		gs_out.offset = vec3(.5, -.5, .5);
+		EmitVertex();
+	}
+	EndPrimitive();
+	// -Y
+	{
+		gl_Position = mvp * (centerPos + cubeScale * vec4(-.5, -.5, -.5, 0.0));
+		gs_out.texcoord0 = vs_out[0].texcoord0;
+		gs_out.offset = vec3(-.5, -.5, -.5);
+		EmitVertex();
+
+		gl_Position = mvp * (centerPos + cubeScale * vec4(.5, -.5, -.5, 0.0));
+		gs_out.texcoord0 = vs_out[0].texcoord0;
+		gs_out.offset = vec3(.5, -.5, -.5);
+		EmitVertex();
+
+		gl_Position = mvp * (centerPos + cubeScale * vec4(-.5, -.5, .5, 0.0));
+		gs_out.texcoord0 = vs_out[0].texcoord0;
+		gs_out.offset = vec3(-.5, -.5, .5);
+		EmitVertex();
+		
+		gl_Position = mvp * (centerPos + cubeScale * vec4(.5, -.5, .5, 0.0));
+		gs_out.texcoord0 = vs_out[0].texcoord0;
+		gs_out.offset = vec3(.5, -.5, .5);
+		EmitVertex();
+	}
+	EndPrimitive();
+	// +Y
+	{
+		gl_Position = mvp * (centerPos + cubeScale * vec4(.5, .5, -.5, 0.0));
+		gs_out.texcoord0 = vs_out[0].texcoord0;
+		gs_out.offset = vec3(.5, .5, -.5);
+		EmitVertex();
+
+		gl_Position = mvp * (centerPos + cubeScale * vec4(-.5, .5, -.5, 0.0));
+		gs_out.texcoord0 = vs_out[0].texcoord0;
+		gs_out.offset = vec3(-.5, .5, -.5);
+		EmitVertex();
+
+		gl_Position = mvp * (centerPos + cubeScale * vec4(.5, .5, .5, 0.0));
+		gs_out.texcoord0 = vs_out[0].texcoord0;
+		gs_out.offset = vec3(.5, .5, .5);
+		EmitVertex();
+		
+		gl_Position = mvp * (centerPos + cubeScale * vec4(-.5, .5, .5, 0.0));			
+		gs_out.texcoord0 = vs_out[0].texcoord0;
+		gs_out.offset = vec3(-.5, .5, .5);
+		EmitVertex();
+	}
+	EndPrimitive();
+	// -Z
+	{
+		gl_Position = mvp * (centerPos + cubeScale * vec4(-.5, -.5, -.5, 0.0));
+		gs_out.texcoord0 = vs_out[0].texcoord0;
+		gs_out.offset = vec3(-.5, -.5, -.5);
+		EmitVertex();
+
+		gl_Position = mvp * (centerPos + cubeScale * vec4(-.5, .5, -.5, 0.0));
+		gs_out.texcoord0 = vs_out[0].texcoord0;
+		gs_out.offset = vec3(-.5, .5, -.5);
+		EmitVertex();
+
+		gl_Position = mvp * (centerPos + cubeScale * vec4(.5, -.5, -.5, 0.0));
+		gs_out.texcoord0 = vs_out[0].texcoord0;
+		gs_out.offset = vec3(.5, -.5, -.5);
+		EmitVertex();
+		
+		gl_Position = mvp * (centerPos + cubeScale * vec4(.5, .5, -.5, 0.0));
+		gs_out.texcoord0 = vs_out[0].texcoord0;
+		gs_out.offset = vec3(.5, .5, -.5);
+		EmitVertex();
+	}
+	EndPrimitive();
+	// +Z
+	{
+		gl_Position = mvp * (centerPos + cubeScale * vec4(.5, -.5, .5, 0.0));
+		gs_out.texcoord0 = vs_out[0].texcoord0;
+		gs_out.offset = vec3(.5, -.5, .5);
+		EmitVertex();
+
+		gl_Position = mvp * (centerPos + cubeScale * vec4(.5, .5, .5, 0.0));
+		gs_out.texcoord0 = vs_out[0].texcoord0;
+		gs_out.offset = vec3(.5, .5, .5);
+		EmitVertex();
+
+		gl_Position = mvp * (centerPos + cubeScale * vec4(-.5, -.5, .5, 0.0));
+		gs_out.texcoord0 = vs_out[0].texcoord0;
+		gs_out.offset = vec3(-.5, -.5, .5);
+		EmitVertex();
+		
+		gl_Position = mvp * (centerPos + cubeScale * vec4(-.5, .5, .5, 0.0));
+		gs_out.texcoord0 = vs_out[0].texcoord0;
+		gs_out.offset = vec3(-.5, .5, .5);
+		EmitVertex();
+	}
+	EndPrimitive();
+}

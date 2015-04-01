@@ -79,6 +79,7 @@
     <ClCompile Include="Snow\SnowSimulator.cpp" />
     <ClCompile Include="Snow\SnowGrid.cpp" />
     <ClCompile Include="Scene\StaticModel.cpp" />
+    <ClCompile Include="Render\RenderGLSL.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Primitives\Texture.h" />
@@ -173,6 +174,9 @@
     <ClInclude Include="Snow\Snow.h" />
     <ClInclude Include="Snow\SnowSimulator.h" />
     <ClInclude Include="Snow\SnowGrid.h" />
+    <ClInclude Include="Render\RenderOptions.h" />
+    <ClInclude Include="Render\IRender.h" />
+    <ClInclude Include="Render\RenderGLSL.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="UI\HierarchyWidget.ui" />

@@ -1,0 +1,354 @@
+#version 430
+layout (local_size_x = 8, local_size_y = 8, local_size_z = 1) in;
+
+/*
+// work group dimensions
+in    uvec3 gl_NumWorkGroups;
+const uvec3 gl_WorkGroupSize; // const, so can be used to size shared arrays
+
+// work group and invocation IDs
+in    uvec3 gl_WorkGroupID;
+in    uvec3 gl_LocalInvocationID;
+
+// derived variables
+in    uvec3 gl_GlobalInvocationID;
+in    uint  gl_LocalInvocationIndex;
+*/
+
+layout(binding = 0, rgba8) uniform image3D srcMip;
+
+struct DXT1Block
+{
+	unsigned int colors;
+	unsigned int colorControl;
+};
+struct DXT3AlphaBlock
+{
+	unsigned int alphas[2];
+};
+struct DXT3Block
+{
+	DXT3AlphaBlock dxt3Alpha;
+	DXT1Block dxt1;
+};
+struct DXT5AlphaBlock
+{
+	unsigned int alphas[2];
+};
+struct DXT5Block
+{
+	DXT5AlphaBlock dxt5Alpha;
+	DXT1Block dxt1;
+};
+
+layout(std430, binding = 0) buffer DXTBuffer
+{
+	DXT3Block dxtData[];
+};
+
+DXT1Block compressDXT1Block(vec4 colors[16])
+{
+	uvec4 output = uvec4(0);
+	
+#if 0 // two most distant colors (slightly better quality, but slower)
+
+	// get the average
+	const float avgWeight = .0625;
+	vec3 avg = colors[0].xyz;
+	for (int n = 1; n < 16; n++)
+	{
+		avg += colors[n].xyz;
+	}
+	avg *= avgWeight;
+
+	// find the most distant color from the average
+	vec3 furthest1 = colors[0].xyz;
+	float furthest1Dist = dot(colors[0].xyz - avg, colors[0].xyz - avg);
+	for (int n = 1; n < 16; n++)
+	{
+		vec3 delta = colors[n].xyz - avg;
+		float dist = dot(delta, delta);
+		if (dist > furthest1Dist)
+		{
+			furthest1 = colors[n].xyz;
+			furthest1Dist = dist;
+		}
+	}
+	
+	// find the most distant color from furthest1
+	vec3 furthest2 = colors[0].xyz;
+	float furthest2Dist = dot(colors[0].xyz - furthest1, colors[0].xyz - furthest1);
+	for (int n = 1; n < 16; n++)
+	{
+		vec3 delta = colors[n].xyz - furthest1;
+		float dist = dot(delta, delta);
+		if (dist > furthest2Dist)
+		{
+			furthest2 = colors[n].xyz;
+			furthest2Dist = dist;
+		}
+	}
+
+#else // min/max with swizzling (nvidia method, slightly worse quality, faster)
+
+	vec3 furthest1 = colors[0].xyz;
+	vec3 furthest2 = colors[0].xyz;
+	for (int n = 1; n < 16; n++)
+	{
+		furthest1 = min(furthest1, colors[n].xyz);
+		furthest2 = max(furthest2, colors[n].xyz);
+	}
+	
+	vec3 center = (furthest1 + furthest2) * .5;
+	vec2 cov = vec2(0.0, 0.0);
+	for (int n = 0; n < 16; n++)
+	{
+		vec3 dir = colors[n].xyz - center;
+		cov.x += dir.x * dir.z;
+		cov.y += dir.y * dir.z;
+	}
+	
+	if (cov.x < 0.0)
+	{
+		float temp = furthest2.x;
+		furthest2.x = furthest1.x;
+		furthest1.x = temp;
+	}
+	
+	if (cov.y < 0.0)
+	{
+		float temp = furthest2.y;
+		furthest2.y = furthest1.y;
+		furthest1.y = temp;
+	}
+
+	//vec3 inset = (furthest2 - furthest1) / 16.0 - (8.0 / 255.0) / 16.0;
+	//furthest1 = clamp(furthest1 + inset, 0.0, 1.0);
+	//furthest2 = clamp(furthest2 - inset, 0.0, 1.0);
+
+#endif
+
+	// get the 565 color values
+	output.x = (unsigned int(furthest1.x * 31.99999) << unsigned int(11))
+					| (unsigned int(furthest1.y * 63.99999) << unsigned int(5))
+					| (unsigned int(furthest1.z * 31.99999));
+	output.y = (unsigned int(furthest2.x * 31.99999) << unsigned int(11))
+					| (unsigned int(furthest2.y * 63.99999) << unsigned int(5))
+					| (unsigned int(furthest2.z * 31.99999));
+
+	// we're only working with the case color0 > color1
+	// swap if needed
+	if (output.x <= output.y)
+	{
+		vec3 ftemp = furthest1;
+		furthest1 = furthest2;
+		furthest2 = ftemp;
+
+		unsigned int itemp = output.x;
+		output.x = output.y;
+		output.y = itemp;
+	}
+
+	if (output.x != output.y) // color0 != color1
+	{
+		// get interpolation values
+		// direction to interpolate along
+		vec3 interpDir = furthest2 - furthest1;
+		// scale by 1 / mag^2 - builds in normalization and an extra 1/mag scale to normalize dot(interpDir, colors[n])
+		interpDir *= 1.0 / dot(interpDir, interpDir);
+
+		// starting distance along interpolation direction
+		float interpStart = dot(interpDir, furthest1);
+		float interp[16];
+		// normalized distance from furthest1 towards furthest2
+		for (int n = 0; n < 16; n++)
+		{
+			interp[n] = clamp(dot(interpDir, colors[n].xyz) - interpStart, 0.0, 1.0);
+		}
+
+		// get and pack the control codes
+		unsigned int control = unsigned int(0);
+		for (unsigned int n = unsigned int(0); n < unsigned int(16); n++)
+		{
+			control |= unsigned int(interp[int(n)] * 3.99999) << (n * unsigned int(2));
+		}
+
+		// remap control codes
+		// 0 = RGB0
+		// 1 = RGB1
+		// 2 = (2*RGB0+RGB1)/3
+		// 3 = (RGB0+2*RGB1)/3
+		// 3 -> 1
+		// 2 -> 3
+		// 1 -> 2
+		// AB -> CD
+		// 00 -> 00
+		// 01 -> 10
+		// 10 -> 11
+		// 11 -> 01
+		// 1010 = 0xA
+		// 0101 = 0x5
+		// C = A ^ B
+		// D = A
+		const unsigned int mask0 = unsigned int(0x55555555);
+		const unsigned int mask1 = unsigned int(0xaaaaaaaa);
+		control = ((control & mask1) >> unsigned int(1)) | (((control & mask1)) ^ (control & mask0) << unsigned int(1));
+		
+		const unsigned int mask2 = unsigned int(0x0000ffff);
+		const unsigned int mask3 = unsigned int(0xffff0000);
+		output.z = control & mask2;
+		output.w = (control & mask3) >> unsigned int(16);
+	}
+	else // color0 == color1
+	{
+		// force all control codes to 0
+		output.zw = unsigned ivec2(unsigned int(0));
+	}
+	
+	DXT1Block dxt1Block;
+	dxt1Block.colors = output.x | (output.y << unsigned int(16));
+	dxt1Block.colorControl = output.z | (output.w << unsigned int(16));
+	
+	return dxt1Block;
+}
+
+// choose quantized color that produces less error (DXT3 compressor)
+unsigned int quantize4(int a)
+{
+	int q0 = (a >> 4) - 1;
+	int q1 = (a >> 4);
+	int q2 = (a >> 4) + 1;
+
+	q0 = (q0 << 4) | q0;
+	q1 = (q1 << 4) | q1;
+	q2 = (q2 << 4) | q2;
+		
+	int d0 = abs(q0 - a);
+	int d1 = abs(q1 - a);
+	int d2 = abs(q2 - a);
+
+	if (d0 < d1 && d0 < d2) return unsigned int(q0 >> 4);
+	if (d1 < d2) return unsigned int(q1 >> 4);
+	return unsigned int(q2 >> 4);
+}
+
+DXT3AlphaBlock compressDXT3Alpha(vec4 colors[16])
+{
+	DXT3AlphaBlock dxt3Alpha;
+
+	unsigned int quantizedAlpha0 = quantize4(int(colors[0].w * 255.0 + .5));
+	unsigned int quantizedAlpha1 = quantize4(int(colors[1].w * 255.0 + .5));
+	unsigned int quantizedAlpha2 = quantize4(int(colors[2].w * 255.0 + .5));
+	unsigned int quantizedAlpha3 = quantize4(int(colors[3].w * 255.0 + .5));
+	unsigned int quantizedAlpha4 = quantize4(int(colors[4].w * 255.0 + .5));
+	unsigned int quantizedAlpha5 = quantize4(int(colors[5].w * 255.0 + .5));
+	unsigned int quantizedAlpha6 = quantize4(int(colors[6].w * 255.0 + .5));
+	unsigned int quantizedAlpha7 = quantize4(int(colors[7].w * 255.0 + .5));
+	dxt3Alpha.alphas[0] =
+		quantizedAlpha0 << unsigned int(0) |
+		quantizedAlpha1 << unsigned int(4) |
+		quantizedAlpha2 << unsigned int(8) |
+		quantizedAlpha3 << unsigned int(12) |
+		quantizedAlpha4 << unsigned int(16) |
+		quantizedAlpha5 << unsigned int(20) |
+		quantizedAlpha6 << unsigned int(24) |
+		quantizedAlpha7 << unsigned int(28);
+	
+	unsigned int quantizedAlpha8 = quantize4(int(colors[8].w * 255.0 + .5));
+	unsigned int quantizedAlpha9 = quantize4(int(colors[9].w * 255.0 + .5));
+	unsigned int quantizedAlpha10 = quantize4(int(colors[10].w * 255.0 + .5));
+	unsigned int quantizedAlpha11 = quantize4(int(colors[11].w * 255.0 + .5));
+	unsigned int quantizedAlpha12 = quantize4(int(colors[12].w * 255.0 + .5));
+	unsigned int quantizedAlpha13 = quantize4(int(colors[13].w * 255.0 + .5));
+	unsigned int quantizedAlpha14 = quantize4(int(colors[14].w * 255.0 + .5));
+	unsigned int quantizedAlpha15 = quantize4(int(colors[15].w * 255.0 + .5));
+	dxt3Alpha.alphas[1] =
+		quantizedAlpha8 << unsigned int(0) |
+		quantizedAlpha9 << unsigned int(4) |
+		quantizedAlpha10 << unsigned int(8) |
+		quantizedAlpha11 << unsigned int(12) |
+		quantizedAlpha12 << unsigned int(16) |
+		quantizedAlpha13 << unsigned int(20) |
+		quantizedAlpha14 << unsigned int(24) |
+		quantizedAlpha15 << unsigned int(28);
+	
+	return dxt3Alpha;
+}
+
+DXT3Block compressDXT3Block(vec4 colors[16])
+{
+	DXT1Block dxt1Block = compressDXT1Block(colors);
+
+	DXT3AlphaBlock dxt3Alpha = compressDXT3Alpha(colors);
+	
+	DXT3Block dxt3Block;
+	dxt3Block.dxt3Alpha = dxt3Alpha;
+	dxt3Block.dxt1 = dxt1Block;
+	
+	return dxt3Block;
+}
+
+DXT5Block compressDXT5Block(vec4 colors[16])
+{
+	DXT1Block dxt1Block = compressDXT1Block(colors);
+
+	// TODO: implement compressDXT5Alpha()
+	DXT5AlphaBlock dxt5Alpha;
+	dxt5Alpha.alphas[0] = 0;
+	dxt5Alpha.alphas[1] = 0;
+	
+	DXT5Block dxt5Block;
+	dxt5Block.dxt5Alpha = dxt5Alpha;
+	dxt5Block.dxt1 = dxt1Block;
+	
+	return dxt5Block;
+}
+
+DXT3Block compressSlice(ivec3 srcPos)
+{
+	vec4 colors[16];
+	colors[0] = imageLoad(srcMip, srcPos + ivec3(0, 0, 0));
+	colors[1] = imageLoad(srcMip, srcPos + ivec3(1, 0, 0));
+	colors[2] = imageLoad(srcMip, srcPos + ivec3(2, 0, 0));
+	colors[3] = imageLoad(srcMip, srcPos + ivec3(3, 0, 0));
+	colors[4] = imageLoad(srcMip, srcPos + ivec3(0, 1, 0));
+	colors[5] = imageLoad(srcMip, srcPos + ivec3(1, 1, 0));
+	colors[6] = imageLoad(srcMip, srcPos + ivec3(2, 1, 0));
+	colors[7] = imageLoad(srcMip, srcPos + ivec3(3, 1, 0));
+	colors[8] = imageLoad(srcMip, srcPos + ivec3(0, 2, 0));
+	colors[9] = imageLoad(srcMip, srcPos + ivec3(1, 2, 0));
+	colors[10] = imageLoad(srcMip, srcPos + ivec3(2, 2, 0));
+	colors[11] = imageLoad(srcMip, srcPos + ivec3(3, 2, 0));
+	colors[12] = imageLoad(srcMip, srcPos + ivec3(0, 3, 0));
+	colors[13] = imageLoad(srcMip, srcPos + ivec3(1, 3, 0));
+	colors[14] = imageLoad(srcMip, srcPos + ivec3(2, 3, 0));
+	colors[15] = imageLoad(srcMip, srcPos + ivec3(3, 3, 0));
+	
+	return compressDXT3Block(colors);
+}
+
+void main()
+{
+	ivec3 dstSize = imageSize(srcMip) / 4;
+	
+	if (gl_GlobalInvocationID.x >= dstSize.x
+		|| gl_GlobalInvocationID.y >= dstSize.y
+		|| gl_GlobalInvocationID.z >= dstSize.z)
+	{
+		// out of range, ignore
+		// beware barrier() instructions below due to these threads
+	}
+	else
+	{
+		uint dstIndex =
+			gl_GlobalInvocationID.z * dstSize.y * dstSize.x
+			+ gl_GlobalInvocationID.y * dstSize.x
+			+ gl_GlobalInvocationID.x;
+		ivec3 srcPos = ivec3(gl_GlobalInvocationID) * 4;
+
+		dxtData[dstIndex * 4 + 0] = compressSlice(srcPos + ivec3(0, 0, 0));
+		dxtData[dstIndex * 4 + 1] = compressSlice(srcPos + ivec3(0, 0, 1));
+		dxtData[dstIndex * 4 + 2] = compressSlice(srcPos + ivec3(0, 0, 2));
+		dxtData[dstIndex * 4 + 3] = compressSlice(srcPos + ivec3(0, 0, 3));
+	}
+}

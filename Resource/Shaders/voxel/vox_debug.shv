@@ -1,0 +1,16 @@
+#version 430
+
+// input
+in vec4 a0;
+in vec3 a1; // texcoord0
+
+out VSOutput
+{
+	vec3 texcoord0;
+} vs_out;
+
+void main()
+{
+	gl_Position = a0;
+	vs_out.texcoord0 = a1;
+}

@@ -12,6 +12,44 @@ namespace Math
 		return d != d;
 	}
 
+	namespace Util
+	{
+		const char LogTable256[] = 
+		{
+			0, 0, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3,
+			4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+			5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+			5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+			6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
+			6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
+			6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
+			6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
+			7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7,
+			7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7,
+			7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7,
+			7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7,
+			7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7,
+			7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7,
+			7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7,
+			7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7
+		};
+
+		// returns the log base 2, or the position of the highest bit set
+		static int getBitIndex(unsigned int v)
+		{
+			register unsigned int t, tt; // temporaries
+
+			if ((tt = (v >> 16)))
+			{
+				return (t = (v >> 24)) ? 24 + LogTable256[t] : 16 + LogTable256[tt & 0xFF];
+			}
+			else 
+			{
+				return (t = (v >> 8)) ? 8 + LogTable256[t] : LogTable256[v];
+			}
+		}
+	}
+
 	namespace Converter
 	{
 		/************************************************************************/
@@ -384,6 +422,54 @@ namespace Math
 
 	}
 	
+	namespace Matrix4
+	{
+		// side is an opengl define
+		static mat4 cubemapMatrix(int side)
+		{
+			switch (side)
+			{
+			case 0x8515: // +X
+				return mat4(0, 0, -1, 0, 
+							0, -1, 0, 0,
+							-1, 0, 0, 0,
+							0, 0, 0, 1);
+
+			case 0x8516: // -X
+				return mat4(0, 0, 1, 0, 
+							0, -1, 0, 0,
+							1, 0, 0, 0,
+							0, 0, 0, 1);
+
+			case 0x8517: // +Y				
+				return mat4(1, 0, 0, 0, 
+							0, 0, 1, 0,
+							0, -1, 0, 0,
+							0, 0, 0, 1);
+
+			case 0x8518: // -Y
+				return mat4(1, 0, 0, 0, 
+							0, 0, -1, 0,
+							0, 1, 0, 0,
+							0, 0, 0, 1);
+
+			case 0x8519: // +Z
+				return mat4(1, 0, 0, 0, 
+							0, -1, 0, 0,
+							0, 0, -1, 0,
+							0, 0, 0, 1);
+
+			case 0x851A: // -Z
+				return mat4(-1, 0, 0, 0, 
+							0, -1, 0, 0,
+							0, 0, 1, 0,
+							0, 0, 0, 1);
+
+			default:
+				return mat4();
+			}
+		}
+	}
 
 	static void decomposeMat4(mat4& matIn, vec3& scalingOut, quat& rotationOut, vec3& positionOut)
 	{
