@@ -10,6 +10,9 @@
 // Snow stuff
 #include <Snow/SnowSimulator.h>
 
+// Render
+#include <Render/RenderGLSL.h>
+
 Scene::Scene(QObject* parent)
 	: IScene(parent),
 	  m_camera(new Camera(NULL,this)),
@@ -69,6 +72,12 @@ void Scene::initialize()
 	m_sceneRootNode = new GameObject;
 	m_sceneRootNode->setObjectName("Scene Root");
 
+	// start up the render
+	if (!RenderGLSL::instance()->startup())
+	{
+		qWarning() << "RenderGLSL start failed.";
+	}
+
 	resetToDefaultScene();
 }
 
@@ -82,7 +91,10 @@ void Scene::initPhysicsModule()
 
 void Scene::update(float currentTime)
 {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	RenderGLSL::instance()->drawShadows();
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+
+	glViewport(0, 0, m_canvas->getContainerWidget()->width(), m_canvas->getContainerWidget()->height());
 
 	// update the camera
 	m_camera->update(currentTime - m_relativeTime);

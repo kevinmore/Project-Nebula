@@ -4,14 +4,14 @@
 class RenderGLSL :	public IRender
 {
 public:
-	RenderGLSL();
-	~RenderGLSL();
+	static RenderGLSL* instance();
 
 	bool startup();
 	void shutdown();
 
-	void draw(float minFPS, float averageFPS, float maxFPS, float t);
+	void draw();
 	void toggleShadows();
+	void drawShadows();
 
 protected:
 	void setTransform(const mat4 &projection, const mat4 &modelview, bool infPersp);
@@ -20,16 +20,8 @@ protected:
 	enum {giDim = 256};
 	enum {giAxisCount = 6};
 	unsigned int _giTex[giAxisCount];
-	unsigned int _giTexDXT[giAxisCount];
 
 	unsigned int _giFramebuffer;
-
-	enum {giDXTBufferSize = giDim * giDim * giDim}; // DXT3/5, 1 byte per pixel
-	enum {giDXTBufferCount = 1};
-	unsigned int _giDXTBuffer[giDXTBufferCount];
-	int _giDXTBufferIndex;
-
-	unsigned int _giDebugPointBuffer;
 
 	float _voxelScale;
 	vec3 _voxelBias;
@@ -40,9 +32,6 @@ protected:
 	void updateGI();
 	void updateGI_drawScene(const mat4 &mvp, const mat4 &storageTransform);
 	void updateGI_mipmap(int direction);
-	void updateGI_dxt(int direction);
-
-	void drawDebugGI();
 	////
 
 	//// Shadows
@@ -54,11 +43,15 @@ protected:
 	void initShadows();
 	void shutdownShadows();
 	bool startupShadows();
-	void drawShadows();
 	////
 
 
 	RenderOptions _renderOptions;
 	mat4 _projection, _modelview, _modelviewInverse, _mvp, _mvpInverse;
+
+private:
+	RenderGLSL();
+	~RenderGLSL();
+	static RenderGLSL* m_instance;
 };
 

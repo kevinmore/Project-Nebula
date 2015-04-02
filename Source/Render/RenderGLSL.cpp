@@ -16,6 +16,21 @@ RenderGLSL::~RenderGLSL()
 	shutdown();
 }
 
+RenderGLSL* RenderGLSL::m_instance = 0;
+
+RenderGLSL* RenderGLSL::instance()
+{
+	static QMutex mutex;
+	if (!m_instance) 
+	{
+		QMutexLocker locker(&mutex);
+		if (!m_instance)
+			m_instance = new RenderGLSL;
+	}
+
+	return m_instance;
+}
+
 void RenderGLSL::shutdown()
 {
 	shutdownGI();
@@ -26,25 +41,11 @@ bool RenderGLSL::startup()
 {
 	shutdown();
 
-#if defined(ENABLE_DEBUG_OUTPUT_CALLBACK)
-	if (GL_TRUE == glewIsSupported("GL_KHR_debug"))
-	{
-		glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
-		glDebugMessageCallback(DebugOutputCallback, 0);
-		glEnable(GL_DEBUG_OUTPUT);
-	}
-	else if (GL_TRUE == glewIsSupported("GL_ARB_debug_output"))
-	{
-		glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS_ARB);
-		glDebugMessageCallbackARB(DebugOutputCallback, 0);
-	}
-#endif
-
 	// enable sRGB backbuffer
 	// RGB8 and RGBA8 backbuffers will likely be sRGB-capable, and this enable is all that is needed to turn on sRGB for
 	// the default framebuffer
 	// for FBOs, the internal format of the color attachment(s) needs to be an sRGB format for this to have any effect
-	glEnable(GL_FRAMEBUFFER_SRGB);
+//	glEnable(GL_FRAMEBUFFER_SRGB);
 
 	if (!startupGI())
 	{
@@ -58,15 +59,15 @@ bool RenderGLSL::startup()
 		return false;
 	}
 
-	glDepthFunc(GL_LEQUAL);
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE);
-	glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
+// 	glDepthFunc(GL_LEQUAL);
+// 	glEnable(GL_DEPTH_TEST);
+// 	glEnable(GL_CULL_FACE);
+// 	glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
 
 	return true;
 }
 
-void RenderGLSL::draw( float minFPS, float averageFPS, float maxFPS, float t )
+void RenderGLSL::draw()
 {
 	// draw shadows before setting up the main render target (it would overwrite the main RT settings otherwise)
 	drawShadows();
@@ -82,17 +83,9 @@ void RenderGLSL::initGI()
 	for (int n = 0; n < giAxisCount; n++)
 	{
 		_giTex[n] = 0;
-		_giTexDXT[n] = 0;
 	}
 
 	_giFramebuffer = 0;
-
-	for (int n = 0; n < giDXTBufferCount; n++)
-	{
-		_giDXTBuffer[n] = 0;
-	}
-
-	_giDebugPointBuffer = 0;
 }
 
 void RenderGLSL::shutdownGI()
@@ -101,25 +94,11 @@ void RenderGLSL::shutdownGI()
 	{
 		glDeleteTextures(1, &_giTex[n]);
 		_giTex[n] = 0;
-
-		glDeleteTextures(1, &_giTexDXT[n]);
-		_giTexDXT[n] = 0;
 	}
 
 	if (_giFramebuffer)
 		glDeleteFramebuffers(1, &_giFramebuffer);
 	_giFramebuffer = 0;
-
-	for (int n = 0; n < giDXTBufferCount; n++)
-	{
-		if (_giDXTBuffer[n])
-			glDeleteBuffers(1, &_giDXTBuffer[n]);
-		_giDXTBuffer[n] = 0;
-	}
-
-	if (_giDebugPointBuffer)
-		glDeleteBuffers(1, &_giDebugPointBuffer);
-	_giDebugPointBuffer = 0;
 }
 
 bool RenderGLSL::startupGI()
@@ -143,24 +122,6 @@ bool RenderGLSL::startupGI()
 		{
 			glTexImage3D(GL_TEXTURE_3D, mip, GL_RGBA8, giDim >> mip, giDim >> mip, giDim >> mip, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
 		}
-
-
-		glGenTextures(1, &_giTexDXT[n]);
-		glBindTexture(GL_TEXTURE_3D, _giTexDXT[n]);
-		glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-		glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-		glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-		glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-
-		int compressedBlockSize = 16; // DXT3/5
-		for (int mip = 0; mip < mipLevels; mip++)
-		{
-			int dim = giDim >> mip;
-			int size = ((dim + 3) / 4) * ((dim + 3) / 4) * compressedBlockSize * dim;
-
-			glCompressedTexImage3D(GL_TEXTURE_3D, mip, GL_COMPRESSED_RGBA_S3TC_DXT3_EXT, dim, dim, dim, 0, size, nullptr);
-		}
 	}
 
 	glGenFramebuffers(1, &_giFramebuffer);
@@ -169,46 +130,6 @@ bool RenderGLSL::startupGI()
 	glFramebufferParameteri(GL_FRAMEBUFFER, GL_FRAMEBUFFER_DEFAULT_HEIGHT, giDim);
 	glFramebufferParameteri(GL_FRAMEBUFFER, GL_FRAMEBUFFER_DEFAULT_LAYERS, giAxisCount);
 
-	_giDXTBufferIndex = 0;
-	for (int n = 0; n < giDXTBufferCount; n++)
-	{
-		glGenBuffers(1, &_giDXTBuffer[n]);
-		glBindBuffer(GL_SHADER_STORAGE_BUFFER, _giDXTBuffer[n]);
-		glBufferData(GL_SHADER_STORAGE_BUFFER, giDXTBufferSize, nullptr, GL_STATIC_DRAW);
-	}
-
-	// 	{
-	// 		glGenBuffers(1, &_giDebugPointBuffer);
-	// 		glBindBuffer(GL_ARRAY_BUFFER, _giDebugPointBuffer);
-	// 		glBufferData(GL_ARRAY_BUFFER, giDim * giDim * giDim * sizeof(float) * 6, nullptr, GL_STATIC_DRAW);
-	// 		float *debugPointData = (float*)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-	// 
-	// 		float step = 1.0f / giDim;
-	// 		float invVoxelScale = 1.0f / _voxelScale;
-	// 		for (float z = .5f * step; z < 1.0f; z += step)
-	// 		{
-	// 			for (float y = .5f * step; y < 1.0f; y += step)
-	// 			{
-	// 				for (float x = .5f * step; x < 1.0f; x += step)
-	// 				{
-	// 					vector3 texPos(x, y, z);
-	// 					vector3 worldPos = texPos * invVoxelScale - _voxelBias;
-	// 
-	// 					debugPointData[0] = worldPos.x;
-	// 					debugPointData[1] = worldPos.y;
-	// 					debugPointData[2] = worldPos.z;
-	// 
-	// 					debugPointData[3] = texPos.x;
-	// 					debugPointData[4] = texPos.y;
-	// 					debugPointData[5] = texPos.z;
-	// 
-	// 					debugPointData += 6;
-	// 				}
-	// 			}
-	// 		}
-	// 
-	// 		glUnmapBuffer(GL_ARRAY_BUFFER);
-	// 	}
 
 	return true;
 }
@@ -258,7 +179,10 @@ void RenderGLSL::drawShadows()
 	float shadowRadius = 1.0f / _voxelScale; // world space radius of shadow buffer
 	vec3 lightDir = m_scene->getLights().first()->direction();
 
+	lightDir = vec3(0, -1, 0);
+
 	glBindFramebuffer(GL_FRAMEBUFFER, _shadowFramebuffer);
+	glViewport(0, 0, _renderOptions.shadowMapResolution, _renderOptions.shadowMapResolution);
 	glColorMask(0, 0, 0, 0);
 
 	glClearDepth(1);

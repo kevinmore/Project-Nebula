@@ -13,11 +13,12 @@ public:
 	virtual bool startup() = 0;
 	virtual void shutdown() = 0;
 
-	virtual void draw(float minFPS, float averageFPS, float maxFPS, float t) = 0;
+	virtual void draw() = 0;
 
 	virtual void toggleShadows() = 0;
-	virtual void adjustLightDir(const vec3& adjustment) = 0;
+	//virtual void adjustLightDir(const vec3& adjustment) = 0;
 
 protected:
+
 	Scene* m_scene;
 };
