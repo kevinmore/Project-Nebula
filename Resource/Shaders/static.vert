@@ -8,16 +8,19 @@ layout (location = 4) in vec2 TexCoord;
 
 uniform mat4 gWVP;                                                                  
 uniform mat4 gWorld;                                                                
+uniform mat4 gLightWVP;                                                             
 
 out vec2 TexCoord0;                                                                 
 out vec4 Color0;                                                                 
 out vec3 Normal0;                                                                   
 out vec3 WorldPos0;                                                                 
 out vec3 Tangent0; 
+out vec4 LightSpacePos0;                                                             
 
 void main()
 {   
     vec4 PosL    = vec4(Position, 1.0);
+	LightSpacePos0 = gLightWVP * PosL;
 
     gl_Position  = gWVP * PosL;
 

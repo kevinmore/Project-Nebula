@@ -10,6 +10,7 @@ in vec4 Color0;
 in vec3 Normal0;                                                                   
 in vec3 WorldPos0;                                                                 
 in vec3 Tangent0; 
+in vec4 LightSpacePos0;                                                             
 
 out vec4 FragColor;
 
@@ -20,6 +21,7 @@ struct VSOutput
     vec3 Normal;
 	vec3 Tangent;                                                                   
     vec3 WorldPos;
+	vec4 LightSpacePos;
 };
 
 // Material properties
@@ -100,8 +102,11 @@ float CalcShadowFactor(vec4 LightSpacePos)
         return 1.0;                                                                         
 } 
 
-vec4 CalcLightInternal(BaseLight Light, vec3 LightDirection, VSOutput In, float ShadowFactor)            
-{                                                                                           
+vec4 CalcLightInternal(BaseLight Light, vec3 LightDirection, VSOutput In)            
+{   
+	// Compute the shadow factor
+	float ShadowFactor = CalcShadowFactor(In.LightSpacePos);
+	                                                                                  
     // Compute the ambient / diffuse / specular / emissive components for each fragment
     vec4 AmbientColor = material.Ka * Light.Color * Light.Intensity;                   
     vec4 EmissiveColor = material.Ke;                                                                                                                                      
@@ -194,7 +199,7 @@ vec4 CalcLightInternal(BaseLight Light, vec3 LightDirection, VSOutput In, float 
                                                                                             
 vec4 CalcDirectionalLight(DirectionalLight l, VSOutput In)                                                      
 {                                                                                           
-    return CalcLightInternal(l.Base, l.Direction, In, 1.0);  
+    return CalcLightInternal(l.Base, l.Direction, In);  
 }                                                                                           
                                                                                             
 vec4 CalcPointLight(PointLight l, VSOutput In)                                       
@@ -203,9 +208,7 @@ vec4 CalcPointLight(PointLight l, VSOutput In)
     float Distance = length(LightDirection);                                                
     LightDirection = normalize(LightDirection);                                             
     
-	float ShadowFactor = 1;//CalcShadowFactor(In.LightSpacePos);
-	                                                                               
-    vec4 Color = CalcLightInternal(l.Base, LightDirection, In, ShadowFactor);                         
+    vec4 Color = CalcLightInternal(l.Base, LightDirection, In);                         
     float Attenuation =  l.Atten.Constant +                                                 
                          l.Atten.Linear * Distance +                                        
                          l.Atten.Exp * Distance * Distance;                                 
@@ -249,6 +252,7 @@ void main()
     In.TexCoord = TexCoord0;
     In.WorldPos = WorldPos0;
 	In.Tangent = Tangent0;
+	In.LightSpacePos = LightSpacePos0;
 
 	if(material.hasNormalMap)
 		In.Normal   = CalcBumpedNormal();

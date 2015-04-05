@@ -11,13 +11,7 @@ ShadowMapFBO::ShadowMapFBO()
 
 ShadowMapFBO::~ShadowMapFBO()
 {
-	if (m_fbo != 0) {
-		glDeleteFramebuffers(1, &m_fbo);
-	}
-
-	if (m_shadowMap != 0) {
-		glDeleteTextures(1, &m_shadowMap);
-	}
+	destroy();
 }
 
 bool ShadowMapFBO::init( uint windowWidth, uint windowHeight )
