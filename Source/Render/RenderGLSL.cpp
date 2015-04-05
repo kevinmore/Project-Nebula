@@ -1,11 +1,11 @@
 #include "RenderGLSL.h"
 #include <Scene/Scene.h>
+#include <UI/Canvas.h>
 
 RenderGLSL::RenderGLSL()
 	: IRender()
 {
 	initGI();
-	initShadows();
 	shutdown();
 
 	m_scene = Scene::instance();
@@ -59,10 +59,12 @@ bool RenderGLSL::startup()
 		return false;
 	}
 
-// 	glDepthFunc(GL_LEQUAL);
-// 	glEnable(GL_DEPTH_TEST);
-// 	glEnable(GL_CULL_FACE);
-// 	glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
+	glDepthFunc(GL_LEQUAL);
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE);
+	glHint(GL_POINT_SMOOTH_HINT, GL_NICEST);
+	glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
+	glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
 
 	return true;
 }
@@ -71,6 +73,12 @@ void RenderGLSL::draw()
 {
 	// draw shadows before setting up the main render target (it would overwrite the main RT settings otherwise)
 	drawShadows();
+	m_shadowMapFBO.bindForReading(SHADOW_TEXTURE_UNIT);
+
+	glViewport(0, 0, m_scene->getCanvas()->getContainerWidget()->width(), m_scene->getCanvas()->getContainerWidget()->height());
+
+	glClearDepth(1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 }
 
 void RenderGLSL::toggleShadows()
@@ -134,54 +142,29 @@ bool RenderGLSL::startupGI()
 	return true;
 }
 
-void RenderGLSL::initShadows()
-{
-	_shadowTex = 0;
-	_shadowFramebuffer = 0;
-}
-
 void RenderGLSL::shutdownShadows()
 {
-	if (_shadowTex)
-		glDeleteTextures(1, &_shadowTex);
-	_shadowTex = 0;
-
-	if (_shadowFramebuffer)
-		glDeleteFramebuffers(1, &_shadowFramebuffer);
-	_shadowFramebuffer = 0;
+	m_shadowMapFBO.destroy();
 }
 
 bool RenderGLSL::startupShadows()
 {
-	glGenTextures(1, &_shadowTex);
-	glBindTexture(GL_TEXTURE_2D, _shadowTex);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24, _renderOptions.shadowMapResolution, _renderOptions.shadowMapResolution, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_INT, 0);
-
-	glGenFramebuffers(1, &_shadowFramebuffer);
-	glBindFramebuffer(GL_FRAMEBUFFER, _shadowFramebuffer);
-	glReadBuffer(GL_NONE);
-	glDrawBuffer(GL_NONE);
-
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, _shadowTex, 0);
-
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	if (!m_shadowMapFBO.init(_renderOptions.shadowMapResolution, _renderOptions.shadowMapResolution)) 
+		return false;
 
 	return true;
 }
 
 void RenderGLSL::drawShadows()
 {
+	m_shadowMapFBO.bindForWriting();
+
 	vec3 cameraPos = m_scene->getCamera()->position();
 	float shadowRadius = 1.0f / _voxelScale; // world space radius of shadow buffer
 	vec3 lightDir = m_scene->getLights().first()->direction();
 
 	lightDir = vec3(0, -1, 0);
 
-	glBindFramebuffer(GL_FRAMEBUFFER, _shadowFramebuffer);
 	glViewport(0, 0, _renderOptions.shadowMapResolution, _renderOptions.shadowMapResolution);
 	glColorMask(0, 0, 0, 0);
 
@@ -196,8 +179,8 @@ void RenderGLSL::drawShadows()
 	shadowModelview.lookAt(lightDir, vec3(0, 0, 0), vec3(0, 1, 0));// * matrix().translate(-cameraPos);
 	_shadowMVP = _mvp;
 
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glColorMask(1, 1, 1, 1);
+	m_shadowMapFBO.release();
 }
 
 void RenderGLSL::setTransform( const mat4 &projection, const mat4 &modelview, bool infPersp )

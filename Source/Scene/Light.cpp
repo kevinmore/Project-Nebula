@@ -6,11 +6,11 @@ using namespace Math;
 const float INNER_ANGLE = 30.0f; // 30deg = 0.6981rad = cos(2PI/9) = 0.76604;
 const float OUTER_ANGLE = 40.0f; // 40deg = 0.5235rad = cos(1PI/6) = 0.86602;
 
-Light::Light() 
+Light::Light(LightType type) 
 	: Component(),
-	m_type(PointLight),
+	m_type(type),
 	m_position(Math::Vector3::ZERO),
-	m_direction(Math::Vector3::NEGATIVE_UNIT_Z),
+	m_direction(vec3(1, -1, 1)),
 	m_color(Qt::white),
 	m_constantAttenuation(1.0f),
 	m_linearAttenuation(0.0f),

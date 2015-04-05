@@ -4,7 +4,7 @@
 #include <Utility/EngineCommon.h>
 #include <Primitives/Component.h>
 #include <Primitives/Texture.h>
-#include <Scene/ShadingTechniques/ParticleTechnique.h>
+#include <Render/ShadingTechniques/ParticleTechnique.h>
 class Particle
 {
 public:

@@ -17,7 +17,7 @@ Scene::Scene(QObject* parent)
 	: IScene(parent),
 	  m_camera(new Camera(NULL,this)),
 	  m_absoluteTime(0.0f),
-	  m_relativeTime(0.0f),
+	  m_recordedTime(0.0f),
 	  m_delayedTime(0.0f),
 	  m_bShowSkybox(false),
 	  m_bPhysicsPaused(true),
@@ -55,15 +55,6 @@ void Scene::initialize()
 	initPhysicsModule();
 	initHavokPhysicsModule();
 
-	//glEnable(GL_PROGRAM_POINT_SIZE);
-	glEnable(GL_CULL_FACE);
-	glDepthFunc(GL_LEQUAL);
-	glEnable(GL_DEPTH_TEST);
-	glHint(GL_POINT_SMOOTH_HINT, GL_NICEST);
-	glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
-	glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
-	glClearDepth( 1.0 );
-
 	m_meshManager     = MeshManager::instance();
 	m_textureManager  = TextureManager::instance();
 	m_materialManager = MaterialManager::instance();
@@ -86,25 +77,28 @@ void Scene::initPhysicsModule()
 	PhysicsWorldConfig config;
 
 	m_physicsWorld = new PhysicsWorld(config);
-
 }
 
 void Scene::update(float currentTime)
 {
-	RenderGLSL::instance()->drawShadows();
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-
-	glViewport(0, 0, m_canvas->getContainerWidget()->width(), m_canvas->getContainerWidget()->height());
+	RenderGLSL::instance()->draw();
 
 	// update the camera
-	m_camera->update(currentTime - m_relativeTime);
+	m_camera->update(currentTime - m_recordedTime);
 
 	// record the absolute time
 	m_absoluteTime = currentTime;
 
 	// update the time
-	float dt = m_absoluteTime - m_delayedTime - m_relativeTime;
-	m_relativeTime = m_absoluteTime - m_delayedTime;
+	float dt = m_absoluteTime - m_delayedTime - m_recordedTime;
+	m_recordedTime = m_absoluteTime - m_delayedTime;
+
+	// render sky box
+	if (m_bShowSkybox) 
+		m_skybox->render(m_recordedTime);
+
+	// render all
+	m_objectManager->renderAll(m_recordedTime);
 
 	// do nothing when the physics world is paused
 	if (!m_bPhysicsPaused || m_bStepPhysics)
@@ -116,14 +110,7 @@ void Scene::update(float currentTime)
 		// Snow
 		//SnowSimulator::instance()->update(0.002f);
 	}
-	m_physicsWorld->setCurrentTime(m_relativeTime);
-
-	// render sky box
-	if (m_bShowSkybox) 
-		m_skybox->render(m_relativeTime);
-
-	// render all
-	m_objectManager->renderAll(m_relativeTime);
+	m_physicsWorld->setCurrentTime(m_recordedTime);
 
 	// always reset the flag of step physics
 	m_bStepPhysics = false;
@@ -163,7 +150,7 @@ void Scene::resetToDefaultScene()
 
 	// Initializing the lights
 	LightPtr light = createLight();
-	light->gameObject()->setFixedPositionY(2);
+	//light->gameObject()->setFixedPositionY(2);
 
 	// back up
 // 	GameObjectPtr temp(new GameObject(this));
@@ -406,7 +393,7 @@ LightPtr Scene::createLight( GameObject* objectToAttach )
 	GameObjectPtr ref = createEmptyGameObject("Light", objectToAttach);
 
 	// light
-	LightPtr l(new Light);
+	LightPtr l(new Light(Light::DirectionalLight));
 	addLight(l);
 	ref->attachComponent(l);
 
@@ -551,7 +538,7 @@ void Scene::play()
 	m_bPhysicsPaused = false;
 	m_physicsWorld->unlock();
 	m_physicsWorld->start();
-	m_delayedTime += m_absoluteTime - m_relativeTime;
+	m_delayedTime += m_absoluteTime - m_recordedTime;
 
 	m_canvas->getContainerWidget()->setWindowTitle("Scene - Physics Simulation: On");
 

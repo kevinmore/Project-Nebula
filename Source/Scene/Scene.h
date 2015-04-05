@@ -107,7 +107,7 @@ private:
 	QList<LightPtr>		  m_lights;
 	
 	float m_absoluteTime; // absolute time from the start of the program
-	float m_relativeTime; // relative time excluding paused duration 
+	float m_recordedTime; // relative time excluding paused duration 
 	float m_delayedTime; // the time delayed between pauses
 
 	QVector<vec3> m_path;

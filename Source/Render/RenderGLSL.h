@@ -1,5 +1,6 @@
 #pragma once
 #include "IRender.h"
+#include "ShadingTechniques/ShadowMapFBO.h"
 
 class RenderGLSL :	public IRender
 {
@@ -35,12 +36,10 @@ protected:
 	////
 
 	//// Shadows
-	unsigned int _shadowTex;
-	unsigned int _shadowFramebuffer;
 	bool _drawShadows;
 	mat4 _shadowMVP;
+	ShadowMapFBO m_shadowMapFBO;
 
-	void initShadows();
 	void shutdownShadows();
 	bool startupShadows();
 	////

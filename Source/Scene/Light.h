@@ -18,7 +18,7 @@ public:
 		AreaLight
 	};
 
-	Light();
+	Light(LightType type = PointLight);
 	~Light();
 
 	virtual QString className() { return "Light"; }

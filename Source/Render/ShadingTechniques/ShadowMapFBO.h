@@ -10,6 +10,8 @@ public:
 	bool init(uint windowWidth, uint windowHeight);
 	void bindForWriting();
 	void bindForReading(GLenum textureUnit);
+	void release();
+	void destroy();
 
 private:
 	GLuint m_fbo;

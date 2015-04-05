@@ -1,6 +1,6 @@
 #pragma once
 #include <QOpenGLFunctions_4_3_Core>
-#include <Scene/ShadingTechniques/SkyboxTechnique.h>
+#include <Render/ShadingTechniques/SkyboxTechnique.h>
 #include <Scene/Managers/MeshManager.h>
 #include <Scene/Camera.h>
 #include <Primitives/CubeMapTexture.h>

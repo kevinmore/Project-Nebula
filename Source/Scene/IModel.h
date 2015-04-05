@@ -10,7 +10,7 @@
 #include <Primitives/Component.h>
 #include <Primitives/Mesh.h>
 #include <Primitives/Material.h>
-#include <Scene/ShadingTechniques/ShadingTechnique.h>
+#include <Render/ShadingTechniques/ShadingTechnique.h>
 
 #include <Physicis/Collision/Collider/SphereCollider.h>
 #include <Physicis/Collision/Collider/BoxCollider.h>

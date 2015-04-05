@@ -13,15 +13,12 @@
     <ClCompile Include="Animation\FK\FKController.cpp" />
     <ClCompile Include="Animation\Rig\Skeleton.cpp" />
     <ClCompile Include="Scene\RiggedModel.cpp" />
-    <ClCompile Include="Scene\ShadingTechniques\ShadingTechnique.cpp" />
     <ClCompile Include="Animation\IK\FABRIKSolver.cpp" />
     <ClCompile Include="Animation\IK\CCDIKSolver.cpp" />
     <ClCompile Include="Animation\Rig\Pose.cpp" />
     <ClCompile Include="Scene\moc_Scene.cc" />
-    <ClCompile Include="Scene\ShadingTechniques\ShadowMapFBO.cpp" />
     <ClCompile Include="Scene\Camera.cpp" />
     <ClCompile Include="Scene\moc_Camera.cc" />
-    <ClCompile Include="Scene\ShadingTechniques\Technique.cpp" />
     <ClCompile Include="Utility\LoaderThread.cpp" />
     <ClCompile Include="Utility\moc_LoaderThread.cc" />
     <ClCompile Include="UI\Canvas.cpp" />
@@ -35,10 +32,8 @@
     <ClCompile Include="Scene\Managers\ObjectManager.cpp" />
     <ClCompile Include="Primitives\Component.cpp" />
     <ClCompile Include="Physicis\Particles\ParticleSystem.cpp" />
-    <ClCompile Include="Scene\ShadingTechniques\ParticleTechnique.cpp" />
     <ClCompile Include="Physicis\Particles\moc_ParticleSystem.cc" />
     <ClCompile Include="Primitives\CubeMapTexture.cpp" />
-    <ClCompile Include="Scene\ShadingTechniques\SkyboxTechnique.cpp" />
     <ClCompile Include="Scene\Skybox.cpp" />
     <ClCompile Include="UI\SkyboxDialog.cpp" />
     <ClCompile Include="UI\moc_SkyboxDialog.cc" />
@@ -53,7 +48,6 @@
     <ClCompile Include="Utility\AssimpThread.cpp" />
     <ClCompile Include="Utility\moc_AssimpThread.cc" />
     <ClCompile Include="Physicis\World\PhysicsWorldObject.cpp" />
-    <ClCompile Include="Scene\ShadingTechniques\moc_ShadingTechnique.cc" />
     <ClCompile Include="Scene\moc_Light.cc" />
     <ClCompile Include="Physicis\Geometry\ConvexShape.cpp" />
     <ClCompile Include="Physicis\Collision\BroadPhase\BroadPhaseCollisionFeedback..cpp" />
@@ -80,6 +74,12 @@
     <ClCompile Include="Snow\SnowGrid.cpp" />
     <ClCompile Include="Scene\StaticModel.cpp" />
     <ClCompile Include="Render\RenderGLSL.cpp" />
+    <ClCompile Include="Render\ShadingTechniques\moc_ShadingTechnique.cc" />
+    <ClCompile Include="Render\ShadingTechniques\ParticleTechnique.cpp" />
+    <ClCompile Include="Render\ShadingTechniques\ShadingTechnique.cpp" />
+    <ClCompile Include="Render\ShadingTechniques\ShadowMapFBO.cpp" />
+    <ClCompile Include="Render\ShadingTechniques\SkyboxTechnique.cpp" />
+    <ClCompile Include="Render\ShadingTechniques\Technique.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Primitives\Texture.h" />
@@ -97,13 +97,10 @@
     <ClInclude Include="Animation\IK\FABRIKSolver.h" />
     <ClInclude Include="Animation\IK\CCDIKSolver.h" />
     <ClInclude Include="Animation\Rig\Pose.h" />
-    <ClInclude Include="Scene\ShadingTechniques\ShadowMapFBO.h" />
     <ClInclude Include="Utility\EngineCommon.h" />
-    <ClInclude Include="Scene\ShadingTechniques\Technique.h" />
     <ClInclude Include="Utility\Serialization.h" />
     <ClInclude Include="UI\ui_HierarchyWidget.h" />
     <ClInclude Include="Primitives\CubeMapTexture.h" />
-    <ClInclude Include="Scene\ShadingTechniques\SkyboxTechnique.h" />
     <ClInclude Include="Scene\Skybox.h" />
     <ClInclude Include="UI\ui_SkyboxWidget.h" />
     <ClInclude Include="Physicis\World\PhysicsWorldConfig.h" />
@@ -120,8 +117,6 @@
     <ClInclude Include="Physicis\Geometry\SphereShape.h" />
     <ClInclude Include="UI\Canvas.h" />
     <ClInclude Include="Scene\Managers\ObjectManager.h" />
-    <ClInclude Include="Scene\ShadingTechniques\ParticleTechnique.h" />
-    <ClInclude Include="Scene\ShadingTechniques\ShadingTechnique.h" />
     <ClInclude Include="Physicis\Geometry\ConvexShape.h" />
     <ClInclude Include="Physicis\Collision\BroadPhase\BroadPhaseCollisionFeedback.h" />
     <ClInclude Include="Physicis\Collision\Collider\BoxCollider.h" />
@@ -177,6 +172,11 @@
     <ClInclude Include="Render\RenderOptions.h" />
     <ClInclude Include="Render\IRender.h" />
     <ClInclude Include="Render\RenderGLSL.h" />
+    <ClInclude Include="Render\ShadingTechniques\ParticleTechnique.h" />
+    <ClInclude Include="Render\ShadingTechniques\ShadingTechnique.h" />
+    <ClInclude Include="Render\ShadingTechniques\ShadowMapFBO.h" />
+    <ClInclude Include="Render\ShadingTechniques\SkyboxTechnique.h" />
+    <ClInclude Include="Render\ShadingTechniques\Technique.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="UI\HierarchyWidget.ui" />

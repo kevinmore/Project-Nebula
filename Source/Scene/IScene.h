@@ -33,6 +33,7 @@ public:
      * Associate with the canvas widget
      */
 	void setCanvas(Canvas* widget) { m_canvas = widget; }
+	Canvas* getCanvas() { return m_canvas; }
 
 protected:
     QOpenGLContext* m_context;

@@ -3,7 +3,7 @@
 #include <Primitives/Component.h>
 #include <QVector>
 #include <QSharedPointer>
-#include <Scene/ShadingTechniques/ParticleTechnique.h>
+#include <Render/ShadingTechniques/ParticleTechnique.h>
 #include "SnowParticle.h"
 #include "GridNode.h"
 

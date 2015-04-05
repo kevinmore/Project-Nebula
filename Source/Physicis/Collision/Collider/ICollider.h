@@ -2,7 +2,7 @@
 #include <Physicis/Collision/BroadPhase/BroadPhaseCollisionFeedback.h>
 #include <Utility/Math.h>
 #include <Primitives/Component.h>
-#include <Scene/ShadingTechniques/ShadingTechnique.h>
+#include <Render/ShadingTechniques/ShadingTechnique.h>
 #include <Scene/Managers/MeshManager.h>
 #include <QOpenGLFunctions_4_3_Core>
 

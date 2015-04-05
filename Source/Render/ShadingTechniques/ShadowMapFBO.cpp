@@ -1,6 +1,6 @@
 #include "ShadowMapFBO.h"
 #include <assert.h>
-
+#include <QDebug>
 
 ShadowMapFBO::ShadowMapFBO()
 	: m_fbo(0),
@@ -43,8 +43,9 @@ bool ShadowMapFBO::init( uint windowWidth, uint windowHeight )
 
 	GLenum Status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 
-	if (Status != GL_FRAMEBUFFER_COMPLETE) {
-		printf("Frame buffer error, status: 0x%x\n", Status);
+	if (Status != GL_FRAMEBUFFER_COMPLETE) 
+	{
+		qWarning() << "Frame buffer error, status:" << Status; // 0x%x;
 		return false;
 	}
 
@@ -60,4 +61,18 @@ void ShadowMapFBO::bindForReading( GLenum textureUnit )
 {
 	glActiveTexture(textureUnit);
 	glBindTexture(GL_TEXTURE_2D, m_shadowMap);
+}
+
+void ShadowMapFBO::release()
+{
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+}
+
+void ShadowMapFBO::destroy()
+{
+	if (m_shadowMap)
+		glDeleteTextures(1, &m_shadowMap);
+
+	if (m_fbo)
+		glDeleteFramebuffers(1, &m_fbo);
 }

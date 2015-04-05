@@ -7,7 +7,7 @@
 #include <assert.h>
 #include <QOpenGLFunctions_4_3_Core>
 #include <QSharedPointer>
-#include <Scene/ShadingTechniques/ShadingTechnique.h>
+#include <Render/ShadingTechniques/ShadingTechnique.h>
 #include <Physicis/Collision/Collider/BoxCollider.h>
 #include <Physicis/Collision/Collider/SphereCollider.h>
 #include <Physicis/Collision/Collider/ConvexHullCollider.h>
