@@ -64,10 +64,10 @@ void Scene::initialize()
 	m_sceneRootNode->setObjectName("Scene Root");
 
 	// start up the render
-	if (!RenderGLSL::instance()->startup())
-	{
-		qWarning() << "RenderGLSL start failed.";
-	}
+// 	if (!RenderGLSL::instance()->startup())
+// 	{
+// 		qWarning() << "RenderGLSL start failed.";
+// 	}
 
 	resetToDefaultScene();
 }
@@ -81,7 +81,7 @@ void Scene::initPhysicsModule()
 
 void Scene::update(float currentTime)
 {
-	RenderGLSL::instance()->draw();
+//	RenderGLSL::instance()->draw();
 
 	// update the camera
 	m_camera->update(currentTime - m_recordedTime);

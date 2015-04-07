@@ -24,6 +24,7 @@ public:
     ShadingTechnique(const QString &shaderName, ShaderType shaderType = STATIC);
     virtual bool init();
 	virtual void enable();
+	ShaderType getShaderType() const { return m_shaderType; }
 
 	void setLight(Light::LightType type, uint index, const Light* light);
 
@@ -32,7 +33,8 @@ public:
 	void setViewMatrix(const mat4& view);
     void setColorTextureUnit(uint textureUnit);
 	void setShadowMapTextureUnit(uint textureUnit);
-	void setNormalMapTextureUnit(uint textureUnit);
+	void setNormalMapTextureUnit(uint textureUnit);	void setLightMVPMatrix(const mat4& mvp);
+
     void setCameraPosition(const vec3& cameraPos);
     
     void setBoneTransform(uint tndex, const mat4& transform);

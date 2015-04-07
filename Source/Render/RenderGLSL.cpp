@@ -53,11 +53,11 @@ bool RenderGLSL::startup()
 		return false;
 	}
 
-	if (!startupShadows())
-	{
-		qWarning() << "RenderGLSL::startupShadows failed";
-		return false;
-	}
+// 	if (!startupShadows())
+// 	{
+// 		qWarning() << "RenderGLSL::startupShadows failed";
+// 		return false;
+// 	}
 
 	glDepthFunc(GL_LEQUAL);
 	glEnable(GL_DEPTH_TEST);

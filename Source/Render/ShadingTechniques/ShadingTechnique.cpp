@@ -163,6 +163,11 @@ void ShadingTechnique::setMVPMatrix(const mat4& mvp)
 	m_shaderProgram->setUniformValue("gWVP", mvp);
 }
 
+void ShadingTechnique::setLightMVPMatrix( const mat4& mvp )
+{
+	m_shaderProgram->setUniformValue("gLightWVP", mvp);
+}
+
 void ShadingTechnique::setModelMatrix(const mat4& model)
 {
 	m_shaderProgram->setUniformValue("gWorld", model);
